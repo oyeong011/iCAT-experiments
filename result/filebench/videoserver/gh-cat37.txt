@@ -1,0 +1,52 @@
+[START] module=gh-cat37
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[WORKLOAD] source=/home/oy/iCAT/workloads/filebench/videoserver.f runtime=300s
+Filebench Version 1.5-alpha3
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+0.000: Allocated 173MB of shared memory
+0.191: Video Server Version 3.0 personality successfully loaded
+0.191: Populating and pre-allocating filesets
+0.192: passivevids populated: 194 files, avg. dir. width = 20, avg. dir. depth = 1.8, 0 leafdirs, 1986560.000MB total size
+0.192: Removing passivevids tree (if exists)
+0.193: Pre-allocating directories in passivevids tree
+0.193: Pre-allocating files in passivevids tree
+3.096: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000002/00000005: No space left on device around line 79
+3.096: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000002/00000031: No space left on device around line 79
+3.098: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000003/00000001/00000003: No space left on device around line 79
+3.099: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000001/00000017: No space left on device around line 79
+3.102: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000003/00000007: No space left on device around line 79
+3.102: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000007/00000015: No space left on device around line 79
+3.103: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000003/00000008: No space left on device around line 79
+3.105: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000002/00000002: No space left on device around line 79
+3.105: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000003/00000020: No space left on device around line 79
+3.106: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000003/00000013: No space left on device around line 79
+3.108: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000001/00000008: No space left on device around line 79
+3.110: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000001/00000007: No space left on device around line 79
+3.112: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000002/00000029: No space left on device around line 79
+3.112: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000002/00000027: No space left on device around line 79
+3.113: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000003/00000010: No space left on device around line 79
+3.116: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000002/00000032: No space left on device around line 79
+3.096: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000001/00000024: No space left on device around line 79
+3.117: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000001/00000025: No space left on device around line 79
+3.117: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000001/00000012: No space left on device around line 79
+3.119: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000003/00000002/00000005: No space left on device around line 79
+3.120: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000006/00000010: No space left on device around line 79
+3.121: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000001/00000011: No space left on device around line 79
+3.122: Failed to create filesets around line 79
+3.124: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000005/00000003: No space left on device around line 79
+3.125: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000003/00000014: No space left on device around line 79
+3.126: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000001/00000031: No space left on device around line 79
+3.127: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000006/00000003: No space left on device around line 79
+3.129: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000002/00000025: No space left on device around line 79
+3.131: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000007/00000010: No space left on device around line 79
+3.132: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000001/00000022: No space left on device around line 79
+3.133: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000007/00000030: No space left on device around line 79
+3.135: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000007/00000016: No space left on device around line 79
+3.135: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000006/00000004: No space left on device around line 79
+filebench.sh: filebench failed/timeout: 1
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/videoserver/summary.txt
+[WAF] module=gh-cat37 WAF=N/A host_pages=0 gc_copied=N/A -> /home/oy/iCAT/result/filebench/videoserver/summary.txt

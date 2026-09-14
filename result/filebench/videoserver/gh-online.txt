@@ -1,0 +1,24 @@
+[START] module=gh-online
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[WORKLOAD] source=/home/oy/iCAT/workloads/filebench/videoserver.f runtime=300s
+Filebench Version 1.5-alpha3
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+0.000: Allocated 173MB of shared memory
+0.022: Video Server Version 3.0 personality successfully loaded
+0.022: Populating and pre-allocating filesets
+0.022: passivevids populated: 194 files, avg. dir. width = 20, avg. dir. depth = 1.8, 0 leafdirs, 1986560.000MB total size
+0.022: Removing passivevids tree (if exists)
+0.024: Pre-allocating directories in passivevids tree
+0.024: Pre-allocating files in passivevids tree
+2.842: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000001/00000008: No space left on device around line 79
+2.842: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000003/00000013: No space left on device around line 79
+2.842: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000008/00000001/00000022: No space left on device around line 79
+2.842: Failed to create filesets around line 79
+2.842: Failed to pre-allocate file /home/oy/iCAT/mnt/filebench/passivevids/00000001/00000006/00000004: No space left on device around line 79
+filebench.sh: filebench failed/timeout: 1
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/videoserver/summary.txt
+[WAF] module=gh-online WAF=N/A host_pages=0 gc_copied=N/A -> /home/oy/iCAT/result/filebench/videoserver/summary.txt
