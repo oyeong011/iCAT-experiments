@@ -1869,3 +1869,8 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 - 사용자 요청: 남은 GitHub workload 전부 실행. `gh-fio.sh`는 TEST_JOB이 파일에 고정돼 있어 환경변수 `GH_TEST_JOB`으로 선택하도록 1줄 수정(기본 gh-test4.fio). sqlite는 이식된 `script/sqlite.sh`(GitHub sqlite.sh 경로·권한만 변경) 사용.
 - 순서: test3 → test5 → test2 → sqlite a → sqlite b, 각 cat37, online. 10 run, 약 2.5시간. GitHub 기준값(arm37): test3 1.7323, test5 1.5459, sqlite-a 1.3419, sqlite-b 1.1354.
+
+## 2026-09-14 — gh-queue-20260914 사전 등록 (무인 연속 실행)
+
+- 사용자 요청: 돌릴 수 있는 실험 계속 실행, 사용자 부재. `script/gh-queue-20260914.sh`가 현재 batch(ALLDONE) 종료를 기다린 뒤 순서대로: (1) fio test4/test3/test5 × cat37/online × rep2,3 (GitHub fio는 randseed 고정이므로 동일 seed 반복 = run-to-run 변동 측정), (2) filebench oltp/varmail × cat37/online × rep2,3, (3) filebench webserver/webproxy × cat37/online 1회. 각 블록 후 git commit/push(oyeong011/iCAT-experiments). 총 ~24 run, 약 6시간. 실패는 콘솔에 FAIL로 남기고 다음으로 진행.
+- 참고: gh-fio.sh/gh-filebench.sh는 dmesg 결과 파일명에 run ID를 넣어(fio) 또는 고정 이름(filebench: `dmesg-<tag>.log`, 덮어씀)을 쓴다. filebench 반복은 원본 스크립트가 같은 파일명에 덮어쓰므로, 각 rep의 콘솔(`*-repN.console.txt`)에 WAF 라인이 보존된다 — dmesg-*.log는 마지막 rep만 남는다.
