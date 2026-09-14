@@ -1880,3 +1880,8 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 사용자 요청: 가능한 실험 전부 실행. 모듈 추가 빌드: `nvmev-gh-greedy.ko`(GitHub HEAD GREEDY), `nvmev-fixed10.ko`(arm10 = test4 최악, k2/s200/r7), `nvmev-fixed50.ko`(arm50 = 6-workload minimax, k10/s50/r16), `nvmev-fixed47.ko`(기존 fixed47 복사). fixed*는 varmail-compare-src(HEAD+할당 패치+FIXED_ARM), measurement_manual 기본 0이라 GitHub 자동 계측으로 동작. hash `result/gh-repro-20260914/modules.sha256`.
 - 순서(queue1 QUEUEDONE 이후): fio test4/test3/test5/test2 × {greedy,fixed10,fixed47,fixed50} → sqlite a/b × 4 → filebench oltp/varmail × 4 → sqlite d × 6 정책 → filebench videoserver × cat37/online → sqlite a/b × cat37/online rep2,3. 약 40 run, 12시간 이상. 블록마다 push.
 - 이로써 WORST_CAT_VS_ICAT_PLAN의 5-정책 비교가 GitHub 계측 방식으로 test4에서 완성된다(cat37/online은 queue1에서 3회, 나머지 1회).
+
+## 2026-09-14 — gh-queue3-20260914 사전 등록 (무인 연속 실행 3차)
+
+- 사용자 요청: 추가 실험 예약. (1) fio test4/3/5의 randseed를 +1/+2한 변형(`gh-*-s2.fio`, `-s3.fio`) × 6정책(greedy, fixed10, cat37, fixed47, fixed50, online) = 36 run — GitHub fio는 seed 고정이라 seed 변동을 이것으로 확보. (2) filebench webserver/webproxy/videoserver × 4 고정 정책. (3) **mix A안**: `mix-20260911.sh mixA` — phase A test4(24M writes) 후 파일을 지우지 않고 남은 공간에 sqlite DB(60만 건, 400만 op) 생성. 좀비 유효 데이터 없이 "두 앱이 SSD를 나눠 쓰다 주도권이 바뀜"을 재현. fixed10/fixed47/fixed50/online × rep 1~3(seed 변경) = 12 run. 총 ~60 run, 15시간 이상. queue2 종료 후 자동 시작, 블록마다 push.
+- mixA 판정: 각 run 내부 검사 통과, phase B가 ENOSPC 없이 완료. phase A/B WAF를 정책별로 비교하고 iCAT의 arm 추이를 본다.

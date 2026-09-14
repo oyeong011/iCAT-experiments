@@ -6,10 +6,12 @@ root=/home/oy/iCAT
 base="$root/result/mix-20260911"
 journal="$root/EXPERIMENT_LOG.md"
 control=/proc/nvmevirt_measurement
-label=${1:?Use smoke, main, long or t4}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
+label=${1:?Use smoke, main, long, t4 or mixA}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
 case "$policy" in
     fixed47) module="$root/buildoutput/nvmev-varmail-20260908-fixed47.ko";;
     online)  module="$root/buildoutput/nvmev-online-mix-20260907.ko";;
+    fixed10) module="$root/buildoutput/nvmev-fixed10.ko";;
+    fixed50) module="$root/buildoutput/nvmev-fixed50.ko";;
     *) exit 2;;
 esac
 # test4 payload: 24M writes = 600 s at 40k IOPS (hot:warm:cold = 6:3:1). smoke = 1/10.
@@ -18,12 +20,13 @@ case "$label" in
     main)  scale=1;  RECORDS=4000000; OPS=1000000;;
     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
     t4)    scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed
+    mixA)  scale=1;  RECORDS=600000; OPS=4000000;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
     *) exit 2;;
 esac
 mult=1; [[ "$label" != long ]] || mult=6   # long: phase A 6x payload (3600 s) so the learner can exploit after its 600 s sweep
 export HOT_IO=$((58982400000*mult/scale)) WARM_IO=$((29491200000*mult/scale)) COLD_IO=$((9830400000*mult/scale))
 export SEED_HOT=$((20260910+rep)) SEED_WARM=$((20261010+rep)) SEED_COLD=$((20261110+rep))
-dir="$base/$label-$policy"; [[ "$label" != t4 ]] || dir="$base/t4-$policy-rep$rep"
+dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != mixA ]] || dir="$base/$label-$policy-rep$rep"
 [[ ! -e "$dir" ]] || { echo "Refusing to overwrite $dir" >&2; exit 1; }
 mkdir -p "$dir"
 exec 9>"$base/device.lock"; flock -n 9 || exit 1
@@ -103,7 +106,7 @@ if [[ "$label" == t4 ]]; then
     : > "$dir/ycsb-load.txt"; : > "$dir/ycsb-run.txt"
 else
 # ---- transition: delete fio file (no discard, FTL keeps its state)
-rm -f "$FIO_TARGET"; sync
+[[ "$label" == mixA ]] || rm -f "$FIO_TARGET"; sync   # mixA keeps the fio file: FTL sees no deleted-but-valid data
 cat "$control" > "$dir/phase-B-start.txt"
 # ---- phase B: YCSB sqlite workload A (same as GitHub sqlite.sh: WAL, batch 1000, drop_caches 4s during run)
 kmsg phase=B START; date -Is > "$dir/phase-B-start.time"
