@@ -1874,3 +1874,9 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 - 사용자 요청: 돌릴 수 있는 실험 계속 실행, 사용자 부재. `script/gh-queue-20260914.sh`가 현재 batch(ALLDONE) 종료를 기다린 뒤 순서대로: (1) fio test4/test3/test5 × cat37/online × rep2,3 (GitHub fio는 randseed 고정이므로 동일 seed 반복 = run-to-run 변동 측정), (2) filebench oltp/varmail × cat37/online × rep2,3, (3) filebench webserver/webproxy × cat37/online 1회. 각 블록 후 git commit/push(oyeong011/iCAT-experiments). 총 ~24 run, 약 6시간. 실패는 콘솔에 FAIL로 남기고 다음으로 진행.
 - 참고: gh-fio.sh/gh-filebench.sh는 dmesg 결과 파일명에 run ID를 넣어(fio) 또는 고정 이름(filebench: `dmesg-<tag>.log`, 덮어씀)을 쓴다. filebench 반복은 원본 스크립트가 같은 파일명에 덮어쓰므로, 각 rep의 콘솔(`*-repN.console.txt`)에 WAF 라인이 보존된다 — dmesg-*.log는 마지막 rep만 남는다.
+
+## 2026-09-14 — gh-queue2-20260914 사전 등록 (무인 연속 실행 2차)
+
+- 사용자 요청: 가능한 실험 전부 실행. 모듈 추가 빌드: `nvmev-gh-greedy.ko`(GitHub HEAD GREEDY), `nvmev-fixed10.ko`(arm10 = test4 최악, k2/s200/r7), `nvmev-fixed50.ko`(arm50 = 6-workload minimax, k10/s50/r16), `nvmev-fixed47.ko`(기존 fixed47 복사). fixed*는 varmail-compare-src(HEAD+할당 패치+FIXED_ARM), measurement_manual 기본 0이라 GitHub 자동 계측으로 동작. hash `result/gh-repro-20260914/modules.sha256`.
+- 순서(queue1 QUEUEDONE 이후): fio test4/test3/test5/test2 × {greedy,fixed10,fixed47,fixed50} → sqlite a/b × 4 → filebench oltp/varmail × 4 → sqlite d × 6 정책 → filebench videoserver × cat37/online → sqlite a/b × cat37/online rep2,3. 약 40 run, 12시간 이상. 블록마다 push.
+- 이로써 WORST_CAT_VS_ICAT_PLAN의 5-정책 비교가 GitHub 계측 방식으로 test4에서 완성된다(cat37/online은 queue1에서 3회, 나머지 1회).
