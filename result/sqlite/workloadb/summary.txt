@@ -310,3 +310,81 @@ gc_cnt      : N/A
 [294138.865449] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=14697834 gc_pages=1569377 gc_count=254168 WAF=1.106 warmup_gc=100-per-part
 --- all current-run WAF lines ---
 [294138.865449] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=14697834 gc_pages=1569377 gc_count=254168 WAF=1.106 warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-15 06:45:11 +0900
+module      : gh-cat37
+phase       : load-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 06:57:29 +0900
+module      : gh-cat37
+phase       : run-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 06:57:31 +0900
+module      : gh-cat37
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-15 06:57:33 +0900
+module      : gh-cat37
+workload    : workloadb
+source      : dmesg
+WAF         : 1.114
+waf_x1000   : N/A
+host_pages  : 14703418
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[299520.689172] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=14703418 gc_pages=1686215 gc_count=256081 WAF=1.114 warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[299520.689172] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=14703418 gc_pages=1686215 gc_count=256081 WAF=1.114 warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-15 07:01:23 +0900
+module      : gh-online
+phase       : load-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 07:13:40 +0900
+module      : gh-online
+phase       : run-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 07:13:41 +0900
+module      : gh-online
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-15 07:13:43 +0900
+module      : gh-online
+workload    : workloadb
+source      : dmesg
+WAF         : 1.105
+waf_x1000   : N/A
+host_pages  : 14697313
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[300491.143904] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=14697313 gc_pages=1543333 gc_count=253753 WAF=1.105 warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[300491.143904] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=14697313 gc_pages=1543333 gc_count=253753 WAF=1.105 warmup_gc=100-per-part
