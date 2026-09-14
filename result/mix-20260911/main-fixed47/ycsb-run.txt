@@ -1,0 +1,61 @@
+/usr/bin/java  -classpath /home/oy/YCSB/ycsb-0.17.0/conf:/home/oy/YCSB/ycsb-0.17.0/lib/core-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/conf:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-collections-3.2.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-lang-2.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-pool-1.5.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jms_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jta_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/jdbc-binding-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-jdbc-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-kernel-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-lib-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/serp-1.13.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/slf4j-api-1.7.36.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar site.ycsb.Client -t -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -p recordcount=4000000 -p operationcount=1000000 -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+Picked up JAVA_TOOL_OPTIONS: -Xshare:off
+Command line: -t -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -p recordcount=4000000 -p operationcount=1000000 -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Adding shard node URL: jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db
+2026-09-11 23:15:39:970 0 sec: 0 operations; est completion in 0 second 
+Using shards: 1, batchSize:1000, fetchSize: -1
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-11 23:15:49:874 10 sec: 150792 operations; 15079.2 current ops/sec; est completion in 57 seconds [READ: Count=75455, Max=11423, Min=4, Avg=63.25, 90=163, 99=245, 99.9=309, 99.99=369] [UPDATE: Count=75931, Max=19743, Min=3, Avg=62.39, 90=161, 99=242, 99.9=312, 99.99=388] 
+2026-09-11 23:15:59:873 20 sec: 252788 operations; 10199.6 current ops/sec; est completion in 1 minute [READ: Count=50917, Max=1043, Min=4, Avg=97.96, 90=179, 99=260, 99.9=337, 99.99=405] [UPDATE: Count=50486, Max=417, Min=3, Avg=95.6, 90=176, 99=255, 99.9=328, 99.99=385] 
+2026-09-11 23:16:09:873 30 sec: 359160 operations; 10637.2 current ops/sec; est completion in 54 seconds [READ: Count=53071, Max=528, Min=4, Avg=93.79, 90=175, 99=252, 99.9=333, 99.99=396] [UPDATE: Count=53304, Max=562, Min=3, Avg=92.07, 90=173, 99=248, 99.9=332, 99.99=405] 
+2026-09-11 23:16:19:873 40 sec: 454808 operations; 9564.8 current ops/sec; est completion in 48 seconds [READ: Count=47917, Max=25327, Min=4, Avg=103.99, 90=184, 99=262, 99.9=1829, 99.99=7559] [UPDATE: Count=47727, Max=66879, Min=3, Avg=102.46, 90=179, 99=257, 99.9=1946, 99.99=8295] 
+2026-09-11 23:16:29:873 50 sec: 528089 operations; 7328.1 current ops/sec; est completion in 45 seconds [READ: Count=36514, Max=123775, Min=4, Avg=128.37, 90=200, 99=299, 99.9=443, 99.99=33087] [UPDATE: Count=36768, Max=167167, Min=3, Avg=142.5, 90=200, 99=302, 99.9=443, 99.99=87615] 
+2026-09-11 23:16:39:873 60 sec: 624686 operations; 9659.7 current ops/sec; est completion in 37 seconds [READ: Count=48215, Max=969, Min=4, Avg=103.58, 90=184, 99=263, 99.9=359, 99.99=461] [UPDATE: Count=48386, Max=701, Min=3, Avg=101.23, 90=181, 99=259, 99.9=338, 99.99=450] 
+2026-09-11 23:16:49:873 70 sec: 725437 operations; 10075.1 current ops/sec; est completion in 27 seconds [READ: Count=50348, Max=690, Min=4, Avg=98.29, 90=179, 99=254, 99.9=317, 99.99=440] [UPDATE: Count=50405, Max=1840, Min=3, Avg=98.04, 90=178, 99=251, 99.9=326, 99.99=421] 
+2026-09-11 23:16:59:873 80 sec: 797071 operations; 7163.4 current ops/sec; est completion in 21 seconds [READ: Count=35854, Max=48831, Min=4, Avg=141.2, 90=205, 99=327, 99.9=2531, 99.99=29839] [UPDATE: Count=35779, Max=62815, Min=3, Avg=135.48, 90=199, 99=319, 99.9=1750, 99.99=34527] 
+2026-09-11 23:17:09:873 90 sec: 882369 operations; 8529.8 current ops/sec; est completion in 12 seconds [READ: Count=42627, Max=744, Min=4, Avg=117.93, 90=199, 99=272, 99.9=370, 99.99=484] [UPDATE: Count=42671, Max=654, Min=3, Avg=114.03, 90=194, 99=268, 99.9=357, 99.99=476] 
+2026-09-11 23:17:19:873 100 sec: 972094 operations; 8972.5 current ops/sec; est completion in 3 second [READ: Count=45124, Max=971, Min=4, Avg=112, 90=197, 99=278, 99.9=375, 99.99=510] [UPDATE: Count=44599, Max=681, Min=3, Avg=108.44, 90=192, 99=272, 99.9=393, 99.99=489] 
+2026-09-11 23:17:29:873 110 sec: 1000000 operations; 2790.6 current ops/sec; [READ: Count=14043, Max=285, Min=4, Avg=102.55, 90=193, 99=213, 99.9=248, 99.99=281] [UPDATE: Count=13859, Max=615, Min=3, Avg=97.67, 90=188, 99=208, 99.9=246, 99.99=282] 
+2026-09-11 23:17:39:873 120 sec: 1000000 operations; 0 current ops/sec; [READ: Count=0, Max=0, Min=9223372036854775807, Avg=NaN, 90=0, 99=0, 99.9=0, 99.99=0] [UPDATE: Count=0, Max=0, Min=9223372036854775807, Avg=NaN, 90=0, 99=0, 99.9=0, 99.99=0] 
+2026-09-11 23:17:45:085 125 sec: 1000000 operations; 0 current ops/sec; [READ: Count=0, Max=0, Min=9223372036854775807, Avg=NaN, 90=0, 99=0, 99.9=0, 99.99=0] [CLEANUP: Count=1, Max=22396927, Min=22380544, Avg=22388736, 90=22396927, 99=22396927, 99.9=22396927, 99.99=22396927] [UPDATE: Count=0, Max=0, Min=9223372036854775807, Avg=NaN, 90=0, 99=0, 99.9=0, 99.99=0] 
+[OVERALL], RunTime(ms), 125277
+[OVERALL], Throughput(ops/sec), 7982.31119838438
+[TOTAL_GCS_G1_Young_Generation], Count, 25
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 18
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.014368160157091883
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 25
+[TOTAL_GC_TIME], Time(ms), 18
+[TOTAL_GC_TIME_%], Time(%), 0.014368160157091883
+[READ], Operations, 500085
+[READ], AverageLatency(us), 101.85041542937701
+[READ], MinLatency(us), 4
+[READ], MaxLatency(us), 123775
+[READ], 95thPercentileLatency(us), 218
+[READ], 99thPercentileLatency(us), 267
+[READ], Return=OK, 500085
+[CLEANUP], Operations, 1
+[CLEANUP], AverageLatency(us), 2.2388736E7
+[CLEANUP], MinLatency(us), 22380544
+[CLEANUP], MaxLatency(us), 22396927
+[CLEANUP], 95thPercentileLatency(us), 22396927
+[CLEANUP], 99thPercentileLatency(us), 22396927
+[UPDATE], Operations, 499915
+[UPDATE], AverageLatency(us), 100.70481181800906
+[UPDATE], MinLatency(us), 3
+[UPDATE], MaxLatency(us), 167167
+[UPDATE], 95thPercentileLatency(us), 216
+[UPDATE], 99thPercentileLatency(us), 262
+[UPDATE], Return=OK, 499915

@@ -1,0 +1,110 @@
+[START] module=gh-cat37
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[ROCKSDB] DB directory: /home/oy/iCAT/mnt/ycsb-rocksdb
+[LOAD] /home/oy/iCAT/workloads/rocksdb/workloadsmoke
+/usr/bin/java  -classpath /home/oy/YCSB/ycsb-0.17.0/conf:/home/oy/YCSB/ycsb-0.17.0/lib/core-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/rocksdb-binding/lib/jcip-annotations-1.0.jar:/home/oy/YCSB/ycsb-0.17.0/rocksdb-binding/lib/rocksdb-binding-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/rocksdb-binding/lib/rocksdbjni-5.11.3.jar:/home/oy/YCSB/ycsb-0.17.0/rocksdb-binding/lib/slf4j-api-1.7.25.jar:/home/oy/YCSB/ycsb-0.17.0/rocksdb-binding/lib/slf4j-simple-1.7.25.jar site.ycsb.Client -load -db site.ycsb.db.rocksdb.RocksDBClient -s -P /home/oy/iCAT/workloads/rocksdb/workloadsmoke -threads 1 -p rocksdb.dir=/home/oy/iCAT/mnt/ycsb-rocksdb
+Picked up JAVA_TOOL_OPTIONS: -Xshare:off
+Command line: -load -db site.ycsb.db.rocksdb.RocksDBClient -s -P /home/oy/iCAT/workloads/rocksdb/workloadsmoke -threads 1 -p rocksdb.dir=/home/oy/iCAT/mnt/ycsb-rocksdb
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+[Thread-2] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /home/oy/iCAT/mnt/ycsb-rocksdb
+2026-09-14 13:52:00:763 0 sec: 0 operations; est completion in 0 second 
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-14 13:52:01:163 0 sec: 20000 operations; 43763.68 current ops/sec; [CLEANUP: Count=1, Max=3869, Min=3868, Avg=3869, 90=3869, 99=3869, 99.9=3869, 99.99=3869] [INSERT: Count=20000, Max=8415, Min=4, Avg=13.03, 90=20, 99=39, 99.9=104, 99.99=3093] 
+[OVERALL], RunTime(ms), 457
+[OVERALL], Throughput(ops/sec), 43763.6761487965
+[TOTAL_GCS_G1_Young_Generation], Count, 3
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 9
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 1.9693654266958425
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 3
+[TOTAL_GC_TIME], Time(ms), 9
+[TOTAL_GC_TIME_%], Time(%), 1.9693654266958425
+[CLEANUP], Operations, 1
+[CLEANUP], AverageLatency(us), 3869.0
+[CLEANUP], MinLatency(us), 3868
+[CLEANUP], MaxLatency(us), 3869
+[CLEANUP], 95thPercentileLatency(us), 3869
+[CLEANUP], 99thPercentileLatency(us), 3869
+[INSERT], Operations, 20000
+[INSERT], AverageLatency(us), 13.02525
+[INSERT], MinLatency(us), 4
+[INSERT], MaxLatency(us), 8415
+[INSERT], 95thPercentileLatency(us), 24
+[INSERT], 99thPercentileLatency(us), 39
+[INSERT], Return=OK, 20000
+[FLUSH] phase=load-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/rocksdb/workloadsmoke/summary.txt
+[DROP-CACHES] scope=run interval=4s pid=104116
+[RUN] /home/oy/iCAT/workloads/rocksdb/workloadsmoke
+/usr/bin/java  -classpath /home/oy/YCSB/ycsb-0.17.0/conf:/home/oy/YCSB/ycsb-0.17.0/lib/core-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/rocksdb-binding/lib/jcip-annotations-1.0.jar:/home/oy/YCSB/ycsb-0.17.0/rocksdb-binding/lib/rocksdb-binding-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/rocksdb-binding/lib/rocksdbjni-5.11.3.jar:/home/oy/YCSB/ycsb-0.17.0/rocksdb-binding/lib/slf4j-api-1.7.25.jar:/home/oy/YCSB/ycsb-0.17.0/rocksdb-binding/lib/slf4j-simple-1.7.25.jar site.ycsb.Client -t -db site.ycsb.db.rocksdb.RocksDBClient -s -P /home/oy/iCAT/workloads/rocksdb/workloadsmoke -threads 1 -p rocksdb.dir=/home/oy/iCAT/mnt/ycsb-rocksdb -p hdrhistogram.percentiles=95,99,99.9,99.99,99.999,99.9999
+Picked up JAVA_TOOL_OPTIONS: -Xshare:off
+Command line: -t -db site.ycsb.db.rocksdb.RocksDBClient -s -P /home/oy/iCAT/workloads/rocksdb/workloadsmoke -threads 1 -p rocksdb.dir=/home/oy/iCAT/mnt/ycsb-rocksdb -p hdrhistogram.percentiles=95,99,99.9,99.99,99.999,99.9999
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+[Thread-2] INFO site.ycsb.db.rocksdb.RocksDBClient - RocksDB data dir: /home/oy/iCAT/mnt/ycsb-rocksdb
+2026-09-14 13:52:07:061 0 sec: 0 operations; est completion in 0 second 
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-14 13:52:08:380 2 sec: 20000 operations; 7751.94 current ops/sec; [READ: Count=9899, Max=2469, Min=2, Avg=13.54, 90=22, 99=37, 99.9=68, 99.99=1685] [CLEANUP: Count=1, Max=72639, Min=72576, Avg=72608, 90=72639, 99=72639, 99.9=72639, 99.99=72639] [UPDATE: Count=10101, Max=676, Min=13, Avg=30.66, 90=43, 99=78, 99.9=191, 99.99=473] 
+[OVERALL], RunTime(ms), 2580
+[OVERALL], Throughput(ops/sec), 7751.937984496124
+[TOTAL_GCS_G1_Young_Generation], Count, 2
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 5
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.1937984496124031
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 2
+[TOTAL_GC_TIME], Time(ms), 5
+[TOTAL_GC_TIME_%], Time(%), 0.1937984496124031
+[READ], Operations, 9899
+[READ], AverageLatency(us), 13.544701484998484
+[READ], MinLatency(us), 2
+[READ], MaxLatency(us), 2469
+[READ], 95thPercentileLatency(us), 26
+[READ], 99thPercentileLatency(us), 37
+[READ], 99.9PercentileLatency(us), 68
+[READ], 99.99PercentileLatency(us), 1685
+[READ], 99.999PercentileLatency(us), 2469
+[READ], 99.9999PercentileLatency(us), 2469
+[READ], Return=OK, 9899
+[CLEANUP], Operations, 1
+[CLEANUP], AverageLatency(us), 72608.0
+[CLEANUP], MinLatency(us), 72576
+[CLEANUP], MaxLatency(us), 72639
+[CLEANUP], 95thPercentileLatency(us), 72639
+[CLEANUP], 99thPercentileLatency(us), 72639
+[CLEANUP], 99.9PercentileLatency(us), 72639
+[CLEANUP], 99.99PercentileLatency(us), 72639
+[CLEANUP], 99.999PercentileLatency(us), 72639
+[CLEANUP], 99.9999PercentileLatency(us), 72639
+[UPDATE], Operations, 10101
+[UPDATE], AverageLatency(us), 30.66191466191466
+[UPDATE], MinLatency(us), 13
+[UPDATE], MaxLatency(us), 676
+[UPDATE], 95thPercentileLatency(us), 51
+[UPDATE], 99thPercentileLatency(us), 78
+[UPDATE], 99.9PercentileLatency(us), 191
+[UPDATE], 99.99PercentileLatency(us), 473
+[UPDATE], 99.999PercentileLatency(us), 676
+[UPDATE], 99.9999PercentileLatency(us), 676
+[UPDATE], Return=OK, 10101
+[FLUSH] phase=run-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/rocksdb/workloadsmoke/summary.txt
+[RESULT] app=/home/oy/iCAT/result/rocksdb/workloadsmoke/gh-cat37.txt
+[RESULT] dmesg=/home/oy/iCAT/result/rocksdb/workloadsmoke/dmesg-gh-cat37.log
+[RESULT] summary=/home/oy/iCAT/result/rocksdb/workloadsmoke/summary.txt
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/rocksdb/workloadsmoke/summary.txt
+[WAF] module=gh-cat37 WAF=N/A host_pages=0 gc_copied=N/A -> /home/oy/iCAT/result/rocksdb/workloadsmoke/summary.txt

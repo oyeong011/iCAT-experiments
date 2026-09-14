@@ -1,0 +1,65 @@
+/usr/bin/java  -classpath /home/oy/YCSB/ycsb-0.17.0/conf:/home/oy/YCSB/ycsb-0.17.0/lib/core-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/conf:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-collections-3.2.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-lang-2.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-pool-1.5.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jms_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jta_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/jdbc-binding-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-jdbc-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-kernel-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-lib-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/serp-1.13.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/slf4j-api-1.7.36.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar site.ycsb.Client -load -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -p recordcount=4000000 -p operationcount=10000000 -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+Picked up JAVA_TOOL_OPTIONS: -Xshare:off
+Command line: -load -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -p recordcount=4000000 -p operationcount=10000000 -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Adding shard node URL: jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db
+2026-09-12 13:16:51:044 0 sec: 0 operations; est completion in 0 second 
+Using shards: 1, batchSize:1000, fetchSize: -1
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-12 13:17:00:888 10 sec: 239692 operations; 23969.2 current ops/sec; est completion in 2 minutes [INSERT: Count=239719, Max=25439, Min=8, Avg=38.69, 90=36, 99=61, 99.9=3151, 99.99=22783] 
+2026-09-12 13:17:10:888 20 sec: 429580 operations; 18988.8 current ops/sec; est completion in 2 minutes [INSERT: Count=189866, Max=28559, Min=9, Avg=51.27, 90=40, 99=68, 99.9=1471, 99.99=27055] 
+2026-09-12 13:17:20:888 30 sec: 606619 operations; 17703.9 current ops/sec; est completion in 2 minutes [INSERT: Count=177042, Max=29375, Min=8, Avg=55.06, 90=43, 99=71, 99.9=1107, 99.99=27951] 
+2026-09-12 13:17:30:888 40 sec: 809999 operations; 20338 current ops/sec; est completion in 2 minutes [INSERT: Count=203372, Max=31455, Min=9, Avg=47.86, 90=37, 99=62, 99.9=1502, 99.99=28079] 
+2026-09-12 13:17:40:888 50 sec: 978922 operations; 16892.3 current ops/sec; est completion in 2 minutes [INSERT: Count=168932, Max=36895, Min=9, Avg=57.9, 90=43, 99=70, 99.9=1131, 99.99=33567] 
+2026-09-12 13:17:50:888 60 sec: 1157999 operations; 17907.7 current ops/sec; est completion in 2 minutes [INSERT: Count=179068, Max=42367, Min=9, Avg=54.53, 90=38, 99=64, 99.9=1084, 99.99=35103] 
+2026-09-12 13:18:00:888 70 sec: 1353338 operations; 19533.9 current ops/sec; est completion in 2 minutes [INSERT: Count=195350, Max=31711, Min=9, Avg=50.06, 90=38, 99=63, 99.9=22943, 99.99=30175] 
+2026-09-12 13:18:10:888 80 sec: 1528999 operations; 17566.1 current ops/sec; est completion in 2 minutes [INSERT: Count=175650, Max=44735, Min=9, Avg=55.64, 90=40, 99=66, 99.9=980, 99.99=35263] 
+2026-09-12 13:18:20:888 90 sec: 1699999 operations; 17100 current ops/sec; est completion in 2 minutes [INSERT: Count=171000, Max=42463, Min=9, Avg=57.13, 90=39, 99=64, 99.9=956, 99.99=36831] 
+2026-09-12 13:18:30:888 100 sec: 1864249 operations; 16425 current ops/sec; est completion in 1 minute [INSERT: Count=164259, Max=37407, Min=9, Avg=59.72, 90=41, 99=68, 99.9=26095, 99.99=35519] 
+2026-09-12 13:18:40:888 110 sec: 2034999 operations; 17075 current ops/sec; est completion in 1 minute [INSERT: Count=170741, Max=39359, Min=9, Avg=57.2, 90=40, 99=67, 99.9=1085, 99.99=35487] 
+2026-09-12 13:18:50:888 120 sec: 2203999 operations; 16900 current ops/sec; est completion in 1 minute [INSERT: Count=169000, Max=36927, Min=9, Avg=57.95, 90=40, 99=67, 99.9=872, 99.99=35551] 
+2026-09-12 13:19:00:888 130 sec: 2367999 operations; 16400 current ops/sec; est completion in 1 minute [INSERT: Count=164000, Max=43519, Min=9, Avg=59.72, 90=41, 99=69, 99.9=1026, 99.99=36735] 
+2026-09-12 13:19:10:888 140 sec: 2530999 operations; 16300 current ops/sec; est completion in 1 minute [INSERT: Count=163000, Max=47519, Min=9, Avg=59.99, 90=39, 99=66, 99.9=1140, 99.99=39487] 
+2026-09-12 13:19:20:888 150 sec: 2692999 operations; 16200 current ops/sec; est completion in 1 minute [INSERT: Count=162000, Max=46015, Min=9, Avg=60.6, 90=38, 99=63, 99.9=1136, 99.99=41215] 
+2026-09-12 13:19:30:888 160 sec: 2840999 operations; 14800 current ops/sec; est completion in 1 minute [INSERT: Count=148000, Max=44895, Min=9, Avg=66.13, 90=42, 99=69, 99.9=1148, 99.99=42335] 
+2026-09-12 13:19:40:888 170 sec: 2998999 operations; 15800 current ops/sec; est completion in 57 seconds [INSERT: Count=158000, Max=46463, Min=9, Avg=62.14, 90=39, 99=65, 99.9=1165, 99.99=40543] 
+2026-09-12 13:19:50:888 180 sec: 3142999 operations; 14400 current ops/sec; est completion in 50 seconds [INSERT: Count=144000, Max=46847, Min=9, Avg=68.16, 90=44, 99=71, 99.9=959, 99.99=42079] 
+2026-09-12 13:20:00:888 190 sec: 3301999 operations; 15900 current ops/sec; est completion in 41 seconds [INSERT: Count=159000, Max=45599, Min=9, Avg=61.56, 90=39, 99=63, 99.9=1110, 99.99=42111] 
+2026-09-12 13:20:10:888 200 sec: 3458540 operations; 15654.1 current ops/sec; est completion in 32 seconds [INSERT: Count=156550, Max=44127, Min=9, Avg=62.82, 90=40, 99=68, 99.9=1017, 99.99=40255] 
+2026-09-12 13:20:20:888 210 sec: 3618522 operations; 15998.2 current ops/sec; est completion in 23 seconds [INSERT: Count=159982, Max=44447, Min=9, Avg=61.32, 90=39, 99=64, 99.9=1011, 99.99=40511] 
+2026-09-12 13:20:30:888 220 sec: 3782999 operations; 16447.7 current ops/sec; est completion in 13 seconds [INSERT: Count=164468, Max=43007, Min=9, Avg=59.43, 90=37, 99=61, 99.9=2046, 99.99=39487] 
+2026-09-12 13:20:40:888 230 sec: 3934999 operations; 15200 current ops/sec; est completion in 4 second [INSERT: Count=152000, Max=44671, Min=9, Avg=64.53, 90=41, 99=70, 99.9=1098, 99.99=40703] 
+2026-09-12 13:20:44:748 233 sec: 4000000 operations; 16839.64 current ops/sec; [CLEANUP: Count=1, Max=1405, Min=1405, Avg=1405, 90=1405, 99=1405, 99.9=1405, 99.99=1405] [INSERT: Count=65001, Max=43423, Min=9, Avg=58.64, 90=35, 99=58, 99.9=31215, 99.99=37791] 
+[OVERALL], RunTime(ms), 233860
+[OVERALL], Throughput(ops/sec), 17104.250406225947
+[TOTAL_GCS_G1_Young_Generation], Count, 580
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 334
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.14282049089198667
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 580
+[TOTAL_GC_TIME], Time(ms), 334
+[TOTAL_GC_TIME_%], Time(%), 0.14282049089198667
+[CLEANUP], Operations, 1
+[CLEANUP], AverageLatency(us), 1405.0
+[CLEANUP], MinLatency(us), 1405
+[CLEANUP], MaxLatency(us), 1405
+[CLEANUP], 95thPercentileLatency(us), 1405
+[CLEANUP], 99thPercentileLatency(us), 1405
+[INSERT], Operations, 4000000
+[INSERT], AverageLatency(us), 57.09145125
+[INSERT], MinLatency(us), 8
+[INSERT], MaxLatency(us), 47519
+[INSERT], 95thPercentileLatency(us), 46
+[INSERT], 99thPercentileLatency(us), 66
+[INSERT], Return=OK, 4000000

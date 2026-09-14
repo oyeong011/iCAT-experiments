@@ -1,0 +1,73 @@
+[272530.413638] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[272530.413649] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[272530.425801] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[272530.438909] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[272530.449831] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[272530.449849] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[272530.450744] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[272530.450813] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[272530.450815] NVMeVirt: GC victim policy: cat-fig7 scale_pct=200 age_ratio=7
+[272530.460706] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[272530.470607] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[272530.470622] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[272530.471530] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[272530.471534] NVMeVirt: GC victim policy: cat-fig7 scale_pct=200 age_ratio=7
+[272530.481611] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[272530.491422] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[272530.491436] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[272530.492381] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[272530.492383] NVMeVirt: GC victim policy: cat-fig7 scale_pct=200 age_ratio=7
+[272530.502156] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[272530.511924] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[272530.511940] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[272530.512899] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[272530.512902] NVMeVirt: GC victim policy: cat-fig7 scale_pct=200 age_ratio=7
+[272530.512908] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[272530.512909] NVMeVirt: ns 0/1: size 7655 MiB
+[272530.512960] PCI host bridge to bus 0001:10
+[272530.512963] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[272530.512967] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[272530.512969] pci_bus 0001:10: root bus resource [bus 00-ff]
+[272530.512978] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[272530.512983] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[272530.512986] pci 0001:10:00.0: enabling Extended Tags
+[272530.513126] NVMeVirt: Virtual PCI bus created (node 0)
+[272530.513350] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[272530.513371] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[272530.513407] NVMeVirt: Virtual NVMe device created
+[272530.514017] nvme nvme0: pci function 0001:10:00.0
+[272530.516124] nvme nvme0: 8/0/0 default/read/poll queues
+[272530.599148] EXT4-fs (nvme0n1): mounted filesystem d8ff1c9d-c1a6-4d21-9a8d-99397227e5a8 r/w with ordered data mode. Quota mode: none.
+[272607.582675] NVMeVirt: GC window: seq=0 host_pages=262144 gc_pages=30 WAF=1.000 cum_host=262144 cum_gc=30
+[272633.796611] NVMeVirt: GC window: seq=1 host_pages=262144 gc_pages=57962 WAF=1.221 cum_host=524288 cum_gc=57992
+[272660.010292] NVMeVirt: GC window: seq=2 host_pages=262144 gc_pages=75435 WAF=1.287 cum_host=786432 cum_gc=133427
+[272686.224229] NVMeVirt: GC window: seq=3 host_pages=262144 gc_pages=77522 WAF=1.295 cum_host=1048576 cum_gc=210949
+[272712.438166] NVMeVirt: GC window: seq=4 host_pages=262144 gc_pages=131687 WAF=1.502 cum_host=1310720 cum_gc=342636
+[272738.652167] NVMeVirt: GC window: seq=5 host_pages=262144 gc_pages=187487 WAF=1.715 cum_host=1572864 cum_gc=530123
+[272764.865786] NVMeVirt: GC window: seq=6 host_pages=262144 gc_pages=238014 WAF=1.907 cum_host=1835008 cum_gc=768137
+[272791.079750] NVMeVirt: GC window: seq=7 host_pages=262144 gc_pages=246854 WAF=1.941 cum_host=2097152 cum_gc=1014991
+[272817.293775] NVMeVirt: GC window: seq=8 host_pages=262144 gc_pages=195021 WAF=1.743 cum_host=2359296 cum_gc=1210012
+[272843.507711] NVMeVirt: GC window: seq=9 host_pages=262144 gc_pages=141101 WAF=1.538 cum_host=2621440 cum_gc=1351113
+[272869.721397] NVMeVirt: GC window: seq=10 host_pages=262144 gc_pages=147653 WAF=1.563 cum_host=2883584 cum_gc=1498766
+[272895.935328] NVMeVirt: GC window: seq=11 host_pages=262144 gc_pages=174979 WAF=1.667 cum_host=3145728 cum_gc=1673745
+[272922.149267] NVMeVirt: GC window: seq=12 host_pages=262144 gc_pages=169853 WAF=1.647 cum_host=3407872 cum_gc=1843598
+[272948.363201] NVMeVirt: GC window: seq=13 host_pages=262144 gc_pages=144838 WAF=1.552 cum_host=3670016 cum_gc=1988436
+[272974.576889] NVMeVirt: GC window: seq=14 host_pages=262144 gc_pages=118872 WAF=1.453 cum_host=3932160 cum_gc=2107308
+[273000.790821] NVMeVirt: GC window: seq=15 host_pages=262144 gc_pages=135848 WAF=1.518 cum_host=4194304 cum_gc=2243156
+[273027.004762] NVMeVirt: GC window: seq=16 host_pages=262144 gc_pages=152962 WAF=1.583 cum_host=4456448 cum_gc=2396118
+[273053.218821] NVMeVirt: GC window: seq=17 host_pages=262144 gc_pages=143537 WAF=1.547 cum_host=4718592 cum_gc=2539655
+[273079.432393] NVMeVirt: GC window: seq=18 host_pages=262144 gc_pages=118224 WAF=1.450 cum_host=4980736 cum_gc=2657879
+[273105.646435] NVMeVirt: GC window: seq=19 host_pages=262144 gc_pages=97660 WAF=1.372 cum_host=5242880 cum_gc=2755539
+[273131.860453] NVMeVirt: GC window: seq=20 host_pages=262144 gc_pages=114790 WAF=1.437 cum_host=5505024 cum_gc=2870329
+[273134.009726] EXT4-fs (nvme0n1): unmounting filesystem d8ff1c9d-c1a6-4d21-9a8d-99397227e5a8.
+[273134.097604] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[273134.097746] NVMeVirt: GC stats: policy=cat-fig7 age_mode=create host_pages=5526016 gc_pages=2876978 gc_count=131287 WAF=1.520 scale_pct=200 age_ratio=7
+[273134.097752] NVMeVirt: GC victim hist: level=0 count=0
+[273134.097753] NVMeVirt: GC victim hist: level=1 count=0
+[273134.097755] NVMeVirt: GC victim hist: level=2 count=39198
+[273134.097756] NVMeVirt: GC victim hist: level=3 count=52153
+[273134.097757] NVMeVirt: GC victim hist: level=4 count=9818
+[273134.097759] NVMeVirt: GC victim hist: level=5 count=28174
+[273134.097760] NVMeVirt: GC victim hist: level=6 count=1948
+[273134.097761] NVMeVirt: GC victim mean: victims=131291 vpc=21.91 age_ms=101946
+[273134.159758] NVMeVirt: Virtual NVMe device closed

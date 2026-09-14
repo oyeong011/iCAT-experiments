@@ -1,0 +1,70 @@
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+preset: (g=0): rw=write, bs=(R) 128KiB-128KiB, (W) 128KiB-128KiB, (T) 128KiB-128KiB, ioengine=libaio, iodepth=32
+fio-3.36
+Starting 1 process
+preset: Laying out IO file (1 file / 6144MiB)
+
+preset: (groupid=0, jobs=1): err= 0: pid=256699: Sun Sep  6 23:26:15 2026
+  write: IOPS=17.8k, BW=2231MiB/s (2339MB/s)(6144MiB/2754msec); 0 zone resets
+    slat (usec): min=6, max=133, avg= 9.19, stdev= 2.86
+    clat (usec): min=79, max=6963, avg=1781.63, stdev=251.41
+     lat (usec): min=90, max=6975, avg=1790.81, stdev=251.21
+    clat percentiles (usec):
+     |  1.00th=[  775],  5.00th=[ 1745], 10.00th=[ 1762], 20.00th=[ 1778],
+     | 30.00th=[ 1778], 40.00th=[ 1778], 50.00th=[ 1778], 60.00th=[ 1778],
+     | 70.00th=[ 1778], 80.00th=[ 1795], 90.00th=[ 1795], 95.00th=[ 1811],
+     | 99.00th=[ 2540], 99.50th=[ 3130], 99.90th=[ 4817], 99.95th=[ 5407],
+     | 99.99th=[ 6390]
+   bw (  MiB/s): min= 2229, max= 2242, per=100.00%, avg=2233.80, stdev= 5.05, samples=5
+   iops        : min=17836, max=17936, avg=17870.40, stdev=40.43, samples=5
+  lat (usec)   : 100=0.02%, 250=0.21%, 500=0.38%, 750=0.37%, 1000=0.33%
+  lat (msec)   : 2=97.02%, 4=1.41%, 10=0.27%
+  cpu          : usr=7.34%, sys=14.97%, ctx=47827, majf=0, minf=13
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=99.9%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.1%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,49152,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+  WRITE: bw=2231MiB/s (2339MB/s), 2231MiB/s-2231MiB/s (2339MB/s-2339MB/s), io=6144MiB (6442MB), run=2754-2754msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/47159, sectors=0/12076776, merge=0/0, ticks=0/86796, in_queue=86795, util=96.28%
+hot: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+warm: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+cold: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+fio-3.36
+Starting 3 processes
+
+hot: (groupid=0, jobs=3): err= 0: pid=256711: Sun Sep  6 23:36:15 2026
+  write: IOPS=9999, BW=39.1MiB/s (41.0MB/s)(22.9GiB/600001msec); 0 zone resets
+    slat (usec): min=2, max=613, avg= 4.67, stdev= 1.90
+    clat (nsec): min=1191, max=2136.8k, avg=15951.66, stdev=17669.68
+     lat (usec): min=10, max=2158, avg=20.62, stdev=17.82
+    clat percentiles (usec):
+     |  1.00th=[   10],  5.00th=[   10], 10.00th=[   10], 20.00th=[   11],
+     | 30.00th=[   11], 40.00th=[   11], 50.00th=[   12], 60.00th=[   12],
+     | 70.00th=[   13], 80.00th=[   15], 90.00th=[   17], 95.00th=[   44],
+     | 99.00th=[  109], 99.50th=[  123], 99.90th=[  147], 99.95th=[  159],
+     | 99.99th=[  186]
+   bw (  KiB/s): min=39992, max=40032, per=100.00%, avg=40011.61, stdev= 3.48, samples=3597
+   iops        : min= 9998, max=10008, avg=10002.90, stdev= 0.87, samples=3597
+  lat (usec)   : 2=0.01%, 4=0.01%, 10=16.11%, 20=74.95%, 50=4.90%
+  lat (usec)   : 100=2.68%, 250=1.34%, 500=0.01%, 750=0.01%, 1000=0.01%
+  lat (msec)   : 2=0.01%, 4=0.01%
+  cpu          : usr=3.19%, sys=3.13%, ctx=11947918, majf=0, minf=44
+  IO depths    : 1=100.0%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,6000000,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+  WRITE: bw=39.1MiB/s (41.0MB/s), 39.1MiB/s-39.1MiB/s (41.0MB/s-41.0MB/s), io=22.9GiB (24.6GB), run=600001-600001msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/5999696, sectors=0/48224272, merge=0/170, ticks=0/74815, in_queue=74815, util=11.77%
+[RESULT] /home/oy/iCAT/result/test3-sweep-20260906-a25-r16-rep1-20260906-232612-256610.log

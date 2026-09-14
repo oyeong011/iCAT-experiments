@@ -1,0 +1,18 @@
+make  all-recursive
+make[1]: Entering directory '/home/oy/iCAT/tools/filebench-local'
+Making all in workloads
+make[2]: Entering directory '/home/oy/iCAT/tools/filebench-local/workloads'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/oy/iCAT/tools/filebench-local/workloads'
+Making all in cvars
+make[2]: Entering directory '/home/oy/iCAT/tools/filebench-local/cvars'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/oy/iCAT/tools/filebench-local/cvars'
+make[2]: Entering directory '/home/oy/iCAT/tools/filebench-local'
+depbase=`echo fileset.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`;\
+gcc -D_REENTRANT -DYYDEBUG -DYY_NO_INPUT -DFBDATADIR=\"/home/oy/iCAT/tools/filebench-local/install/share/filebench\" -D_LARGEFILE64_SOURCE -D_GNU_SOURCE -I. -I./filebench-1.5-alpha3    -Wall -Wno-unknown-pragmas -g -O2 -MT fileset.o -MD -MP -MF $depbase.Tpo -c -o fileset.o ./filebench-1.5-alpha3/fileset.c &&\
+mv -f $depbase.Tpo $depbase.Po
+/bin/bash ./libtool  --tag=CC   --mode=link gcc -Wall -Wno-unknown-pragmas -g -O2   -o filebench eventgen.o fb_avl.o fb_localfs.o fb_random.o fileset.o flowop.o flowop_library.o gamma_dist.o ipc.o misc.o multi_client_sync.o parser_gram.o parser_lex.o procflow.o stats.o threadflow.o utils.o vars.o ioprio.o fbtime.o fb_cvar.o aslr.o cvars/mtwist/mtwist.o  -ldl -lpthread -lm -lrt 
+libtool: link: gcc -Wall -Wno-unknown-pragmas -g -O2 -o filebench eventgen.o fb_avl.o fb_localfs.o fb_random.o fileset.o flowop.o flowop_library.o gamma_dist.o ipc.o misc.o multi_client_sync.o parser_gram.o parser_lex.o procflow.o stats.o threadflow.o utils.o vars.o ioprio.o fbtime.o fb_cvar.o aslr.o cvars/mtwist/mtwist.o  -ldl -lpthread -lm -lrt
+make[2]: Leaving directory '/home/oy/iCAT/tools/filebench-local'
+make[1]: Leaving directory '/home/oy/iCAT/tools/filebench-local'

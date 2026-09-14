@@ -1,0 +1,1525 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+#include <linux/vmalloc.h>
+#include <linux/ktime.h>
+#include <linux/math64.h>
+#include <linux/sched/clock.h>
+#include <linux/time64.h>
+#include <linux/module.h>
+#include <linux/mutex.h>
+#include <linux/proc_fs.h>
+#include <linux/uaccess.h>
+#include <linux/user_namespace.h>
+
+#include "nvmev.h"
+#include "conv_ftl.h"
+
+/*
+ * Instrumentation shared by every policy.  Both counters are global so that a
+ * WAF observation window spans all SSD_PARTITIONS instances at once.
+ */
+#define CONV_AGE_NR_LEVELS 7
+
+static const uint64_t conv_age_report_bound_ns[CONV_AGE_NR_LEVELS - 1] = {
+	10ULL * NSEC_PER_SEC,  20ULL * NSEC_PER_SEC,  45ULL * NSEC_PER_SEC,
+	90ULL * NSEC_PER_SEC, 180ULL * NSEC_PER_SEC, 360ULL * NSEC_PER_SEC,
+};
+
+static atomic64_t conv_total_host_pages = ATOMIC64_INIT(0);
+static atomic64_t conv_total_gc_pages = ATOMIC64_INIT(0);
+static atomic64_t conv_victim_age_hist[CONV_AGE_NR_LEVELS];
+static atomic64_t conv_victim_vpc_sum = ATOMIC64_INIT(0);
+static atomic64_t conv_victim_age_sum_ms = ATOMIC64_INIT(0);
+static atomic64_t conv_victim_count = ATOMIC64_INIT(0);
+static uint64_t conv_window_prev_gc_pages;
+static uint64_t conv_window_seq;
+
+static bool measurement_manual;
+module_param(measurement_manual, bool, 0444);
+MODULE_PARM_DESC(measurement_manual, "Enable explicit command-boundary WAF measurement");
+static unsigned int measurement_uid;
+module_param(measurement_uid, uint, 0444);
+MODULE_PARM_DESC(measurement_uid, "Owner UID for the manual measurement control (default root)");
+static DEFINE_MUTEX(conv_measure_lock);
+static struct proc_dir_entry *conv_measure_proc;
+static bool conv_measure_active;
+static uint64_t conv_measure_epoch;
+static uint64_t conv_measure_host_bytes;
+
+static ssize_t conv_measure_read(struct file *file, char __user *buf, size_t count,
+				loff_t *offset)
+{
+	struct nvmev_ns *ns = pde_data(file_inode(file));
+	struct conv_ftl *ftls = ns->ftls;
+	char text[1024];
+	size_t len;
+	uint32_t i;
+
+	mutex_lock(&conv_measure_lock);
+	len = scnprintf(text, sizeof(text),
+		"epoch=%llu active=%u host_bytes=%llu host_pages=%lld gc_pages=%lld\n",
+		conv_measure_epoch, conv_measure_active, conv_measure_host_bytes,
+		atomic64_read(&conv_total_host_pages), atomic64_read(&conv_total_gc_pages));
+	for (i = 0; i < ns->nr_parts; i++)
+		len += scnprintf(text + len, sizeof(text) - len,
+			"part=%u host_pages=%llu gc_pages=%llu gc_count=%llu\n", i,
+			ftls[i].stats.host_page_writes, ftls[i].stats.gc_page_writes,
+			ftls[i].stats.gc_count);
+	mutex_unlock(&conv_measure_lock);
+	return simple_read_from_buffer(buf, count, offset, text, len);
+}
+
+static ssize_t conv_measure_write(struct file *file, const char __user *buf,
+				 size_t count, loff_t *offset)
+{
+	struct nvmev_ns *ns = pde_data(file_inode(file));
+	struct conv_ftl *ftls = ns->ftls;
+	char command[16];
+	char *value;
+	ssize_t result = count;
+	uint32_t i;
+
+	if (!count || count >= sizeof(command))
+		return -EINVAL;
+	if (copy_from_user(command, buf, count))
+		return -EFAULT;
+	command[count] = '\0';
+	if (memchr(command, '\0', count))
+		return -EINVAL;
+	value = strim(command);
+	mutex_lock(&conv_measure_lock);
+	if (!strcmp(value, "start")) {
+		if (conv_measure_active) {
+			result = -EBUSY;
+			goto out;
+		}
+		for (i = 0; i < ns->nr_parts; i++)
+			ftls[i].stats = (struct conv_gc_stats){ .measurement_started = true };
+		atomic64_set(&conv_total_host_pages, 0);
+		atomic64_set(&conv_total_gc_pages, 0);
+		for (i = 0; i < CONV_AGE_NR_LEVELS; i++)
+			atomic64_set(&conv_victim_age_hist[i], 0);
+		atomic64_set(&conv_victim_vpc_sum, 0);
+		atomic64_set(&conv_victim_age_sum_ms, 0);
+		atomic64_set(&conv_victim_count, 0);
+		conv_window_prev_gc_pages = 0;
+		conv_window_seq = 0;
+		conv_measure_host_bytes = 0;
+		conv_measure_epoch++;
+		conv_measure_active = true;
+	} else if (!strcmp(value, "stop")) {
+		if (!conv_measure_active) {
+			result = -EINVAL;
+			goto out;
+		}
+		for (i = 0; i < ns->nr_parts; i++)
+			ftls[i].stats.measurement_started = false;
+		conv_measure_active = false;
+	} else {
+		result = -EINVAL;
+		goto out;
+	}
+	NVMEV_INFO("Measurement: command=%s epoch=%llu host_bytes=%llu host_pages=%lld gc_pages=%lld\n",
+		value, conv_measure_epoch, conv_measure_host_bytes,
+		atomic64_read(&conv_total_host_pages), atomic64_read(&conv_total_gc_pages));
+out:
+	mutex_unlock(&conv_measure_lock);
+	return result;
+}
+
+static const struct proc_ops conv_measure_ops = {
+	.proc_read = conv_measure_read,
+	.proc_write = conv_measure_write,
+	.proc_lseek = default_llseek,
+};
+
+static const char *conv_age_mode_name(void)
+{
+#if CONV_AGE_MODE == CONV_AGE_MODE_CREATE
+	return "create";
+#else
+	return "last-inval";
+#endif
+}
+
+/* Raw age of a line, following the configured age definition. */
+static uint64_t conv_line_raw_age_ns(const struct line *line, uint64_t now_ns)
+{
+#if CONV_AGE_MODE == CONV_AGE_MODE_CREATE
+	uint64_t base = line->created_at_ns;
+#else
+	uint64_t base = line->last_invalid_ns ? line->last_invalid_ns : line->created_at_ns;
+#endif
+
+	if (!base || now_ns < base)
+		return 0;
+	return now_ns - base;
+}
+
+/* Records the selected victim so that experiment 5 can explain the choice. */
+static void conv_record_victim(const struct line *line, uint64_t now_ns)
+{
+	uint64_t age_ns = conv_line_raw_age_ns(line, now_ns);
+	size_t i;
+
+	if (measurement_manual && !conv_measure_active)
+		return;
+
+	for (i = 0; i < CONV_AGE_NR_LEVELS - 1; i++) {
+		if (age_ns < conv_age_report_bound_ns[i])
+			break;
+	}
+
+	atomic64_inc(&conv_victim_age_hist[i]);
+	atomic64_add(line->vpc, &conv_victim_vpc_sum);
+	atomic64_add(div64_u64(age_ns, NSEC_PER_MSEC), &conv_victim_age_sum_ms);
+	atomic64_inc(&conv_victim_count);
+}
+
+/*
+ * Emits one WAF sample per CONV_WAF_WINDOW_PAGES host pages.  The window is a
+ * power of two so that the boundary test stays a mask instead of a 64-bit
+ * division on the write path.
+ */
+static void conv_account_host_page(void)
+{
+	uint64_t host_pages = atomic64_inc_return(&conv_total_host_pages);
+	uint64_t gc_pages, win_gc, waf_milli;
+
+	if (!CONV_WAF_WINDOW_PAGES)
+		return;
+	static_assert((CONV_WAF_WINDOW_PAGES & (CONV_WAF_WINDOW_PAGES - 1)) == 0,
+		      "CONV_WAF_WINDOW_PAGES must be a power of two");
+	if (host_pages & (CONV_WAF_WINDOW_PAGES - 1))
+		return;
+
+	gc_pages = atomic64_read(&conv_total_gc_pages);
+	win_gc = gc_pages - conv_window_prev_gc_pages;
+	conv_window_prev_gc_pages = gc_pages;
+	waf_milli = div64_u64((CONV_WAF_WINDOW_PAGES + win_gc) * 1000ULL,
+			      CONV_WAF_WINDOW_PAGES);
+
+	NVMEV_INFO("GC window: seq=%llu host_pages=%u gc_pages=%llu WAF=%llu.%03llu "
+		   "cum_host=%llu cum_gc=%llu\n",
+		   conv_window_seq++, (uint32_t)CONV_WAF_WINDOW_PAGES, win_gc,
+		   waf_milli / 1000, waf_milli % 1000, host_pages, gc_pages);
+}
+
+#if CONV_GC_POLICY == CONV_GC_POLICY_CAT_FIG7
+#ifndef CAT_FIG7_SCALE_PCT
+#define CAT_FIG7_SCALE_PCT 100
+#endif
+
+#ifndef CAT_FIG7_AGE_RATIO
+#define CAT_FIG7_AGE_RATIO 7
+#endif
+
+#if CAT_FIG7_SCALE_PCT != 5 && CAT_FIG7_SCALE_PCT != 10 && \
+	CAT_FIG7_SCALE_PCT != 25 && CAT_FIG7_SCALE_PCT != 50 && \
+	CAT_FIG7_SCALE_PCT != 100 && CAT_FIG7_SCALE_PCT != 200 && \
+	CAT_FIG7_SCALE_PCT != 400
+#error "CAT_FIG7_SCALE_PCT must be 5, 10, 25, 50, 100, 200, or 400"
+#endif
+
+#if CAT_FIG7_AGE_RATIO != 4 && CAT_FIG7_AGE_RATIO != 7 && \
+	CAT_FIG7_AGE_RATIO != 16
+#error "CAT_FIG7_AGE_RATIO must be 4, 7, or 16"
+#endif
+
+#define CAT_FIG7_SCALED_NS(seconds) \
+	((uint64_t)(seconds) * NSEC_PER_SEC * CAT_FIG7_SCALE_PCT / 100ULL)
+
+/*
+ * Keep the seven outputs linear and change only max/min age influence.
+ * The factor 6 provides exact integer steps for ratios 4, 7, and 16.
+ * For ratio 7, {6,12,...,42} is order-equivalent to Fig. 7's {1,...,7}.
+ */
+#define CAT_FIG7_AGE_VALUE(level) \
+	(6U + (CAT_FIG7_AGE_RATIO - 1U) * (level))
+
+/* Fig. 7: raw segment age (seconds) -> normalized age level. */
+static const uint64_t cat_fig7_age_threshold_ns[] = {
+	CAT_FIG7_SCALED_NS(10),
+	CAT_FIG7_SCALED_NS(20),
+	CAT_FIG7_SCALED_NS(45),
+	CAT_FIG7_SCALED_NS(90),
+	CAT_FIG7_SCALED_NS(180),
+	CAT_FIG7_SCALED_NS(360),
+};
+
+static const uint32_t cat_fig7_age_value[] = {
+	CAT_FIG7_AGE_VALUE(0),
+	CAT_FIG7_AGE_VALUE(1),
+	CAT_FIG7_AGE_VALUE(2),
+	CAT_FIG7_AGE_VALUE(3),
+	CAT_FIG7_AGE_VALUE(4),
+	CAT_FIG7_AGE_VALUE(5),
+	CAT_FIG7_AGE_VALUE(6),
+};
+
+static uint32_t cat_fig7_transform_age(const struct line *line, uint64_t now_ns)
+{
+	uint64_t age_ns = conv_line_raw_age_ns(line, now_ns);
+	size_t i;
+
+	for (i = 0; i < ARRAY_SIZE(cat_fig7_age_threshold_ns); i++) {
+		if (age_ns < cat_fig7_age_threshold_ns[i])
+			return cat_fig7_age_value[i];
+	}
+
+	return cat_fig7_age_value[ARRAY_SIZE(cat_fig7_age_value) - 1];
+}
+
+/*
+ * Erase count is intentionally excluded.  With u = vpc / pages_per_line,
+ * the requested CAT-Fig.7 score is
+ *
+ *                  u                 vpc
+ *     score = ----------- / age = ----------- .
+ *                1 - u             ipc * age
+ *
+ * Lower is better.  Cross multiplication avoids floating point in the
+ * kernel and preserves the exact ordering of the two rational scores.
+ */
+static bool cat_fig7_line_is_better(const struct line *candidate,
+				    const struct line *best_line, uint64_t now_ns)
+{
+	uint64_t candidate_age = cat_fig7_transform_age(candidate, now_ns);
+	uint64_t best_age = cat_fig7_transform_age(best_line, now_ns);
+	uint64_t candidate_side;
+	uint64_t best_side;
+
+	NVMEV_ASSERT(candidate->ipc > 0);
+	NVMEV_ASSERT(best_line->ipc > 0);
+
+	candidate_side = (uint64_t)candidate->vpc * best_line->ipc * best_age;
+	best_side = (uint64_t)best_line->vpc * candidate->ipc * candidate_age;
+
+	if (candidate_side != best_side)
+		return candidate_side < best_side;
+
+	/* Deterministic tie-breaker; it adds no extra policy input. */
+	return candidate->id < best_line->id;
+}
+#endif
+
+/* Victim age/vpc distribution, dumped once at module removal. */
+static void conv_report_victim_stats(void)
+{
+	uint64_t victims = atomic64_read(&conv_victim_count);
+	uint64_t vpc_sum = atomic64_read(&conv_victim_vpc_sum);
+	size_t i;
+
+	if (!victims)
+		return;
+
+	for (i = 0; i < CONV_AGE_NR_LEVELS; i++) {
+		NVMEV_INFO("GC victim hist: level=%zu count=%lld\n", i,
+			   atomic64_read(&conv_victim_age_hist[i]));
+	}
+	NVMEV_INFO("GC victim mean: victims=%llu vpc=%llu.%02llu age_ms=%llu\n", victims,
+		   div64_u64(vpc_sum, victims), div64_u64(vpc_sum * 100, victims) % 100,
+		   div64_u64(atomic64_read(&conv_victim_age_sum_ms), victims));
+}
+
+static const char *conv_gc_policy_name(void)
+{
+#if CONV_GC_POLICY == CONV_GC_POLICY_GREEDY
+	return "greedy";
+#else
+	return "cat-fig7";
+#endif
+}
+
+static uint32_t conv_gc_policy_scale_pct(void)
+{
+#if CONV_GC_POLICY == CONV_GC_POLICY_CAT_FIG7
+	return CAT_FIG7_SCALE_PCT;
+#else
+	return 0;
+#endif
+}
+
+static uint32_t conv_gc_policy_age_ratio(void)
+{
+#if CONV_GC_POLICY == CONV_GC_POLICY_CAT_FIG7
+	return CAT_FIG7_AGE_RATIO;
+#else
+	return 0;
+#endif
+}
+
+static inline bool last_pg_in_wordline(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	return (ppa->g.pg % spp->pgs_per_oneshotpg) == (spp->pgs_per_oneshotpg - 1);
+}
+
+static bool should_gc(struct conv_ftl *conv_ftl)
+{
+	return (conv_ftl->lm.free_line_cnt <= conv_ftl->cp.gc_thres_lines);
+}
+
+static inline bool should_gc_high(struct conv_ftl *conv_ftl)
+{
+	return conv_ftl->lm.free_line_cnt <= conv_ftl->cp.gc_thres_lines_high;
+}
+
+static inline struct ppa get_maptbl_ent(struct conv_ftl *conv_ftl, uint64_t lpn)
+{
+	return conv_ftl->maptbl[lpn];
+}
+
+static inline void set_maptbl_ent(struct conv_ftl *conv_ftl, uint64_t lpn, struct ppa *ppa)
+{
+	NVMEV_ASSERT(lpn < conv_ftl->ssd->sp.tt_pgs);
+	conv_ftl->maptbl[lpn] = *ppa;
+}
+
+static uint64_t ppa2pgidx(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	uint64_t pgidx;
+
+	NVMEV_DEBUG_VERBOSE("%s: ch:%d, lun:%d, pl:%d, blk:%d, pg:%d\n", __func__,
+			ppa->g.ch, ppa->g.lun, ppa->g.pl, ppa->g.blk, ppa->g.pg);
+
+	pgidx = ppa->g.ch * spp->pgs_per_ch + ppa->g.lun * spp->pgs_per_lun +
+		ppa->g.pl * spp->pgs_per_pl + ppa->g.blk * spp->pgs_per_blk + ppa->g.pg;
+
+	NVMEV_ASSERT(pgidx < spp->tt_pgs);
+
+	return pgidx;
+}
+
+static inline uint64_t get_rmap_ent(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	uint64_t pgidx = ppa2pgidx(conv_ftl, ppa);
+
+	return conv_ftl->rmap[pgidx];
+}
+
+/* set rmap[page_no(ppa)] -> lpn */
+static inline void set_rmap_ent(struct conv_ftl *conv_ftl, uint64_t lpn, struct ppa *ppa)
+{
+	uint64_t pgidx = ppa2pgidx(conv_ftl, ppa);
+
+	conv_ftl->rmap[pgidx] = lpn;
+}
+
+static inline int victim_line_cmp_pri(pqueue_pri_t next, pqueue_pri_t curr)
+{
+	return (next > curr);
+}
+
+static inline pqueue_pri_t victim_line_get_pri(void *a)
+{
+	return ((struct line *)a)->vpc;
+}
+
+static inline void victim_line_set_pri(void *a, pqueue_pri_t pri)
+{
+	((struct line *)a)->vpc = pri;
+}
+
+static inline size_t victim_line_get_pos(void *a)
+{
+	return ((struct line *)a)->pos;
+}
+
+static inline void victim_line_set_pos(void *a, size_t pos)
+{
+	((struct line *)a)->pos = pos;
+}
+
+static inline void consume_write_credit(struct conv_ftl *conv_ftl)
+{
+	conv_ftl->wfc.write_credits--;
+}
+
+static void foreground_gc(struct conv_ftl *conv_ftl);
+
+static inline void check_and_refill_write_credit(struct conv_ftl *conv_ftl)
+{
+	struct write_flow_control *wfc = &(conv_ftl->wfc);
+	if (wfc->write_credits <= 0) {
+		foreground_gc(conv_ftl);
+
+		wfc->write_credits += wfc->credits_to_refill;
+	}
+}
+
+static void init_lines(struct conv_ftl *conv_ftl)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct line_mgmt *lm = &conv_ftl->lm;
+	struct line *line;
+	int i;
+
+	lm->tt_lines = spp->blks_per_pl;
+	NVMEV_ASSERT(lm->tt_lines == spp->tt_lines);
+	lm->lines = vmalloc(sizeof(struct line) * lm->tt_lines);
+
+	INIT_LIST_HEAD(&lm->free_line_list);
+	INIT_LIST_HEAD(&lm->full_line_list);
+
+	lm->victim_line_pq = pqueue_init(spp->tt_lines, victim_line_cmp_pri, victim_line_get_pri,
+					 victim_line_set_pri, victim_line_get_pos,
+					 victim_line_set_pos);
+
+	lm->free_line_cnt = 0;
+	for (i = 0; i < lm->tt_lines; i++) {
+		lm->lines[i] = (struct line){
+			.id = i,
+			.ipc = 0,
+			.vpc = 0,
+			.created_at_ns = 0,
+			.last_invalid_ns = 0,
+			.pos = 0,
+			.entry = LIST_HEAD_INIT(lm->lines[i].entry),
+		};
+
+		/* initialize all the lines as free lines */
+		list_add_tail(&lm->lines[i].entry, &lm->free_line_list);
+		lm->free_line_cnt++;
+	}
+
+	NVMEV_ASSERT(lm->free_line_cnt == lm->tt_lines);
+	lm->victim_line_cnt = 0;
+	lm->full_line_cnt = 0;
+}
+
+static void remove_lines(struct conv_ftl *conv_ftl)
+{
+	pqueue_free(conv_ftl->lm.victim_line_pq);
+	vfree(conv_ftl->lm.lines);
+}
+
+static void init_write_flow_control(struct conv_ftl *conv_ftl)
+{
+	struct write_flow_control *wfc = &(conv_ftl->wfc);
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+
+	wfc->write_credits = spp->pgs_per_line;
+	wfc->credits_to_refill = spp->pgs_per_line;
+}
+
+static inline void check_addr(int a, int max)
+{
+	NVMEV_ASSERT(a >= 0 && a < max);
+}
+
+static struct line *get_next_free_line(struct conv_ftl *conv_ftl)
+{
+	struct line_mgmt *lm = &conv_ftl->lm;
+	struct line *curline = list_first_entry_or_null(&lm->free_line_list, struct line, entry);
+
+	if (!curline) {
+		NVMEV_ERROR("No free line left in VIRT !!!!\n");
+		return NULL;
+	}
+
+	list_del_init(&curline->entry);
+	lm->free_line_cnt--;
+	NVMEV_DEBUG("%s: free_line_cnt %d\n", __func__, lm->free_line_cnt);
+	return curline;
+}
+
+static struct write_pointer *__get_wp(struct conv_ftl *ftl, uint32_t io_type)
+{
+	if (io_type == USER_IO) {
+		return &ftl->wp;
+	} else if (io_type == GC_IO) {
+		return &ftl->gc_wp;
+	}
+
+	NVMEV_ASSERT(0);
+	return NULL;
+}
+
+static void prepare_write_pointer(struct conv_ftl *conv_ftl, uint32_t io_type)
+{
+	struct write_pointer *wp = __get_wp(conv_ftl, io_type);
+	struct line *curline = get_next_free_line(conv_ftl);
+
+	NVMEV_ASSERT(wp);
+	NVMEV_ASSERT(curline);
+
+	/* wp->curline is always our next-to-write super-block */
+	*wp = (struct write_pointer){
+		.curline = curline,
+		.ch = 0,
+		.lun = 0,
+		.pg = 0,
+		.blk = curline->id,
+		.pl = 0,
+	};
+}
+
+static void advance_write_pointer(struct conv_ftl *conv_ftl, uint32_t io_type)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct line_mgmt *lm = &conv_ftl->lm;
+	struct write_pointer *wpp = __get_wp(conv_ftl, io_type);
+
+	NVMEV_DEBUG_VERBOSE("current wpp: ch:%d, lun:%d, pl:%d, blk:%d, pg:%d\n",
+			wpp->ch, wpp->lun, wpp->pl, wpp->blk, wpp->pg);
+
+	check_addr(wpp->pg, spp->pgs_per_blk);
+	wpp->pg++;
+	if ((wpp->pg % spp->pgs_per_oneshotpg) != 0)
+		goto out;
+
+	wpp->pg -= spp->pgs_per_oneshotpg;
+	check_addr(wpp->ch, spp->nchs);
+	wpp->ch++;
+	if (wpp->ch != spp->nchs)
+		goto out;
+
+	wpp->ch = 0;
+	check_addr(wpp->lun, spp->luns_per_ch);
+	wpp->lun++;
+	/* in this case, we should go to next lun */
+	if (wpp->lun != spp->luns_per_ch)
+		goto out;
+
+	wpp->lun = 0;
+	/* go to next wordline in the block */
+	wpp->pg += spp->pgs_per_oneshotpg;
+	if (wpp->pg != spp->pgs_per_blk)
+		goto out;
+
+	wpp->pg = 0;
+	/* move current line to {victim,full} line list */
+	if (wpp->curline->vpc == spp->pgs_per_line) {
+		/* all pgs are still valid, move to full line list */
+		NVMEV_ASSERT(wpp->curline->ipc == 0);
+		list_add_tail(&wpp->curline->entry, &lm->full_line_list);
+		lm->full_line_cnt++;
+		NVMEV_DEBUG_VERBOSE("wpp: move line to full_line_list\n");
+	} else {
+		NVMEV_DEBUG_VERBOSE("wpp: line is moved to victim list\n");
+		NVMEV_ASSERT(wpp->curline->vpc >= 0 && wpp->curline->vpc < spp->pgs_per_line);
+		/* there must be some invalid pages in this line */
+		NVMEV_ASSERT(wpp->curline->ipc > 0);
+		pqueue_insert(lm->victim_line_pq, wpp->curline);
+		lm->victim_line_cnt++;
+	}
+	/* current line is used up, pick another empty line */
+	check_addr(wpp->blk, spp->blks_per_pl);
+	wpp->curline = get_next_free_line(conv_ftl);
+	NVMEV_DEBUG_VERBOSE("wpp: got new clean line %d\n", wpp->curline->id);
+
+	wpp->blk = wpp->curline->id;
+	check_addr(wpp->blk, spp->blks_per_pl);
+
+	/* make sure we are starting from page 0 in the super block */
+	NVMEV_ASSERT(wpp->pg == 0);
+	NVMEV_ASSERT(wpp->lun == 0);
+	NVMEV_ASSERT(wpp->ch == 0);
+	/* TODO: assume # of pl_per_lun is 1, fix later */
+	NVMEV_ASSERT(wpp->pl == 0);
+out:
+	NVMEV_DEBUG_VERBOSE("advanced wpp: ch:%d, lun:%d, pl:%d, blk:%d, pg:%d (curline %d)\n",
+			wpp->ch, wpp->lun, wpp->pl, wpp->blk, wpp->pg, wpp->curline->id);
+}
+
+static struct ppa get_new_page(struct conv_ftl *conv_ftl, uint32_t io_type)
+{
+	struct ppa ppa;
+	struct write_pointer *wp = __get_wp(conv_ftl, io_type);
+
+	ppa.ppa = 0;
+	ppa.g.ch = wp->ch;
+	ppa.g.lun = wp->lun;
+	ppa.g.pg = wp->pg;
+	ppa.g.blk = wp->blk;
+	ppa.g.pl = wp->pl;
+
+	NVMEV_ASSERT(ppa.g.pl == 0);
+
+	return ppa;
+}
+
+static void init_maptbl(struct conv_ftl *conv_ftl)
+{
+	int i;
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+
+	conv_ftl->maptbl = vmalloc(sizeof(struct ppa) * spp->tt_pgs);
+	for (i = 0; i < spp->tt_pgs; i++) {
+		conv_ftl->maptbl[i].ppa = UNMAPPED_PPA;
+	}
+}
+
+static void remove_maptbl(struct conv_ftl *conv_ftl)
+{
+	vfree(conv_ftl->maptbl);
+}
+
+static void init_rmap(struct conv_ftl *conv_ftl)
+{
+	int i;
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+
+	conv_ftl->rmap = vmalloc(sizeof(uint64_t) * spp->tt_pgs);
+	for (i = 0; i < spp->tt_pgs; i++) {
+		conv_ftl->rmap[i] = INVALID_LPN;
+	}
+}
+
+static void remove_rmap(struct conv_ftl *conv_ftl)
+{
+	vfree(conv_ftl->rmap);
+}
+
+static void conv_init_ftl(struct conv_ftl *conv_ftl, struct convparams *cpp, struct ssd *ssd)
+{
+	/*copy convparams*/
+	conv_ftl->cp = *cpp;
+
+	conv_ftl->ssd = ssd;
+	conv_ftl->stats = (struct conv_gc_stats){ 0 };
+
+	/* initialize maptbl */
+	init_maptbl(conv_ftl); // mapping table
+
+	/* initialize rmap */
+	init_rmap(conv_ftl); // reverse mapping table (?)
+
+	/* initialize all the lines */
+	init_lines(conv_ftl);
+
+	/* initialize write pointer, this is how we allocate new pages for writes */
+	prepare_write_pointer(conv_ftl, USER_IO);
+	prepare_write_pointer(conv_ftl, GC_IO);
+
+	init_write_flow_control(conv_ftl);
+
+	NVMEV_INFO("Init FTL instance with %d channels (%ld pages)\n", conv_ftl->ssd->sp.nchs,
+		   conv_ftl->ssd->sp.tt_pgs);
+	NVMEV_INFO("GC victim policy: %s scale_pct=%u age_ratio=%u\n",
+		   conv_gc_policy_name(), conv_gc_policy_scale_pct(),
+		   conv_gc_policy_age_ratio());
+
+	return;
+}
+
+static void conv_remove_ftl(struct conv_ftl *conv_ftl)
+{
+	remove_lines(conv_ftl);
+	remove_rmap(conv_ftl);
+	remove_maptbl(conv_ftl);
+}
+
+static void conv_init_params(struct convparams *cpp)
+{
+	cpp->op_area_pcent = OP_AREA_PERCENT;
+	cpp->gc_thres_lines = 2; /* Need only two lines.(host write, gc)*/
+	cpp->gc_thres_lines_high = 2; /* Need only two lines.(host write, gc)*/
+	cpp->enable_gc_delay = 1;
+	cpp->pba_pcent = (int)((1 + cpp->op_area_pcent) * 100);
+}
+
+void conv_init_namespace(struct nvmev_ns *ns, uint32_t id, uint64_t size, void *mapped_addr,
+			 uint32_t cpu_nr_dispatcher)
+{
+	struct ssdparams spp;
+	struct convparams cpp;
+	struct conv_ftl *conv_ftls;
+	struct ssd *ssd;
+	uint32_t i;
+	const uint32_t nr_parts = SSD_PARTITIONS;
+
+	ssd_init_params(&spp, size, nr_parts);
+	conv_init_params(&cpp);
+
+	conv_ftls = kmalloc(sizeof(struct conv_ftl) * nr_parts, GFP_KERNEL);
+
+	for (i = 0; i < nr_parts; i++) {
+		ssd = kmalloc(sizeof(struct ssd), GFP_KERNEL);
+		ssd_init(ssd, &spp, cpu_nr_dispatcher);
+		conv_init_ftl(&conv_ftls[i], &cpp, ssd);
+	}
+
+	/* PCIe, Write buffer are shared by all instances*/
+	for (i = 1; i < nr_parts; i++) {
+		kfree(conv_ftls[i].ssd->pcie->perf_model);
+		kfree(conv_ftls[i].ssd->pcie);
+		kfree(conv_ftls[i].ssd->write_buffer);
+
+		conv_ftls[i].ssd->pcie = conv_ftls[0].ssd->pcie;
+		conv_ftls[i].ssd->write_buffer = conv_ftls[0].ssd->write_buffer;
+	}
+
+	ns->id = id;
+	ns->csi = NVME_CSI_NVM;
+	ns->nr_parts = nr_parts;
+	ns->ftls = (void *)conv_ftls;
+	ns->size = (uint64_t)((size * 100) / cpp.pba_pcent);
+	ns->mapped = mapped_addr;
+	/*register io command handler*/
+	ns->proc_io_cmd = conv_proc_nvme_io_cmd;
+
+	NVMEV_INFO("FTL physical space: %lld, logical space: %lld (physical/logical * 100 = %d)\n",
+		   size, ns->size, cpp.pba_pcent);
+
+	return;
+}
+
+void conv_measure_init(struct nvmev_ns *ns)
+{
+	kuid_t owner;
+
+	if (!measurement_manual)
+		return;
+	owner = make_kuid(&init_user_ns, measurement_uid);
+	if (ns->id == 0 && NR_NAMESPACES == 1 && uid_valid(owner))
+		conv_measure_proc = proc_create_data("nvmevirt_measurement", 0600,
+			NULL, &conv_measure_ops, ns);
+	if (conv_measure_proc)
+		proc_set_user(conv_measure_proc, owner, GLOBAL_ROOT_GID);
+	else
+		NVMEV_ERROR("Manual measurement control unavailable; accounting remains disabled\n");
+}
+
+void conv_remove_namespace(struct nvmev_ns *ns)
+{
+	struct conv_ftl *conv_ftls = (struct conv_ftl *)ns->ftls;
+	const uint32_t nr_parts = SSD_PARTITIONS;
+	uint64_t host_page_writes = 0;
+	uint64_t gc_page_writes = 0;
+	uint64_t gc_count = 0;
+	uint64_t total_page_writes;
+	uint64_t waf_integer;
+	uint64_t waf_milli;
+	uint64_t remainder;
+	uint32_t i;
+
+	if (measurement_manual) {
+		proc_remove(conv_measure_proc);
+		conv_measure_proc = NULL;
+	}
+	for (i = 0; i < nr_parts; i++) {
+		host_page_writes += conv_ftls[i].stats.host_page_writes;
+		gc_page_writes += conv_ftls[i].stats.gc_page_writes;
+		gc_count += conv_ftls[i].stats.gc_count;
+	}
+
+	total_page_writes = host_page_writes + gc_page_writes;
+	if (host_page_writes) {
+		waf_integer = div64_u64_rem(total_page_writes, host_page_writes, &remainder);
+		waf_milli = div64_u64(remainder * 1000, host_page_writes);
+		NVMEV_INFO("GC stats: policy=%s age_mode=%s host_pages=%llu gc_pages=%llu "
+			   "gc_count=%llu WAF=%llu.%03llu scale_pct=%u age_ratio=%u\n",
+			   conv_gc_policy_name(), conv_age_mode_name(), host_page_writes,
+			   gc_page_writes, gc_count, waf_integer, waf_milli,
+			   conv_gc_policy_scale_pct(), conv_gc_policy_age_ratio());
+	} else {
+		NVMEV_INFO("GC stats: policy=%s host_pages=0 gc_pages=%llu gc_count=%llu "
+			   "WAF=N/A scale_pct=%u age_ratio=%u\n",
+			   conv_gc_policy_name(), gc_page_writes, gc_count,
+			   conv_gc_policy_scale_pct(), conv_gc_policy_age_ratio());
+	}
+
+	conv_report_victim_stats();
+
+	/* PCIe, Write buffer are shared by all instances*/
+	for (i = 1; i < nr_parts; i++) {
+		/*
+		 * These were freed from conv_init_namespace() already.
+		 * Mark these NULL so that ssd_remove() skips it.
+		 */
+		conv_ftls[i].ssd->pcie = NULL;
+		conv_ftls[i].ssd->write_buffer = NULL;
+	}
+
+	for (i = 0; i < nr_parts; i++) {
+		conv_remove_ftl(&conv_ftls[i]);
+		ssd_remove(conv_ftls[i].ssd);
+		kfree(conv_ftls[i].ssd);
+	}
+
+	kfree(conv_ftls);
+	ns->ftls = NULL;
+}
+
+static inline bool valid_ppa(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	int ch = ppa->g.ch;
+	int lun = ppa->g.lun;
+	int pl = ppa->g.pl;
+	int blk = ppa->g.blk;
+	int pg = ppa->g.pg;
+	//int sec = ppa->g.sec;
+
+	if (ch < 0 || ch >= spp->nchs)
+		return false;
+	if (lun < 0 || lun >= spp->luns_per_ch)
+		return false;
+	if (pl < 0 || pl >= spp->pls_per_lun)
+		return false;
+	if (blk < 0 || blk >= spp->blks_per_pl)
+		return false;
+	if (pg < 0 || pg >= spp->pgs_per_blk)
+		return false;
+
+	return true;
+}
+
+static inline bool valid_lpn(struct conv_ftl *conv_ftl, uint64_t lpn)
+{
+	return (lpn < conv_ftl->ssd->sp.tt_pgs);
+}
+
+static inline bool mapped_ppa(struct ppa *ppa)
+{
+	return !(ppa->ppa == UNMAPPED_PPA);
+}
+
+static inline struct line *get_line(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	return &(conv_ftl->lm.lines[ppa->g.blk]);
+}
+
+/* update SSD status about one page from PG_VALID -> PG_VALID */
+static void mark_page_invalid(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct line_mgmt *lm = &conv_ftl->lm;
+	struct nand_block *blk = NULL;
+	struct nand_page *pg = NULL;
+	bool was_full_line = false;
+	struct line *line;
+
+	/* update corresponding page status */
+	pg = get_pg(conv_ftl->ssd, ppa);
+	NVMEV_ASSERT(pg->status == PG_VALID);
+	pg->status = PG_INVALID;
+
+	/* update corresponding block status */
+	blk = get_blk(conv_ftl->ssd, ppa);
+	NVMEV_ASSERT(blk->ipc >= 0 && blk->ipc < spp->pgs_per_blk);
+	blk->ipc++;
+	NVMEV_ASSERT(blk->vpc > 0 && blk->vpc <= spp->pgs_per_blk);
+	blk->vpc--;
+
+	/* update corresponding line status */
+	line = get_line(conv_ftl, ppa);
+	NVMEV_ASSERT(line->ipc >= 0 && line->ipc < spp->pgs_per_line);
+	if (line->vpc == spp->pgs_per_line) {
+		NVMEV_ASSERT(line->ipc == 0);
+		was_full_line = true;
+	}
+	line->ipc++;
+	NVMEV_ASSERT(line->vpc > 0 && line->vpc <= spp->pgs_per_line);
+	/* Adjust the position of the victime line in the pq under over-writes */
+	if (line->pos) {
+		/* Note that line->vpc will be updated by this call */
+		pqueue_change_priority(lm->victim_line_pq, line->vpc - 1, line);
+	} else {
+		line->vpc--;
+	}
+
+	if (was_full_line) {
+		/* move line: "full" -> "victim" */
+		list_del_init(&line->entry);
+		lm->full_line_cnt--;
+		pqueue_insert(lm->victim_line_pq, line);
+		lm->victim_line_cnt++;
+	}
+}
+
+static void mark_page_valid(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct nand_block *blk = NULL;
+	struct nand_page *pg = NULL;
+	struct line *line;
+
+	/* update page status */
+	pg = get_pg(conv_ftl->ssd, ppa);
+	NVMEV_ASSERT(pg->status == PG_FREE);
+	pg->status = PG_VALID;
+
+	/* update corresponding block status */
+	blk = get_blk(conv_ftl->ssd, ppa);
+	NVMEV_ASSERT(blk->vpc >= 0 && blk->vpc < spp->pgs_per_blk);
+	blk->vpc++;
+
+	/* update corresponding line status */
+	line = get_line(conv_ftl, ppa);
+	NVMEV_ASSERT(line->vpc >= 0 && line->vpc < spp->pgs_per_line);
+	if (line->vpc == 0 && line->ipc == 0) {
+		/* An empty line reserved by a write pointer is not created yet. */
+		NVMEV_ASSERT(line->created_at_ns == 0);
+		line->created_at_ns = ktime_get_ns();
+		line->last_invalid_ns = line->created_at_ns;
+	}
+	line->vpc++;
+}
+
+static void mark_block_free(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct nand_block *blk = get_blk(conv_ftl->ssd, ppa);
+	struct nand_page *pg = NULL;
+	int i;
+
+	for (i = 0; i < spp->pgs_per_blk; i++) {
+		/* reset page status */
+		pg = &blk->pg[i];
+		NVMEV_ASSERT(pg->nsecs == spp->secs_per_pg);
+		pg->status = PG_FREE;
+	}
+
+	/* reset block status */
+	NVMEV_ASSERT(blk->npgs == spp->pgs_per_blk);
+	blk->ipc = 0;
+	blk->vpc = 0;
+	blk->erase_cnt++;
+}
+
+static void gc_read_page(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct convparams *cpp = &conv_ftl->cp;
+	/* advance conv_ftl status, we don't care about how long it takes */
+	if (cpp->enable_gc_delay) {
+		struct nand_cmd gcr = {
+			.type = GC_IO,
+			.cmd = NAND_READ,
+			.stime = 0,
+			.xfer_size = spp->pgsz,
+			.interleave_pci_dma = false,
+			.ppa = ppa,
+		};
+		ssd_advance_nand(conv_ftl->ssd, &gcr);
+	}
+}
+
+/* move valid page data (already in DRAM) from victim line to a new page */
+static uint64_t gc_write_page(struct conv_ftl *conv_ftl, struct ppa *old_ppa)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct convparams *cpp = &conv_ftl->cp;
+	struct ppa new_ppa;
+	uint64_t lpn = get_rmap_ent(conv_ftl, old_ppa);
+
+	NVMEV_ASSERT(valid_lpn(conv_ftl, lpn));
+	new_ppa = get_new_page(conv_ftl, GC_IO);
+	/* update maptbl */
+	set_maptbl_ent(conv_ftl, lpn, &new_ppa);
+	/* update rmap */
+	set_rmap_ent(conv_ftl, lpn, &new_ppa);
+
+	mark_page_valid(conv_ftl, &new_ppa);
+	if (conv_ftl->stats.measurement_started) {
+		conv_ftl->stats.gc_page_writes++;
+		atomic64_inc(&conv_total_gc_pages);
+	}
+
+	/* need to advance the write pointer here */
+	advance_write_pointer(conv_ftl, GC_IO);
+
+	if (cpp->enable_gc_delay) {
+		struct nand_cmd gcw = {
+			.type = GC_IO,
+			.cmd = NAND_NOP,
+			.stime = 0,
+			.interleave_pci_dma = false,
+			.ppa = &new_ppa,
+		};
+		if (last_pg_in_wordline(conv_ftl, &new_ppa)) {
+			gcw.cmd = NAND_WRITE;
+			gcw.xfer_size = spp->pgsz * spp->pgs_per_oneshotpg;
+		}
+
+		ssd_advance_nand(conv_ftl->ssd, &gcw);
+	}
+
+	/* advance per-ch gc_endtime as well */
+#if 0
+	new_ch = get_ch(conv_ftl, &new_ppa);
+	new_ch->gc_endtime = new_ch->next_ch_avail_time;
+
+	new_lun = get_lun(conv_ftl, &new_ppa);
+	new_lun->gc_endtime = new_lun->next_lun_avail_time;
+#endif
+
+	return 0;
+}
+
+static struct line *select_victim_line(struct conv_ftl *conv_ftl, bool force)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct line_mgmt *lm = &conv_ftl->lm;
+	struct line *victim_line = NULL;
+
+#if CONV_GC_POLICY == CONV_GC_POLICY_GREEDY
+	victim_line = pqueue_peek(lm->victim_line_pq);
+	if (!victim_line) {
+		return NULL;
+	}
+
+	if (!force && (victim_line->vpc > (spp->pgs_per_line / 8))) {
+		return NULL;
+	}
+
+	pqueue_pop(lm->victim_line_pq);
+#else
+	struct line *candidate;
+	uint64_t now_ns = ktime_get_ns();
+	uint32_t i;
+
+	/*
+	 * A line's CAT priority changes as wall-clock time advances.  Therefore a
+	 * heap key computed at insertion time would become stale.  Scan only the
+	 * current victim members (line->pos != 0), then remove the winner from the
+	 * existing queue.
+	 */
+	for (i = 0; i < lm->tt_lines; i++) {
+		candidate = &lm->lines[i];
+		if (!candidate->pos)
+			continue;
+		if (!force && candidate->vpc > (spp->pgs_per_line / 8))
+			continue;
+		if (!victim_line || cat_fig7_line_is_better(candidate, victim_line, now_ns))
+			victim_line = candidate;
+	}
+
+	if (!victim_line)
+		return NULL;
+
+	pqueue_remove(lm->victim_line_pq, victim_line);
+#endif
+	conv_record_victim(victim_line, ktime_get_ns());
+	victim_line->pos = 0;
+	lm->victim_line_cnt--;
+
+	/* victim_line is a danggling node now */
+	return victim_line;
+}
+
+/* here ppa identifies the block we want to clean */
+static void clean_one_block(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct nand_page *pg_iter = NULL;
+	int cnt = 0;
+	int pg;
+
+	for (pg = 0; pg < spp->pgs_per_blk; pg++) {
+		ppa->g.pg = pg;
+		pg_iter = get_pg(conv_ftl->ssd, ppa);
+		/* there shouldn't be any free page in victim blocks */
+		NVMEV_ASSERT(pg_iter->status != PG_FREE);
+		if (pg_iter->status == PG_VALID) {
+			gc_read_page(conv_ftl, ppa);
+			/* delay the maptbl update until "write" happens */
+			gc_write_page(conv_ftl, ppa);
+			cnt++;
+		}
+	}
+
+	NVMEV_ASSERT(get_blk(conv_ftl->ssd, ppa)->vpc == cnt);
+}
+
+/* here ppa identifies the block we want to clean */
+static void clean_one_flashpg(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct convparams *cpp = &conv_ftl->cp;
+	struct nand_page *pg_iter = NULL;
+	int cnt = 0, i = 0;
+	uint64_t completed_time = 0;
+	struct ppa ppa_copy = *ppa;
+
+	for (i = 0; i < spp->pgs_per_flashpg; i++) {
+		pg_iter = get_pg(conv_ftl->ssd, &ppa_copy);
+		/* there shouldn't be any free page in victim blocks */
+		NVMEV_ASSERT(pg_iter->status != PG_FREE);
+		if (pg_iter->status == PG_VALID)
+			cnt++;
+
+		ppa_copy.g.pg++;
+	}
+
+	ppa_copy = *ppa;
+
+	if (cnt <= 0)
+		return;
+
+	if (cpp->enable_gc_delay) {
+		struct nand_cmd gcr = {
+			.type = GC_IO,
+			.cmd = NAND_READ,
+			.stime = 0,
+			.xfer_size = spp->pgsz * cnt,
+			.interleave_pci_dma = false,
+			.ppa = &ppa_copy,
+		};
+		completed_time = ssd_advance_nand(conv_ftl->ssd, &gcr);
+	}
+
+	for (i = 0; i < spp->pgs_per_flashpg; i++) {
+		pg_iter = get_pg(conv_ftl->ssd, &ppa_copy);
+
+		/* there shouldn't be any free page in victim blocks */
+		if (pg_iter->status == PG_VALID) {
+			/* delay the maptbl update until "write" happens */
+			gc_write_page(conv_ftl, &ppa_copy);
+		}
+
+		ppa_copy.g.pg++;
+	}
+}
+
+static void mark_line_free(struct conv_ftl *conv_ftl, struct ppa *ppa)
+{
+	struct line_mgmt *lm = &conv_ftl->lm;
+	struct line *line = get_line(conv_ftl, ppa);
+	line->ipc = 0;
+	line->vpc = 0;
+	line->created_at_ns = 0;
+	line->last_invalid_ns = 0;
+	/* move this line to free line list */
+	list_add_tail(&line->entry, &lm->free_line_list);
+	lm->free_line_cnt++;
+}
+
+static int do_gc(struct conv_ftl *conv_ftl, bool force)
+{
+	struct line *victim_line = NULL;
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct ppa ppa;
+	int flashpg;
+
+	victim_line = select_victim_line(conv_ftl, force);
+	if (!victim_line) {
+		return -1;
+	}
+
+	ppa.g.blk = victim_line->id;
+	NVMEV_DEBUG_VERBOSE("GC-ing line:%d,ipc=%d(%d),victim=%d,full=%d,free=%d\n", ppa.g.blk,
+		    victim_line->ipc, victim_line->vpc, conv_ftl->lm.victim_line_cnt,
+		    conv_ftl->lm.full_line_cnt, conv_ftl->lm.free_line_cnt);
+
+	conv_ftl->wfc.credits_to_refill = victim_line->ipc;
+
+	/* copy back valid data */
+	for (flashpg = 0; flashpg < spp->flashpgs_per_blk; flashpg++) {
+		int ch, lun;
+
+		ppa.g.pg = flashpg * spp->pgs_per_flashpg;
+		for (ch = 0; ch < spp->nchs; ch++) {
+			for (lun = 0; lun < spp->luns_per_ch; lun++) {
+				struct nand_lun *lunp;
+
+				ppa.g.ch = ch;
+				ppa.g.lun = lun;
+				ppa.g.pl = 0;
+				lunp = get_lun(conv_ftl->ssd, &ppa);
+				clean_one_flashpg(conv_ftl, &ppa);
+
+				if (flashpg == (spp->flashpgs_per_blk - 1)) {
+					struct convparams *cpp = &conv_ftl->cp;
+
+					mark_block_free(conv_ftl, &ppa);
+
+					if (cpp->enable_gc_delay) {
+						struct nand_cmd gce = {
+							.type = GC_IO,
+							.cmd = NAND_ERASE,
+							.stime = 0,
+							.interleave_pci_dma = false,
+							.ppa = &ppa,
+						};
+						ssd_advance_nand(conv_ftl->ssd, &gce);
+					}
+
+					lunp->gc_endtime = lunp->next_lun_avail_time;
+				}
+			}
+		}
+	}
+
+	/* update line status */
+	mark_line_free(conv_ftl, &ppa);
+	if (conv_ftl->stats.measurement_started) {
+		conv_ftl->stats.gc_count++;
+	} else if (!measurement_manual) {
+		/* Exclude initial fill and the first GC from the measured WAF. */
+		conv_ftl->stats.measurement_started = true;
+	}
+
+	return 0;
+}
+
+static void foreground_gc(struct conv_ftl *conv_ftl)
+{
+	if (should_gc_high(conv_ftl)) {
+		NVMEV_DEBUG_VERBOSE("should_gc_high passed");
+		/* perform GC here until !should_gc(conv_ftl) */
+		do_gc(conv_ftl, true);
+	}
+}
+
+static bool is_same_flash_page(struct conv_ftl *conv_ftl, struct ppa ppa1, struct ppa ppa2)
+{
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	uint32_t ppa1_page = ppa1.g.pg / spp->pgs_per_flashpg;
+	uint32_t ppa2_page = ppa2.g.pg / spp->pgs_per_flashpg;
+
+	return (ppa1.h.blk_in_ssd == ppa2.h.blk_in_ssd) && (ppa1_page == ppa2_page);
+}
+
+static bool conv_read(struct nvmev_ns *ns, struct nvmev_request *req, struct nvmev_result *ret)
+{
+	struct conv_ftl *conv_ftls = (struct conv_ftl *)ns->ftls;
+	struct conv_ftl *conv_ftl = &conv_ftls[0];
+	/* spp are shared by all instances*/
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+
+	struct nvme_command *cmd = req->cmd;
+	uint64_t lba = cmd->rw.slba;
+	uint64_t nr_lba = (cmd->rw.length + 1);
+	uint64_t start_lpn = lba / spp->secs_per_pg;
+	uint64_t end_lpn = (lba + nr_lba - 1) / spp->secs_per_pg;
+	uint64_t lpn;
+	uint64_t nsecs_start = req->nsecs_start;
+	uint64_t nsecs_completed, nsecs_latest = nsecs_start;
+	uint32_t xfer_size, i;
+	uint32_t nr_parts = ns->nr_parts;
+
+	struct ppa prev_ppa;
+	struct nand_cmd srd = {
+		.type = USER_IO,
+		.cmd = NAND_READ,
+		.stime = nsecs_start,
+		.interleave_pci_dma = true,
+	};
+
+	NVMEV_ASSERT(conv_ftls);
+	NVMEV_DEBUG_VERBOSE("%s: start_lpn=%lld, len=%lld, end_lpn=%lld", __func__, start_lpn, nr_lba, end_lpn);
+	if ((end_lpn / nr_parts) >= spp->tt_pgs) {
+		NVMEV_ERROR("%s: lpn passed FTL range (start_lpn=%lld > tt_pgs=%ld)\n", __func__,
+			    start_lpn, spp->tt_pgs);
+		return false;
+	}
+
+	if (LBA_TO_BYTE(nr_lba) <= (KB(4) * nr_parts)) {
+		srd.stime += spp->fw_4kb_rd_lat;
+	} else {
+		srd.stime += spp->fw_rd_lat;
+	}
+
+	for (i = 0; (i < nr_parts) && (start_lpn <= end_lpn); i++, start_lpn++) {
+		conv_ftl = &conv_ftls[start_lpn % nr_parts];
+		xfer_size = 0;
+		prev_ppa = get_maptbl_ent(conv_ftl, start_lpn / nr_parts);
+
+		/* normal IO read path */
+		for (lpn = start_lpn; lpn <= end_lpn; lpn += nr_parts) {
+			uint64_t local_lpn;
+			struct ppa cur_ppa;
+
+			local_lpn = lpn / nr_parts;
+			cur_ppa = get_maptbl_ent(conv_ftl, local_lpn);
+			if (!mapped_ppa(&cur_ppa) || !valid_ppa(conv_ftl, &cur_ppa)) {
+				NVMEV_DEBUG_VERBOSE("lpn 0x%llx not mapped to valid ppa\n", local_lpn);
+				NVMEV_DEBUG_VERBOSE("Invalid ppa,ch:%d,lun:%d,blk:%d,pl:%d,pg:%d\n",
+					    cur_ppa.g.ch, cur_ppa.g.lun, cur_ppa.g.blk,
+					    cur_ppa.g.pl, cur_ppa.g.pg);
+				continue;
+			}
+
+			// aggregate read io in same flash page
+			if (mapped_ppa(&prev_ppa) &&
+			    is_same_flash_page(conv_ftl, cur_ppa, prev_ppa)) {
+				xfer_size += spp->pgsz;
+				continue;
+			}
+
+			if (xfer_size > 0) {
+				srd.xfer_size = xfer_size;
+				srd.ppa = &prev_ppa;
+				nsecs_completed = ssd_advance_nand(conv_ftl->ssd, &srd);
+				nsecs_latest = max(nsecs_completed, nsecs_latest);
+			}
+
+			xfer_size = spp->pgsz;
+			prev_ppa = cur_ppa;
+		}
+
+		// issue remaining io
+		if (xfer_size > 0) {
+			srd.xfer_size = xfer_size;
+			srd.ppa = &prev_ppa;
+			nsecs_completed = ssd_advance_nand(conv_ftl->ssd, &srd);
+			nsecs_latest = max(nsecs_completed, nsecs_latest);
+		}
+	}
+
+	ret->nsecs_target = nsecs_latest;
+	ret->status = NVME_SC_SUCCESS;
+	return true;
+}
+
+static bool conv_write(struct nvmev_ns *ns, struct nvmev_request *req, struct nvmev_result *ret)
+{
+	struct conv_ftl *conv_ftls = (struct conv_ftl *)ns->ftls;
+	struct conv_ftl *conv_ftl = &conv_ftls[0];
+
+	/* wbuf and spp are shared by all instances */
+	struct ssdparams *spp = &conv_ftl->ssd->sp;
+	struct buffer *wbuf = conv_ftl->ssd->write_buffer;
+
+	struct nvme_command *cmd = req->cmd;
+	uint64_t lba = cmd->rw.slba;
+	uint64_t nr_lba = (cmd->rw.length + 1);
+	uint64_t start_lpn = lba / spp->secs_per_pg;
+	uint64_t end_lpn = (lba + nr_lba - 1) / spp->secs_per_pg;
+
+	uint64_t lpn;
+	uint32_t nr_parts = ns->nr_parts;
+
+	uint64_t nsecs_latest;
+	uint64_t nsecs_xfer_completed;
+	uint32_t allocated_buf_size;
+
+	struct nand_cmd swr = {
+		.type = USER_IO,
+		.cmd = NAND_WRITE,
+		.interleave_pci_dma = false,
+		.xfer_size = spp->pgsz * spp->pgs_per_oneshotpg,
+	};
+
+	NVMEV_DEBUG_VERBOSE("%s: start_lpn=%lld, len=%lld, end_lpn=%lld", __func__, start_lpn, nr_lba, end_lpn);
+	if ((end_lpn / nr_parts) >= spp->tt_pgs) {
+		NVMEV_ERROR("%s: lpn passed FTL range (start_lpn=%lld > tt_pgs=%ld)\n",
+				__func__, start_lpn, spp->tt_pgs);
+		return false;
+	}
+
+	allocated_buf_size = buffer_allocate(wbuf, LBA_TO_BYTE(nr_lba));
+	if (allocated_buf_size < LBA_TO_BYTE(nr_lba))
+		return false;
+
+	nsecs_latest =
+		ssd_advance_write_buffer(conv_ftl->ssd, req->nsecs_start, LBA_TO_BYTE(nr_lba));
+	nsecs_xfer_completed = nsecs_latest;
+
+	swr.stime = nsecs_latest;
+
+	for (lpn = start_lpn; lpn <= end_lpn; lpn++) {
+		uint64_t local_lpn;
+		uint64_t nsecs_completed = 0;
+		struct ppa ppa;
+
+		conv_ftl = &conv_ftls[lpn % nr_parts];
+		local_lpn = lpn / nr_parts;
+		ppa = get_maptbl_ent(
+			conv_ftl, local_lpn); // Check whether the given LPN has been written before
+		if (mapped_ppa(&ppa)) {
+			/* update old page information first */
+			mark_page_invalid(conv_ftl, &ppa);
+			set_rmap_ent(conv_ftl, INVALID_LPN, &ppa);
+			NVMEV_DEBUG("%s: %lld is invalid, ", __func__, ppa2pgidx(conv_ftl, &ppa));
+		}
+
+		/* new write */
+		ppa = get_new_page(conv_ftl, USER_IO);
+		/* update maptbl */
+		set_maptbl_ent(conv_ftl, local_lpn, &ppa);
+		NVMEV_DEBUG("%s: got new ppa %lld, ", __func__, ppa2pgidx(conv_ftl, &ppa));
+		/* update rmap */
+		set_rmap_ent(conv_ftl, local_lpn, &ppa);
+
+		mark_page_valid(conv_ftl, &ppa);
+		if (conv_ftl->stats.measurement_started) {
+			conv_ftl->stats.host_page_writes++;
+			conv_account_host_page();
+		}
+
+		/* need to advance the write pointer here */
+		advance_write_pointer(conv_ftl, USER_IO);
+
+		/* Aggregate write io in flash page */
+		if (last_pg_in_wordline(conv_ftl, &ppa)) {
+			swr.ppa = &ppa;
+
+			nsecs_completed = ssd_advance_nand(conv_ftl->ssd, &swr);
+			nsecs_latest = max(nsecs_completed, nsecs_latest);
+
+			schedule_internal_operation(req->sq_id, nsecs_completed, wbuf,
+						    spp->pgs_per_oneshotpg * spp->pgsz);
+		}
+
+		consume_write_credit(conv_ftl);
+		check_and_refill_write_credit(conv_ftl);
+	}
+
+	if ((cmd->rw.control & NVME_RW_FUA) || (spp->write_early_completion == 0)) {
+		/* Wait all flash operations */
+		ret->nsecs_target = nsecs_latest;
+	} else {
+		/* Early completion */
+		ret->nsecs_target = nsecs_xfer_completed;
+	}
+	ret->status = NVME_SC_SUCCESS;
+
+	return true;
+}
+
+static void conv_flush(struct nvmev_ns *ns, struct nvmev_request *req, struct nvmev_result *ret)
+{
+	uint64_t start, latest;
+	uint32_t i;
+	struct conv_ftl *conv_ftls = (struct conv_ftl *)ns->ftls;
+
+	start = local_clock();
+	latest = start;
+	for (i = 0; i < ns->nr_parts; i++) {
+		latest = max(latest, ssd_next_idle_time(conv_ftls[i].ssd));
+	}
+
+	NVMEV_DEBUG_VERBOSE("%s: latency=%llu\n", __func__, latest - start);
+
+	ret->status = NVME_SC_SUCCESS;
+	ret->nsecs_target = latest;
+	return;
+}
+
+bool conv_proc_nvme_io_cmd(struct nvmev_ns *ns, struct nvmev_request *req, struct nvmev_result *ret)
+{
+	struct nvme_command *cmd = req->cmd;
+	bool accepted = true;
+
+	NVMEV_ASSERT(ns->csi == NVME_CSI_NVM);
+	if (measurement_manual)
+		mutex_lock(&conv_measure_lock);
+
+	switch (cmd->common.opcode) {
+	case nvme_cmd_write:
+		accepted = conv_write(ns, req, ret);
+		if (accepted && measurement_manual && conv_measure_active)
+			conv_measure_host_bytes += ((uint64_t)le16_to_cpu(cmd->rw.length) + 1) * LBA_SIZE;
+		break;
+	case nvme_cmd_read:
+		accepted = conv_read(ns, req, ret);
+		break;
+	case nvme_cmd_flush:
+		conv_flush(ns, req, ret);
+		break;
+	default:
+		NVMEV_ERROR("%s: command not implemented: %s (0x%x)\n", __func__,
+				nvme_opcode_string(cmd->common.opcode), cmd->common.opcode);
+		break;
+	}
+
+	if (measurement_manual)
+		mutex_unlock(&conv_measure_lock);
+	return accepted;
+}

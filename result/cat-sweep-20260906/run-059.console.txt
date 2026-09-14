@@ -1,0 +1,69 @@
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+preset: (g=0): rw=write, bs=(R) 128KiB-128KiB, (W) 128KiB-128KiB, (T) 128KiB-128KiB, ioengine=libaio, iodepth=32
+fio-3.36
+Starting 1 process
+preset: Laying out IO file (1 file / 6144MiB)
+
+preset: (groupid=0, jobs=1): err= 0: pid=297014: Mon Sep  7 05:28:36 2026
+  write: IOPS=17.9k, BW=2233MiB/s (2341MB/s)(6144MiB/2752msec); 0 zone resets
+    slat (usec): min=6, max=166, avg= 9.13, stdev= 2.31
+    clat (usec): min=91, max=6499, avg=1780.41, stdev=163.41
+     lat (usec): min=107, max=6509, avg=1789.55, stdev=163.31
+    clat percentiles (usec):
+     |  1.00th=[ 1663],  5.00th=[ 1762], 10.00th=[ 1778], 20.00th=[ 1778],
+     | 30.00th=[ 1778], 40.00th=[ 1778], 50.00th=[ 1778], 60.00th=[ 1778],
+     | 70.00th=[ 1778], 80.00th=[ 1778], 90.00th=[ 1795], 95.00th=[ 1795],
+     | 99.00th=[ 1827], 99.50th=[ 2212], 99.90th=[ 4015], 99.95th=[ 4817],
+     | 99.99th=[ 6259]
+   bw (  MiB/s): min= 2233, max= 2241, per=100.00%, avg=2235.40, stdev= 3.56, samples=5
+   iops        : min=17868, max=17934, avg=17883.20, stdev=28.45, samples=5
+  lat (usec)   : 100=0.01%, 250=0.09%, 500=0.14%, 750=0.16%, 1000=0.19%
+  lat (msec)   : 2=98.81%, 4=0.51%, 10=0.10%
+  cpu          : usr=6.14%, sys=16.28%, ctx=48369, majf=0, minf=12
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=99.9%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.1%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,49152,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+  WRITE: bw=2233MiB/s (2341MB/s), 2233MiB/s-2233MiB/s (2341MB/s-2341MB/s), io=6144MiB (6442MB), run=2752-2752msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/47175, sectors=0/12076800, merge=0/0, ticks=0/83625, in_queue=83626, util=96.28%
+hot: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+cold: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+fio-3.36
+Starting 2 processes
+
+hot: (groupid=0, jobs=2): err= 0: pid=297026: Mon Sep  7 05:38:36 2026
+  write: IOPS=9999, BW=39.1MiB/s (41.0MB/s)(22.9GiB/600001msec); 0 zone resets
+    slat (nsec): min=1987, max=1902.0k, avg=4446.23, stdev=2284.12
+    clat (nsec): min=1309, max=3129.5k, avg=15058.97, stdev=15652.09
+     lat (usec): min=9, max=3136, avg=19.51, stdev=15.88
+    clat percentiles (usec):
+     |  1.00th=[   10],  5.00th=[   10], 10.00th=[   10], 20.00th=[   10],
+     | 30.00th=[   11], 40.00th=[   11], 50.00th=[   11], 60.00th=[   12],
+     | 70.00th=[   14], 80.00th=[   15], 90.00th=[   17], 95.00th=[   34],
+     | 99.00th=[  102], 99.50th=[  121], 99.90th=[  143], 99.95th=[  153],
+     | 99.99th=[  174]
+   bw (  KiB/s): min=39856, max=40176, per=100.00%, avg=40011.50, stdev= 5.85, samples=2398
+   iops        : min= 9964, max=10044, avg=10002.88, stdev= 1.46, samples=2398
+  lat (usec)   : 2=0.01%, 4=0.02%, 10=27.92%, 20=64.72%, 50=4.63%
+  lat (usec)   : 100=1.62%, 250=1.09%, 500=0.01%, 750=0.01%, 1000=0.01%
+  lat (msec)   : 2=0.01%, 4=0.01%
+  cpu          : usr=4.51%, sys=4.40%, ctx=11850871, majf=0, minf=22
+  IO depths    : 1=99.5%, 2=0.5%, 4=0.1%, 8=0.1%, 16=0.1%, 32=0.1%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,6000000,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+  WRITE: bw=39.1MiB/s (41.0MB/s), 39.1MiB/s-39.1MiB/s (41.0MB/s-41.0MB/s), io=22.9GiB (24.6GB), run=600001-600001msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/5999646, sectors=0/48236264, merge=0/210, ticks=0/69944, in_queue=69945, util=11.99%
+[RESULT] /home/oy/iCAT/result/test2-sweep-20260906-a200-r7-rep3-20260907-052833-296928.log
