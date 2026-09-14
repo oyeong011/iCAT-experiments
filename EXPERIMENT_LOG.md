@@ -1886,3 +1886,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 사용자 요청: 추가 실험 예약. (1) fio test4/3/5의 randseed를 +1/+2한 변형(`gh-*-s2.fio`, `-s3.fio`) × 6정책(greedy, fixed10, cat37, fixed47, fixed50, online) = 36 run — GitHub fio는 seed 고정이라 seed 변동을 이것으로 확보. (2) filebench webserver/webproxy/videoserver × 4 고정 정책. (3) **mix A안**: `mix-20260911.sh mixA` — phase A test4(24M writes) 후 파일을 지우지 않고 남은 공간에 sqlite DB(60만 건, 400만 op) 생성. 좀비 유효 데이터 없이 "두 앱이 SSD를 나눠 쓰다 주도권이 바뀜"을 재현. fixed10/fixed47/fixed50/online × rep 1~3(seed 변경) = 12 run. 총 ~60 run, 15시간 이상. queue2 종료 후 자동 시작, 블록마다 push.
 - mixA 판정: 각 run 내부 검사 통과, phase B가 ENOSPC 없이 완료. phase A/B WAF를 정책별로 비교하고 iCAT의 arm 추이를 본다.
 - 2026-09-14 23:10 queue1 완료(QUEUEDONE 20:43). FAIL 2건: filebench webproxy × cat37/online — GitHub 원본 `webproxy.f`(및 `videoserver.f`)에 `run` 지시가 없어 스크립트가 거부. 두 프로필 끝에 `run 300` 추가(스크립트가 FILEBENCH_RUNTIME으로 덮어씀). webproxy cat37/online은 queue3에서 4 고정 정책만 돌므로 cat37/online 2 run은 별도 재실행 필요. queue2 진행 중(fio test4/3/5 × 4정책 완료, test2 진행 중).
+
+## 2026-09-14 — gh-queue4-20260914 사전 등록 (무인 연속 실행 4차: mix 전 설계 × 전 정책)
+
+- 사용자 요청: mix workload에서 iCAT/CAT/Greedy 가능한 조합 전부. `mix-20260911.sh`를 phase 함수로 재구성해 3설계 추가/정리:
+  - **mixA** test4 → sqlite-a(60만 건/400만 op), fio 파일 유지(좀비 없음)
+  - **mixB** sqlite-a → test4 (앱 먼저, 그 다음 fio; 파일은 preset 것 유지)
+  - **mixC** test3(1/4 IOPS·1/4 payload, 600초) → test4(600초): 같은 배치에서 overwrite 시간축만 4배 변화
+  - main(원 설계, 파일 삭제 후 sqlite)은 아직 안 돌린 정책만 추가
+- 정책 6개(start/stop 계측 모듈): greedy(`nvmev-greedy-m.ko`, varmail-compare-src GREEDY), fixed10, fixed37(기존 varmail fixed37 복사), fixed47, fixed50, online. gh-* 모듈은 manual 계측이 없어 mix에 못 쓴다.
+- 순서(queue3 종료 후): mixB/mixC SMOKE(1/10) → rep1~3 × {mixB, mixC} × 6정책 + mixA × {greedy, fixed37} → main × {greedy, fixed10, fixed37, fixed50}. 약 46 run, 12시간 이상. 블록마다 push. mixB/mixC는 장치가 점유 중이라 사전 smoke를 못 했고 queue4 첫 단계에서 smoke한다(실패해도 본 run 시도, FAIL 기록).

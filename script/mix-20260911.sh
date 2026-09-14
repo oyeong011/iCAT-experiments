@@ -6,11 +6,13 @@ root=/home/oy/iCAT
 base="$root/result/mix-20260911"
 journal="$root/EXPERIMENT_LOG.md"
 control=/proc/nvmevirt_measurement
-label=${1:?Use smoke, main, long, t4 or mixA}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
+label=${1:?Use smoke, main, long, t4, mixA, mixB or mixC}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
 case "$policy" in
     fixed47) module="$root/buildoutput/nvmev-varmail-20260908-fixed47.ko";;
     online)  module="$root/buildoutput/nvmev-online-mix-20260907.ko";;
     fixed10) module="$root/buildoutput/nvmev-fixed10.ko";;
+    fixed37) module="$root/buildoutput/nvmev-fixed37.ko";;
+    greedy)  module="$root/buildoutput/nvmev-greedy-m.ko";;
     fixed50) module="$root/buildoutput/nvmev-fixed50.ko";;
     *) exit 2;;
 esac
@@ -20,13 +22,16 @@ case "$label" in
     main)  scale=1;  RECORDS=4000000; OPS=1000000;;
     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
     t4)    scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed
-    mixA)  scale=1;  RECORDS=600000; OPS=4000000;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
+    mixA|mixB) scale=1; RECORDS=600000; OPS=4000000;;
+    mixC)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
     *) exit 2;;
 esac
 mult=1; [[ "$label" != long ]] || mult=6   # long: phase A 6x payload (3600 s) so the learner can exploit after its 600 s sweep
+[[ -z "${SMOKE:-}" ]] || { scale=$((scale*10)); RECORDS=20000; OPS=20000; }   # SMOKE=1: 1/10 payload, tiny DB
 export HOT_IO=$((58982400000*mult/scale)) WARM_IO=$((29491200000*mult/scale)) COLD_IO=$((9830400000*mult/scale))
 export SEED_HOT=$((20260910+rep)) SEED_WARM=$((20261010+rep)) SEED_COLD=$((20261110+rep))
-dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != mixA ]] || dir="$base/$label-$policy-rep$rep"
+dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != mix[ABC] ]] || dir="$base/$label-$policy-rep$rep"
+[[ -z "${SMOKE:-}" ]] || dir="$dir-smoke"
 [[ ! -e "$dir" ]] || { echo "Refusing to overwrite $dir" >&2; exit 1; }
 mkdir -p "$dir"
 exec 9>"$base/device.lock"; flock -n 9 || exit 1
@@ -93,38 +98,47 @@ cat "$control" > "$dir/prepared.txt"
 before=$(sectors)
 printf 'start\n' > "$control"
 cat "$control" > "$dir/started.txt"
-# ---- phase A: fio test4
-kmsg phase=A START; date -Is > "$dir/phase-A-start.time"
-cp "$dir/started.txt" "$dir/phase-A-start.txt"
-fio "$root/workloads/mix-test4.fio" --output-format=json --output="$dir/phase-A.json"
-sync -f "$FIO_TARGET"
-jq -e 'all(.jobs[]; .error == 0 and .write.io_bytes > 0)' "$dir/phase-A.json" >/dev/null
-cat "$control" > "$dir/phase-A-end.txt"; date -Is > "$dir/phase-A-end.time"
-kmsg phase=A END
-if [[ "$label" == t4 ]]; then
-    cp "$dir/phase-A-end.txt" "$dir/phase-B-start.txt"; cp "$dir/phase-A-end.txt" "$dir/phase-B-loaded.txt"; cp "$dir/phase-A-end.txt" "$dir/phase-B-end.txt"
-    : > "$dir/ycsb-load.txt"; : > "$dir/ycsb-run.txt"
-else
-# ---- transition: delete fio file (no discard, FTL keeps its state)
-[[ "$label" == mixA ]] || rm -f "$FIO_TARGET"; sync   # mixA keeps the fio file: FTL sees no deleted-but-valid data
-cat "$control" > "$dir/phase-B-start.txt"
-# ---- phase B: YCSB sqlite workload A (same as GitHub sqlite.sh: WAL, batch 1000, drop_caches 4s during run)
-kmsg phase=B START; date -Is > "$dir/phase-B-start.time"
-sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
- CREATE TABLE usertable (YCSB_KEY VARCHAR(255) PRIMARY KEY, FIELD0 TEXT, FIELD1 TEXT, FIELD2 TEXT, FIELD3 TEXT, FIELD4 TEXT, FIELD5 TEXT, FIELD6 TEXT, FIELD7 TEXT, FIELD8 TEXT, FIELD9 TEXT);"
-yc() { (cd "$ycsb" && JAVA_TOOL_OPTIONS="-Xshare:off" bash bin/ycsb.sh "$1" jdbc -s -P "$root/workloads/sqlite/workloada" -p recordcount="$RECORDS" -p operationcount="$OPS" -threads 1 \
-        -p db.driver=org.sqlite.JDBC -p db.url="jdbc:sqlite:$db" -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false); }
-kmsg phase=B LOAD; yc load > "$dir/ycsb-load.txt" 2>&1
-grep -q '^\[INSERT\], Return=OK, ' "$dir/ycsb-load.txt"
-sync; cat "$control" > "$dir/phase-B-loaded.txt"
-touch "$dir/dc.flag"
-( exec 9>&-; while [[ -e "$dir/dc.flag" ]]; do sleep 4; echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; done ) & dc=$!
-kmsg phase=B RUN; yc run > "$dir/ycsb-run.txt" 2>&1
-rm -f "$dir/dc.flag"; wait "$dc"; dc=
-grep -q '^\[UPDATE\], Return=OK, ' "$dir/ycsb-run.txt"
-sync; cat "$control" > "$dir/phase-B-end.txt"; date -Is > "$dir/phase-B-end.time"
-kmsg phase=B END
-fi
+# ---- phases. Slot A runs first, slot B second; which workload fills each slot depends on the label.
+phase_fio() { # phase_fio <slot> <fio job file>
+    local slot=$1 job=$2
+    kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    cat "$control" > "$dir/phase-$slot-start.txt"
+    fio "$root/workloads/$job" --output-format=json --output="$dir/phase-$slot.json"
+    sync -f "$FIO_TARGET"
+    jq -e 'all(.jobs[]; .error == 0 and .write.io_bytes > 0)' "$dir/phase-$slot.json" >/dev/null
+    cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
+    kmsg phase=$slot END
+}
+phase_sqlite() { # phase_sqlite <slot>  (same as GitHub sqlite.sh: WAL, batch 1000, drop_caches 4s during run)
+    local slot=$1
+    cat "$control" > "$dir/phase-$slot-start.txt"
+    kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
+     CREATE TABLE usertable (YCSB_KEY VARCHAR(255) PRIMARY KEY, FIELD0 TEXT, FIELD1 TEXT, FIELD2 TEXT, FIELD3 TEXT, FIELD4 TEXT, FIELD5 TEXT, FIELD6 TEXT, FIELD7 TEXT, FIELD8 TEXT, FIELD9 TEXT);"
+    yc() { (cd "$ycsb" && JAVA_TOOL_OPTIONS="-Xshare:off" bash bin/ycsb.sh "$1" jdbc -s -P "$root/workloads/sqlite/workloada" -p recordcount="$RECORDS" -p operationcount="$OPS" -threads 1 \
+            -p db.driver=org.sqlite.JDBC -p db.url="jdbc:sqlite:$db" -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false); }
+    kmsg phase=$slot LOAD; yc load > "$dir/ycsb-load.txt" 2>&1
+    grep -q '^\[INSERT\], Return=OK, ' "$dir/ycsb-load.txt"
+    sync; cat "$control" > "$dir/phase-$slot-loaded.txt"
+    touch "$dir/dc.flag"
+    ( exec 9>&-; while [[ -e "$dir/dc.flag" ]]; do sleep 4; echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; done ) & dc=$!
+    kmsg phase=$slot RUN; yc run > "$dir/ycsb-run.txt" 2>&1
+    rm -f "$dir/dc.flag"; wait "$dc"; dc=
+    grep -q '^\[UPDATE\], Return=OK, ' "$dir/ycsb-run.txt"
+    sync; cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
+    kmsg phase=$slot END
+}
+skip_slot() { for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done; : > "$dir/ycsb-load.txt"; : > "$dir/ycsb-run.txt"; }
+: > "$dir/ycsb-load.txt"; : > "$dir/ycsb-run.txt"
+case "$label" in
+    t4)    A_NAME=test4; B_NAME=none;     phase_fio A mix-test4.fio; skip_slot;;
+    mixB)  A_NAME=sqlite-a; B_NAME=test4; phase_sqlite A; phase_fio B mix-test4.fio;;          # app first, then fio; fio file kept from preset
+    mixC)  A_NAME=test3; B_NAME=test4;    HOT_IO=$((HOT_IO/4)) WARM_IO=$((WARM_IO/4)) COLD_IO=$((COLD_IO/4)) phase_fio A mix-test3.fio; phase_fio B mix-test4.fio;;  # test3 = 1/4 IOPS, 1/4 payload → same 600 s # same layout, IOPS x4: overwrite time axis shifts
+    mixA)  A_NAME=test4; B_NAME=sqlite-a; phase_fio A mix-test4.fio; phase_sqlite B;;           # fio file kept: no deleted-but-valid data
+    *)     A_NAME=test4; B_NAME=sqlite-a; phase_fio A mix-test4.fio
+           rm -f "$FIO_TARGET"; sync   # smoke/main/long: delete fio file (no discard, FTL keeps it valid)
+           phase_sqlite B;;
+esac
 # ---- stop
 stop_before=$(sectors); printf 'stop\n' > "$control"; after=$(sectors)
 [[ "$stop_before" == "$after" ]]
@@ -133,10 +147,9 @@ host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pa
 [[ "$bytes" == "$(((after-before)*512))" && "$gc" -gt 0 ]]   # buffered sqlite writes: host_pages*4096 == bytes is NOT enforced
 {
     awk -v h="$host" -v g="$gc" -v b="$bytes" 'BEGIN{printf "total host_bytes=%.0f host_pages=%.0f gc_pages=%.0f WAF=%.6f\n",b,h,g,1+g/h}'
-    printf 'phaseA(test4) %s\n' "$(phase_waf "$dir/phase-A-start.txt" "$dir/phase-A-end.txt")"
-    printf 'phaseB(sqlite-a) %s\n' "$(phase_waf "$dir/phase-B-start.txt" "$dir/phase-B-end.txt")"
-    printf 'phaseB-load %s\n' "$(phase_waf "$dir/phase-B-start.txt" "$dir/phase-B-loaded.txt")"
-    printf 'phaseB-run %s\n' "$(phase_waf "$dir/phase-B-loaded.txt" "$dir/phase-B-end.txt")"
+    printf 'phaseA(%s) %s\n' "$A_NAME" "$(phase_waf "$dir/phase-A-start.txt" "$dir/phase-A-end.txt")"
+    printf 'phaseB(%s) %s\n' "$B_NAME" "$(phase_waf "$dir/phase-B-start.txt" "$dir/phase-B-end.txt")"
+    for sl in A B; do [[ -f "$dir/phase-$sl-loaded.txt" ]] && printf 'phase%s-load %s\nphase%s-run %s\n' "$sl" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-loaded.txt")" "$sl" "$(phase_waf "$dir/phase-$sl-loaded.txt" "$dir/phase-$sl-end.txt")"; done
     printf 'ycsb-load %s\nycsb-run %s\n' "$(grep -m1 'Throughput' "$dir/ycsb-load.txt")" "$(grep -m1 'Throughput' "$dir/ycsb-run.txt")"
 } > "$dir/summary.txt"
 cat "$dir/summary.txt"
