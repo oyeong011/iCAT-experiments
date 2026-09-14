@@ -1,0 +1,42 @@
+[START] module=gh-cat37
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[WORKLOAD] source=/home/oy/iCAT/workloads/filebench/webserver.f runtime=300s
+Filebench Version 1.5-alpha3
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+0.000: Allocated 173MB of shared memory
+0.117: Web-server Version 3.1 personality successfully loaded
+0.117: Populating and pre-allocating filesets
+0.117: logfiles populated: 1 files, avg. dir. width = 20, avg. dir. depth = 0.0, 0 leafdirs, 0.002MB total size
+0.117: Removing logfiles tree (if exists)
+0.118: Pre-allocating directories in logfiles tree
+0.118: Pre-allocating files in logfiles tree
+0.119: bigfileset populated: 1000 files, avg. dir. width = 20, avg. dir. depth = 2.3, 0 leafdirs, 14.760MB total size
+0.119: Removing bigfileset tree (if exists)
+0.120: Pre-allocating directories in bigfileset tree
+0.122: Pre-allocating files in bigfileset tree
+0.142: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.142: Population and pre-allocation of filesets completed
+0.142: Starting 1 filereader instances
+1.147: Running...
+46.827: Failed to write 8664 bytes on fd 16: Success
+46.827: filereaderthread-13: flowop appendlog-1 failed
+46.827: Failed to write 6587 bytes on fd 18: No space left on device
+46.827: filereaderthread-12: flowop appendlog-1 failed
+46.827: Failed to write 526 bytes on fd 116: No space left on device
+46.827: filereaderthread-96: flowop appendlog-1 failed
+46.827: Failed to write 15629 bytes on fd 117: No space left on device
+46.827: filereaderthread-76: flowop appendlog-1 failed
+47.165: Run took 46 seconds...
+47.165: NO VALID RESULTS! Filebench run terminated prematurely around line 77
+47.165: Shutting down processes
+[DURABLE] sync + NVMe flush
+[FLUSH] phase=run-durable-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/webserver/summary.txt
+[RESULT] app=/home/oy/iCAT/result/filebench/webserver/gh-cat37.txt
+[RESULT] dmesg=/home/oy/iCAT/result/filebench/webserver/dmesg-gh-cat37.log
+[RESULT] summary=/home/oy/iCAT/result/filebench/webserver/summary.txt
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/webserver/summary.txt
+[WAF] module=gh-cat37 WAF=N/A host_pages=0 gc_copied=N/A -> /home/oy/iCAT/result/filebench/webserver/summary.txt

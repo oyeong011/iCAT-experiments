@@ -1,0 +1,54 @@
+[262554.454916] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[262554.454922] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[262554.465328] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[262554.475603] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[262554.485977] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[262554.485990] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[262554.486956] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[262554.487012] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[262554.487014] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[262554.497257] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[262554.507609] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[262554.507623] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[262554.508729] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[262554.508732] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[262554.519137] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[262554.529428] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[262554.529441] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[262554.530465] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[262554.530468] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[262554.540702] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[262554.551004] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[262554.551019] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[262554.552021] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[262554.552023] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[262554.552030] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[262554.552031] NVMeVirt: ns 0/1: size 7655 MiB
+[262554.552082] PCI host bridge to bus 0001:10
+[262554.552085] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[262554.552089] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[262554.552091] pci_bus 0001:10: root bus resource [bus 00-ff]
+[262554.552101] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[262554.552106] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[262554.552109] pci 0001:10:00.0: enabling Extended Tags
+[262554.552254] NVMeVirt: Virtual PCI bus created (node 0)
+[262554.552524] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[262554.552595] NVMeVirt: Virtual NVMe device created
+[262554.552727] nvme nvme0: pci function 0001:10:00.0
+[262554.555113] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[262554.557227] nvme nvme0: 8/0/0 default/read/poll queues
+[262555.193203] EXT4-fs (nvme0n1): mounted filesystem 3f235d27-c6d6-40a4-b4b2-6b0f174732f0 r/w with ordered data mode. Quota mode: none.
+[262556.853443] iCAT_FILEBENCH_MEASURE_START run=20260914-204126-422579
+[262557.987869] tee (422786): drop_caches: 3
+[262565.000779] tee (422798): drop_caches: 3
+[262570.943932] tee (422803): drop_caches: 3
+[262576.806538] tee (422808): drop_caches: 3
+[262583.019852] tee (422814): drop_caches: 3
+[262589.237608] tee (422820): drop_caches: 3
+[262595.574181] tee (422824): drop_caches: 3
+[262601.923282] tee (422828): drop_caches: 3
+[262604.800763] iCAT_FILEBENCH_MEASURE_END run=20260914-204126-422579
+[262606.758630] EXT4-fs (nvme0n1): unmounting filesystem 3f235d27-c6d6-40a4-b4b2-6b0f174732f0.
+[262607.020842] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[262607.020888] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+[262607.093513] NVMeVirt: Virtual NVMe device closed

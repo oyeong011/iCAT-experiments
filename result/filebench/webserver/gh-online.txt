@@ -1,0 +1,42 @@
+[START] module=gh-online
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[WORKLOAD] source=/home/oy/iCAT/workloads/filebench/webserver.f runtime=300s
+Filebench Version 1.5-alpha3
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+0.000: Allocated 173MB of shared memory
+0.194: Web-server Version 3.1 personality successfully loaded
+0.194: Populating and pre-allocating filesets
+0.195: logfiles populated: 1 files, avg. dir. width = 20, avg. dir. depth = 0.0, 0 leafdirs, 0.002MB total size
+0.195: Removing logfiles tree (if exists)
+0.211: Pre-allocating directories in logfiles tree
+0.211: Pre-allocating files in logfiles tree
+0.212: bigfileset populated: 1000 files, avg. dir. width = 20, avg. dir. depth = 2.3, 0 leafdirs, 14.760MB total size
+0.212: Removing bigfileset tree (if exists)
+0.213: Pre-allocating directories in bigfileset tree
+0.214: Pre-allocating files in bigfileset tree
+0.234: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.234: Population and pre-allocation of filesets completed
+0.234: Starting 1 filereader instances
+1.239: Running...
+46.936: Failed to write 11902 bytes on fd 24: Success
+46.936: filereaderthread-44: flowop appendlog-1 failed
+46.936: Failed to write 12470 bytes on fd 70: No space left on device
+46.936: filereaderthread-63: flowop appendlog-1 failed
+46.936: Failed to write 15104 bytes on fd 119: No space left on device
+46.936: Failed to write 11005 bytes on fd 29: No space left on device
+46.936: filereaderthread-6: flowop appendlog-1 failed
+46.936: filereaderthread-87: flowop appendlog-1 failed
+47.249: Run took 46 seconds...
+47.249: NO VALID RESULTS! Filebench run terminated prematurely around line 77
+47.249: Shutting down processes
+[DURABLE] sync + NVMe flush
+[FLUSH] phase=run-durable-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/webserver/summary.txt
+[RESULT] app=/home/oy/iCAT/result/filebench/webserver/gh-online.txt
+[RESULT] dmesg=/home/oy/iCAT/result/filebench/webserver/dmesg-gh-online.log
+[RESULT] summary=/home/oy/iCAT/result/filebench/webserver/summary.txt
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/webserver/summary.txt
+[WAF] module=gh-online WAF=N/A host_pages=0 gc_copied=N/A -> /home/oy/iCAT/result/filebench/webserver/summary.txt
