@@ -1,0 +1,105 @@
+[DMESG] start marker: iCAT_FIO_START module=gh-online run=20260914-194908-271347
+[START] module=gh-online
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[PRESET] size=6G job=/home/oy/iCAT/workloads/gh-preset.fio
+preset: (g=0): rw=write, bs=(R) 128KiB-128KiB, (W) 128KiB-128KiB, (T) 128KiB-128KiB, ioengine=libaio, iodepth=32
+fio-3.36
+Starting 1 process
+preset: Laying out IO file (1 file / 6144MiB)
+
+preset: (groupid=0, jobs=1): err= 0: pid=271424: Mon Sep 14 19:49:11 2026
+  write: IOPS=17.8k, BW=2225MiB/s (2333MB/s)(6144MiB/2761msec); 0 zone resets
+    slat (usec): min=5, max=178, avg= 8.25, stdev= 2.87
+    clat (usec): min=69, max=198374, avg=1787.09, stdev=1316.25
+     lat (usec): min=77, max=198383, avg=1795.34, stdev=1316.24
+    clat percentiles (usec):
+     |  1.00th=[  586],  5.00th=[ 1631], 10.00th=[ 1713], 20.00th=[ 1762],
+     | 30.00th=[ 1778], 40.00th=[ 1778], 50.00th=[ 1778], 60.00th=[ 1778],
+     | 70.00th=[ 1778], 80.00th=[ 1795], 90.00th=[ 1795], 95.00th=[ 1827],
+     | 99.00th=[ 2704], 99.50th=[ 3752], 99.90th=[ 7308], 99.95th=[10552],
+     | 99.99th=[14091]
+   bw (  MiB/s): min= 2222, max= 2239, per=100.00%, avg=2228.15, stdev= 7.04, samples=5
+   iops        : min=17778, max=17916, avg=17825.20, stdev=56.31, samples=5
+  lat (usec)   : 100=0.02%, 250=0.28%, 500=0.53%, 750=0.58%, 1000=0.51%
+  lat (msec)   : 2=96.03%, 4=1.64%, 10=0.34%, 20=0.05%, 250=0.01%
+  cpu          : usr=7.07%, sys=13.70%, ctx=46970, majf=0, minf=12
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=99.9%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.1%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,49152,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+  WRITE: bw=2225MiB/s (2333MB/s), 2225MiB/s-2225MiB/s (2333MB/s-2333MB/s), io=6144MiB (6442MB), run=2761-2761msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/47231, sectors=0/12138056, merge=0/0, ticks=0/98768, in_queue=98767, util=96.28%
+[TEST] size=6G io_size=200G job=/home/oy/iCAT/workloads/gh-test5.fio
+phase_a_front_hot: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+phase_a_back_cold: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+phase_b_front_cold: (g=1): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+phase_b_back_hot: (g=1): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+fio-3.36
+Starting 4 processes
+
+phase_a_front_hot: (groupid=0, jobs=2): err= 0: pid=271436: Mon Sep 14 19:59:12 2026
+  write: IOPS=40.0k, BW=156MiB/s (164MB/s)(45.8GiB/300001msec); 0 zone resets
+    slat (nsec): min=1826, max=261517, avg=3156.70, stdev=1267.36
+    clat (nsec): min=995, max=3561.6k, avg=13458.95, stdev=15125.36
+     lat (usec): min=8, max=3566, avg=16.62, stdev=15.25
+    clat percentiles (usec):
+     |  1.00th=[    9],  5.00th=[   10], 10.00th=[   10], 20.00th=[   10],
+     | 30.00th=[   10], 40.00th=[   10], 50.00th=[   10], 60.00th=[   11],
+     | 70.00th=[   11], 80.00th=[   12], 90.00th=[   15], 95.00th=[   25],
+     | 99.00th=[   85], 99.50th=[   96], 99.90th=[  125], 99.95th=[  141],
+     | 99.99th=[  176]
+   bw (  KiB/s): min=159992, max=160241, per=100.00%, avg=160045.50, stdev= 8.99, samples=1198
+   iops        : min=39998, max=40060, avg=40011.38, stdev= 2.25, samples=1198
+  lat (nsec)   : 1000=0.01%
+  lat (usec)   : 2=0.01%, 4=0.01%, 10=53.05%, 20=41.27%, 50=1.46%
+  lat (usec)   : 100=3.79%, 250=0.43%, 500=0.01%, 750=0.01%, 1000=0.01%
+  lat (msec)   : 2=0.01%, 4=0.01%
+  cpu          : usr=36.09%, sys=9.04%, ctx=13516145, majf=0, minf=28
+  IO depths    : 1=94.0%, 2=5.2%, 4=0.8%, 8=0.1%, 16=0.1%, 32=0.1%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,12000000,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+phase_b_front_cold: (groupid=1, jobs=2): err= 0: pid=271656: Mon Sep 14 19:59:12 2026
+  write: IOPS=40.0k, BW=156MiB/s (164MB/s)(45.8GiB/300001msec); 0 zone resets
+    slat (nsec): min=1827, max=1780.8k, avg=3160.07, stdev=1404.63
+    clat (nsec): min=1114, max=2087.0k, avg=13330.20, stdev=14519.59
+     lat (usec): min=8, max=2092, avg=16.49, stdev=14.66
+    clat percentiles (usec):
+     |  1.00th=[    9],  5.00th=[   10], 10.00th=[   10], 20.00th=[   10],
+     | 30.00th=[   10], 40.00th=[   10], 50.00th=[   10], 60.00th=[   11],
+     | 70.00th=[   11], 80.00th=[   11], 90.00th=[   15], 95.00th=[   24],
+     | 99.00th=[   86], 99.50th=[   96], 99.90th=[  122], 99.95th=[  135],
+     | 99.99th=[  165]
+   bw (  KiB/s): min=160000, max=160112, per=100.00%, avg=160052.37, stdev= 7.31, samples=1198
+   iops        : min=40000, max=40028, avg=40013.10, stdev= 1.83, samples=1198
+  lat (usec)   : 2=0.01%, 4=0.01%, 10=55.35%, 20=39.14%, 50=1.41%
+  lat (usec)   : 100=3.69%, 250=0.41%, 500=0.01%, 750=0.01%
+  lat (msec)   : 2=0.01%, 4=0.01%
+  cpu          : usr=37.57%, sys=7.61%, ctx=13510056, majf=0, minf=26
+  IO depths    : 1=93.8%, 2=5.3%, 4=0.9%, 8=0.1%, 16=0.1%, 32=0.1%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,12000000,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+  WRITE: bw=156MiB/s (164MB/s), 156MiB/s-156MiB/s (164MB/s-164MB/s), io=45.8GiB (49.2GB), run=300001-300001msec
+
+Run status group 1 (all jobs):
+  WRITE: bw=156MiB/s (164MB/s), 156MiB/s-156MiB/s (164MB/s-164MB/s), io=45.8GiB (49.2GB), run=300001-300001msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/23996694, sectors=0/191974896, merge=0/168, ticks=0/256457, in_queue=256457, util=34.00%
+[FLUSH] /dev/nvme0n1
+[STOP] NVMeVirt
+[DMESG] end marker: iCAT_FIO_END module=gh-online run=20260914-194908-271347
+[DMESG] saving this run: /home/oy/iCAT/result/gh-repro-20260914/dmesg-gh-online-20260914-194908-271347.log
+[RESULT] /home/oy/iCAT/result/gh-repro-20260914/dmesg-gh-online-20260914-194908-271347.log
