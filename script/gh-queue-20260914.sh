@@ -14,6 +14,7 @@ done
 for rep in 2 3; do
   for w in oltp varmail; do for m in gh-cat37 gh-online; do
     FILEBENCH_RUNTIME=300 bash script/gh-filebench.sh $m $w > result/filebench/$w-$m-rep$rep.console.txt 2>&1 || echo "FAIL $w $m rep$rep"
+    cp result/filebench/$w/dmesg-$m.log result/filebench/$w/dmesg-$m-rep$rep.log; cp result/filebench/$w/$m.txt result/filebench/$w/$m-rep$rep.txt   # original script overwrites fixed names
   done; done
   push "filebench repeats rep$rep"
 done
