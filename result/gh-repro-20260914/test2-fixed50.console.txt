@@ -41,3 +41,37 @@ hot: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, 
 cold: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
 fio-3.36
 Starting 2 processes
+
+hot: (groupid=0, jobs=2): err= 0: pid=431021: Mon Sep 14 23:24:38 2026
+  write: IOPS=9999, BW=39.1MiB/s (41.0MB/s)(22.9GiB/600001msec); 0 zone resets
+    slat (nsec): min=1866, max=3468.3k, avg=4587.22, stdev=3467.22
+    clat (nsec): min=1203, max=6071.9k, avg=16833.26, stdev=31086.06
+     lat (usec): min=9, max=6077, avg=21.42, stdev=31.39
+    clat percentiles (usec):
+     |  1.00th=[   10],  5.00th=[   10], 10.00th=[   10], 20.00th=[   10],
+     | 30.00th=[   11], 40.00th=[   11], 50.00th=[   12], 60.00th=[   13],
+     | 70.00th=[   14], 80.00th=[   15], 90.00th=[   18], 95.00th=[   31],
+     | 99.00th=[  157], 99.50th=[  178], 99.90th=[  221], 99.95th=[  245],
+     | 99.99th=[  537]
+   bw (  KiB/s): min=39808, max=40224, per=100.00%, avg=40013.81, stdev= 8.58, samples=2398
+   iops        : min= 9952, max=10056, avg=10003.45, stdev= 2.14, samples=2398
+  lat (usec)   : 2=0.01%, 4=0.01%, 10=21.70%, 20=70.64%, 50=4.20%
+  lat (usec)   : 100=0.88%, 250=2.51%, 500=0.03%, 750=0.01%, 1000=0.01%
+  lat (msec)   : 2=0.01%, 4=0.01%, 10=0.01%
+  cpu          : usr=9.24%, sys=4.68%, ctx=11684564, majf=0, minf=25
+  IO depths    : 1=98.0%, 2=1.9%, 4=0.1%, 8=0.1%, 16=0.1%, 32=0.1%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,6000000,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+  WRITE: bw=39.1MiB/s (41.0MB/s), 39.1MiB/s-39.1MiB/s (41.0MB/s-41.0MB/s), io=22.9GiB (24.6GB), run=600001-600001msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/5999334, sectors=0/48048344, merge=0/170, ticks=0/77939, in_queue=77940, util=12.28%
+[FLUSH] /dev/nvme0n1
+[STOP] NVMeVirt
+[DMESG] end marker: iCAT_FIO_END module=fixed50 run=20260914-231434-430919
+[DMESG] saving this run: /home/oy/iCAT/result/gh-repro-20260914/dmesg-fixed50-20260914-231434-430919.log
+[RESULT] /home/oy/iCAT/result/gh-repro-20260914/dmesg-fixed50-20260914-231434-430919.log
