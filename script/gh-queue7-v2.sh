@@ -10,6 +10,10 @@ M=online-v2
 SMOKE=1 bash script/mix-20260911.sh t4 onlinev2 1 > result/mix-20260911/t4-onlinev2-smoke.console.txt 2>&1 || echo "FAIL smoke v2"
 for r in 1 2 3; do bash script/mix-20260911.sh t4 onlinev2 $r > result/mix-20260911/t4-onlinev2-rep$r.console.txt 2>&1 || echo "FAIL t4 v2 rep$r"; done
 push "t4 x3"
+# 0b. 3600 s test4: enough for v2 (60 s windows) to sweep all 60 arms and settle; v1 long reference = long-online (1.952)
+for r in 1 2; do bash script/mix-20260911.sh t4long onlinev2 $r > result/mix-20260911/t4long-onlinev2-rep$r.console.txt 2>&1 || echo "FAIL t4long v2 rep$r"; done
+bash script/mix-20260911.sh t4long fixed47 1 > result/mix-20260911/t4long-fixed47-rep1.console.txt 2>&1 || echo "FAIL t4long fixed47"
+push "t4long v2 x2 + fixed47"
 # 1. single workloads, GitHub method (same scripts as v1)
 for s in "" -s2 -s3; do for t in test4 test3 test5 test2; do
   [[ "$t" == test2 && -n "$s" ]] && continue

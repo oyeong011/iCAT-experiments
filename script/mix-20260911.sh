@@ -22,16 +22,16 @@ case "$label" in
     smoke) scale=10; RECORDS=20000; OPS=20000;;
     main)  scale=1;  RECORDS=4000000; OPS=1000000;;
     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
-    t4)    scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed
+    t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
     mixA|mixB|mixG|mixH|mixJ|mixP) scale=1; RECORDS=600000; OPS=4000000;;
     mixC|mixD|mixF|mixK|mixL|mixM|mixO|mixQ)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
     *) exit 2;;
 esac
-mult=1; [[ "$label" != long ]] || mult=6   # long: phase A 6x payload (3600 s) so the learner can exploit after its 600 s sweep
+mult=1; [[ "$label" != long && "$label" != t4long ]] || mult=6   # long: phase A 6x payload (3600 s) so the learner can exploit after its 600 s sweep
 [[ -z "${SMOKE:-}" ]] || { scale=$((scale*10)); RECORDS=20000; OPS=20000; export VM_FILES=2000 VM_RUN=20; }   # SMOKE=1: 1/10 payload, tiny DB
 export HOT_IO=$((58982400000*mult/scale)) WARM_IO=$((29491200000*mult/scale)) COLD_IO=$((9830400000*mult/scale))
 export SEED_HOT=$((20260910+rep)) SEED_WARM=$((20261010+rep)) SEED_COLD=$((20261110+rep))
-dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != mix[A-Z] ]] || dir="$base/$label-$policy-rep$rep"
+dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != t4long && "$label" != mix[A-Z] ]] || dir="$base/$label-$policy-rep$rep"
 [[ -z "${SMOKE:-}" ]] || dir="$dir-smoke"
 [[ ! -e "$dir" ]] || { echo "Refusing to overwrite $dir" >&2; exit 1; }
 mkdir -p "$dir"
@@ -196,7 +196,7 @@ phase_concurrent() { # phase_concurrent <slot>: fio test4 (half payload) in back
 skip_slot() { for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done; : > "$dir/ycsb-load.txt"; : > "$dir/ycsb-run.txt"; }
 : > "$dir/ycsb-load.txt"; : > "$dir/ycsb-run.txt"
 case "$label" in
-    t4)    A_NAME=test4; B_NAME=none;     phase_fio A mix-test4.fio; skip_slot;;
+    t4|t4long) A_NAME=test4; B_NAME=none; phase_fio A mix-test4.fio; skip_slot;;
     mixB)  A_NAME=sqlite-a; B_NAME=test4; phase_sqlite A; phase_fio B mix-test4.fio;;          # app first, then fio; fio file kept from preset
     mixC)  A_NAME=test3; B_NAME=test4;    HOT_IO=$((HOT_IO/4)) WARM_IO=$((WARM_IO/4)) COLD_IO=$((COLD_IO/4)) phase_fio A mix-test3.fio; phase_fio B mix-test4.fio;;  # test3 = 1/4 IOPS, 1/4 payload → same 600 s # same layout, IOPS x4: overwrite time axis shifts
     mixA)  A_NAME=test4; B_NAME=sqlite-a; phase_fio A mix-test4.fio; phase_sqlite B;;           # fio file kept: no deleted-but-valid data
