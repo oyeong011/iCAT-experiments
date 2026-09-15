@@ -2253,3 +2253,50 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=6742259 gc_pages=6912986 WAF=2.025322
 - ycsb-load [OVERALL], Throughput(ops/sec), 23655.57483046838
 - ycsb-run [OVERALL], Throughput(ops/sec), 12050.733588407194
+
+### mix-20260911 mixC greedy — started 2026-09-15T17:18:58+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-greedy-m.ko`.
+- Command: `bash script/mix-20260911.sh mixC greedy`; evidence `result/mix-20260911/mixC-greedy/`.
+
+- Finished 2026-09-15T17:40:23+09:00; mixC greedy exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixC-greedy-rep1`; cleanup attempted.
+- total host_bytes=122922139648 host_pages=30010288 gc_pages=37502866 WAF=2.249667
+- phaseA(test3) host_pages=6009624 gc_pages=6952444 WAF=2.156885
+- phaseB(test4) host_pages=24000664 gc_pages=30550422 WAF=2.272899
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixC fixed10 — started 2026-09-15T17:40:23+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed10.ko`.
+- Command: `bash script/mix-20260911.sh mixC fixed10`; evidence `result/mix-20260911/mixC-fixed10/`.
+
+- Finished 2026-09-15T18:01:46+09:00; mixC fixed10 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixC-fixed10-rep1`; cleanup attempted.
+- total host_bytes=122947317760 host_pages=30016435 gc_pages=37779603 WAF=2.258631
+- phaseA(test3) host_pages=6015768 gc_pages=7001438 WAF=2.163848
+- phaseB(test4) host_pages=24000667 gc_pages=30778165 WAF=2.282388
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixC fixed37 — started 2026-09-15T18:01:46+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixC fixed37`; evidence `result/mix-20260911/mixC-fixed37/`.
+
+- Finished 2026-09-15T18:23:09+09:00; mixC fixed37 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixC-fixed37-rep1`; cleanup attempted.
+- total host_bytes=122884419584 host_pages=30001079 gc_pages=26744864 WAF=1.891463
+- phaseA(test3) host_pages=6000421 gc_pages=4947449 WAF=1.824517
+- phaseB(test4) host_pages=24000658 gc_pages=21797415 WAF=1.908201
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixC fixed47 — started 2026-09-15T18:23:09+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh mixC fixed47`; evidence `result/mix-20260911/mixC-fixed47/`.
+
+## 2026-09-15 — 결정: v1 실험 완료 후 iCAT v2 (판단 window 확대만)
+
+- 사용자 결정: 현재 큐(mix 14종 × 6정책 × 3 seed + 단일 잔여)를 끝까지 돌린 뒤, iCAT v2를 시험한다. v2의 변경은 **window 확대 하나만**(64 GC/256 MiB → 약 6배, 60초 수준). k=2 제거·조기 탈락·dwell은 v2 결과를 본 뒤 결정. v2 결과는 v1과 분리해 기록한다.
+- 큐 진행 중 장치를 쓰지 않는 준비(v2 소스 분기·빌드·hash 기록)는 미리 한다. 장치 smoke는 큐 종료 후.
+- 노벨티 관련 관찰(기록용): 사전 sweep과 본 측정 모두에서 최적 arm은 scale 25~50%·k 7~10에 몰려 있고 scale 200/400%가 최적인 워크로드가 없다. 현재 워크로드가 모두 재기록 주기 초 단위의 "빠른" 워크로드이기 때문으로 보이며, "고정 하나로는 안 된다"를 강하게 보이려면 재기록 주기가 분~시간 단위인 느린 워크로드 추가가 필요하다(추후 결정).
