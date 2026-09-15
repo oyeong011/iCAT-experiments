@@ -2319,3 +2319,22 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 모듈 `buildoutput/nvmev-online-v2.ko` SHA256 `8a8909a1…`(`modules.sha256`). mix 러너에 정책 `onlinev2` 추가.
 - 실행: t4 smoke → t4 × 3 seed(명시 계측) → GitHub 방식 단일(fio 4종 × seed 3, sqlite a/b × 3, filebench oltp/varmail × 3) → mix 14종 × 3 seed. v2는 online만 다시 돌리며 고정 정책·Greedy 결과는 v1 것을 공유한다(코드 동일). 결과는 `*-online-v2*`, `*-onlinev2-*`로 구분.
 - 판정: v1 대비 (1) settled 비율·best arm 교체 횟수 감소, (2) 단일 워크로드에서 최적 고정 CAT 대비 손실이 v1의 12%에서 유의미하게 감소, 목표 ≤4%(arm50 수준). 실패 시 window 외 요인(탐색 상수, 후보 축소)로 넘어간다.
+
+- Finished 2026-09-15T19:05:56+09:00; mixC fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixC-fixed50-rep1`; cleanup attempted.
+- total host_bytes=122884419584 host_pages=30001079 gc_pages=23404766 WAF=1.780131
+- phaseA(test3) host_pages=6000421 gc_pages=4810121 WAF=1.801631
+- phaseB(test4) host_pages=24000658 gc_pages=18594645 WAF=1.774756
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixC online — started 2026-09-15T19:05:56+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-mix-20260907.ko`.
+- Command: `bash script/mix-20260911.sh mixC online`; evidence `result/mix-20260911/mixC-online/`.
+
+- Finished 2026-09-15T19:27:19+09:00; mixC online exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixC-online-rep1`; cleanup attempted.
+- total host_bytes=122884419584 host_pages=30001079 gc_pages=29989276 WAF=1.999607
+- phaseA(test3) host_pages=6000421 gc_pages=6836509 WAF=2.139338
+- phaseB(test4) host_pages=24000658 gc_pages=23152767 WAF=1.964672
+- ycsb-load 
+- ycsb-run 
