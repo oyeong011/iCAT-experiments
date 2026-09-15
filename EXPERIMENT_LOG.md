@@ -2410,3 +2410,26 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(test3) host_pages=6000418 gc_pages=7615355 WAF=2.269137
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixJ greedy — started 2026-09-15T21:35:44+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-greedy-m.ko`.
+- Command: `bash script/mix-20260911.sh mixJ greedy`; evidence `result/mix-20260911/mixJ-greedy/`.
+
+- Finished 2026-09-15T21:47:28+09:00; mixJ greedy exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixJ-greedy-rep1`; cleanup attempted.
+- total host_bytes=35566329856 host_pages=8683186 gc_pages=8864192 WAF=2.020846
+- phaseA(sqlite-a) host_pages=8051761 gc_pages=8170771 WAF=2.014781
+- phaseB(sqlite-b) host_pages=631425 gc_pages=693421 WAF=2.098184
+- phaseA-load host_pages=1398351 gc_pages=1050059 WAF=1.750927
+- phaseA-run host_pages=6653410 gc_pages=7120712 WAF=2.070235
+- ycsb-load [OVERALL], Throughput(ops/sec), 23500.84211350907
+- ycsb-run [OVERALL], Throughput(ops/sec), 45656.88848304988
+
+## 2026-09-15 — 우선순위 변경: 60-arm sweep을 이 머신에서 재실행 (sweep-20260915)
+
+- 사용자 결정: 고정 4개(최악/기본/최적/견고) 라벨이 선행 연구 sweep(다른 환경, 소스 미커밋)에 의존하므로, 60 arm 전부를 이 머신에서 직접 돌려 순위를 확정한다. 이를 v1 mix·v2보다 우선한다.
+- 모듈: `varmail-compare-src` FIXED_ARM=0..59 → `buildoutput/nvmev-arm00..59.ko`(hash `result/sweep-20260915/modules.sha256`). 동일 소스·동일 커널.
+- 워크로드 3개(GitHub 계측 방식, 각 1회): test4(fio 3영역 빠름), sqlite-a, filebench oltp. 60×3=180 run ≈ 39시간. 결과 콘솔 `result/sweep-20260915/`, `result/sqlite/a-armNN.*`, `result/filebench/oltp-armNN.*`.
+- 판정: 워크로드별 60 arm 순위와 선행 sweep 순위의 일치도(Spearman), 최악/기본/최적/견고 라벨의 이 환경 등수. 라벨이 바뀌면 이후 실험의 고정 arm을 갱신한다.
+- 순서: 진행 중이던 v1 run(mixJ greedy rep1) 완주 → sweep → queue6(v1 mix, 완료분 건너뜀) → queue7(v2) 자동 재개. queue6/7 스크립트는 중단해 두었다.
+- 부수 관찰(long-online 재분석): iCAT v1은 30분경 후보를 25개로 좁히며 WAF 2.00→1.84로 개선되나 이후 다시 42~49개로 확장되며 1.86으로 되돌아감. "학습되지만 정착하지 못함"으로 정정.
