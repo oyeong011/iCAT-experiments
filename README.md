@@ -4,6 +4,18 @@ NVMeVirt(가상 SSD) 위에서 GC victim 선택 정책 **Greedy / CAT(고정 파
 
 모든 실행은 `EXPERIMENT_LOG.md`에 **실행 전 사전 등록(목적·조건·판정 기준) → 실행 후 결과** 순으로 기록돼 있다. 실패도 지우지 않는다.
 
+## 0. 워크로드 이름
+
+| 이름 | 뜻 |
+|---|---|
+| test2 | fio, hot 1GB + cold 5GB, 합계 10k IOPS (2영역) |
+| test3 | fio, hot 512MB / warm 1.5GB / cold 4GB, 6k/3k/1k IOPS (3영역, 느림) |
+| test4 | test3와 같은 배치, IOPS 4배 (24k/12k/4k) (3영역, 빠름) |
+| test5 | fio, 앞 2GB hot → 300초 뒤 뒤 4GB hot (hot 위치 이동) |
+| sqlite-a/b/d | YCSB on SQLite: a=읽기50/수정50, b=읽기95/수정5, d=최신 읽기 |
+| oltp / varmail / webserver / webproxy / videoserver | Filebench 프로필 |
+| mixA / mixB / mixC | test4→sqlite-a(파일 유지) / sqlite-a→test4 / test3→test4 |
+
 ## 1. 무엇을 비교하나
 
 | 정책 | 설명 |

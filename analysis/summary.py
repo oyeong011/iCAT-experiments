@@ -3,6 +3,8 @@
 import re, glob, statistics as st, sys, collections
 from pathlib import Path
 R = Path('/home/oy/iCAT/result')
+NAME = {'test2': 'test2 hot/cold 2영역', 'test3': 'test3 3영역 느림10k', 'test4': 'test4 3영역 빠름40k', 'test5': 'test5 hot위치이동',
+        'a': 'sqlite-a 읽기50/수정50', 'b': 'sqlite-b 읽기95/수정5', 'd': 'sqlite-d 최신읽기', 'oltp': 'oltp DB트랜잭션', 'varmail': 'varmail 메일서버'}
 POL = ['gh-greedy', 'greedy', 'fixed10', 'gh-cat37', 'fixed37', 'fixed47', 'fixed50', 'gh-online', 'online']
 GC = re.compile(r'GC stats: .*?policy=(\S+) host_pages=(\d+) gc_pages=(\d+)')
 rows = []  # (group, workload, policy, waf, host)
@@ -34,12 +36,12 @@ for s in glob.glob(str(R / 'mix-20260911' / '*' / 'summary.txt')):
         if mm and int(mm[2]) > 0: add('mix:' + m[1], mm[1], m[2], mm[4], mm[2])
 groups = collections.defaultdict(lambda: collections.defaultdict(list))
 for g, w, p, waf, host in rows: groups[(g, w)][p].append(waf)
-print(f'{"group":10s} {"workload":18s} ' + ' '.join(f'{p:>12s}' for p in POL))
+print(f'{"group":10s} {"workload":24s} ' + ' '.join(f'{p:>12s}' for p in POL))
 for (g, w) in sorted(groups):
     cells = []
     for p in POL:
         v = groups[(g, w)].get(p)
         cells.append(f'{st.fmean(v):.3f}({len(v)})' if v else '-')
-    print(f'{g:10s} {w:18s} ' + ' '.join(f'{c:>12s}' for c in cells))
+    print(f'{g:10s} {NAME.get(w, w):24s} ' + ' '.join(f'{c:>12s}' for c in cells))
 if '-v' in sys.argv:
     for r in sorted(rows): print(r)
