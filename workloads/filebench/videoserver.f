@@ -35,7 +35,7 @@
 
 set $dir=/tmp
 set $eventrate=96
-set $filesize=10g
+set $filesize=16m   # iCAT: original 10g x 226 files = 2.3 TB cannot fit the 7.6 GiB device; 16m x 226 = 3.6 GiB
 set $nthreads=48
 set $numactivevids=32
 set $numpassivevids=194
