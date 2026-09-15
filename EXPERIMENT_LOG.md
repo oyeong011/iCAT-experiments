@@ -2440,3 +2440,9 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 설계: mixA(test4→sqlite-a), mixC(test3→test4)를 phase ×1(10분, queue6 결과 공유), ×3(30분), ×6(60분). `MULT` 환경변수로 fio payload와 YCSB op 수를 배수 적용(load 크기는 고정). 정책: online(v1), onlinev2, fixed47, fixed50. 16 run ≈ 14시간. seed 1만.
 - 분석: 구간별 WAF + 10분 단위 시계열(WAF, 시험 중 arm 수)로 전환 후 재수렴 시간을 본다. 판정: 어떤 길이에서 iCAT(v1/v2)이 견고(arm50) 이내(≤4%)에 들어오는가.
 - 순서: sweep(180 run, 진행 중 — test4 arm00부터) → 본 실험 → queue6(v1 mix 잔여) → queue7(v2). sweep 스크립트의 queue6/7 자동 재개는 제거하고 queue8이 대신 재개한다.
+
+## 2026-09-15 — mix 60-arm sweep 사전 등록 (gh-queue9-mixsweep)
+
+- 사용자 결정: mix에서도 60 arm 전부. 대상 mixA(test4→sqlite-a, 파일 유지)와 mixC(test3→test4), seed 1, 명시 계측. 120 run ≈ 30시간. 정책 이름 `armNN`을 mix 러너에 추가(`buildoutput/nvmev-armNN.ko`, sweep과 동일 모듈).
+- 목적: phase 전환 시 "각 phase의 최적 arm이 실제로 다른가"와 "두 phase 합산 최적 arm"을 우리 환경에서 직접 확인. 이것이 iCAT이 넘어야 할 진짜 기준선(mix별 최적 고정)이 된다.
+- 순서: sweep(단일 180) → phase 길이(16) → **mix sweep(120)** → queue6(v1 mix 잔여) → queue7(v2). 총 예상 9/20 전후.

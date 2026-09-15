@@ -13,5 +13,4 @@ for mult in 3 6; do for lb in mixA mixC; do for m in online onlinev2 fixed47 fix
   MULT=$mult bash script/mix-20260911.sh $lb $m 1 > result/mix-20260911/$lb-$m-rep1-x$mult.console.txt 2>&1 || echo "FAIL $lb $m x$mult"
 done; push "$lb x$mult"; done; done
 echo PHASELENDONE $(date -Is)
-(setsid nohup bash script/gh-queue6-20260915.sh > $B/queue6.out 2>&1 < /dev/null &)
-(setsid nohup bash script/gh-queue7-v2.sh > $B/queue7.out 2>&1 < /dev/null &)
+# queue9 (mix sweep) resumes queue6/7 afterwards
