@@ -6,7 +6,7 @@ root=/home/oy/iCAT
 base="$root/result/mix-20260911"
 journal="$root/EXPERIMENT_LOG.md"
 control=/proc/nvmevirt_measurement
-label=${1:?Use smoke, main, long, t4, mixA, mixB or mixC}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
+label=${1:?Use smoke, main, long, t4, or mixA/B/C/D/F/G/H/J/K/L/M/O/P/Q}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
 case "$policy" in
     fixed47) module="$root/buildoutput/nvmev-varmail-20260908-fixed47.ko";;
     online)  module="$root/buildoutput/nvmev-online-mix-20260907.ko";;
@@ -22,15 +22,15 @@ case "$label" in
     main)  scale=1;  RECORDS=4000000; OPS=1000000;;
     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
     t4)    scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed
-    mixA|mixB) scale=1; RECORDS=600000; OPS=4000000;;
-    mixC)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
+    mixA|mixB|mixG|mixH|mixJ|mixP) scale=1; RECORDS=600000; OPS=4000000;;
+    mixC|mixD|mixF|mixK|mixL|mixM|mixO|mixQ)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
     *) exit 2;;
 esac
 mult=1; [[ "$label" != long ]] || mult=6   # long: phase A 6x payload (3600 s) so the learner can exploit after its 600 s sweep
-[[ -z "${SMOKE:-}" ]] || { scale=$((scale*10)); RECORDS=20000; OPS=20000; }   # SMOKE=1: 1/10 payload, tiny DB
+[[ -z "${SMOKE:-}" ]] || { scale=$((scale*10)); RECORDS=20000; OPS=20000; export VM_FILES=2000 VM_RUN=20; }   # SMOKE=1: 1/10 payload, tiny DB
 export HOT_IO=$((58982400000*mult/scale)) WARM_IO=$((29491200000*mult/scale)) COLD_IO=$((9830400000*mult/scale))
 export SEED_HOT=$((20260910+rep)) SEED_WARM=$((20261010+rep)) SEED_COLD=$((20261110+rep))
-dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != mix[ABC] ]] || dir="$base/$label-$policy-rep$rep"
+dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != mix[A-Z] ]] || dir="$base/$label-$policy-rep$rep"
 [[ -z "${SMOKE:-}" ]] || dir="$dir-smoke"
 [[ ! -e "$dir" ]] || { echo "Refusing to overwrite $dir" >&2; exit 1; }
 mkdir -p "$dir"
@@ -109,23 +109,87 @@ phase_fio() { # phase_fio <slot> <fio job file>
     cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
     kmsg phase=$slot END
 }
-phase_sqlite() { # phase_sqlite <slot>  (same as GitHub sqlite.sh: WAL, batch 1000, drop_caches 4s during run)
-    local slot=$1
+phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHub sqlite.sh: WAL, batch 1000, drop_caches 4s during run)
+    local slot=$1 wl=${2:-a} load=${3:-1}
     cat "$control" > "$dir/phase-$slot-start.txt"
     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    ((load)) && sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
+     CREATE TABLE usertable (YCSB_KEY VARCHAR(255) PRIMARY KEY, FIELD0 TEXT, FIELD1 TEXT, FIELD2 TEXT, FIELD3 TEXT, FIELD4 TEXT, FIELD5 TEXT, FIELD6 TEXT, FIELD7 TEXT, FIELD8 TEXT, FIELD9 TEXT);"
+    yc() { (cd "$ycsb" && JAVA_TOOL_OPTIONS="-Xshare:off" bash bin/ycsb.sh "$1" jdbc -s -P "$root/workloads/sqlite/workload$wl" -p recordcount="$RECORDS" -p operationcount="$OPS" -threads 1 \
+            -p db.driver=org.sqlite.JDBC -p db.url="jdbc:sqlite:$db" -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false); }
+    if ((load)); then
+        kmsg phase=$slot LOAD; yc load > "$dir/ycsb-load.txt" 2>&1
+        grep -q '^\[INSERT\], Return=OK, ' "$dir/ycsb-load.txt"
+        sync; cat "$control" > "$dir/phase-$slot-loaded.txt"
+    fi
+    touch "$dir/dc.flag"
+    ( exec 9>&-; while [[ -e "$dir/dc.flag" ]]; do sleep 4; echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; done ) & dc=$!
+    kmsg phase=$slot RUN; yc run > "$dir/ycsb-run-$slot.txt" 2>&1; cp "$dir/ycsb-run-$slot.txt" "$dir/ycsb-run.txt"
+    rm -f "$dir/dc.flag"; wait "$dc"; dc=
+    grep -q '^\[\(UPDATE\|READ\)\], Return=OK, ' "$dir/ycsb-run-$slot.txt"
+    sync; cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
+    kmsg phase=$slot END
+}
+phase_filebench() { # phase_filebench <slot> <profile> [nfiles] [filesize]: Filebench profile from workloads/filebench, own subdir, 300 s
+    local slot=$1 prof=$2 nf=${3:-} fs=${4:-} wl="$dir/$2.f"
+    mkdir -p "$root/mnt/filebench"
+    sed -e "s#^set \$dir=.*#set \$dir=$root/mnt/filebench#" -e "s#^run .*#run ${VM_RUN:-300}#" "$root/workloads/filebench/$prof.f" > "$wl"
+    [[ -z "$nf" ]] || sed -i "s#^set \$nfiles=.*#set \$nfiles=${VM_FILES:-$nf}#" "$wl"
+    [[ -z "$fs" ]] || sed -i "s#^set \$filesize=.*#set \$filesize=$fs#" "$wl"   # the 6 GiB preset file stays; only ~1.5 GiB is free
+    cat "$control" > "$dir/phase-$slot-start.txt"
+    kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    ( exec 9>&-; timeout --signal=TERM --kill-after=15 $(( ${VM_RUN:-300} + 900 )) setarch "$(uname -m)" -R "$root/tools/filebench-local/filebench" -f "$wl" ) > "$dir/filebench-$slot.txt" 2>&1
+    grep -q 'IO Summary' "$dir/filebench-$slot.txt"
+    rm -rf "$root/mnt/filebench"; sync   # next filebench phase starts from an empty dir (deleted data stays valid in the FTL, as everywhere here)
+    cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
+    kmsg phase=$slot END
+}
+phase_varmail() { phase_filebench "$1" varmail 24000; }   # 24000 files = the GitHub sweep condition
+phase_alternate() { # phase_alternate <slot>: 5 cycles of (fast test4 60 s, slow test3 60 s) — repeated speed changes
+    local slot=$1 i
+    cat "$control" > "$dir/phase-$slot-start.txt"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    for i in 1 2 3 4 5; do
+        kmsg phase=$slot cycle=$i fast
+        HOT_IO=$((HOT_IO/10)) WARM_IO=$((WARM_IO/10)) COLD_IO=$((COLD_IO/10)) fio "$root/workloads/mix-test4.fio" --output-format=json --output="$dir/phase-$slot-c$i-fast.json"
+        kmsg phase=$slot cycle=$i slow
+        HOT_IO=$((HOT_IO/40)) WARM_IO=$((WARM_IO/40)) COLD_IO=$((COLD_IO/40)) fio "$root/workloads/mix-test3.fio" --output-format=json --output="$dir/phase-$slot-c$i-slow.json"
+    done
+    sync -f "$FIO_TARGET"; jq -s -e 'all(.[]; all(.jobs[]; .error == 0))' "$dir"/phase-$slot-c*.json >/dev/null
+    cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"; kmsg phase=$slot END
+}
+phase_ramp() { # phase_ramp <slot>: IOPS ramps 10k -> 20k -> 30k -> 40k -> 50k, 120 s each (gradual drift instead of a step)
+    local slot=$1 m
+    cat "$control" > "$dir/phase-$slot-start.txt"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    for m in 1 2 3 4 5; do   # test3 rates x m; payload = 120 s worth
+        kmsg phase=$slot step=$m
+        HOT_R=$((6000*m)) WARM_R=$((3000*m)) COLD_R=$((1000*m)) HOT_IO=$((6000*m*120*4096/scale)) WARM_IO=$((3000*m*120*4096/scale)) COLD_IO=$((1000*m*120*4096/scale)) \
+            fio "$root/workloads/mix-rate.fio" --output-format=json --output="$dir/phase-$slot-step$m.json"
+    done
+    sync -f "$FIO_TARGET"; jq -s -e 'all(.[]; all(.jobs[]; .error == 0))' "$dir"/phase-$slot-step*.json >/dev/null
+    cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"; kmsg phase=$slot END
+}
+phase_idle() { # phase_idle <slot> <seconds>: no I/O; block ages keep growing
+    local slot=$1 sec=$2
+    cat "$control" > "$dir/phase-$slot-start.txt"; kmsg phase=$slot START idle=$sec; date -Is > "$dir/phase-$slot-start.time"
+    sleep "$sec"
+    cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"; kmsg phase=$slot END
+}
+phase_concurrent() { # phase_concurrent <slot>: fio test4 (half payload) in background while sqlite-a runs; both tenants share the device
+    local slot=$1 fpid
+    cat "$control" > "$dir/phase-$slot-start.txt"
+    kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    ( exec 9>&-; HOT_IO=$((HOT_IO/2)) WARM_IO=$((WARM_IO/2)) COLD_IO=$((COLD_IO/2)) fio "$root/workloads/mix-test4.fio" --output-format=json --output="$dir/phase-$slot.json" ) & fpid=$!
     sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
      CREATE TABLE usertable (YCSB_KEY VARCHAR(255) PRIMARY KEY, FIELD0 TEXT, FIELD1 TEXT, FIELD2 TEXT, FIELD3 TEXT, FIELD4 TEXT, FIELD5 TEXT, FIELD6 TEXT, FIELD7 TEXT, FIELD8 TEXT, FIELD9 TEXT);"
     yc() { (cd "$ycsb" && JAVA_TOOL_OPTIONS="-Xshare:off" bash bin/ycsb.sh "$1" jdbc -s -P "$root/workloads/sqlite/workloada" -p recordcount="$RECORDS" -p operationcount="$OPS" -threads 1 \
             -p db.driver=org.sqlite.JDBC -p db.url="jdbc:sqlite:$db" -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false); }
-    kmsg phase=$slot LOAD; yc load > "$dir/ycsb-load.txt" 2>&1
-    grep -q '^\[INSERT\], Return=OK, ' "$dir/ycsb-load.txt"
-    sync; cat "$control" > "$dir/phase-$slot-loaded.txt"
-    touch "$dir/dc.flag"
-    ( exec 9>&-; while [[ -e "$dir/dc.flag" ]]; do sleep 4; echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; done ) & dc=$!
-    kmsg phase=$slot RUN; yc run > "$dir/ycsb-run.txt" 2>&1
-    rm -f "$dir/dc.flag"; wait "$dc"; dc=
+    yc load > "$dir/ycsb-load.txt" 2>&1; grep -q '^\[INSERT\], Return=OK, ' "$dir/ycsb-load.txt"
+    touch "$dir/dc.flag"; ( exec 9>&-; while [[ -e "$dir/dc.flag" ]]; do sleep 4; echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; done ) & dc=$!
+    yc run > "$dir/ycsb-run.txt" 2>&1; rm -f "$dir/dc.flag"; wait "$dc"; dc=
     grep -q '^\[UPDATE\], Return=OK, ' "$dir/ycsb-run.txt"
-    sync; cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
+    wait "$fpid"; sync -f "$FIO_TARGET"
+    jq -e 'all(.jobs[]; .error == 0 and .write.io_bytes > 0)' "$dir/phase-$slot.json" >/dev/null
+    cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
     kmsg phase=$slot END
 }
 skip_slot() { for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done; : > "$dir/ycsb-load.txt"; : > "$dir/ycsb-run.txt"; }
@@ -135,6 +199,17 @@ case "$label" in
     mixB)  A_NAME=sqlite-a; B_NAME=test4; phase_sqlite A; phase_fio B mix-test4.fio;;          # app first, then fio; fio file kept from preset
     mixC)  A_NAME=test3; B_NAME=test4;    HOT_IO=$((HOT_IO/4)) WARM_IO=$((WARM_IO/4)) COLD_IO=$((COLD_IO/4)) phase_fio A mix-test3.fio; phase_fio B mix-test4.fio;;  # test3 = 1/4 IOPS, 1/4 payload → same 600 s # same layout, IOPS x4: overwrite time axis shifts
     mixA)  A_NAME=test4; B_NAME=sqlite-a; phase_fio A mix-test4.fio; phase_sqlite B;;           # fio file kept: no deleted-but-valid data
+    mixD)  A_NAME=test4; B_NAME=test3;    phase_fio A mix-test4.fio; HOT_IO=$((HOT_IO/4)) WARM_IO=$((WARM_IO/4)) COLD_IO=$((COLD_IO/4)) phase_fio B mix-test3.fio;;  # reverse of C: slowdown
+    mixF)  A_NAME=test4; B_NAME=varmail;  phase_fio A mix-test4.fio; phase_varmail B;;          # fio -> mail server (24000 files)
+    mixG)  A_NAME=concurrent-test4+sqlite-a; B_NAME=none; phase_concurrent A; skip_slot;;     # two tenants at once
+    mixH)  A_NAME=test3; B_NAME=test4; C_NAME=sqlite-a; HOT_IO=$((HOT_IO/4)) WARM_IO=$((WARM_IO/4)) COLD_IO=$((COLD_IO/4)) phase_fio A mix-test3.fio; phase_fio B mix-test4.fio; phase_sqlite C;;  # three shifts
+    mixJ)  A_NAME=sqlite-a; B_NAME=sqlite-b; phase_sqlite A a 1; phase_sqlite B b 0;;         # same DB: update-heavy -> read-heavy
+    mixK)  A_NAME=test4-hot512M; B_NAME=test4-hot128M; phase_fio A mix-test4.fio; HOT_SIZE=128M phase_fio B mix-hotsize.fio;;   # same speed, hot region shrinks 4x (locality change)
+    mixL)  A_NAME=alternate-fast/slow-x5; B_NAME=none; phase_alternate A; skip_slot;;        # repeated 60 s speed flips
+    mixM)  A_NAME=ramp-10k-to-50k; B_NAME=none; phase_ramp A; skip_slot;;                    # gradual drift
+    mixO)  A_NAME=oltp; B_NAME=varmail;  phase_filebench A oltp "" 64m; phase_varmail B;;            # two filebench apps
+    mixP)  A_NAME=sqlite-a; B_NAME=oltp; phase_sqlite A a 1; phase_filebench B oltp "" 32m;;         # DB -> DB-like app
+    mixQ)  A_NAME=test4; B_NAME=idle-300s; C_NAME=test4; HOT_IO=$((HOT_IO/2)) WARM_IO=$((WARM_IO/2)) COLD_IO=$((COLD_IO/2)) phase_fio A mix-test4.fio; phase_idle B $(( ${SMOKE:+30} + ${SMOKE:-300} )); HOT_IO=$((HOT_IO/2)) WARM_IO=$((WARM_IO/2)) COLD_IO=$((COLD_IO/2)) phase_fio C mix-test4.fio;;  # idle gap between two identical phases
     *)     A_NAME=test4; B_NAME=sqlite-a; phase_fio A mix-test4.fio
            rm -f "$FIO_TARGET"; sync   # smoke/main/long: delete fio file (no discard, FTL keeps it valid)
            phase_sqlite B;;
@@ -149,7 +224,8 @@ host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pa
     awk -v h="$host" -v g="$gc" -v b="$bytes" 'BEGIN{printf "total host_bytes=%.0f host_pages=%.0f gc_pages=%.0f WAF=%.6f\n",b,h,g,1+g/h}'
     printf 'phaseA(%s) %s\n' "$A_NAME" "$(phase_waf "$dir/phase-A-start.txt" "$dir/phase-A-end.txt")"
     printf 'phaseB(%s) %s\n' "$B_NAME" "$(phase_waf "$dir/phase-B-start.txt" "$dir/phase-B-end.txt")"
-    for sl in A B; do [[ -f "$dir/phase-$sl-loaded.txt" ]] && printf 'phase%s-load %s\nphase%s-run %s\n' "$sl" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-loaded.txt")" "$sl" "$(phase_waf "$dir/phase-$sl-loaded.txt" "$dir/phase-$sl-end.txt")"; done
+    [[ ! -f "$dir/phase-C-end.txt" ]] || printf 'phaseC(%s) %s\n' "${C_NAME:-}" "$(phase_waf "$dir/phase-C-start.txt" "$dir/phase-C-end.txt")"
+    for sl in A B C; do [[ -f "$dir/phase-$sl-loaded.txt" ]] && printf 'phase%s-load %s\nphase%s-run %s\n' "$sl" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-loaded.txt")" "$sl" "$(phase_waf "$dir/phase-$sl-loaded.txt" "$dir/phase-$sl-end.txt")"; done
     printf 'ycsb-load %s\nycsb-run %s\n' "$(grep -m1 'Throughput' "$dir/ycsb-load.txt")" "$(grep -m1 'Throughput' "$dir/ycsb-run.txt")"
 } > "$dir/summary.txt"
 cat "$dir/summary.txt"
