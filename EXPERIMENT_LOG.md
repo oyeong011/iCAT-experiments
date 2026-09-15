@@ -2300,3 +2300,22 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 사용자 결정: 현재 큐(mix 14종 × 6정책 × 3 seed + 단일 잔여)를 끝까지 돌린 뒤, iCAT v2를 시험한다. v2의 변경은 **window 확대 하나만**(64 GC/256 MiB → 약 6배, 60초 수준). k=2 제거·조기 탈락·dwell은 v2 결과를 본 뒤 결정. v2 결과는 v1과 분리해 기록한다.
 - 큐 진행 중 장치를 쓰지 않는 준비(v2 소스 분기·빌드·hash 기록)는 미리 한다. 장치 smoke는 큐 종료 후.
 - 노벨티 관련 관찰(기록용): 사전 sweep과 본 측정 모두에서 최적 arm은 scale 25~50%·k 7~10에 몰려 있고 scale 200/400%가 최적인 워크로드가 없다. 현재 워크로드가 모두 재기록 주기 초 단위의 "빠른" 워크로드이기 때문으로 보이며, "고정 하나로는 안 된다"를 강하게 보이려면 재기록 주기가 분~시간 단위인 느린 워크로드 추가가 필요하다(추후 결정).
+
+- Finished 2026-09-15T18:44:33+09:00; mixC fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixC-fixed47-rep1`; cleanup attempted.
+- total host_bytes=122884419584 host_pages=30001079 gc_pages=22524804 WAF=1.750800
+- phaseA(test3) host_pages=6000421 gc_pages=4787838 WAF=1.797917
+- phaseB(test4) host_pages=24000658 gc_pages=17736966 WAF=1.739020
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixC fixed50 — started 2026-09-15T18:44:33+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixC fixed50`; evidence `result/mix-20260911/mixC-fixed50/`.
+
+## 2026-09-15 — iCAT v2 사전 등록 (gh-queue7-v2, queue6 종료 후 자동 시작)
+
+- 사용자 요청: v1 큐가 끝나는 즉시 v2 시작. **v2 = online-mix-src 복사본(`online-v2-src/`)에서 conv_ftl.h 두 상수만 변경**: `WATGC_V2_WINDOW_GC` 64→384, `WATGC_V2_WINDOW_HOST_PAGES` 65536→393216 (256 MiB→1.5 GiB, 6배). 그 외 학습기 상수·정책·계측 코드 무변경. 목적: window당 관측 WAF의 잡음(v1에서 동일 arm 폭 0.385)을 줄여 arm 간 차이(0.098)를 분별 가능하게 함. 부작용으로 STABLE/STALE/DRIFT window 수는 그대로이므로 시간 기준으로는 6배 길어짐(기록).
+- 모듈 `buildoutput/nvmev-online-v2.ko` SHA256 `8a8909a1…`(`modules.sha256`). mix 러너에 정책 `onlinev2` 추가.
+- 실행: t4 smoke → t4 × 3 seed(명시 계측) → GitHub 방식 단일(fio 4종 × seed 3, sqlite a/b × 3, filebench oltp/varmail × 3) → mix 14종 × 3 seed. v2는 online만 다시 돌리며 고정 정책·Greedy 결과는 v1 것을 공유한다(코드 동일). 결과는 `*-online-v2*`, `*-onlinev2-*`로 구분.
+- 판정: v1 대비 (1) settled 비율·best arm 교체 횟수 감소, (2) 단일 워크로드에서 최적 고정 CAT 대비 손실이 v1의 12%에서 유의미하게 감소, 목표 ≤4%(arm50 수준). 실패 시 window 외 요인(탐색 상수, 후보 축소)로 넘어간다.

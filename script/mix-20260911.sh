@@ -10,6 +10,7 @@ label=${1:?Use smoke, main, long, t4, or mixA/B/C/D/F/G/H/J/K/L/M/O/P/Q}; policy
 case "$policy" in
     fixed47) module="$root/buildoutput/nvmev-varmail-20260908-fixed47.ko";;
     online)  module="$root/buildoutput/nvmev-online-mix-20260907.ko";;
+    onlinev2) module="$root/buildoutput/nvmev-online-v2.ko";;   # v1 + 6x reward window
     fixed10) module="$root/buildoutput/nvmev-fixed10.ko";;
     fixed37) module="$root/buildoutput/nvmev-fixed37.ko";;
     greedy)  module="$root/buildoutput/nvmev-greedy-m.ko";;
@@ -62,7 +63,7 @@ finish() {
     [[ -z "$collector" ]] || { kill "$collector"; wait "$collector"; }
     sudo -n dmesg --color=never > "$dir/kernel-final.log" || rc=1
     awk -v s="$marker" '!seen[$0]++ {if(index($0,s))on=1; if(on)print}' "$dir"/kernel-snapshots/*.log "$dir/kernel-final.log" > "$dir/kernel.log" || rc=1
-    if [[ "$rc" == 0 && "$policy" == online ]]; then
+    if [[ "$rc" == 0 && "$policy" == online* ]]; then
         for part in 0 1 2 3; do grep -Eq "WATGC_V2 sample .*part=$part " "$dir/kernel.log" || rc=1; done
     fi
     printf '\n- Finished %s; %s %s exit=%s; evidence `%s`; cleanup attempted.\n' "$(date -Is)" "$label" "$policy" "$rc" "$dir" >> "$journal"
