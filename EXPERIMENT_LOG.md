@@ -2433,3 +2433,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 판정: 워크로드별 60 arm 순위와 선행 sweep 순위의 일치도(Spearman), 최악/기본/최적/견고 라벨의 이 환경 등수. 라벨이 바뀌면 이후 실험의 고정 arm을 갱신한다.
 - 순서: 진행 중이던 v1 run(mixJ greedy rep1) 완주 → sweep → queue6(v1 mix, 완료분 건너뜀) → queue7(v2) 자동 재개. queue6/7 스크립트는 중단해 두었다.
 - 부수 관찰(long-online 재분석): iCAT v1은 30분경 후보를 25개로 좁히며 WAF 2.00→1.84로 개선되나 이후 다시 42~49개로 확장되며 1.86으로 되돌아감. "학습되지만 정착하지 못함"으로 정정.
+
+## 2026-09-15 — phase 길이 vs 학습 시간 실험 사전 등록 (gh-queue8-phaselen, sweep 직후)
+
+- 사용자 제안: mix에서 phase 길이가 iCAT 학습 시간(v1 재분석에서 약 30분)보다 짧으면 iCAT이 따라갈 수 없으므로, phase 길이를 축으로 두고 어느 길이부터 iCAT이 고정 CAT을 따라잡는지 본다.
+- 설계: mixA(test4→sqlite-a), mixC(test3→test4)를 phase ×1(10분, queue6 결과 공유), ×3(30분), ×6(60분). `MULT` 환경변수로 fio payload와 YCSB op 수를 배수 적용(load 크기는 고정). 정책: online(v1), onlinev2, fixed47, fixed50. 16 run ≈ 14시간. seed 1만.
+- 분석: 구간별 WAF + 10분 단위 시계열(WAF, 시험 중 arm 수)로 전환 후 재수렴 시간을 본다. 판정: 어떤 길이에서 iCAT(v1/v2)이 견고(arm50) 이내(≤4%)에 들어오는가.
+- 순서: sweep(180 run, 진행 중 — test4 arm00부터) → 본 실험 → queue6(v1 mix 잔여) → queue7(v2). sweep 스크립트의 queue6/7 자동 재개는 제거하고 queue8이 대신 재개한다.

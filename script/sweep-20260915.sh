@@ -17,6 +17,4 @@ for a in $(seq 0 59); do t=$(printf 'arm%02d' $a)
   [[ -e result/filebench/oltp-$t.console.txt ]] || FILEBENCH_RUNTIME=300 bash script/gh-filebench.sh $t oltp > result/filebench/oltp-$t.console.txt 2>&1 || echo "FAIL oltp $t"
 done; push "oltp x 60 arms"
 echo SWEEPDONE $(date -Is)
-# resume v1 mixes then v2
-(setsid nohup bash script/gh-queue6-20260915.sh > $B/queue6.out 2>&1 < /dev/null &)
-(setsid nohup bash script/gh-queue7-v2.sh > $B/queue7.out 2>&1 < /dev/null &)
+# queue8 (phase-length) resumes queue6/7 afterwards

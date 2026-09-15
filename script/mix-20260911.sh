@@ -27,11 +27,12 @@ case "$label" in
     mixC|mixD|mixF|mixK|mixL|mixM|mixO|mixQ)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
     *) exit 2;;
 esac
-mult=1; [[ "$label" != long && "$label" != t4long ]] || mult=6   # long: phase A 6x payload (3600 s) so the learner can exploit after its 600 s sweep
+mult=${MULT:-1}; [[ "$label" != long && "$label" != t4long ]] || mult=6   # MULT=n: every phase n times longer (fio payload and YCSB ops); for phase-length vs learning-time analysis   # long: phase A 6x payload (3600 s) so the learner can exploit after its 600 s sweep
 [[ -z "${SMOKE:-}" ]] || { scale=$((scale*10)); RECORDS=20000; OPS=20000; export VM_FILES=2000 VM_RUN=20; }   # SMOKE=1: 1/10 payload, tiny DB
 export HOT_IO=$((58982400000*mult/scale)) WARM_IO=$((29491200000*mult/scale)) COLD_IO=$((9830400000*mult/scale))
 export SEED_HOT=$((20260910+rep)) SEED_WARM=$((20261010+rep)) SEED_COLD=$((20261110+rep))
 dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != t4long && "$label" != mix[A-Z] ]] || dir="$base/$label-$policy-rep$rep"
+[[ -z "${MULT:-}" || "$MULT" == 1 ]] || { dir="$dir-x$MULT"; OPS=$((OPS*MULT)); }
 [[ -z "${SMOKE:-}" ]] || dir="$dir-smoke"
 [[ ! -e "$dir" ]] || { echo "Refusing to overwrite $dir" >&2; exit 1; }
 mkdir -p "$dir"
