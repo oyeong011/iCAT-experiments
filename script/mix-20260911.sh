@@ -229,3 +229,4 @@ host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pa
     printf 'ycsb-load %s\nycsb-run %s\n' "$(grep -m1 'Throughput' "$dir/ycsb-load.txt")" "$(grep -m1 'Throughput' "$dir/ycsb-run.txt")"
 } > "$dir/summary.txt"
 cat "$dir/summary.txt"
+gzip -f "$dir"/ycsb-run*.txt "$dir"/ycsb-load.txt 2>/dev/null || true   # YCSB per-second status is ~180 MB per 4M ops; GitHub caps files at 100 MB
