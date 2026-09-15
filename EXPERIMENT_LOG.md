@@ -1897,3 +1897,8 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 정책 6개(start/stop 계측 모듈): greedy(`nvmev-greedy-m.ko`, varmail-compare-src GREEDY), fixed10, fixed37(기존 varmail fixed37 복사), fixed47, fixed50, online. gh-* 모듈은 manual 계측이 없어 mix에 못 쓴다.
 - 순서(queue3 종료 후): mixB/mixC SMOKE(1/10) → rep1~3 × {mixB, mixC} × 6정책 + mixA × {greedy, fixed37} → main × {greedy, fixed10, fixed37, fixed50}. 약 46 run, 12시간 이상. 블록마다 push. mixB/mixC는 장치가 점유 중이라 사전 smoke를 못 했고 queue4 첫 단계에서 smoke한다(실패해도 본 run 시도, FAIL 기록).
 - 2026-09-15 10:55 queue2 완료(07:13). FAIL 2건: filebench videoserver × cat37/online — 원본 프로필이 파일 226개 × 10 GiB(2.3 TB)라 7.6 GiB 장치에서 ENOSPC. `$filesize=16m`으로 축소(3.6 GiB). 이 변경은 workload 크기 자체를 바꾸므로 videoserver 결과는 GitHub와 비교 불가하고 정책 간 상대 비교로만 쓴다. cat37/online videoserver는 queue3의 4 고정 정책과 별개로 재실행 필요. queue3 진행 중(fio seed s2 × 6정책 완료, s3 진행 중).
+
+## 2026-09-15 — 큐 재편성: mix 우선 (gh-queue5-20260915)
+
+- 사용자 요청: mix 결과를 먼저 보고 싶음. queue3(fio s3 진행 중)·queue4 스크립트를 중단(진행 중이던 gh-fio fixed47 test5-s3 run은 완주하게 둠). 새 queue5가 장치가 빌 때까지 기다린 뒤: mixB/mixC smoke → **rep1: mixA·mixB·mixC × 6정책(greedy, fixed10, fixed37, fixed47, fixed50, online)** → rep2 → rep3 → 남은 fio s3(test3 fixed50/online, test5 전부) → filebench webserver/webproxy/videoserver × 6정책 → main × greedy/fixed10/fixed37/fixed50. 이미 summary가 있는 run은 건너뛴다. 블록마다 push.
+- 예상: mix rep1 18 run ≈ 5시간(오늘 저녁), rep2/3 ≈ 내일, 나머지 모레.
