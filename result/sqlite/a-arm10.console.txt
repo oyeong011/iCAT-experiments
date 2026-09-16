@@ -1,0 +1,40 @@
+[DMESG] start marker: iCAT_SQLITE_START module=arm10 workload=a run=20260916-141416-830446
+[START] module=arm10
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[SQLITE] schema setup: /home/oy/iCAT/mnt/ycsb.db
+wal
+[LOAD] /home/oy/iCAT/workloads/sqlite/workloada
+/usr/bin/java  -classpath /home/oy/YCSB/ycsb-0.17.0/conf:/home/oy/YCSB/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/core-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/conf:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-collections-3.2.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-lang-2.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-pool-1.5.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jms_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jta_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/jdbc-binding-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-jdbc-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-kernel-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-lib-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/serp-1.13.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/slf4j-api-1.7.36.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar site.ycsb.Client -load -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+Picked up JAVA_TOOL_OPTIONS: -Xshare:off
+Command line: -load -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Adding shard node URL: jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db
+2026-09-16 14:14:22:498 0 sec: 0 operations; est completion in 0 second 
+Using shards: 1, batchSize:1000, fetchSize: -1
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-16 14:14:32:280 10 sec: 241233 operations; 24123.3 current ops/sec; est completion in 2 minutes [INSERT: Count=241296, Max=21039, Min=8, Avg=35.97, 90=35, 99=63, 99.9=3591, 99.99=19343] 
+2026-09-16 14:14:42:280 20 sec: 455827 operations; 21459.4 current ops/sec; est completion in 2 minutes [INSERT: Count=214538, Max=23823, Min=9, Avg=45.22, 90=38, 99=65, 99.9=1063, 99.99=22511] 
+2026-09-16 14:14:52:280 30 sec: 653999 operations; 19817.2 current ops/sec; est completion in 2 minutes [INSERT: Count=198165, Max=24687, Min=9, Avg=48.93, 90=41, 99=69, 99.9=1045, 99.99=23743] 
+2026-09-16 14:15:02:280 40 sec: 874348 operations; 22034.9 current ops/sec; est completion in 2 minutes [INSERT: Count=220361, Max=24351, Min=9, Avg=44.18, 90=38, 99=64, 99.9=15663, 99.99=22991] 
+2026-09-16 14:15:12:280 50 sec: 1087755 operations; 21340.7 current ops/sec; est completion in 2 minutes [INSERT: Count=213401, Max=28799, Min=9, Avg=45.58, 90=38, 99=65, 99.9=1098, 99.99=25455] 
+2026-09-16 14:15:22:280 60 sec: 1302999 operations; 21524.4 current ops/sec; est completion in 2 minutes [INSERT: Count=215238, Max=26831, Min=9, Avg=45.21, 90=38, 99=63, 99.9=1185, 99.99=25615] 
+2026-09-16 14:15:32:280 70 sec: 1498341 operations; 19534.2 current ops/sec; est completion in 1 minute [INSERT: Count=195351, Max=27487, Min=9, Avg=49.84, 90=41, 99=68, 99.9=18831, 99.99=26111] 
+2026-09-16 14:15:42:280 80 sec: 1709778 operations; 21143.7 current ops/sec; est completion in 1 minute [INSERT: Count=211438, Max=29935, Min=9, Avg=46.03, 90=38, 99=64, 99.9=998, 99.99=25327] 
+2026-09-16 14:15:52:280 90 sec: 1901884 operations; 19210.6 current ops/sec; est completion in 1 minute [INSERT: Count=192102, Max=29471, Min=9, Avg=50.71, 90=41, 99=69, 99.9=990, 99.99=26815] 
+2026-09-16 14:16:02:280 100 sec: 2112999 operations; 21111.5 current ops/sec; est completion in 1 minute [INSERT: Count=211109, Max=29663, Min=9, Avg=46.09, 90=38, 99=63, 99.9=1075, 99.99=25407] 
+2026-09-16 14:16:12:280 110 sec: 2324386 operations; 21138.7 current ops/sec; est completion in 1 minute [INSERT: Count=211392, Max=28671, Min=9, Avg=46.05, 90=38, 99=63, 99.9=18815, 99.99=26351] 
+2026-09-16 14:16:22:280 120 sec: 2540999 operations; 21661.3 current ops/sec; est completion in 1 minute [INSERT: Count=216608, Max=28047, Min=9, Avg=44.94, 90=36, 99=60, 99.9=1013, 99.99=24127] 
+2026-09-16 14:16:32:280 130 sec: 2744999 operations; 20400 current ops/sec; est completion in 1 minute [INSERT: Count=204000, Max=27775, Min=9, Avg=47.68, 90=39, 99=65, 99.9=958, 99.99=26975] 
+2026-09-16 14:16:42:280 140 sec: 2921999 operations; 17700 current ops/sec; est completion in 52 seconds [INSERT: Count=177000, Max=28879, Min=9, Avg=55.09, 90=44, 99=72, 99.9=1257, 99.99=27583] 
+2026-09-16 14:16:52:280 150 sec: 3102838 operations; 18083.9 current ops/sec; est completion in 44 seconds [INSERT: Count=180846, Max=28511, Min=9, Avg=53.98, 90=44, 99=72, 99.9=1030, 99.99=27375] 
+2026-09-16 14:17:02:280 160 sec: 3309999 operations; 20716.1 current ops/sec; est completion in 34 seconds [INSERT: Count=207154, Max=28703, Min=9, Avg=47.01, 90=39, 99=65, 99.9=971, 99.99=26815] 
+2026-09-16 14:17:12:280 170 sec: 3503501 operations; 19350.2 current ops/sec; est completion in 25 seconds [INSERT: Count=193509, Max=33407, Min=9, Avg=50.4, 90=41, 99=70, 99.9=2797, 99.99=29343] 
+2026-09-16 14:17:22:280 180 sec: 3677999 operations; 17449.8 current ops/sec; est completion in 16 seconds [INSERT: Count=174491, Max=34015, Min=9, Avg=55.85, 90=45, 99=76, 99.9=1166, 99.99=31103] 
