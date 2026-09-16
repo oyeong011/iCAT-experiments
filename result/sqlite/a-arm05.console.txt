@@ -1,0 +1,96 @@
+[DMESG] start marker: iCAT_SQLITE_START module=arm05 workload=a run=20260916-110050-815761
+[START] module=arm05
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[SQLITE] schema setup: /home/oy/iCAT/mnt/ycsb.db
+wal
+[LOAD] /home/oy/iCAT/workloads/sqlite/workloada
+/usr/bin/java  -classpath /home/oy/YCSB/ycsb-0.17.0/conf:/home/oy/YCSB/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/core-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/conf:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-collections-3.2.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-lang-2.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-pool-1.5.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jms_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jta_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/jdbc-binding-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-jdbc-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-kernel-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-lib-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/serp-1.13.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/slf4j-api-1.7.36.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar site.ycsb.Client -load -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+Picked up JAVA_TOOL_OPTIONS: -Xshare:off
+Command line: -load -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Adding shard node URL: jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db
+2026-09-16 11:00:56:836 0 sec: 0 operations; est completion in 0 second 
+Using shards: 1, batchSize:1000, fetchSize: -1
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-16 11:01:06:557 10 sec: 262735 operations; 26273.5 current ops/sec; est completion in 2 minutes [INSERT: Count=262795, Max=21471, Min=8, Avg=32.46, 90=30, 99=55, 99.9=3227, 99.99=18767] 
+2026-09-16 11:01:16:557 20 sec: 487999 operations; 22526.4 current ops/sec; est completion in 2 minutes [INSERT: Count=225204, Max=23967, Min=8, Avg=43.07, 90=37, 99=63, 99.9=1106, 99.99=22223] 
+2026-09-16 11:01:26:557 30 sec: 722999 operations; 23500 current ops/sec; est completion in 2 minutes [INSERT: Count=235000, Max=24431, Min=8, Avg=41.39, 90=36, 99=61, 99.9=1199, 99.99=21967] 
+2026-09-16 11:01:36:557 40 sec: 936385 operations; 21338.6 current ops/sec; est completion in 2 minutes [INSERT: Count=213391, Max=26831, Min=8, Avg=45.62, 90=38, 99=65, 99.9=16239, 99.99=25359] 
+2026-09-16 11:01:46:557 50 sec: 1124606 operations; 18822.1 current ops/sec; est completion in 2 minutes [INSERT: Count=188227, Max=30015, Min=9, Avg=51.77, 90=43, 99=70, 99.9=1163, 99.99=26383] 
+2026-09-16 11:01:56:557 60 sec: 1332456 operations; 20785 current ops/sec; est completion in 2 minutes [INSERT: Count=207845, Max=28559, Min=9, Avg=46.87, 90=39, 99=65, 99.9=1036, 99.99=26015] 
+2026-09-16 11:02:06:557 70 sec: 1525999 operations; 19354.3 current ops/sec; est completion in 1 minute [INSERT: Count=193537, Max=27439, Min=9, Avg=50.32, 90=41, 99=69, 99.9=958, 99.99=26431] 
+2026-09-16 11:02:16:557 80 sec: 1725262 operations; 19926.3 current ops/sec; est completion in 1 minute [INSERT: Count=199290, Max=28015, Min=9, Avg=48.94, 90=40, 99=68, 99.9=18959, 99.99=26815] 
+2026-09-16 11:02:26:557 90 sec: 1916999 operations; 19173.7 current ops/sec; est completion in 1 minute [INSERT: Count=191710, Max=30687, Min=9, Avg=50.81, 90=42, 99=69, 99.9=994, 99.99=27071] 
+2026-09-16 11:02:36:557 100 sec: 2107098 operations; 19009.9 current ops/sec; est completion in 1 minute [INSERT: Count=190150, Max=29071, Min=9, Avg=51.31, 90=42, 99=69, 99.9=19327, 99.99=27023] 
+2026-09-16 11:02:46:557 110 sec: 2304555 operations; 19745.7 current ops/sec; est completion in 1 minute [INSERT: Count=197434, Max=29727, Min=9, Avg=49.37, 90=40, 99=68, 99.9=1060, 99.99=26911] 
+2026-09-16 11:02:56:557 120 sec: 2507730 operations; 20317.5 current ops/sec; est completion in 1 minute [INSERT: Count=203156, Max=28735, Min=9, Avg=47.98, 90=39, 99=66, 99.9=1854, 99.99=27471] 
+2026-09-16 11:03:06:557 130 sec: 2716999 operations; 20926.9 current ops/sec; est completion in 1 minute [INSERT: Count=209260, Max=29919, Min=9, Avg=46.47, 90=38, 99=63, 99.9=1213, 99.99=26943] 
+2026-09-16 11:03:16:557 140 sec: 2902999 operations; 18600 current ops/sec; est completion in 53 seconds [INSERT: Count=186000, Max=31151, Min=9, Avg=52.47, 90=42, 99=70, 99.9=987, 99.99=27679] 
+2026-09-16 11:03:26:557 150 sec: 3097999 operations; 19500 current ops/sec; est completion in 44 seconds [INSERT: Count=195000, Max=30415, Min=9, Avg=50.1, 90=40, 99=69, 99.9=1341, 99.99=27663] 
+2026-09-16 11:03:36:557 160 sec: 3291999 operations; 19400 current ops/sec; est completion in 35 seconds [INSERT: Count=194000, Max=29743, Min=9, Avg=50.22, 90=41, 99=68, 99.9=1051, 99.99=27807] 
+2026-09-16 11:03:46:557 170 sec: 3485693 operations; 19369.4 current ops/sec; est completion in 26 seconds [INSERT: Count=193711, Max=29391, Min=9, Avg=50.41, 90=41, 99=68, 99.9=1101, 99.99=27535] 
+2026-09-16 11:03:56:557 180 sec: 3680999 operations; 19530.6 current ops/sec; est completion in 16 seconds [INSERT: Count=195289, Max=29807, Min=9, Avg=49.93, 90=40, 99=68, 99.9=1117, 99.99=27823] 
+2026-09-16 11:04:06:557 190 sec: 3860999 operations; 18000 current ops/sec; est completion in 7 second [INSERT: Count=180000, Max=31615, Min=9, Avg=54.12, 90=43, 99=78, 99.9=3483, 99.99=28911] 
+2026-09-16 11:04:13:589 197 sec: 4000000 operations; 19764.11 current ops/sec; [CLEANUP: Count=1, Max=1380, Min=1380, Avg=1380, 90=1380, 99=1380, 99.9=1380, 99.99=1380] [INSERT: Count=139001, Max=30591, Min=9, Avg=49.4, 90=40, 99=69, 99.9=20351, 99.99=28255] 
+[OVERALL], RunTime(ms), 197033
+[OVERALL], Throughput(ops/sec), 20301.167824679116
+[TOTAL_GCS_G1_Young_Generation], Count, 581
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 351
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.17814274766155924
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 581
+[TOTAL_GC_TIME], Time(ms), 351
+[TOTAL_GC_TIME_%], Time(%), 0.17814274766155924
+[CLEANUP], Operations, 1
+[CLEANUP], AverageLatency(us), 1380.0
+[CLEANUP], MinLatency(us), 1380
+[CLEANUP], MaxLatency(us), 1380
+[CLEANUP], 95thPercentileLatency(us), 1380
+[CLEANUP], 99thPercentileLatency(us), 1380
+[INSERT], Operations, 4000000
+[INSERT], AverageLatency(us), 47.694236
+[INSERT], MinLatency(us), 8
+[INSERT], MaxLatency(us), 31615
+[INSERT], 95thPercentileLatency(us), 46
+[INSERT], 99thPercentileLatency(us), 67
+[INSERT], Return=OK, 4000000
+[FLUSH] phase=load-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/sqlite/workloada/summary.txt
+[DROP-CACHES] scope=run interval=4s pid=815997
+[RUN] /home/oy/iCAT/workloads/sqlite/workloada
+/usr/bin/java  -classpath /home/oy/YCSB/ycsb-0.17.0/conf:/home/oy/YCSB/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/core-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/conf:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-collections-3.2.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-lang-2.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-pool-1.5.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jms_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jta_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/jdbc-binding-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-jdbc-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-kernel-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-lib-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/serp-1.13.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/slf4j-api-1.7.36.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar site.ycsb.Client -t -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p jdbc.autocommit=true -p hdrhistogram.percentiles=95,99,99.9,99.99,99.999,99.9999
+Picked up JAVA_TOOL_OPTIONS: -Xshare:off
+Command line: -t -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p jdbc.autocommit=true -p hdrhistogram.percentiles=95,99,99.9,99.99,99.999,99.9999
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Adding shard node URL: jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db
+2026-09-16 11:04:20:349 0 sec: 0 operations; est completion in 0 second 
+Using shards: 1, batchSize:-1, fetchSize: -1
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-16 11:04:30:104 10 sec: 45854 operations; 4585.4 current ops/sec; est completion in 43 minutes [READ: Count=23221, Max=3799, Min=7, Avg=144.1, 90=254, 99=385, 99.9=615, 99.99=1718] [UPDATE: Count=22754, Max=42655, Min=35, Avg=233.66, 90=383, 99=597, 99.9=6291, 99.99=12047] 
+2026-09-16 11:04:40:104 20 sec: 105764 operations; 5991 current ops/sec; est completion in 37 minutes [READ: Count=29859, Max=2105, Min=7, Avg=127.6, 90=231, 99=331, 99.9=448, 99.99=863] [UPDATE: Count=29938, Max=23663, Min=35, Avg=201.94, 90=329, 99=480, 99.9=1249, 99.99=8903] 
+2026-09-16 11:04:50:104 30 sec: 164957 operations; 5919.3 current ops/sec; est completion in 35 minutes [READ: Count=29584, Max=1205, Min=7, Avg=129.66, 90=238, 99=334, 99.9=451, 99.99=649] [UPDATE: Count=29609, Max=13671, Min=35, Avg=204.83, 90=337, 99=491, 99.9=4139, 99.99=9575] 
+2026-09-16 11:05:00:104 40 sec: 224086 operations; 5912.9 current ops/sec; est completion in 35 minutes [READ: Count=29423, Max=3703, Min=7, Avg=129.9, 90=238, 99=334, 99.9=448, 99.99=649] [UPDATE: Count=29698, Max=19631, Min=35, Avg=204.63, 90=341, 99=499, 99.9=960, 99.99=9911] 
+2026-09-16 11:05:10:104 50 sec: 282866 operations; 5878 current ops/sec; est completion in 34 minutes [READ: Count=29463, Max=903, Min=7, Avg=129.2, 90=238, 99=339, 99.9=457, 99.99=630] [UPDATE: Count=29322, Max=27231, Min=35, Avg=207.88, 90=340, 99=497, 99.9=6267, 99.99=10415] 
+2026-09-16 11:05:20:104 60 sec: 342812 operations; 5994.6 current ops/sec; est completion in 34 minutes [READ: Count=29996, Max=3385, Min=7, Avg=125.07, 90=226, 99=341, 99.9=464, 99.99=1661] [UPDATE: Count=29947, Max=40671, Min=35, Avg=205.13, 90=333, 99=517, 99.9=6039, 99.99=10687] 
+2026-09-16 11:05:30:104 70 sec: 399595 operations; 5678.3 current ops/sec; est completion in 33 minutes [READ: Count=28575, Max=1605, Min=7, Avg=132.63, 90=238, 99=337, 99.9=481, 99.99=938] [UPDATE: Count=28211, Max=17071, Min=35, Avg=216.43, 90=349, 99=539, 99.9=4243, 99.99=10855] 
+2026-09-16 11:05:40:106 80 sec: 454298 operations; 5469.21 current ops/sec; est completion in 33 minutes [READ: Count=27317, Max=8023, Min=7, Avg=136.96, 90=245, 99=353, 99.9=528, 99.99=1012] [UPDATE: Count=27381, Max=19935, Min=37, Avg=224.88, 90=362, 99=581, 99.9=4279, 99.99=11631] 
+2026-09-16 11:05:50:104 90 sec: 510170 operations; 5588.32 current ops/sec; est completion in 33 minutes [READ: Count=27786, Max=2209, Min=7, Avg=133.46, 90=243, 99=352, 99.9=484, 99.99=1750] [UPDATE: Count=28090, Max=41183, Min=36, Avg=220.27, 90=355, 99=547, 99.9=6167, 99.99=12311] 
+2026-09-16 11:06:00:104 100 sec: 571192 operations; 6102.2 current ops/sec; est completion in 33 minutes [READ: Count=30443, Max=1286, Min=7, Avg=123.51, 90=223, 99=345, 99.9=506, 99.99=896] [UPDATE: Count=30577, Max=29583, Min=35, Avg=200.56, 90=327, 99=504, 99.9=4587, 99.99=10759] 
