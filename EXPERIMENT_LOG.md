@@ -2447,3 +2447,7 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 목적: phase 전환 시 "각 phase의 최적 arm이 실제로 다른가"와 "두 phase 합산 최적 arm"을 우리 환경에서 직접 확인. 이것이 iCAT이 넘어야 할 진짜 기준선(mix별 최적 고정)이 된다.
 - 순서: sweep(단일 180) → phase 길이(16) → **mix sweep(120)** → queue6(v1 mix 잔여) → queue7(v2). 총 예상 9/20 전후.
 - 2026-09-16 11:05 sweep test4 60/60 완료(07:54 push). 이 머신 순위(`result/sweep-20260915/rank-test4.txt`, `analysis/sweep-rank.py`): 1등 arm31(k7/s25/r7) 1.7439, 2등 arm47 1.7455(차 0.1%), 견고 arm50 6등 1.7859, 기본 arm37 21등 1.9375, 최악 arm10 51등 2.2070(꼴찌 arm12 2.2321, 차 1.1%). GitHub sweep과 Spearman ρ=0.959, 편차 28.0% vs 27.7%. 결론: 선행 sweep 순위가 이 환경에서 재현되며, 최적/견고/최악 라벨은 유지해도 된다(최적은 arm31과 사실상 동률). k=2 arm 15개가 하위 16등 중 14개를 차지.
+
+## 2026-09-17 — 다음 후보 (현재 큐 종료 후, 사용자 결정 대기)
+
+리뷰 대응 관점에서 순서: (1) 격자 확장 scale 5%/10% × k10 × ratio 3 = 6 arm, test4·sqlite-a (최적이 격자 끝 25%에 있음) (2) 실제 trace 재생 (MSR Cambridge, fio read_iolog, 주소 축소) (3) OP 비율 변경(논리 용량 6.5 GiB) (4) 앱 워크로드 반복 5회. 사용자 지시: 진행 중 큐부터 마무리.
