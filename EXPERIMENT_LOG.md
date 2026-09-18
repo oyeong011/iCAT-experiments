@@ -2659,3 +2659,283 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(test4) host_pages=144004005 gc_pages=117321374 WAF=1.814709
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixA arm00 — started 2026-09-19T01:36:07+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm00.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm00`; evidence `result/mix-20260911/mixA-arm00/`.
+
+- Finished 2026-09-19T01:53:44+09:00; mixA arm00 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm00-rep1`; cleanup attempted.
+- total host_bytes=131725692928 host_pages=32159593 gc_pages=36864482 WAF=2.146298
+- phaseA(test4) host_pages=24015521 gc_pages=27490798 WAF=2.144710
+- phaseB(sqlite-a) host_pages=8144072 gc_pages=9373684 WAF=2.150982
+- phaseB-load host_pages=1398861 gc_pages=1630438 WAF=2.165547
+- phaseB-run host_pages=6745211 gc_pages=7743246 WAF=2.147962
+- ycsb-load [OVERALL], Throughput(ops/sec), 25635.54795983764
+- ycsb-run [OVERALL], Throughput(ops/sec), 12026.494367090701
+
+### mix-20260911 mixA arm01 — started 2026-09-19T01:53:44+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm01.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm01`; evidence `result/mix-20260911/mixA-arm01/`.
+
+- Finished 2026-09-19T02:11:20+09:00; mixA arm01 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm01-rep1`; cleanup attempted.
+- total host_bytes=131605438464 host_pages=32130234 gc_pages=39467550 WAF=2.228362
+- phaseA(test4) host_pages=24000664 gc_pages=29819094 WAF=2.242428
+- phaseB(sqlite-a) host_pages=8129570 gc_pages=9648456 WAF=2.186835
+- phaseB-load host_pages=1398349 gc_pages=1696213 WAF=2.213011
+- phaseB-run host_pages=6731221 gc_pages=7952243 WAF=2.181397
+- ycsb-load [OVERALL], Throughput(ops/sec), 23458.576064432888
+- ycsb-run [OVERALL], Throughput(ops/sec), 12217.470983506415
+
+### mix-20260911 mixA arm02 — started 2026-09-19T02:11:21+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm02.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm02`; evidence `result/mix-20260911/mixA-arm02/`.
+
+- Finished 2026-09-19T02:30:58+09:00; mixA arm02 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm02-rep1`; cleanup attempted.
+- total host_bytes=131374399488 host_pages=32073828 gc_pages=37858044 WAF=2.180341
+- phaseA(test4) host_pages=24015498 gc_pages=29840770 WAF=2.242563
+- phaseB(sqlite-a) host_pages=8058330 gc_pages=8017274 WAF=1.994905
+- phaseB-load host_pages=1398349 gc_pages=1693500 WAF=2.211071
+- phaseB-run host_pages=6659981 gc_pages=6323774 WAF=1.949518
+- ycsb-load [OVERALL], Throughput(ops/sec), 25327.14225411566
+- ycsb-run [OVERALL], Throughput(ops/sec), 8768.680028673583
+
+### mix-20260911 mixA arm03 — started 2026-09-19T02:30:59+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm03.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm03`; evidence `result/mix-20260911/mixA-arm03/`.
+
+- Finished 2026-09-19T02:50:46+09:00; mixA arm03 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm03-rep1`; cleanup attempted.
+- total host_bytes=131553464320 host_pages=32117545 gc_pages=40347865 WAF=2.256256
+- phaseA(test4) host_pages=24023703 gc_pages=29776509 WAF=2.239464
+- phaseB(sqlite-a) host_pages=8093842 gc_pages=10571356 WAF=2.306099
+- phaseB-load host_pages=1398349 gc_pages=1688512 WAF=2.207504
+- phaseB-run host_pages=6695493 gc_pages=8882844 WAF=2.326690
+- ycsb-load [OVERALL], Throughput(ops/sec), 24394.21044072207
+- ycsb-run [OVERALL], Throughput(ops/sec), 8544.744554861532
+
+### mix-20260911 mixA arm04 — started 2026-09-19T02:50:47+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm04.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm04`; evidence `result/mix-20260911/mixA-arm04/`.
+
+- Finished 2026-09-19T03:08:31+09:00; mixA arm04 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm04-rep1`; cleanup attempted.
+- total host_bytes=131711086592 host_pages=32156027 gc_pages=41984221 WAF=2.305641
+- phaseA(test4) host_pages=24000658 gc_pages=30311950 WAF=2.262963
+- phaseB(sqlite-a) host_pages=8155369 gc_pages=11672271 WAF=2.431238
+- phaseB-load host_pages=1398349 gc_pages=1695479 WAF=2.212486
+- phaseB-run host_pages=6757020 gc_pages=9976792 WAF=2.476508
+- ycsb-load [OVERALL], Throughput(ops/sec), 24537.870112874203
+- ycsb-run [OVERALL], Throughput(ops/sec), 11830.049508757194
+
+### mix-20260911 mixA arm05 — started 2026-09-19T03:08:32+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm05.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm05`; evidence `result/mix-20260911/mixA-arm05/`.
+
+- Finished 2026-09-19T03:28:20+09:00; mixA arm05 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm05-rep1`; cleanup attempted.
+- total host_bytes=131451154432 host_pages=32092567 gc_pages=40094735 WAF=2.249346
+- phaseA(test4) host_pages=24000658 gc_pages=30239130 WAF=2.259929
+- phaseB(sqlite-a) host_pages=8091909 gc_pages=9855605 WAF=2.217958
+- phaseB-load host_pages=1398349 gc_pages=1691317 WAF=2.209510
+- phaseB-run host_pages=6693560 gc_pages=8164288 WAF=2.219723
+- ycsb-load [OVERALL], Throughput(ops/sec), 23071.59886180112
+- ycsb-run [OVERALL], Throughput(ops/sec), 8585.68080155916
+
+### mix-20260911 mixA arm06 — started 2026-09-19T03:28:20+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm06.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm06`; evidence `result/mix-20260911/mixA-arm06/`.
+
+- Finished 2026-09-19T03:46:26+09:00; mixA arm06 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm06-rep1`; cleanup attempted.
+- total host_bytes=131972870144 host_pages=32219939 gc_pages=45347716 WAF=2.407443
+- phaseA(test4) host_pages=24000673 gc_pages=30346254 WAF=2.264392
+- phaseB(sqlite-a) host_pages=8219266 gc_pages=15001462 WAF=2.825158
+- phaseB-load host_pages=1398349 gc_pages=1681740 WAF=2.202661
+- phaseB-run host_pages=6820917 gc_pages=13319722 WAF=2.952776
+- ycsb-load [OVERALL], Throughput(ops/sec), 24433.946896888745
+- ycsb-run [OVERALL], Throughput(ops/sec), 11155.982953658047
+
+### mix-20260911 mixA arm07 — started 2026-09-19T03:46:27+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm07.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm07`; evidence `result/mix-20260911/mixA-arm07/`.
+
+- Finished 2026-09-19T04:06:32+09:00; mixA arm07 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm07-rep1`; cleanup attempted.
+- total host_bytes=131664695296 host_pages=32144701 gc_pages=43252820 WAF=2.345566
+- phaseA(test4) host_pages=24017032 gc_pages=30157127 WAF=2.255656
+- phaseB(sqlite-a) host_pages=8127669 gc_pages=13095693 WAF=2.611248
+- phaseB-load host_pages=1398351 gc_pages=1691610 WAF=2.209718
+- phaseB-run host_pages=6729318 gc_pages=11404083 WAF=2.694686
+- ycsb-load [OVERALL], Throughput(ops/sec), 24670.03823855927
+- ycsb-run [OVERALL], Throughput(ops/sec), 8248.545162846904
+
+### mix-20260911 mixA arm08 — started 2026-09-19T04:06:32+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm08.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm08`; evidence `result/mix-20260911/mixA-arm08/`.
+
+- Finished 2026-09-19T04:26:37+09:00; mixA arm08 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm08-rep1`; cleanup attempted.
+- total host_bytes=131634823168 host_pages=32137408 gc_pages=43272191 WAF=2.346474
+- phaseA(test4) host_pages=24000658 gc_pages=30301717 WAF=2.262537
+- phaseB(sqlite-a) host_pages=8136750 gc_pages=12970474 WAF=2.594061
+- phaseB-load host_pages=1398345 gc_pages=1681753 WAF=2.202674
+- phaseB-run host_pages=6738405 gc_pages=11288721 WAF=2.675281
+- ycsb-load [OVERALL], Throughput(ops/sec), 27084.367805714803
+- ycsb-run [OVERALL], Throughput(ops/sec), 8226.102657648116
+
+### mix-20260911 mixA arm09 — started 2026-09-19T04:26:38+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm09.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm09`; evidence `result/mix-20260911/mixA-arm09/`.
+
+- Finished 2026-09-19T04:46:57+09:00; mixA arm09 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm09-rep1`; cleanup attempted.
+- total host_bytes=131746893824 host_pages=32164769 gc_pages=45930965 WAF=2.427990
+- phaseA(test4) host_pages=24000664 gc_pages=30253867 WAF=2.260543
+- phaseB(sqlite-a) host_pages=8164105 gc_pages=15677098 WAF=2.920247
+- phaseB-load host_pages=1398351 gc_pages=1695439 WAF=2.212456
+- phaseB-run host_pages=6765754 gc_pages=13981659 WAF=3.066534
+- ycsb-load [OVERALL], Throughput(ops/sec), 26585.138907350793
+- ycsb-run [OVERALL], Throughput(ops/sec), 8067.44383042233
+
+### mix-20260911 mixA arm10 — started 2026-09-19T04:46:57+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm10.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm10`; evidence `result/mix-20260911/mixA-arm10/`.
+
+- Finished 2026-09-19T05:07:17+09:00; mixA arm10 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm10-rep1`; cleanup attempted.
+- total host_bytes=131816460288 host_pages=32181753 gc_pages=45472926 WAF=2.413003
+- phaseA(test4) host_pages=24023751 gc_pages=29832424 WAF=2.241789
+- phaseB(sqlite-a) host_pages=8158002 gc_pages=15640502 WAF=2.917198
+- phaseB-load host_pages=1398349 gc_pages=1689367 WAF=2.208115
+- phaseB-run host_pages=6759653 gc_pages=13951135 WAF=3.063883
+- ycsb-load [OVERALL], Throughput(ops/sec), 20490.40366095212
+- ycsb-run [OVERALL], Throughput(ops/sec), 8102.6771245219425
+
+### mix-20260911 mixA arm11 — started 2026-09-19T05:07:18+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm11.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm11`; evidence `result/mix-20260911/mixA-arm11/`.
+
+- Finished 2026-09-19T05:27:37+09:00; mixA arm11 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm11-rep1`; cleanup attempted.
+- total host_bytes=131747893248 host_pages=32165013 gc_pages=45983365 WAF=2.429608
+- phaseA(test4) host_pages=24000658 gc_pages=30295234 WAF=2.262267
+- phaseB(sqlite-a) host_pages=8164355 gc_pages=15688131 WAF=2.921540
+- phaseB-load host_pages=1398349 gc_pages=1682630 WAF=2.203298
+- phaseB-run host_pages=6766006 gc_pages=14005501 WAF=3.069981
+- ycsb-load [OVERALL], Throughput(ops/sec), 22760.896779333107
+- ycsb-run [OVERALL], Throughput(ops/sec), 8052.1132771295825
+
+### mix-20260911 mixA arm12 — started 2026-09-19T05:27:38+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm12.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm12`; evidence `result/mix-20260911/mixA-arm12/`.
+
+- Finished 2026-09-19T05:47:58+09:00; mixA arm12 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm12-rep1`; cleanup attempted.
+- total host_bytes=131789852672 host_pages=32175257 gc_pages=46301030 WAF=2.439026
+- phaseA(test4) host_pages=24000670 gc_pages=30566611 WAF=2.273573
+- phaseB(sqlite-a) host_pages=8174587 gc_pages=15734419 WAF=2.924797
+- phaseB-load host_pages=1398349 gc_pages=1684317 WAF=2.204504
+- phaseB-run host_pages=6776238 gc_pages=14050102 WAF=3.073437
+- ycsb-load [OVERALL], Throughput(ops/sec), 25558.016697904244
+- ycsb-run [OVERALL], Throughput(ops/sec), 7989.533710838801
+
+### mix-20260911 mixA arm13 — started 2026-09-19T05:47:58+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm13.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm13`; evidence `result/mix-20260911/mixA-arm13/`.
+
+- Finished 2026-09-19T06:08:13+09:00; mixA arm13 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm13-rep1`; cleanup attempted.
+- total host_bytes=131751022592 host_pages=32165777 gc_pages=46029177 WAF=2.430998
+- phaseA(test4) host_pages=24000658 gc_pages=30358276 WAF=2.264893
+- phaseB(sqlite-a) host_pages=8165119 gc_pages=15670901 WAF=2.919250
+- phaseB-load host_pages=1398351 gc_pages=1684776 WAF=2.204831
+- phaseB-run host_pages=6766768 gc_pages=13986125 WAF=3.066884
+- ycsb-load [OVERALL], Throughput(ops/sec), 25278.058645096058
+- ycsb-run [OVERALL], Throughput(ops/sec), 8056.621938987202
+
+### mix-20260911 mixA arm14 — started 2026-09-19T06:08:14+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm14.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm14`; evidence `result/mix-20260911/mixA-arm14/`.
+
+- Finished 2026-09-19T06:28:40+09:00; mixA arm14 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm14-rep1`; cleanup attempted.
+- total host_bytes=131878068224 host_pages=32196794 gc_pages=44946885 WAF=2.396005
+- phaseA(test4) host_pages=24026784 gc_pages=29241801 WAF=2.217050
+- phaseB(sqlite-a) host_pages=8170010 gc_pages=15705084 WAF=2.922285
+- phaseB-load host_pages=1398351 gc_pages=1691837 WAF=2.209880
+- phaseB-run host_pages=6771659 gc_pages=14013247 WAF=3.069396
+- ycsb-load [OVERALL], Throughput(ops/sec), 24156.534342539657
+- ycsb-run [OVERALL], Throughput(ops/sec), 8007.815628052979
+
+### mix-20260911 mixA arm15 — started 2026-09-19T06:28:40+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm15.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm15`; evidence `result/mix-20260911/mixA-arm15/`.
+
+- Finished 2026-09-19T06:48:11+09:00; mixA arm15 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm15-rep1`; cleanup attempted.
+- total host_bytes=131217170432 host_pages=32035442 gc_pages=27205574 WAF=1.849234
+- phaseA(test4) host_pages=24000667 gc_pages=21047269 WAF=1.876945
+- phaseB(sqlite-a) host_pages=8034775 gc_pages=6158305 WAF=1.766456
+- phaseB-load host_pages=1398349 gc_pages=1103301 WAF=1.789003
+- phaseB-run host_pages=6636426 gc_pages=5055004 WAF=1.761706
+- ycsb-load [OVERALL], Throughput(ops/sec), 25076.27366573327
+- ycsb-run [OVERALL], Throughput(ops/sec), 8915.496693465164
+
+### mix-20260911 mixA arm16 — started 2026-09-19T06:48:12+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm16.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm16`; evidence `result/mix-20260911/mixA-arm16/`.
+
+- Finished 2026-09-19T07:05:34+09:00; mixA arm16 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm16-rep1`; cleanup attempted.
+- total host_bytes=131467460608 host_pages=32096548 gc_pages=24794626 WAF=1.772501
+- phaseA(test4) host_pages=24000670 gc_pages=19988067 WAF=1.832813
+- phaseB(sqlite-a) host_pages=8095878 gc_pages=4806559 WAF=1.593704
+- phaseB-load host_pages=1398351 gc_pages=832407 WAF=1.595278
+- phaseB-run host_pages=6697527 gc_pages=3974152 WAF=1.593376
+- ycsb-load [OVERALL], Throughput(ops/sec), 26677.33760170735
+- ycsb-run [OVERALL], Throughput(ops/sec), 12613.999016108077
+
+### mix-20260911 mixA arm17 — started 2026-09-19T07:05:34+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm17.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm17`; evidence `result/mix-20260911/mixA-arm17/`.
+
+- Finished 2026-09-19T07:24:56+09:00; mixA arm17 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm17-rep1`; cleanup attempted.
+- total host_bytes=131176546304 host_pages=32025524 gc_pages=23852586 WAF=1.744799
+- phaseA(test4) host_pages=24017032 gc_pages=20882657 WAF=1.869494
+- phaseB(sqlite-a) host_pages=8008492 gc_pages=2969929 WAF=1.370847
+- phaseB-load host_pages=1398349 gc_pages=407944 WAF=1.291733
+- phaseB-run host_pages=6610143 gc_pages=2561985 WAF=1.387584
+- ycsb-load [OVERALL], Throughput(ops/sec), 22353.86162959651
+- ycsb-run [OVERALL], Throughput(ops/sec), 9144.257520580295
+
+### mix-20260911 mixA arm18 — started 2026-09-19T07:24:56+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm18.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm18`; evidence `result/mix-20260911/mixA-arm18/`.
+
+- Finished 2026-09-19T07:44:38+09:00; mixA arm18 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm18-rep1`; cleanup attempted.
+- total host_bytes=131454169088 host_pages=32093303 gc_pages=29765667 WAF=1.927473
+- phaseA(test4) host_pages=24021130 gc_pages=23425343 WAF=1.975197
+- phaseB(sqlite-a) host_pages=8072173 gc_pages=6340324 WAF=1.785454
+- phaseB-load host_pages=1398349 gc_pages=1243733 WAF=1.889430
+- phaseB-run host_pages=6673824 gc_pages=5096591 WAF=1.763669
+- ycsb-load [OVERALL], Throughput(ops/sec), 23673.308344841193
+- ycsb-run [OVERALL], Throughput(ops/sec), 8665.17336845617
+
+### mix-20260911 mixA arm19 — started 2026-09-19T07:44:38+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm19.ko`.
+- Command: `bash script/mix-20260911.sh mixA arm19`; evidence `result/mix-20260911/mixA-arm19/`.
+
+- Finished 2026-09-19T08:01:57+09:00; mixA arm19 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-arm19-rep1`; cleanup attempted.
+- total host_bytes=131401834496 host_pages=32080526 gc_pages=27629903 WAF=1.861267
+- phaseA(test4) host_pages=24000658 gc_pages=22448331 WAF=1.935321
+- phaseB(sqlite-a) host_pages=8079868 gc_pages=5181572 WAF=1.641294
+- phaseB-load host_pages=1398351 gc_pages=946270 WAF=1.676704
+- phaseB-run host_pages=6681517 gc_pages=4235302 WAF=1.633883
+- ycsb-load [OVERALL], Throughput(ops/sec), 23960.704444710675
+- ycsb-run [OVERALL], Throughput(ops/sec), 12850.78630748719
