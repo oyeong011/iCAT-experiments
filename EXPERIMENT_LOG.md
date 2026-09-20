@@ -4291,3 +4291,12 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
   - mix sweep(A, C, 60 arm, seed1): A 전체 1등 arm32 1.720(arm47 3등 1.732, 0.7% 차); phase별 최적은 test4→arm47, sqlite→arm17로 다르지만 전체 최적 대비 손실 0.7%. C 전체 1등 arm47 1.751; phase별 arm49/arm47, 차이 0.4%. **phase 전환에 따른 최적 arm 변화는 존재하나 단일 고정 arm의 손실은 1% 미만.**
   - phase 길이(v1 online, seed1): mixA 전체 x1 2.123 → x3 1.920 → x6 1.848 (arm47 1.709/1.696/1.722); mixC x1 2.000 → x3 1.972 → x6 1.940 (arm47 1.751/1.772/1.770). phase가 길수록 iCAT v1이 개선되나 60분에서도 arm47 대비 7~11% 열세.
   - v1 mix seed1: D(빠름→느림) 전체 online 2.045 vs arm47 1.778; J(sqlite a→b) online 미완, 고정 arm50 1.406 최저.
+
+- Finished 2026-09-20T18:44:41+09:00; mixJ online exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixJ-online-rep1`; cleanup attempted.
+- total host_bytes=35797409792 host_pages=8739602 gc_pages=7330155 WAF=1.838729
+- phaseA(sqlite-a) host_pages=8112102 gc_pages=6988664 WAF=1.861511
+- phaseB(sqlite-b) host_pages=627500 gc_pages=341491 WAF=1.544209
+- phaseA-load host_pages=1398350 gc_pages=916596 WAF=1.655484
+- phaseA-run host_pages=6713752 gc_pages=6072068 WAF=1.904422
+- ycsb-load [OVERALL], Throughput(ops/sec), 20563.438206868188
+- ycsb-run [OVERALL], Throughput(ops/sec), 44995.89412466112
