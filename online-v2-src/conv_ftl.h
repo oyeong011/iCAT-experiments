@@ -41,7 +41,7 @@ void conv_measure_init(struct nvmev_ns *ns);
 #define WATGC_V2_WINDOW_GC 384ULL   /* v2: 6x v1 (64) */
 #define WATGC_V2_WINDOW_HOST_PAGES 393216ULL /* v2: 1.5 GiB, 6x v1 (256 MiB). Only change vs v1: longer reward window to raise SNR */
 /* No timeout may turn an empty or undersized interval into a reward. */
-#define WATGC_V2_MAX_WINDOW_GC 4096ULL
+#define WATGC_V2_MAX_WINDOW_GC 24576ULL   /* v2: 6x v1 (4096); v2 first build kept 4096 so every window hit the cap before 393216 host pages and was discarded as undersized */
 #define WATGC_V2_MAX_WINDOW_NS (300ULL * 1000000000ULL)
 
 /* Forgetting per VALID observation; newest observation is not discounted. */

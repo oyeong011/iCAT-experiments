@@ -10,6 +10,9 @@ M=online-v2
 SMOKE=1 bash script/mix-20260911.sh t4 onlinev2 1 > result/mix-20260911/t4-onlinev2-smoke.console.txt 2>&1 || echo "FAIL smoke v2"
 for r in 1 2 3; do bash script/mix-20260911.sh t4 onlinev2 $r > result/mix-20260911/t4-onlinev2-rep$r.console.txt 2>&1 || echo "FAIL t4 v2 rep$r"; done
 push "t4 x3"
+# 0a. redo the phase-length v2 runs (first v2 build discarded every window: MAX_WINDOW_GC cap)
+for mult in 3 6; do for lb in mixA mixC; do MULT=$mult bash script/mix-20260911.sh $lb onlinev2 1 > result/mix-20260911/$lb-onlinev2-rep1-x$mult.console.txt 2>&1 || echo "FAIL $lb v2 x$mult"; done; done
+push "phase-length v2 redo"
 # 0b. 3600 s test4: enough for v2 (60 s windows) to sweep all 60 arms and settle; v1 long reference = long-online (1.952)
 for r in 1 2; do bash script/mix-20260911.sh t4long onlinev2 $r > result/mix-20260911/t4long-onlinev2-rep$r.console.txt 2>&1 || echo "FAIL t4long v2 rep$r"; done
 bash script/mix-20260911.sh t4long fixed47 1 > result/mix-20260911/t4long-fixed47-rep1.console.txt 2>&1 || echo "FAIL t4long fixed47"
