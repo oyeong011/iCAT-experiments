@@ -4286,3 +4286,8 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 완료: 단일 sweep 180 run(SWEEPDONE 9/18 03:13), phase 길이 16 run(9/19 01:35), mix sweep 120 run(9/20 17:47). queue6(v1 mix) 재개되어 진행 중(mixJ). 실패 4건은 모두 v2 phase-length run.
 - **v2 결함:** 첫 v2 빌드(hash 8a8909a1…)는 WINDOW_GC/WINDOW_HOST_PAGES만 6배로 올리고 `WATGC_V2_MAX_WINDOW_GC`(4096)를 그대로 두어, 모든 window가 4096 GC에서 강제 종료되며 host 145k < 393216로 `reason=undersized` 폐기됨(kernel.log: sample 0건, discard 536건). 학습이 전혀 일어나지 않았고 실질적으로 초기 arm37 고정 실행이었다. 해당 4 run은 `*-v2broken`으로 이름을 바꿔 보존(무효).
 - 수정: MAX_WINDOW_GC 4096→24576(6배). 재빌드 hash `74d88d42…`. queue7 시작부에 phase-length v2 4 run 재실행을 추가. 다른 v2 run은 아직 시작 전이었으므로 영향 없음.
+- 2026-09-20 결과 정리 (분석 스크립트 `analysis/sweep-rank.py`, `analysis/summary.py` 확장):
+  - 단일 sweep: test4 1등 arm31 1.744(arm47 2등 1.746), sqlite-a 1등 **arm47** 1.157(arm17 2등 1.158, 견고 arm50 4등), oltp 1등 arm46 1.332(견고 11등, 최적 16등, 기본 17등). GitHub와 ρ: test4 0.959, sqlite-a 0.979, **oltp 0.164**(GitHub oltp 편차 7.7%로 순위가 잡음 수준이었음; 우리 편차 27%). 최악 arm10: test4 51등, sqlite-a 60등, oltp 33등.
+  - mix sweep(A, C, 60 arm, seed1): A 전체 1등 arm32 1.720(arm47 3등 1.732, 0.7% 차); phase별 최적은 test4→arm47, sqlite→arm17로 다르지만 전체 최적 대비 손실 0.7%. C 전체 1등 arm47 1.751; phase별 arm49/arm47, 차이 0.4%. **phase 전환에 따른 최적 arm 변화는 존재하나 단일 고정 arm의 손실은 1% 미만.**
+  - phase 길이(v1 online, seed1): mixA 전체 x1 2.123 → x3 1.920 → x6 1.848 (arm47 1.709/1.696/1.722); mixC x1 2.000 → x3 1.972 → x6 1.940 (arm47 1.751/1.772/1.770). phase가 길수록 iCAT v1이 개선되나 60분에서도 arm47 대비 7~11% 열세.
+  - v1 mix seed1: D(빠름→느림) 전체 online 2.045 vs arm47 1.778; J(sqlite a→b) online 미완, 고정 arm50 1.406 최저.
