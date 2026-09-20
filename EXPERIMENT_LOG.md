@@ -4300,3 +4300,87 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=6713752 gc_pages=6072068 WAF=1.904422
 - ycsb-load [OVERALL], Throughput(ops/sec), 20563.438206868188
 - ycsb-run [OVERALL], Throughput(ops/sec), 44995.89412466112
+
+### mix-20260911 mixG greedy — started 2026-09-20T18:44:47+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-greedy-m.ko`.
+- Command: `bash script/mix-20260911.sh mixG greedy`; evidence `result/mix-20260911/mixG-greedy/`.
+
+- Finished 2026-09-20T18:55:03+09:00; mixG greedy exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixG-greedy-rep1`; cleanup attempted.
+- total host_bytes=84252323840 host_pages=20569415 gc_pages=63234029 WAF=4.074177
+- phaseA(concurrent-test4+sqlite-a) host_pages=20569415 gc_pages=63234029 WAF=4.074177
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixG fixed10 — started 2026-09-20T18:55:03+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed10.ko`.
+- Command: `bash script/mix-20260911.sh mixG fixed10`; evidence `result/mix-20260911/mixG-fixed10/`.
+
+- Finished 2026-09-20T19:06:22+09:00; mixG fixed10 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixG-fixed10-rep1`; cleanup attempted.
+- total host_bytes=84912488448 host_pages=20730588 gc_pages=62068090 WAF=3.994034
+- phaseA(concurrent-test4+sqlite-a) host_pages=20730588 gc_pages=62068090 WAF=3.994034
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixG fixed37 — started 2026-09-20T19:06:22+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixG fixed37`; evidence `result/mix-20260911/mixG-fixed37/`.
+
+- Finished 2026-09-20T19:19:31+09:00; mixG fixed37 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixG-fixed37-rep1`; cleanup attempted.
+- total host_bytes=83909439488 host_pages=20485703 gc_pages=49449888 WAF=3.413873
+- phaseA(concurrent-test4+sqlite-a) host_pages=20485703 gc_pages=49449888 WAF=3.413873
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixG fixed47 — started 2026-09-20T19:19:31+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh mixG fixed47`; evidence `result/mix-20260911/mixG-fixed47/`.
+
+- Finished 2026-09-20T19:32:06+09:00; mixG fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixG-fixed47-rep1`; cleanup attempted.
+- total host_bytes=83796246528 host_pages=20458068 gc_pages=33841424 WAF=2.654185
+- phaseA(concurrent-test4+sqlite-a) host_pages=20458068 gc_pages=33841424 WAF=2.654185
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixG fixed50 — started 2026-09-20T19:32:06+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixG fixed50`; evidence `result/mix-20260911/mixG-fixed50/`.
+
+- Finished 2026-09-20T19:45:01+09:00; mixG fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixG-fixed50-rep1`; cleanup attempted.
+- total host_bytes=83897368576 host_pages=20482756 gc_pages=40947859 WAF=2.999138
+- phaseA(concurrent-test4+sqlite-a) host_pages=20482756 gc_pages=40947859 WAF=2.999138
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixG online — started 2026-09-20T19:45:02+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-mix-20260907.ko`.
+- Command: `bash script/mix-20260911.sh mixG online`; evidence `result/mix-20260911/mixG-online/`.
+
+- Finished 2026-09-20T19:56:06+09:00; mixG online exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixG-online-rep1`; cleanup attempted.
+- total host_bytes=84724576256 host_pages=20684711 gc_pages=59457701 WAF=3.874476
+- phaseA(concurrent-test4+sqlite-a) host_pages=20684711 gc_pages=59457701 WAF=3.874476
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
