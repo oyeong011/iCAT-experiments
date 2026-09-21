@@ -1,0 +1,8 @@
+FAIL line=236 command=grep -m1 'Throughput' "$dir/ycsb-load.txt"
+FAIL line=236 command=grep -m1 'Throughput' "$dir/ycsb-run.txt"
+total host_bytes=196616142848 host_pages=48001988 gc_pages=64737195 WAF=2.348636
+phaseA(test4-hot512M) host_pages=24000661 gc_pages=30302034 WAF=2.262550
+phaseB(test4-hot128M) host_pages=24001327 gc_pages=34435161 WAF=2.434719
+ycsb-load 
+ycsb-run 
+MIX mixK fixed10 exit=0

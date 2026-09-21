@@ -1,0 +1,554 @@
+[867853.030549] mix-mixK-online-4151037 BEGIN
+[867853.043991] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[867853.043998] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[867853.055381] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[867853.067177] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[867853.079547] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[867853.079564] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[867853.079567] NVMeVirt: WATGC_V2 init ns=0 part=0 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[867853.080995] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[867853.081035] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[867853.081037] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=0 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[867853.091479] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[867853.101643] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[867853.101657] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[867853.101659] NVMeVirt: WATGC_V2 init ns=0 part=1 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[867853.102978] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[867853.102981] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=1 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[867853.114721] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[867853.124750] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[867853.124764] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[867853.124766] NVMeVirt: WATGC_V2 init ns=0 part=2 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[867853.126011] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[867853.126013] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=2 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[867853.135931] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[867853.147397] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[867853.147413] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[867853.147416] NVMeVirt: WATGC_V2 init ns=0 part=3 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[867853.148790] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[867853.148793] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=3 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[867853.148800] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[867853.148802] NVMeVirt: ns 0/1: size 7655 MiB
+[867853.148858] PCI host bridge to bus 0001:10
+[867853.148860] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[867853.148863] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[867853.148866] pci_bus 0001:10: root bus resource [bus 00-ff]
+[867853.148874] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[867853.148878] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[867853.148881] pci 0001:10:00.0: enabling Extended Tags
+[867853.149035] NVMeVirt: Virtual PCI bus created (node 0)
+[867853.149413] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[867853.149430] NVMeVirt: Virtual NVMe device created
+[867853.150269] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[867853.150552] nvme nvme0: pci function 0001:10:00.0
+[867853.152984] nvme nvme0: 8/0/0 default/read/poll queues
+[867853.229187] EXT4-fs (nvme0n1): mounted filesystem 903fda66-257f-42c0-a979-2bf5435a417f r/w with ordered data mode. Quota mode: none.
+[867935.242428] NVMeVirt: WATGC_V2 init ns=0 part=0 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[867935.242435] NVMeVirt: WATGC_V2 init ns=0 part=1 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[867935.242437] NVMeVirt: WATGC_V2 init ns=0 part=2 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[867935.242439] NVMeVirt: WATGC_V2 init ns=0 part=3 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[867935.242440] NVMeVirt: Measurement: command=start epoch=1 host_bytes=0 learner_active=1
+[867935.251432] mix-mixK-online-4151037 phase=A START
+[867935.842862] NVMeVirt: WATGC_V2 warmup-done ns=0 part=1 gc_count=2821
+[867935.844238] NVMeVirt: WATGC_V2 warmup-done ns=0 part=2 gc_count=2818
+[867935.845921] NVMeVirt: WATGC_V2 warmup-done ns=0 part=0 gc_count=2838
+[867935.852670] NVMeVirt: WATGC_V2 warmup-done ns=0 part=3 gc_count=2825
+[867945.671092] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=1 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=65563 gc_pages=62754 gc_count=2005 waf_q16=128264 best=37 next=0 settled=0
+[867945.674003] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=1 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=65556 gc_pages=62697 gc_count=2004 waf_q16=128213 best=37 next=0 settled=0
+[867945.674915] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=1 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=65555 gc_pages=62442 gc_count=2000 waf_q16=127959 best=37 next=0 settled=0
+[867945.702405] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=1 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=65552 gc_pages=62639 gc_count=2003 waf_q16=128159 best=37 next=0 settled=0
+[867955.501560] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=2 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65551 gc_pages=61363 gc_count=1983 waf_q16=126884 best=0 next=1 settled=0
+[867955.504826] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=2 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65540 gc_pages=61630 gc_count=1987 waf_q16=127162 best=0 next=1 settled=0
+[867955.515829] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=2 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65539 gc_pages=61121 gc_count=1979 waf_q16=126654 best=0 next=1 settled=0
+[867955.531157] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=2 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65550 gc_pages=61109 gc_count=1979 waf_q16=126631 best=0 next=1 settled=0
+[867965.332899] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=3 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65563 gc_pages=75047 gc_count=2197 waf_q16=140552 best=0 next=2 settled=0
+[867965.341825] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=3 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65541 gc_pages=75133 gc_count=2198 waf_q16=140663 best=0 next=2 settled=0
+[867965.350034] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=3 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65547 gc_pages=74999 gc_count=2196 waf_q16=140522 best=0 next=2 settled=0
+[867965.362644] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=3 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65548 gc_pages=75382 gc_count=2202 waf_q16=140904 best=0 next=2 settled=0
+[867975.163120] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=4 phase=measure evaluated=2 k=2 scale_pct=25 age_ratio=16 host=65546 gc_pages=73212 gc_count=2168 waf_q16=138736 best=0 next=3 settled=0
+[867975.170434] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=4 phase=measure evaluated=2 k=2 scale_pct=25 age_ratio=16 host=65549 gc_pages=73399 gc_count=2171 waf_q16=138920 best=0 next=3 settled=0
+[867975.188445] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=4 phase=measure evaluated=2 k=2 scale_pct=25 age_ratio=16 host=65552 gc_pages=73589 gc_count=2174 waf_q16=139107 best=0 next=3 settled=0
+[867975.196331] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=4 phase=measure evaluated=2 k=2 scale_pct=25 age_ratio=16 host=65537 gc_pages=74180 gc_count=2183 waf_q16=139714 best=0 next=3 settled=0
+[867984.980503] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=5 phase=measure evaluated=3 k=2 scale_pct=50 age_ratio=4 host=65560 gc_pages=73576 gc_count=2174 waf_q16=139085 best=0 next=4 settled=0
+[867984.999006] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=5 phase=measure evaluated=3 k=2 scale_pct=50 age_ratio=4 host=65561 gc_pages=72424 gc_count=2156 waf_q16=137932 best=0 next=4 settled=0
+[867985.028931] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=5 phase=measure evaluated=3 k=2 scale_pct=50 age_ratio=4 host=65545 gc_pages=73848 gc_count=2178 waf_q16=139373 best=0 next=4 settled=0
+[867985.040327] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=5 phase=measure evaluated=3 k=2 scale_pct=50 age_ratio=4 host=65561 gc_pages=73257 gc_count=2169 waf_q16=138765 best=0 next=4 settled=0
+[867994.827171] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=6 phase=measure evaluated=4 k=2 scale_pct=50 age_ratio=7 host=65539 gc_pages=71801 gc_count=2146 waf_q16=137333 best=0 next=5 settled=0
+[867994.847332] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=6 phase=measure evaluated=4 k=2 scale_pct=50 age_ratio=7 host=65563 gc_pages=72032 gc_count=2150 waf_q16=137538 best=0 next=5 settled=0
+[867994.853547] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=6 phase=measure evaluated=4 k=2 scale_pct=50 age_ratio=7 host=65566 gc_pages=71774 gc_count=2146 waf_q16=137277 best=0 next=5 settled=0
+[867994.859256] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=6 phase=measure evaluated=4 k=2 scale_pct=50 age_ratio=7 host=65566 gc_pages=71134 gc_count=2136 waf_q16=136637 best=0 next=5 settled=0
+[868004.664751] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=7 phase=measure evaluated=5 k=2 scale_pct=50 age_ratio=16 host=65543 gc_pages=74808 gc_count=2193 waf_q16=140336 best=0 next=6 settled=0
+[868004.674232] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=7 phase=measure evaluated=5 k=2 scale_pct=50 age_ratio=16 host=65537 gc_pages=74237 gc_count=2184 waf_q16=139771 best=0 next=6 settled=0
+[868004.677570] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=7 phase=measure evaluated=5 k=2 scale_pct=50 age_ratio=16 host=65552 gc_pages=75566 gc_count=2205 waf_q16=141083 best=0 next=6 settled=0
+[868004.700383] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=7 phase=measure evaluated=5 k=2 scale_pct=50 age_ratio=16 host=65548 gc_pages=75378 gc_count=2202 waf_q16=140900 best=0 next=6 settled=0
+[868014.492404] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=8 phase=measure evaluated=6 k=2 scale_pct=100 age_ratio=4 host=65561 gc_pages=80104 gc_count=2276 waf_q16=145609 best=0 next=7 settled=0
+[868014.493565] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=8 phase=measure evaluated=6 k=2 scale_pct=100 age_ratio=4 host=65540 gc_pages=79100 gc_count=2260 waf_q16=144631 best=0 next=7 settled=0
+[868014.529690] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=8 phase=measure evaluated=6 k=2 scale_pct=100 age_ratio=4 host=65549 gc_pages=79028 gc_count=2259 waf_q16=144548 best=0 next=7 settled=0
+[868014.530204] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=8 phase=measure evaluated=6 k=2 scale_pct=100 age_ratio=4 host=65557 gc_pages=79786 gc_count=2271 waf_q16=145296 best=0 next=7 settled=0
+[868024.312153] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=9 phase=measure evaluated=7 k=2 scale_pct=100 age_ratio=7 host=65554 gc_pages=77106 gc_count=2229 waf_q16=142620 best=0 next=8 settled=0
+[868024.338732] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=9 phase=measure evaluated=7 k=2 scale_pct=100 age_ratio=7 host=65538 gc_pages=78210 gc_count=2246 waf_q16=143743 best=0 next=8 settled=0
+[868024.357839] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=9 phase=measure evaluated=7 k=2 scale_pct=100 age_ratio=7 host=65536 gc_pages=77506 gc_count=2235 waf_q16=143042 best=0 next=8 settled=0
+[868024.367520] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=9 phase=measure evaluated=7 k=2 scale_pct=100 age_ratio=7 host=65557 gc_pages=77294 gc_count=2232 waf_q16=142805 best=0 next=8 settled=0
+[868034.137642] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=10 phase=measure evaluated=8 k=2 scale_pct=100 age_ratio=16 host=65553 gc_pages=78324 gc_count=2248 waf_q16=143839 best=0 next=9 settled=0
+[868034.155186] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=10 phase=measure evaluated=8 k=2 scale_pct=100 age_ratio=16 host=65556 gc_pages=79983 gc_count=2274 waf_q16=145494 best=0 next=9 settled=0
+[868034.206947] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=10 phase=measure evaluated=8 k=2 scale_pct=100 age_ratio=16 host=65546 gc_pages=78266 gc_count=2247 waf_q16=143790 best=0 next=9 settled=0
+[868034.210173] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=10 phase=measure evaluated=8 k=2 scale_pct=100 age_ratio=16 host=65564 gc_pages=77799 gc_count=2240 waf_q16=143301 best=0 next=9 settled=0
+[868043.957855] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=11 phase=measure evaluated=9 k=2 scale_pct=200 age_ratio=4 host=65547 gc_pages=83315 gc_count=2326 waf_q16=148837 best=0 next=10 settled=0
+[868044.001959] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=11 phase=measure evaluated=9 k=2 scale_pct=200 age_ratio=4 host=65554 gc_pages=83435 gc_count=2328 waf_q16=148948 best=0 next=10 settled=0
+[868044.026967] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=11 phase=measure evaluated=9 k=2 scale_pct=200 age_ratio=4 host=65540 gc_pages=81977 gc_count=2305 waf_q16=147507 best=0 next=10 settled=0
+[868044.065171] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=11 phase=measure evaluated=9 k=2 scale_pct=200 age_ratio=4 host=65565 gc_pages=82528 gc_count=2314 waf_q16=148027 best=0 next=10 settled=0
+[868053.784635] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=12 phase=measure evaluated=10 k=2 scale_pct=200 age_ratio=7 host=65543 gc_pages=83321 gc_count=2326 waf_q16=148848 best=0 next=11 settled=0
+[868053.814321] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=12 phase=measure evaluated=10 k=2 scale_pct=200 age_ratio=7 host=65560 gc_pages=83174 gc_count=2324 waf_q16=148679 best=0 next=11 settled=0
+[868053.867843] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=12 phase=measure evaluated=10 k=2 scale_pct=200 age_ratio=7 host=65543 gc_pages=83064 gc_count=2322 waf_q16=148591 best=0 next=11 settled=0
+[868053.913441] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=12 phase=measure evaluated=10 k=2 scale_pct=200 age_ratio=7 host=65562 gc_pages=83173 gc_count=2324 waf_q16=148676 best=0 next=11 settled=0
+[868063.633625] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=13 phase=measure evaluated=11 k=2 scale_pct=200 age_ratio=16 host=65550 gc_pages=84659 gc_count=2347 waf_q16=150176 best=0 next=12 settled=0
+[868063.653759] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=13 phase=measure evaluated=11 k=2 scale_pct=200 age_ratio=16 host=65547 gc_pages=85557 gc_count=2361 waf_q16=151078 best=0 next=12 settled=0
+[868063.706620] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=13 phase=measure evaluated=11 k=2 scale_pct=200 age_ratio=16 host=65561 gc_pages=84776 gc_count=2349 waf_q16=150279 best=0 next=12 settled=0
+[868063.719867] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=13 phase=measure evaluated=11 k=2 scale_pct=200 age_ratio=16 host=65542 gc_pages=84666 gc_count=2347 waf_q16=150194 best=0 next=12 settled=0
+[868073.481856] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=14 phase=measure evaluated=12 k=2 scale_pct=400 age_ratio=4 host=65553 gc_pages=85169 gc_count=2355 waf_q16=150682 best=0 next=13 settled=0
+[868073.499400] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=14 phase=measure evaluated=12 k=2 scale_pct=400 age_ratio=4 host=65545 gc_pages=83449 gc_count=2328 waf_q16=148973 best=0 next=13 settled=0
+[868073.531686] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=14 phase=measure evaluated=12 k=2 scale_pct=400 age_ratio=4 host=65547 gc_pages=84023 gc_count=2337 waf_q16=149544 best=0 next=13 settled=0
+[868073.533247] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=14 phase=measure evaluated=12 k=2 scale_pct=400 age_ratio=4 host=65556 gc_pages=85101 gc_count=2354 waf_q16=150611 best=0 next=13 settled=0
+[868083.307221] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=15 phase=measure evaluated=13 k=2 scale_pct=400 age_ratio=7 host=65563 gc_pages=78440 gc_count=2250 waf_q16=143943 best=0 next=14 settled=0
+[868083.345633] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=15 phase=measure evaluated=13 k=2 scale_pct=400 age_ratio=7 host=65564 gc_pages=78887 gc_count=2257 waf_q16=144389 best=0 next=14 settled=0
+[868083.362055] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=15 phase=measure evaluated=13 k=2 scale_pct=400 age_ratio=7 host=65549 gc_pages=78518 gc_count=2251 waf_q16=144038 best=0 next=14 settled=0
+[868083.367132] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=15 phase=measure evaluated=13 k=2 scale_pct=400 age_ratio=7 host=65559 gc_pages=79532 gc_count=2267 waf_q16=145040 best=0 next=14 settled=0
+[868093.135873] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=16 phase=measure evaluated=14 k=2 scale_pct=400 age_ratio=16 host=65552 gc_pages=82027 gc_count=2306 waf_q16=147542 best=0 next=15 settled=0
+[868093.173992] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=16 phase=measure evaluated=14 k=2 scale_pct=400 age_ratio=16 host=65567 gc_pages=82397 gc_count=2312 waf_q16=147894 best=0 next=15 settled=0
+[868093.203665] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=16 phase=measure evaluated=14 k=2 scale_pct=400 age_ratio=16 host=65538 gc_pages=82235 gc_count=2309 waf_q16=147768 best=0 next=15 settled=0
+[868093.204730] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=16 phase=measure evaluated=14 k=2 scale_pct=400 age_ratio=16 host=65554 gc_pages=82028 gc_count=2306 waf_q16=147541 best=0 next=15 settled=0
+[868103.000823] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=17 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=65542 gc_pages=69627 gc_count=2112 waf_q16=135156 best=0 next=16 settled=0
+[868103.003534] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=17 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=65547 gc_pages=70644 gc_count=2128 waf_q16=136168 best=0 next=16 settled=0
+[868103.017926] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=17 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=65552 gc_pages=70701 gc_count=2129 waf_q16=136219 best=0 next=16 settled=0
+[868103.029089] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=17 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=65561 gc_pages=70550 gc_count=2127 waf_q16=136059 best=0 next=16 settled=0
+[868112.836787] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=18 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=65541 gc_pages=65106 gc_count=2041 waf_q16=130637 best=0 next=17 settled=0
+[868112.846786] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=18 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=65537 gc_pages=66259 gc_count=2059 waf_q16=131793 best=0 next=17 settled=0
+[868112.848832] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=18 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=65556 gc_pages=66087 gc_count=2057 waf_q16=131602 best=0 next=17 settled=0
+[868112.857457] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=18 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=65570 gc_pages=66770 gc_count=2068 waf_q16=132271 best=0 next=17 settled=0
+[868122.670180] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=19 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=65561 gc_pages=60839 gc_count=1975 waf_q16=126351 best=0 next=18 settled=0
+[868122.676558] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=19 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=65543 gc_pages=63182 gc_count=2011 waf_q16=128711 best=0 next=18 settled=0
+[868122.685137] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=19 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=65551 gc_pages=61761 gc_count=1989 waf_q16=127282 best=0 next=18 settled=0
+[868122.688603] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=19 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=65542 gc_pages=61306 gc_count=1982 waf_q16=126836 best=0 next=18 settled=0
+[868132.492137] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=20 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=65559 gc_pages=42471 gc_count=1688 waf_q16=107992 best=18 next=19 settled=0
+[868132.509617] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=20 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=65542 gc_pages=42615 gc_count=1690 waf_q16=108147 best=18 next=19 settled=0
+[868132.524312] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=20 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=65540 gc_pages=42683 gc_count=1691 waf_q16=108216 best=18 next=19 settled=0
+[868132.528972] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=20 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=65551 gc_pages=42736 gc_count=1692 waf_q16=108262 best=18 next=19 settled=0
+[868142.304248] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=21 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=65537 gc_pages=49935 gc_count=1804 waf_q16=115470 best=18 next=20 settled=0
+[868142.351733] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=21 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=65537 gc_pages=49469 gc_count=1797 waf_q16=115004 best=18 next=20 settled=0
+[868142.352229] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=21 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=65543 gc_pages=50103 gc_count=1807 waf_q16=115633 best=18 next=20 settled=0
+[868142.377552] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=21 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=65561 gc_pages=51109 gc_count=1823 waf_q16=116625 best=18 next=20 settled=0
+[868152.151007] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=22 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=65542 gc_pages=64061 gc_count=2025 waf_q16=129591 best=18 next=21 settled=0
+[868152.176639] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=22 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=65537 gc_pages=63810 gc_count=2021 waf_q16=129345 best=18 next=21 settled=0
+[868152.190115] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=22 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=65565 gc_pages=65382 gc_count=2046 waf_q16=130889 best=18 next=21 settled=0
+[868152.203885] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=22 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=65565 gc_pages=63590 gc_count=2018 waf_q16=129097 best=18 next=21 settled=0
+[868161.979252] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=23 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=65542 gc_pages=50361 gc_count=1811 waf_q16=115892 best=18 next=22 settled=0
+[868162.013069] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=23 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=65546 gc_pages=50101 gc_count=1807 waf_q16=115629 best=18 next=22 settled=0
+[868162.023114] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=23 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=65555 gc_pages=49900 gc_count=1804 waf_q16=115421 best=18 next=22 settled=0
+[868162.031922] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=23 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=65542 gc_pages=49978 gc_count=1805 waf_q16=115509 best=18 next=22 settled=0
+[868171.836070] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=24 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=65540 gc_pages=49727 gc_count=1801 waf_q16=115259 best=18 next=23 settled=0
+[868171.839019] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=24 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=65538 gc_pages=49858 gc_count=1803 waf_q16=115392 best=18 next=23 settled=0
+[868171.844476] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=24 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=65538 gc_pages=49602 gc_count=1799 waf_q16=115136 best=18 next=23 settled=0
+[868171.853186] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=24 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=65561 gc_pages=50347 gc_count=1811 waf_q16=115863 best=18 next=23 settled=0
+[868181.666315] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=25 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=65543 gc_pages=65656 gc_count=2050 waf_q16=131184 best=18 next=24 settled=0
+[868181.667740] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=25 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=65547 gc_pages=64629 gc_count=2034 waf_q16=130154 best=18 next=24 settled=0
+[868181.685999] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=25 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=65570 gc_pages=64030 gc_count=2025 waf_q16=129532 best=18 next=24 settled=0
+[868181.686877] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=25 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=65538 gc_pages=65022 gc_count=2040 waf_q16=130556 best=18 next=24 settled=0
+[868191.505161] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=26 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=65537 gc_pages=59130 gc_count=1948 waf_q16=124665 best=18 next=25 settled=0
+[868191.508962] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=26 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=65541 gc_pages=60214 gc_count=1965 waf_q16=125745 best=18 next=25 settled=0
+[868191.510126] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=26 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=65544 gc_pages=59572 gc_count=1955 waf_q16=125100 best=18 next=25 settled=0
+[868191.511227] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=26 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=65545 gc_pages=60146 gc_count=1964 waf_q16=125673 best=18 next=25 settled=0
+[868201.323533] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=27 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=65563 gc_pages=62884 gc_count=2007 waf_q16=128394 best=18 next=26 settled=0
+[868201.330375] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=27 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=65558 gc_pages=63210 gc_count=2012 waf_q16=128724 best=18 next=26 settled=0
+[868201.351956] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=27 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=65541 gc_pages=63483 gc_count=2016 waf_q16=129014 best=18 next=26 settled=0
+[868201.363407] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=27 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=65537 gc_pages=63168 gc_count=2011 waf_q16=128703 best=18 next=26 settled=0
+[868211.164237] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=28 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=65544 gc_pages=72376 gc_count=2155 waf_q16=137903 best=18 next=27 settled=0
+[868211.164740] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=28 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=65539 gc_pages=72382 gc_count=2155 waf_q16=137914 best=18 next=27 settled=0
+[868211.172120] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=28 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=65559 gc_pages=72362 gc_count=2155 waf_q16=137872 best=18 next=27 settled=0
+[868211.202521] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=28 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=65557 gc_pages=72422 gc_count=2156 waf_q16=137934 best=18 next=27 settled=0
+[868220.998754] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=29 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=65545 gc_pages=66747 gc_count=2067 waf_q16=132273 best=18 next=28 settled=0
+[868221.000841] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=29 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=65548 gc_pages=66742 gc_count=2067 waf_q16=132265 best=18 next=28 settled=0
+[868221.008146] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=29 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=65551 gc_pages=67251 gc_count=2075 waf_q16=132771 best=18 next=28 settled=0
+[868221.023898] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=29 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=65540 gc_pages=66558 gc_count=2064 waf_q16=132089 best=18 next=28 settled=0
+[868230.829953] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=30 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=65536 gc_pages=66880 gc_count=2069 waf_q16=132416 best=18 next=29 settled=0
+[868230.834337] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=30 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=65567 gc_pages=67105 gc_count=2073 waf_q16=132609 best=18 next=29 settled=0
+[868230.841827] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=30 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=65552 gc_pages=67376 gc_count=2077 waf_q16=132895 best=18 next=29 settled=0
+[868230.861090] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=30 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=65560 gc_pages=67112 gc_count=2073 waf_q16=132623 best=18 next=29 settled=0
+[868240.655617] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=31 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=65560 gc_pages=75495 gc_count=2204 waf_q16=141003 best=18 next=30 settled=0
+[868240.676135] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=31 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=65540 gc_pages=75704 gc_count=2207 waf_q16=141235 best=18 next=30 settled=0
+[868240.676297] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=31 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=65555 gc_pages=75177 gc_count=2199 waf_q16=140691 best=18 next=30 settled=0
+[868240.693388] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=31 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=65559 gc_pages=75559 gc_count=2205 waf_q16=141068 best=18 next=30 settled=0
+[868250.478738] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=32 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=65553 gc_pages=63341 gc_count=2014 waf_q16=128860 best=18 next=31 settled=0
+[868250.493771] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=32 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=65543 gc_pages=63478 gc_count=2016 waf_q16=129007 best=18 next=31 settled=0
+[868250.530648] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=32 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=65553 gc_pages=63148 gc_count=2011 waf_q16=128667 best=18 next=31 settled=0
+[868250.531365] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=32 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=65559 gc_pages=63265 gc_count=2013 waf_q16=128778 best=18 next=31 settled=0
+[868260.303663] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=33 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=65542 gc_pages=49402 gc_count=1796 waf_q16=114933 best=18 next=32 settled=0
+[868260.317501] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=33 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=65547 gc_pages=50469 gc_count=1813 waf_q16=115996 best=18 next=32 settled=0
+[868260.371918] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=33 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=65536 gc_pages=50560 gc_count=1814 waf_q16=116096 best=18 next=32 settled=0
+[868260.373736] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=33 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=65570 gc_pages=50387 gc_count=1812 waf_q16=115896 best=18 next=32 settled=0
+[868270.139174] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=34 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=65558 gc_pages=61266 gc_count=1982 waf_q16=126781 best=18 next=33 settled=0
+[868270.150531] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=34 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=65540 gc_pages=59174 gc_count=1949 waf_q16=124706 best=18 next=33 settled=0
+[868270.186461] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=34 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=65542 gc_pages=59035 gc_count=1947 waf_q16=124565 best=18 next=33 settled=0
+[868270.222710] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=34 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=65582 gc_pages=60341 gc_count=1968 waf_q16=125834 best=18 next=33 settled=0
+[868279.984899] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=35 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=65561 gc_pages=46635 gc_count=1753 waf_q16=112153 best=18 next=34 settled=0
+[868279.987368] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=35 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=65571 gc_pages=46881 gc_count=1757 waf_q16=112391 best=18 next=34 settled=0
+[868280.015083] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=35 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=65544 gc_pages=45692 gc_count=1738 waf_q16=111222 best=18 next=34 settled=0
+[868280.045920] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=35 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=65554 gc_pages=46578 gc_count=1752 waf_q16=112101 best=18 next=34 settled=0
+[868289.820760] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=36 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=65562 gc_pages=57754 gc_count=1927 waf_q16=123267 best=18 next=35 settled=0
+[868289.838258] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=36 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=65558 gc_pages=57387 gc_count=1921 waf_q16=122903 best=18 next=35 settled=0
+[868289.839453] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=36 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=65571 gc_pages=57431 gc_count=1922 waf_q16=122936 best=18 next=35 settled=0
+[868289.871249] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=36 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=65547 gc_pages=58037 gc_count=1931 waf_q16=123563 best=18 next=35 settled=0
+[868299.617898] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=37 phase=measure evaluated=35 k=7 scale_pct=50 age_ratio=16 host=65536 gc_pages=62168 gc_count=1995 waf_q16=127704 best=18 next=36 settled=0
+[868299.689850] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=37 phase=measure evaluated=35 k=7 scale_pct=50 age_ratio=16 host=65556 gc_pages=61089 gc_count=1979 waf_q16=126606 best=18 next=36 settled=0
+[868299.695438] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=37 phase=measure evaluated=35 k=7 scale_pct=50 age_ratio=16 host=65539 gc_pages=61459 gc_count=1984 waf_q16=126992 best=18 next=36 settled=0
+[868299.702176] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=37 phase=measure evaluated=35 k=7 scale_pct=50 age_ratio=16 host=65570 gc_pages=63975 gc_count=2024 waf_q16=129477 best=18 next=36 settled=0
+[868309.473470] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=38 phase=measure evaluated=36 k=7 scale_pct=100 age_ratio=4 host=65551 gc_pages=51840 gc_count=1834 waf_q16=117364 best=18 next=38 settled=0
+[868309.511168] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=38 phase=measure evaluated=36 k=7 scale_pct=100 age_ratio=4 host=65563 gc_pages=50797 gc_count=1818 waf_q16=116312 best=18 next=38 settled=0
+[868309.521953] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=38 phase=measure evaluated=36 k=7 scale_pct=100 age_ratio=4 host=65545 gc_pages=50692 gc_count=1816 waf_q16=116221 best=18 next=38 settled=0
+[868309.533087] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=38 phase=measure evaluated=36 k=7 scale_pct=100 age_ratio=4 host=65562 gc_pages=51502 gc_count=1829 waf_q16=117017 best=18 next=38 settled=0
+[868319.321340] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=39 phase=measure evaluated=38 k=7 scale_pct=100 age_ratio=16 host=65539 gc_pages=65214 gc_count=2043 waf_q16=130747 best=18 next=39 settled=0
+[868319.327641] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=39 phase=measure evaluated=38 k=7 scale_pct=100 age_ratio=16 host=65565 gc_pages=65316 gc_count=2045 waf_q16=130823 best=18 next=39 settled=0
+[868319.354876] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=39 phase=measure evaluated=38 k=7 scale_pct=100 age_ratio=16 host=65563 gc_pages=65638 gc_count=2050 waf_q16=131146 best=18 next=39 settled=0
+[868319.376318] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=39 phase=measure evaluated=38 k=7 scale_pct=100 age_ratio=16 host=65563 gc_pages=64358 gc_count=2030 waf_q16=129867 best=18 next=39 settled=0
+[868329.156895] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=40 phase=measure evaluated=39 k=7 scale_pct=200 age_ratio=4 host=65571 gc_pages=53661 gc_count=1863 waf_q16=119168 best=18 next=40 settled=0
+[868329.165967] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=40 phase=measure evaluated=39 k=7 scale_pct=200 age_ratio=4 host=65538 gc_pages=52222 gc_count=1840 waf_q16=117756 best=18 next=40 settled=0
+[868329.188328] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=40 phase=measure evaluated=39 k=7 scale_pct=200 age_ratio=4 host=65549 gc_pages=52274 gc_count=1841 waf_q16=117799 best=18 next=40 settled=0
+[868329.201635] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=40 phase=measure evaluated=39 k=7 scale_pct=200 age_ratio=4 host=65557 gc_pages=52844 gc_count=1850 waf_q16=118363 best=18 next=40 settled=0
+[868338.993494] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=41 phase=measure evaluated=40 k=7 scale_pct=200 age_ratio=7 host=65567 gc_pages=68126 gc_count=2089 waf_q16=133629 best=18 next=41 settled=0
+[868339.008813] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=41 phase=measure evaluated=40 k=7 scale_pct=200 age_ratio=7 host=65539 gc_pages=67004 gc_count=2071 waf_q16=132536 best=18 next=41 settled=0
+[868339.015015] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=41 phase=measure evaluated=40 k=7 scale_pct=200 age_ratio=7 host=65544 gc_pages=66613 gc_count=2065 waf_q16=132140 best=18 next=41 settled=0
+[868339.030856] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=41 phase=measure evaluated=40 k=7 scale_pct=200 age_ratio=7 host=65554 gc_pages=66861 gc_count=2069 waf_q16=132378 best=18 next=41 settled=0
+[868348.813845] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=42 phase=measure evaluated=41 k=7 scale_pct=200 age_ratio=16 host=65536 gc_pages=79485 gc_count=2266 waf_q16=145021 best=18 next=42 settled=0
+[868348.838021] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=42 phase=measure evaluated=41 k=7 scale_pct=200 age_ratio=16 host=65561 gc_pages=79139 gc_count=2261 waf_q16=144644 best=18 next=42 settled=0
+[868348.861046] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=42 phase=measure evaluated=41 k=7 scale_pct=200 age_ratio=16 host=65541 gc_pages=79543 gc_count=2267 waf_q16=145072 best=18 next=42 settled=0
+[868348.865253] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=42 phase=measure evaluated=41 k=7 scale_pct=200 age_ratio=16 host=65557 gc_pages=79526 gc_count=2267 waf_q16=145036 best=18 next=42 settled=0
+[868358.661368] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=43 phase=measure evaluated=42 k=7 scale_pct=400 age_ratio=4 host=65551 gc_pages=68531 gc_count=2095 waf_q16=134051 best=18 next=43 settled=0
+[868358.672798] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=43 phase=measure evaluated=42 k=7 scale_pct=400 age_ratio=4 host=65558 gc_pages=68780 gc_count=2099 waf_q16=134292 best=18 next=43 settled=0
+[868358.678569] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=43 phase=measure evaluated=42 k=7 scale_pct=400 age_ratio=4 host=65560 gc_pages=68587 gc_count=2096 waf_q16=134097 best=18 next=43 settled=0
+[868358.694603] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=43 phase=measure evaluated=42 k=7 scale_pct=400 age_ratio=4 host=65537 gc_pages=68352 gc_count=2092 waf_q16=133886 best=18 next=43 settled=0
+[868368.492094] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=44 phase=measure evaluated=43 k=7 scale_pct=400 age_ratio=7 host=65550 gc_pages=70456 gc_count=2125 waf_q16=135976 best=18 next=44 settled=0
+[868368.497905] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=44 phase=measure evaluated=43 k=7 scale_pct=400 age_ratio=7 host=65551 gc_pages=70071 gc_count=2119 waf_q16=135590 best=18 next=44 settled=0
+[868368.508390] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=44 phase=measure evaluated=43 k=7 scale_pct=400 age_ratio=7 host=65538 gc_pages=71044 gc_count=2134 waf_q16=136577 best=18 next=44 settled=0
+[868368.543161] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=44 phase=measure evaluated=43 k=7 scale_pct=400 age_ratio=7 host=65559 gc_pages=70447 gc_count=2125 waf_q16=135958 best=18 next=44 settled=0
+[868378.335219] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=45 phase=measure evaluated=44 k=7 scale_pct=400 age_ratio=16 host=65557 gc_pages=70764 gc_count=2130 waf_q16=136277 best=18 next=45 settled=0
+[868378.340881] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=45 phase=measure evaluated=44 k=7 scale_pct=400 age_ratio=16 host=65549 gc_pages=71796 gc_count=2146 waf_q16=137317 best=18 next=45 settled=0
+[868378.341069] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=45 phase=measure evaluated=44 k=7 scale_pct=400 age_ratio=16 host=65541 gc_pages=71102 gc_count=2135 waf_q16=136632 best=18 next=45 settled=0
+[868378.355696] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=45 phase=measure evaluated=44 k=7 scale_pct=400 age_ratio=16 host=65547 gc_pages=71863 gc_count=2147 waf_q16=137386 best=18 next=45 settled=0
+[868388.150108] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=46 phase=measure evaluated=45 k=10 scale_pct=25 age_ratio=4 host=65555 gc_pages=54565 gc_count=1877 waf_q16=120085 best=18 next=46 settled=0
+[868388.178271] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=46 phase=measure evaluated=45 k=10 scale_pct=25 age_ratio=4 host=65555 gc_pages=54314 gc_count=1873 waf_q16=119834 best=18 next=46 settled=0
+[868388.190356] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=46 phase=measure evaluated=45 k=10 scale_pct=25 age_ratio=4 host=65572 gc_pages=53970 gc_count=1868 waf_q16=119476 best=18 next=46 settled=0
+[868388.190866] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=46 phase=measure evaluated=45 k=10 scale_pct=25 age_ratio=4 host=65555 gc_pages=54245 gc_count=1872 waf_q16=119765 best=18 next=46 settled=0
+[868397.992142] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=47 phase=measure evaluated=46 k=10 scale_pct=25 age_ratio=7 host=65548 gc_pages=50424 gc_count=1812 waf_q16=115950 best=18 next=47 settled=0
+[868398.015601] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=47 phase=measure evaluated=46 k=10 scale_pct=25 age_ratio=7 host=65557 gc_pages=51046 gc_count=1822 waf_q16=116565 best=18 next=47 settled=0
+[868398.015951] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=47 phase=measure evaluated=46 k=10 scale_pct=25 age_ratio=7 host=65550 gc_pages=51249 gc_count=1825 waf_q16=116774 best=18 next=47 settled=0
+[868398.018860] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=47 phase=measure evaluated=46 k=10 scale_pct=25 age_ratio=7 host=65559 gc_pages=50465 gc_count=1813 waf_q16=115983 best=18 next=47 settled=0
+[868407.831830] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=48 phase=measure evaluated=47 k=10 scale_pct=25 age_ratio=16 host=65539 gc_pages=49413 gc_count=1796 waf_q16=114946 best=18 next=48 settled=0
+[868407.839044] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=48 phase=measure evaluated=47 k=10 scale_pct=25 age_ratio=16 host=65542 gc_pages=51135 gc_count=1823 waf_q16=116666 best=18 next=48 settled=0
+[868407.846637] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=48 phase=measure evaluated=47 k=10 scale_pct=25 age_ratio=16 host=65548 gc_pages=50553 gc_count=1814 waf_q16=116079 best=18 next=48 settled=0
+[868407.861505] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=48 phase=measure evaluated=47 k=10 scale_pct=25 age_ratio=16 host=65564 gc_pages=50092 gc_count=1807 waf_q16=115606 best=18 next=48 settled=0
+[868417.648683] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=49 phase=measure evaluated=48 k=10 scale_pct=50 age_ratio=4 host=65538 gc_pages=49472 gc_count=1797 waf_q16=115006 best=18 next=49 settled=0
+[868417.656365] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=49 phase=measure evaluated=48 k=10 scale_pct=50 age_ratio=4 host=65569 gc_pages=49057 gc_count=1791 waf_q16=114568 best=18 next=49 settled=0
+[868417.688169] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=49 phase=measure evaluated=48 k=10 scale_pct=50 age_ratio=4 host=65547 gc_pages=49655 gc_count=1800 waf_q16=115182 best=18 next=49 settled=0
+[868417.719949] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=49 phase=measure evaluated=48 k=10 scale_pct=50 age_ratio=4 host=65548 gc_pages=49334 gc_count=1795 waf_q16=114860 best=18 next=49 settled=0
+[868427.498109] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=50 phase=measure evaluated=49 k=10 scale_pct=50 age_ratio=7 host=65562 gc_pages=43748 gc_count=1708 waf_q16=109266 best=18 next=50 settled=0
+[868427.498510] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=50 phase=measure evaluated=49 k=10 scale_pct=50 age_ratio=7 host=65559 gc_pages=43959 gc_count=1711 waf_q16=109479 best=18 next=50 settled=0
+[868427.524693] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=50 phase=measure evaluated=49 k=10 scale_pct=50 age_ratio=7 host=65538 gc_pages=43772 gc_count=1708 waf_q16=109306 best=18 next=50 settled=0
+[868427.527776] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=50 phase=measure evaluated=49 k=10 scale_pct=50 age_ratio=7 host=65575 gc_pages=43096 gc_count=1698 waf_q16=108606 best=18 next=50 settled=0
+[868437.330158] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=51 phase=measure evaluated=50 k=10 scale_pct=50 age_ratio=16 host=65553 gc_pages=52331 gc_count=1842 waf_q16=117853 best=18 next=51 settled=0
+[868437.337881] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=51 phase=measure evaluated=50 k=10 scale_pct=50 age_ratio=16 host=65543 gc_pages=52798 gc_count=1849 waf_q16=118328 best=18 next=51 settled=0
+[868437.349274] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=51 phase=measure evaluated=50 k=10 scale_pct=50 age_ratio=16 host=65570 gc_pages=51219 gc_count=1825 waf_q16=116728 best=18 next=51 settled=0
+[868437.370504] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=51 phase=measure evaluated=50 k=10 scale_pct=50 age_ratio=16 host=65570 gc_pages=52050 gc_count=1838 waf_q16=117559 best=18 next=51 settled=0
+[868447.166892] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=52 phase=measure evaluated=51 k=10 scale_pct=100 age_ratio=4 host=65559 gc_pages=51246 gc_count=1825 waf_q16=116764 best=18 next=52 settled=0
+[868447.176979] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=52 phase=measure evaluated=51 k=10 scale_pct=100 age_ratio=4 host=65555 gc_pages=51761 gc_count=1833 waf_q16=117281 best=18 next=52 settled=0
+[868447.186518] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=52 phase=measure evaluated=51 k=10 scale_pct=100 age_ratio=4 host=65553 gc_pages=51380 gc_count=1827 waf_q16=116902 best=18 next=52 settled=0
+[868447.194992] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=52 phase=measure evaluated=51 k=10 scale_pct=100 age_ratio=4 host=65558 gc_pages=51566 gc_count=1830 waf_q16=117084 best=18 next=52 settled=0
+[868456.999160] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=53 phase=measure evaluated=52 k=10 scale_pct=100 age_ratio=7 host=65557 gc_pages=48937 gc_count=1789 waf_q16=114457 best=18 next=53 settled=0
+[868457.008956] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=53 phase=measure evaluated=52 k=10 scale_pct=100 age_ratio=7 host=65548 gc_pages=49394 gc_count=1796 waf_q16=114920 best=18 next=53 settled=0
+[868457.023887] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=53 phase=measure evaluated=52 k=10 scale_pct=100 age_ratio=7 host=65536 gc_pages=49216 gc_count=1793 waf_q16=114752 best=18 next=53 settled=0
+[868457.028448] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=53 phase=measure evaluated=52 k=10 scale_pct=100 age_ratio=7 host=65563 gc_pages=49380 gc_count=1796 waf_q16=114895 best=18 next=53 settled=0
+[868466.828472] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=54 phase=measure evaluated=53 k=10 scale_pct=100 age_ratio=16 host=65577 gc_pages=53588 gc_count=1862 waf_q16=119090 best=18 next=54 settled=0
+[868466.851999] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=54 phase=measure evaluated=53 k=10 scale_pct=100 age_ratio=16 host=65541 gc_pages=53703 gc_count=1863 waf_q16=119234 best=18 next=54 settled=0
+[868466.856362] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=54 phase=measure evaluated=53 k=10 scale_pct=100 age_ratio=16 host=65557 gc_pages=53928 gc_count=1867 waf_q16=119446 best=18 next=54 settled=0
+[868466.861544] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=54 phase=measure evaluated=53 k=10 scale_pct=100 age_ratio=16 host=65549 gc_pages=53745 gc_count=1864 waf_q16=119270 best=18 next=54 settled=0
+[868476.643822] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=55 phase=measure evaluated=54 k=10 scale_pct=200 age_ratio=4 host=65544 gc_pages=55673 gc_count=1894 waf_q16=121202 best=18 next=55 settled=0
+[868476.667732] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=55 phase=measure evaluated=54 k=10 scale_pct=200 age_ratio=4 host=65543 gc_pages=55419 gc_count=1890 waf_q16=120949 best=18 next=55 settled=0
+[868476.702303] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=55 phase=measure evaluated=54 k=10 scale_pct=200 age_ratio=4 host=65558 gc_pages=55787 gc_count=1896 waf_q16=121304 best=18 next=55 settled=0
+[868476.714344] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=55 phase=measure evaluated=54 k=10 scale_pct=200 age_ratio=4 host=65539 gc_pages=55231 gc_count=1887 waf_q16=120764 best=18 next=55 settled=0
+[868486.476331] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=56 phase=measure evaluated=55 k=10 scale_pct=200 age_ratio=7 host=65549 gc_pages=56045 gc_count=1900 waf_q16=121569 best=18 next=56 settled=0
+[868486.511461] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=56 phase=measure evaluated=55 k=10 scale_pct=200 age_ratio=7 host=65569 gc_pages=55898 gc_count=1898 waf_q16=121405 best=18 next=56 settled=0
+[868486.534447] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=56 phase=measure evaluated=55 k=10 scale_pct=200 age_ratio=7 host=65537 gc_pages=55996 gc_count=1899 waf_q16=121531 best=18 next=56 settled=0
+[868486.536037] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=56 phase=measure evaluated=55 k=10 scale_pct=200 age_ratio=7 host=65569 gc_pages=55514 gc_count=1892 waf_q16=121022 best=18 next=56 settled=0
+[868496.322481] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=57 phase=measure evaluated=56 k=10 scale_pct=200 age_ratio=16 host=65536 gc_pages=61618 gc_count=1987 waf_q16=127154 best=18 next=57 settled=0
+[868496.339234] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=57 phase=measure evaluated=56 k=10 scale_pct=200 age_ratio=16 host=65567 gc_pages=61161 gc_count=1980 waf_q16=126668 best=18 next=57 settled=0
+[868496.359152] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=57 phase=measure evaluated=56 k=10 scale_pct=200 age_ratio=16 host=65564 gc_pages=61274 gc_count=1982 waf_q16=126783 best=18 next=57 settled=0
+[868496.377272] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=57 phase=measure evaluated=56 k=10 scale_pct=200 age_ratio=16 host=65543 gc_pages=61691 gc_count=1988 waf_q16=127220 best=18 next=57 settled=0
+[868506.160307] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=58 phase=measure evaluated=57 k=10 scale_pct=400 age_ratio=4 host=65560 gc_pages=74411 gc_count=2187 waf_q16=139919 best=18 next=58 settled=0
+[868506.180324] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=58 phase=measure evaluated=57 k=10 scale_pct=400 age_ratio=4 host=65543 gc_pages=73980 gc_count=2180 waf_q16=139508 best=18 next=58 settled=0
+[868506.186886] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=58 phase=measure evaluated=57 k=10 scale_pct=400 age_ratio=4 host=65550 gc_pages=74933 gc_count=2195 waf_q16=140452 best=18 next=58 settled=0
+[868506.200243] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=58 phase=measure evaluated=57 k=10 scale_pct=400 age_ratio=4 host=65553 gc_pages=74546 gc_count=2189 waf_q16=140062 best=18 next=58 settled=0
+[868515.990389] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=59 phase=measure evaluated=58 k=10 scale_pct=400 age_ratio=7 host=65554 gc_pages=74353 gc_count=2186 waf_q16=139868 best=18 next=59 settled=0
+[868516.015231] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=59 phase=measure evaluated=58 k=10 scale_pct=400 age_ratio=7 host=65555 gc_pages=74159 gc_count=2183 waf_q16=139673 best=18 next=59 settled=0
+[868516.023620] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=59 phase=measure evaluated=58 k=10 scale_pct=400 age_ratio=7 host=65543 gc_pages=74235 gc_count=2184 waf_q16=139763 best=18 next=59 settled=0
+[868516.031579] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=59 phase=measure evaluated=58 k=10 scale_pct=400 age_ratio=7 host=65561 gc_pages=73513 gc_count=2173 waf_q16=139020 best=18 next=59 settled=0
+[868525.827547] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=60 phase=measure evaluated=59 k=10 scale_pct=400 age_ratio=16 host=65549 gc_pages=76150 gc_count=2214 waf_q16=141670 best=18 next=0 settled=0
+[868525.843226] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=60 phase=measure evaluated=59 k=10 scale_pct=400 age_ratio=16 host=65558 gc_pages=76589 gc_count=2221 waf_q16=142099 best=18 next=0 settled=0
+[868525.859548] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=60 phase=measure evaluated=59 k=10 scale_pct=400 age_ratio=16 host=65542 gc_pages=76030 gc_count=2212 waf_q16=141559 best=18 next=0 settled=0
+[868525.868325] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=60 phase=measure evaluated=59 k=10 scale_pct=400 age_ratio=16 host=65549 gc_pages=75574 gc_count=2205 waf_q16=141095 best=18 next=0 settled=0
+[868535.569930] mix-mixK-online-4151037 phase=A END
+[868535.576873] mix-mixK-online-4151037 phase=B START
+[868535.975464] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=61 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65554 gc_pages=81581 gc_count=2299 waf_q16=147094 best=18 next=1 settled=0
+[868535.991997] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=61 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65546 gc_pages=81973 gc_count=2305 waf_q16=147496 best=18 next=1 settled=0
+[868536.009674] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=61 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65543 gc_pages=80953 gc_count=2289 waf_q16=146480 best=18 next=1 settled=0
+[868536.021301] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=61 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65565 gc_pages=81699 gc_count=2301 waf_q16=147198 best=18 next=1 settled=0
+[868545.807386] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=62 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65545 gc_pages=87160 gc_count=2386 waf_q16=152684 best=18 next=2 settled=0
+[868545.821559] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=62 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65540 gc_pages=86205 gc_count=2371 waf_q16=151735 best=18 next=2 settled=0
+[868545.841048] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=62 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65553 gc_pages=88112 gc_count=2401 waf_q16=153625 best=18 next=2 settled=0
+[868545.859052] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=62 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65550 gc_pages=87027 gc_count=2384 waf_q16=152544 best=18 next=2 settled=0
+[868555.634835] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=63 phase=measure evaluated=2 k=2 scale_pct=25 age_ratio=16 host=65556 gc_pages=93104 gc_count=2479 waf_q16=158611 best=18 next=3 settled=0
+[868555.660591] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=63 phase=measure evaluated=2 k=2 scale_pct=25 age_ratio=16 host=65538 gc_pages=92865 gc_count=2475 waf_q16=158398 best=18 next=3 settled=0
+[868555.677531] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=63 phase=measure evaluated=2 k=2 scale_pct=25 age_ratio=16 host=65549 gc_pages=93430 gc_count=2484 waf_q16=158947 best=18 next=3 settled=0
+[868555.688145] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=63 phase=measure evaluated=2 k=2 scale_pct=25 age_ratio=16 host=65555 gc_pages=92785 gc_count=2474 waf_q16=158294 best=18 next=3 settled=0
+[868565.470009] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=64 phase=measure evaluated=3 k=2 scale_pct=50 age_ratio=4 host=65554 gc_pages=92400 gc_count=2468 waf_q16=157910 best=18 next=4 settled=0
+[868565.495538] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=64 phase=measure evaluated=3 k=2 scale_pct=50 age_ratio=4 host=65555 gc_pages=93358 gc_count=2483 waf_q16=158866 best=18 next=4 settled=0
+[868565.513049] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=64 phase=measure evaluated=3 k=2 scale_pct=50 age_ratio=4 host=65562 gc_pages=92904 gc_count=2476 waf_q16=158403 best=18 next=4 settled=0
+[868565.519062] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=64 phase=measure evaluated=3 k=2 scale_pct=50 age_ratio=4 host=65536 gc_pages=93054 gc_count=2478 waf_q16=158590 best=18 next=4 settled=0
+[868575.298853] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=65 phase=measure evaluated=4 k=2 scale_pct=50 age_ratio=7 host=65542 gc_pages=92469 gc_count=2469 waf_q16=157996 best=18 next=5 settled=0
+[868575.333258] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=65 phase=measure evaluated=4 k=2 scale_pct=50 age_ratio=7 host=65541 gc_pages=91958 gc_count=2461 waf_q16=157486 best=18 next=5 settled=0
+[868575.334864] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=65 phase=measure evaluated=4 k=2 scale_pct=50 age_ratio=7 host=65547 gc_pages=93300 gc_count=2482 waf_q16=158820 best=18 next=5 settled=0
+[868575.355014] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=65 phase=measure evaluated=4 k=2 scale_pct=50 age_ratio=7 host=65560 gc_pages=91814 gc_count=2459 waf_q16=157316 best=18 next=5 settled=0
+[868585.121454] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=66 phase=measure evaluated=5 k=2 scale_pct=50 age_ratio=16 host=65555 gc_pages=88044 gc_count=2400 waf_q16=153554 best=18 next=6 settled=0
+[868585.152318] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=66 phase=measure evaluated=5 k=2 scale_pct=50 age_ratio=16 host=65541 gc_pages=88378 gc_count=2405 waf_q16=153907 best=18 next=6 settled=0
+[868585.168214] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=66 phase=measure evaluated=5 k=2 scale_pct=50 age_ratio=16 host=65555 gc_pages=87789 gc_count=2396 waf_q16=153299 best=18 next=6 settled=0
+[868585.208444] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=66 phase=measure evaluated=5 k=2 scale_pct=50 age_ratio=16 host=65545 gc_pages=87991 gc_count=2399 waf_q16=153514 best=18 next=6 settled=0
+[868594.971284] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=67 phase=measure evaluated=6 k=2 scale_pct=100 age_ratio=4 host=65538 gc_pages=90750 gc_count=2442 waf_q16=156283 best=18 next=7 settled=0
+[868594.979359] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=67 phase=measure evaluated=6 k=2 scale_pct=100 age_ratio=4 host=65546 gc_pages=91510 gc_count=2454 waf_q16=157032 best=18 next=7 settled=0
+[868595.015603] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=67 phase=measure evaluated=6 k=2 scale_pct=100 age_ratio=4 host=65540 gc_pages=91388 gc_count=2452 waf_q16=156918 best=18 next=7 settled=0
+[868595.018299] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=67 phase=measure evaluated=6 k=2 scale_pct=100 age_ratio=4 host=65561 gc_pages=91687 gc_count=2457 waf_q16=157188 best=18 next=7 settled=0
+[868604.806487] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=68 phase=measure evaluated=7 k=2 scale_pct=100 age_ratio=7 host=65547 gc_pages=91830 gc_count=2459 waf_q16=157350 best=18 next=8 settled=0
+[868604.818983] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=68 phase=measure evaluated=7 k=2 scale_pct=100 age_ratio=7 host=65544 gc_pages=93052 gc_count=2478 waf_q16=158576 best=18 next=8 settled=0
+[868604.838488] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=68 phase=measure evaluated=7 k=2 scale_pct=100 age_ratio=7 host=65547 gc_pages=92537 gc_count=2470 waf_q16=158057 best=18 next=8 settled=0
+[868604.847008] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=68 phase=measure evaluated=7 k=2 scale_pct=100 age_ratio=7 host=65542 gc_pages=93694 gc_count=2488 waf_q16=159221 best=18 next=8 settled=0
+[868614.619916] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=69 phase=measure evaluated=8 k=2 scale_pct=100 age_ratio=16 host=65539 gc_pages=91456 gc_count=2453 waf_q16=156987 best=18 next=9 settled=0
+[868614.664608] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=69 phase=measure evaluated=8 k=2 scale_pct=100 age_ratio=16 host=65548 gc_pages=89652 gc_count=2425 waf_q16=155171 best=18 next=9 settled=0
+[868614.676235] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=69 phase=measure evaluated=8 k=2 scale_pct=100 age_ratio=16 host=65549 gc_pages=90865 gc_count=2444 waf_q16=156382 best=18 next=9 settled=0
+[868614.679851] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=69 phase=measure evaluated=8 k=2 scale_pct=100 age_ratio=16 host=65549 gc_pages=91249 gc_count=2450 waf_q16=156766 best=18 next=9 settled=0
+[868624.447727] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=70 phase=measure evaluated=9 k=2 scale_pct=200 age_ratio=4 host=65538 gc_pages=93561 gc_count=2486 waf_q16=159094 best=18 next=10 settled=0
+[868624.497234] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=70 phase=measure evaluated=9 k=2 scale_pct=200 age_ratio=4 host=65543 gc_pages=92664 gc_count=2472 waf_q16=158190 best=18 next=10 settled=0
+[868624.510451] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=70 phase=measure evaluated=9 k=2 scale_pct=200 age_ratio=4 host=65563 gc_pages=91876 gc_count=2460 waf_q16=157374 best=18 next=10 settled=0
+[868624.515498] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=70 phase=measure evaluated=9 k=2 scale_pct=200 age_ratio=4 host=65557 gc_pages=93099 gc_count=2479 waf_q16=158605 best=18 next=10 settled=0
+[868634.267811] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=71 phase=measure evaluated=10 k=2 scale_pct=200 age_ratio=7 host=65539 gc_pages=94461 gc_count=2500 waf_q16=159992 best=18 next=11 settled=0
+[868634.333959] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=71 phase=measure evaluated=10 k=2 scale_pct=200 age_ratio=7 host=65552 gc_pages=94448 gc_count=2500 waf_q16=159960 best=18 next=11 settled=0
+[868634.341778] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=71 phase=measure evaluated=10 k=2 scale_pct=200 age_ratio=7 host=65546 gc_pages=93622 gc_count=2487 waf_q16=159143 best=18 next=11 settled=0
+[868634.354788] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=71 phase=measure evaluated=10 k=2 scale_pct=200 age_ratio=7 host=65542 gc_pages=94266 gc_count=2497 waf_q16=159793 best=18 next=11 settled=0
+[868644.091431] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=72 phase=measure evaluated=11 k=2 scale_pct=200 age_ratio=16 host=65541 gc_pages=91962 gc_count=2461 waf_q16=157490 best=18 next=12 settled=0
+[868644.161782] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=72 phase=measure evaluated=11 k=2 scale_pct=200 age_ratio=16 host=65559 gc_pages=91882 gc_count=2460 waf_q16=157385 best=18 next=12 settled=0
+[868644.180922] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=72 phase=measure evaluated=11 k=2 scale_pct=200 age_ratio=16 host=65558 gc_pages=92522 gc_count=2470 waf_q16=158026 best=18 next=12 settled=0
+[868644.190643] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=72 phase=measure evaluated=11 k=2 scale_pct=200 age_ratio=16 host=65560 gc_pages=92903 gc_count=2476 waf_q16=158404 best=18 next=12 settled=0
+[868653.914933] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=73 phase=measure evaluated=12 k=2 scale_pct=400 age_ratio=4 host=65536 gc_pages=91842 gc_count=2459 waf_q16=157378 best=18 next=13 settled=0
+[868653.991881] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=73 phase=measure evaluated=12 k=2 scale_pct=400 age_ratio=4 host=65557 gc_pages=92654 gc_count=2472 waf_q16=158160 best=18 next=13 settled=0
+[868654.017210] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=73 phase=measure evaluated=12 k=2 scale_pct=400 age_ratio=4 host=65560 gc_pages=92780 gc_count=2474 waf_q16=158282 best=18 next=13 settled=0
+[868654.037634] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=73 phase=measure evaluated=12 k=2 scale_pct=400 age_ratio=4 host=65560 gc_pages=92396 gc_count=2468 waf_q16=157898 best=18 next=13 settled=0
+[868663.788123] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=74 phase=measure evaluated=13 k=2 scale_pct=400 age_ratio=7 host=65543 gc_pages=95034 gc_count=2509 waf_q16=160559 best=18 next=14 settled=0
+[868663.800808] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=74 phase=measure evaluated=13 k=2 scale_pct=400 age_ratio=7 host=65545 gc_pages=95733 gc_count=2520 waf_q16=161255 best=18 next=14 settled=0
+[868663.849239] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=74 phase=measure evaluated=13 k=2 scale_pct=400 age_ratio=7 host=65557 gc_pages=94762 gc_count=2505 waf_q16=160267 best=18 next=14 settled=0
+[868663.852303] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=74 phase=measure evaluated=13 k=2 scale_pct=400 age_ratio=7 host=65564 gc_pages=96672 gc_count=2535 waf_q16=162166 best=18 next=14 settled=0
+[868673.612916] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=75 phase=measure evaluated=14 k=2 scale_pct=400 age_ratio=16 host=65547 gc_pages=94064 gc_count=2494 waf_q16=159584 best=18 next=15 settled=0
+[868673.659215] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=75 phase=measure evaluated=14 k=2 scale_pct=400 age_ratio=16 host=65561 gc_pages=95588 gc_count=2518 waf_q16=161087 best=18 next=15 settled=0
+[868673.661014] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=75 phase=measure evaluated=14 k=2 scale_pct=400 age_ratio=16 host=65551 gc_pages=94830 gc_count=2506 waf_q16=160344 best=18 next=15 settled=0
+[868673.684977] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=75 phase=measure evaluated=14 k=2 scale_pct=400 age_ratio=16 host=65546 gc_pages=95989 gc_count=2524 waf_q16=161510 best=18 next=15 settled=0
+[868683.467847] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=76 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=65538 gc_pages=69615 gc_count=2112 waf_q16=135148 best=18 next=16 settled=0
+[868683.478425] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=76 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=65550 gc_pages=69239 gc_count=2106 waf_q16=134760 best=18 next=16 settled=0
+[868683.482215] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=76 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=65538 gc_pages=69744 gc_count=2114 waf_q16=135277 best=18 next=16 settled=0
+[868683.520141] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=76 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=65560 gc_pages=69657 gc_count=2113 waf_q16=135167 best=18 next=16 settled=0
+[868693.295658] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=77 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=65545 gc_pages=57068 gc_count=1916 waf_q16=122596 best=18 next=17 settled=0
+[868693.303564] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=77 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=65544 gc_pages=57189 gc_count=1918 waf_q16=122718 best=18 next=17 settled=0
+[868693.329038] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=77 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=65562 gc_pages=56867 gc_count=1913 waf_q16=122380 best=18 next=17 settled=0
+[868693.352711] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=77 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=65570 gc_pages=56923 gc_count=1914 waf_q16=122429 best=18 next=17 settled=0
+[868703.135921] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=78 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=65540 gc_pages=61374 gc_count=1983 waf_q16=126906 best=18 next=18 settled=0
+[868703.146828] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=78 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=65567 gc_pages=62043 gc_count=1994 waf_q16=127549 best=18 next=18 settled=0
+[868703.154281] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=78 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=65541 gc_pages=60800 gc_count=1974 waf_q16=126331 best=18 next=18 settled=0
+[868703.172546] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=78 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=65542 gc_pages=61637 gc_count=1987 waf_q16=127167 best=18 next=18 settled=0
+[868712.956827] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=79 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=65548 gc_pages=47298 gc_count=1763 waf_q16=112825 best=49 next=19 settled=0
+[868712.976084] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=79 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=65563 gc_pages=47018 gc_count=1759 waf_q16=112534 best=49 next=19 settled=0
+[868713.007277] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=79 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=65571 gc_pages=46945 gc_count=1758 waf_q16=112455 best=49 next=19 settled=0
+[868713.010008] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=79 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=65571 gc_pages=47776 gc_count=1771 waf_q16=113286 best=49 next=19 settled=0
+[868722.792447] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=80 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=65572 gc_pages=54811 gc_count=1881 waf_q16=120316 best=49 next=20 settled=0
+[868722.825485] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=80 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=65569 gc_pages=54877 gc_count=1882 waf_q16=120385 best=49 next=20 settled=0
+[868722.836708] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=80 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=65566 gc_pages=55135 gc_count=1886 waf_q16=120645 best=49 next=20 settled=0
+[868722.838136] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=80 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=65568 gc_pages=54942 gc_count=1883 waf_q16=120451 best=49 next=20 settled=0
+[868732.626887] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=81 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=65538 gc_pages=54441 gc_count=1875 waf_q16=119975 best=49 next=21 settled=0
+[868732.644363] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=81 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=65551 gc_pages=55262 gc_count=1888 waf_q16=120785 best=49 next=21 settled=0
+[868732.663641] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=81 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=65553 gc_pages=54832 gc_count=1881 waf_q16=120353 best=49 next=21 settled=0
+[868732.686529] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=81 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=65545 gc_pages=54240 gc_count=1872 waf_q16=119768 best=49 next=21 settled=0
+[868742.428639] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=82 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=65567 gc_pages=52389 gc_count=1843 waf_q16=117900 best=49 next=22 settled=0
+[868742.500456] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=82 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=65563 gc_pages=52137 gc_count=1839 waf_q16=117651 best=49 next=22 settled=0
+[868742.508705] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=82 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=65560 gc_pages=52523 gc_count=1845 waf_q16=118039 best=49 next=22 settled=0
+[868742.520645] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=82 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=65540 gc_pages=52224 gc_count=1840 waf_q16=117756 best=49 next=22 settled=0
+[868752.268387] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=83 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=65548 gc_pages=69683 gc_count=2113 waf_q16=135206 best=49 next=23 settled=0
+[868752.328052] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=83 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=65541 gc_pages=68548 gc_count=2095 waf_q16=134078 best=49 next=23 settled=0
+[868752.337048] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=83 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=65556 gc_pages=69553 gc_count=2111 waf_q16=135067 best=49 next=23 settled=0
+[868752.362490] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=83 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=65564 gc_pages=69604 gc_count=2112 waf_q16=135110 best=49 next=23 settled=0
+[868762.107197] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=84 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=65554 gc_pages=59378 gc_count=1952 waf_q16=124897 best=49 next=24 settled=0
+[868762.141740] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=84 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=65558 gc_pages=57838 gc_count=1928 waf_q16=123354 best=49 next=24 settled=0
+[868762.188399] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=84 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=65546 gc_pages=58937 gc_count=1945 waf_q16=124464 best=49 next=24 settled=0
+[868762.196311] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=84 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=65565 gc_pages=58088 gc_count=1932 waf_q16=123598 best=49 next=24 settled=0
+[868771.963751] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=85 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=65559 gc_pages=59945 gc_count=1961 waf_q16=125459 best=49 next=25 settled=0
+[868771.968657] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=85 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=65538 gc_pages=60669 gc_count=1972 waf_q16=126203 best=49 next=25 settled=0
+[868772.013036] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=85 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=65565 gc_pages=60257 gc_count=1966 waf_q16=125766 best=49 next=25 settled=0
+[868772.016065] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=85 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=65539 gc_pages=60538 gc_count=1970 waf_q16=126071 best=49 next=25 settled=0
+[868781.783492] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=86 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=65545 gc_pages=71094 gc_count=2135 waf_q16=136620 best=49 next=26 settled=0
+[868781.795564] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=86 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=65542 gc_pages=72313 gc_count=2154 waf_q16=137842 best=49 next=26 settled=0
+[868781.845550] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=86 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=65559 gc_pages=70311 gc_count=2123 waf_q16=135822 best=49 next=26 settled=0
+[868781.866277] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=86 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=65555 gc_pages=70766 gc_count=2130 waf_q16=136281 best=49 next=26 settled=0
+[868791.636935] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=87 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=65553 gc_pages=66350 gc_count=2061 waf_q16=131868 best=49 next=27 settled=0
+[868791.637152] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=87 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=65540 gc_pages=64828 gc_count=2037 waf_q16=130360 best=49 next=27 settled=0
+[868791.674699] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=87 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=65558 gc_pages=63338 gc_count=2014 waf_q16=128852 best=49 next=27 settled=0
+[868791.675445] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=87 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=65536 gc_pages=65280 gc_count=2044 waf_q16=130816 best=49 next=27 settled=0
+[868801.458109] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=88 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=65545 gc_pages=69306 gc_count=2107 waf_q16=134832 best=49 next=28 settled=0
+[868801.476659] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=88 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=65548 gc_pages=69175 gc_count=2105 waf_q16=134698 best=49 next=28 settled=0
+[868801.489492] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=88 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=65555 gc_pages=68465 gc_count=2094 waf_q16=133981 best=49 next=28 settled=0
+[868801.532237] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=88 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=65557 gc_pages=68592 gc_count=2096 waf_q16=134106 best=49 next=28 settled=0
+[868811.284524] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=89 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=65550 gc_pages=79732 gc_count=2270 waf_q16=145250 best=49 next=29 settled=0
+[868811.299258] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=89 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=65554 gc_pages=79091 gc_count=2260 waf_q16=144605 best=49 next=29 settled=0
+[868811.328880] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=89 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=65548 gc_pages=79098 gc_count=2260 waf_q16=144619 best=49 next=29 settled=0
+[868811.374546] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=89 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=65562 gc_pages=78698 gc_count=2254 waf_q16=144202 best=49 next=29 settled=0
+[868821.128735] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=90 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=65550 gc_pages=78060 gc_count=2244 waf_q16=143579 best=49 next=30 settled=0
+[868821.132763] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=90 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=65552 gc_pages=78185 gc_count=2246 waf_q16=143701 best=49 next=30 settled=0
+[868821.155071] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=90 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=65547 gc_pages=76080 gc_count=2213 waf_q16=141603 best=49 next=30 settled=0
+[868821.197901] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=90 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=65542 gc_pages=76020 gc_count=2212 waf_q16=141549 best=49 next=30 settled=0
+[868830.958893] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=91 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=65555 gc_pages=55205 gc_count=1887 waf_q16=120724 best=49 next=31 settled=0
+[868830.979007] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=91 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=65568 gc_pages=55891 gc_count=1898 waf_q16=121399 best=49 next=31 settled=0
+[868830.989970] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=91 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=65546 gc_pages=54707 gc_count=1879 waf_q16=120234 best=49 next=31 settled=0
+[868831.019361] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=91 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=65549 gc_pages=54881 gc_count=1882 waf_q16=120406 best=49 next=31 settled=0
+[868840.798071] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=92 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=65540 gc_pages=56454 gc_count=1906 waf_q16=121986 best=49 next=32 settled=0
+[868840.808644] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=92 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=65562 gc_pages=57621 gc_count=1925 waf_q16=123134 best=49 next=32 settled=0
+[868840.811231] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=92 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=65547 gc_pages=57791 gc_count=1927 waf_q16=123317 best=49 next=32 settled=0
+[868840.869015] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=92 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=65568 gc_pages=58005 gc_count=1931 waf_q16=123512 best=49 next=32 settled=0
+[868850.601072] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=93 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=65543 gc_pages=65302 gc_count=2044 waf_q16=130831 best=49 next=33 settled=0
+[868850.647465] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=93 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=65542 gc_pages=65101 gc_count=2041 waf_q16=130631 best=49 next=33 settled=0
+[868850.654320] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=93 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=65537 gc_pages=66062 gc_count=2056 waf_q16=131596 best=49 next=33 settled=0
+[868850.711162] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=93 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=65564 gc_pages=65333 gc_count=2045 waf_q16=130841 best=49 next=33 settled=0
+[868860.434146] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=94 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=65542 gc_pages=39870 gc_count=1647 waf_q16=105402 best=33 next=34 settled=0
+[868860.474138] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=94 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=65539 gc_pages=39683 gc_count=1644 waf_q16=105217 best=49 next=34 settled=0
+[868860.479158] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=94 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=65572 gc_pages=39968 gc_count=1649 waf_q16=105482 best=49 next=34 settled=0
+[868860.562759] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=94 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=65565 gc_pages=39657 gc_count=1644 waf_q16=105175 best=33 next=34 settled=0
+[868870.277456] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=95 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=65559 gc_pages=47466 gc_count=1766 waf_q16=112985 best=33 next=35 settled=0
+[868870.298447] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=95 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=65544 gc_pages=45497 gc_count=1735 waf_q16=111027 best=49 next=35 settled=0
+[868870.310950] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=95 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=65561 gc_pages=46060 gc_count=1744 waf_q16=111578 best=49 next=35 settled=0
+[868870.397245] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=95 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=65537 gc_pages=46081 gc_count=1744 waf_q16=111616 best=33 next=35 settled=0
+[868880.121064] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=96 phase=measure evaluated=35 k=7 scale_pct=50 age_ratio=16 host=65573 gc_pages=65183 gc_count=2043 waf_q16=130682 best=49 next=36 settled=0
+[868880.135081] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=96 phase=measure evaluated=35 k=7 scale_pct=50 age_ratio=16 host=65567 gc_pages=66133 gc_count=2058 waf_q16=131637 best=33 next=36 settled=0
+[868880.143353] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=96 phase=measure evaluated=35 k=7 scale_pct=50 age_ratio=16 host=65561 gc_pages=65516 gc_count=2048 waf_q16=131027 best=49 next=36 settled=0
+[868880.225882] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=96 phase=measure evaluated=35 k=7 scale_pct=50 age_ratio=16 host=65559 gc_pages=66090 gc_count=2057 waf_q16=131602 best=33 next=36 settled=0
+[868889.944595] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=97 phase=measure evaluated=36 k=7 scale_pct=100 age_ratio=4 host=65551 gc_pages=47661 gc_count=1769 waf_q16=113186 best=49 next=37 settled=0
+[868889.959441] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=97 phase=measure evaluated=36 k=7 scale_pct=100 age_ratio=4 host=65558 gc_pages=47143 gc_count=1761 waf_q16=112663 best=33 next=37 settled=0
+[868890.002250] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=97 phase=measure evaluated=36 k=7 scale_pct=100 age_ratio=4 host=65558 gc_pages=47720 gc_count=1770 waf_q16=113239 best=49 next=37 settled=0
+[868890.050347] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=97 phase=measure evaluated=36 k=7 scale_pct=100 age_ratio=4 host=65541 gc_pages=47735 gc_count=1770 waf_q16=113267 best=33 next=37 settled=0
+[868899.763362] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=98 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=65560 gc_pages=45929 gc_count=1742 waf_q16=111448 best=33 next=38 settled=0
+[868899.811204] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=98 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=65538 gc_pages=45952 gc_count=1742 waf_q16=111486 best=49 next=38 settled=0
+[868899.841625] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=98 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=65538 gc_pages=46337 gc_count=1748 waf_q16=111871 best=49 next=38 settled=0
+[868899.872318] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=98 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=65553 gc_pages=46322 gc_count=1748 waf_q16=111845 best=33 next=38 settled=0
+[868909.616458] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=99 phase=measure evaluated=38 k=7 scale_pct=100 age_ratio=16 host=65547 gc_pages=70778 gc_count=2130 waf_q16=136302 best=49 next=39 settled=0
+[868909.638080] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=99 phase=measure evaluated=38 k=7 scale_pct=100 age_ratio=16 host=65565 gc_pages=69608 gc_count=2112 waf_q16=135113 best=33 next=39 settled=0
+[868909.660460] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=99 phase=measure evaluated=38 k=7 scale_pct=100 age_ratio=16 host=65536 gc_pages=70854 gc_count=2131 waf_q16=136390 best=49 next=39 settled=0
+[868909.702668] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=99 phase=measure evaluated=38 k=7 scale_pct=100 age_ratio=16 host=65540 gc_pages=71058 gc_count=2134 waf_q16=136589 best=33 next=39 settled=0
+[868919.448834] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=100 phase=measure evaluated=39 k=7 scale_pct=200 age_ratio=4 host=65539 gc_pages=61943 gc_count=1992 waf_q16=127476 best=49 next=40 settled=0
+[868919.454734] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=100 phase=measure evaluated=39 k=7 scale_pct=200 age_ratio=4 host=65564 gc_pages=61341 gc_count=1983 waf_q16=126850 best=33 next=40 settled=0
+[868919.505798] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=100 phase=measure evaluated=39 k=7 scale_pct=200 age_ratio=4 host=65555 gc_pages=60518 gc_count=1970 waf_q16=126036 best=49 next=40 settled=0
+[868919.537423] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=100 phase=measure evaluated=39 k=7 scale_pct=200 age_ratio=4 host=65571 gc_pages=61142 gc_count=1980 waf_q16=126645 best=33 next=40 settled=0
+[868929.270239] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=101 phase=measure evaluated=40 k=7 scale_pct=200 age_ratio=7 host=65562 gc_pages=58341 gc_count=1936 waf_q16=123853 best=49 next=41 settled=0
+[868929.293809] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=101 phase=measure evaluated=40 k=7 scale_pct=200 age_ratio=7 host=65547 gc_pages=57973 gc_count=1930 waf_q16=123499 best=33 next=41 settled=0
+[868929.333297] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=101 phase=measure evaluated=40 k=7 scale_pct=200 age_ratio=7 host=65547 gc_pages=56950 gc_count=1914 waf_q16=122476 best=49 next=41 settled=0
+[868929.379344] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=101 phase=measure evaluated=40 k=7 scale_pct=200 age_ratio=7 host=65550 gc_pages=57971 gc_count=1930 waf_q16=123494 best=33 next=41 settled=0
+[868939.114054] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=102 phase=measure evaluated=41 k=7 scale_pct=200 age_ratio=16 host=65548 gc_pages=69814 gc_count=2115 waf_q16=135337 best=49 next=42 settled=0
+[868939.131250] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=102 phase=measure evaluated=41 k=7 scale_pct=200 age_ratio=16 host=65551 gc_pages=70130 gc_count=2120 waf_q16=135649 best=33 next=42 settled=0
+[868939.158349] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=102 phase=measure evaluated=41 k=7 scale_pct=200 age_ratio=16 host=65542 gc_pages=70588 gc_count=2127 waf_q16=136117 best=49 next=42 settled=0
+[868939.203283] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=102 phase=measure evaluated=41 k=7 scale_pct=200 age_ratio=16 host=65543 gc_pages=70140 gc_count=2120 waf_q16=135668 best=33 next=42 settled=0
+[868948.946185] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=103 phase=measure evaluated=42 k=7 scale_pct=400 age_ratio=4 host=65540 gc_pages=71230 gc_count=2137 waf_q16=136761 best=49 next=43 settled=0
+[868948.951860] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=103 phase=measure evaluated=42 k=7 scale_pct=400 age_ratio=4 host=65549 gc_pages=71862 gc_count=2147 waf_q16=137383 best=33 next=43 settled=0
+[868948.991652] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=103 phase=measure evaluated=42 k=7 scale_pct=400 age_ratio=4 host=65547 gc_pages=72374 gc_count=2155 waf_q16=137897 best=49 next=43 settled=0
+[868949.042872] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=103 phase=measure evaluated=42 k=7 scale_pct=400 age_ratio=4 host=65558 gc_pages=71789 gc_count=2146 waf_q16=137300 best=33 next=43 settled=0
+[868958.781334] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=104 phase=measure evaluated=43 k=7 scale_pct=400 age_ratio=7 host=65550 gc_pages=69623 gc_count=2112 waf_q16=135144 best=33 next=44 settled=0
+[868958.784452] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=104 phase=measure evaluated=43 k=7 scale_pct=400 age_ratio=7 host=65552 gc_pages=68789 gc_count=2099 waf_q16=134308 best=49 next=44 settled=0
+[868958.832503] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=104 phase=measure evaluated=43 k=7 scale_pct=400 age_ratio=7 host=65562 gc_pages=70313 gc_count=2123 waf_q16=135821 best=49 next=44 settled=0
+[868958.874827] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=104 phase=measure evaluated=43 k=7 scale_pct=400 age_ratio=7 host=65559 gc_pages=71083 gc_count=2135 waf_q16=136594 best=33 next=44 settled=0
+[868968.615841] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=105 phase=measure evaluated=44 k=7 scale_pct=400 age_ratio=16 host=65557 gc_pages=76399 gc_count=2218 waf_q16=141910 best=33 next=45 settled=0
+[868968.631158] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=105 phase=measure evaluated=44 k=7 scale_pct=400 age_ratio=16 host=65557 gc_pages=75120 gc_count=2198 waf_q16=140631 best=49 next=45 settled=0
+[868968.640430] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=105 phase=measure evaluated=44 k=7 scale_pct=400 age_ratio=16 host=65541 gc_pages=76723 gc_count=2223 waf_q16=142253 best=49 next=45 settled=0
+[868968.725131] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=105 phase=measure evaluated=44 k=7 scale_pct=400 age_ratio=16 host=65561 gc_pages=76383 gc_count=2218 waf_q16=141889 best=33 next=45 settled=0
+[868978.461338] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=106 phase=measure evaluated=45 k=10 scale_pct=25 age_ratio=4 host=65538 gc_pages=61696 gc_count=1988 waf_q16=127230 best=33 next=46 settled=0
+[868978.465877] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=106 phase=measure evaluated=45 k=10 scale_pct=25 age_ratio=4 host=65545 gc_pages=60655 gc_count=1972 waf_q16=126182 best=49 next=46 settled=0
+[868978.483141] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=106 phase=measure evaluated=45 k=10 scale_pct=25 age_ratio=4 host=65541 gc_pages=61753 gc_count=1989 waf_q16=127284 best=49 next=46 settled=0
+[868978.529443] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=106 phase=measure evaluated=45 k=10 scale_pct=25 age_ratio=4 host=65548 gc_pages=61165 gc_count=1980 waf_q16=126689 best=33 next=46 settled=0
+[868988.262275] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=107 phase=measure evaluated=46 k=10 scale_pct=25 age_ratio=7 host=65555 gc_pages=47400 gc_count=1765 waf_q16=112922 best=33 next=47 settled=0
+[868988.298648] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=107 phase=measure evaluated=46 k=10 scale_pct=25 age_ratio=7 host=65568 gc_pages=47452 gc_count=1766 waf_q16=112964 best=49 next=47 settled=0
+[868988.328716] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=107 phase=measure evaluated=46 k=10 scale_pct=25 age_ratio=7 host=65549 gc_pages=47020 gc_count=1759 waf_q16=112546 best=49 next=47 settled=0
+[868988.376458] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=107 phase=measure evaluated=46 k=10 scale_pct=25 age_ratio=7 host=65569 gc_pages=47195 gc_count=1762 waf_q16=112707 best=33 next=47 settled=0
+[868998.116906] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=108 phase=measure evaluated=47 k=10 scale_pct=25 age_ratio=16 host=65540 gc_pages=40971 gc_count=1664 waf_q16=106504 best=33 next=48 settled=0
+[868998.117764] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=108 phase=measure evaluated=47 k=10 scale_pct=25 age_ratio=16 host=65568 gc_pages=40048 gc_count=1650 waf_q16=105564 best=49 next=48 settled=0
+[868998.171387] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=108 phase=measure evaluated=47 k=10 scale_pct=25 age_ratio=16 host=65576 gc_pages=39637 gc_count=1644 waf_q16=105148 best=49 next=48 settled=0
+[868998.201646] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=108 phase=measure evaluated=47 k=10 scale_pct=25 age_ratio=16 host=65561 gc_pages=40997 gc_count=1665 waf_q16=106517 best=33 next=48 settled=0
+[869007.951708] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=109 phase=measure evaluated=48 k=10 scale_pct=50 age_ratio=4 host=65541 gc_pages=51910 gc_count=1835 waf_q16=117442 best=49 next=49 settled=0
+[869007.978530] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=109 phase=measure evaluated=48 k=10 scale_pct=50 age_ratio=4 host=65558 gc_pages=53168 gc_count=1855 waf_q16=118686 best=33 next=49 settled=0
+[869008.007302] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=109 phase=measure evaluated=48 k=10 scale_pct=50 age_ratio=4 host=65553 gc_pages=51955 gc_count=1836 waf_q16=117477 best=33 next=49 settled=0
+[869008.008251] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=109 phase=measure evaluated=48 k=10 scale_pct=50 age_ratio=4 host=65564 gc_pages=51497 gc_count=1829 waf_q16=117011 best=49 next=49 settled=0
+[869017.779751] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=110 phase=measure evaluated=49 k=10 scale_pct=50 age_ratio=7 host=65540 gc_pages=58164 gc_count=1933 waf_q16=123696 best=33 next=50 settled=0
+[869017.786636] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=110 phase=measure evaluated=49 k=10 scale_pct=50 age_ratio=7 host=65568 gc_pages=56731 gc_count=1911 waf_q16=122239 best=33 next=50 settled=0
+[869017.854405] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=110 phase=measure evaluated=49 k=10 scale_pct=50 age_ratio=7 host=65558 gc_pages=56991 gc_count=1915 waf_q16=122507 best=33 next=50 settled=0
+[869017.858715] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=110 phase=measure evaluated=49 k=10 scale_pct=50 age_ratio=7 host=65536 gc_pages=57456 gc_count=1922 waf_q16=122992 best=33 next=50 settled=0
+[869027.618793] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=111 phase=measure evaluated=50 k=10 scale_pct=50 age_ratio=16 host=65550 gc_pages=46015 gc_count=1743 waf_q16=111541 best=33 next=51 settled=0
+[869027.624229] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=111 phase=measure evaluated=50 k=10 scale_pct=50 age_ratio=16 host=65545 gc_pages=45231 gc_count=1731 waf_q16=110760 best=33 next=51 settled=0
+[869027.676136] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=111 phase=measure evaluated=50 k=10 scale_pct=50 age_ratio=16 host=65576 gc_pages=46289 gc_count=1748 waf_q16=111796 best=33 next=51 settled=0
+[869027.695282] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=111 phase=measure evaluated=50 k=10 scale_pct=50 age_ratio=16 host=65554 gc_pages=45672 gc_count=1738 waf_q16=111195 best=33 next=51 settled=0
+[869037.457320] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=112 phase=measure evaluated=51 k=10 scale_pct=100 age_ratio=4 host=65563 gc_pages=41769 gc_count=1677 waf_q16=107287 best=33 next=52 settled=0
+[869037.459066] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=112 phase=measure evaluated=51 k=10 scale_pct=100 age_ratio=4 host=65567 gc_pages=42084 gc_count=1682 waf_q16=107600 best=33 next=52 settled=0
+[869037.511724] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=112 phase=measure evaluated=51 k=10 scale_pct=100 age_ratio=4 host=65542 gc_pages=42110 gc_count=1682 waf_q16=107642 best=33 next=52 settled=0
+[869037.526186] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=112 phase=measure evaluated=51 k=10 scale_pct=100 age_ratio=4 host=65572 gc_pages=42144 gc_count=1683 waf_q16=107656 best=33 next=52 settled=0
+[869047.303151] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=113 phase=measure evaluated=52 k=10 scale_pct=100 age_ratio=7 host=65564 gc_pages=53797 gc_count=1865 waf_q16=119310 best=33 next=53 settled=0
+[869047.304464] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=113 phase=measure evaluated=52 k=10 scale_pct=100 age_ratio=7 host=65538 gc_pages=54336 gc_count=1873 waf_q16=119870 best=33 next=53 settled=0
+[869047.321952] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=113 phase=measure evaluated=52 k=10 scale_pct=100 age_ratio=7 host=65554 gc_pages=53871 gc_count=1866 waf_q16=119392 best=33 next=53 settled=0
+[869047.358388] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=113 phase=measure evaluated=52 k=10 scale_pct=100 age_ratio=7 host=65546 gc_pages=54599 gc_count=1877 waf_q16=120126 best=33 next=53 settled=0
+[869057.135984] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=114 phase=measure evaluated=53 k=10 scale_pct=100 age_ratio=16 host=65544 gc_pages=46791 gc_count=1755 waf_q16=112321 best=33 next=54 settled=0
+[869057.136926] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=114 phase=measure evaluated=53 k=10 scale_pct=100 age_ratio=16 host=65550 gc_pages=47410 gc_count=1765 waf_q16=112935 best=33 next=54 settled=0
+[869057.160275] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=114 phase=measure evaluated=53 k=10 scale_pct=100 age_ratio=16 host=65552 gc_pages=47287 gc_count=1763 waf_q16=112811 best=33 next=54 settled=0
+[869057.186023] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=114 phase=measure evaluated=53 k=10 scale_pct=100 age_ratio=16 host=65555 gc_pages=46898 gc_count=1757 waf_q16=112420 best=33 next=54 settled=0
+[869066.940452] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=115 phase=measure evaluated=54 k=10 scale_pct=200 age_ratio=4 host=65560 gc_pages=44519 gc_count=1720 waf_q16=110038 best=33 next=55 settled=0
+[869066.981965] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=115 phase=measure evaluated=54 k=10 scale_pct=200 age_ratio=4 host=65575 gc_pages=43800 gc_count=1709 waf_q16=109309 best=33 next=55 settled=0
+[869066.991845] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=115 phase=measure evaluated=54 k=10 scale_pct=200 age_ratio=4 host=65536 gc_pages=44543 gc_count=1720 waf_q16=110079 best=33 next=55 settled=0
+[869067.039815] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=115 phase=measure evaluated=54 k=10 scale_pct=200 age_ratio=4 host=65570 gc_pages=44254 gc_count=1716 waf_q16=109767 best=33 next=55 settled=0
+[869076.775768] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=116 phase=measure evaluated=55 k=10 scale_pct=200 age_ratio=7 host=65538 gc_pages=58239 gc_count=1934 waf_q16=123773 best=33 next=56 settled=0
+[869076.786231] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=116 phase=measure evaluated=55 k=10 scale_pct=200 age_ratio=7 host=65542 gc_pages=59203 gc_count=1949 waf_q16=124733 best=33 next=56 settled=0
+[869076.836139] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=116 phase=measure evaluated=55 k=10 scale_pct=200 age_ratio=7 host=65541 gc_pages=59068 gc_count=1947 waf_q16=124599 best=33 next=56 settled=0
+[869076.893930] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=116 phase=measure evaluated=55 k=10 scale_pct=200 age_ratio=7 host=65557 gc_pages=59117 gc_count=1948 waf_q16=124634 best=33 next=56 settled=0
+[869086.599981] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=117 phase=measure evaluated=56 k=10 scale_pct=200 age_ratio=16 host=65540 gc_pages=53560 gc_count=1861 waf_q16=119092 best=33 next=57 settled=0
+[869086.627765] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=117 phase=measure evaluated=56 k=10 scale_pct=200 age_ratio=16 host=65557 gc_pages=53031 gc_count=1853 waf_q16=118550 best=33 next=57 settled=0
+[869086.673884] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=117 phase=measure evaluated=56 k=10 scale_pct=200 age_ratio=16 host=65570 gc_pages=53017 gc_count=1853 waf_q16=118525 best=33 next=57 settled=0
+[869086.721026] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=117 phase=measure evaluated=56 k=10 scale_pct=200 age_ratio=16 host=65555 gc_pages=52709 gc_count=1848 waf_q16=118229 best=33 next=57 settled=0
+[869096.435487] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=118 phase=measure evaluated=57 k=10 scale_pct=400 age_ratio=4 host=65551 gc_pages=52532 gc_count=1845 waf_q16=118055 best=33 next=58 settled=0
+[869096.457955] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=118 phase=measure evaluated=57 k=10 scale_pct=400 age_ratio=4 host=65565 gc_pages=52710 gc_count=1848 waf_q16=118222 best=33 next=58 settled=0
+[869096.507699] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=118 phase=measure evaluated=57 k=10 scale_pct=400 age_ratio=4 host=65537 gc_pages=51906 gc_count=1835 waf_q16=117441 best=33 next=58 settled=0
+[869096.549454] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=118 phase=measure evaluated=57 k=10 scale_pct=400 age_ratio=4 host=65545 gc_pages=52347 gc_count=1842 waf_q16=117875 best=33 next=58 settled=0
+[869106.264227] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=119 phase=measure evaluated=58 k=10 scale_pct=400 age_ratio=7 host=65543 gc_pages=71295 gc_count=2138 waf_q16=136823 best=33 next=59 settled=0
+[869106.322098] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=119 phase=measure evaluated=58 k=10 scale_pct=400 age_ratio=7 host=65557 gc_pages=70769 gc_count=2130 waf_q16=136282 best=33 next=59 settled=0
+[869106.325577] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=119 phase=measure evaluated=58 k=10 scale_pct=400 age_ratio=7 host=65567 gc_pages=71142 gc_count=2136 waf_q16=136644 best=33 next=59 settled=0
+[869106.372024] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=119 phase=measure evaluated=58 k=10 scale_pct=400 age_ratio=7 host=65538 gc_pages=71809 gc_count=2146 waf_q16=137342 best=33 next=59 settled=0
+[869116.105379] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=120 phase=measure evaluated=59 k=10 scale_pct=400 age_ratio=16 host=65564 gc_pages=72988 gc_count=2165 waf_q16=138492 best=33 next=0 settled=0
+[869116.154499] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=120 phase=measure evaluated=59 k=10 scale_pct=400 age_ratio=16 host=65557 gc_pages=73318 gc_count=2170 waf_q16=138830 best=33 next=0 settled=0
+[869116.157006] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=120 phase=measure evaluated=59 k=10 scale_pct=400 age_ratio=16 host=65536 gc_pages=73338 gc_count=2170 waf_q16=138874 best=33 next=0 settled=0
+[869116.205516] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=120 phase=measure evaluated=59 k=10 scale_pct=400 age_ratio=16 host=65567 gc_pages=72477 gc_count=2157 waf_q16=137978 best=33 next=0 settled=0
+[869125.944969] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=121 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65546 gc_pages=77109 gc_count=2229 waf_q16=142633 best=33 next=1 settled=0
+[869125.972231] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=121 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65544 gc_pages=77561 gc_count=2236 waf_q16=143087 best=33 next=1 settled=0
+[869125.987181] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=121 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65542 gc_pages=77306 gc_count=2232 waf_q16=142834 best=33 next=1 settled=0
+[869126.048131] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=121 phase=measure evaluated=0 k=2 scale_pct=25 age_ratio=4 host=65544 gc_pages=77241 gc_count=2231 waf_q16=142767 best=33 next=1 settled=0
+[869135.768296] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=122 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65540 gc_pages=85820 gc_count=2365 waf_q16=151350 best=33 next=2 settled=0
+[869135.787279] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=122 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65552 gc_pages=86321 gc_count=2373 waf_q16=151835 best=33 next=2 settled=0
+[869135.830342] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=122 phase=measure evaluated=1 k=2 scale_pct=25 age_ratio=7 host=65558 gc_pages=86636 gc_count=2378 waf_q16=152142 best=33 next=2 settled=0
+[869135.888015] mix-mixK-online-4151037 phase=B END
+[869135.891914] NVMeVirt: Measurement: command=stop epoch=1 host_bytes=196616118272 learner_active=0
+[869135.947727] EXT4-fs (nvme0n1): unmounting filesystem 903fda66-257f-42c0-a979-2bf5435a417f.
+[869136.015677] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[869136.015778] NVMeVirt: WATGC_V2 summary ns=0 part=0 epoch=1 windows=122 epoch_windows=122 discarded=0 visited=60 covered=0 settled=0 phase=1 current=2 best=33 k=7 scale_pct=50 age_ratio=4 best_waf_valid=1 best_waf_q16=108767
+[869136.015783] NVMeVirt: WATGC_V2 summary ns=0 part=1 epoch=1 windows=121 epoch_windows=121 discarded=0 visited=60 covered=0 settled=0 phase=2 current=1 best=33 k=7 scale_pct=50 age_ratio=4 best_waf_valid=1 best_waf_q16=108586
+[869136.015787] NVMeVirt: WATGC_V2 summary ns=0 part=2 epoch=1 windows=122 epoch_windows=122 discarded=0 visited=60 covered=0 settled=0 phase=1 current=2 best=33 k=7 scale_pct=50 age_ratio=4 best_waf_valid=1 best_waf_q16=108269
+[869136.015790] NVMeVirt: WATGC_V2 summary ns=0 part=3 epoch=1 windows=122 epoch_windows=122 discarded=0 visited=60 covered=0 settled=0 phase=1 current=2 best=33 k=7 scale_pct=50 age_ratio=4 best_waf_valid=1 best_waf_q16=108752
+[869136.015792] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=48001982 gc_pages=49118299 gc_count=1517504 WAF=2.023 warmup_gc=100-per-part
+[869136.092183] NVMeVirt: Virtual NVMe device closed
