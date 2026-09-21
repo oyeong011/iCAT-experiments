@@ -1,0 +1,38 @@
+[global]
+filename=/home/oy/iCAT/mnt/test.dat
+ioengine=libaio
+direct=1
+rw=randwrite
+bs=4K
+iodepth=32
+iodepth_batch_submit=1
+time_based=1
+runtime=1200
+allow_file_create=0
+overwrite=1
+randrepeat=1
+group_reporting=1
+
+# 아주 느린 3영역 쓰기 = test4 배치 그대로, IOPS 1/16 (1500/750/250). 뜨거운 512 MiB 한 바퀴 ≈ 87초 (test4는 5.5초)
+
+[hot]
+offset=0
+size=512M
+rate_iops=1500
+randseed=20260831
+
+# 1.5 GiB / 750 IOPS ≈ 524초
+
+[warm]
+offset=512M
+size=1536M
+rate_iops=750
+randseed=20260901
+
+# 4 GiB / 250 IOPS ≈ 4194초 (1200초 동안 약 30%만 덮어씀)
+
+[cold]
+offset=2G
+size=4G
+rate_iops=250
+randseed=20260902

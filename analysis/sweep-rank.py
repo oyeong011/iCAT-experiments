@@ -10,8 +10,8 @@ def name(a):  # arm index -> kKK-sSSS-rRR
 ours = {}
 for a in range(60):
     t = f'arm{a:02d}'
-    if wl == 'test4':
-        c = R / 'sweep-20260915' / f'test4-{t}.console.txt'
+    if wl in ('test4', 'slow16'):   # slow16 = 아주 느린 3영역 쓰기 (test4 IOPS/16), sweep-slow16-20260921
+        c = R / ('sweep-20260915' if wl == 'test4' else 'sweep-slow16-20260921') / f'{wl}-{t}.console.txt'
         if not c.exists(): continue
         m = re.search(r'^\[RESULT\] (\S+)', c.read_text(errors='replace'), re.M)
         if not m or not Path(m[1]).exists(): continue
