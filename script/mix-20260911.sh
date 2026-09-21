@@ -42,7 +42,7 @@ exec 9>"$base/device.lock"; flock -n 9 || exit 1
 export FIO_TARGET="$root/mnt/test.dat"
 ycsb=/home/oy/YCSB/ycsb-0.17.0
 db="$root/mnt/ycsb.db"
-loaded=0; collector=; dc=
+loaded=0; collector=; dc=; series=
 marker="mix-$label-$policy-$$"
 printf '\n### mix-20260911 %s %s — started %s\n\n- Phase A fio test4 fixed payload (%s/%s/%s bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (%s records, %s ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `%s`.\n- Command: `bash script/mix-20260911.sh %s %s`; evidence `result/mix-20260911/%s-%s/`.\n' "$label" "$policy" "$(date -Is)" "$HOT_IO" "$WARM_IO" "$COLD_IO" "$RECORDS" "$OPS" "$(basename "$module")" "$label" "$policy" "$label" "$policy" >> "$journal"
 field() { awk -v key="$2" 'NR==1{for(i=1;i<=NF;i++){split($i,a,"=");if(a[1]==key)print a[2]}}' "$1"; }
@@ -64,6 +64,7 @@ finish() {
         sudo -n rmmod nvmev || rc=1
     fi
     [[ -z "$collector" ]] || { kill "$collector"; wait "$collector"; }
+    [[ -z "${series:-}" ]] || { kill "$series" 2>/dev/null; wait "$series" 2>/dev/null; }
     sudo -n dmesg --color=never > "$dir/kernel-final.log" || rc=1
     awk -v s="$marker" '!seen[$0]++ {if(index($0,s))on=1; if(on)print}' "$dir"/kernel-snapshots/*.log "$dir/kernel-final.log" > "$dir/kernel.log" || rc=1
     if [[ "$rc" == 0 && "$policy" == online* ]]; then
@@ -87,6 +88,8 @@ sudo -n insmod "$module" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_
 loaded=1
 for _ in {1..50}; do [[ -b /dev/nvme0n1 && -w "$control" ]] && break; sleep 0.2; done
 [[ -b /dev/nvme0n1 && -w "$control" ]]
+# counter time series every 30 s (all policies): lets fixed arms be compared with the learner over time, not just per phase
+( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; cat "$control" 2>/dev/null | head -1; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
 grep -q CSL_Virt /sys/class/nvme/nvme0/model
 cat /sys/class/nvme/nvme0/model /sys/class/block/nvme0n1/size > "$dir/device.txt"
 sudo -n mkfs.ext4 /dev/nvme0n1 > "$dir/mkfs.txt" 2>&1

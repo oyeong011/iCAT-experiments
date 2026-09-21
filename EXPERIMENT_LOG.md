@@ -5291,3 +5291,37 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(test3) host_pages=6000418 gc_pages=7598322 WAF=2.266299
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixJ greedy — started 2026-09-21T16:40:06+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-greedy-m.ko`.
+- Command: `bash script/mix-20260911.sh mixJ greedy`; evidence `result/mix-20260911/mixJ-greedy/`.
+
+- Finished 2026-09-21T16:51:22+09:00; mixJ greedy exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixJ-greedy-rep2`; cleanup attempted.
+- total host_bytes=35580952576 host_pages=8686756 gc_pages=8859402 WAF=2.019875
+- phaseA(sqlite-a) host_pages=8048816 gc_pages=8164091 WAF=2.014322
+- phaseB(sqlite-b) host_pages=637940 gc_pages=695311 WAF=2.089932
+- phaseA-load host_pages=1398341 gc_pages=1043073 WAF=1.745936
+- phaseA-run host_pages=6650475 gc_pages=7121018 WAF=2.070753
+- ycsb-load [OVERALL], Throughput(ops/sec), 26181.437360911114
+- ycsb-run [OVERALL], Throughput(ops/sec), 45943.214187264544
+
+### mix-20260911 mixJ fixed10 — started 2026-09-21T16:51:22+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed10.ko`.
+- Command: `bash script/mix-20260911.sh mixJ fixed10`; evidence `result/mix-20260911/mixJ-fixed10/`.
+
+- Finished 2026-09-21T17:03:02+09:00; mixJ fixed10 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixJ-fixed10-rep2`; cleanup attempted.
+- total host_bytes=35757522944 host_pages=8729864 gc_pages=8918763 WAF=2.021638
+- phaseA(sqlite-a) host_pages=8090215 gc_pages=8226953 WAF=2.016902
+- phaseB(sqlite-b) host_pages=639649 gc_pages=691810 WAF=2.081546
+- phaseA-load host_pages=1398349 gc_pages=1071600 WAF=1.766332
+- phaseA-run host_pages=6691866 gc_pages=7155353 WAF=2.069261
+- ycsb-load [OVERALL], Throughput(ops/sec), 23258.51843237586
+- ycsb-run [OVERALL], Throughput(ops/sec), 43913.57807834182
+
+### mix-20260911 mixJ fixed37 — started 2026-09-21T17:03:02+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixJ fixed37`; evidence `result/mix-20260911/mixJ-fixed37/`.
+- 2026-09-21 학습 여부 분석(v1, 60분 phase run의 WATGC sample 10분 집계): mixA-x6 phase A(test4) iCAT 1.99→1.82(최적 arm47 1.773 대비 +12%→+2.7%), 시험 arm 수 60→23→45; phase B(sqlite) 전환 직후 2.01(+42%)이었다가 70분 이후 1.41→1.30으로 **고정 arm50의 phase 평균(1.416)보다 낮아짐**. mixC-x6: phase A 20분 만에 +2.8%까지 접근하나 40~50분에 +25%로 재이탈, phase B는 +5~13%에서 등락. 결론: 학습은 일어나며 20~30분 후 최적 고정에 2~5%까지 접근하지만 유지되지 않고 주기적으로 재탐색한다. 주의: 고정 arm은 phase 평균만 있어 같은 시간축 비교가 불가(phase 내 WAF 자체가 시간에 따라 변할 수 있음) → 러너에 30초 간격 counter 시계열(`control-series.txt`) 추가. 이후 run(v1 rep2/3, v2)부터 모든 정책의 시계열 비교 가능.
