@@ -5576,3 +5576,68 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **기대**: window당 잡음 v1의 1/√3 (0.385 → ≈0.22; arm 간 차이 0.098). 부작용: STABLE/STALE/DRIFT는 window 수 기준이므로 시간으로는 3배 길어짐 (STALE 240 window ≈ 2시간 → 실험 안에서는 STALE 재탐색이 사실상 없음; 이것도 기록).
 - **모듈** `buildoutput/nvmev-online-v2.ko` SHA256 `74734ee6…` (이전 `74d88d42…`는 폐기; 그 모듈로 낸 결과는 `*-v2broken` 4건뿐이며 모두 MAX_WINDOW_GC 결함으로 무효). 빌드 로그 `result/gh-repro-20260914/build-online-v2c.log`.
 - 09-15 사전 등록의 실행 목록·판정 기준은 그대로 유지. queue7은 아직 QUEUE6DONE 대기 중이므로 새 모듈로 실행된다.
+
+- Finished 2026-09-21T21:33:55+09:00; mixL fixed10 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixL-fixed10-rep2`; cleanup attempted.
+- total host_bytes=61480001536 host_pages=15009766 gc_pages=15591678 WAF=2.038769
+- phaseA(alternate-fast/slow-x5) host_pages=15009766 gc_pages=15591678 WAF=2.038769
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixL fixed37 — started 2026-09-21T21:33:55+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixL fixed37`; evidence `result/mix-20260911/mixL-fixed37/`.
+
+- Finished 2026-09-21T21:45:21+09:00; mixL fixed37 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixL-fixed37-rep2`; cleanup attempted.
+- total host_bytes=61442252800 host_pages=15000550 gc_pages=10013118 WAF=1.667517
+- phaseA(alternate-fast/slow-x5) host_pages=15000550 gc_pages=10013118 WAF=1.667517
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixL fixed47 — started 2026-09-21T21:45:21+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh mixL fixed47`; evidence `result/mix-20260911/mixL-fixed47/`.
+
+- Finished 2026-09-21T21:56:47+09:00; mixL fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixL-fixed47-rep2`; cleanup attempted.
+- total host_bytes=61442252800 host_pages=15000550 gc_pages=8200463 WAF=1.546677
+- phaseA(alternate-fast/slow-x5) host_pages=15000550 gc_pages=8200463 WAF=1.546677
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixL fixed50 — started 2026-09-21T21:56:47+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixL fixed50`; evidence `result/mix-20260911/mixL-fixed50/`.
+
+- Finished 2026-09-21T22:08:12+09:00; mixL fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixL-fixed50-rep2`; cleanup attempted.
+- total host_bytes=61442277376 host_pages=15000556 gc_pages=8542776 WAF=1.569497
+- phaseA(alternate-fast/slow-x5) host_pages=15000556 gc_pages=8542776 WAF=1.569497
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixL online — started 2026-09-21T22:08:12+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-mix-20260907.ko`.
+- Command: `bash script/mix-20260911.sh mixL online`; evidence `result/mix-20260911/mixL-online/`.
+
+- Finished 2026-09-21T22:19:38+09:00; mixL online exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixL-online-rep2`; cleanup attempted.
+- total host_bytes=61442269184 host_pages=15000554 gc_pages=11524880 WAF=1.768297
+- phaseA(alternate-fast/slow-x5) host_pages=15000554 gc_pages=11524880 WAF=1.768297
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
