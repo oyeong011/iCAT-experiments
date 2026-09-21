@@ -38,16 +38,16 @@ void conv_measure_init(struct nvmev_ns *ns);
 #define WATGC_V2_WARMUP_GC 100ULL
 #define WATGC_V2_BURNIN_GC 32ULL
 #define WATGC_V2_BURNIN_HOST_PAGES 32768ULL
-#define WATGC_V2_WINDOW_GC 384ULL   /* v2: 6x v1 (64) */
-#define WATGC_V2_WINDOW_HOST_PAGES 393216ULL /* v2: 1.5 GiB, 6x v1 (256 MiB). Only change vs v1: longer reward window to raise SNR */
+#define WATGC_V2_WINDOW_GC 192ULL   /* v2: 3x v1 (64). 2026-09-21: was 6x (384); with MIN_VISITS 3 the forced sweep took 3 h, longer than any run */
+#define WATGC_V2_WINDOW_HOST_PAGES 196608ULL /* v2: 768 MiB, 3x v1 (256 MiB). Longer reward window to raise SNR */
 /* No timeout may turn an empty or undersized interval into a reward. */
-#define WATGC_V2_MAX_WINDOW_GC 24576ULL   /* v2: 6x v1 (4096); v2 first build kept 4096 so every window hit the cap before 393216 host pages and was discarded as undersized */
+#define WATGC_V2_MAX_WINDOW_GC 12288ULL   /* v2: 3x v1 (4096), same cap/window ratio as v1 */
 #define WATGC_V2_MAX_WINDOW_NS (300ULL * 1000000000ULL)
 
 /* Forgetting per VALID observation; newest observation is not discounted. */
 #define WATGC_V2_GAMMA_Q16 65503ULL /* 0.99949646, half-life about 1376 windows */
 #define WATGC_V2_UCB_C_Q16 16384ULL /* 0.25 WAF units; heuristic exploration */
-#define WATGC_V2_MIN_VISITS 3U
+#define WATGC_V2_MIN_VISITS 1U   /* v2: 3 -> 1 so the forced sweep of 60 arms stays ~30 min (60 x 1 x ~30 s), like v1 (60 x 3 x ~10 s) */
 #define WATGC_V2_STABLE_WINDOWS 12U
 #define WATGC_V2_BEST_CONFIRMATIONS 3U
 #define WATGC_V2_TOLERANCE_Q16 328ULL /* about 0.5%, relative incumbent hysteresis */

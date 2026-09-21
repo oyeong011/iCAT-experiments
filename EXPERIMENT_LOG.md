@@ -5543,3 +5543,36 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(test4-hot128M) host_pages=24001324 gc_pages=25045866 WAF=2.043520
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixL greedy — started 2026-09-21T21:11:04+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-greedy-m.ko`.
+- Command: `bash script/mix-20260911.sh mixL greedy`; evidence `result/mix-20260911/mixL-greedy/`.
+
+- Finished 2026-09-21T21:22:30+09:00; mixL greedy exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixL-greedy-rep2`; cleanup attempted.
+- total host_bytes=61467467776 host_pages=15006706 gc_pages=15585256 WAF=2.038553
+- phaseA(alternate-fast/slow-x5) host_pages=15006706 gc_pages=15585256 WAF=2.038553
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixL fixed10 — started 2026-09-21T21:22:30+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed10.ko`.
+- Command: `bash script/mix-20260911.sh mixL fixed10`; evidence `result/mix-20260911/mixL-fixed10/`.
+
+## 2026-09-21 — iCAT v2 설계 변경 (queue7 시작 전, 장치 사용 없음)
+
+- **문제**: 09-15 v2(판단 구간 ×6, `74d88d42…`)는 강제 순회(60 arm × MIN_VISITS 3 × 약 60초 window)가 **약 3시간**이라 어떤 run(10~60분)보다 길다. 학습 시작 전에 실험이 끝난다. (v1은 60 × 3 × 10초 = 30분.)
+- **사용자 결정**: 판단 구간을 줄이고 강제 순회도 줄인다.
+- **변경** (`online-v2-src/conv_ftl.h`, v1 대비):
+  - `WATGC_V2_WINDOW_GC` 64 → **192** (×3; 09-15 안은 384)
+  - `WATGC_V2_WINDOW_HOST_PAGES` 65536 → **196608** (256 MiB → 768 MiB, ×3)
+  - `WATGC_V2_MAX_WINDOW_GC` 4096 → **12288** (×3, v1과 같은 cap/window 비율)
+  - `WATGC_V2_MIN_VISITS` 3 → **1** (강제 순회 60 × 1 × ~30초 ≈ 30분, v1과 같음)
+  - 그 외 무변경 (γ, c, STABLE 12, TOLERANCE 0.5%, PROBE 8, STALE 240, DRIFT 12.5%×3).
+- **기대**: window당 잡음 v1의 1/√3 (0.385 → ≈0.22; arm 간 차이 0.098). 부작용: STABLE/STALE/DRIFT는 window 수 기준이므로 시간으로는 3배 길어짐 (STALE 240 window ≈ 2시간 → 실험 안에서는 STALE 재탐색이 사실상 없음; 이것도 기록).
+- **모듈** `buildoutput/nvmev-online-v2.ko` SHA256 `74734ee6…` (이전 `74d88d42…`는 폐기; 그 모듈로 낸 결과는 `*-v2broken` 4건뿐이며 모두 MAX_WINDOW_GC 결함으로 무효). 빌드 로그 `result/gh-repro-20260914/build-online-v2c.log`.
+- 09-15 사전 등록의 실행 목록·판정 기준은 그대로 유지. queue7은 아직 QUEUE6DONE 대기 중이므로 새 모듈로 실행된다.
