@@ -5325,3 +5325,54 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
 - Command: `bash script/mix-20260911.sh mixJ fixed37`; evidence `result/mix-20260911/mixJ-fixed37/`.
 - 2026-09-21 학습 여부 분석(v1, 60분 phase run의 WATGC sample 10분 집계): mixA-x6 phase A(test4) iCAT 1.99→1.82(최적 arm47 1.773 대비 +12%→+2.7%), 시험 arm 수 60→23→45; phase B(sqlite) 전환 직후 2.01(+42%)이었다가 70분 이후 1.41→1.30으로 **고정 arm50의 phase 평균(1.416)보다 낮아짐**. mixC-x6: phase A 20분 만에 +2.8%까지 접근하나 40~50분에 +25%로 재이탈, phase B는 +5~13%에서 등락. 결론: 학습은 일어나며 20~30분 후 최적 고정에 2~5%까지 접근하지만 유지되지 않고 주기적으로 재탐색한다. 주의: 고정 arm은 phase 평균만 있어 같은 시간축 비교가 불가(phase 내 WAF 자체가 시간에 따라 변할 수 있음) → 러너에 30초 간격 counter 시계열(`control-series.txt`) 추가. 이후 run(v1 rep2/3, v2)부터 모든 정책의 시계열 비교 가능.
+
+- Finished 2026-09-21T17:12:41+09:00; mixJ fixed37 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixJ-fixed37-rep2`; cleanup attempted.
+- total host_bytes=35879333888 host_pages=8759603 gc_pages=4440111 WAF=1.506885
+- phaseA(sqlite-a) host_pages=8122014 gc_pages=4146539 WAF=1.510531
+- phaseB(sqlite-b) host_pages=637589 gc_pages=293572 WAF=1.460441
+- phaseA-load host_pages=1398339 gc_pages=604256 WAF=1.432124
+- phaseA-run host_pages=6723675 gc_pages=3542283 WAF=1.526837
+- ycsb-load [OVERALL], Throughput(ops/sec), 24716.7868177137
+- ycsb-run [OVERALL], Throughput(ops/sec), 42848.57314251435
+
+### mix-20260911 mixJ fixed47 — started 2026-09-21T17:12:41+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh mixJ fixed47`; evidence `result/mix-20260911/mixJ-fixed47/`.
+
+- Finished 2026-09-21T17:27:12+09:00; mixJ fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixJ-fixed47-rep2`; cleanup attempted.
+- total host_bytes=36273008640 host_pages=8855715 gc_pages=3867529 WAF=1.436727
+- phaseA(sqlite-a) host_pages=8030704 gc_pages=3774257 WAF=1.469978
+- phaseB(sqlite-b) host_pages=825011 gc_pages=93272 WAF=1.113055
+- phaseA-load host_pages=1398349 gc_pages=370015 WAF=1.264608
+- phaseA-run host_pages=6632355 gc_pages=3404242 WAF=1.513278
+- ycsb-load [OVERALL], Throughput(ops/sec), 23043.244488824028
+- ycsb-run [OVERALL], Throughput(ops/sec), 13396.654855282635
+
+### mix-20260911 mixJ fixed50 — started 2026-09-21T17:27:13+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixJ fixed50`; evidence `result/mix-20260911/mixJ-fixed50/`.
+
+- Finished 2026-09-21T17:38:34+09:00; mixJ fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixJ-fixed50-rep2`; cleanup attempted.
+- total host_bytes=35563290624 host_pages=8682444 gc_pages=3889542 WAF=1.447978
+- phaseA(sqlite-a) host_pages=8053391 gc_pages=3628516 WAF=1.450558
+- phaseB(sqlite-b) host_pages=629053 gc_pages=261026 WAF=1.414951
+- phaseA-load host_pages=1398351 gc_pages=385746 WAF=1.275858
+- phaseA-run host_pages=6655040 gc_pages=3242770 WAF=1.487265
+- ycsb-load [OVERALL], Throughput(ops/sec), 23298.256513804216
+- ycsb-run [OVERALL], Throughput(ops/sec), 45114.13877109086
+
+### mix-20260911 mixJ online — started 2026-09-21T17:38:35+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-mix-20260907.ko`.
+- Command: `bash script/mix-20260911.sh mixJ online`; evidence `result/mix-20260911/mixJ-online/`.
+
+- Finished 2026-09-21T17:50:16+09:00; mixJ online exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixJ-online-rep2`; cleanup attempted.
+- total host_bytes=35802906624 host_pages=8740944 gc_pages=7260320 WAF=1.830611
+- phaseA(sqlite-a) host_pages=8104789 gc_pages=6914922 WAF=1.853190
+- phaseB(sqlite-b) host_pages=636155 gc_pages=345398 WAF=1.542946
+- phaseA-load host_pages=1405509 gc_pages=905728 WAF=1.644413
+- phaseA-run host_pages=6699280 gc_pages=6009194 WAF=1.896991
+- ycsb-load [OVERALL], Throughput(ops/sec), 23339.038431616616
+- ycsb-run [OVERALL], Throughput(ops/sec), 45148.25558427486
