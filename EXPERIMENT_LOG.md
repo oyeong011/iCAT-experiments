@@ -5448,3 +5448,17 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
   - 1등 scale ≥ 200% 이고 arm47(k10,s25,r16)이 1등 대비 ≥3% 나쁘면 → 가설 채택, "빠른 → 아주 느린" mix(mixR) 설계로 진행.
   - 1등이 여전히 scale 25~50%이면 → 가설 기각. "느린 워크로드로 novelty 확보" 방향은 폐기하고 그대로 기록.
 - **명령**: `script/gh-queue10-slow16.sh` (QUEUE7DONE 대기 → 실행). 로그 `scratchpad/queue10.out`.
+
+- Finished 2026-09-21T18:48:53+09:00; mixG fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixG-fixed50-rep2`; cleanup attempted.
+- total host_bytes=83853844480 host_pages=20472130 gc_pages=41055885 WAF=3.005453
+- phaseA(concurrent-test4+sqlite-a) host_pages=20472130 gc_pages=41055885 WAF=3.005453
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixG online — started 2026-09-21T18:48:54+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-mix-20260907.ko`.
+- Command: `bash script/mix-20260911.sh mixG online`; evidence `result/mix-20260911/mixG-online/`.
