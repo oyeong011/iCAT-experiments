@@ -24,7 +24,8 @@ case "$label" in
     main)  scale=1;  RECORDS=4000000; OPS=1000000;;
     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
     t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
-    mixA|mixB|mixG|mixH|mixJ|mixP) scale=1; RECORDS=600000; OPS=4000000;;
+    mixA|mixB|mixG|mixH|mixJ) scale=1; RECORDS=600000; OPS=4000000;;
+    mixP)  scale=1;  RECORDS=250000; OPS=4000000;;   # sqlite then oltp: 600k records + WAL left no room for the oltp fileset (ENOSPC on rep1)
     mixC|mixD|mixF|mixK|mixL|mixM|mixO|mixQ)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
     *) exit 2;;
 esac

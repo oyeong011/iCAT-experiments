@@ -10,6 +10,9 @@ M=online-v2
 SMOKE=1 bash script/mix-20260911.sh t4 onlinev2 1 > result/mix-20260911/t4-onlinev2-smoke.console.txt 2>&1 || echo "FAIL smoke v2"
 for r in 1 2 3; do bash script/mix-20260911.sh t4 onlinev2 $r > result/mix-20260911/t4-onlinev2-rep$r.console.txt 2>&1 || echo "FAIL t4 v2 rep$r"; done
 push "t4 x3"
+# 0c. mixP rep1 redo (v1 policies) after shrinking its DB
+for m in greedy fixed10 fixed37 fixed47 fixed50 online; do rm -rf result/mix-20260911/mixP-$m-rep1; bash script/mix-20260911.sh mixP $m 1 > result/mix-20260911/mixP-$m-rep1.console.txt 2>&1 || echo "FAIL mixP $m rep1 redo"; done
+push "mixP rep1 redo"
 # 0a. redo the phase-length v2 runs (first v2 build discarded every window: MAX_WINDOW_GC cap)
 for mult in 3 6; do for lb in mixA mixC; do MULT=$mult bash script/mix-20260911.sh $lb onlinev2 1 > result/mix-20260911/$lb-onlinev2-rep1-x$mult.console.txt 2>&1 || echo "FAIL $lb v2 x$mult"; done; done
 push "phase-length v2 redo"
