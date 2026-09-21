@@ -5875,3 +5875,87 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(varmail) host_pages=54255652 gc_pages=52579963 WAF=1.969115
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixP greedy — started 2026-09-22T02:15:36+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (250000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-greedy-m.ko`.
+- Command: `bash script/mix-20260911.sh mixP greedy`; evidence `result/mix-20260911/mixP-greedy/`.
+
+- Finished 2026-09-22T02:23:35+09:00; mixP greedy exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixP-greedy-rep2`; cleanup attempted.
+- total host_bytes=42611650560 host_pages=10403235 gc_pages=10736007 WAF=2.031987
+- phaseA(sqlite-a) host_pages=805438 gc_pages=377877 WAF=1.469157
+- phaseB(oltp) host_pages=9597797 gc_pages=10358130 WAF=2.079220
+- phaseA-load host_pages=453849 gc_pages=270512 WAF=1.596040
+- phaseA-run host_pages=351589 gc_pages=107365 WAF=1.305371
+- ycsb-load [OVERALL], Throughput(ops/sec), 25375.55826228177
+- ycsb-run [OVERALL], Throughput(ops/sec), 52426.70091877793
+
+### mix-20260911 mixP fixed10 — started 2026-09-22T02:23:36+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (250000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed10.ko`.
+- Command: `bash script/mix-20260911.sh mixP fixed10`; evidence `result/mix-20260911/mixP-fixed10/`.
+
+- Finished 2026-09-22T02:31:25+09:00; mixP fixed10 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixP-fixed10-rep2`; cleanup attempted.
+- total host_bytes=39041056768 host_pages=9531508 gc_pages=9859349 WAF=2.034396
+- phaseA(sqlite-a) host_pages=713211 gc_pages=397461 WAF=1.557284
+- phaseB(oltp) host_pages=8818297 gc_pages=9461888 WAF=2.072984
+- phaseA-load host_pages=452310 gc_pages=292356 WAF=1.646362
+- phaseA-run host_pages=260901 gc_pages=105105 WAF=1.402854
+- ycsb-load [OVERALL], Throughput(ops/sec), 27961.07817917459
+- ycsb-run [OVERALL], Throughput(ops/sec), 65913.06067297235
+
+### mix-20260911 mixP fixed37 — started 2026-09-22T02:31:25+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (250000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixP fixed37`; evidence `result/mix-20260911/mixP-fixed37/`.
+
+- Finished 2026-09-22T02:39:09+09:00; mixP fixed37 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixP-fixed37-rep2`; cleanup attempted.
+- total host_bytes=41354145792 host_pages=10096227 gc_pages=2426287 WAF=1.240316
+- phaseA(sqlite-a) host_pages=707851 gc_pages=302341 WAF=1.427125
+- phaseB(oltp) host_pages=9388376 gc_pages=2123946 WAF=1.226231
+- phaseA-load host_pages=452312 gc_pages=216526 WAF=1.478709
+- phaseA-run host_pages=255539 gc_pages=85815 WAF=1.335820
+- ycsb-load [OVERALL], Throughput(ops/sec), 31581.606872157656
+- ycsb-run [OVERALL], Throughput(ops/sec), 69576.10756466229
+
+### mix-20260911 mixP fixed47 — started 2026-09-22T02:39:10+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (250000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh mixP fixed47`; evidence `result/mix-20260911/mixP-fixed47/`.
+
+- Finished 2026-09-22T02:47:10+09:00; mixP fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixP-fixed47-rep2`; cleanup attempted.
+- total host_bytes=40273002496 host_pages=9832276 gc_pages=1653077 WAF=1.168128
+- phaseA(sqlite-a) host_pages=795117 gc_pages=207216 WAF=1.260611
+- phaseB(oltp) host_pages=9037159 gc_pages=1445861 WAF=1.159991
+- phaseA-load host_pages=452310 gc_pages=124302 WAF=1.274816
+- phaseA-run host_pages=342807 gc_pages=82914 WAF=1.241868
+- ycsb-load [OVERALL], Throughput(ops/sec), 30618.49357011635
+- ycsb-run [OVERALL], Throughput(ops/sec), 55021.389565193465
+
+### mix-20260911 mixP fixed50 — started 2026-09-22T02:47:11+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (250000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixP fixed50`; evidence `result/mix-20260911/mixP-fixed50/`.
+
+- Finished 2026-09-22T02:55:05+09:00; mixP fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixP-fixed50-rep2`; cleanup attempted.
+- total host_bytes=41843068928 host_pages=10215593 gc_pages=1591574 WAF=1.155798
+- phaseA(sqlite-a) host_pages=797021 gc_pages=205413 WAF=1.257726
+- phaseB(oltp) host_pages=9418572 gc_pages=1386161 WAF=1.147173
+- phaseA-load host_pages=452310 gc_pages=125168 WAF=1.276731
+- phaseA-run host_pages=344711 gc_pages=80245 WAF=1.232789
+- ycsb-load [OVERALL], Throughput(ops/sec), 25316.45569620253
+- ycsb-run [OVERALL], Throughput(ops/sec), 62399.575682885355
+
+### mix-20260911 mixP online — started 2026-09-22T02:55:06+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (250000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-mix-20260907.ko`.
+- Command: `bash script/mix-20260911.sh mixP online`; evidence `result/mix-20260911/mixP-online/`.
+
+- Finished 2026-09-22T03:02:54+09:00; mixP online exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixP-online-rep2`; cleanup attempted.
+- total host_bytes=41290629120 host_pages=10080720 gc_pages=1794205 WAF=1.177984
+- phaseA(sqlite-a) host_pages=711918 gc_pages=296369 WAF=1.416297
+- phaseB(oltp) host_pages=9368802 gc_pages=1497836 WAF=1.159875
+- phaseA-load host_pages=452310 gc_pages=202550 WAF=1.447812
+- phaseA-run host_pages=259608 gc_pages=93819 WAF=1.361387
+- ycsb-load [OVERALL], Throughput(ops/sec), 24767.188428769565
+- ycsb-run [OVERALL], Throughput(ops/sec), 63940.66306467598
