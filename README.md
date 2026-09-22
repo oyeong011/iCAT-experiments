@@ -98,6 +98,7 @@ Greedy는 GitHub 기록(2.223)과 0.9% 차이로 재현됨.
 EXPERIMENT_LOG.md      모든 run의 사전 등록·결과 (원본 기록)
 README.md              이 문서
 WORKLOADS.md           모든 워크로드 상세 설명 (숫자·한 바퀴 주기·왜 넣었나)
+GLOSSARY_KR.md         기초부터 현재 상황까지 용어·개념 설명
 WORST_CAT_VS_ICAT_PLAN.md, MIX_EXPERIMENT_PLAN.md, experiment.md   계획서
 analysis/              gh-sweep-waf.py (GitHub 결과 재계산), parse.py
 script/                실행 스크립트. gh-* 는 GitHub 원본에서 경로만 바꾼 것
