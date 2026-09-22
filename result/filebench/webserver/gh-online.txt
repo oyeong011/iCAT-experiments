@@ -8,31 +8,29 @@ WARNING: Could not open /proc/sys/kernel/shmmax file!
 It means that you probably ran Filebench not as a root. Filebench will not increase shared
 region limits in this case, which can lead to the failures on certain workloads.
 0.000: Allocated 173MB of shared memory
-0.194: Web-server Version 3.1 personality successfully loaded
-0.194: Populating and pre-allocating filesets
-0.195: logfiles populated: 1 files, avg. dir. width = 20, avg. dir. depth = 0.0, 0 leafdirs, 0.002MB total size
-0.195: Removing logfiles tree (if exists)
-0.211: Pre-allocating directories in logfiles tree
-0.211: Pre-allocating files in logfiles tree
-0.212: bigfileset populated: 1000 files, avg. dir. width = 20, avg. dir. depth = 2.3, 0 leafdirs, 14.760MB total size
-0.212: Removing bigfileset tree (if exists)
-0.213: Pre-allocating directories in bigfileset tree
-0.214: Pre-allocating files in bigfileset tree
-0.234: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
-0.234: Population and pre-allocation of filesets completed
-0.234: Starting 1 filereader instances
-1.239: Running...
-46.936: Failed to write 11902 bytes on fd 24: Success
-46.936: filereaderthread-44: flowop appendlog-1 failed
-46.936: Failed to write 12470 bytes on fd 70: No space left on device
-46.936: filereaderthread-63: flowop appendlog-1 failed
-46.936: Failed to write 15104 bytes on fd 119: No space left on device
-46.936: Failed to write 11005 bytes on fd 29: No space left on device
-46.936: filereaderthread-6: flowop appendlog-1 failed
-46.936: filereaderthread-87: flowop appendlog-1 failed
-47.249: Run took 46 seconds...
-47.249: NO VALID RESULTS! Filebench run terminated prematurely around line 77
-47.249: Shutting down processes
+0.322: Web-server Version 3.1 personality successfully loaded
+0.322: Populating and pre-allocating filesets
+0.323: logfiles populated: 1 files, avg. dir. width = 20, avg. dir. depth = 0.0, 0 leafdirs, 0.002MB total size
+0.323: Removing logfiles tree (if exists)
+0.331: Pre-allocating directories in logfiles tree
+0.331: Pre-allocating files in logfiles tree
+0.332: bigfileset populated: 1000 files, avg. dir. width = 20, avg. dir. depth = 2.3, 0 leafdirs, 14.760MB total size
+0.332: Removing bigfileset tree (if exists)
+0.333: Pre-allocating directories in bigfileset tree
+0.334: Pre-allocating files in bigfileset tree
+0.354: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.354: Population and pre-allocation of filesets completed
+0.355: Starting 1 filereader instances
+1.360: Running...
+47.069: Failed to write 6335 bytes on fd 154: Success
+47.069: filereaderthread-87: flowop appendlog-1 failed
+47.069: Failed to write 313 bytes on fd 104: No space left on device
+47.069: filereaderthread-98: flowop appendlog-1 failed
+47.069: Failed to write 9236 bytes on fd 29: No space left on device
+47.069: filereaderthread-11: flowop appendlog-1 failed
+47.381: Run took 46 seconds...
+47.381: NO VALID RESULTS! Filebench run terminated prematurely around line 77
+47.381: Shutting down processes
 [DURABLE] sync + NVMe flush
 [FLUSH] phase=run-durable-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/webserver/summary.txt
 [RESULT] app=/home/oy/iCAT/result/filebench/webserver/gh-online.txt

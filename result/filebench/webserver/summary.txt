@@ -60,3 +60,189 @@ gc_cnt      : N/A
 [262661.430865] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
 --- all current-run WAF lines ---
 [262661.430865] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:31:14 +0900
+module      : gh-greedy
+phase       : run-durable-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:31:15 +0900
+module      : gh-greedy
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-23 07:31:16 +0900
+module      : gh-greedy
+workload    : webserver
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[992753.318900] NVMeVirt: GC stats: ns=0 policy=greedy host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[992753.318900] NVMeVirt: GC stats: ns=0 policy=greedy host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:32:09 +0900
+module      : fixed10
+phase       : run-durable-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:32:10 +0900
+module      : fixed10
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-23 07:32:11 +0900
+module      : fixed10
+workload    : webserver
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[992808.478537] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[992808.478537] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:33:04 +0900
+module      : gh-cat37
+phase       : run-durable-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:33:04 +0900
+module      : gh-cat37
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-23 07:33:06 +0900
+module      : gh-cat37
+workload    : webserver
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[992863.218055] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[992863.218055] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:33:59 +0900
+module      : fixed47
+phase       : run-durable-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:34:00 +0900
+module      : fixed47
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-23 07:34:01 +0900
+module      : fixed47
+workload    : webserver
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[992918.347623] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[992918.347623] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:34:54 +0900
+module      : fixed50
+phase       : run-durable-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:34:56 +0900
+module      : fixed50
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-23 07:34:57 +0900
+module      : fixed50
+workload    : webserver
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[992974.319250] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[992974.319250] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:35:50 +0900
+module      : gh-online
+phase       : run-durable-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-23 07:35:50 +0900
+module      : gh-online
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-23 07:35:52 +0900
+module      : gh-online
+workload    : webserver
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[993028.642837] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[993028.642837] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
