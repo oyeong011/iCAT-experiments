@@ -7564,3 +7564,25 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **조건**: GitHub 방식 `gh-filebench.sh`, runtime 300 s, arm46(k10,s25,r7) / arm47(k10,s25,r16) / arm49(k10,s50,r7) / arm50(k10,s50,r16) × 3회. 같은 scale에서 ratio 7 vs 16 두 쌍.
 - **판정**: 3회 평균에서 r7이 r16보다 두 쌍 모두 ≥3% 좋고 반복 편차보다 크면 → ratio는 워크로드마다 달라야 함(후보 축소 불가). 차이 <3% 또는 편차 안이면 → sweep의 10%는 잡음, scale만 학습하는 축소안 재검토 가능.
 - **v2 확인(장치 없이)**: `t4-onlinev2-rep1/kernel.log`의 evaluated arm = 0~24, 37 → 10분 run에서 v2는 k=2/k=4 위주로만 써보고 끝났음. 09-23 해석 확인.
+
+- Finished 2026-09-23T21:57:07+09:00; t4long online exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4long-online-rep1`; cleanup attempted.
+- total host_bytes=589840220160 host_pages=144003960 gc_pages=138786892 WAF=1.963771
+- phaseA(test4) host_pages=144003960 gc_pages=138786892 WAF=1.963771
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4long fixed50 — started 2026-09-23T21:57:07+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh t4long fixed50`; evidence `result/mix-20260911/t4long-fixed50/`.
+
+## 사전 등록 2026-09-23 — 3시간 빠른 3영역 쓰기 (queue13, queue11 뒤 / 아주 느린 sweep 앞)
+
+- **이유**: 60분 run에서 v2 +10% (1.951~1.965 vs fixed47 1.773). 순회 30분을 빼면 학습 시간은 30분뿐. 사용자 결정: 실험 시간을 더 늘린다.
+- **조건**: `MULT=18 mix-20260911.sh t4` = 빠른 3영역 쓰기 payload ×18 ≈ 3시간 (명시 계측). v2 ×2(seed 1,2), v1 ×1, fixed47 ×1, fixed50 ×1. 약 15시간.
+- **판정**: v2의 fixed47 대비 손실이 60분(+10%)보다 줄어 ≤4%에 가까워지면 "시간만 주면 배운다". 60분과 같으면 시간은 원인이 아님 → 학습기 자체(후보 수·드리프트 리셋) 수정으로 넘어감. `control-series.txt`(30초 간격)로 시간대별 WAF도 본다.
+- **참고**: v2 STALE 240 window ≈ 2시간 → 3시간 run 안에서 재확인 순회가 한 번 발생할 수 있음(기록).
+- queue10(아주 느린 sweep)은 이 큐 뒤로 미룸. 순서: queue11 → queue13 → queue10 → queue12.
