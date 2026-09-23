@@ -7433,3 +7433,19 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=344994 gc_pages=92318 WAF=1.267593
 - ycsb-load [OVERALL], Throughput(ops/sec), 22465.851905104242
 - ycsb-run [OVERALL], Throughput(ops/sec), 50697.72747436596
+
+### mix-20260911 mixA onlinev2 — started 2026-09-23T11:13:14+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 12000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v2.ko`.
+- Command: `bash script/mix-20260911.sh mixA onlinev2`; evidence `result/mix-20260911/mixA-onlinev2/`.
+
+## 2026-09-23 — v2는 긴 실험으로만 평가 (queue11, queue7 긴 블록 뒤 인계)
+
+- **관찰**: v2 빠른 3영역 쓰기 10분 × 3회 WAF 2.118 / 2.121 / 2.084 — v1(2.001)보다 나쁨, 최적 고정(1.774) 대비 +18%.
+- **해석(추정, kernel.log로 확인 예정)**: v2 강제 순회는 60 arm × 30초 ≈ 30분. 10분 실험에서는 arm 0~19(k=2, k=4 = 가장 나쁜 조합)만 써보고 끝나 학습 단계에 들어가지 못한다. 10분 실험은 v2의 학습을 평가할 수 없다.
+- **사용자 결정**: 워크로드 시간을 늘린다.
+- **변경**: queue7의 긴 블록(phase-length ×3/×6, 60분 빠른 3영역 ×2 + fixed47)까지만 실행하고, 이후 10분짜리 단일·믹스 v2 run은 취소. 대신 `script/gh-queue11-v2long.sh`:
+  1. 60분 빠른 3영역: v2 3회차 + 같은 길이의 v1 / 견고(fixed50) / Greedy 각 1회
+  2. 6배 길이 믹스 "빠른→느린 3영역"(mixD), "뜨거운 구역 512→128 MB"(mixK): v2 / v1 / fixed47 / fixed50 각 1회
+  3. 6배 길이 mixA, mixC v2 2·3회차
+- **판정 (09-15 기준 유지)**: 60분 이상 run에서 v2의 최적 고정 대비 손실이 v1보다 줄었는가, 목표 ≤4%. 끝나면 QUEUE7DONE을 남겨 queue10(아주 느린 sweep)이 이어서 시작.
