@@ -7496,3 +7496,45 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(test4) host_pages=144003979 gc_pages=134456588 WAF=1.933701
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 t4long onlinev2 — started 2026-09-23T16:39:59+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v2.ko`.
+- Command: `bash script/mix-20260911.sh t4long onlinev2`; evidence `result/mix-20260911/t4long-onlinev2/`.
+
+- Finished 2026-09-23T17:41:22+09:00; t4long onlinev2 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4long-onlinev2-rep1`; cleanup attempted.
+- total host_bytes=589840244736 host_pages=144003966 gc_pages=136979764 WAF=1.951222
+- phaseA(test4) host_pages=144003966 gc_pages=136979764 WAF=1.951222
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4long onlinev2 — started 2026-09-23T17:41:22+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v2.ko`.
+- Command: `bash script/mix-20260911.sh t4long onlinev2`; evidence `result/mix-20260911/t4long-onlinev2/`.
+
+- Finished 2026-09-23T18:42:45+09:00; t4long onlinev2 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4long-onlinev2-rep2`; cleanup attempted.
+- total host_bytes=589840244736 host_pages=144003966 gc_pages=138944200 WAF=1.964864
+- phaseA(test4) host_pages=144003966 gc_pages=138944200 WAF=1.964864
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4long fixed47 — started 2026-09-23T18:42:45+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh t4long fixed47`; evidence `result/mix-20260911/t4long-fixed47/`.
+
+- Finished 2026-09-23T19:44:08+09:00; t4long fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4long-fixed47-rep1`; cleanup attempted.
+- total host_bytes=589840232448 host_pages=144003963 gc_pages=111293370 WAF=1.772849
+- phaseA(test4) host_pages=144003963 gc_pages=111293370 WAF=1.772849
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
