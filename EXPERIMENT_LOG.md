@@ -7586,3 +7586,26 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **판정**: v2의 fixed47 대비 손실이 60분(+10%)보다 줄어 ≤4%에 가까워지면 "시간만 주면 배운다". 60분과 같으면 시간은 원인이 아님 → 학습기 자체(후보 수·드리프트 리셋) 수정으로 넘어감. `control-series.txt`(30초 간격)로 시간대별 WAF도 본다.
 - **참고**: v2 STALE 240 window ≈ 2시간 → 3시간 run 안에서 재확인 순회가 한 번 발생할 수 있음(기록).
 - queue10(아주 느린 sweep)은 이 큐 뒤로 미룸. 순서: queue11 → queue13 → queue10 → queue12.
+
+- Finished 2026-09-23T22:58:30+09:00; t4long fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4long-fixed50-rep1`; cleanup attempted.
+- total host_bytes=589945233408 host_pages=144029598 gc_pages=116895881 WAF=1.811610
+- phaseA(test4) host_pages=144029598 gc_pages=116895881 WAF=1.811610
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4long greedy — started 2026-09-23T22:58:30+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-greedy-m.ko`.
+- Command: `bash script/mix-20260911.sh t4long greedy`; evidence `result/mix-20260911/t4long-greedy/`.
+
+- Finished 2026-09-23T23:59:53+09:00; t4long greedy exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4long-greedy-rep1`; cleanup attempted.
+- total host_bytes=589957812224 host_pages=144032669 gc_pages=180948184 WAF=2.256300
+- phaseA(test4) host_pages=144032669 gc_pages=180948184 WAF=2.256300
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
