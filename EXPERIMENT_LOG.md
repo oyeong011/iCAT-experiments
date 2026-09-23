@@ -7538,3 +7538,29 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=0 gc_pages=0 WAF=N/A
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 t4long onlinev2 — started 2026-09-23T19:54:21+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v2.ko`.
+- Command: `bash script/mix-20260911.sh t4long onlinev2`; evidence `result/mix-20260911/t4long-onlinev2/`.
+
+- Finished 2026-09-23T20:55:44+09:00; t4long onlinev2 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4long-onlinev2-rep3`; cleanup attempted.
+- total host_bytes=589840220160 host_pages=144003960 gc_pages=137946702 WAF=1.957937
+- phaseA(test4) host_pages=144003960 gc_pages=137946702 WAF=1.957937
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4long online — started 2026-09-23T20:55:44+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-mix-20260907.ko`.
+- Command: `bash script/mix-20260911.sh t4long online`; evidence `result/mix-20260911/t4long-online/`.
+
+## 사전 등록 2026-09-23 — 거래 DB 흉내(oltp) ratio 재확인 (queue12, queue10 뒤)
+
+- **질문**: 60-arm sweep(1회)에서 oltp 1등은 arm46(k10,s25,r7) 1.332, k10·r16 중 최고 arm50 1.471 → ratio 7이 10% 좋다. 이 10%가 진짜인가 잡음인가? (oltp는 GitHub 순위와 ρ=0.164로 1회 측정 신뢰도가 낮다.) 이 답에 따라 "후보를 scale 5개로 줄여도 되는가"가 갈린다.
+- **조건**: GitHub 방식 `gh-filebench.sh`, runtime 300 s, arm46(k10,s25,r7) / arm47(k10,s25,r16) / arm49(k10,s50,r7) / arm50(k10,s50,r16) × 3회. 같은 scale에서 ratio 7 vs 16 두 쌍.
+- **판정**: 3회 평균에서 r7이 r16보다 두 쌍 모두 ≥3% 좋고 반복 편차보다 크면 → ratio는 워크로드마다 달라야 함(후보 축소 불가). 차이 <3% 또는 편차 안이면 → sweep의 10%는 잡음, scale만 학습하는 축소안 재검토 가능.
+- **v2 확인(장치 없이)**: `t4-onlinev2-rep1/kernel.log`의 evaluated arm = 0~24, 37 → 10분 run에서 v2는 k=2/k=4 위주로만 써보고 끝났음. 09-23 해석 확인.
