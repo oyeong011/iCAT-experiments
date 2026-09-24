@@ -7839,3 +7839,17 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=0 gc_pages=0 WAF=N/A
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 t4 onlinev2 — started 2026-09-25T05:29:07+09:00
+
+- Phase A fio test4 fixed payload (1061683200000/530841600000/176947200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v2.ko`.
+- Command: `bash script/mix-20260911.sh t4 onlinev2`; evidence `result/mix-20260911/t4-onlinev2/`.
+
+- Finished 2026-09-25T08:30:30+09:00; t4 onlinev2 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-onlinev2-rep2-x18`; cleanup attempted.
+- total host_bytes=1769520734208 host_pages=432011898 gc_pages=389611313 WAF=1.901853
+- phaseA(test4) host_pages=432011898 gc_pages=389611313 WAF=1.901853
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
