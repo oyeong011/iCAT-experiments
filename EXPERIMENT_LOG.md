@@ -7782,3 +7782,12 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **정책**: v3, fixed47(빠른 3영역 최적), arm17(SQLite 구간 최적), fixed50(견고), v1, Greedy. 먼저 SMOKE=1로 실행기 확인. 1회씩(총 ≈15시간), 결과 보고 반복 추가.
 - **판정**: (1) 구간별 1등이 실제로 갈리는가 (A·C는 47, B는 17). (2) 최고 고정 대비 v3 손실. v3가 최고 고정보다 좋으면 "적응이 이기는 판이 있다". (3) 구간별 최적 조합(oracle) 추정 = A·C는 fixed47, B는 arm17 구간 WAF를 쓰기량 가중 합산.
 - 순서: queue11 → queue13(3시간 v1/v2) → queue14(v3) → **queue15(mixR)** → queue10(아주 느린 sweep) → queue12(oltp 재확인).
+
+- Finished 2026-09-24T23:24:06+09:00; mixA onlinev2 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-onlinev2-rep3-x6`; cleanup attempted.
+- total host_bytes=762465185792 host_pages=186148727 gc_pages=159672332 WAF=1.857768
+- phaseA(test4) host_pages=144003975 gc_pages=138319969 WAF=1.960529
+- phaseB(sqlite-a) host_pages=42144752 gc_pages=21352363 WAF=1.506643
+- phaseB-load host_pages=1398340 gc_pages=851777 WAF=1.609134
+- phaseB-run host_pages=40746412 gc_pages=20500586 WAF=1.503126
+- ycsb-load [OVERALL], Throughput(ops/sec), 21473.819834651586
+- ycsb-run [OVERALL], Throughput(ops/sec), 12373.557707179756
