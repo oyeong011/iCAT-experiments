@@ -7726,3 +7726,51 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **판정**: 60분 이상에서 fixed47 대비 손실 ≤4% → v3 성공. kernel.log에서 settled 이후 reset 횟수·best 교체 횟수로 "유지"를 확인. 30분에서 v2·v1보다 좋으면 "순회 단축" 효과 확인.
 - 순서: queue11 → queue13(3시간 v1/v2) → **queue14(v3)** → queue10(아주 느린 sweep) → queue12(oltp 재확인).
 - 2026-09-24 사고 기록: onlinev3 매핑을 넣던 sed가 실패해 `script/mix-20260911.sh`가 빈 파일로 커밋됨(f249faa). 그 사이 시작된 run 없음(진행 중이던 mixC onlinev2 rep2는 16:11 시작, 이전 파일 사용). 5fbf396 판으로 복구 + 매핑 1줄 추가(5e1464d).
+
+- Finished 2026-09-24T18:12:51+09:00; mixC onlinev2 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixC-onlinev2-rep2-x6`; cleanup attempted.
+- total host_bytes=737335853056 host_pages=180013636 gc_pages=172450794 WAF=1.957987
+- phaseA(test3) host_pages=36009657 gc_pages=35942133 WAF=1.998125
+- phaseB(test4) host_pages=144003979 gc_pages=136508661 WAF=1.947951
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixA onlinev2 — started 2026-09-24T18:12:51+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 24000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v2.ko`.
+- Command: `bash script/mix-20260911.sh mixA onlinev2`; evidence `result/mix-20260911/mixA-onlinev2/`.
+
+- Finished 2026-09-24T19:47:24+09:00; mixA onlinev2 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-onlinev2-rep2-x6`; cleanup attempted.
+- total host_bytes=762126753792 host_pages=186066102 gc_pages=157957113 WAF=1.848930
+- phaseA(test4) host_pages=144032148 gc_pages=136692566 WAF=1.949042
+- phaseB(sqlite-a) host_pages=42033954 gc_pages=21264547 WAF=1.505890
+- phaseB-load host_pages=1398342 gc_pages=698025 WAF=1.499180
+- phaseB-run host_pages=40635612 gc_pages=20566522 WAF=1.506121
+- ycsb-load [OVERALL], Throughput(ops/sec), 23467.751398286855
+- ycsb-run [OVERALL], Throughput(ops/sec), 12643.14409707406
+
+### mix-20260911 mixC onlinev2 — started 2026-09-24T19:47:24+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v2.ko`.
+- Command: `bash script/mix-20260911.sh mixC onlinev2`; evidence `result/mix-20260911/mixC-onlinev2/`.
+
+- Finished 2026-09-24T21:48:52+09:00; mixC onlinev2 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixC-onlinev2-rep3-x6`; cleanup attempted.
+- total host_bytes=737306497024 host_pages=180006469 gc_pages=172106905 WAF=1.956115
+- phaseA(test3) host_pages=36002493 gc_pages=35946927 WAF=1.998457
+- phaseB(test4) host_pages=144003976 gc_pages=136159978 WAF=1.945529
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixA onlinev2 — started 2026-09-24T21:48:52+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 24000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v2.ko`.
+- Command: `bash script/mix-20260911.sh mixA onlinev2`; evidence `result/mix-20260911/mixA-onlinev2/`.
+
+## 2026-09-24 — v4 설계 메모 (아직 빌드 안 함; v3·아주 느린 sweep 결과 후 결정)
+
+- **사용자 아이디어**: 좁혀진 후보를 유지하고(다시 넓히지 않음), 후보 제거 기준은 실험 중 iCAT이 직접 잰 값으로 정한다(사전 지식 없음). 워크로드가 바뀌면 "좁혀진 집합들 사이의 관계"를 이용한다.
+- **근거 데이터** (믹스 60-arm sweep, 구간별 상위 5):
+  - mixA 앞(빠른 3영역): 47, 46, 32, 31, 50 / mixA 뒤(SQLite 읽기50/수정50): **17(k4,s25,r16)**, 32, 35, 20, 53
+  - mixC 뒤(빠른 3영역): 47, 46, 31, 32, 50 / mixC 앞(느린 3영역): 3% 안에 22개 (평평함)
+  - 좋은 조합은 파라미터 공간에서 붙어 있는 한 덩어리이고, 워크로드가 바뀌면 이웃으로 이동한다(32 → k만 한 칸 → 17).
+- **v4 안**: (1) v3 순회(45 arm) 후 1등보다 잡음 여유를 넘게 나쁜 arm 제거(successive elimination), (2) 생존 집합 안에서만 UCB, 정착 후 유지, (3) 드리프트(25%) 감지 시 전체가 아니라 생존 집합 + 1칸 이웃(k·scale·ratio 중 하나만 인접)만 복원.
+- **미확인**: 증거는 빠른 워크로드 믹스 2개뿐. 아주 느린 sweep에서 최적이 멀리(scale 400%) 가면 이웃 이동이 여러 번 필요.
