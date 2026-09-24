@@ -7705,3 +7705,23 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(test4-hot128M) host_pages=144007919 gc_pages=113081703 WAF=1.785246
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixC onlinev2 — started 2026-09-24T16:11:28+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v2.ko`.
+- Command: `bash script/mix-20260911.sh mixC onlinev2`; evidence `result/mix-20260911/mixC-onlinev2/`.
+
+## 사전 등록 2026-09-24 — iCAT v3 (queue14: queue13 뒤, 아주 느린 sweep 앞)
+
+- **이유**: v1은 20~30분에 최적의 3~4%까지 좁혀졌다가 다시 벌어짐. v2(구간 ×3)는 60분에서 v1과 같음(+10% vs +11%), 순회 30분이 너무 김. 사용자 결정: 순회 시간을 줄이고, 좁혀진 뒤 유지되게 한 v3를 시험.
+- **변경** (`online-v3-src` = online-v2-src 복사 후, v1 대비):
+  - 판단 구간 64 → **128 GC** / 256 → **512 MiB** (×2), MAX_WINDOW_GC 8192
+  - **k=2 arm 0~14 제외 → 45 arm** (근거: GitHub 6개 + 이 머신 3개 sweep 전부에서 k=2가 최하위, Greedy와 0.4% 이내)
+  - 강제 순회 **1회** → 45 × ≈20초 ≈ **15분** (v1·v2 30분)
+  - 정착 후 **탐색(PROBE) 끔** (v1은 8구간마다 가장 오래된 arm을 1번 씀)
+  - 드리프트 리셋 문턱 12.5% → **25%**
+  - 그 외 무변경 (γ, c, STABLE 12, CONFIRM 3, TOLERANCE 0.5%, STALE 240).
+- 모듈 `buildoutput/nvmev-online-v3.ko` SHA256 `0757c4cd…`, 빌드 로그 `result/gh-repro-20260914/build-online-v3.log`. 러너 정책 `onlinev3`.
+- **실행**: 빠른 3영역 쓰기 10분 ×1 / 30분(×3) ×3 + 같은 길이 fixed47·v2·v1 / 60분 ×2 / 3시간 ×1; 6배 믹스 "빠른→느린"(mixD), "뜨거운 구역 512→128 MB"(mixK). 약 13시간.
+- **판정**: 60분 이상에서 fixed47 대비 손실 ≤4% → v3 성공. kernel.log에서 settled 이후 reset 횟수·best 교체 횟수로 "유지"를 확인. 30분에서 v2·v1보다 좋으면 "순회 단축" 효과 확인.
+- 순서: queue11 → queue13(3시간 v1/v2) → **queue14(v3)** → queue10(아주 느린 sweep) → queue12(oltp 재확인).
