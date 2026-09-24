@@ -7791,3 +7791,15 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=40746412 gc_pages=20500586 WAF=1.503126
 - ycsb-load [OVERALL], Throughput(ops/sec), 21473.819834651586
 - ycsb-run [OVERALL], Throughput(ops/sec), 12373.557707179756
+
+### mix-20260911 t4 onlinev2 — started 2026-09-24T23:26:09+09:00
+
+- Phase A fio test4 fixed payload (1061683200000/530841600000/176947200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v2.ko`.
+- Command: `bash script/mix-20260911.sh t4 onlinev2`; evidence `result/mix-20260911/t4-onlinev2/`.
+
+### 2026-09-24 mixR 타당성 점검 (실행 전)
+
+- **실행 조건은 문제없음**: 공간(6 GiB fio 파일 + DB ≈0.8 GiB, mixA ×3에서 1,200만 op 정상), 쓰기량(SQLite run 1.69 페이지/op, ×1·×3 모두 같음), 길이(구간당 30~90분 > v3 순회 15분).
+- **수정 1 — 가장 좋은 고정 조합이 빠져 있었음**: 3구간 가중(빠른 2 : SQLite 1)으로 mixA 구간값을 합산하면 최고 고정은 **arm32(k7,s25,r16) 1.696**, arm17 1.703, arm47 1.719. arm32를 정책 목록에 추가(queue15 재시작). 구간별 최적 합산(oracle) 1.640 → 적응 이득 여지 **3.5%**.
+- **위험 1 — 전제가 1회 측정에 기대고 있음**: SQLite 구간 arm17 1.371은 2등 arm32 1.500보다 9% 낮은 단독값(rep1만 있음). mixR의 arm17·arm47·arm32 run이 재측정이 된다.
+- **위험 2 — v3는 구조상 이 믹스에 적응하기 어려움**: 구간 전환 시 현재 arm의 WAF 변화는 arm47 −9.4%, arm32 −16.4%(좋아지는 방향)로 드리프트 문턱 25%를 넘지 않을 가능성이 높다(SQLite load 구간 1.218은 −31%지만 파티션당 약 3 window로 "3 window 연속" 조건에 걸칠락 말락). v3는 정착 후 탐색을 끄고, 할인 반감기는 1,376 window ≈ 7.6시간이라 옛 점수도 거의 안 잊는다. → v3는 사실상 "앞 구간에서 고른 고정 조합 + 순회 비용"이 되어 최고 고정보다 약간 질 것으로 예상. 이 믹스에서 적응하려면 v4의 "좁혀진 후보의 이웃만 가끔 확인(32 → 17)" 같은 탐색이 필요하다. v1(8 window마다 탐색)은 비교 기준으로 유지.
