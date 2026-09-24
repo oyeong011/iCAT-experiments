@@ -11,5 +11,7 @@ run() { local d=$1; shift; [[ -e $R/$d/summary.txt ]] && return; rm -rf $R/$d; "
 run mixR-fixed47-rep1-smoke env SMOKE=1 bash script/mix-20260911.sh mixR fixed47 1
 [[ -e $R/mixR-fixed47-rep1-smoke/summary.txt ]] || { echo "SMOKE FAIL, skipping mixR"; echo QUEUE15DONE $(date -Is); exit; }
 push "smoke"
-for p in onlinev3 arm32 fixed47 arm17 fixed50 online greedy; do run mixR-$p-rep1-x3 env MULT=3 bash script/mix-20260911.sh mixR $p 1; push "$p x3"; done
+run t4-onlinev4-rep1-smoke env SMOKE=1 bash script/mix-20260911.sh t4 onlinev4 1
+[[ -e $R/t4-onlinev4-rep1-smoke/summary.txt ]] && push "v4 smoke" || echo "V4 SMOKE FAIL"
+for p in onlinev4 onlinev3 arm32 fixed47 arm17 fixed50 online greedy; do run mixR-$p-rep1-x3 env MULT=3 bash script/mix-20260911.sh mixR $p 1; push "$p x3"; done
 echo QUEUE15DONE $(date -Is)
