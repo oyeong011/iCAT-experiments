@@ -7816,3 +7816,12 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **알려진 한계 (ponytail)**: 제거 기준 15%는 1회 관측 잡음(window당 대략 10~15%)과 비슷해서 진짜 1등이 운 나쁘게 빠질 수 있다. 이웃 탐색으로 되살아날 수 있지만 1등에서 멀면 못 돌아온다. 더 필요하면 "2회 이상 관측 후 제거"로 강화.
 - **실행**: queue15에서 SMOKE(빠른 3영역 1/10)로 모듈·로그 확인 → mixR ×3 길이에서 v4를 첫 번째로 실행, 이어서 v3, arm32, fixed47, arm17, fixed50, v1, Greedy.
 - **판정**: mixR에서 v4가 최고 고정(arm32 예상)보다 WAF가 낮으면 "적응이 이기는 판이 있고, 이웃 탐색으로 그 판을 딴다". SQLite 구간에서 v4의 best가 17 근처로 옮겨 갔는지 kernel.log로 확인.
+
+- Finished 2026-09-25T02:27:34+09:00; t4 onlinev2 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-onlinev2-rep1-x18`; cleanup attempted.
+- total host_bytes=1769520844800 host_pages=432011925 gc_pages=379503856 WAF=1.878457
+- phaseA(test4) host_pages=432011925 gc_pages=379503856 WAF=1.878457
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
