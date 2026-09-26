@@ -8167,3 +8167,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **조건**: 빠른 3영역 쓰기, v3와 같은 길이 — 60분(`t4long`) ×2(seed 1,2), 3시간(`MULT=18 t4`) ×1. 모듈 `nvmev-online-v4.ko`(db93f822…).
 - **판정**: v3(60분 1.900~1.906, 3시간 1.848)보다 낮으면 후보 제거 효과 확인. kernel.log로 나쁜 조합(1등보다 15% 초과)에 쓴 시간 비율을 v3(12.3%)와 비교. 견고 CAT(1.814)보다 낮으면 3시간 목표 달성.
 - 2026-09-26: mixR에 기본 CAT(arm37) ×3 추가(queue17, queue15 뒤·아주 느린 sweep 앞). 모든 학습기 버전을 기본값과 같은 믹스에서 비교하기 위함.
+
+- Finished 2026-09-26T16:12:30+09:00; mixR fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixR-fixed50-rep1-x3`; cleanup attempted.
+- total host_bytes=888290013184 host_pages=216867679 gc_pages=232839377 WAF=2.073647
+- phaseA(test4) host_pages=72012734 gc_pages=58632664 WAF=1.814199
+- phaseB(sqlite-a) host_pages=72852957 gc_pages=29624331 WAF=1.406632
+- phaseC(test4) host_pages=72001988 gc_pages=144582382 WAF=3.008033
+- phaseB-load host_pages=1398349 gc_pages=402738 WAF=1.288010
+- phaseB-run host_pages=71454608 gc_pages=29221593 WAF=1.408953
+- ycsb-load [OVERALL], Throughput(ops/sec), 24058.703235895584
+- ycsb-run [OVERALL], Throughput(ops/sec), 12299.09285405135
