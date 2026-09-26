@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # 아주 느린 3영역 쓰기(test4 IOPS/16, 1200 s) 60-arm sweep + greedy. GitHub measurement method (gh-fio.sh).
-# Question: does the best scale move from 25% (fast) to >=200% (slow)?  Starts after queue15 (balanced fast-SQLite-fast mix).
+# Question: does the best scale move from 25% (fast) to >=200% (slow)?  Starts after queue17 (mixR default CAT).
 set -u
 cd /home/oy/iCAT
 B=/tmp/claude-1000/-home-oy-nvmevirt/644aa240-1852-482e-a060-ce2cfc119144/scratchpad
-until grep -q QUEUE15DONE $B/queue15.out 2>/dev/null; do sleep 300; done
+until grep -q QUEUE17DONE $B/queue17.out 2>/dev/null; do sleep 300; done
 until ! pgrep -f "script/mix-20260911.sh" >/dev/null && [[ ! -e /sys/module/nvmev ]]; do sleep 30; done
 push() { git add -A >/dev/null 2>&1; git commit -qm "sweep-slow16: $1" >/dev/null 2>&1; git push -q 2>/dev/null; echo "[push] $1 $(date -Is)"; }
 D=result/sweep-slow16-20260921; mkdir -p $D
