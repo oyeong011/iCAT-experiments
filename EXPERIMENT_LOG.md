@@ -8177,3 +8177,15 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=71454608 gc_pages=29221593 WAF=1.408953
 - ycsb-load [OVERALL], Throughput(ops/sec), 24058.703235895584
 - ycsb-run [OVERALL], Throughput(ops/sec), 12299.09285405135
+
+### mix-20260911 mixR online — started 2026-09-26T16:12:37+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 42000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-mix-20260907.ko`.
+- Command: `bash script/mix-20260911.sh mixR online`; evidence `result/mix-20260911/mixR-online/`.
+
+## 사전 등록 2026-09-26 — 10시간 빠른 3영역 쓰기 (queue18, 맨 뒤)
+
+- **사용자 판단**: 실제 워크로드는 한 번에 3시간, 10시간 이상 돈다. 그 길이에서의 성능이 현실적인 기준이다.
+- **추정**(WAF = 한계 + 순회비용/시간, 60분·3시간 두 점): v3 10시간 ≈1.828(+3.2%), 한계 ≈1.82 / v1 10시간 ≈1.856. 고정 CAT은 길이 무관(47번 10분 1.774, 3시간 1.772)이라 재실행 안 함.
+- **조건**: `MULT=60 mix-20260911.sh t4` (빠른 3영역 쓰기 payload ×60 ≈ 10시간), v4 ×1, v3 ×1.
+- **판정**: 실측이 추정과 ±0.01 안이면 "한계선 모델" 채택. v4가 v3보다 낮고 견고 CAT(1.814)보다 낮으면 "긴 워크로드에서 모르고 고른 고정 CAT 수준을 넘는다".
