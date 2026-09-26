@@ -12,8 +12,7 @@ run t4-onlinev4-rep1-x60 env MULT=60 bash script/mix-20260911.sh t4 onlinev4 1; 
 # 2. oltp recheck (arm46/47/49/50 x3)
 for rep in 1 2 3; do for a in arm46 arm47 arm49 arm50; do f=result/filebench/oltp-$a-rep$rep.console.txt; [[ -e $f ]] && continue
   FILEBENCH_RUNTIME=300 bash script/gh-filebench.sh $a oltp > $f 2>&1 || echo "FAIL oltp $a rep$rep"; done; done; push "oltp recheck"
-# 3. v4 3 h
-run t4-onlinev4-rep1-x18 env MULT=18 bash script/mix-20260911.sh t4 onlinev4 1; push "v4 3 h"
+# 3. (dropped) v4 3 h: read from the 10 h run's 30 s counter series (control-series.txt) at t = 3 h
 # 4. new mix seed 2: v4 and robust CAT
 for p in onlinev4 fixed50; do run mixR-$p-rep2-x3 env MULT=3 bash script/mix-20260911.sh mixR $p 2; done; push "mixR rep2 v4 + fixed50"
 echo PRIORITYDONE $(date -Is)

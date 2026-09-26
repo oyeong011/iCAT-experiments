@@ -8237,3 +8237,9 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 새 순서: ① v4 10시간 ② 거래 DB 흉내 재확인(arm46/47/49/50 ×3) ③ v4 3시간 ④ mixR 2회차 v4·견고 CAT ⑤ 아주 느린 sweep 나머지 ⑥ v3 10시간(시간 남으면) ⑦ 자동 정리(`result/final-20260929/ALL-NEW-RESULTS.md`) 후 push.
 - 취소: v4 60분 ×2(3시간·10시간으로 대체). v5는 이번 달 범위에서 제외(향후 과제: 처음 순회 대신 이웃 따라 오르기 + 더 빠른 후보 제거; 근거는 mixR v4 앞 구간 손해의 60%가 순회, 40%가 순회 뒤 느린 후보 축소).
 - 사전 등록된 판정 기준은 각 항목의 원래 등록(9/21, 9/23, 9/24, 9/26)을 그대로 따른다.
+
+### mix-20260911 t4 onlinev4 — started 2026-09-27T00:38:43+09:00
+
+- Phase A fio test4 fixed payload (3538944000000/1769472000000/589824000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh t4 onlinev4`; evidence `result/mix-20260911/t4-onlinev4/`.
+- 2026-09-27 02:15: v4 3시간 별도 실행 취소. 10시간 실행의 30초 누적 카운터(control-series.txt)에서 1시간·3시간·10시간 시점 WAF를 읽는다(같은 워크로드·같은 속도라 동등). 3시간 절약.
