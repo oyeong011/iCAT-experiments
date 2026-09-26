@@ -8119,3 +8119,18 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=70893995 gc_pages=36913509 WAF=1.520686
 - ycsb-load [OVERALL], Throughput(ops/sec), 27135.814752837952
 - ycsb-run [OVERALL], Throughput(ops/sec), 8665.377176015474
+
+### mix-20260911 mixR fixed47 — started 2026-09-26T09:50:26+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 42000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh mixR fixed47`; evidence `result/mix-20260911/mixR-fixed47/`.
+
+- Finished 2026-09-26T12:12:05+09:00; mixR fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixR-fixed47-rep1-x3`; cleanup attempted.
+- total host_bytes=885155704832 host_pages=216102467 gc_pages=221372827 WAF=2.024388
+- phaseA(test4) host_pages=72001993 gc_pages=55680692 WAF=1.773322
+- phaseB(sqlite-a) host_pages=72098482 gc_pages=36924609 WAF=1.512141
+- phaseC(test4) host_pages=72001992 gc_pages=128767526 WAF=2.788388
+- phaseB-load host_pages=1398349 gc_pages=299541 WAF=1.214210
+- phaseB-run host_pages=70700133 gc_pages=36625068 WAF=1.518034
+- ycsb-load [OVERALL], Throughput(ops/sec), 22437.455592535807
+- ycsb-run [OVERALL], Throughput(ops/sec), 8807.426254056922
