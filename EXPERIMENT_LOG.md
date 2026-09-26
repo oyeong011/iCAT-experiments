@@ -8189,3 +8189,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **추정**(WAF = 한계 + 순회비용/시간, 60분·3시간 두 점): v3 10시간 ≈1.828(+3.2%), 한계 ≈1.82 / v1 10시간 ≈1.856. 고정 CAT은 길이 무관(47번 10분 1.774, 3시간 1.772)이라 재실행 안 함.
 - **조건**: `MULT=60 mix-20260911.sh t4` (빠른 3영역 쓰기 payload ×60 ≈ 10시간), v4 ×1, v3 ×1.
 - **판정**: 실측이 추정과 ±0.01 안이면 "한계선 모델" 채택. v4가 v3보다 낮고 견고 CAT(1.814)보다 낮으면 "긴 워크로드에서 모르고 고른 고정 CAT 수준을 넘는다".
+
+- Finished 2026-09-26T18:12:20+09:00; mixR online exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixR-online-rep1-x3`; cleanup attempted.
+- total host_bytes=887537442816 host_pages=216683946 gc_pages=278980586 WAF=2.287500
+- phaseA(test4) host_pages=72001981 gc_pages=73900569 WAF=2.026369
+- phaseB(sqlite-a) host_pages=72679980 gc_pages=27743035 WAF=1.381715
+- phaseC(test4) host_pages=72001985 gc_pages=177336982 WAF=3.462946
+- phaseB-load host_pages=1398350 gc_pages=936885 WAF=1.669993
+- phaseB-run host_pages=71281630 gc_pages=26806150 WAF=1.376060
+- ycsb-load [OVERALL], Throughput(ops/sec), 24440.914090186972
+- ycsb-run [OVERALL], Throughput(ops/sec), 12525.255537579495
