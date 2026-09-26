@@ -8155,3 +8155,14 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=71278212 gc_pages=26614108 WAF=1.373383
 - ycsb-load [OVERALL], Throughput(ops/sec), 21366.76044300417
 - ycsb-run [OVERALL], Throughput(ops/sec), 12548.670916483217
+
+### mix-20260911 mixR fixed50 — started 2026-09-26T14:11:55+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 42000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixR fixed50`; evidence `result/mix-20260911/mixR-fixed50/`.
+
+## 사전 등록 2026-09-26 — v4 단일 워크로드 (queue16, queue12 뒤)
+
+- **질문**: v3는 3시간에서도 12%의 시간을 나쁜 조합에 써서 한계 ≈1.82(+2.7%)로 추정된다. v4의 실험 중 후보 제거가 이 한계를 낮추는가?
+- **조건**: 빠른 3영역 쓰기, v3와 같은 길이 — 60분(`t4long`) ×2(seed 1,2), 3시간(`MULT=18 t4`) ×1. 모듈 `nvmev-online-v4.ko`(db93f822…).
+- **판정**: v3(60분 1.900~1.906, 3시간 1.848)보다 낮으면 후보 제거 효과 확인. kernel.log로 나쁜 조합(1등보다 15% 초과)에 쓴 시간 비율을 v3(12.3%)와 비교. 견고 CAT(1.814)보다 낮으면 3시간 목표 달성.
