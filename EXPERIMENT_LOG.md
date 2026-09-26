@@ -8145,3 +8145,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 방법: 60-arm sweep이 있는 워크로드 8개(이 머신: 빠른 3영역, SQLite 읽기50/수정50, 거래 DB 흉내, mixA, mixC / GitHub: 느린 3영역, hot 위치 이동, SQLite 읽기95) 중 하나를 빼고, 나머지에서 "최악 손해가 가장 작은" 조합을 고른 뒤 뺀 워크로드에서의 손해를 잰다(leave-one-out).
 - 결과: 고른 조합은 거의 항상 arm46(k10,s25,r7). 손해 0.3~5.4%, 단 **거래 DB 흉내를 뺐을 때 arm47이 뽑혀 14.0%** 손해. 평균 3.5%.
 - 의미: iCAT이 넘어야 할 공정한 기준선은 "워크로드별 최적"이 아니라 이 값(평균 3.5%). v3 3시간(빠른 3영역)은 sweep 최저 1.744 대비 +6.0%로 아직 못 넘음. 거래 DB 흉내의 14%는 1회 sweep 값이라 queue12 재확인(arm46/47/49/50 ×3) 결과에 달려 있다.
+
+- Finished 2026-09-26T14:11:50+09:00; mixR arm17 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixR-arm17-rep1-x3`; cleanup attempted.
+- total host_bytes=887523467264 host_pages=216680534 gc_pages=254904492 WAF=2.176407
+- phaseA(test4) host_pages=72001990 gc_pages=62796399 WAF=1.872148
+- phaseB(sqlite-a) host_pages=72676557 gc_pages=26995395 WAF=1.371446
+- phaseC(test4) host_pages=72001987 gc_pages=165112698 WAF=3.293169
+- phaseB-load host_pages=1398345 gc_pages=381287 WAF=1.272670
+- phaseB-run host_pages=71278212 gc_pages=26614108 WAF=1.373383
+- ycsb-load [OVERALL], Throughput(ops/sec), 21366.76044300417
+- ycsb-run [OVERALL], Throughput(ops/sec), 12548.670916483217
