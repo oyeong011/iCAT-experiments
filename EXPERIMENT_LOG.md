@@ -8199,3 +8199,18 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=71281630 gc_pages=26806150 WAF=1.376060
 - ycsb-load [OVERALL], Throughput(ops/sec), 24440.914090186972
 - ycsb-run [OVERALL], Throughput(ops/sec), 12525.255537579495
+
+### mix-20260911 mixR greedy — started 2026-09-26T18:12:28+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 42000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-greedy-m.ko`.
+- Command: `bash script/mix-20260911.sh mixR greedy`; evidence `result/mix-20260911/mixR-greedy/`.
+
+- Finished 2026-09-26T20:15:38+09:00; mixR greedy exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixR-greedy-rep1-x3`; cleanup attempted.
+- total host_bytes=889359118336 host_pages=217128691 gc_pages=469777117 WAF=3.163588
+- phaseA(test4) host_pages=72001981 gc_pages=91479987 WAF=2.270520
+- phaseB(sqlite-a) host_pages=73124724 gc_pages=151297218 WAF=3.069030
+- phaseC(test4) host_pages=72001986 gc_pages=226999912 WAF=4.152690
+- phaseB-load host_pages=1398351 gc_pages=1796235 WAF=2.284538
+- phaseB-run host_pages=71726373 gc_pages=149500983 WAF=3.084324
+- ycsb-load [OVERALL], Throughput(ops/sec), 20814.542426975648
+- ycsb-run [OVERALL], Throughput(ops/sec), 11779.190657419067
