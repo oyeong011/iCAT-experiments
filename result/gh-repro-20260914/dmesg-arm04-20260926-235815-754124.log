@@ -1,0 +1,61 @@
+[1311177.480625] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[1311177.480631] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[1311177.491396] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[1311177.502858] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1311177.514005] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1311177.514020] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1311177.514022] NVMeVirt: Fixed CAT init ns=0 part=0 arm=4 k=2 scale_pct=50 age_ratio=7
+[1311177.515259] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[1311177.515298] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1311177.515300] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=2 initial_scale_pct=50 initial_age_ratio=7 warmup_gc=100
+[1311177.525963] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1311177.536806] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1311177.536820] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1311177.536823] NVMeVirt: Fixed CAT init ns=0 part=1 arm=4 k=2 scale_pct=50 age_ratio=7
+[1311177.538172] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1311177.538175] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=2 initial_scale_pct=50 initial_age_ratio=7 warmup_gc=100
+[1311177.548667] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1311177.559209] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1311177.559223] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1311177.559226] NVMeVirt: Fixed CAT init ns=0 part=2 arm=4 k=2 scale_pct=50 age_ratio=7
+[1311177.560481] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1311177.560485] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=2 initial_scale_pct=50 initial_age_ratio=7 warmup_gc=100
+[1311177.571074] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1311177.581677] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1311177.581692] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1311177.581694] NVMeVirt: Fixed CAT init ns=0 part=3 arm=4 k=2 scale_pct=50 age_ratio=7
+[1311177.583014] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1311177.583018] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=2 initial_scale_pct=50 initial_age_ratio=7 warmup_gc=100
+[1311177.583024] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[1311177.583026] NVMeVirt: ns 0/1: size 7655 MiB
+[1311177.583074] PCI host bridge to bus 0001:10
+[1311177.583077] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[1311177.583080] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[1311177.583082] pci_bus 0001:10: root bus resource [bus 00-ff]
+[1311177.583104] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[1311177.583108] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[1311177.583110] pci 0001:10:00.0: enabling Extended Tags
+[1311177.583233] NVMeVirt: Virtual PCI bus created (node 0)
+[1311177.583517] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[1311177.583542] NVMeVirt: Virtual NVMe device created
+[1311177.584095] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[1311177.584700] nvme nvme0: pci function 0001:10:00.0
+[1311177.589052] nvme nvme0: 8/0/0 default/read/poll queues
+[1311177.664671] EXT4-fs (nvme0n1): mounted filesystem 07da6ab2-5f3e-4562-9414-2686851a69c9 r/w with ordered data mode. Quota mode: none.
+[1311285.681562] audit: type=1400 audit(1790434804.119:612): apparmor="DENIED" operation="capable" class="cap" profile="/usr/sbin/cupsd" pid=754577 comm="cupsd" capability=12  capname="net_admin"
+[1311376.878005] audit: type=1107 audit(1790434895.313:613): pid=1434 uid=101 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor="DENIED" operation="dbus_signal"  bus="system" path="/com/redhat/PrinterSpooler" interface="com.redhat.PrinterSpooler" member="QueueChanged" mask="send" name="org.freedesktop.DBus" pid=2073 label="snap.cups.cupsd" peer_pid=4752 peer_label="unconfined"
+                  exe="/usr/bin/dbus-daemon" sauid=101 hostname=? addr=? terminal=?'
+[1311439.123292] audit: type=1107 audit(1790434957.557:614): pid=1434 uid=101 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor="DENIED" operation="dbus_signal"  bus="system" path="/com/redhat/PrinterSpooler" interface="com.redhat.PrinterSpooler" member="QueueChanged" mask="send" name="org.freedesktop.DBus" pid=2073 label="snap.cups.cupsd" peer_pid=4752 peer_label="unconfined"
+                  exe="/usr/bin/dbus-daemon" sauid=101 hostname=? addr=? terminal=?'
+[1311500.318254] audit: type=1107 audit(1790435018.750:615): pid=1434 uid=101 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor="DENIED" operation="dbus_signal"  bus="system" path="/com/redhat/PrinterSpooler" interface="com.redhat.PrinterSpooler" member="QueueChanged" mask="send" name="org.freedesktop.DBus" pid=2073 label="snap.cups.cupsd" peer_pid=4752 peer_label="unconfined"
+                  exe="/usr/bin/dbus-daemon" sauid=101 hostname=? addr=? terminal=?'
+[1311590.684953] audit: type=1107 audit(1790435109.114:616): pid=1434 uid=101 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor="DENIED" operation="dbus_signal"  bus="system" path="/com/redhat/PrinterSpooler" interface="com.redhat.PrinterSpooler" member="QueueChanged" mask="send" name="org.freedesktop.DBus" pid=2073 label="snap.cups.cupsd" peer_pid=4752 peer_label="unconfined"
+                  exe="/usr/bin/dbus-daemon" sauid=101 hostname=? addr=? terminal=?'
+[1311622.513315] audit: type=1107 audit(1790435140.942:617): pid=1434 uid=101 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor="DENIED" operation="dbus_signal"  bus="system" path="/com/redhat/PrinterSpooler" interface="com.redhat.PrinterSpooler" member="QueueChanged" mask="send" name="org.freedesktop.DBus" pid=2073 label="snap.cups.cupsd" peer_pid=4752 peer_label="unconfined"
+                  exe="/usr/bin/dbus-daemon" sauid=101 hostname=? addr=? terminal=?'
+[1311627.542888] audit: type=1107 audit(1790435145.971:618): pid=1434 uid=101 auid=4294967295 ses=4294967295 subj=unconfined msg='apparmor="DENIED" operation="dbus_signal"  bus="system" path="/com/redhat/PrinterSpooler" interface="com.redhat.PrinterSpooler" member="QueueChanged" mask="send" name="org.freedesktop.DBus" pid=2073 label="snap.cups.cupsd" peer_pid=4752 peer_label="unconfined"
+                  exe="/usr/bin/dbus-daemon" sauid=101 hostname=? addr=? terminal=?'
+[1312381.197374] EXT4-fs (nvme0n1): unmounting filesystem 07da6ab2-5f3e-4562-9414-2686851a69c9.
+[1312381.261622] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[1312381.261764] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=2501108 gc_pages=1725843 gc_count=66037 WAF=1.690 warmup_gc=100-per-part
+[1312381.347246] NVMeVirt: Virtual NVMe device closed

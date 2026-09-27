@@ -8243,3 +8243,12 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Phase A fio test4 fixed payload (3538944000000/1769472000000/589824000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
 - Command: `bash script/mix-20260911.sh t4 onlinev4`; evidence `result/mix-20260911/t4-onlinev4/`.
 - 2026-09-27 02:15: v4 3시간 별도 실행 취소. 10시간 실행의 30초 누적 카운터(control-series.txt)에서 1시간·3시간·10시간 시점 WAF를 읽는다(같은 워크로드·같은 속도라 동등). 3시간 절약.
+
+- Finished 2026-09-27T10:40:07+09:00; t4 onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-onlinev4-rep1-x60`; cleanup attempted.
+- total host_bytes=5898461077504 host_pages=1440053974 gc_pages=1162435040 WAF=1.807216
+- phaseA(test4) host_pages=1440053974 gc_pages=1162435040 WAF=1.807216
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
