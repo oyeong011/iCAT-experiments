@@ -8426,3 +8426,17 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(test3) host_pages=18001248 gc_pages=14144773 WAF=1.785766
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixJ onlinev4 — started 2026-09-28T02:06:30+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 12000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixJ onlinev4`; evidence `result/mix-20260911/mixJ-onlinev4/`.
+
+- Finished 2026-09-28T02:27:51+09:00; mixJ onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixJ-onlinev4-rep1-x3`; cleanup attempted.
+- total host_bytes=96868225024 host_pages=23649469 gc_pages=8920505 WAF=1.377197
+- phaseA(sqlite-a) host_pages=21559089 gc_pages=8179666 WAF=1.379407
+- phaseB(sqlite-b) host_pages=2090380 gc_pages=740839 WAF=1.354404
+- phaseA-load host_pages=1400898 gc_pages=616952 WAF=1.440398
+- phaseA-run host_pages=20158191 gc_pages=7562714 WAF=1.375168
+- ycsb-load [OVERALL], Throughput(ops/sec), 26421.242679114006
+- ycsb-run [OVERALL], Throughput(ops/sec), 64473.83973952569
