@@ -8298,3 +8298,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 판정(9/21 사전 등록과 동일 기준): 1등 scale ≥200%이고 arm47이 1등 대비 ≥3% 나쁘면 → 빠른 ↔ 아주 느린 믹스를 새로 설계. 아니면 느린 워크로드 방향 폐기.
 - 거래 DB 흉내 재확인 3회 평균: arm46 1.430, arm47 1.453, arm49 1.444, arm50 1.449 (차이 1.6% 이내, 같은 arm 반복 폭 최대 8%). → 이 워크로드는 파라미터 영향이 잡음보다 작다. leave-one-out 기준선의 "최대 14%"는 철회.
 - mixR 2회차 v4: 전체 2.101 (A 1.902 / B 1.503 / C 2.900). 1회차 2.057과 2% 차이.
+
+- Finished 2026-09-27T16:05:40+09:00; mixR fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixR-fixed50-rep2-x3`; cleanup attempted.
+- total host_bytes=887288680448 host_pages=216623213 gc_pages=232527003 WAF=2.073417
+- phaseA(test4) host_pages=72009143 gc_pages=58630306 WAF=1.814206
+- phaseB(sqlite-a) host_pages=72612086 gc_pages=29220241 WAF=1.402416
+- phaseC(test4) host_pages=72001984 gc_pages=144676456 WAF=3.009340
+- phaseB-load host_pages=1398349 gc_pages=399145 WAF=1.285440
+- phaseB-run host_pages=71213737 gc_pages=28821096 WAF=1.404713
+- ycsb-load [OVERALL], Throughput(ops/sec), 22465.178972592483
+- ycsb-run [OVERALL], Throughput(ops/sec), 12621.428661581633
