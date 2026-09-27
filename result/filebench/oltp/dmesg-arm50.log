@@ -1,102 +1,100 @@
-[542180.151198] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
-[542180.151204] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
-[542180.161774] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
-[542180.173317] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
-[542180.183928] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
-[542180.183941] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
-[542180.183944] NVMeVirt: Fixed CAT init ns=0 part=0 arm=50 k=10 scale_pct=50 age_ratio=16
-[542180.184956] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
-[542180.185003] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
-[542180.185027] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
-[542180.195868] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
-[542180.206435] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
-[542180.206449] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
-[542180.206451] NVMeVirt: Fixed CAT init ns=0 part=1 arm=50 k=10 scale_pct=50 age_ratio=16
-[542180.207383] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
-[542180.207385] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
-[542180.218035] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
-[542180.228696] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
-[542180.228710] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
-[542180.228712] NVMeVirt: Fixed CAT init ns=0 part=2 arm=50 k=10 scale_pct=50 age_ratio=16
-[542180.229675] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
-[542180.229678] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
-[542180.240334] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
-[542180.251205] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
-[542180.251219] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
-[542180.251222] NVMeVirt: Fixed CAT init ns=0 part=3 arm=50 k=10 scale_pct=50 age_ratio=16
-[542180.252148] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
-[542180.252151] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
-[542180.252158] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
-[542180.252160] NVMeVirt: ns 0/1: size 7655 MiB
-[542180.252210] PCI host bridge to bus 0001:10
-[542180.252212] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
-[542180.252215] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
-[542180.252217] pci_bus 0001:10: root bus resource [bus 00-ff]
-[542180.252225] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
-[542180.252229] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
-[542180.252231] pci 0001:10:00.0: enabling Extended Tags
-[542180.252397] NVMeVirt: Virtual PCI bus created (node 0)
-[542180.252620] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
-[542180.252682] NVMeVirt: Virtual NVMe device created
-[542180.252704] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
-[542180.254084] nvme nvme0: pci function 0001:10:00.0
-[542180.258692] nvme nvme0: 8/0/0 default/read/poll queues
-[542181.295990] EXT4-fs (nvme0n1): mounted filesystem 5c72a7ae-5532-41de-87c7-79c9b5f85e1e r/w with ordered data mode. Quota mode: none.
-[542185.655315] iCAT_FILEBENCH_MEASURE_START run=20260918-022147-3256370
-[542187.332883] tee (3258085): drop_caches: 3
-[542192.954510] tee (3258104): drop_caches: 3
-[542198.967148] tee (3258659): drop_caches: 3
-[542204.803697] tee (3259636): drop_caches: 3
-[542210.552277] tee (3260970): drop_caches: 3
-[542216.242123] tee (3262631): drop_caches: 3
-[542222.608184] tee (3264490): drop_caches: 3
-[542228.846896] tee (3266149): drop_caches: 3
-[542234.840343] tee (3267734): drop_caches: 3
-[542240.683652] tee (3269209): drop_caches: 3
-[542246.391042] tee (3270503): drop_caches: 3
-[542252.166696] tee (3271935): drop_caches: 3
-[542258.006829] tee (3273343): drop_caches: 3
-[542263.815434] tee (3274521): drop_caches: 3
-[542269.676012] tee (3275982): drop_caches: 3
-[542275.462620] tee (3277454): drop_caches: 3
-[542281.349072] tee (3278653): drop_caches: 3
-[542287.010449] tee (3279616): drop_caches: 3
-[542292.864098] tee (3281122): drop_caches: 3
-[542298.725629] tee (3282324): drop_caches: 3
-[542304.643784] tee (3283959): drop_caches: 3
-[542310.321136] tee (3285467): drop_caches: 3
-[542316.002523] tee (3286781): drop_caches: 3
-[542322.733297] tee (3288525): drop_caches: 3
-[542329.533515] tee (3290184): drop_caches: 3
-[542335.135570] tee (3291556): drop_caches: 3
-[542340.991237] tee (3292851): drop_caches: 3
-[542346.863520] tee (3294229): drop_caches: 3
-[542352.766923] tee (3295673): drop_caches: 3
-[542358.537338] tee (3297110): drop_caches: 3
-[542364.264440] tee (3298280): drop_caches: 3
-[542370.175505] tee (3299581): drop_caches: 3
-[542375.583656] tee (3300604): drop_caches: 3
-[542381.279825] tee (3301898): drop_caches: 3
-[542387.032856] tee (3303036): drop_caches: 3
-[542392.713124] tee (3304577): drop_caches: 3
-[542398.357969] tee (3305931): drop_caches: 3
-[542404.259256] tee (3307298): drop_caches: 3
-[542410.067224] tee (3308394): drop_caches: 3
-[542415.951997] tee (3309694): drop_caches: 3
-[542421.748162] tee (3310954): drop_caches: 3
-[542427.573773] tee (3312314): drop_caches: 3
-[542433.403220] tee (3313722): drop_caches: 3
-[542439.269119] tee (3314982): drop_caches: 3
-[542445.057042] tee (3316262): drop_caches: 3
-[542450.853793] tee (3317487): drop_caches: 3
-[542456.624135] tee (3319044): drop_caches: 3
-[542462.511112] tee (3320663): drop_caches: 3
-[542468.311918] tee (3322007): drop_caches: 3
-[542473.874183] tee (3323157): drop_caches: 3
-[542479.656366] tee (3324436): drop_caches: 3
-[542485.336099] tee (3325759): drop_caches: 3
-[542489.174629] iCAT_FILEBENCH_MEASURE_END run=20260918-022147-3256370
-[542490.249622] EXT4-fs (nvme0n1): unmounting filesystem 5c72a7ae-5532-41de-87c7-79c9b5f85e1e.
-[542490.595241] pci_bus 0001:10: busn_res: [bus 10-ff] is released
-[542490.595365] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=8348753 gc_pages=3940578 gc_count=192018 WAF=1.471 warmup_gc=100-per-part
-[542490.666821] NVMeVirt: Virtual NVMe device closed
+[1351911.788709] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[1351911.788716] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[1351911.799554] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[1351911.811029] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1351911.821780] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1351911.821794] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1351911.821797] NVMeVirt: Fixed CAT init ns=0 part=0 arm=50 k=10 scale_pct=50 age_ratio=16
+[1351911.822742] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[1351911.822778] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1351911.822780] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[1351911.834163] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1351911.844562] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1351911.844595] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1351911.844597] NVMeVirt: Fixed CAT init ns=0 part=1 arm=50 k=10 scale_pct=50 age_ratio=16
+[1351911.845656] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1351911.845660] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[1351911.856746] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1351911.868298] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1351911.868314] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1351911.868316] NVMeVirt: Fixed CAT init ns=0 part=2 arm=50 k=10 scale_pct=50 age_ratio=16
+[1351911.869372] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1351911.869376] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[1351911.880087] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1351911.890779] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1351911.890794] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1351911.890796] NVMeVirt: Fixed CAT init ns=0 part=3 arm=50 k=10 scale_pct=50 age_ratio=16
+[1351911.891761] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1351911.891763] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[1351911.891770] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[1351911.891771] NVMeVirt: ns 0/1: size 7655 MiB
+[1351911.891823] PCI host bridge to bus 0001:10
+[1351911.891825] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[1351911.891828] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[1351911.891830] pci_bus 0001:10: root bus resource [bus 00-ff]
+[1351911.891837] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[1351911.891842] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[1351911.891844] pci 0001:10:00.0: enabling Extended Tags
+[1351911.891967] NVMeVirt: Virtual PCI bus created (node 0)
+[1351911.892301] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[1351911.892420] NVMeVirt: Virtual NVMe device created
+[1351911.892609] nvme nvme0: pci function 0001:10:00.0
+[1351911.892622] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[1351911.897216] nvme nvme0: 8/0/0 default/read/poll queues
+[1351912.983471] EXT4-fs (nvme0n1): mounted filesystem 8095280e-dc33-4120-b681-07c3e383efaa r/w with ordered data mode. Quota mode: none.
+[1351917.412013] iCAT_FILEBENCH_MEASURE_START run=20260927-111708-1075824
+[1351918.983576] tee (1077601): drop_caches: 3
+[1351926.955285] tee (1077695): drop_caches: 3
+[1351933.501586] tee (1077699): drop_caches: 3
+[1351940.397701] tee (1077721): drop_caches: 3
+[1351947.029288] tee (1077875): drop_caches: 3
+[1351953.641556] tee (1078300): drop_caches: 3
+[1351960.163603] tee (1079273): drop_caches: 3
+[1351966.894698] tee (1080418): drop_caches: 3
+[1351974.048504] tee (1081909): drop_caches: 3
+[1351980.337584] tee (1083808): drop_caches: 3
+[1351986.954652] tee (1085331): drop_caches: 3
+[1351993.700772] tee (1086968): drop_caches: 3
+[1352000.169026] tee (1088381): drop_caches: 3
+[1352007.080697] tee (1090017): drop_caches: 3
+[1352014.043092] tee (1091882): drop_caches: 3
+[1352020.469101] tee (1093639): drop_caches: 3
+[1352026.115989] tee (1095199): drop_caches: 3
+[1352031.790875] tee (1096563): drop_caches: 3
+[1352037.537368] tee (1097963): drop_caches: 3
+[1352043.138798] tee (1099492): drop_caches: 3
+[1352048.864069] tee (1100878): drop_caches: 3
+[1352054.463239] tee (1102451): drop_caches: 3
+[1352060.221844] tee (1103819): drop_caches: 3
+[1352066.176588] tee (1105230): drop_caches: 3
+[1352071.790481] tee (1106669): drop_caches: 3
+[1352077.431868] tee (1107977): drop_caches: 3
+[1352083.017223] tee (1109665): drop_caches: 3
+[1352088.369978] tee (1111078): drop_caches: 3
+[1352096.211657] tee (1113033): drop_caches: 3
+[1352103.802645] tee (1114881): drop_caches: 3
+[1352110.438838] tee (1116765): drop_caches: 3
+[1352116.858717] tee (1118448): drop_caches: 3
+[1352122.501894] tee (1120063): drop_caches: 3
+[1352128.523337] tee (1121524): drop_caches: 3
+[1352134.192409] tee (1123075): drop_caches: 3
+[1352139.988190] tee (1124526): drop_caches: 3
+[1352145.727053] tee (1125860): drop_caches: 3
+[1352151.390750] tee (1127231): drop_caches: 3
+[1352156.929271] tee (1128659): drop_caches: 3
+[1352162.514395] tee (1129934): drop_caches: 3
+[1352168.521164] tee (1131308): drop_caches: 3
+[1352174.167580] tee (1132835): drop_caches: 3
+[1352179.884303] tee (1134209): drop_caches: 3
+[1352185.623160] tee (1135591): drop_caches: 3
+[1352191.462175] tee (1137077): drop_caches: 3
+[1352197.370112] tee (1138411): drop_caches: 3
+[1352203.094785] tee (1139806): drop_caches: 3
+[1352208.826046] tee (1141327): drop_caches: 3
+[1352214.721064] tee (1142831): drop_caches: 3
+[1352220.028473] tee (1143665): drop_caches: 3
+[1352220.970373] iCAT_FILEBENCH_MEASURE_END run=20260927-111708-1075824
+[1352224.864523] EXT4-fs (nvme0n1): unmounting filesystem 8095280e-dc33-4120-b681-07c3e383efaa.
+[1352225.216281] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[1352225.216332] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=7133836 gc_pages=2913475 gc_count=156984 WAF=1.408 warmup_gc=100-per-part
+[1352225.295542] NVMeVirt: Virtual NVMe device closed
