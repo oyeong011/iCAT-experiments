@@ -14,6 +14,12 @@ for rep in 1 2 3; do for a in arm46 arm47 arm49 arm50; do f=result/filebench/olt
   FILEBENCH_RUNTIME=300 bash script/gh-filebench.sh $a oltp > $f 2>&1 || echo "FAIL oltp $a rep$rep"; done; done; push "oltp recheck"
 # 2. new mix seed 2: v4 and robust CAT
 for p in onlinev4 fixed50; do run mixR-$p-rep2-x3 env MULT=3 bash script/mix-20260911.sh mixR $p 2; done; push "mixR rep2"
+# 2b. slow sweep, key 15 arms only (scale axis at k4/r16, k7/r7, k10/r16): does the optimum move to large scale?
+D=result/sweep-slow16-20260921; mkdir -p $D
+for a in 17 20 23 26 29 31 34 37 40 43 47 50 53 56 59; do t=arm$a
+  [[ -e $D/slow16-$t.console.txt ]] || GH_TEST_JOB=gh-test4-slow16.fio bash script/gh-fio.sh $t > $D/slow16-$t.console.txt 2>&1 || echo "FAIL slow16 $t"
+done; python3 analysis/sweep-rank.py slow16 > $D/rank-slow16.txt 2>&1; push "slow16 key 15 arms"
+echo SLOWKEYDONE $(date -Is)
 # 3. v4 on all 14 mixes (x1, seed 1) — v1/fixed/greedy already have 3 seeds
 for lb in $MIXES; do run $lb-onlinev4-rep1 bash script/mix-20260911.sh $lb onlinev4 1; done; push "v4 x 14 mixes"
 # 4. v4 on the x3 mixes that already have fixed47/fixed50/v1/v2 at x3
