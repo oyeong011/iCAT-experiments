@@ -8334,3 +8334,36 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
 - Command: `bash script/mix-20260911.sh mixB onlinev4`; evidence `result/mix-20260911/mixB-onlinev4/`.
 - 20:10 이후 남은 3개 완료: arm56(k10,s200,r16) 1.577로 1등(20번 1.579와 0.1% 차), arm53 1.581, arm59 1.593. 1등 scale은 200%이지만 arm47은 1등 대비 +0.7%(<3%)라 판정은 여전히 기각. 상위 12개가 1% 안(평평).
+
+- Finished 2026-09-27T21:44:27+09:00; mixB onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixB-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=131370680320 host_pages=32072920 gc_pages=64648879 WAF=3.015684
+- phaseA(sqlite-a) host_pages=8072262 gc_pages=3475120 WAF=1.430501
+- phaseB(test4) host_pages=24000658 gc_pages=61173759 WAF=3.548837
+- phaseA-load host_pages=1400399 gc_pages=571416 WAF=1.408038
+- phaseA-run host_pages=6671863 gc_pages=2903704 WAF=1.435216
+- ycsb-load [OVERALL], Throughput(ops/sec), 22047.475564047916
+- ycsb-run [OVERALL], Throughput(ops/sec), 8890.963447026528
+
+### mix-20260911 mixC onlinev4 — started 2026-09-27T21:44:28+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixC onlinev4`; evidence `result/mix-20260911/mixC-onlinev4/`.
+
+- Finished 2026-09-27T22:05:53+09:00; mixC onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixC-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=122884419584 host_pages=30001079 gc_pages=27166138 WAF=1.905505
+- phaseA(test3) host_pages=6000421 gc_pages=5080978 WAF=1.846770
+- phaseB(test4) host_pages=24000658 gc_pages=22085160 WAF=1.920190
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixD onlinev4 — started 2026-09-27T22:05:53+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixD onlinev4`; evidence `result/mix-20260911/mixD-onlinev4/`.
+
+## 2026-09-27 21:45 — 실수 정정: 믹스 14종을 1배 길이로 v4에 돌린 것 (queue22로 교체)
+
+- 문제(사용자 지적): 믹스 14종은 v1용 설계로 1배 길이가 10~30분(mixA 16분). v4의 첫 순회(약 15분)보다 짧거나 비슷해 v4를 평가할 수 없다. 큐에 넣기 전에 확인했어야 했음.
+- 조치: 1배 길이 v4 실행 중단(진행 중이던 mixB는 끝까지 돌게 둠; mixA 1배 결과 1.899는 "짧은 워크로드" 참고값으로 보관). queue22: 13종을 **3배 길이**(`MULT=3`, 파일벤치 구간 `VM_RUN=900`)로 v4 → 견고 CAT(fixed50) → 최적 CAT(fixed47) 순서. 서서히 빨라지는 믹스(mixM)는 단계 길이 120초 고정이라 제외.
+- 비교 기준: 같은 3배 길이의 fixed50·fixed47. 판정: 13종 중 v4가 fixed50과 같거나(±1%) 좋은 믹스 수, 최적 대비 손해.
+- 취소: v3 × 믹스 14종, 아주 느린 sweep 나머지 45개(핵심 15개로 판정 완료).
