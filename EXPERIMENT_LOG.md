@@ -8367,3 +8367,24 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 조치: 1배 길이 v4 실행 중단(진행 중이던 mixB는 끝까지 돌게 둠; mixA 1배 결과 1.899는 "짧은 워크로드" 참고값으로 보관). queue22: 13종을 **3배 길이**(`MULT=3`, 파일벤치 구간 `VM_RUN=900`)로 v4 → 견고 CAT(fixed50) → 최적 CAT(fixed47) 순서. 서서히 빨라지는 믹스(mixM)는 단계 길이 120초 고정이라 제외.
 - 비교 기준: 같은 3배 길이의 fixed50·fixed47. 판정: 13종 중 v4가 fixed50과 같거나(±1%) 좋은 믹스 수, 최적 대비 손해.
 - 취소: v3 × 믹스 14종, 아주 느린 sweep 나머지 45개(핵심 15개로 판정 완료).
+
+- Finished 2026-09-27T22:27:17+09:00; mixD onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixD-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=122926342144 host_pages=30011314 gc_pages=28586410 WAF=1.952521
+- phaseA(test4) host_pages=24010893 gc_pages=23159577 WAF=1.964545
+- phaseB(test3) host_pages=6000421 gc_pages=5426833 WAF=1.904409
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixA onlinev4 — started 2026-09-27T22:27:32+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 12000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixA onlinev4`; evidence `result/mix-20260911/mixA-onlinev4/`.
+
+- Finished 2026-09-27T23:15:34+09:00; mixA onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-onlinev4-rep1-x3`; cleanup attempted.
+- total host_bytes=383550509056 host_pages=93640261 gc_pages=75819162 WAF=1.809686
+- phaseA(test4) host_pages=72001981 gc_pages=64984349 WAF=1.902536
+- phaseB(sqlite-a) host_pages=21638280 gc_pages=10834813 WAF=1.500724
+- phaseB-load host_pages=1398349 gc_pages=672654 WAF=1.481034
+- phaseB-run host_pages=20239931 gc_pages=10162159 WAF=1.502085
+- ycsb-load [OVERALL], Throughput(ops/sec), 23776.500891618783
+- ycsb-run [OVERALL], Throughput(ops/sec), 12816.952555913955
