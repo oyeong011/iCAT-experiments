@@ -8314,3 +8314,23 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 상위 9개(20, 37, 34, 50, 40, 17, 47, 43, 31)가 1.579~1.593 안에 모두 있음(차이 0.9%). 1등 arm20(k4,s50,r16) 1.579, arm47 1.589(+0.6%), 기본 arm37 1.581, Greedy 1.695(+7%). k=2와 k4 큰 scale만 나쁨.
 - **사전 등록 판정: 기각.** 1등 scale이 200% 이상으로 옮겨 가지 않았고 arm47이 1등 대비 3% 이상 나쁘지 않음. 속도를 1/16로 늦추면 오히려 괜찮은 조합들 사이 차이가 사라진다(평평해짐).
 - 결과: 빠른 3영역 ↔ 아주 느린 3영역은 "구간마다 1등이 다른 짝"이 되지 않는다.
+
+### mix-20260911 mixA onlinev4 — started 2026-09-27T21:07:18+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixA onlinev4`; evidence `result/mix-20260911/mixA-onlinev4/`.
+
+- Finished 2026-09-27T21:24:54+09:00; mixA onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixA-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=131630964736 host_pages=32136466 gc_pages=28905675 WAF=1.899467
+- phaseA(test4) host_pages=24000661 gc_pages=23117863 WAF=1.963218
+- phaseB(sqlite-a) host_pages=8135805 gc_pages=5787812 WAF=1.711400
+- phaseB-load host_pages=1398347 gc_pages=1036173 WAF=1.740998
+- phaseB-run host_pages=6737458 gc_pages=4751639 WAF=1.705257
+- ycsb-load [OVERALL], Throughput(ops/sec), 22492.970946579193
+- ycsb-run [OVERALL], Throughput(ops/sec), 12175.299968952984
+
+### mix-20260911 mixB onlinev4 — started 2026-09-27T21:24:54+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixB onlinev4`; evidence `result/mix-20260911/mixB-onlinev4/`.
+- 20:10 이후 남은 3개 완료: arm56(k10,s200,r16) 1.577로 1등(20번 1.579와 0.1% 차), arm53 1.581, arm59 1.593. 1등 scale은 200%이지만 arm47은 1등 대비 +0.7%(<3%)라 판정은 여전히 기각. 상위 12개가 1% 안(평평).
