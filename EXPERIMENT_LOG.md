@@ -8264,3 +8264,29 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 - arm46(r7) 1.399 / 1.389, arm47(r16) 1.461 / 1.417, arm49(r7) 1.456 / 1.477, arm50(r16) 1.411 / 1.408.
 - sweep 1회값(46 1.332, 47 1.518, 차이 14%)은 재현되지 않음: 46 대 47 ≈3%, 49 대 50은 오히려 ratio 16이 ≈4% 좋음. 같은 arm 반복 폭 최대 3%(arm47). → "거래 DB 흉내에서 ratio 7이 14% 좋다"는 1회 측정 잡음이 크게 섞인 값. leave-one-out 기준선의 최대 14%는 과대. 3회차 후 확정.
+
+### mix-20260911 mixR onlinev4 — started 2026-09-27T11:43:23+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 42000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixR onlinev4`; evidence `result/mix-20260911/mixR-onlinev4/`.
+
+- Finished 2026-09-27T14:06:32+09:00; mixR onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixR-onlinev4-rep2-x3`; cleanup attempted.
+- total host_bytes=885861896192 host_pages=216274877 gc_pages=238047093 WAF=2.100669
+- phaseA(test4) host_pages=72001981 gc_pages=64939710 WAF=1.901916
+- phaseB(sqlite-a) host_pages=72270904 gc_pages=36318675 WAF=1.502535
+- phaseC(test4) host_pages=72001992 gc_pages=136788708 WAF=2.899791
+- phaseB-load host_pages=1398349 gc_pages=616133 WAF=1.440615
+- phaseB-run host_pages=70872555 gc_pages=35702542 WAF=1.503757
+- ycsb-load [OVERALL], Throughput(ops/sec), 21496.130696474636
+- ycsb-run [OVERALL], Throughput(ops/sec), 8652.54708324698
+
+### mix-20260911 mixR fixed50 — started 2026-09-27T14:06:32+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 42000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixR fixed50`; evidence `result/mix-20260911/mixR-fixed50/`.
+
+## 2026-09-27 — 사용자 지적: v3·v4를 믹스에서 평가해야 함 (queue21로 교체)
+
+- 지적: v1은 믹스 14종 × 3회로 평가했는데 v3·v4는 대부분 단일 워크로드로만 평가했다.
+- 변경: queue20의 남은 순서를 queue21로 교체. ① 거래 DB 흉내 재확인 마무리 ② mixR 2회차(v4, 견고 CAT) ③ **v4 × 믹스 14종**(×1, seed 1; 기존 v1·고정·Greedy 3회 결과와 비교) ④ v4 × 3배 길이 mixA·mixC(기존 fixed47·fixed50·v1·v2 ×3과 비교) ⑤ 아주 느린 sweep 나머지 ⑥ **v3 × 믹스 14종** ⑦ 자동 정리. v3 10시간은 취소.
+- 판정: 믹스별로 v4가 v1·기본 CAT·견고 CAT보다 좋은지, 최적 고정 대비 손해. 14종 중 몇 개에서 견고 CAT을 이기는지 센다.
