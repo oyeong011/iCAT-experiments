@@ -8712,3 +8712,15 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=40777640 gc_pages=20034622 WAF=1.491314
 - ycsb-load [OVERALL], Throughput(ops/sec), 21290.940704730136
 - ycsb-run [OVERALL], Throughput(ops/sec), 12299.41070448462
+
+### mix-20260911 mixC onlinev4 — started 2026-09-28T17:37:20+09:00
+
+- Phase A fio test4 fixed payload (353894400000/176947200000/58982400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixC onlinev4`; evidence `result/mix-20260911/mixC-onlinev4/`.
+
+## 사전 등록 2026-09-28 — v4 앱 믹스 반복 (queue24, queue23 뒤)
+
+- 이유: 3배 길이에서 v4가 견고 CAT을 이긴 4종(거래 DB 흉내→메일 서버 −5.1%, 빠른 3영역→메일 서버 −4.2%, SQLite→거래 DB 흉내 −1.6%, SQLite 수정 많음→읽기 위주 −0.9%)은 모두 1회. v4는 실행마다 약 2% 흔들림(mixR 2.057/2.101).
+- 조건: 같은 4종을 v4 ×3 길이 seed 2로 1회씩. 견고 CAT은 반복 안 함(고정 조합은 반복 간 차이 0.1% 이내: mixR 2.074/2.073).
+- 판정: 2회 평균에서도 견고 CAT보다 좋으면 "앱 믹스에서 v4 > 견고 CAT"로 기술. 앞 두 종(−5.1%, −4.2%)은 흔들림보다 커서 유지될 것으로, 뒤 두 종(−1.6%, −0.9%)은 "비슷"으로 바뀔 수 있음.
+- 끝나면 `RESULTS_ALL.md` 자동 재생성 후 push.
