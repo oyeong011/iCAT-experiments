@@ -8732,3 +8732,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 2. **v3 하나씩 빼 보기** (빠른 3영역 3시간, v3 1.848과 비교): `online-v3k2`(v3에 k=2 15개를 되돌림, 60개; SHA256 06874884…), `online-v3probe`(v3에 v1식 정착 후 탐색을 되돌림; f54c1997…). 판정: 1.848보다 1% 이상 나빠진 쪽이 v3 개선의 주요인.
 3. **v1 10시간** (빠른 3영역, v4 10시간 1.807과 비교). 판정: 추정 한계 ≈1.84~1.86과 맞는지.
 끝나면 `RESULTS_ALL.md` 재생성 후 push.
+
+- Finished 2026-09-28T19:38:46+09:00; mixC onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixC-onlinev4-rep1-x6`; cleanup attempted.
+- total host_bytes=737306484736 host_pages=180006466 gc_pages=160290271 WAF=1.890470
+- phaseA(test3) host_pages=36002493 gc_pages=29732153 WAF=1.825836
+- phaseB(test4) host_pages=144003973 gc_pages=130558118 WAF=1.906629
+- ycsb-load 
+- ycsb-run 
