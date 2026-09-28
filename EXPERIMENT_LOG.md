@@ -8613,3 +8613,14 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseC-run host_pages=20265695 gc_pages=8813633 WAF=1.434904
 - ycsb-load [OVERALL], Throughput(ops/sec), 25146.68901927913
 - ycsb-run [OVERALL], Throughput(ops/sec), 12743.696649044967
+
+### mix-20260911 mixF fixed50 — started 2026-09-28T12:39:44+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixF fixed50`; evidence `result/mix-20260911/mixF-fixed50/`.
+
+## 2026-09-28 12:50 — v4 3배 길이 결과와 6배 길이 추가 (queue23)
+
+- v4 ×3 대 견고 CAT ×3: mixA 1.810/1.723(+5.0%), mixC 1.888/1.804(+4.7%), mixB 2.887/2.645(+9.1%), mixD 1.874/1.802(+4.0%), mixJ 1.377/1.390(−0.9%), mixK 1.859/1.800(+3.3%), mixH 1.807/1.731(+4.4%). 3배 길이(30~90분)에서도 첫 순회 비용이 커서 견고 CAT에 대부분 진다.
+- v4 ×3 대 기본 CAT(×1 값): 13종 중 10종에서 같거나 좋음(최대 mixB −10%, mixJ −9%), mixL(60초 반복 전환) +6%, mixQ +1% 나쁨. 파일벤치 믹스(F·O·P)는 ×3에서 VM_RUN=900으로 작업이 달라져 ×1 기본값과 비교 불가.
+- 사용자 판단: 실험 시간을 더 늘려야 한다. → 견고 CAT ×3 나머지 6종 후, v4 ×6을 mixA·mixC·mixD·mixK에 실행(이 4종은 fixed47·fixed50·v1·v2·v3 ×6 결과가 이미 있음). fixed47 ×3 13종은 취소(×1 값 사용).
