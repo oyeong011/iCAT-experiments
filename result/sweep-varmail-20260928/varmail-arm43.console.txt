@@ -1,0 +1,44 @@
+[START] module=arm43
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[WORKLOAD] source=/home/oy/iCAT/workloads/filebench/varmail.f runtime=300s
+Filebench Version 1.5-alpha3
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+0.000: Allocated 173MB of shared memory
+0.187: Varmail Version 3.0 personality successfully loaded
+0.187: Populating and pre-allocating filesets
+0.251: bigfileset populated: 150000 files, avg. dir. width = 1000000, avg. dir. depth = 0.9, 0 leafdirs, 2346.993MB total size
+0.251: Removing bigfileset tree (if exists)
+0.300: Pre-allocating directories in bigfileset tree
+0.300: Pre-allocating files in bigfileset tree
+4.771: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+4.771: Population and pre-allocation of filesets completed
+4.771: Starting 1 filereader instances
+5.774: Running...
+305.794: Run took 300 seconds...
+305.795: Per-Operation Breakdown
+closefile4           863357ops     2878ops/s   0.0mb/s      0.0ms/op [0.00ms -  3.25ms]
+readfile4            863358ops     2878ops/s  44.4mb/s      1.8ms/op [0.00ms - 25.46ms]
+openfile4            863366ops     2878ops/s   0.0mb/s      0.2ms/op [0.00ms - 19.30ms]
+closefile3           863366ops     2878ops/s   0.0mb/s      0.0ms/op [0.00ms -  2.95ms]
+fsyncfile3           863366ops     2878ops/s   0.0mb/s      0.4ms/op [0.00ms - 18.84ms]
+appendfilerand3      863366ops     2878ops/s  22.5mb/s      0.1ms/op [0.00ms - 22.05ms]
+readfile3            863367ops     2878ops/s  44.4mb/s      1.8ms/op [0.00ms - 27.10ms]
+openfile3            863373ops     2878ops/s   0.0mb/s      0.2ms/op [0.00ms - 10.90ms]
+closefile2           863373ops     2878ops/s   0.0mb/s      0.0ms/op [0.00ms -  3.63ms]
+fsyncfile2           863373ops     2878ops/s   0.0mb/s      0.5ms/op [0.03ms - 15.58ms]
+appendfilerand2      863373ops     2878ops/s  22.5mb/s      0.0ms/op [0.00ms -  5.61ms]
+createfile2          863373ops     2878ops/s   0.0mb/s      0.3ms/op [0.01ms - 105.27ms]
+deletefile1          863371ops     2878ops/s   0.0mb/s      0.3ms/op [0.02ms - 22.22ms]
+305.795: IO Summary: 11223782 ops 37410.105 ops/s 5755/5755 rd/wr 133.7mb/s   1.4ms/op
+305.795: Shutting down processes
+[DURABLE] sync + NVMe flush
+[FLUSH] phase=run-durable-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/varmail/summary.txt
+[RESULT] app=/home/oy/iCAT/result/filebench/varmail/arm43.txt
+[RESULT] dmesg=/home/oy/iCAT/result/filebench/varmail/dmesg-arm43.log
+[RESULT] summary=/home/oy/iCAT/result/filebench/varmail/summary.txt
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/varmail/summary.txt
+[WAF] module=arm43 WAF=4.850 host_pages=19486190 gc_copied=N/A -> /home/oy/iCAT/result/filebench/varmail/summary.txt
