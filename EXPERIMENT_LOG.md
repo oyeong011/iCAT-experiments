@@ -8624,3 +8624,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - v4 ×3 대 견고 CAT ×3: mixA 1.810/1.723(+5.0%), mixC 1.888/1.804(+4.7%), mixB 2.887/2.645(+9.1%), mixD 1.874/1.802(+4.0%), mixJ 1.377/1.390(−0.9%), mixK 1.859/1.800(+3.3%), mixH 1.807/1.731(+4.4%). 3배 길이(30~90분)에서도 첫 순회 비용이 커서 견고 CAT에 대부분 진다.
 - v4 ×3 대 기본 CAT(×1 값): 13종 중 10종에서 같거나 좋음(최대 mixB −10%, mixJ −9%), mixL(60초 반복 전환) +6%, mixQ +1% 나쁨. 파일벤치 믹스(F·O·P)는 ×3에서 VM_RUN=900으로 작업이 달라져 ×1 기본값과 비교 불가.
 - 사용자 판단: 실험 시간을 더 늘려야 한다. → 견고 CAT ×3 나머지 6종 후, v4 ×6을 mixA·mixC·mixD·mixK에 실행(이 4종은 fixed47·fixed50·v1·v2·v3 ×6 결과가 이미 있음). fixed47 ×3 13종은 취소(×1 값 사용).
+
+- Finished 2026-09-28T13:26:13+09:00; mixF fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixF-fixed50-rep1-x3`; cleanup attempted.
+- total host_bytes=759922397184 host_pages=185527929 gc_pages=269776840 WAF=2.454104
+- phaseA(test4) host_pages=72002002 gc_pages=58597396 WAF=1.813830
+- phaseB(varmail) host_pages=113525927 gc_pages=211179444 WAF=2.860187
+- ycsb-load 
+- ycsb-run 
