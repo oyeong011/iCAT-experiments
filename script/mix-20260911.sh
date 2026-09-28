@@ -13,6 +13,8 @@ case "$policy" in
     onlinev2) module="$root/buildoutput/nvmev-online-v2.ko";;   # v1 + 6x reward window
     onlinev3) module="$root/buildoutput/nvmev-online-v3.ko";;   # v2 src + window x2, k=2 arms skipped (45), 1 visit, no probe after settle, drift 25%
     onlinev4) module="$root/buildoutput/nvmev-online-v4.ko";;   # v3 + online elimination (15%) + neighbour probe every 8 + reset restores survivors+neighbours
+    onlinev3k2) module="$root/buildoutput/nvmev-online-v3k2.ko";;   # ablation: v3 with k=2 arms back (60 arms)
+    onlinev3probe) module="$root/buildoutput/nvmev-online-v3probe.ko";;   # ablation: v3 with v1 post-settle probing back
     fixed10) module="$root/buildoutput/nvmev-fixed10.ko";;
     arm[0-5][0-9]) module="$root/buildoutput/nvmev-$policy.ko";;   # any of the 60 sweep modules
     fixed37) module="$root/buildoutput/nvmev-fixed37.ko";;
