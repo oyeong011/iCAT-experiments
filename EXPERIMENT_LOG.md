@@ -8659,3 +8659,15 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=0 gc_pages=0 WAF=N/A
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixO fixed50 — started 2026-09-28T14:32:37+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixO fixed50`; evidence `result/mix-20260911/mixO-fixed50/`.
+
+- Finished 2026-09-28T15:04:31+09:00; mixO fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-fixed50-rep1-x3`; cleanup attempted.
+- total host_bytes=710508855296 host_pages=173464076 gc_pages=167082081 WAF=1.963209
+- phaseA(oltp) host_pages=25308340 gc_pages=6502005 WAF=1.256912
+- phaseB(varmail) host_pages=148155736 gc_pages=160580076 WAF=2.083860
+- ycsb-load 
+- ycsb-run 
