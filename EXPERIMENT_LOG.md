@@ -8822,3 +8822,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Command: `bash script/mix-20260911.sh t4 onlinev3k2`; evidence `result/mix-20260911/t4-onlinev3k2/`.
 
 - Finished 2026-09-29T03:14:48+09:00; t4 onlinev3k2 exit=127; evidence `/home/oy/iCAT/result/mix-20260911/t4-onlinev3k2-rep1-x18`; cleanup attempted.
+
+### mix-20260911 t4 onlinev3probe — started 2026-09-29T03:14:51+09:00
+
+- Phase A fio test4 fixed payload (1061683200000/530841600000/176947200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v3probe.ko`.
+- Command: `bash script/mix-20260911.sh t4 onlinev3probe`; evidence `result/mix-20260911/t4-onlinev3probe/`.
+
+- Finished 2026-09-29T03:14:51+09:00; t4 onlinev3probe exit=1; evidence `/home/oy/iCAT/result/mix-20260911/t4-onlinev3probe-rep1-x18`; cleanup attempted.
