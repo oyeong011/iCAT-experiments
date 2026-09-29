@@ -8891,3 +8891,64 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=0 gc_pages=0 WAF=N/A
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixO fixed47 — started 2026-09-29T17:18:36+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh mixO fixed47`; evidence `result/mix-20260911/mixO-fixed47/`.
+
+- Finished 2026-09-29T17:50:27+09:00; mixO fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-fixed47-rep1-x3`; cleanup attempted.
+- total host_bytes=709052059648 host_pages=173108413 gc_pages=157599202 WAF=1.910408
+- phaseA(oltp) host_pages=24260616 gc_pages=6637241 WAF=1.273581
+- phaseB(varmail) host_pages=148847349 gc_pages=150961691 WAF=2.014205
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixO arm46 — started 2026-09-29T17:50:33+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm46.ko`.
+- Command: `bash script/mix-20260911.sh mixO arm46`; evidence `result/mix-20260911/mixO-arm46/`.
+
+- Finished 2026-09-29T18:22:10+09:00; mixO arm46 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-arm46-rep1-x3`; cleanup attempted.
+- total host_bytes=715267633152 host_pages=174625887 gc_pages=203715952 WAF=2.166585
+- phaseA(oltp) host_pages=25369968 gc_pages=7927207 WAF=1.312464
+- phaseB(varmail) host_pages=149255919 gc_pages=195788745 WAF=2.311765
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixO arm31 — started 2026-09-29T18:22:16+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm31.ko`.
+- Command: `bash script/mix-20260911.sh mixO arm31`; evidence `result/mix-20260911/mixO-arm31/`.
+
+- Finished 2026-09-29T18:53:54+09:00; mixO arm31 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-arm31-rep1-x3`; cleanup attempted.
+- total host_bytes=722307543040 host_pages=176344615 gc_pages=207628189 WAF=2.177400
+- phaseA(oltp) host_pages=26024591 gc_pages=8071360 WAF=1.310144
+- phaseB(varmail) host_pages=150320024 gc_pages=199556829 WAF=2.327547
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixO arm17 — started 2026-09-29T18:54:01+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm17.ko`.
+- Command: `bash script/mix-20260911.sh mixO arm17`; evidence `result/mix-20260911/mixO-arm17/`.
+
+- Finished 2026-09-29T19:25:52+09:00; mixO arm17 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-arm17-rep1-x3`; cleanup attempted.
+- total host_bytes=709806206976 host_pages=173292531 gc_pages=161976252 WAF=1.934698
+- phaseA(oltp) host_pages=25540535 gc_pages=6641473 WAF=1.260037
+- phaseB(varmail) host_pages=147751996 gc_pages=155334779 WAF=2.051321
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixO fixed37 — started 2026-09-29T19:25:59+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixO fixed37`; evidence `result/mix-20260911/mixO-fixed37/`.
+
+### 결과 2026-09-29 — v3 하나씩 빼 보기 (빠른 3영역 3시간, 명시 계측)
+
+- v3 1.848 / v3 + k=2 되돌림(60개) **1.905 (+3.1%)** / v3 + 정착 후 탐색 되돌림 **1.875 (+1.5%)**. (참고 v1 1.884, v2 1.878~1.902)
+- 판정: 둘 다 1% 이상 나빠짐 → 두 변경 모두 v3 개선에 기여, k=2 제외의 기여가 더 큼. 1회씩이라 순서는 잠정.
+
+### 중간 결과 2026-09-29 — 거래 DB 흉내 → 메일 서버(mixO) ×3, 고정 조합
+- 47번 1.910, 17번 1.935, 견고 50번 1.963, 46번 2.167, 31번 2.177 (기본 37번 진행 중). v4 2회 1.864 / 1.839 (평균 1.851) → **지금까지 잰 고정 조합 5개 모두보다 좋음**(최고 47번 대비 −3.1%).
