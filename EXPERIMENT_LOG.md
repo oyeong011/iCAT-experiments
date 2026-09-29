@@ -9005,3 +9005,22 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 ### 2026-09-29 22:40 — 중간 결과와 마지막 추가 (queue29)
 - 빠른 3영역 → 메일 서버(mixF) ×3: 47번 2.042, 46번 2.367, 31번 2.468 (v4 2회 평균 2.352, 견고 2.454). 47번은 빠른 3영역과 메일 서버 모두에서 1등이라 이 믹스에서 v4보다 15% 좋다. v4의 "견고 CAT 대비 승리"는 견고 CAT이 메일 서버에 약해서이며, 최적 조합 대비로는 짐.
 - queue29(queue28 뒤): 거래 DB 흉내 → 메일 서버 v4 3회차(seed 3). v4가 고정 6개 모두를 이긴 유일한 사례라 반복 확인. 판정: 3회 평균이 47번(1.910)보다 낮으면 유지.
+
+- Finished 2026-09-29T23:04:09+09:00; mixF arm17 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixF-arm17-rep1-x3`; cleanup attempted.
+- total host_bytes=769174917120 host_pages=187786845 gc_pages=282161517 WAF=2.502563
+- phaseA(test4) host_pages=72001981 gc_pages=62785662 WAF=1.871999
+- phaseB(varmail) host_pages=115784864 gc_pages=219375855 WAF=2.894685
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixF fixed37 — started 2026-09-29T23:04:12+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixF fixed37`; evidence `result/mix-20260911/mixF-fixed37/`.
+
+- Finished 2026-09-29T23:50:42+09:00; mixF fixed37 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixF-fixed37-rep1-x3`; cleanup attempted.
+- total host_bytes=655316107264 host_pages=159989284 gc_pages=300550069 WAF=2.878564
+- phaseA(test4) host_pages=72021429 gc_pages=70266431 WAF=1.975632
+- phaseB(varmail) host_pages=87967855 gc_pages=230283638 WAF=3.617816
+- ycsb-load 
+- ycsb-run 
