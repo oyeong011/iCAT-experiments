@@ -178,3 +178,14 @@ v4 < v3 < v1은 유지되지만, 견고 CAT이 잘 맞는 이 워크로드들에
 - Filebench 1.5-alpha3가 최신 커널에서 시작 즉시 종료되는 버그(fileset.c strlcpy)를 1줄 수정.
 - 우리 쪽 사고: v2 첫 빌드 결함(4개 실행 무효), 실행 스크립트가 빈 파일로 커밋된 사고(영향 없음, 복구), fio 라이브러리 캐시 손상(3개 실행 재실행). 모두 `EXPERIMENT_LOG.md`에 기록.
 - 철회·정정한 주장: `EXPERIMENTS_OVERVIEW.md` 6장.
+
+## 그림 목록 (`figs/`, `python3 analysis/figures.py`로 원본에서 생성, PNG·PDF)
+
+| 그림 | 파일 | 내용 | 측정 방식 |
+|---|---|---|---|
+| 1 | `fig1_sensitivity` | 빠른 3영역 쓰기, 고정 조합 60개의 WAF(정렬). 최적·견고·기본 표시, Greedy 기준선 | 원저자 방식 |
+| 2 | `fig2_learning_over_time` | 실행 시간에 따른 누적 WAF, v1·v2·v3(3시간)·v4(10시간), 최적·견고 기준선 | 명시 계측 |
+| 3 | `fig3_time_use` | 처음 3시간 동안 좋은/중간/나쁜 조합에 쓴 시간 비율 | 명시 계측 (조합 등급은 그림 1 값 기준) |
+| 4 | `fig4_mixes_v4_vs_robust` | 전환 워크로드 13종, v4 − 견고 CAT (%, 3배 길이; 이긴 4종은 v4 2회 평균) | 명시 계측 |
+| 5 | `fig5_three_phase_mix` | 빠른 3영역 → SQLite → 빠른 3영역, 구간별 WAF (견고·v4는 2회 평균) | 명시 계측 |
+| 6 | `fig6_ablation` | v3 요소를 하나씩 되돌렸을 때 (3시간) | 명시 계측 |
