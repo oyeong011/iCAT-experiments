@@ -8959,3 +8959,9 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(varmail) host_pages=135515855 gc_pages=187797468 WAF=2.385797
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixF fixed47 — started 2026-09-29T19:57:52+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh mixF fixed47`; evidence `result/mix-20260911/mixF-fixed47/`.
+- mixO 기본 37번 ×3: 2.226 → v4(1.851)가 고정 6개 중 최고(47번 1.910)보다 3.1%, 기본보다 16.8% 좋음. 7개 중 1등.
