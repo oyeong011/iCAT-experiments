@@ -8977,3 +8977,31 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 - Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm46.ko`.
 - Command: `bash script/mix-20260911.sh mixF arm46`; evidence `result/mix-20260911/mixF-arm46/`.
+
+- Finished 2026-09-29T21:30:55+09:00; mixF arm46 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixF-arm46-rep1-x3`; cleanup attempted.
+- total host_bytes=719482863616 host_pages=175654996 gc_pages=240036803 WAF=2.366524
+- phaseA(test4) host_pages=72001981 gc_pages=56563773 WAF=1.785586
+- phaseB(varmail) host_pages=103653015 gc_pages=183473030 WAF=2.770069
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixF arm31 — started 2026-09-29T21:30:59+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm31.ko`.
+- Command: `bash script/mix-20260911.sh mixF arm31`; evidence `result/mix-20260911/mixF-arm31/`.
+
+- Finished 2026-09-29T22:17:31+09:00; mixF arm31 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixF-arm31-rep1-x3`; cleanup attempted.
+- total host_bytes=745438928896 host_pages=181991926 gc_pages=267217415 WAF=2.468293
+- phaseA(test4) host_pages=72001990 gc_pages=57445493 WAF=1.797832
+- phaseB(varmail) host_pages=109989936 gc_pages=209771922 WAF=2.907192
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixF arm17 — started 2026-09-29T22:17:38+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm17.ko`.
+- Command: `bash script/mix-20260911.sh mixF arm17`; evidence `result/mix-20260911/mixF-arm17/`.
+
+### 2026-09-29 22:40 — 중간 결과와 마지막 추가 (queue29)
+- 빠른 3영역 → 메일 서버(mixF) ×3: 47번 2.042, 46번 2.367, 31번 2.468 (v4 2회 평균 2.352, 견고 2.454). 47번은 빠른 3영역과 메일 서버 모두에서 1등이라 이 믹스에서 v4보다 15% 좋다. v4의 "견고 CAT 대비 승리"는 견고 CAT이 메일 서버에 약해서이며, 최적 조합 대비로는 짐.
+- queue29(queue28 뒤): 거래 DB 흉내 → 메일 서버 v4 3회차(seed 3). v4가 고정 6개 모두를 이긴 유일한 사례라 반복 확인. 판정: 3회 평균이 47번(1.910)보다 낮으면 유지.
