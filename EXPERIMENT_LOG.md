@@ -8836,3 +8836,21 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Command: `bash script/mix-20260911.sh t4 online`; evidence `result/mix-20260911/t4-online/`.
 
 - Finished 2026-09-29T03:14:53+09:00; t4 online exit=1; evidence `/home/oy/iCAT/result/mix-20260911/t4-online-rep1-x60`; cleanup attempted.
+
+### mix-20260911 t4 onlinev3k2 — started 2026-09-29T11:15:19+09:00
+
+- Phase A fio test4 fixed payload (1061683200000/530841600000/176947200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v3k2.ko`.
+- Command: `bash script/mix-20260911.sh t4 onlinev3k2`; evidence `result/mix-20260911/t4-onlinev3k2/`.
+
+## 2026-09-29 — 사고: fio 실행 불가 (03:14~11:20 장치 유휴)
+
+- 증상: queue25의 v3 빼 보기 2개와 v1 10시간이 시작 직후 실패. `fio: symbol lookup error: .../ceph/libceph-common.so.2: undefined symbol: _ZZN5boost9function2...`.
+- 조사: 패키지 변경 없음(apt 기록상 9/29 06:05 이전 변경 없음), 라이브러리 파일 날짜 2026-02 그대로, 해당 기호는 그 라이브러리 자체가 정의함. `drop_caches` 후 fio 정상 → **메모리에 캐시된 라이브러리 사본(page cache)이 손상**된 것으로 판단. 손상 시점은 01:50(queue24 마지막 fio 정상)~03:14 사이이며, 그 사이에는 메일 서버(filebench) 15조합만 돌았다.
+- 원인 미확정: NVMeVirt의 메모리 접근 오류 또는 메모리 하드웨어 문제 가능성. WAF는 FTL 카운터로 계산하므로 다른 페이지 손상이 WAF 값에 영향을 줄 경로는 없다고 판단하나, 검증하지 않았다. 향후 메모리 검사(memtest) 필요.
+- 조치: 실패 3건은 `*-fiobroken`으로 이름 변경해 보존. queue26에서 재실행하며 매 실행 전 page cache 비우기 + `fio --version` 확인.
+
+## 결과 2026-09-29 — v4 6배 길이, 앱 믹스 반복, 메일 서버 15조합
+
+- **v4 ×6 (약 2시간)** 대 견고 CAT ×6: 빠른 3영역→SQLite 1.783 / 1.724 (+3.4%), 느린→빠른 1.890 / 1.804 (+4.8%), 빠른→느린 1.852 / 1.803 (+2.7%), 뜨거운 구역 축소 1.830 / 1.800 (+1.7%). v1 ×6(1.848/1.940/1.919/1.916)·v3 ×6(–/–/1.894/1.874)보다 모두 좋고 기본 CAT(×1 1.905/1.892/1.943/1.956)보다 모두 좋음. fio 위주 믹스에서는 2시간에도 견고 CAT에 1.7~4.8% 짐.
+- **앱 믹스 v4 ×3 2회차**: 거래 DB 흉내→메일 서버 1.839(1회 1.864, 평균 1.851, 견고 1.963 대비 −5.7%), 빠른 3영역→메일 서버 2.354(2.350, 평균 2.352, −4.2%), SQLite→거래 DB 흉내 1.133(1.122, 평균 1.128, −1.1%), SQLite 수정 많음→읽기 위주 1.355(1.377, 평균 1.366, −1.7%). **4종 모두 2회 평균에서도 견고 CAT보다 좋음** (사전 판정: 앞 두 종은 확실, 뒤 두 종은 차이가 작음).
+- **메일 서버 핵심 15조합 + Greedy** (15만 파일, 300초): 1등 47번 3.455, 31번 3.933, 50번 4.008(+16%), 17번 4.139, 기본 37번 4.588, Greedy 4.769. 판정: 최적 CAT(47)은 여기서도 1등 → "47이 fio에만 유리" 가설은 기각. 견고 CAT(50)은 1등보다 16% 나쁨 → "견고 CAT은 fio 위주로 고른 것이라 앱에서는 견고하지 않다"는 지지.
