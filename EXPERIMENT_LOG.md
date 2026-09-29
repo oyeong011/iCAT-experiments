@@ -8952,3 +8952,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 ### 중간 결과 2026-09-29 — 거래 DB 흉내 → 메일 서버(mixO) ×3, 고정 조합
 - 47번 1.910, 17번 1.935, 견고 50번 1.963, 46번 2.167, 31번 2.177 (기본 37번 진행 중). v4 2회 1.864 / 1.839 (평균 1.851) → **지금까지 잰 고정 조합 5개 모두보다 좋음**(최고 47번 대비 −3.1%).
+
+- Finished 2026-09-29T19:57:38+09:00; mixO fixed37 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-fixed37-rep1-x3`; cleanup attempted.
+- total host_bytes=655135768576 host_pages=159945256 gc_pages=196137485 WAF=2.226279
+- phaseA(oltp) host_pages=24429401 gc_pages=8340017 WAF=1.341393
+- phaseB(varmail) host_pages=135515855 gc_pages=187797468 WAF=2.385797
+- ycsb-load 
+- ycsb-run 
