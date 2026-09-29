@@ -9150,3 +9150,199 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Command: `bash script/mix-20260911.sh mixP fixed37`; evidence `result/mix-20260911/mixP-fixed37/`.
 
 - Finished 2026-09-30T03:08:01+09:00; mixP fixed37 exit=1; evidence `/home/oy/iCAT/result/mix-20260911/mixP-fixed37-rep1-x3`; cleanup attempted.
+
+### mix-20260911 t4 arm31 — started 2026-09-30T03:10:23+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm31.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm31`; evidence `result/mix-20260911/t4-arm31/`.
+
+- Finished 2026-09-30T03:21:49+09:00; t4 arm31 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm31-rep1`; cleanup attempted.
+- total host_bytes=98306707456 host_pages=24000661 gc_pages=19116795 WAF=1.796511
+- phaseA(test4) host_pages=24000661 gc_pages=19116795 WAF=1.796511
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm46 — started 2026-09-30T03:21:52+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm46.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm46`; evidence `result/mix-20260911/t4-arm46/`.
+
+- Finished 2026-09-30T03:33:19+09:00; t4 arm46 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm46-rep1`; cleanup attempted.
+- total host_bytes=98310901760 host_pages=24001685 gc_pages=18833396 WAF=1.784670
+- phaseA(test4) host_pages=24001685 gc_pages=18833396 WAF=1.784670
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm32 — started 2026-09-30T03:33:22+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm32.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm32`; evidence `result/mix-20260911/t4-arm32/`.
+
+- Finished 2026-09-30T03:44:48+09:00; t4 arm32 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm32-rep1`; cleanup attempted.
+- total host_bytes=98306695168 host_pages=24000658 gc_pages=19092515 WAF=1.795500
+- phaseA(test4) host_pages=24000658 gc_pages=19092515 WAF=1.795500
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm34 — started 2026-09-30T03:44:52+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm34.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm34`; evidence `result/mix-20260911/t4-arm34/`.
+
+- Finished 2026-09-30T03:56:17+09:00; t4 arm34 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm34-rep1`; cleanup attempted.
+- total host_bytes=98306695168 host_pages=24000658 gc_pages=20476013 WAF=1.853144
+- phaseA(test4) host_pages=24000658 gc_pages=20476013 WAF=1.853144
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm16 — started 2026-09-30T03:56:21+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm16.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm16`; evidence `result/mix-20260911/t4-arm16/`.
+
+- Finished 2026-09-30T04:07:47+09:00; t4 arm16 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm16-rep1`; cleanup attempted.
+- total host_bytes=98306695168 host_pages=24000658 gc_pages=20001612 WAF=1.833378
+- phaseA(test4) host_pages=24000658 gc_pages=20001612 WAF=1.833378
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm45 — started 2026-09-30T04:07:51+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm45.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm45`; evidence `result/mix-20260911/t4-arm45/`.
+
+- Finished 2026-09-30T04:19:17+09:00; t4 arm45 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm45-rep1`; cleanup attempted.
+- total host_bytes=98407395328 host_pages=24025243 gc_pages=19540330 WAF=1.813325
+- phaseA(test4) host_pages=24025243 gc_pages=19540330 WAF=1.813325
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm49 — started 2026-09-30T04:19:21+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm49.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm49`; evidence `result/mix-20260911/t4-arm49/`.
+
+- Finished 2026-09-30T04:30:47+09:00; t4 arm49 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm49-rep1`; cleanup attempted.
+- total host_bytes=98407395328 host_pages=24025243 gc_pages=19695939 WAF=1.819802
+- phaseA(test4) host_pages=24025243 gc_pages=19695939 WAF=1.819802
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm30 — started 2026-09-30T04:30:52+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm30.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm30`; evidence `result/mix-20260911/t4-arm30/`.
+
+- Finished 2026-09-30T04:42:20+09:00; t4 arm30 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm30-rep1`; cleanup attempted.
+- total host_bytes=98306781184 host_pages=24000679 gc_pages=20074248 WAF=1.836403
+- phaseA(test4) host_pages=24000679 gc_pages=20074248 WAF=1.836403
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm35 — started 2026-09-30T04:42:24+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm35.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm35`; evidence `result/mix-20260911/t4-arm35/`.
+
+- Finished 2026-09-30T04:53:50+09:00; t4 arm35 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm35-rep1`; cleanup attempted.
+- total host_bytes=98386415616 host_pages=24020121 gc_pages=20251247 WAF=1.843095
+- phaseA(test4) host_pages=24020121 gc_pages=20251247 WAF=1.843095
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm17 — started 2026-09-30T04:53:53+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm17.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm17`; evidence `result/mix-20260911/t4-arm17/`.
+
+- Finished 2026-09-30T05:05:20+09:00; t4 arm17 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm17-rep1`; cleanup attempted.
+- total host_bytes=98306695168 host_pages=24000658 gc_pages=20941797 WAF=1.872551
+- phaseA(test4) host_pages=24000658 gc_pages=20941797 WAF=1.872551
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm15 — started 2026-09-30T05:05:23+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm15.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm15`; evidence `result/mix-20260911/t4-arm15/`.
+
+- Finished 2026-09-30T05:16:50+09:00; t4 arm15 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm15-rep1`; cleanup attempted.
+- total host_bytes=98306695168 host_pages=24000658 gc_pages=21052975 WAF=1.877183
+- phaseA(test4) host_pages=24000658 gc_pages=21052975 WAF=1.877183
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 arm33 — started 2026-09-30T05:16:54+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm33.ko`.
+- Command: `bash script/mix-20260911.sh t4 arm33`; evidence `result/mix-20260911/t4-arm33/`.
+
+- Finished 2026-09-30T05:28:20+09:00; t4 arm33 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-arm33-rep1`; cleanup attempted.
+- total host_bytes=98306732032 host_pages=24000667 gc_pages=21961797 WAF=1.915049
+- phaseA(test4) host_pages=24000667 gc_pages=21961797 WAF=1.915049
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 greedy — started 2026-09-30T05:28:24+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-greedy-m.ko`.
+- Command: `bash script/mix-20260911.sh t4 greedy`; evidence `result/mix-20260911/t4-greedy/`.
+
+- Finished 2026-09-30T05:39:50+09:00; t4 greedy exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-greedy-rep1`; cleanup attempted.
+- total host_bytes=98375864320 host_pages=24017545 gc_pages=29904930 WAF=2.245129
+- phaseA(test4) host_pages=24017545 gc_pages=29904930 WAF=2.245129
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 fixed37 — started 2026-09-30T05:39:54+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh t4 fixed37`; evidence `result/mix-20260911/t4-fixed37/`.
+
+- Finished 2026-09-30T05:51:20+09:00; t4 fixed37 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-fixed37-rep1`; cleanup attempted.
+- total host_bytes=98306695168 host_pages=24000658 gc_pages=23370844 WAF=1.973758
+- phaseA(test4) host_pages=24000658 gc_pages=23370844 WAF=1.973758
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
