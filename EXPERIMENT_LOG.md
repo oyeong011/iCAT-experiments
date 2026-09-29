@@ -8965,3 +8965,15 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
 - Command: `bash script/mix-20260911.sh mixF fixed47`; evidence `result/mix-20260911/mixF-fixed47/`.
 - mixO 기본 37번 ×3: 2.226 → v4(1.851)가 고정 6개 중 최고(47번 1.910)보다 3.1%, 기본보다 16.8% 좋음. 7개 중 1등.
+
+- Finished 2026-09-29T20:44:22+09:00; mixF fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixF-fixed47-rep1-x3`; cleanup attempted.
+- total host_bytes=830048137216 host_pages=202648471 gc_pages=211129804 WAF=2.041852
+- phaseA(test4) host_pages=72001996 gc_pages=55514419 WAF=1.771012
+- phaseB(varmail) host_pages=130646475 gc_pages=155615385 WAF=2.191118
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixF arm46 — started 2026-09-29T20:44:25+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm46.ko`.
+- Command: `bash script/mix-20260911.sh mixF arm46`; evidence `result/mix-20260911/mixF-arm46/`.
