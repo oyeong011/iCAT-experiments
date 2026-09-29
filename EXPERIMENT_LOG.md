@@ -8868,3 +8868,26 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 사용자 질문으로 확인: 60개 고정 조합은 원저자 방식(파티션별 GC 100회 워밍업 제외 ~ 모듈 해제), v1~v4는 명시 계측(사전 조건화 뒤 start~stop)으로 측정. 같은 조합에서 두 방식 차이: arm47 1.746 / 1.774(+1.6%), arm50 1.786 / 1.812~1.814(+1.5%), Greedy 2.186 / 2.256(+3.2%). 원저자 방식이 낮게 측정됨. 이전의 "두 방식 1% 이내 일치" 서술은 부정확(1.5~3%).
 - 영향 범위: 빠른 3영역 단일의 "60개 중 N등" 숫자만. 그 외 비교(길이별 표, 믹스 전부, 믹스 60-arm 순위, 느린 3영역·메일 서버·거래 DB·SQLite 순위)는 같은 방식끼리라 영향 없음.
 - 조치(queue28, queue27 뒤): 빠른 3영역 상위 12개(31, 46, 32, 34, 16, 45, 49, 30, 35, 17, 15, 33) + Greedy + 기본 37을 명시 계측 10분으로 재측정(47·50은 기존 값 있음). 약 2.5시간. 결과로 v1~v4 순위를 같은 자로 다시 매긴다.
+
+- Finished 2026-09-29T14:16:46+09:00; t4 onlinev3k2 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-onlinev3k2-rep1-x18`; cleanup attempted.
+- total host_bytes=1769520734208 host_pages=432011898 gc_pages=390902520 WAF=1.904842
+- phaseA(test4) host_pages=432011898 gc_pages=390902520 WAF=1.904842
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 onlinev3probe — started 2026-09-29T14:16:50+09:00
+
+- Phase A fio test4 fixed payload (1061683200000/530841600000/176947200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v3probe.ko`.
+- Command: `bash script/mix-20260911.sh t4 onlinev3probe`; evidence `result/mix-20260911/t4-onlinev3probe/`.
+
+- Finished 2026-09-29T17:18:16+09:00; t4 onlinev3probe exit=0; evidence `/home/oy/iCAT/result/mix-20260911/t4-onlinev3probe-rep1-x18`; cleanup attempted.
+- total host_bytes=1769520734208 host_pages=432011898 gc_pages=378199937 WAF=1.875439
+- phaseA(test4) host_pages=432011898 gc_pages=378199937 WAF=1.875439
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
