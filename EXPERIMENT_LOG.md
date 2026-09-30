@@ -9378,3 +9378,26 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 학습기 순위(61자리 중): **v4 10시간 1.807 → 5등**(위: 47, 46, 32, 31), v4 3시간 → 8등, v3 3시간 → 11등, v1 3시간·v2 3시간 → 14등, v4 1시간 → 12등. (재측정하지 않은 조합은 원저자 방식에서 모두 1.846 이상이라 명시 계측으로는 약 1.87 이상으로 추정 → 위 순위에 영향 없음. 단 v1 1시간 1.964의 15등은 재측정 안 한 조합 일부보다 나쁠 수 있어 하한.)
 - 방식이 섞였던 잠정 순위(v4 10시간 10등, v3 3시간 14등)는 폐기.
 - v4 3회차(거래 DB 흉내 → 메일 서버, queue29): 3회 평균 1.859, 여전히 고정 6개 중 최고(47번 1.910)보다 2.7% 좋음.
+
+- Finished 2026-09-30T10:10:46+09:00; mixP arm46 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixP-arm46-rep1-x3`; cleanup attempted.
+- total host_bytes=106552057856 host_pages=26013686 gc_pages=4529579 WAF=1.174123
+- phaseA(sqlite-a) host_pages=1143569 gc_pages=232384 WAF=1.203209
+- phaseB(oltp) host_pages=24870117 gc_pages=4297195 WAF=1.172785
+- phaseA-load host_pages=452312 gc_pages=142186 WAF=1.314354
+- phaseA-run host_pages=691257 gc_pages=90198 WAF=1.130484
+- ycsb-load [OVERALL], Throughput(ops/sec), 27382.25629791895
+- ycsb-run [OVERALL], Throughput(ops/sec), 55817.588122017245
+
+### mix-20260911 mixP fixed37 — started 2026-09-30T10:10:56+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (250000 records, 12000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixP fixed37`; evidence `result/mix-20260911/mixP-fixed37/`.
+
+- Finished 2026-09-30T10:31:28+09:00; mixP fixed37 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixP-fixed37-rep1-x3`; cleanup attempted.
+- total host_bytes=106023792640 host_pages=25884715 gc_pages=4597482 WAF=1.177614
+- phaseA(sqlite-a) host_pages=1152638 gc_pages=306101 WAF=1.265566
+- phaseB(oltp) host_pages=24732077 gc_pages=4291381 WAF=1.173515
+- phaseA-load host_pages=454869 gc_pages=215008 WAF=1.472681
+- phaseA-run host_pages=697769 gc_pages=91093 WAF=1.130549
+- ycsb-load [OVERALL], Throughput(ops/sec), 31075.20198881293
+- ycsb-run [OVERALL], Throughput(ops/sec), 56186.614475544775
