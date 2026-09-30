@@ -66,6 +66,7 @@ PNG와 PDF는 `figs/`. `python3 analysis/figures.py`로 원본에서 다시 그�
 
 | 파일 | 내용 |
 |---|---|
+| `PAPER_KCI_DRAFT.md` | **투고용 논문 초안** (KCI 학술지 구성: 국·영문 요약, 서론~결론, 참고문헌, 그림 자리) |
 | `WRITEUP_DRAFT.md` | **글 초안** (초록, 방법, 결과, 논의, 한계, 향후 과제, 그림 목록) |
 | `EXPERIMENTS_OVERVIEW.md` | 실험 전체 정리: 단계별 표, 핵심 결과, **철회·정정한 주장**, 한계 |
 | `RESULTS_ALL.md` | 모든 결과표 (`analysis/all-tables.py`로 원본에서 자동 생성) |
