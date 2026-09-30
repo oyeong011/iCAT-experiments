@@ -9358,3 +9358,11 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(varmail) host_pages=147302053 gc_pages=144015674 WAF=1.977690
 - ycsb-load 
 - ycsb-run 
+
+## 2026-09-30 — 사고 2회째: 메모리의 라이브러리 사본 손상
+
+- mixP(SQLite → 거래 DB 흉내) ×3 arm46(02:25)·기본 37번(03:08)이 시작 직후 실패. arm46은 `Inconsistency detected by ld.so: ... elf_machine_rela_relative: Assertion ... failed`, 37번은 SQLite 준비 단계에서 종료(로그 4바이트). 9/29 새벽 fio 사고와 같은 유형(메모리에 캐시된 실행 파일·라이브러리 손상)으로 판단.
+- 공통점: 두 번 모두 Filebench가 들어간 실행(메일 서버 sweep, SQLite → 거래 DB 흉내) 도중·직후. 커널 로그에 하드웨어 메모리 오류(MCE/EDAC) 기록은 없음.
+- 원인 후보: (1) NVMeVirt의 데이터 복사가 예약 영역 밖 메모리를 건드림, (2) 램 불량. 미확정. **실험이 끝난 뒤 램 검사(memtest86+) 필요.**
+- 결과 영향 판단: 손상은 프로그램 시작 실패로 드러났고, 정상 종료한 실행의 WAF는 FTL 카운터로 계산하며 호스트 바이트 수가 블록 계층 통계와 일치하는지 매 실행 검사한다(`mix-20260911.sh` stop 단계). 정상 종료한 실행은 유효로 본다. 다만 이것이 모든 가능성을 배제하지는 않는다(한계에 기록).
+- 조치: 실패 2건 `*-libbroken`으로 보존, queue30에서 재실행(시작 전 page cache 비우기 + fio·sqlite3·java 실행 확인).
