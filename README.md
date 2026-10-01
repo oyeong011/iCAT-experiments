@@ -78,6 +78,7 @@ SQLite가 들어간 두 종의 1위는 17번(k4·25%·r16, 1.208 / 1.123)이다.
 | `EXPERIMENT_LOG.md` | 모든 실행의 사전 등록과 결과, 사고 기록 (원본 기록) |
 | `WORKLOADS.md` | 워크로드 상세 (무엇을, 왜, 정확히 어떻게) |
 | `GLOSSARY_KR.md` | 기초부터 용어 설명 |
+| `DUAL_BOOT_GUIDE.md` | **새 컴퓨터 듀얼 부팅 설치부터 실험 준비까지** (체크리스트) |
 | `SETUP_NEW_MACHINE.md` | 다른 컴퓨터에 실험 환경 만들기 |
 | `RESULTS_TABLE.md`, `TECHNICAL_SUMMARY.md`, `INTERVIEW_ONEPAGER.md` | 이전 시점(9/15~9/26) 정리 문서 |
 
