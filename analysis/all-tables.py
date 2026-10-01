@@ -145,3 +145,42 @@ for a in (46, 47, 49, 50):
 
 Path('/home/oy/iCAT/RESULTS_ALL.md').write_text('\n'.join(out) + '\n')
 print('\n'.join(out))
+
+# ---------------- 2026-10-01: transition workloads, screening (x1) and confirmation (x3) ----------------
+ARMS16 = {'fixed47': 47, 'fixed50': 50, 'fixed37': 37, **{f'arm{a:02d}': a for a in (46, 31, 32, 17, 16, 15, 30, 34, 35, 45, 49, 53, 56)}}
+def x1(k, p):
+    if p.startswith('fixed'): return mean3(f'mix{k}-{p}-rep{{r}}')[0]
+    return tot(f'mix{k}-{p}-rep1')
+out2 = []; q = out2.append
+q('\n## 10. 전환 워크로드: 고정 조합 16개를 1배 길이로 선별 (순위 확인용)\n')
+q('1배 길이는 구간 비중이 3배 길이와 달라 값은 다르지만, 조합 간 순서는 대부분 유지된다(4종 중 3종 동일). 상위 3개는 11장에서 3배 길이로 다시 잰다.\n')
+q('| 전환 워크로드 | 측정 수 | 1등 | 2등 | 3등 | 47번 순위 | 50번(견고) 순위 | 37번(기본) 순위 |\n|---|---:|---|---|---|---|---|---|')
+for k, n in MIX.items():
+    if k in 'ACM': continue
+    w = {p: v for p in ARMS16 if (v := x1(k, p))}
+    if len(w) < 3: continue
+    s_ = sorted(w, key=w.get); rk = lambda p: f'{s_.index(p) + 1}등' if p in w else '–'
+    q(f'| {n} | {len(w)} | ' + ' | '.join(f'{ARMS16[p]}번 {w[p]:.3f}' for p in s_[:3]) + f' | {rk("fixed47")} | {rk("fixed50")} | {rk("fixed37")} |')
+q('\n## 11. 전환 워크로드: 3배 길이에서 v4와 고정 조합 비교\n')
+q('| 전환 워크로드 | v4 (회수) | 측정한 고정 조합 (WAF 낮은 순) | v4 순위 | 1등 고정 대비 v4 |\n|---|---|---|---|---:|')
+LOSS = {}
+for k, n in MIX.items():
+    v = [x for r in (1, 2, 3) if (x := tot(f'mix{k}-onlinev4-rep{r}-x3'))]
+    f3 = {p: x for p in ARMS16 if (x := tot(f'mix{k}-{p}-rep1-x3'))}
+    if not v or len(f3) < 2: continue
+    v4 = st.mean(v); best = min(f3.values()); s_ = sorted(f3, key=f3.get)
+    LOSS[k] = {'v4': (v4 / best - 1) * 100, **{p: (x / best - 1) * 100 for p, x in f3.items()}}
+    q(f'| {n} | {v4:.3f} ({len(v)}) | ' + ', '.join(f'{ARMS16[p]}번 {f3[p]:.3f}' for p in s_) + f' | {1 + sum(x < v4 for x in f3.values())}/{len(f3) + 1} | {(v4 / best - 1) * 100:+.1f}% |')
+q('\n## 12. 견고성: 1등 고정 조합 대비 손해 (3배 길이, 해당 정책을 모두 잰 전환 워크로드만)\n')
+pols = ['v4'] + list(ARMS16)
+common = [k for k in LOSS if all(p in LOSS[k] for p in ('v4', 'fixed47', 'fixed50'))]
+q(f'대상 {len(common)}종: ' + ', '.join(MIX[k] for k in common) + '\n')
+q('| 정책 | 측정한 워크로드 수 | 평균 손해 | 최악 손해 |\n|---|---:|---:|---:|')
+for p in pols:
+    xs = [LOSS[k][p] for k in common if p in LOSS[k]]
+    if len(xs) == len(common) and xs:
+        lab = 'v4' if p == 'v4' else f'{ARMS16[p]}번' + {'fixed47': ' (최적)', 'fixed50': ' (원래 견고)', 'fixed37': ' (기본)'}.get(p, '')
+        q(f'| {lab} | {len(xs)} | {st.mean(xs):.1f}% | {max(xs):.1f}% |')
+q('\n손해 = (그 정책의 WAF ÷ 그 워크로드에서 측정한 고정 조합 중 1등의 WAF − 1). 1등은 측정한 조합 중 1등이며 60개 전체 중 1등은 아니다.\n')
+Path('/home/oy/iCAT/RESULTS_ALL.md').write_text(Path('/home/oy/iCAT/RESULTS_ALL.md').read_text() + '\n'.join(out2) + '\n')
+print('\n'.join(out2))

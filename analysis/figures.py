@@ -129,3 +129,45 @@ ax.axvline(1.772, color=INK2, ls=':', lw=1.2);
 ax.set_yticks(range(len(ab))); ax.set_yticklabels([l for l, _ in ab[::-1]]); ax.set_xlim(1.0, 2.0); ax.grid(axis='y', visible=False)
 ax.set_xlabel('WAF (3시간, 1.0 = GC 복사 없음)   점선 = 최적 CAT 1.772'); ax.set_title('그림 6. v3 변경을 하나씩 되돌렸을 때 (빠른 3영역 쓰기, 3시간)', loc='left', fontsize=11, color=INK)
 save(fig, 'fig6_ablation')
+
+# ---------------- 2026-10-01: transition workloads at x3 — v4 vs measured fixed arms ----------------
+ARMS16 = {'fixed47': 47, 'fixed50': 50, 'fixed37': 37, **{f'arm{a:02d}': a for a in (46, 31, 32, 17, 16, 15, 30, 34, 35, 45, 49, 53, 56)}}
+NAME = {'A': '빠른 3영역 → SQLite', 'C': '느린 → 빠른 3영역', **MIX}
+LOSS = {}
+for k in NAME:
+    v = [x for r in (1, 2, 3) if (x := tot(f'mix{k}-onlinev4-rep{r}-x3'))]
+    f3 = {p: x for p in ARMS16 if (x := tot(f'mix{k}-{p}-rep1-x3'))}
+    if v and len(f3) >= 2:
+        best = min(f3.values()); LOSS[k] = {'v4': (st.mean(v) / best - 1) * 100, **{p: (x / best - 1) * 100 for p, x in f3.items()}}
+
+# Fig 7 — per workload: loss vs the best measured fixed arm (dots)
+ks = sorted(LOSS, key=lambda k: LOSS[k]['v4'])
+fig, ax = plt.subplots(figsize=(8, 0.55 * len(ks) + 1.4))
+for i, k in enumerate(ks[::-1]):
+    for p_, x in LOSS[k].items():
+        if p_ == 'v4': continue
+        ax.scatter(x, i, s=34, color='#6b6a66' if p_ == 'fixed47' else '#c9c8c3', zorder=2, edgecolor=SURF, linewidth=1)
+    ax.scatter(LOSS[k]['v4'], i, s=60, color=C['v4'], zorder=3, edgecolor=SURF, linewidth=1.5)
+    ax.text(LOSS[k]['v4'], i + 0.28, f"{LOSS[k]['v4']:+.1f}%", ha='center', fontsize=7, color=INK)
+ax.axvline(0, color=INK2, lw=1); ax.set_ylim(-0.6, len(ks) - 0.1)
+ax.set_yticks(range(len(ks))); ax.set_yticklabels([f'{NAME[k]} ({len(LOSS[k]) - 1}개)' for k in ks[::-1]], fontsize=9)
+ax.grid(axis='y', visible=False); ax.set_xlabel('측정한 고정 조합 중 1등 대비 WAF 손해 (%)')
+ax.legend(handles=[plt.Line2D([], [], marker='o', ls='', color=C['v4'], label='v4'), plt.Line2D([], [], marker='o', ls='', color='#6b6a66', label='47번'),
+                   plt.Line2D([], [], marker='o', ls='', color='#c9c8c3', label='다른 고정 조합')], frameon=False, fontsize=8, loc='upper right')
+ax.set_title('그림 7. 전환 워크로드별 v4와 고정 조합의 손해 (3배 길이, 괄호 = 측정한 고정 조합 수)', loc='left', fontsize=11, color=INK)
+save(fig, 'fig7_mix_loss_by_workload')
+
+# Fig 8 — robustness: mean and worst loss over the workloads where every listed policy was measured
+common = [k for k in LOSS if all(p_ in LOSS[k] for p_ in ('v4', 'fixed47', 'fixed50'))]
+pols = [p_ for p_ in ['v4', 'fixed47', 'fixed50', 'arm17', 'fixed37', 'arm46', 'arm31'] if all(p_ in LOSS[k] for k in common)]
+lab = {'v4': 'v4', 'fixed47': '47번', 'fixed50': '50번\n(원래 견고)', 'fixed37': '37번\n(기본)', 'arm17': '17번', 'arm46': '46번', 'arm31': '31번'}
+mean_ = [st.mean(LOSS[k][p_] for k in common) for p_ in pols]; worst = [max(LOSS[k][p_] for k in common) for p_ in pols]
+fig, ax = plt.subplots(figsize=(8, 3.4)); W = 0.36
+for j, (vals, col, name) in enumerate([(mean_, '#52514e', '평균 손해'), (worst, '#b3b2ac', '최악 손해')]):
+    xs = [i + (j - 0.5) * (W + 0.03) for i in range(len(pols))]
+    ax.bar(xs, vals, width=W, color=col, label=name)
+    for x_, v_ in zip(xs, vals): ax.text(x_, v_ + 0.4, f'{v_:.1f}', ha='center', fontsize=7, color=INK)
+ax.set_xticks(range(len(pols))); ax.set_xticklabels([lab[p_] for p_ in pols], fontsize=9); ax.grid(axis='x', visible=False)
+ax.set_ylabel('1등 고정 조합 대비 손해 (%)'); ax.legend(frameon=False, fontsize=8, loc='upper left')
+ax.set_title(f'그림 8. 전환 워크로드 {len(common)}종에서의 견고성 (3배 길이)', loc='left', fontsize=11, color=INK)
+save(fig, 'fig8_robustness')

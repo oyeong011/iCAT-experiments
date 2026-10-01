@@ -26,6 +26,7 @@ SSD의 GC(쓰레기 수거)가 어떤 블록을 지울지 고르는 정책 **CAT
 | ![그림 1](figs/fig1_sensitivity.png) 파라미터에 따라 WAF가 최대 28% 달라진다 | ![그림 2](figs/fig2_learning_over_time.png) 버전이 오를수록, 오래 돌릴수록 좋아진다 |
 | ![그림 3](figs/fig3_time_use.png) 나쁜 조합에 쓰는 시간: 21% → 12% → 4% | ![그림 4](figs/fig4_mixes_v4_vs_robust.png) 전환 워크로드 13종: v4 대 견고 파라미터 |
 | ![그림 5](figs/fig5_three_phase_mix.png) 구간이 바뀔 때 v4는 빨리 복귀한다 | ![그림 6](figs/fig6_ablation.png) v3의 두 변경은 각각 3.1%, 1.5% 기여 |
+| ![그림 7](figs/fig7_mix_loss_by_workload.png) 전환 워크로드별 1등 고정 조합 대비 손해 | ![그림 8](figs/fig8_robustness.png) 평균 손해는 47번, 최악 손해는 v4가 가장 작다 |
 
 PNG와 PDF는 `figs/`. `python3 analysis/figures.py`로 원본에서 다시 그린다.
 
