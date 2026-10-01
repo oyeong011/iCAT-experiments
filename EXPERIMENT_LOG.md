@@ -11318,3 +11318,15 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseC(test4) host_pages=12000331 gc_pages=10331942 WAF=1.860971
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixO arm16 — started 2026-10-02T00:44:36+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm16.ko`.
+- Command: `bash script/mix-20260911.sh mixO arm16`; evidence `result/mix-20260911/mixO-arm16/`.
+
+- Finished 2026-10-02T01:16:11+09:00; mixO arm16 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-arm16-rep1-x3`; cleanup attempted.
+- total host_bytes=723569274880 host_pages=176652655 gc_pages=210291418 WAF=2.190423
+- phaseA(oltp) host_pages=26076105 gc_pages=7976886 WAF=1.305908
+- phaseB(varmail) host_pages=150576550 gc_pages=202314532 WAF=2.343599
+- ycsb-load 
+- ycsb-run 
