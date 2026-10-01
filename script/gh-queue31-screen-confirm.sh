@@ -39,5 +39,5 @@ PY
   echo "$lb top3 at x1: $top"
   for p in $top; do run $lb-$p-rep1-x3 env MULT=3 VM_RUN=900 bash script/mix-20260911.sh $lb $p 1; done; push "$lb confirmed (x3): $top"
 done
-python3 analysis/all-tables.py > /dev/null 2>&1; python3 analysis/figures.py > /dev/null 2>&1; python3 analysis/v4-vs-cat.py > /dev/null 2>&1; push "tables and figures regenerated"
+python3 analysis/all-tables.py > /dev/null 2>&1; python3 analysis/figures.py > /dev/null 2>&1; python3 analysis/v4-vs-cat.py > /dev/null 2>&1; bash analysis/dashboard-build.sh > /dev/null 2>&1; push "tables and figures regenerated"
 echo QUEUE31DONE $(date -Is)

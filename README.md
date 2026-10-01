@@ -68,6 +68,7 @@ SQLite가 들어간 두 종의 1위는 17번(k4·25%·r16, 1.208 / 1.123)이다.
 
 | 파일 | 내용 |
 |---|---|
+| `dashboard/icat-board.html` | **결과 보드** (그림으로 보는 v4 대 CAT, 마우스를 올리면 숫자; `bash analysis/dashboard-build.sh`로 재생성) |
 | `ALL_RUNS.md`, `ALL_RUNS.csv` | **모든 측정값** (실행 866개, 한 줄씩; CSV는 엑셀용, `analysis/all-runs.py`로 자동 생성) |
 | `V4_VS_CAT.md` | **v4가 CAT보다 얼마나 좋은가** (모든 비교를 같은 길이·같은 측정 방식으로, `analysis/v4-vs-cat.py`로 자동 생성) |
 | `PAPER_KCI_DRAFT.md` | **투고용 논문 초안** (KCI 학술지 구성: 국·영문 요약, 서론~결론, 참고문헌, 그림 자리) |
