@@ -11330,3 +11330,15 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(varmail) host_pages=150576550 gc_pages=202314532 WAF=2.343599
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixF arm32 — started 2026-10-02T01:16:27+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm32.ko`.
+- Command: `bash script/mix-20260911.sh mixF arm32`; evidence `result/mix-20260911/mixF-arm32/`.
+
+- Finished 2026-10-02T02:02:56+09:00; mixF arm32 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixF-arm32-rep1-x3`; cleanup attempted.
+- total host_bytes=838396157952 host_pages=204686562 gc_pages=280363965 WAF=2.369723
+- phaseA(test4) host_pages=72001990 gc_pages=57260421 WAF=1.795262
+- phaseB(varmail) host_pages=132684572 gc_pages=223103544 WAF=2.681458
+- ycsb-load 
+- ycsb-run 
