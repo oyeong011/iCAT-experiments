@@ -1,0 +1,11 @@
+wal
+FAIL line=248 command=grep -m1 'Throughput' "$dir/ycsb-load.txt"
+FAIL line=248 command=grep -m1 'Throughput' "$dir/ycsb-run.txt"
+total host_bytes=84385259520 host_pages=20601870 gc_pages=40449399 WAF=2.963385
+phaseA(concurrent-test4+sqlite-a) host_pages=20601870 gc_pages=40449399 WAF=2.963385
+phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+ycsb-load 
+ycsb-run 
+MIX mixG arm46 exit=0
