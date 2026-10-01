@@ -10574,3 +10574,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 - Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm56.ko`.
 - Command: `bash script/mix-20260911.sh mixK arm56`; evidence `result/mix-20260911/mixK-arm56/`.
+
+- Finished 2026-10-01T09:59:19+09:00; mixK arm56 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixK-arm56-rep1`; cleanup attempted.
+- total host_bytes=196616118272 host_pages=48001982 gc_pages=47959568 WAF=1.999116
+- phaseA(test4-hot512M) host_pages=24000661 gc_pages=24659359 WAF=2.027445
+- phaseB(test4-hot128M) host_pages=24001321 gc_pages=23300209 WAF=1.970789
+- ycsb-load 
+- ycsb-run 
