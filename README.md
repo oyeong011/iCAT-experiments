@@ -27,6 +27,7 @@ SSD의 GC(쓰레기 수거)가 어떤 블록을 지울지 고르는 정책 **CAT
 | ![그림 3](figs/fig3_time_use.png) 나쁜 조합에 쓰는 시간: 21% → 12% → 4% | ![그림 4](figs/fig4_mixes_v4_vs_robust.png) 전환 워크로드 13종: v4 대 견고 파라미터 |
 | ![그림 5](figs/fig5_three_phase_mix.png) 구간이 바뀔 때 v4는 빨리 복귀한다 | ![그림 6](figs/fig6_ablation.png) v3의 두 변경은 각각 3.1%, 1.5% 기여 |
 | ![그림 7](figs/fig7_mix_loss_by_workload.png) 전환 워크로드별 1등 고정 조합 대비 손해 | ![그림 8](figs/fig8_robustness.png) 평균 손해는 47번, 최악 손해는 v4가 가장 작다 |
+| ![그림 9](figs/fig9_rank_over_time.png) 고정 조합 중 순위: v4는 10시간에 5위 | ![그림 10](figs/fig10_v4_choices.png) v4가 쓴 조합의 순위: 1.5시간 뒤 상위 3위 근처로 좁혀짐 |
 
 PNG와 PDF는 `figs/`. `python3 analysis/figures.py`로 원본에서 다시 그린다.
 
@@ -67,6 +68,7 @@ SQLite가 들어간 두 종의 1위는 17번(k4·25%·r16, 1.208 / 1.123)이다.
 
 | 파일 | 내용 |
 |---|---|
+| `ALL_RUNS.md`, `ALL_RUNS.csv` | **모든 측정값** (실행 866개, 한 줄씩; CSV는 엑셀용, `analysis/all-runs.py`로 자동 생성) |
 | `V4_VS_CAT.md` | **v4가 CAT보다 얼마나 좋은가** (모든 비교를 같은 길이·같은 측정 방식으로, `analysis/v4-vs-cat.py`로 자동 생성) |
 | `PAPER_KCI_DRAFT.md` | **투고용 논문 초안** (KCI 학술지 구성: 국·영문 요약, 서론~결론, 참고문헌, 그림 자리) |
 | `WRITEUP_DRAFT.md` | **글 초안** (초록, 방법, 결과, 논의, 한계, 향후 과제, 그림 목록) |

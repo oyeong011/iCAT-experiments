@@ -171,3 +171,42 @@ ax.set_xticks(range(len(pols))); ax.set_xticklabels([lab[p_] for p_ in pols], fo
 ax.set_ylabel('1등 고정 조합 대비 손해 (%)'); ax.legend(frameon=False, fontsize=8, loc='upper left')
 ax.set_title(f'그림 8. 전환 워크로드 {len(common)}종에서의 견고성 (3배 길이)', loc='left', fontsize=11, color=INK)
 save(fig, 'fig8_robustness')
+
+# ---------------- 2026-10-01: learning shown as rank among the 60 fixed arms ----------------
+# Fig 9 — cumulative WAF over time expressed as a rank among fixed arms measured with the SAME (explicit) method.
+EXPL = {a: tot(f't4-arm{a:02d}-rep1') for a in (31, 46, 32, 34, 16, 45, 49, 30, 35, 17, 15, 33)}
+EXPL.update({47: tot('t4-fixed47-rep1'), 50: tot('t4long-fixed50-rep1'), 37: tot('t4-fixed37-rep1')})
+EXPL = {a: v for a, v in EXPL.items() if v}
+def rank_expl(v):  # arms not re-measured were all below 1.846 (original method) ~ 1.87+ explicit: rank capped at len+1
+    return 1 + sum(x < v for x in EXPL.values())
+fig, ax = plt.subplots(figsize=(8, 3.8))
+for key, d, lab in [('v1', 't4-online-rep1-x18', 'v1'), ('v3', 't4-onlinev3-rep1-x18', 'v3'), ('v4', 't4-onlinev4-rep1-x60', 'v4')]:
+    x, y = curve(d); k = [i for i, t in enumerate(x) if t >= 0.25]
+    r = [rank_expl(y[i]) for i in k]
+    ax.step([x[i] for i in k], r, where='post', color=C[key]); ax.text(x[-1] + 0.1, r[-1] + (0.6 if key == 'v4' else 0), f'{lab} {r[-1]}위' + (' (견고 CAT보다 위)' if key == 'v4' else ''), color=INK, fontsize=9, va='center')
+for v, lab, xt in [(EXPL[47], '최적 CAT (47번)', 5.0), (EXPL[50], '견고 CAT (50번)', 3.2), (EXPL[37], '기본 CAT (37번, 60개 중 약 21위)', 10.9)]:
+    ax.axhline(rank_expl(v), color=INK2, ls=':', lw=1); ax.text(xt, rank_expl(v) - 0.25, lab, color=INK2, fontsize=8, ha='right' if xt > 10 else 'center', va='bottom')
+ax.invert_yaxis(); ax.set_ylim(len(EXPL) + 1.5, 0); ax.set_xlim(0, 12.2)
+ax.set_yticks([1, 5, 10, 15]); ax.set_ylabel('고정 조합 중 순위 (1 = 최고)'); ax.set_xlabel('실행 시간 (시간)')
+ax.set_title(f'그림 9. 누적 WAF를 고정 조합 순위로 나타낸 학습 과정 (빠른 3영역 쓰기, 같은 측정 방식 {len(EXPL)}개와 비교)', loc='left', fontsize=10.5, color=INK)
+save(fig, 'fig9_rank_over_time')
+
+# Fig 10 — what v4 actually used: rank (among 60, original-method sweep) of the arm applied in each window, first 3 h
+RANK60 = {a: i + 1 for i, a in enumerate(sorted(T, key=T.get))}
+pts = []; t0 = None
+for l in (M / 't4-onlinev4-rep1-x60' / 'kernel.log').read_text(errors='replace').splitlines():
+    m = re.search(r'^\[\s*([\d.]+)\].*phase=measure evaluated=(\d+)', l)
+    if not m: continue
+    ts = float(m[1]); t0 = t0 or ts
+    if ts - t0 > 3 * 3600: break
+    pts.append(((ts - t0) / 3600, RANK60[int(m[2])]))
+fig, ax = plt.subplots(figsize=(8, 3.6))
+ax.scatter([p_[0] for p_ in pts], [p_[1] for p_ in pts], s=5, color=C['v4'], alpha=0.35, linewidths=0)
+B = 0.1; bins = {}
+for t_, r_ in pts: bins.setdefault(int(t_ / B), []).append(r_)
+bx = sorted(bins); ax.plot([(b + 0.5) * B for b in bx], [st.median(bins[b]) for b in bx], color=INK, lw=1.5)
+ax.text(3.02, st.median(bins[bx[-1]]), '6분 구간 중앙값', fontsize=8, color=INK, va='center')
+ax.invert_yaxis(); ax.set_ylim(61, 0); ax.set_yticks([1, 10, 20, 30, 40, 50, 60]); ax.set_xlim(0, 3.4)
+ax.set_ylabel('그 순간 쓴 조합의 순위 (60개 중)'); ax.set_xlabel('실행 시간 (시간)')
+ax.set_title('그림 10. v4가 매 판단 구간에 쓴 조합의 순위 (빠른 3영역 쓰기, 처음 3시간)', loc='left', fontsize=11, color=INK)
+save(fig, 'fig10_v4_choices')
