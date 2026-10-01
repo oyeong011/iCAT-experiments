@@ -10586,3 +10586,27 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 - Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm46.ko`.
 - Command: `bash script/mix-20260911.sh mixH arm46`; evidence `result/mix-20260911/mixH-arm46/`.
+
+- Finished 2026-10-01T10:27:46+09:00; mixH arm46 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixH-arm46-rep1`; cleanup attempted.
+- total host_bytes=156547362816 host_pages=38219571 gc_pages=27451638 WAF=1.718261
+- phaseA(test3) host_pages=6000424 gc_pages=4784340 WAF=1.797334
+- phaseB(test4) host_pages=24000658 gc_pages=17913735 WAF=1.746385
+- phaseC(sqlite-a) host_pages=8218489 gc_pages=4753563 WAF=1.578399
+- phaseC-load host_pages=1398349 gc_pages=719924 WAF=1.514839
+- phaseC-run host_pages=6820140 gc_pages=4033639 WAF=1.591431
+- ycsb-load [OVERALL], Throughput(ops/sec), 18274.85380116959
+- ycsb-run [OVERALL], Throughput(ops/sec), 10987.290451769915
+
+### mix-20260911 mixH arm31 — started 2026-10-01T10:27:52+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm31.ko`.
+- Command: `bash script/mix-20260911.sh mixH arm31`; evidence `result/mix-20260911/mixH-arm31/`.
+
+## 2026-10-01 — 처음 보는 리뷰어 심사(별도 에이전트, 원고와 그림만 열람) 반영
+
+- 판정: 수정 후 재심. 확인된 지적: iCAT이 "모든 경우" CAT-Default보다 나쁘다는 주장이 1배 길이에서만 성립(3시간 1.884 < 1.974, 3구간 전환 2.288 < 2.410), CAT-Best가 이 환경 측정에서는 2위(1위 arm 31, 1.744), Greedy 값 혼용(2.186 = 3회 평균, 2.203 = 1회), 초록의 "최대 18.3%"가 CAT-Best에 15% 진 워크로드의 값, "5위"가 15개 중 순위, arm 47의 이웃은 32·46·50뿐(44 아님), 워크로드 정의 부족, 그림 7(−5.7%, n=2)과 표 4(−5.3%, n=3) 불일치.
+- 로그 분석(실험 없음):
+  - 저성능 조합(최상위 대비 15% 초과) 사용 21% 중 초기 순회 7.6%p, 순회 이후 13.3%p (iCAT). iCAT-v3 순회 이후 9.9%, iCAT-v4 1.6%.
+  - 같은 조합의 판단 구간 WAF 표준편차: 직전 구간이 같은 조합일 때 0.120, 다른 조합일 때 0.139 (iCAT 3시간). 흔들림의 대부분은 직전 조합의 영향이 아닌 구간 자체의 변동.
+- 사전 등록 queue32(queue31 뒤, 약 2일): A. iCAT-v4 ×3 길이를 전환 워크로드 13종 모두 n=3으로 / B. OLTP → Varmail의 arm 47·17·50 ×3 반복(n=3) / C. 구성 요소 제거: iCAT-v3의 판단 구간(64 GC로 복원), 순회 횟수(3회), 초기화 임계값(12.5%), iCAT-v4의 후보 제거 끔, 이웃 탐색 끔(FIO-Fast 3시간), 부분 초기화 대신 전체 복원(3구간 전환), 기존 v3·k2·probe 2회차. 모듈 SHA256은 result/sweep-20260915/modules.sha256 끝 6줄.
+- 판정 기준: 반복 3회 평균과 범위로 표 4·그림 7을 다시 계산. OLTP → Varmail에서 iCAT-v4 3회 범위가 고정 조합 3회 범위와 겹치지 않으면 "우위" 유지, 겹치면 "동등"으로 표현을 낮춘다. 구성 요소별로 3시간 WAF가 iCAT-v3/v4 대비 1% 이상 나빠지면 기여로 판정.

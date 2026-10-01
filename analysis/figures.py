@@ -94,7 +94,7 @@ MIX = {'O': 'OLTP → Varmail', 'F': 'FIO-Fast → Varmail', 'J': 'YCSB-A → YC
        'C': 'FIO-Slow → FIO-Fast', 'Q': 'FIO-Fast → 유휴 5분 → FIO-Fast', 'A': 'FIO-Fast → YCSB-A', 'B': 'YCSB-A → FIO-Fast', 'G': 'FIO-Fast ∥ YCSB-A (동시)'}
 d4 = {}; NREP = {}
 for k, n in MIX.items():
-    v = [x for r in (1, 2) if (x := tot(f'mix{k}-onlinev4-rep{r}-x3'))]; f50 = tot(f'mix{k}-fixed50-rep1-x3')
+    v = [x for r in (1, 2, 3) if (x := tot(f'mix{k}-onlinev4-rep{r}-x3'))]; f50 = tot(f'mix{k}-fixed50-rep1-x3')
     if v and f50: d4[n] = (st.mean(v) / f50 - 1) * 100; NREP[n] = len(v)
 items = sorted(d4.items(), key=lambda x: x[1])
 fig, ax = plt.subplots(figsize=(8, 4.6))
