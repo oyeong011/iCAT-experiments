@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # 2026-10-02: 10-hour transition workloads, CAT-47 (best) vs CAT-50 (robust) vs iCAT-v4. After queue31, before queue32.
-# Length ~10 h each (from measured x3 durations): mixD FIO-Fast->FIO-Slow MULT=30, mixJ YCSB-A->YCSB-B MULT=90,
-# mixO OLTP->Varmail MULT=20 VM_RUN=18000 (two 5 h filebench phases). One run each, order D, J, O.
+# OLTP->Varmail only (user, 10-02): MULT=20 VM_RUN=18000 = two 5 h filebench phases, ~10 h per run. D and J dropped.
 set -u
 cd /home/oy/iCAT
 S=/tmp/claude-1000/-home-oy-nvmevirt/644aa240-1852-482e-a060-ce2cfc119144/scratchpad
@@ -15,8 +14,7 @@ run() { local d=$1; shift; [[ -e $R/$d/summary.txt ]] && return; free
   echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; tools || { echo "tools broken before $d, skipped"; return; }
   "$@" > $R/$d.console.txt 2>&1 || echo "FAIL $d"
   tools || { echo "SUSPECT $d: tools broken right after this run" | tee -a $R/$d/SUSPECT.txt; echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; }; }
-run t4-fixed37-rep1-x18 env MULT=18 bash script/mix-20260911.sh t4 fixed37 1; push "FIO-Fast 3h CAT-37 (default) for Fig.6"   # added 10-02: Fig.6 needs a long default-CAT curve
-for p in fixed47 fixed50 onlinev4; do run mixD-$p-rep1-x30 env MULT=30 bash script/mix-20260911.sh mixD $p 1; push "mixD $p"; done
-for p in fixed47 fixed50 onlinev4; do run mixJ-$p-rep1-x90 env MULT=90 bash script/mix-20260911.sh mixJ $p 1; push "mixJ $p"; done
-for p in fixed47 fixed50 onlinev4; do run mixO-$p-rep1-x20 env MULT=20 VM_RUN=18000 bash script/mix-20260911.sh mixO $p 1; push "mixO $p"; done
+# 10-02 (user): one workload only — OLTP->Varmail 10 h. v4 vs CAT-50 (robust) vs CAT-37 (default) first; CAT-47 last (for the results table).
+for p in onlinev4 fixed50 fixed37 fixed47; do run mixO-$p-rep1-x20 env MULT=20 VM_RUN=18000 bash script/mix-20260911.sh mixO $p 1; push "mixO 10h $p"; done
+run t4-fixed37-rep1-x18 env MULT=18 bash script/mix-20260911.sh t4 fixed37 1; push "FIO-Fast 3h CAT-37 (default) for the long-run figure"
 echo QUEUE34DONE $(date -Is)
