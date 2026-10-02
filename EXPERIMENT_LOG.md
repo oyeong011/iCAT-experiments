@@ -11571,3 +11571,19 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - OLTP→Varmail 10시간은 **iCAT-v4와 CAT-50(견고)만**. CAT-37(기본)은 두 번째 PC에서 측정 중, CAT-47은 하지 않음.
 - 최우선: 큐31(전환 워크로드 상위 3개 확인)을 일시 중지하고, 진행 중이던 run(mixG fixed47 x3)만 끝나면 바로 v4 → CAT-50 순으로 시작. 큐31 나머지(G·L·Q 확인)는 그 뒤에 이어서, 이후 t4 CAT-37 3시간, 이후 큐32.
 - 중지 방식: 큐31 스크립트 프로세스만 종료, 진행 중 측정은 그대로 완료. 이 run은 큐의 사후 도구 점검(fio/sqlite/java)을 거치지 않으므로 다음 run 전 점검으로 대체.
+
+- Finished 2026-10-03T00:02:02+09:00; mixG fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixG-fixed47-rep1-x3`; cleanup attempted.
+- total host_bytes=241812729856 host_pages=59036311 gc_pages=114709399 WAF=2.943031
+- phaseA(concurrent-test4+sqlite-a) host_pages=59036311 gc_pages=114709399 WAF=2.943031
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixO onlinev4 — started 2026-10-03T00:02:34+09:00
+
+- Phase A fio test4 fixed payload (1179648000000/589824000000/196608000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixO onlinev4`; evidence `result/mix-20260911/mixO-onlinev4/`.
+
+- Finished 2026-10-03T05:20:15+09:00; mixO onlinev4 exit=124; evidence `/home/oy/iCAT/result/mix-20260911/mixO-onlinev4-rep1-x20`; cleanup attempted.
