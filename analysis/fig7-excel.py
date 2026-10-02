@@ -62,8 +62,8 @@ for wl in ['OLTP → Varmail', 'FIO-Fast → Varmail']:
         ws.cell(row=1, column=col, value='전환 시간'); ws.cell(row=1, column=col + 1, value=f'워크로드 전환 ({sw:.1f}분)')
         for i, yv in enumerate((lo, hi), 2): ws.cell(row=i, column=col, value=round(sw, 2)); ws.cell(row=i, column=col + 1, value=yv)
         return (col, col + 1, 2, 'E5484D', 19050, False)
-    wafs = cols[1][1] + cols[3][1] + cols[15][1] + cols[17][1]
-    chart(ws, f'(가) {wl}: 판단 구간별 WAF (낮을수록 좋음)', 'WAF', [(16, 17, n(17), 'E3A33B', 22225, False), (18, 19, n(19), '8E8E93', 22225, False), (3, 4, n(4), '1D1D1F', 12700, False), (1, 2, n(2), '2A78D6', 15875, False), vline(23, round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1))],
+    wafs = cols[1][1] + cols[15][1] + cols[17][1]
+    chart(ws, f'(가) {wl}: 판단 구간별 WAF (낮을수록 좋음)', 'WAF', [(16, 17, n(17), 'E3A33B', 22225, False), (18, 19, n(19), '8E8E93', 22225, False), (1, 2, n(2), '2A78D6', 15875, False), vline(23, round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1))],
           round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1), xm, 'AD2')
     chart(ws, '(나) 학습 상태 (0 = 전수 순회, 1 = 탐색, 2 = 정착)', '상태', [(14, 15, n(15), '2A78D6', 28575, False), vline(25, -0.2, 2.2)], -0.2, 2.2, xm, 'AD21')
     # 조합 번호(E~H열)는 그래프에서 뺐지만 데이터는 남겨 둠

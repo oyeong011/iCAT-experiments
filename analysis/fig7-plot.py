@@ -34,8 +34,7 @@ def one(wl, out, a, b):
     ax[0].text(sw / 2, 0.88, f'앞 워크로드: {a}', transform=ax[0].get_xaxis_transform(), ha='center', fontsize=11, color=INK2, weight='bold')
     ax[0].text((sw + X1) / 2, 0.4, f'뒤 워크로드: {b}', transform=ax[0].get_xaxis_transform(), ha='center', fontsize=11, color=V4, weight='bold')
     # (가) WAF
-    for pol, lab, col, lw, ls in [('CAT-37 (기본)', 'CAT-37 (기본값)', '#e3a33b', 1.8, '-'), ('CAT-50 (견고)', 'CAT-50 (견고 설정)', '#8e8e93', 1.8, '-'),
-                                  ('CAT-47 (최적)', 'CAT-47 (최적, 참고: 사후 튜닝값)', FIX, 1.0, (0, (4, 2)))]:
+    for pol, lab, col, lw, ls in [('CAT-37 (기본)', 'CAT-37 (기본값)', '#e3a33b', 1.8, '-'), ('CAT-50 (견고)', 'CAT-50 (견고 설정)', '#8e8e93', 1.8, '-')]:   # 그림 7은 과정 그림: 기본·견고와 비교. 최적(CAT-47) 비교는 결과 표(표 7·MIX_TABLES)에 있음
         f = [(float(r['경과(분)']), float(r['30초 WAF'])) for r in F if r['워크로드'] == wl and r['정책'] == pol and r['30초 WAF']]
         ax[0].plot([p for p, _ in f], [w for _, w in f], color=col, lw=lw, ls=ls, label=lab)
     ax[0].plot(x, [float(r['구간 WAF']) for r in t], color=V4, lw=1.3, alpha=0.95, label='iCAT-v4 (제안)', zorder=5)
