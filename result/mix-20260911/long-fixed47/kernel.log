@@ -1,0 +1,404 @@
+[59391.881802] mix-long-fixed47-34828 BEGIN
+[59391.899246] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[59391.899264] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[59391.910390] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[59391.921413] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[59391.931828] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[59391.931844] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[59391.931846] NVMeVirt: Fixed CAT init ns=0 part=0 arm=47 k=10 scale_pct=25 age_ratio=16
+[59391.932716] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[59391.932755] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[59391.932757] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=10 initial_scale_pct=25 initial_age_ratio=16 warmup_gc=100
+[59391.943277] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[59391.954556] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[59391.954573] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[59391.954575] NVMeVirt: Fixed CAT init ns=0 part=1 arm=47 k=10 scale_pct=25 age_ratio=16
+[59391.955974] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[59391.955981] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=10 initial_scale_pct=25 initial_age_ratio=16 warmup_gc=100
+[59391.966619] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[59391.977123] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[59391.977142] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[59391.977145] NVMeVirt: Fixed CAT init ns=0 part=2 arm=47 k=10 scale_pct=25 age_ratio=16
+[59391.978517] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[59391.978521] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=10 initial_scale_pct=25 initial_age_ratio=16 warmup_gc=100
+[59391.990364] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[59392.003157] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[59392.003172] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[59392.003175] NVMeVirt: Fixed CAT init ns=0 part=3 arm=47 k=10 scale_pct=25 age_ratio=16
+[59392.004133] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[59392.004135] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=10 initial_scale_pct=25 initial_age_ratio=16 warmup_gc=100
+[59392.004141] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[59392.004143] NVMeVirt: ns 0/1: size 7655 MiB
+[59392.004190] PCI host bridge to bus 0001:10
+[59392.004192] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[59392.004195] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[59392.004197] pci_bus 0001:10: root bus resource [bus 00-ff]
+[59392.004204] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[59392.004208] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[59392.004211] pci 0001:10:00.0: enabling Extended Tags
+[59392.004331] NVMeVirt: Virtual PCI bus created (node 0)
+[59392.004587] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[59392.004656] NVMeVirt: Virtual NVMe device created
+[59392.004787] nvme nvme0: pci function 0001:10:00.0
+[59392.007840] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[59392.008626] nvme nvme0: 8/0/0 default/read/poll queues
+[59392.324444] EXT4-fs (nvme0n1): mounted filesystem 07a3f2a5-6e81-49c8-95aa-f9f67bf6f8b1 r/w with ordered data mode. Quota mode: none.
+[59474.459636] NVMeVirt: Fixed CAT init ns=0 part=0 arm=47 k=10 scale_pct=25 age_ratio=16
+[59474.459641] NVMeVirt: Fixed CAT init ns=0 part=1 arm=47 k=10 scale_pct=25 age_ratio=16
+[59474.459643] NVMeVirt: Fixed CAT init ns=0 part=2 arm=47 k=10 scale_pct=25 age_ratio=16
+[59474.459645] NVMeVirt: Fixed CAT init ns=0 part=3 arm=47 k=10 scale_pct=25 age_ratio=16
+[59474.459646] NVMeVirt: Measurement: command=start epoch=1 host_bytes=0 learner_active=1
+[59474.466476] mix-long-fixed47-34828 phase=A START
+[63074.824266] mix-long-fixed47-34828 phase=A END
+[63075.128213] mix-long-fixed47-34828 phase=B START
+[63075.140057] mix-long-fixed47-34828 phase=B LOAD
+[63310.364352] mix-long-fixed47-34828 phase=B RUN
+[63315.032249] tee (36792): drop_caches: 3
+[63320.359848] tee (36796): drop_caches: 3
+[63325.352508] tee (36800): drop_caches: 3
+[63329.837886] tee (36807): drop_caches: 3
+[63335.021997] tee (36812): drop_caches: 3
+[63340.195788] tee (36816): drop_caches: 3
+[63345.494283] tee (36820): drop_caches: 3
+[63350.759117] tee (36824): drop_caches: 3
+[63356.025296] tee (36828): drop_caches: 3
+[63360.934715] tee (36835): drop_caches: 3
+[63366.276961] tee (36839): drop_caches: 3
+[63371.501901] tee (36843): drop_caches: 3
+[63377.087035] tee (36847): drop_caches: 3
+[63382.209079] tee (36851): drop_caches: 3
+[63387.394992] tee (36855): drop_caches: 3
+[63392.214229] tee (36862): drop_caches: 3
+[63397.515441] tee (36866): drop_caches: 3
+[63402.745089] tee (36870): drop_caches: 3
+[63407.946412] tee (36874): drop_caches: 3
+[63413.436308] tee (36878): drop_caches: 3
+[63418.686302] tee (36882): drop_caches: 3
+[63423.267210] tee (36889): drop_caches: 3
+[63428.533995] tee (36893): drop_caches: 3
+[63433.897575] tee (36897): drop_caches: 3
+[63439.050719] tee (36901): drop_caches: 3
+[63444.338700] tee (36905): drop_caches: 3
+[63449.530555] tee (36909): drop_caches: 3
+[63453.942412] tee (36916): drop_caches: 3
+[63460.112161] tee (36946): drop_caches: 3
+[63467.155485] tee (36958): drop_caches: 3
+[63472.400705] tee (36976): drop_caches: 3
+[63478.321803] tee (36982): drop_caches: 3
+[63482.760841] tee (36989): drop_caches: 3
+[63487.885484] tee (36994): drop_caches: 3
+[63492.891267] tee (36998): drop_caches: 3
+[63497.879363] tee (37007): drop_caches: 3
+[63502.835856] tee (37011): drop_caches: 3
+[63507.912447] tee (37015): drop_caches: 3
+[63512.888998] tee (37020): drop_caches: 3
+[63518.233098] tee (37026): drop_caches: 3
+[63523.160919] tee (37030): drop_caches: 3
+[63528.252815] tee (37034): drop_caches: 3
+[63533.376581] tee (37038): drop_caches: 3
+[63538.312523] tee (37044): drop_caches: 3
+[63543.781237] tee (37049): drop_caches: 3
+[63549.414704] tee (37055): drop_caches: 3
+[63554.376308] tee (37059): drop_caches: 3
+[63559.327488] tee (37063): drop_caches: 3
+[63564.271396] tee (37067): drop_caches: 3
+[63569.029859] tee (37074): drop_caches: 3
+[63573.758495] tee (37078): drop_caches: 3
+[63578.119771] tee (37085): drop_caches: 3
+[63583.281641] tee (37089): drop_caches: 3
+[63588.364508] tee (37093): drop_caches: 3
+[63593.277399] tee (37097): drop_caches: 3
+[63598.299665] tee (37101): drop_caches: 3
+[63603.294024] tee (37105): drop_caches: 3
+[63607.736267] tee (37112): drop_caches: 3
+[63612.903100] tee (37116): drop_caches: 3
+[63617.902309] tee (37120): drop_caches: 3
+[63622.903999] tee (37124): drop_caches: 3
+[63627.838746] tee (37128): drop_caches: 3
+[63632.822431] tee (37132): drop_caches: 3
+[63637.231950] tee (37139): drop_caches: 3
+[63642.298676] tee (37144): drop_caches: 3
+[63647.277211] tee (37148): drop_caches: 3
+[63652.257156] tee (37152): drop_caches: 3
+[63657.253029] tee (37156): drop_caches: 3
+[63662.211042] tee (37160): drop_caches: 3
+[63667.335809] tee (37165): drop_caches: 3
+[63672.578362] tee (37171): drop_caches: 3
+[63677.589494] tee (37176): drop_caches: 3
+[63682.497391] tee (37180): drop_caches: 3
+[63687.407963] tee (37184): drop_caches: 3
+[63692.323982] tee (37188): drop_caches: 3
+[63697.283396] tee (37192): drop_caches: 3
+[63701.669988] tee (37199): drop_caches: 3
+[63706.724937] tee (37203): drop_caches: 3
+[63711.630234] tee (37207): drop_caches: 3
+[63716.580247] tee (37211): drop_caches: 3
+[63721.558466] tee (37215): drop_caches: 3
+[63726.602163] tee (37219): drop_caches: 3
+[63731.022796] tee (37226): drop_caches: 3
+[63736.062359] tee (37230): drop_caches: 3
+[63741.034223] tee (37234): drop_caches: 3
+[63745.998933] tee (37238): drop_caches: 3
+[63750.902742] tee (37242): drop_caches: 3
+[63755.824745] tee (37246): drop_caches: 3
+[63760.573933] tee (37251): drop_caches: 3
+[63765.808273] tee (37257): drop_caches: 3
+[63770.749237] tee (37261): drop_caches: 3
+[63775.700256] tee (37265): drop_caches: 3
+[63780.797654] tee (37271): drop_caches: 3
+[63785.799880] tee (37275): drop_caches: 3
+[63790.842656] tee (37279): drop_caches: 3
+[63795.309385] tee (37286): drop_caches: 3
+[63800.562083] tee (37296): drop_caches: 3
+[63805.504697] tee (37300): drop_caches: 3
+[63810.348762] tee (37304): drop_caches: 3
+[63815.258503] tee (37308): drop_caches: 3
+[63820.211839] tee (37312): drop_caches: 3
+[63824.582863] tee (37319): drop_caches: 3
+[63829.572025] tee (37323): drop_caches: 3
+[63834.533075] tee (37327): drop_caches: 3
+[63839.491499] tee (37331): drop_caches: 3
+[63844.405859] tee (37335): drop_caches: 3
+[63849.302170] tee (37339): drop_caches: 3
+[63853.625405] tee (37346): drop_caches: 3
+[63858.627730] tee (37350): drop_caches: 3
+[63863.546535] tee (37355): drop_caches: 3
+[63868.394102] tee (37371): drop_caches: 3
+[63876.490366] tee (37443): drop_caches: 3
+[63884.513302] tee (37489): drop_caches: 3
+[63894.892629] tee (37565): drop_caches: 3
+[63901.608094] tee (37588): drop_caches: 3
+[63907.232293] tee (37594): drop_caches: 3
+[63912.151319] tee (37598): drop_caches: 3
+[63917.124117] tee (37603): drop_caches: 3
+[63922.270696] tee (37609): drop_caches: 3
+[63927.133730] tee (37613): drop_caches: 3
+[63931.946305] tee (37617): drop_caches: 3
+[63936.891361] tee (37621): drop_caches: 3
+[63941.882509] tee (37625): drop_caches: 3
+[63946.975330] tee (37629): drop_caches: 3
+[63951.468214] tee (37636): drop_caches: 3
+[63956.544862] tee (37640): drop_caches: 3
+[63961.500058] tee (37644): drop_caches: 3
+[63966.485562] tee (37648): drop_caches: 3
+[63971.478886] tee (37652): drop_caches: 3
+[63976.427304] tee (37656): drop_caches: 3
+[63980.851681] tee (37665): drop_caches: 3
+[63985.925681] tee (37669): drop_caches: 3
+[63990.789100] tee (37675): drop_caches: 3
+[63995.865447] tee (37679): drop_caches: 3
+[64000.877558] tee (37683): drop_caches: 3
+[64005.865516] tee (37687): drop_caches: 3
+[64010.504607] tee (37694): drop_caches: 3
+[64015.513823] tee (37698): drop_caches: 3
+[64020.399458] tee (37702): drop_caches: 3
+[64025.379258] tee (37706): drop_caches: 3
+[64030.328333] tee (37710): drop_caches: 3
+[64035.112795] tee (37717): drop_caches: 3
+[64040.146033] tee (37721): drop_caches: 3
+[64044.736083] tee (37728): drop_caches: 3
+[64049.984451] tee (37732): drop_caches: 3
+[64054.882232] tee (37736): drop_caches: 3
+[64059.904349] tee (37740): drop_caches: 3
+[64065.052796] tee (37744): drop_caches: 3
+[64069.937062] tee (37748): drop_caches: 3
+[64074.335028] tee (37755): drop_caches: 3
+[64079.377857] tee (37759): drop_caches: 3
+[64084.438195] tee (37765): drop_caches: 3
+[64089.502933] tee (37769): drop_caches: 3
+[64094.408343] tee (37773): drop_caches: 3
+[64099.360417] tee (37782): drop_caches: 3
+[64103.760978] tee (37789): drop_caches: 3
+[64108.780005] tee (37793): drop_caches: 3
+[64113.673465] tee (37797): drop_caches: 3
+[64118.607576] tee (37801): drop_caches: 3
+[64123.555107] tee (37805): drop_caches: 3
+[64128.468976] tee (37809): drop_caches: 3
+[64133.505692] tee (37815): drop_caches: 3
+[64138.483538] tee (37820): drop_caches: 3
+[64143.417186] tee (37824): drop_caches: 3
+[64148.372485] tee (37828): drop_caches: 3
+[64153.355568] tee (37832): drop_caches: 3
+[64158.240332] tee (37836): drop_caches: 3
+[64163.178577] tee (37840): drop_caches: 3
+[64167.558937] tee (37850): drop_caches: 3
+[64172.654434] tee (37854): drop_caches: 3
+[64177.681491] tee (37858): drop_caches: 3
+[64182.639176] tee (37862): drop_caches: 3
+[64187.617073] tee (37866): drop_caches: 3
+[64192.549425] tee (37870): drop_caches: 3
+[64196.910868] tee (37877): drop_caches: 3
+[64201.936642] tee (37881): drop_caches: 3
+[64206.891923] tee (37886): drop_caches: 3
+[64211.836604] tee (37890): drop_caches: 3
+[64216.787387] tee (37894): drop_caches: 3
+[64221.767167] tee (37898): drop_caches: 3
+[64226.427572] tee (37904): drop_caches: 3
+[64231.509815] tee (37909): drop_caches: 3
+[64236.389301] tee (37913): drop_caches: 3
+[64241.420762] tee (37918): drop_caches: 3
+[64246.365030] tee (37922): drop_caches: 3
+[64251.371522] tee (37926): drop_caches: 3
+[64256.317878] tee (37930): drop_caches: 3
+[64260.754010] tee (37937): drop_caches: 3
+[64265.800432] tee (37941): drop_caches: 3
+[64270.701065] tee (37945): drop_caches: 3
+[64275.639441] tee (37949): drop_caches: 3
+[64280.568353] tee (37953): drop_caches: 3
+[64285.521659] tee (37957): drop_caches: 3
+[64289.899167] tee (37964): drop_caches: 3
+[64294.912610] tee (37968): drop_caches: 3
+[64299.845775] tee (37972): drop_caches: 3
+[64304.782410] tee (37976): drop_caches: 3
+[64309.734930] tee (37980): drop_caches: 3
+[64314.738658] tee (37984): drop_caches: 3
+[64319.361640] tee (37990): drop_caches: 3
+[64324.509116] tee (37995): drop_caches: 3
+[64329.529354] tee (37999): drop_caches: 3
+[64334.566425] tee (38003): drop_caches: 3
+[64339.550497] tee (38007): drop_caches: 3
+[64344.487494] tee (38011): drop_caches: 3
+[64349.465251] tee (38015): drop_caches: 3
+[64354.215248] tee (38022): drop_caches: 3
+[64359.267032] tee (38026): drop_caches: 3
+[64364.211241] tee (38030): drop_caches: 3
+[64369.240579] tee (38034): drop_caches: 3
+[64374.219364] tee (38038): drop_caches: 3
+[64379.213258] tee (38042): drop_caches: 3
+[64383.565236] tee (38049): drop_caches: 3
+[64388.841905] tee (38055): drop_caches: 3
+[64393.857501] tee (38059): drop_caches: 3
+[64398.921786] tee (38069): drop_caches: 3
+[64403.962635] tee (38073): drop_caches: 3
+[64408.897163] tee (38077): drop_caches: 3
+[64413.319638] tee (38084): drop_caches: 3
+[64418.360600] tee (38088): drop_caches: 3
+[64423.326847] tee (38092): drop_caches: 3
+[64428.281352] tee (38096): drop_caches: 3
+[64433.275662] tee (38100): drop_caches: 3
+[64438.234896] tee (38104): drop_caches: 3
+[64443.323784] tee (38109): drop_caches: 3
+[64448.559348] tee (38116): drop_caches: 3
+[64453.550856] tee (38120): drop_caches: 3
+[64458.474212] tee (38124): drop_caches: 3
+[64463.402457] tee (38128): drop_caches: 3
+[64468.401404] tee (38139): drop_caches: 3
+[64475.584796] tee (38206): drop_caches: 3
+[64482.459105] tee (38211): drop_caches: 3
+[64489.859332] tee (38215): drop_caches: 3
+[64496.711163] tee (38219): drop_caches: 3
+[64502.368932] tee (38253): drop_caches: 3
+[64507.363637] tee (38259): drop_caches: 3
+[64512.541404] tee (38264): drop_caches: 3
+[64517.552784] tee (38268): drop_caches: 3
+[64522.536506] tee (38272): drop_caches: 3
+[64527.586306] tee (38276): drop_caches: 3
+[64532.621063] tee (38280): drop_caches: 3
+[64537.697814] tee (38284): drop_caches: 3
+[64542.410002] tee (38292): drop_caches: 3
+[64547.455112] tee (38296): drop_caches: 3
+[64552.382312] tee (38300): drop_caches: 3
+[64557.319164] tee (38304): drop_caches: 3
+[64562.316115] tee (38308): drop_caches: 3
+[64567.305802] tee (38312): drop_caches: 3
+[64571.685661] tee (38319): drop_caches: 3
+[64576.742775] tee (38323): drop_caches: 3
+[64581.723130] tee (38327): drop_caches: 3
+[64586.668758] tee (38331): drop_caches: 3
+[64591.569864] tee (38335): drop_caches: 3
+[64596.616358] tee (38339): drop_caches: 3
+[64600.968612] tee (38346): drop_caches: 3
+[64606.071724] tee (38356): drop_caches: 3
+[64611.293347] tee (38360): drop_caches: 3
+[64616.236386] tee (38364): drop_caches: 3
+[64621.123881] tee (38368): drop_caches: 3
+[64626.060010] tee (38372): drop_caches: 3
+[64633.453065] tee (38386): drop_caches: 3
+[64638.822575] tee (38391): drop_caches: 3
+[64643.982540] tee (38395): drop_caches: 3
+[64649.058607] tee (38399): drop_caches: 3
+[64654.633488] tee (38403): drop_caches: 3
+[64659.715542] tee (38407): drop_caches: 3
+[64664.755733] tee (38412): drop_caches: 3
+[64669.858287] tee (38418): drop_caches: 3
+[64674.869857] tee (38422): drop_caches: 3
+[64679.911847] tee (38426): drop_caches: 3
+[64684.955496] tee (38430): drop_caches: 3
+[64689.929337] tee (38436): drop_caches: 3
+[64695.108361] tee (38445): drop_caches: 3
+[64699.679300] tee (38467): drop_caches: 3
+[64705.078960] tee (38473): drop_caches: 3
+[64710.044907] tee (38477): drop_caches: 3
+[64715.195006] tee (38481): drop_caches: 3
+[64720.206732] tee (38485): drop_caches: 3
+[64725.189232] tee (38489): drop_caches: 3
+[64729.534283] tee (38498): drop_caches: 3
+[64735.367124] tee (38503): drop_caches: 3
+[64740.354784] tee (38507): drop_caches: 3
+[64745.463583] tee (38512): drop_caches: 3
+[64750.419474] tee (38516): drop_caches: 3
+[64755.400974] tee (38520): drop_caches: 3
+[64759.773147] tee (38527): drop_caches: 3
+[64765.036472] tee (38531): drop_caches: 3
+[64769.753958] tee (38538): drop_caches: 3
+[64774.403130] tee (38542): drop_caches: 3
+[64779.350914] tee (38546): drop_caches: 3
+[64784.320418] tee (38550): drop_caches: 3
+[64789.100323] tee (38557): drop_caches: 3
+[64794.293921] tee (38562): drop_caches: 3
+[64799.334618] tee (38567): drop_caches: 3
+[64804.309562] tee (38571): drop_caches: 3
+[64809.274039] tee (38576): drop_caches: 3
+[64814.378205] tee (38580): drop_caches: 3
+[64819.366473] tee (38584): drop_caches: 3
+[64823.972693] tee (38591): drop_caches: 3
+[64829.071651] tee (38595): drop_caches: 3
+[64834.407196] tee (38600): drop_caches: 3
+[64839.360325] tee (38604): drop_caches: 3
+[64844.410001] tee (38609): drop_caches: 3
+[64849.504359] tee (38613): drop_caches: 3
+[64853.888997] tee (38621): drop_caches: 3
+[64858.978210] tee (38626): drop_caches: 3
+[64863.934468] tee (38630): drop_caches: 3
+[64868.905856] tee (38634): drop_caches: 3
+[64873.924306] tee (38638): drop_caches: 3
+[64878.922412] tee (38642): drop_caches: 3
+[64883.300676] tee (38649): drop_caches: 3
+[64888.404243] tee (38653): drop_caches: 3
+[64893.538874] tee (38657): drop_caches: 3
+[64898.545876] tee (38662): drop_caches: 3
+[64903.580731] tee (38666): drop_caches: 3
+[64908.590761] tee (38670): drop_caches: 3
+[64913.212798] tee (38675): drop_caches: 3
+[64918.411877] tee (38681): drop_caches: 3
+[64923.450479] tee (38686): drop_caches: 3
+[64928.454877] tee (38690): drop_caches: 3
+[64933.370831] tee (38694): drop_caches: 3
+[64938.331619] tee (38698): drop_caches: 3
+[64943.350809] tee (38702): drop_caches: 3
+[64947.727890] tee (38709): drop_caches: 3
+[64952.948124] tee (38713): drop_caches: 3
+[64957.926114] tee (38717): drop_caches: 3
+[64962.978891] tee (38721): drop_caches: 3
+[64967.987860] tee (38725): drop_caches: 3
+[64972.977547] tee (38729): drop_caches: 3
+[64977.321755] tee (38736): drop_caches: 3
+[64982.462682] tee (38741): drop_caches: 3
+[64987.383215] tee (38745): drop_caches: 3
+[64992.411748] tee (38751): drop_caches: 3
+[64997.429036] tee (38761): drop_caches: 3
+[65002.412387] tee (38765): drop_caches: 3
+[65006.843670] tee (38775): drop_caches: 3
+[65011.929485] tee (38779): drop_caches: 3
+[65016.812202] tee (38783): drop_caches: 3
+[65021.747289] tee (38787): drop_caches: 3
+[65026.720758] tee (38791): drop_caches: 3
+[65031.660167] tee (38795): drop_caches: 3
+[65036.670163] tee (38799): drop_caches: 3
+[65041.465306] tee (38809): drop_caches: 3
+[65043.306733] mix-long-fixed47-34828 phase=B END
+[65043.619386] NVMeVirt: Measurement: command=stop epoch=1 host_bytes=704182980608 learner_active=0
+[65043.941714] EXT4-fs (nvme0n1): unmounting filesystem 07a3f2a5-6e81-49c8-95aa-f9f67bf6f8b1.
+[65044.227705] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[65044.227766] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=171919673 gc_pages=149022695 gc_count=5014724 WAF=1.866 warmup_gc=100-per-part
+[65044.299485] NVMeVirt: Virtual NVMe device closed

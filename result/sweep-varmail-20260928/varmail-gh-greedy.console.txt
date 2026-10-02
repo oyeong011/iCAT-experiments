@@ -1,0 +1,44 @@
+[START] module=gh-greedy
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[WORKLOAD] source=/home/oy/iCAT/workloads/filebench/varmail.f runtime=300s
+Filebench Version 1.5-alpha3
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+0.000: Allocated 173MB of shared memory
+0.418: Varmail Version 3.0 personality successfully loaded
+0.418: Populating and pre-allocating filesets
+0.484: bigfileset populated: 150000 files, avg. dir. width = 1000000, avg. dir. depth = 0.9, 0 leafdirs, 2346.993MB total size
+0.484: Removing bigfileset tree (if exists)
+0.486: Pre-allocating directories in bigfileset tree
+0.486: Pre-allocating files in bigfileset tree
+4.923: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+4.923: Population and pre-allocation of filesets completed
+4.923: Starting 1 filereader instances
+5.927: Running...
+305.947: Run took 300 seconds...
+305.948: Per-Operation Breakdown
+closefile4           850757ops     2836ops/s   0.0mb/s      0.0ms/op [0.00ms -  5.45ms]
+readfile4            850757ops     2836ops/s  43.6mb/s      2.2ms/op [0.00ms - 24.11ms]
+openfile4            850764ops     2836ops/s   0.0mb/s      0.1ms/op [0.00ms - 101.68ms]
+closefile3           850764ops     2836ops/s   0.0mb/s      0.0ms/op [0.00ms -  3.30ms]
+fsyncfile3           850764ops     2836ops/s   0.0mb/s      0.2ms/op [0.00ms - 18.64ms]
+appendfilerand3      850764ops     2836ops/s  22.2mb/s      0.1ms/op [0.00ms - 11.67ms]
+readfile3            850765ops     2836ops/s  43.6mb/s      2.3ms/op [0.00ms - 30.35ms]
+openfile3            850773ops     2836ops/s   0.0mb/s      0.1ms/op [0.00ms - 12.39ms]
+closefile2           850773ops     2836ops/s   0.0mb/s      0.0ms/op [0.00ms -  3.99ms]
+fsyncfile2           850773ops     2836ops/s   0.0mb/s      0.2ms/op [0.05ms - 22.32ms]
+appendfilerand2      850773ops     2836ops/s  22.1mb/s      0.0ms/op [0.01ms -  6.03ms]
+createfile2          850773ops     2836ops/s   0.0mb/s      0.2ms/op [0.01ms - 32.47ms]
+deletefile1          850773ops     2836ops/s   0.0mb/s      0.2ms/op [0.02ms - 20.74ms]
+305.948: IO Summary: 11059973 ops 36864.073 ops/s 5671/5671 rd/wr 131.6mb/s   1.4ms/op
+305.948: Shutting down processes
+[DURABLE] sync + NVMe flush
+[FLUSH] phase=run-durable-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/varmail/summary.txt
+[RESULT] app=/home/oy/iCAT/result/filebench/varmail/gh-greedy.txt
+[RESULT] dmesg=/home/oy/iCAT/result/filebench/varmail/dmesg-gh-greedy.log
+[RESULT] summary=/home/oy/iCAT/result/filebench/varmail/summary.txt
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/varmail/summary.txt
+[WAF] module=gh-greedy WAF=4.769 host_pages=20155412 gc_copied=N/A -> /home/oy/iCAT/result/filebench/varmail/summary.txt

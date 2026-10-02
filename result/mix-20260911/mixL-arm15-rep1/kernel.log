@@ -1,0 +1,67 @@
+[1727518.187170] mix-mixL-arm15-2306686 BEGIN
+[1727518.349276] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[1727518.349285] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[1727518.360230] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[1727518.371511] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1727518.383195] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1727518.383215] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1727518.383218] NVMeVirt: Fixed CAT init ns=0 part=0 arm=15 k=4 scale_pct=25 age_ratio=4
+[1727518.384850] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[1727518.384906] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1727518.384908] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=4 initial_scale_pct=25 initial_age_ratio=4 warmup_gc=100
+[1727518.395658] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1727518.405821] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1727518.405837] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1727518.405840] NVMeVirt: Fixed CAT init ns=0 part=1 arm=15 k=4 scale_pct=25 age_ratio=4
+[1727518.407179] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1727518.407182] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=4 initial_scale_pct=25 initial_age_ratio=4 warmup_gc=100
+[1727518.417446] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1727518.427960] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1727518.427975] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1727518.427977] NVMeVirt: Fixed CAT init ns=0 part=2 arm=15 k=4 scale_pct=25 age_ratio=4
+[1727518.429215] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1727518.429218] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=4 initial_scale_pct=25 initial_age_ratio=4 warmup_gc=100
+[1727518.439297] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1727518.449732] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1727518.449753] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1727518.449756] NVMeVirt: Fixed CAT init ns=0 part=3 arm=15 k=4 scale_pct=25 age_ratio=4
+[1727518.451541] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1727518.451545] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=4 initial_scale_pct=25 initial_age_ratio=4 warmup_gc=100
+[1727518.451567] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[1727518.451569] NVMeVirt: ns 0/1: size 7655 MiB
+[1727518.451634] PCI host bridge to bus 0001:10
+[1727518.451637] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[1727518.451640] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[1727518.451642] pci_bus 0001:10: root bus resource [bus 00-ff]
+[1727518.451652] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[1727518.451656] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[1727518.451659] pci 0001:10:00.0: enabling Extended Tags
+[1727518.451814] NVMeVirt: Virtual PCI bus created (node 0)
+[1727518.452302] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[1727518.452323] NVMeVirt: Virtual NVMe device created
+[1727518.452482] nvme nvme0: pci function 0001:10:00.0
+[1727518.452496] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[1727518.455408] nvme nvme0: 8/0/0 default/read/poll queues
+[1727518.945407] EXT4-fs (nvme0n1): mounted filesystem c00a38ca-2ef5-45b0-bac5-701faa24fb56 r/w with ordered data mode. Quota mode: none.
+[1727601.291946] NVMeVirt: Fixed CAT init ns=0 part=0 arm=15 k=4 scale_pct=25 age_ratio=4
+[1727601.291952] NVMeVirt: Fixed CAT init ns=0 part=1 arm=15 k=4 scale_pct=25 age_ratio=4
+[1727601.291953] NVMeVirt: Fixed CAT init ns=0 part=2 arm=15 k=4 scale_pct=25 age_ratio=4
+[1727601.291955] NVMeVirt: Fixed CAT init ns=0 part=3 arm=15 k=4 scale_pct=25 age_ratio=4
+[1727601.291956] NVMeVirt: Measurement: command=start epoch=1 host_bytes=0 learner_active=1
+[1727601.302072] mix-mixL-arm15-2306686 phase=A START
+[1727601.310966] mix-mixL-arm15-2306686 phase=A cycle=1 fast
+[1727661.612789] mix-mixL-arm15-2306686 phase=A cycle=1 slow
+[1727721.949929] mix-mixL-arm15-2306686 phase=A cycle=2 fast
+[1727782.265211] mix-mixL-arm15-2306686 phase=A cycle=2 slow
+[1727842.562984] mix-mixL-arm15-2306686 phase=A cycle=3 fast
+[1727902.877225] mix-mixL-arm15-2306686 phase=A cycle=3 slow
+[1727963.188122] mix-mixL-arm15-2306686 phase=A cycle=4 fast
+[1728023.490069] mix-mixL-arm15-2306686 phase=A cycle=4 slow
+[1728083.794025] mix-mixL-arm15-2306686 phase=A cycle=5 fast
+[1728144.092635] mix-mixL-arm15-2306686 phase=A cycle=5 slow
+[1728204.419539] mix-mixL-arm15-2306686 phase=A END
+[1728204.458921] NVMeVirt: Measurement: command=stop epoch=1 host_bytes=61496737792 learner_active=0
+[1728204.618575] EXT4-fs (nvme0n1): unmounting filesystem c00a38ca-2ef5-45b0-bac5-701faa24fb56.
+[1728204.682726] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[1728204.682776] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=15013852 gc_pages=9758996 gc_count=387076 WAF=1.649 warmup_gc=100-per-part
+[1728204.761157] NVMeVirt: Virtual NVMe device closed

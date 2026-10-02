@@ -1,0 +1,68 @@
+[1548320.697823] mix-mixO-arm46-1681181 BEGIN
+[1548321.093100] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[1548321.093107] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[1548321.103716] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[1548321.115856] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1548321.127497] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1548321.127511] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1548321.127513] NVMeVirt: Fixed CAT init ns=0 part=0 arm=46 k=10 scale_pct=25 age_ratio=7
+[1548321.128403] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[1548321.128439] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1548321.128440] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=10 initial_scale_pct=25 initial_age_ratio=7 warmup_gc=100
+[1548321.139445] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1548321.150498] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1548321.150521] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1548321.150523] NVMeVirt: Fixed CAT init ns=0 part=1 arm=46 k=10 scale_pct=25 age_ratio=7
+[1548321.151892] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1548321.151910] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=10 initial_scale_pct=25 initial_age_ratio=7 warmup_gc=100
+[1548321.162838] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1548321.173526] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1548321.173538] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1548321.173540] NVMeVirt: Fixed CAT init ns=0 part=2 arm=46 k=10 scale_pct=25 age_ratio=7
+[1548321.174473] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1548321.174476] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=10 initial_scale_pct=25 initial_age_ratio=7 warmup_gc=100
+[1548321.185288] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1548321.197032] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[1548321.197047] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[1548321.197049] NVMeVirt: Fixed CAT init ns=0 part=3 arm=46 k=10 scale_pct=25 age_ratio=7
+[1548321.198046] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[1548321.198050] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=10 initial_scale_pct=25 initial_age_ratio=7 warmup_gc=100
+[1548321.198069] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[1548321.198071] NVMeVirt: ns 0/1: size 7655 MiB
+[1548321.198126] PCI host bridge to bus 0001:10
+[1548321.198128] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[1548321.198131] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[1548321.198134] pci_bus 0001:10: root bus resource [bus 00-ff]
+[1548321.198142] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[1548321.198146] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[1548321.198149] pci 0001:10:00.0: enabling Extended Tags
+[1548321.198273] NVMeVirt: Virtual PCI bus created (node 0)
+[1548321.198552] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[1548321.198677] NVMeVirt: Virtual NVMe device created
+[1548321.198679] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[1548321.198798] nvme nvme0: pci function 0001:10:00.0
+[1548321.201668] nvme nvme0: 8/0/0 default/read/poll queues
+[1548321.845587] EXT4-fs (nvme0n1): mounted filesystem df5335fa-5fd1-48d1-8d10-c6e21655ecef r/w with ordered data mode. Quota mode: none.
+[1548328.723538] show_signal_msg: 2 callbacks suppressed
+[1548328.723542] thunar-volman[1681272]: segfault at 1 ip 0000796553bd2080 sp 00007ffe06905c40 error 6 in libgtk-3.so.0.2409.32[3d2080,796553883000+3ae000] likely on CPU 0 (core 0, socket 0)
+[1548328.723550] Code: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 <00> 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[1548344.257040] apport-gtk[1681330]: segfault at 1 ip 000075a5145d2080 sp 00007fff28efeb30 error 6 in libgtk-3.so.0.2409.32[3d2080,75a514283000+3ae000] likely on CPU 3 (core 3, socket 0)
+[1548344.257051] Code: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 <00> 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[1548402.785475] apport-gtk[1681404]: segfault at 1 ip 000077f8efdd2080 sp 00007ffced197f60 error 6 in libgtk-3.so.0.2409.32[3d2080,77f8efa83000+3ae000] likely on CPU 7 (core 3, socket 0)
+[1548402.785485] Code: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 <00> 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[1548404.269455] NVMeVirt: Fixed CAT init ns=0 part=0 arm=46 k=10 scale_pct=25 age_ratio=7
+[1548404.269462] NVMeVirt: Fixed CAT init ns=0 part=1 arm=46 k=10 scale_pct=25 age_ratio=7
+[1548404.269464] NVMeVirt: Fixed CAT init ns=0 part=2 arm=46 k=10 scale_pct=25 age_ratio=7
+[1548404.269466] NVMeVirt: Fixed CAT init ns=0 part=3 arm=46 k=10 scale_pct=25 age_ratio=7
+[1548404.269467] NVMeVirt: Measurement: command=start epoch=1 host_bytes=0 learner_active=1
+[1548404.328844] mix-mixO-arm46-1681181 phase=A START
+[1548418.273488] apport-gtk[1682350]: segfault at 1 ip 0000769d9e7d2080 sp 00007ffcc6f35960 error 6 in libgtk-3.so.0.2409.32[3d2080,769d9e483000+3ae000] likely on CPU 4 (core 0, socket 0)
+[1548418.273502] Code: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 <00> 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[1549310.639318] mix-mixO-arm46-1681181 phase=A END
+[1549310.753665] mix-mixO-arm46-1681181 phase=B START
+[1550214.157998] mix-mixO-arm46-1681181 phase=B END
+[1550214.226358] NVMeVirt: Measurement: command=stop epoch=1 host_bytes=715267633152 learner_active=0
+[1550214.367895] EXT4-fs (nvme0n1): unmounting filesystem df5335fa-5fd1-48d1-8d10-c6e21655ecef.
+[1550214.491433] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[1550214.491535] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=174625887 gc_pages=203715952 gc_count=5911590 WAF=2.166 warmup_gc=100-per-part
+[1550214.574353] NVMeVirt: Virtual NVMe device closed

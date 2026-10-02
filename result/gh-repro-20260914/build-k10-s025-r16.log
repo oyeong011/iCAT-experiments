@@ -1,0 +1,37 @@
+make: Entering directory '/usr/src/linux-headers-7.0.0-31-generic'
+make[1]: Entering directory '/home/oy/iCAT/gh-src-7236149'
+warning: the compiler differs from the one used to build the kernel
+  The kernel was built by: x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  You are using:           gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+warning: pahole version differs from the one used to build the kernel
+  The kernel was built with: 125
+  You are using:             0
+  CC [M]  main.o
+  CC [M]  pci.o
+  CC [M]  admin.o
+  CC [M]  io.o
+  CC [M]  dma.o
+  CC [M]  ssd.o
+  CC [M]  conv_ftl.o
+  CC [M]  pqueue/pqueue.o
+In file included from main.c:20:
+conv_ftl.h:23:2: error: #error "Remove old CAT_FIG7_* sweep flags: v2 searches their complete grid online"
+   23 | #error "Remove old CAT_FIG7_* sweep flags: v2 searches their complete grid online"
+      |  ^~~~~
+In file included from conv_ftl.c:12:
+conv_ftl.h:23:2: error: #error "Remove old CAT_FIG7_* sweep flags: v2 searches their complete grid online"
+   23 | #error "Remove old CAT_FIG7_* sweep flags: v2 searches their complete grid online"
+      |  ^~~~~
+In file included from admin.c:4:
+conv_ftl.h:23:2: error: #error "Remove old CAT_FIG7_* sweep flags: v2 searches their complete grid online"
+   23 | #error "Remove old CAT_FIG7_* sweep flags: v2 searches their complete grid online"
+      |  ^~~~~
+make[3]: *** [/usr/src/linux-headers-7.0.0-31-generic/scripts/Makefile.build:289: admin.o] Error 1
+make[3]: *** Waiting for unfinished jobs....
+make[3]: *** [/usr/src/linux-headers-7.0.0-31-generic/scripts/Makefile.build:289: conv_ftl.o] Error 1
+make[3]: *** [/usr/src/linux-headers-7.0.0-31-generic/scripts/Makefile.build:289: main.o] Error 1
+make[2]: *** [/usr/src/linux-headers-7.0.0-31-generic/Makefile:2134: .] Error 2
+make[1]: *** [/usr/src/linux-headers-7.0.0-31-generic/Makefile:248: __sub-make] Error 2
+make[1]: Leaving directory '/home/oy/iCAT/gh-src-7236149'
+make: *** [Makefile:248: __sub-make] Error 2
+make: Leaving directory '/usr/src/linux-headers-7.0.0-31-generic'

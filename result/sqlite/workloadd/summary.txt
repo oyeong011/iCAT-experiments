@@ -1,0 +1,234 @@
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:37:59 +0900
+module      : gh-cat37
+phase       : load-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:38:19 +0900
+module      : gh-cat37
+phase       : run-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:38:20 +0900
+module      : gh-cat37
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-15 03:38:22 +0900
+module      : gh-cat37
+workload    : workloadd
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[287569.786413] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[287569.786413] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:38:31 +0900
+module      : gh-online
+phase       : load-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:38:49 +0900
+module      : gh-online
+phase       : run-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:38:51 +0900
+module      : gh-online
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-15 03:38:52 +0900
+module      : gh-online
+workload    : workloadd
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[287600.024739] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[287600.024739] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:39:00 +0900
+module      : gh-greedy
+phase       : load-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:39:18 +0900
+module      : gh-greedy
+phase       : run-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:39:20 +0900
+module      : gh-greedy
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-15 03:39:21 +0900
+module      : gh-greedy
+workload    : workloadd
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[287629.003096] NVMeVirt: GC stats: ns=0 policy=greedy host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[287629.003096] NVMeVirt: GC stats: ns=0 policy=greedy host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:39:29 +0900
+module      : fixed10
+phase       : load-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:39:41 +0900
+module      : fixed10
+phase       : run-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:39:43 +0900
+module      : fixed10
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-15 03:39:44 +0900
+module      : fixed10
+workload    : workloadd
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[287652.310444] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[287652.310444] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:39:52 +0900
+module      : fixed47
+phase       : load-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:40:12 +0900
+module      : fixed47
+phase       : run-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:40:15 +0900
+module      : fixed47
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-15 03:40:17 +0900
+module      : fixed47
+workload    : workloadd
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[287684.822863] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[287684.822863] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:40:26 +0900
+module      : fixed50
+phase       : load-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:40:44 +0900
+module      : fixed50
+phase       : run-end
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== NVME FLUSH =====
+date        : 2026-09-15 03:40:45 +0900
+module      : fixed50
+phase       : cleanup
+device      : /dev/nvme0n1
+exit_status : 0
+output      : nvme-cli not installed; sync only
+
+===== GC / WAF RESULT =====
+date        : 2026-09-15 03:40:47 +0900
+module      : fixed50
+workload    : workloadd
+source      : dmesg
+WAF         : N/A
+waf_x1000   : N/A
+host_pages  : 0
+gc_copied   : N/A
+gc_cnt      : N/A
+--- final WAF source line ---
+[287714.449275] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+--- all current-run WAF lines ---
+[287714.449275] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part

@@ -1,0 +1,11 @@
+wal
+grep: /home/oy/iCAT/result/mix-20260911/mixB-fixed37-rep1/ycsb-run.txt: No such file or directory
+FAIL line=229 command=grep -m1 'Throughput' "$dir/ycsb-run.txt"
+total host_bytes=131533479936 host_pages=32112666 gc_pages=70697956 WAF=3.201560
+phaseA(sqlite-a) host_pages=8112001 gc_pages=4145288 WAF=1.511007
+phaseB(test4) host_pages=24000665 gc_pages=66552668 WAF=3.772951
+phaseA-load host_pages=1398349 gc_pages=612125 WAF=1.437748
+phaseA-run host_pages=6713652 gc_pages=3533163 WAF=1.526265
+ycsb-load [OVERALL], Throughput(ops/sec), 24229.697532609134
+ycsb-run 
+MIX mixB fixed37 exit=0

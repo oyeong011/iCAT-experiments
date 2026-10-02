@@ -1,0 +1,51 @@
+[START] module=fixed47
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[WORKLOAD] source=/home/oy/iCAT/workloads/filebench/webproxy.f runtime=300s
+Filebench Version 1.5-alpha3
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+0.000: Allocated 173MB of shared memory
+0.307: Web proxy-server Version 3.0 personality successfully loaded
+0.307: Populating and pre-allocating filesets
+0.309: bigfileset populated: 10000 files, avg. dir. width = 1000000, avg. dir. depth = 0.7, 0 leafdirs, 156.250MB total size
+0.309: Removing bigfileset tree (if exists)
+0.337: Pre-allocating directories in bigfileset tree
+0.337: Pre-allocating files in bigfileset tree
+0.583: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.583: Population and pre-allocation of filesets completed
+0.583: Starting 1 proxycache instances
+1.588: Running...
+301.696: Run took 300 seconds...
+301.737: Per-Operation Breakdown
+limit                0ops        0ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+closefile6           8485247ops    28274ops/s   0.0mb/s      0.0ms/op [0.00ms - 30.28ms]
+readfile6            8485247ops    28274ops/s 221.0mb/s      0.0ms/op [0.00ms - 16.59ms]
+openfile6            8485255ops    28274ops/s   0.0mb/s      0.1ms/op [0.00ms - 50.90ms]
+closefile5           8485261ops    28274ops/s   0.0mb/s      0.0ms/op [0.00ms - 11.32ms]
+readfile5            8485261ops    28274ops/s 221.0mb/s      0.0ms/op [0.00ms - 23.59ms]
+openfile5            8485269ops    28274ops/s   0.0mb/s      0.1ms/op [0.00ms - 67.29ms]
+closefile4           8485277ops    28274ops/s   0.0mb/s      0.0ms/op [0.00ms - 26.66ms]
+readfile4            8485277ops    28274ops/s 221.0mb/s      0.0ms/op [0.00ms - 34.59ms]
+openfile4            8485285ops    28274ops/s   0.0mb/s      0.2ms/op [0.00ms - 50.75ms]
+closefile3           8485297ops    28274ops/s   0.0mb/s      0.0ms/op [0.00ms - 28.10ms]
+readfile3            8485297ops    28274ops/s 220.9mb/s      0.0ms/op [0.00ms - 33.37ms]
+openfile3            8485306ops    28274ops/s   0.0mb/s      0.2ms/op [0.00ms - 50.63ms]
+closefile2           8485311ops    28274ops/s   0.0mb/s      0.0ms/op [0.00ms - 18.25ms]
+readfile2            8485312ops    28274ops/s 220.9mb/s      0.0ms/op [0.00ms - 22.37ms]
+openfile2            8485318ops    28274ops/s   0.0mb/s      0.2ms/op [0.00ms - 44.84ms]
+closefile1           8485324ops    28274ops/s   0.0mb/s      0.0ms/op [0.00ms - 16.78ms]
+appendfilerand1      8485327ops    28274ops/s 220.8mb/s      0.0ms/op [0.00ms - 42.04ms]
+createfile1          8485335ops    28274ops/s   0.0mb/s      0.2ms/op [0.01ms - 125.71ms]
+deletefile1          8484136ops    28270ops/s   0.0mb/s      0.2ms/op [0.01ms - 178.40ms]
+301.737: IO Summary: 161219342 ops 537207.743 ops/s 141371/28274 rd/wr 1325.6mb/s   0.2ms/op
+301.737: Shutting down processes
+[DURABLE] sync + NVMe flush
+[FLUSH] phase=run-durable-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/webproxy/summary.txt
+[RESULT] app=/home/oy/iCAT/result/filebench/webproxy/fixed47.txt
+[RESULT] dmesg=/home/oy/iCAT/result/filebench/webproxy/dmesg-fixed47.log
+[RESULT] summary=/home/oy/iCAT/result/filebench/webproxy/summary.txt
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/webproxy/summary.txt
+[WAF] module=fixed47 WAF=N/A host_pages=0 gc_copied=N/A -> /home/oy/iCAT/result/filebench/webproxy/summary.txt

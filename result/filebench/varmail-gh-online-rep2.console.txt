@@ -1,0 +1,44 @@
+[START] module=gh-online
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[WORKLOAD] source=/home/oy/iCAT/workloads/filebench/varmail.f runtime=300s
+Filebench Version 1.5-alpha3
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+0.000: Allocated 173MB of shared memory
+0.282: Varmail Version 3.0 personality successfully loaded
+0.282: Populating and pre-allocating filesets
+0.344: bigfileset populated: 150000 files, avg. dir. width = 1000000, avg. dir. depth = 0.9, 0 leafdirs, 2346.993MB total size
+0.344: Removing bigfileset tree (if exists)
+0.378: Pre-allocating directories in bigfileset tree
+0.378: Pre-allocating files in bigfileset tree
+4.702: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+4.702: Population and pre-allocation of filesets completed
+4.702: Starting 1 filereader instances
+5.705: Running...
+305.723: Run took 300 seconds...
+305.724: Per-Operation Breakdown
+closefile4           859252ops     2864ops/s   0.0mb/s      0.0ms/op [0.00ms -  3.43ms]
+readfile4            859252ops     2864ops/s  44.1mb/s      1.9ms/op [0.00ms - 27.73ms]
+openfile4            859256ops     2864ops/s   0.0mb/s      0.2ms/op [0.00ms - 19.93ms]
+closefile3           859256ops     2864ops/s   0.0mb/s      0.0ms/op [0.00ms -  3.36ms]
+fsyncfile3           859257ops     2864ops/s   0.0mb/s      0.4ms/op [0.00ms - 19.77ms]
+appendfilerand3      859258ops     2864ops/s  22.4mb/s      0.1ms/op [0.00ms - 25.04ms]
+readfile3            859259ops     2864ops/s  44.3mb/s      1.9ms/op [0.00ms - 30.46ms]
+openfile3            859268ops     2864ops/s   0.0mb/s      0.1ms/op [0.00ms - 21.32ms]
+closefile2           859268ops     2864ops/s   0.0mb/s      0.0ms/op [0.00ms -  2.88ms]
+fsyncfile2           859268ops     2864ops/s   0.0mb/s      0.4ms/op [0.03ms - 19.80ms]
+appendfilerand2      859268ops     2864ops/s  22.4mb/s      0.0ms/op [0.00ms -  5.28ms]
+createfile2          859268ops     2864ops/s   0.0mb/s      0.2ms/op [0.01ms - 13.76ms]
+deletefile1          859266ops     2864ops/s   0.0mb/s      0.3ms/op [0.02ms - 25.48ms]
+305.724: IO Summary: 11170396 ops 37232.380 ops/s 5728/5728 rd/wr 133.1mb/s   1.4ms/op
+305.724: Shutting down processes
+[DURABLE] sync + NVMe flush
+[FLUSH] phase=run-durable-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/varmail/summary.txt
+[RESULT] app=/home/oy/iCAT/result/filebench/varmail/gh-online.txt
+[RESULT] dmesg=/home/oy/iCAT/result/filebench/varmail/dmesg-gh-online.log
+[RESULT] summary=/home/oy/iCAT/result/filebench/varmail/summary.txt
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/varmail/summary.txt
+[WAF] module=gh-online WAF=4.916 host_pages=19508445 gc_copied=N/A -> /home/oy/iCAT/result/filebench/varmail/summary.txt

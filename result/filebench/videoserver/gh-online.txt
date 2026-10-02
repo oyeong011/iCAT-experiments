@@ -1,0 +1,43 @@
+[START] module=gh-online
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[WORKLOAD] source=/home/oy/iCAT/workloads/filebench/videoserver.f runtime=300s
+Filebench Version 1.5-alpha3
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+0.000: Allocated 173MB of shared memory
+0.276: Video Server Version 3.0 personality successfully loaded
+0.276: Populating and pre-allocating filesets
+0.277: passivevids populated: 194 files, avg. dir. width = 20, avg. dir. depth = 1.8, 0 leafdirs, 3104.000MB total size
+0.277: Removing passivevids tree (if exists)
+0.328: Pre-allocating directories in passivevids tree
+0.328: Pre-allocating files in passivevids tree
+0.595: activevids populated: 32 files, avg. dir. width = 4, avg. dir. depth = 2.5, 0 leafdirs, 512.000MB total size
+0.595: Removing activevids tree (if exists)
+0.597: Pre-allocating directories in activevids tree
+0.597: Pre-allocating files in activevids tree
+1.027: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+1.044: Population and pre-allocation of filesets completed
+1.044: Starting 1 vidreaders instances
+1.045: Starting 1 vidwriter instances
+2.050: Running...
+302.075: Run took 300 seconds...
+302.075: Per-Operation Breakdown
+serverlimit          116853ops      389ops/s   0.0mb/s    122.2ms/op [0.00ms - 5003.63ms]
+vidreader            116997ops      390ops/s  96.0mb/s      0.1ms/op [0.00ms -  1.92ms]
+replaceinterval      29ops        0ops/s   0.0mb/s  10000.1ms/op [10000.03ms - 10000.11ms]
+wrtclose             30ops        0ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.01ms]
+newvid               30ops        0ops/s   1.6mb/s      2.9ms/op [2.76ms -  3.91ms]
+wrtopen              30ops        0ops/s   0.0mb/s      0.0ms/op [0.02ms -  0.04ms]
+vidremover           30ops        0ops/s   0.0mb/s      0.5ms/op [0.07ms -  0.79ms]
+302.075: IO Summary: 117117 ops 390.357 ops/s 390/0 rd/wr  97.6mb/s   0.1ms/op
+302.075: Shutting down processes
+[DURABLE] sync + NVMe flush
+[FLUSH] phase=run-durable-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/videoserver/summary.txt
+[RESULT] app=/home/oy/iCAT/result/filebench/videoserver/gh-online.txt
+[RESULT] dmesg=/home/oy/iCAT/result/filebench/videoserver/dmesg-gh-online.log
+[RESULT] summary=/home/oy/iCAT/result/filebench/videoserver/summary.txt
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/videoserver/summary.txt
+[WAF] module=gh-online WAF=N/A host_pages=0 gc_copied=N/A -> /home/oy/iCAT/result/filebench/videoserver/summary.txt

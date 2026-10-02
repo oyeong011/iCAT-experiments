@@ -1,0 +1,120 @@
+[DMESG] start marker: iCAT_SQLITE_START module=fixed10 workload=d run=20260915-033921-678695
+[START] module=fixed10
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[SQLITE] schema setup: /home/oy/iCAT/mnt/ycsb.db
+wal
+[LOAD] /home/oy/iCAT/workloads/sqlite/workloadd
+/usr/bin/java  -classpath /home/oy/YCSB/ycsb-0.17.0/conf:/home/oy/YCSB/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/core-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/conf:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-collections-3.2.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-lang-2.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-pool-1.5.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jms_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jta_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/jdbc-binding-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-jdbc-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-kernel-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-lib-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/serp-1.13.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/slf4j-api-1.7.36.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar site.ycsb.Client -load -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloadd -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+Picked up JAVA_TOOL_OPTIONS: -Xshare:off
+Command line: -load -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloadd -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Adding shard node URL: jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db
+2026-09-15 03:39:27:542 0 sec: 0 operations; est completion in 0 second 
+Using shards: 1, batchSize:1000, fetchSize: -1
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-15 03:39:28:324 1 sec: 1000 operations; 950.57 current ops/sec; [CLEANUP: Count=1, Max=2869, Min=2868, Avg=2869, 90=2869, 99=2869, 99.9=2869, 99.99=2869] [INSERT: Count=1000, Max=5727, Min=22, Avg=89.29, 90=146, 99=303, 99.9=3643, 99.99=5727] 
+[OVERALL], RunTime(ms), 1052
+[OVERALL], Throughput(ops/sec), 950.5703422053232
+[TOTAL_GCS_G1_Young_Generation], Count, 1
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 3
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.28517110266159695
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 1
+[TOTAL_GC_TIME], Time(ms), 3
+[TOTAL_GC_TIME_%], Time(%), 0.28517110266159695
+[CLEANUP], Operations, 1
+[CLEANUP], AverageLatency(us), 2869.0
+[CLEANUP], MinLatency(us), 2868
+[CLEANUP], MaxLatency(us), 2869
+[CLEANUP], 95thPercentileLatency(us), 2869
+[CLEANUP], 99thPercentileLatency(us), 2869
+[INSERT], Operations, 1000
+[INSERT], AverageLatency(us), 89.291
+[INSERT], MinLatency(us), 22
+[INSERT], MaxLatency(us), 5727
+[INSERT], 95thPercentileLatency(us), 191
+[INSERT], 99thPercentileLatency(us), 303
+[INSERT], Return=OK, 1000
+[FLUSH] phase=load-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/sqlite/workloadd/summary.txt
+[DROP-CACHES] scope=run interval=4s pid=678830
+[RUN] /home/oy/iCAT/workloads/sqlite/workloadd
+/usr/bin/java  -classpath /home/oy/YCSB/ycsb-0.17.0/conf:/home/oy/YCSB/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/core-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/conf:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-collections-3.2.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-lang-2.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-pool-1.5.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jms_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jta_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/jdbc-binding-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-jdbc-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-kernel-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-lib-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/serp-1.13.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/slf4j-api-1.7.36.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar site.ycsb.Client -t -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloadd -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p jdbc.autocommit=true -p hdrhistogram.percentiles=95,99,99.9,99.99,99.999,99.9999
+Picked up JAVA_TOOL_OPTIONS: -Xshare:off
+Command line: -t -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloadd -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p jdbc.autocommit=true -p hdrhistogram.percentiles=95,99,99.9,99.99,99.999,99.9999
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Adding shard node URL: jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db
+2026-09-15 03:39:38:526 0 sec: 0 operations; est completion in 0 second 
+Using shards: 1, batchSize:-1, fetchSize: -1
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-15 03:39:39:624 1 sec: 1000 operations; 784.31 current ops/sec; [READ: Count=953, Max=4687, Min=17, Avg=51.38, 90=116, 99=186, 99.9=394, 99.99=4687] [CLEANUP: Count=1, Max=903, Min=903, Avg=903, 90=903, 99=903, 99.9=903, 99.99=903] [INSERT: Count=47, Max=3179, Min=291, Avg=528.85, 90=620, 99=3179, 99.9=3179, 99.99=3179] 
+[OVERALL], RunTime(ms), 1275
+[OVERALL], Throughput(ops/sec), 784.3137254901961
+[TOTAL_GCS_G1_Young_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.0
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 0
+[TOTAL_GC_TIME], Time(ms), 0
+[TOTAL_GC_TIME_%], Time(%), 0.0
+[READ], Operations, 953
+[READ], AverageLatency(us), 51.38300104931794
+[READ], MinLatency(us), 17
+[READ], MaxLatency(us), 4687
+[READ], 95thPercentileLatency(us), 131
+[READ], 99thPercentileLatency(us), 186
+[READ], 99.9PercentileLatency(us), 394
+[READ], 99.99PercentileLatency(us), 4687
+[READ], 99.999PercentileLatency(us), 4687
+[READ], 99.9999PercentileLatency(us), 4687
+[READ], Return=OK, 953
+[CLEANUP], Operations, 1
+[CLEANUP], AverageLatency(us), 903.0
+[CLEANUP], MinLatency(us), 903
+[CLEANUP], MaxLatency(us), 903
+[CLEANUP], 95thPercentileLatency(us), 903
+[CLEANUP], 99thPercentileLatency(us), 903
+[CLEANUP], 99.9PercentileLatency(us), 903
+[CLEANUP], 99.99PercentileLatency(us), 903
+[CLEANUP], 99.999PercentileLatency(us), 903
+[CLEANUP], 99.9999PercentileLatency(us), 903
+[INSERT], Operations, 47
+[INSERT], AverageLatency(us), 528.8510638297872
+[INSERT], MinLatency(us), 291
+[INSERT], MaxLatency(us), 3179
+[INSERT], 95thPercentileLatency(us), 628
+[INSERT], 99thPercentileLatency(us), 3179
+[INSERT], 99.9PercentileLatency(us), 3179
+[INSERT], 99.99PercentileLatency(us), 3179
+[INSERT], 99.999PercentileLatency(us), 3179
+[INSERT], 99.9999PercentileLatency(us), 3179
+[INSERT], Return=OK, 47
+[FLUSH] phase=run-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/sqlite/workloadd/summary.txt
+[RESULT] app=/home/oy/iCAT/result/sqlite/workloadd/fixed10.txt
+[RESULT] dmesg=/home/oy/iCAT/result/sqlite/workloadd/dmesg-fixed10.log
+[RESULT] summary=/home/oy/iCAT/result/sqlite/workloadd/summary.txt
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/sqlite/workloadd/summary.txt
+[WAF] module=fixed10 WAF=N/A host_pages=0 gc_copied=N/A -> /home/oy/iCAT/result/sqlite/workloadd/summary.txt

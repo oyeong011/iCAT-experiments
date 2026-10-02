@@ -1,0 +1,176 @@
+[ 1503.673098] measurement-check-online-mix-20260907-9099
+[ 1503.708288] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[ 1503.708295] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[ 1503.719394] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[ 1503.729751] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[ 1503.740336] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[ 1503.740350] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[ 1503.740352] NVMeVirt: WATGC_V2 init ns=0 part=0 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[ 1503.741568] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[ 1503.741614] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[ 1503.741616] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=0 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[ 1503.753586] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[ 1503.766850] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[ 1503.766865] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[ 1503.766867] NVMeVirt: WATGC_V2 init ns=0 part=1 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[ 1503.767902] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[ 1503.767906] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=1 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[ 1503.778693] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[ 1503.790271] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[ 1503.790287] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[ 1503.790289] NVMeVirt: WATGC_V2 init ns=0 part=2 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[ 1503.791503] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[ 1503.791506] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=2 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[ 1503.802786] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[ 1503.814922] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[ 1503.814944] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[ 1503.814947] NVMeVirt: WATGC_V2 init ns=0 part=3 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[ 1503.816629] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[ 1503.816634] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=3 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[ 1503.816645] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[ 1503.816647] NVMeVirt: ns 0/1: size 7655 MiB
+[ 1503.816716] PCI host bridge to bus 0001:10
+[ 1503.816719] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[ 1503.816722] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[ 1503.816724] pci_bus 0001:10: root bus resource [bus 00-ff]
+[ 1503.816734] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[ 1503.816738] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[ 1503.816741] pci 0001:10:00.0: enabling Extended Tags
+[ 1503.816873] NVMeVirt: Virtual PCI bus created (node 0)
+[ 1503.817409] insmod: page allocation failure: order:9, mode:0x40dc0(GFP_KERNEL|__GFP_ZERO|__GFP_COMP), nodemask=(null),cpuset=user.slice,mems_allowed=0
+[ 1503.817420] CPU: 2 UID: 0 PID: 9116 Comm: insmod Tainted: G           OE       7.0.0-31-generic #31~24.04.1-Ubuntu PREEMPT(lazy) 
+[ 1503.817423] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+[ 1503.817424] Hardware name: System manufacturer System Product Name/PRIME B250M-A, BIOS 0810 09/08/2017
+[ 1503.817426] Call Trace:
+[ 1503.817428]  <TASK>
+[ 1503.817432]  dump_stack_lvl+0x76/0xa0
+[ 1503.817438]  dump_stack+0x10/0x20
+[ 1503.817440]  warn_alloc+0x171/0x1f0
+[ 1503.817444]  ? __alloc_pages_direct_compact+0x1e0/0x230
+[ 1503.817447]  __alloc_pages_slowpath.constprop.0+0x609/0xa00
+[ 1503.817450]  __alloc_frozen_pages_noprof+0x34a/0x370
+[ 1503.817453]  alloc_pages_mpol+0x7e/0x1a0
+[ 1503.817460]  alloc_frozen_pages_noprof+0x5c/0xd0
+[ 1503.817462]  ___kmalloc_large_node+0xf8/0x120
+[ 1503.817465]  __kmalloc_large_noprof+0x24/0xf0
+[ 1503.817469]  NVMEV_IO_WORKER_INIT+0x71/0x190 [nvmev]
+[ 1503.817476]  ? NVMEV_PCI_INIT+0x3c7/0x420 [nvmev]
+[ 1503.817481]  NVMeV_init+0x3de/0x5c0 [nvmev]
+[ 1503.817485]  ? __pfx_NVMeV_init+0x10/0x10 [nvmev]
+[ 1503.817489]  do_one_initcall+0x5f/0x360
+[ 1503.817494]  do_init_module+0x97/0x2c0
+[ 1503.817499]  load_module+0x9f4/0xb20
+[ 1503.817502]  init_module_from_file+0x153/0x160
+[ 1503.817506]  idempotent_init_module+0x10f/0x300
+[ 1503.817509]  __x64_sys_finit_module+0x73/0xf0
+[ 1503.817512]  x64_sys_call+0x106d/0x26e0
+[ 1503.817515]  do_syscall_64+0xd9/0x5b0
+[ 1503.817517]  ? count_memcg_events+0x101/0x1d0
+[ 1503.817521]  ? handle_mm_fault+0x272/0x3a0
+[ 1503.817526]  ? arch_exit_to_user_mode_prepare.isra.0+0xd/0x100
+[ 1503.817529]  ? irqentry_exit+0x9d/0x640
+[ 1503.817532]  ? exc_page_fault+0x92/0x1c0
+[ 1503.817534]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[ 1503.817537] RIP: 0033:0x798f3472738d
+[ 1503.817539] Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 5b ba 0d 00 f7 d8 64 89 01 48
+[ 1503.817541] RSP: 002b:00007ffc64e825e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+[ 1503.817543] RAX: ffffffffffffffda RBX: 000063c590edd7c0 RCX: 0000798f3472738d
+[ 1503.817544] RDX: 0000000000000000 RSI: 000063c590edd2a0 RDI: 0000000000000003
+[ 1503.817545] RBP: 00007ffc64e826a0 R08: 0000000000000040 R09: 000063c5551e90b0
+[ 1503.817546] R10: 0000798f34803b20 R11: 0000000000000246 R12: 000063c590edd2a0
+[ 1503.817546] R13: 0000000000000000 R14: 000063c590edd780 R15: 000063c590edd2a0
+[ 1503.817549]  </TASK>
+[ 1503.817550] Mem-Info:
+[ 1503.817558] active_anon:420730 inactive_anon:474600 isolated_anon:0
+                active_file:182209 inactive_file:466271 isolated_file:0
+                unevictable:19787 dirty:426 writeback:760
+                slab_reclaimable:116081 slab_unreclaimable:89259
+                mapped:248116 shmem:187916 pagetables:19895
+                sec_pagetables:0 bounce:0
+                kernel_misc_reclaimable:0
+                free:178291 free_pcp:0 free_cma:28116
+[ 1503.817563] Node 0 active_anon:1682920kB inactive_anon:1898400kB active_file:728836kB inactive_file:1865084kB unevictable:79148kB isolated(anon):0kB isolated(file):0kB mapped:992464kB dirty:1704kB writeback:3040kB shmem:751664kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:0kB kernel_stack:20532kB pagetables:79580kB sec_pagetables:0kB all_unreclaimable? no Balloon:0kB
+[ 1503.817567] Node 0 DMA free:14332kB boost:0kB min:156kB low:192kB high:228kB reserved_highatomic:0KB free_highatomic:0KB active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB zspages:0kB present:15988kB managed:15360kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[ 1503.817571] lowmem_reserve[]: 0 2955 7787 7787 7787
+[ 1503.817575] Node 0 DMA32 free:356384kB boost:49152kB min:74788kB low:81196kB high:87604kB reserved_highatomic:0KB free_highatomic:0KB active_anon:959164kB inactive_anon:566848kB active_file:339760kB inactive_file:540496kB unevictable:5552kB writepending:3188kB zspages:0kB present:3140844kB managed:3026088kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:27784kB
+[ 1503.817580] lowmem_reserve[]: 0 0 4832 4832 4832
+[ 1503.817584] Node 0 Normal free:342448kB boost:32768kB min:74556kB low:85000kB high:95444kB reserved_highatomic:0KB free_highatomic:0KB active_anon:723776kB inactive_anon:1331680kB active_file:389076kB inactive_file:1324676kB unevictable:73596kB writepending:1648kB zspages:0kB present:5095424kB managed:4948276kB mlocked:80kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:84680kB
+[ 1503.817589] lowmem_reserve[]: 0 0 0 0 0
+[ 1503.817593] Node 0 DMA: 1*4kB (U) 1*8kB (U) 1*16kB (U) 1*32kB (U) 1*64kB (U) 1*128kB (U) 1*256kB (U) 1*512kB (U) 1*1024kB (U) 2*2048kB (UM) 2*4096kB (M) = 14332kB
+[ 1503.817609] Node 0 DMA32: 16251*4kB (UMEC) 7282*8kB (UMEC) 3629*16kB (UMEC) 1816*32kB (UMEC) 894*64kB (UMEC) 378*128kB (UMEC) 45*256kB (UM) 0*512kB 0*1024kB 0*2048kB 0*4096kB = 356556kB
+[ 1503.817623] Node 0 Normal: 24616*4kB (UMEC) 13258*8kB (UMEC) 4289*16kB (UMEC) 1170*32kB (UMEC) 279*64kB (UMEC) 109*128kB (UMEC) 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 342400kB
+[ 1503.817636] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[ 1503.817638] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[ 1503.817639] 839939 total pagecache pages
+[ 1503.817640] 3561 pages in swap cache
+[ 1503.817641] Free swap  = 3847944kB
+[ 1503.817642] Total swap = 4194300kB
+[ 1503.817643] 2063064 pages RAM
+[ 1503.817644] 0 pages HighMem/MovableOnly
+[ 1503.817645] 65633 pages reserved
+[ 1503.817646] 0 pages cma reserved
+[ 1503.817647] 0 pages hwpoisoned
+[ 1503.817648] Memory cgroup min protection 0kB -- low protection 0kB
+[ 1503.817651] BUG: kernel NULL pointer dereference, address: 0000000000000068
+[ 1503.817654] #PF: supervisor write access in kernel mode
+[ 1503.817656] #PF: error_code(0x0002) - not-present page
+[ 1503.817658] PGD 0 P4D 0 
+[ 1503.817661] Oops: Oops: 0002 [#1] SMP PTI
+[ 1503.817664] CPU: 2 UID: 0 PID: 9116 Comm: insmod Tainted: G           OE       7.0.0-31-generic #31~24.04.1-Ubuntu PREEMPT(lazy) 
+[ 1503.817667] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+[ 1503.817669] Hardware name: System manufacturer System Product Name/PRIME B250M-A, BIOS 0810 09/08/2017
+[ 1503.817670] RIP: 0010:NVMEV_IO_WORKER_INIT+0x79/0x190 [nvmev]
+[ 1503.817676] Code: 49 89 c6 31 db 48 8d 04 9b be c0 0d 00 00 bf 00 00 1c 00 41 89 df 48 c1 e0 04 49 01 c6 e8 1f e5 bb db ba 70 00 00 00 49 89 06 <c7> 40 68 01 00 00 00 49 8b 06 c7 40 6c ff ff ff ff 31 c0 49 8b 0e
+[ 1503.817678] RSP: 0018:ffffce6702ea3ab0 EFLAGS: 00010246
+[ 1503.817680] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
+[ 1503.817682] RDX: 0000000000000070 RSI: 0000000000000000 RDI: 0000000000000000
+[ 1503.817683] RBP: ffffce6702ea3ae8 R08: 0000000000000000 R09: 0000000000000000
+[ 1503.817685] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8de8a4c96000
+[ 1503.817686] R13: 0000000000000001 R14: ffff8de8870dc180 R15: 0000000000000000
+[ 1503.817688] FS:  0000798f34f4e080(0000) GS:ffff8dea0f0e3000(0000) knlGS:0000000000000000
+[ 1503.817690] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 1503.817691] CR2: 0000000000000068 CR3: 00000003274ce006 CR4: 00000000003726f0
+[ 1503.817693] Call Trace:
+[ 1503.817694]  <TASK>
+[ 1503.817696]  ? NVMEV_PCI_INIT+0x3c7/0x420 [nvmev]
+[ 1503.817701]  NVMeV_init+0x3de/0x5c0 [nvmev]
+[ 1503.817705]  ? __pfx_NVMeV_init+0x10/0x10 [nvmev]
+[ 1503.817709]  do_one_initcall+0x5f/0x360
+[ 1503.817714]  do_init_module+0x97/0x2c0
+[ 1503.817717]  load_module+0x9f4/0xb20
+[ 1503.817720]  init_module_from_file+0x153/0x160
+[ 1503.817725]  idempotent_init_module+0x10f/0x300
+[ 1503.817729]  __x64_sys_finit_module+0x73/0xf0
+[ 1503.817732]  x64_sys_call+0x106d/0x26e0
+[ 1503.817736]  do_syscall_64+0xd9/0x5b0
+[ 1503.817738]  ? count_memcg_events+0x101/0x1d0
+[ 1503.817743]  ? handle_mm_fault+0x272/0x3a0
+[ 1503.817746]  ? arch_exit_to_user_mode_prepare.isra.0+0xd/0x100
+[ 1503.817750]  ? irqentry_exit+0x9d/0x640
+[ 1503.817753]  ? exc_page_fault+0x92/0x1c0
+[ 1503.817755]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[ 1503.817758] RIP: 0033:0x798f3472738d
+[ 1503.817759] Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 5b ba 0d 00 f7 d8 64 89 01 48
+[ 1503.817761] RSP: 002b:00007ffc64e825e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+[ 1503.817763] RAX: ffffffffffffffda RBX: 000063c590edd7c0 RCX: 0000798f3472738d
+[ 1503.817765] RDX: 0000000000000000 RSI: 000063c590edd2a0 RDI: 0000000000000003
+[ 1503.817766] RBP: 00007ffc64e826a0 R08: 0000000000000040 R09: 000063c5551e90b0
+[ 1503.817768] R10: 0000798f34803b20 R11: 0000000000000246 R12: 000063c590edd2a0
+[ 1503.817769] R13: 0000000000000000 R14: 000063c590edd780 R15: 000063c590edd2a0
+[ 1503.817772]  </TASK>
+[ 1503.817774] Modules linked in: nvmev(OE+) nvme nvme_core nvme_keyring nvme_auth hkdf snd_seq_dummy snd_hrtimer nf_tables qrtr overlay binfmt_misc nls_iso8859_1 snd_hda_codec_intelhdmi intel_rapl_msr intel_rapl_common snd_hda_codec_hdmi snd_hda_codec_alc882 snd_hda_codec_realtek_lib intel_uncore_frequency intel_uncore_frequency_common snd_hda_codec_generic intel_tcc_cooling x86_pkg_temp_thermal snd_hda_intel intel_powerclamp snd_soc_avs coretemp snd_soc_hda_codec snd_hda_ext_core snd_hda_codec snd_hda_core snd_intel_dspcfg snd_intel_sdw_acpi mei_pxp mei_hdcp ee1004 snd_hwdep kvm_intel snd_soc_core kvm snd_compress ac97_bus joydev input_leds irqbypass snd_pcm_dmaengine snd_pcm i915 drm_buddy ttm drm_display_helper snd_seq_midi mfd_aaeon snd_seq_midi_event snd_rawmidi intel_pmc_core snd_seq i2c_i801 pmt_telemetry cec snd_seq_device ghash_clmulni_intel aesni_intel eeepc_wmi snd_timer pmt_discovery asus_wmi rc_core rapl snd pmt_class i2c_smbus intel_pmc_ssram_telemetry i2c_algo_bit i2c_mux mac_hid sparse_keymap mei_me
+[ 1503.817834]  intel_vsec platform_profile intel_cstate mei soundcore wmi_bmof mxm_wmi acpi_pad sch_fq_codel iptable_filter ip6table_filter ip6_tables br_netfilter bridge stp llc arp_tables msr parport_pc ppdev lp parport efi_pstore nfnetlink dmi_sysfs ip_tables x_tables autofs4 btrfs libblake2b raid10 raid456 async_raid6_recov async_memcpy async_pq async_xor async_tx xor raid6_pq raid1 raid0 linear hid_generic usbhid hid ahci r8169 video realtek libahci wmi [last unloaded: nvmev(OE)]
+[ 1503.817876] CR2: 0000000000000068
+[ 1503.817878] ---[ end trace 0000000000000000 ]---
+[ 1503.948966] RIP: 0010:NVMEV_IO_WORKER_INIT+0x79/0x190 [nvmev]
+[ 1503.948985] Code: 49 89 c6 31 db 48 8d 04 9b be c0 0d 00 00 bf 00 00 1c 00 41 89 df 48 c1 e0 04 49 01 c6 e8 1f e5 bb db ba 70 00 00 00 49 89 06 <c7> 40 68 01 00 00 00 49 8b 06 c7 40 6c ff ff ff ff 31 c0 49 8b 0e
+[ 1503.948988] RSP: 0018:ffffce6702ea3ab0 EFLAGS: 00010246
+[ 1503.948991] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
+[ 1503.948993] RDX: 0000000000000070 RSI: 0000000000000000 RDI: 0000000000000000
+[ 1503.948995] RBP: ffffce6702ea3ae8 R08: 0000000000000000 R09: 0000000000000000
+[ 1503.948997] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8de8a4c96000
+[ 1503.948999] R13: 0000000000000001 R14: ffff8de8870dc180 R15: 0000000000000000
+[ 1503.949013] FS:  0000798f34f4e080(0000) GS:ffff8dea0f0e3000(0000) knlGS:0000000000000000
+[ 1503.949015] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 1503.949017] CR2: 0000000000000068 CR3: 00000003274ce006 CR4: 00000000003726f0
+[ 1503.949019] note: insmod[9116] exited with irqs disabled

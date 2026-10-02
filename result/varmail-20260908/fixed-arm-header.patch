@@ -1,0 +1,24 @@
+--- /home/oy/iCAT/online-mix-src/conv_ftl.h	2026-09-07 20:07:24.308340045 +0900
++++ /home/oy/iCAT/varmail-compare-src/conv_ftl.h	2026-09-08 15:24:15.931232706 +0900
+@@ -11,7 +11,7 @@
+ 
+ /* Online learning is the default.  0/1 are optional comparison baselines. */
+ #define CONV_GC_POLICY_GREEDY 0
+-#define CONV_GC_POLICY_CAT_FIG7 1 /* fixed reference: K=7, scale=100, ratio=7 */
++#define CONV_GC_POLICY_CAT_FIG7 1 /* fixed arm using the online score and grid */
+ #define CONV_GC_POLICY_WATGC_V2 2
+ #ifndef CONV_GC_POLICY
+ #define CONV_GC_POLICY CONV_GC_POLICY_WATGC_V2
+@@ -31,6 +31,12 @@
+ #define WATGC_V2_RATIO_N 3U
+ #define WATGC_V2_ARM_N (WATGC_V2_K_N * WATGC_V2_SCALE_N * WATGC_V2_RATIO_N)
+ #define WATGC_V2_INITIAL_ARM 37U /* (7, 100, 7); no reward prior */
++#ifndef CONV_FIXED_ARM
++#define CONV_FIXED_ARM WATGC_V2_INITIAL_ARM
++#endif
++#if CONV_FIXED_ARM < 0 || CONV_FIXED_ARM >= WATGC_V2_ARM_N
++#error "CONV_FIXED_ARM must be an integer from 0 through 59"
++#endif
+ #define WATGC_V2_Q 16U
+ #define WATGC_V2_ONE (1ULL << WATGC_V2_Q)
+ 

@@ -1,0 +1,49 @@
+[START] module=arm58
+[DEV] /dev/nvme0n1
+mke2fs 1.47.0 (5-Feb-2023)
+Virt ready: /home/oy/iCAT/mnt
+[WORKLOAD] source=/home/oy/iCAT/workloads/filebench/oltp.f runtime=300s
+Filebench Version 1.5-alpha3
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+0.000: Allocated 173MB of shared memory
+0.171: OLTP Version 3.0 personality successfully loaded
+0.171: Populating and pre-allocating filesets
+0.171: logfile populated: 1 files, avg. dir. width = 1024, avg. dir. depth = 0.0, 0 leafdirs, 10.000MB total size
+0.171: Removing logfile tree (if exists)
+0.203: Pre-allocating directories in logfile tree
+0.203: Pre-allocating files in logfile tree
+0.205: datafiles populated: 10 files, avg. dir. width = 1024, avg. dir. depth = 0.3, 0 leafdirs, 5120.000MB total size
+0.205: Removing datafiles tree (if exists)
+0.207: Pre-allocating directories in datafiles tree
+0.207: Pre-allocating files in datafiles tree
+2.271: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+2.271: Population and pre-allocation of filesets completed
+2.272: Starting 200 shadow instances
+2.389: Starting 10 dbwr instances
+2.398: Starting 1 lgwr instances
+3.401: Running...
+303.756: Run took 300 seconds...
+303.769: Per-Operation Breakdown
+random-rate          0ops        0ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+shadow-post-dbwr     7434785ops    24753ops/s   0.0mb/s      6.8ms/op [0.01ms - 113.55ms]
+shadow-post-lg       7434792ops    24753ops/s   0.0mb/s      0.1ms/op [0.00ms - 93.27ms]
+shadowhog            7434806ops    24753ops/s   0.0mb/s      0.3ms/op [0.05ms - 117.89ms]
+shadowread           7460461ops    24839ops/s  48.3mb/s      0.9ms/op [0.00ms - 356.51ms]
+dbwr-aiowait         74338ops      248ops/s   0.0mb/s      0.1ms/op [0.00ms - 41.99ms]
+dbwr-block           74338ops      248ops/s   0.0mb/s     37.6ms/op [0.00ms - 97.16ms]
+dbwr-hog             74348ops      248ops/s   0.0mb/s      0.0ms/op [0.00ms -  7.65ms]
+dbwrite-a            7436080ops    24758ops/s  48.3mb/s      0.0ms/op [0.00ms - 38.83ms]
+lg-block             2323ops        8ops/s   0.0mb/s    129.2ms/op [68.02ms - 270.72ms]
+lg-aiowait           2324ops        8ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.11ms]
+lg-write             2325ops        8ops/s   1.9mb/s      0.0ms/op [0.00ms -  1.24ms]
+303.769: IO Summary: 14975528 ops 49859.598 ops/s 24839/24765 rd/wr  98.6mb/s   0.9ms/op
+303.769: Shutting down processes
+[DURABLE] sync + NVMe flush
+[FLUSH] phase=run-durable-end device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/oltp/summary.txt
+[RESULT] app=/home/oy/iCAT/result/filebench/oltp/arm58.txt
+[RESULT] dmesg=/home/oy/iCAT/result/filebench/oltp/dmesg-arm58.log
+[RESULT] summary=/home/oy/iCAT/result/filebench/oltp/summary.txt
+[FLUSH] phase=cleanup device=/dev/nvme0n1 -> /home/oy/iCAT/result/filebench/oltp/summary.txt
+[WAF] module=arm58 WAF=1.687 host_pages=8448167 gc_copied=N/A -> /home/oy/iCAT/result/filebench/oltp/summary.txt

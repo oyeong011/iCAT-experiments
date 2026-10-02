@@ -1,0 +1,603 @@
+[561387.021183] mix-mixC-onlinev2-3820170 BEGIN
+[561387.032568] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[561387.032573] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[561387.043595] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[561387.055001] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[561387.066016] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[561387.066030] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[561387.066033] NVMeVirt: WATGC_V2 init ns=0 part=0 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[561387.067240] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[561387.067278] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[561387.067279] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=0 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[561387.078215] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[561387.089013] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[561387.089028] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[561387.089030] NVMeVirt: WATGC_V2 init ns=0 part=1 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[561387.090249] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[561387.090252] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=1 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[561387.100890] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[561387.111322] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[561387.111336] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[561387.111339] NVMeVirt: WATGC_V2 init ns=0 part=2 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[561387.112626] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[561387.112629] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=2 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[561387.123092] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[561387.133511] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[561387.133525] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[561387.133527] NVMeVirt: WATGC_V2 init ns=0 part=3 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[561387.134763] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[561387.134765] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=3 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[561387.134772] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[561387.134773] NVMeVirt: ns 0/1: size 7655 MiB
+[561387.134823] PCI host bridge to bus 0001:10
+[561387.134825] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[561387.134828] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[561387.134830] pci_bus 0001:10: root bus resource [bus 00-ff]
+[561387.134837] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[561387.134856] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[561387.134858] pci 0001:10:00.0: enabling Extended Tags
+[561387.134979] NVMeVirt: Virtual PCI bus created (node 0)
+[561387.135238] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[561387.135337] NVMeVirt: Virtual NVMe device created
+[561387.135477] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[561387.135588] nvme nvme0: pci function 0001:10:00.0
+[561387.138068] nvme nvme0: 8/0/0 default/read/poll queues
+[561387.212453] EXT4-fs (nvme0n1): mounted filesystem 27ba58b3-0270-412a-a9de-36444ec8ac1e r/w with ordered data mode. Quota mode: none.
+[561469.234353] NVMeVirt: WATGC_V2 init ns=0 part=0 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[561469.234359] NVMeVirt: WATGC_V2 init ns=0 part=1 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[561469.234361] NVMeVirt: WATGC_V2 init ns=0 part=2 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[561469.234363] NVMeVirt: WATGC_V2 init ns=0 part=3 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[561469.234364] NVMeVirt: Measurement: command=start epoch=1 host_bytes=0 learner_active=1
+[561469.242259] mix-mixC-onlinev2-3820170 phase=A START
+[561470.761076] NVMeVirt: WATGC_V2 warmup-done ns=0 part=2 gc_count=2817
+[561470.781911] NVMeVirt: WATGC_V2 warmup-done ns=0 part=1 gc_count=2816
+[561470.792074] NVMeVirt: WATGC_V2 warmup-done ns=0 part=3 gc_count=2824
+[561470.807248] NVMeVirt: WATGC_V2 warmup-done ns=0 part=0 gc_count=2838
+[561541.973007] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=145366 gc_pages=116789 gc_count=4096 reason=undersized
+[561542.004976] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=145068 gc_pages=117070 gc_count=4096 reason=undersized
+[561542.101144] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=145546 gc_pages=116602 gc_count=4096 reason=undersized
+[561542.330145] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=146039 gc_pages=116099 gc_count=4096 reason=undersized
+[561609.759472] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=136835 gc_pages=125311 gc_count=4096 reason=undersized
+[561610.013920] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=137131 gc_pages=125016 gc_count=4096 reason=undersized
+[561610.228906] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=137096 gc_pages=125034 gc_count=4096 reason=undersized
+[561610.433481] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=137834 gc_pages=124311 gc_count=4096 reason=undersized
+[561680.477151] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=143540 gc_pages=118616 gc_count=4096 reason=undersized
+[561680.487684] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=143789 gc_pages=118367 gc_count=4096 reason=undersized
+[561680.670384] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=143234 gc_pages=118923 gc_count=4096 reason=undersized
+[561680.791682] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=143361 gc_pages=118795 gc_count=4096 reason=undersized
+[561755.681751] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=154976 gc_pages=107148 gc_count=4096 reason=undersized
+[561755.807938] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=155204 gc_pages=106949 gc_count=4096 reason=undersized
+[561755.819608] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=155732 gc_pages=106417 gc_count=4096 reason=undersized
+[561755.927613] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=155019 gc_pages=107123 gc_count=4096 reason=undersized
+[561821.999725] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=133191 gc_pages=128946 gc_count=4096 reason=undersized
+[561822.044867] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=133061 gc_pages=129081 gc_count=4096 reason=undersized
+[561822.231724] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=133357 gc_pages=128809 gc_count=4096 reason=undersized
+[561822.718208] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133644 gc_pages=128502 gc_count=4096 reason=undersized
+[561896.447663] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=153623 gc_pages=108517 gc_count=4096 reason=undersized
+[561897.096303] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=154528 gc_pages=107630 gc_count=4096 reason=undersized
+[561897.139811] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=154544 gc_pages=107613 gc_count=4096 reason=undersized
+[561897.619008] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=154506 gc_pages=107648 gc_count=4096 reason=undersized
+[561962.955864] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=132989 gc_pages=129134 gc_count=4096 reason=undersized
+[561963.291792] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132683 gc_pages=129466 gc_count=4096 reason=undersized
+[561963.350088] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=133041 gc_pages=129097 gc_count=4096 reason=undersized
+[561964.256226] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133958 gc_pages=128174 gc_count=4096 reason=undersized
+[562037.853117] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=154578 gc_pages=107564 gc_count=4096 reason=undersized
+[562038.143341] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=153950 gc_pages=108193 gc_count=4096 reason=undersized
+[562038.206027] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=154623 gc_pages=107520 gc_count=4096 reason=undersized
+[562038.708553] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=153416 gc_pages=108744 gc_count=4096 reason=undersized
+[562106.171569] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=138026 gc_pages=124112 gc_count=4096 reason=undersized
+[562106.568539] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=138421 gc_pages=123717 gc_count=4096 reason=undersized
+[562106.985635] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=138999 gc_pages=123140 gc_count=4096 reason=undersized
+[562107.516282] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=139244 gc_pages=122894 gc_count=4096 reason=undersized
+[562179.682922] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=150885 gc_pages=111266 gc_count=4096 reason=undersized
+[562180.070246] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=150637 gc_pages=111503 gc_count=4096 reason=undersized
+[562180.454257] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=151161 gc_pages=110980 gc_count=4096 reason=undersized
+[562180.593463] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=150141 gc_pages=112000 gc_count=4096 reason=undersized
+[562250.094945] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=143351 gc_pages=118798 gc_count=4096 reason=undersized
+[562250.416598] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=143255 gc_pages=118883 gc_count=4096 reason=undersized
+[562250.570132] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=142438 gc_pages=119693 gc_count=4096 reason=undersized
+[562251.484295] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=144306 gc_pages=117832 gc_count=4096 reason=undersized
+[562322.795488] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=148900 gc_pages=113235 gc_count=4096 reason=undersized
+[562323.000663] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=148569 gc_pages=113577 gc_count=4096 reason=undersized
+[562323.313193] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=148964 gc_pages=113177 gc_count=4096 reason=undersized
+[562323.389524] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=147286 gc_pages=114873 gc_count=4096 reason=undersized
+[562396.036423] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=150275 gc_pages=111868 gc_count=4096 reason=undersized
+[562396.434101] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=151002 gc_pages=111130 gc_count=4096 reason=undersized
+[562396.746117] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=150898 gc_pages=111225 gc_count=4096 reason=undersized
+[562397.251929] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=151674 gc_pages=110451 gc_count=4096 reason=undersized
+[562467.320969] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=145476 gc_pages=116690 gc_count=4096 reason=undersized
+[562467.337132] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=144665 gc_pages=117494 gc_count=4096 reason=undersized
+[562467.977630] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=145151 gc_pages=117009 gc_count=4096 reason=undersized
+[562468.167976] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=144431 gc_pages=117741 gc_count=4096 reason=undersized
+[562543.451230] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=157265 gc_pages=104872 gc_count=4096 reason=undersized
+[562543.539221] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=157709 gc_pages=104433 gc_count=4096 reason=undersized
+[562543.860889] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=157178 gc_pages=104960 gc_count=4096 reason=undersized
+[562544.206405] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=157305 gc_pages=104838 gc_count=4096 reason=undersized
+[562612.505029] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=139492 gc_pages=122653 gc_count=4096 reason=undersized
+[562612.523862] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=140107 gc_pages=122043 gc_count=4096 reason=undersized
+[562612.837392] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=139718 gc_pages=122430 gc_count=4096 reason=undersized
+[562613.575849] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=140623 gc_pages=121525 gc_count=4096 reason=undersized
+[562688.555830] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=157406 gc_pages=104752 gc_count=4096 reason=undersized
+[562688.587013] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=157462 gc_pages=104697 gc_count=4096 reason=undersized
+[562689.006337] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=157300 gc_pages=104863 gc_count=4096 reason=undersized
+[562689.283503] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=156571 gc_pages=105584 gc_count=4096 reason=undersized
+[562755.745133] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=135322 gc_pages=126819 gc_count=4096 reason=undersized
+[562756.099282] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=135943 gc_pages=126197 gc_count=4096 reason=undersized
+[562756.169619] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135315 gc_pages=126826 gc_count=4096 reason=undersized
+[562756.834482] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=135923 gc_pages=126218 gc_count=4096 reason=undersized
+[562828.532183] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=149323 gc_pages=112838 gc_count=4096 reason=undersized
+[562828.886921] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=149298 gc_pages=112867 gc_count=4096 reason=undersized
+[562829.151473] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=149545 gc_pages=112615 gc_count=4096 reason=undersized
+[562829.213178] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=148145 gc_pages=113998 gc_count=4096 reason=undersized
+[562897.194185] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=138697 gc_pages=123432 gc_count=4096 reason=undersized
+[562897.456184] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=138758 gc_pages=123383 gc_count=4096 reason=undersized
+[562897.701176] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=138597 gc_pages=123548 gc_count=4096 reason=undersized
+[562897.766534] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=138643 gc_pages=123489 gc_count=4096 reason=undersized
+[562969.327560] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=147425 gc_pages=114728 gc_count=4096 reason=undersized
+[562969.404384] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=146928 gc_pages=115226 gc_count=4096 reason=undersized
+[562969.488543] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=146898 gc_pages=115255 gc_count=4096 reason=undersized
+[562969.834454] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=147429 gc_pages=114727 gc_count=4096 reason=undersized
+[563039.732252] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=143306 gc_pages=118831 gc_count=4096 reason=undersized
+[563040.146053] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=143066 gc_pages=119062 gc_count=4096 reason=undersized
+[563040.161270] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=144076 gc_pages=118059 gc_count=4096 reason=undersized
+[563040.346599] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=144235 gc_pages=117913 gc_count=4096 reason=undersized
+[563110.278922] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=143654 gc_pages=118490 gc_count=4096 reason=undersized
+[563110.777194] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=143896 gc_pages=118261 gc_count=4096 reason=undersized
+[563110.818606] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=143502 gc_pages=118644 gc_count=4096 reason=undersized
+[563110.890152] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=143788 gc_pages=118377 gc_count=4096 reason=undersized
+[563183.478669] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=149874 gc_pages=112266 gc_count=4096 reason=undersized
+[563184.046391] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=150420 gc_pages=111718 gc_count=4096 reason=undersized
+[563184.075066] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=150692 gc_pages=111450 gc_count=4096 reason=undersized
+[563184.312523] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=150723 gc_pages=111407 gc_count=4096 reason=undersized
+[563252.990676] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=141098 gc_pages=121065 gc_count=4096 reason=undersized
+[563253.521529] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=140580 gc_pages=121570 gc_count=4096 reason=undersized
+[563253.827902] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=141910 gc_pages=120252 gc_count=4096 reason=undersized
+[563253.845549] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=141055 gc_pages=121115 gc_count=4096 reason=undersized
+[563269.578663] mix-mixC-onlinev2-3820170 phase=A END
+[563269.585834] mix-mixC-onlinev2-3820170 phase=B START
+[563283.761040] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=147694 gc_pages=114445 gc_count=4096 reason=undersized
+[563283.764495] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=146432 gc_pages=115700 gc_count=4096 reason=undersized
+[563283.870992] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=147000 gc_pages=115150 gc_count=4096 reason=undersized
+[563283.965656] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=147576 gc_pages=114564 gc_count=4096 reason=undersized
+[563300.805273] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=137607 gc_pages=124530 gc_count=4096 reason=undersized
+[563300.862279] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=137150 gc_pages=125008 gc_count=4096 reason=undersized
+[563300.886939] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=138516 gc_pages=123630 gc_count=4096 reason=undersized
+[563301.064694] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=138075 gc_pages=124071 gc_count=4096 reason=undersized
+[563316.834937] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=127630 gc_pages=134528 gc_count=4096 reason=undersized
+[563316.944047] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=127899 gc_pages=134250 gc_count=4096 reason=undersized
+[563316.946788] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127800 gc_pages=134339 gc_count=4096 reason=undersized
+[563317.041416] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=127100 gc_pages=135049 gc_count=4096 reason=undersized
+[563333.530990] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=133157 gc_pages=129002 gc_count=4096 reason=undersized
+[563333.543828] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=134220 gc_pages=127922 gc_count=4096 reason=undersized
+[563333.573411] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=133449 gc_pages=128695 gc_count=4096 reason=undersized
+[563333.677123] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133712 gc_pages=128433 gc_count=4096 reason=undersized
+[563349.396391] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=125654 gc_pages=136495 gc_count=4096 reason=undersized
+[563349.417176] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=126146 gc_pages=136009 gc_count=4096 reason=undersized
+[563349.465630] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=126284 gc_pages=135865 gc_count=4096 reason=undersized
+[563349.534762] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=125570 gc_pages=136578 gc_count=4096 reason=undersized
+[563365.871301] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=132031 gc_pages=130120 gc_count=4096 reason=undersized
+[563365.971207] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132235 gc_pages=129916 gc_count=4096 reason=undersized
+[563366.011664] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=133215 gc_pages=128919 gc_count=4096 reason=undersized
+[563366.112506] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=132934 gc_pages=129210 gc_count=4096 reason=undersized
+[563381.971155] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=128312 gc_pages=133838 gc_count=4096 reason=undersized
+[563382.025981] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127391 gc_pages=134763 gc_count=4096 reason=undersized
+[563382.054349] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=127847 gc_pages=134313 gc_count=4096 reason=undersized
+[563382.145522] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=127613 gc_pages=134530 gc_count=4096 reason=undersized
+[563398.685761] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=133535 gc_pages=128611 gc_count=4096 reason=undersized
+[563398.788447] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=135366 gc_pages=126780 gc_count=4096 reason=undersized
+[563398.805733] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135043 gc_pages=127117 gc_count=4096 reason=undersized
+[563398.852487] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=134308 gc_pages=127836 gc_count=4096 reason=undersized
+[563414.911401] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129830 gc_pages=132319 gc_count=4096 reason=undersized
+[563414.970699] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129040 gc_pages=133109 gc_count=4096 reason=undersized
+[563415.063821] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=129163 gc_pages=132986 gc_count=4096 reason=undersized
+[563415.065203] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=129656 gc_pages=132494 gc_count=4096 reason=undersized
+[563431.808321] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=135880 gc_pages=126280 gc_count=4096 reason=undersized
+[563431.831457] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135752 gc_pages=126405 gc_count=4096 reason=undersized
+[563431.886796] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=135657 gc_pages=126487 gc_count=4096 reason=undersized
+[563431.947528] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=136167 gc_pages=125967 gc_count=4096 reason=undersized
+[563448.089630] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129946 gc_pages=132203 gc_count=4096 reason=undersized
+[563448.118474] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=129475 gc_pages=132683 gc_count=4096 reason=undersized
+[563448.154806] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=129478 gc_pages=132680 gc_count=4096 reason=undersized
+[563448.161719] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=130487 gc_pages=131662 gc_count=4096 reason=undersized
+[563465.065671] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=136966 gc_pages=125178 gc_count=4096 reason=undersized
+[563465.177603] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=137807 gc_pages=124336 gc_count=4096 reason=undersized
+[563465.208288] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=137859 gc_pages=124294 gc_count=4096 reason=undersized
+[563465.236080] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=137834 gc_pages=124310 gc_count=4096 reason=undersized
+[563481.461244] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=131128 gc_pages=131017 gc_count=4096 reason=undersized
+[563481.579542] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=131065 gc_pages=131081 gc_count=4096 reason=undersized
+[563481.584732] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=131173 gc_pages=130972 gc_count=4096 reason=undersized
+[563481.623552] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=131179 gc_pages=130971 gc_count=4096 reason=undersized
+[563498.715047] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=139812 gc_pages=122327 gc_count=4096 reason=undersized
+[563498.801120] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=139208 gc_pages=122930 gc_count=4096 reason=undersized
+[563498.813492] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=139587 gc_pages=122551 gc_count=4096 reason=undersized
+[563498.829243] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=139380 gc_pages=122758 gc_count=4096 reason=undersized
+[563515.451306] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=134697 gc_pages=127444 gc_count=4096 reason=undersized
+[563515.452845] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=133933 gc_pages=128206 gc_count=4096 reason=undersized
+[563515.502224] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133758 gc_pages=128381 gc_count=4096 reason=undersized
+[563515.611154] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=135026 gc_pages=127113 gc_count=4096 reason=undersized
+[563533.132028] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=144053 gc_pages=118086 gc_count=4096 reason=undersized
+[563533.152147] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=144091 gc_pages=118048 gc_count=4096 reason=undersized
+[563533.170776] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=144076 gc_pages=118062 gc_count=4096 reason=undersized
+[563533.324826] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=144323 gc_pages=117800 gc_count=4096 reason=undersized
+[563549.842496] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=134360 gc_pages=127788 gc_count=4096 reason=undersized
+[563549.873228] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=134368 gc_pages=127779 gc_count=4096 reason=undersized
+[563549.965488] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=135004 gc_pages=127144 gc_count=4096 reason=undersized
+[563550.084977] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=134918 gc_pages=127230 gc_count=4096 reason=undersized
+[563567.328793] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=142253 gc_pages=119893 gc_count=4096 reason=undersized
+[563567.408557] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=142385 gc_pages=119762 gc_count=4096 reason=undersized
+[563567.415204] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=141779 gc_pages=120362 gc_count=4096 reason=undersized
+[563567.589467] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=142157 gc_pages=119992 gc_count=4096 reason=undersized
+[563583.169935] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=125212 gc_pages=136941 gc_count=4096 reason=undersized
+[563583.270772] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=126312 gc_pages=135841 gc_count=4096 reason=undersized
+[563583.287115] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=125868 gc_pages=136284 gc_count=4096 reason=undersized
+[563583.387854] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=125264 gc_pages=136888 gc_count=4096 reason=undersized
+[563599.724708] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132659 gc_pages=129493 gc_count=4096 reason=undersized
+[563599.783944] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=132698 gc_pages=129453 gc_count=4096 reason=undersized
+[563599.855455] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=132818 gc_pages=129335 gc_count=4096 reason=undersized
+[563599.924219] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=132409 gc_pages=129757 gc_count=4096 reason=undersized
+[563615.308310] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=122386 gc_pages=139766 gc_count=4096 reason=undersized
+[563615.340842] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=123064 gc_pages=139097 gc_count=4096 reason=undersized
+[563615.358024] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=122276 gc_pages=139875 gc_count=4096 reason=undersized
+[563615.374808] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=122076 gc_pages=140076 gc_count=4096 reason=undersized
+[563631.803057] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=132237 gc_pages=129915 gc_count=4096 reason=undersized
+[563631.888088] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132850 gc_pages=129297 gc_count=4096 reason=undersized
+[563631.888338] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=132155 gc_pages=129992 gc_count=4096 reason=undersized
+[563631.917459] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=132823 gc_pages=129324 gc_count=4096 reason=undersized
+[563647.756689] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=125802 gc_pages=136347 gc_count=4096 reason=undersized
+[563647.775347] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=126130 gc_pages=136019 gc_count=4096 reason=undersized
+[563647.779640] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=126132 gc_pages=136017 gc_count=4096 reason=undersized
+[563647.840149] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127354 gc_pages=134795 gc_count=4096 reason=undersized
+[563664.589631] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=135285 gc_pages=126860 gc_count=4096 reason=undersized
+[563664.611602] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=135431 gc_pages=126713 gc_count=4096 reason=undersized
+[563664.628103] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135970 gc_pages=126174 gc_count=4096 reason=undersized
+[563664.726028] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=136227 gc_pages=125927 gc_count=4096 reason=undersized
+[563680.632704] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=127754 gc_pages=134395 gc_count=4096 reason=undersized
+[563680.694222] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=127511 gc_pages=134639 gc_count=4096 reason=undersized
+[563680.702224] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=128326 gc_pages=133823 gc_count=4096 reason=undersized
+[563680.794638] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127973 gc_pages=134176 gc_count=4096 reason=undersized
+[563697.649521] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=137342 gc_pages=124803 gc_count=4096 reason=undersized
+[563697.707152] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=137253 gc_pages=124893 gc_count=4096 reason=undersized
+[563697.742529] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=138045 gc_pages=124120 gc_count=4096 reason=undersized
+[563697.875785] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=137733 gc_pages=124414 gc_count=4096 reason=undersized
+[563713.747894] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=127754 gc_pages=134397 gc_count=4096 reason=undersized
+[563713.851470] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129028 gc_pages=133124 gc_count=4096 reason=undersized
+[563713.916625] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127715 gc_pages=134437 gc_count=4096 reason=undersized
+[563713.972567] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=129531 gc_pages=132620 gc_count=4096 reason=undersized
+[563730.989977] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=138830 gc_pages=123319 gc_count=4096 reason=undersized
+[563731.021898] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=139902 gc_pages=122246 gc_count=4096 reason=undersized
+[563731.093969] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=138508 gc_pages=123641 gc_count=4096 reason=undersized
+[563731.194339] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=139732 gc_pages=122416 gc_count=4096 reason=undersized
+[563747.179406] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129124 gc_pages=133027 gc_count=4096 reason=undersized
+[563747.184543] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=128206 gc_pages=133944 gc_count=4096 reason=undersized
+[563747.211946] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=129129 gc_pages=133023 gc_count=4096 reason=undersized
+[563747.409253] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129248 gc_pages=132903 gc_count=4096 reason=undersized
+[563764.457042] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=139973 gc_pages=122177 gc_count=4096 reason=undersized
+[563764.513125] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=140110 gc_pages=122040 gc_count=4096 reason=undersized
+[563764.514552] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=140492 gc_pages=121657 gc_count=4096 reason=undersized
+[563764.684061] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=140118 gc_pages=122030 gc_count=4096 reason=undersized
+[563780.602011] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=128754 gc_pages=133383 gc_count=4096 reason=undersized
+[563780.734596] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129141 gc_pages=133006 gc_count=4096 reason=undersized
+[563780.745246] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=129311 gc_pages=132837 gc_count=4096 reason=undersized
+[563780.843073] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129255 gc_pages=132892 gc_count=4096 reason=undersized
+[563798.088572] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=142011 gc_pages=120135 gc_count=4096 reason=undersized
+[563798.159127] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=141604 gc_pages=120542 gc_count=4096 reason=undersized
+[563798.197543] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=142178 gc_pages=119968 gc_count=4096 reason=undersized
+[563798.331258] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=141602 gc_pages=120544 gc_count=4096 reason=undersized
+[563814.418364] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=130587 gc_pages=131556 gc_count=4096 reason=undersized
+[563814.456857] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=130439 gc_pages=131704 gc_count=4096 reason=undersized
+[563814.494286] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129984 gc_pages=132159 gc_count=4096 reason=undersized
+[563814.582650] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129661 gc_pages=132481 gc_count=4096 reason=undersized
+[563831.681568] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=139704 gc_pages=122437 gc_count=4096 reason=undersized
+[563831.763450] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=139221 gc_pages=122920 gc_count=4096 reason=undersized
+[563831.806693] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=140339 gc_pages=121802 gc_count=4096 reason=undersized
+[563831.838154] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=140832 gc_pages=121309 gc_count=4096 reason=undersized
+[563847.395971] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=124476 gc_pages=137666 gc_count=4096 reason=undersized
+[563847.538122] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=124497 gc_pages=137633 gc_count=4096 reason=undersized
+[563847.626907] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=126028 gc_pages=136114 gc_count=4096 reason=undersized
+[563847.656458] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=125223 gc_pages=136917 gc_count=4096 reason=undersized
+[563863.705736] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=130244 gc_pages=131901 gc_count=4096 reason=undersized
+[563863.845209] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=130457 gc_pages=131685 gc_count=4096 reason=undersized
+[563864.016123] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=131018 gc_pages=131133 gc_count=4096 reason=undersized
+[563864.025439] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=130944 gc_pages=131206 gc_count=4096 reason=undersized
+[563879.232734] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=122630 gc_pages=139513 gc_count=4096 reason=undersized
+[563879.378078] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=122137 gc_pages=140006 gc_count=4096 reason=undersized
+[563879.494083] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=122154 gc_pages=139984 gc_count=4096 reason=undersized
+[563879.527252] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=122273 gc_pages=139870 gc_count=4096 reason=undersized
+[563895.610862] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129478 gc_pages=132670 gc_count=4096 reason=undersized
+[563895.614652] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=130967 gc_pages=131173 gc_count=4096 reason=undersized
+[563895.745457] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129826 gc_pages=132321 gc_count=4096 reason=undersized
+[563895.747236] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=129481 gc_pages=132676 gc_count=4096 reason=undersized
+[563911.231497] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=123765 gc_pages=138381 gc_count=4096 reason=undersized
+[563911.302518] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=124074 gc_pages=138074 gc_count=4096 reason=undersized
+[563911.402033] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=123662 gc_pages=138482 gc_count=4096 reason=undersized
+[563911.439309] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=123946 gc_pages=138197 gc_count=4096 reason=undersized
+[563927.866115] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=133599 gc_pages=128552 gc_count=4096 reason=undersized
+[563927.934946] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133365 gc_pages=128784 gc_count=4096 reason=undersized
+[563928.030040] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=133564 gc_pages=128596 gc_count=4096 reason=undersized
+[563928.030654] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=133211 gc_pages=128949 gc_count=4096 reason=undersized
+[563943.755588] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=126103 gc_pages=136046 gc_count=4096 reason=undersized
+[563943.819964] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=125967 gc_pages=136193 gc_count=4096 reason=undersized
+[563943.872718] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=125881 gc_pages=136267 gc_count=4096 reason=undersized
+[563943.902900] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=125865 gc_pages=136288 gc_count=4096 reason=undersized
+[563960.644329] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=136227 gc_pages=125924 gc_count=4096 reason=undersized
+[563960.779421] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=136725 gc_pages=125426 gc_count=4096 reason=undersized
+[563960.826344] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=136837 gc_pages=125302 gc_count=4096 reason=undersized
+[563960.851081] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=136515 gc_pages=125634 gc_count=4096 reason=undersized
+[563976.601604] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=126576 gc_pages=135584 gc_count=4096 reason=undersized
+[563976.688888] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=126430 gc_pages=135718 gc_count=4096 reason=undersized
+[563976.759075] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=126490 gc_pages=135660 gc_count=4096 reason=undersized
+[563976.813481] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=127068 gc_pages=135081 gc_count=4096 reason=undersized
+[563993.746818] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=138018 gc_pages=124132 gc_count=4096 reason=undersized
+[563993.771924] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=137226 gc_pages=124923 gc_count=4096 reason=undersized
+[563993.772778] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=138776 gc_pages=123375 gc_count=4096 reason=undersized
+[563993.881183] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=137904 gc_pages=124245 gc_count=4096 reason=undersized
+[564009.738949] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=127373 gc_pages=134766 gc_count=4096 reason=undersized
+[564009.832252] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127725 gc_pages=134412 gc_count=4096 reason=undersized
+[564009.870626] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=128399 gc_pages=133750 gc_count=4096 reason=undersized
+[564009.980958] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=127812 gc_pages=134335 gc_count=4096 reason=undersized
+[564026.962908] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=139311 gc_pages=122837 gc_count=4096 reason=undersized
+[564027.147550] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=140426 gc_pages=121721 gc_count=4096 reason=undersized
+[564027.156789] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=140144 gc_pages=122004 gc_count=4096 reason=undersized
+[564027.208378] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=139517 gc_pages=122630 gc_count=4096 reason=undersized
+[564043.222906] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=129753 gc_pages=132393 gc_count=4096 reason=undersized
+[564043.278389] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=128650 gc_pages=133490 gc_count=4096 reason=undersized
+[564043.422107] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129869 gc_pages=132289 gc_count=4096 reason=undersized
+[564043.450443] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=129659 gc_pages=132485 gc_count=4096 reason=undersized
+[564060.691465] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=141197 gc_pages=120946 gc_count=4096 reason=undersized
+[564060.752374] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=142348 gc_pages=119796 gc_count=4096 reason=undersized
+[564060.932178] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=142189 gc_pages=119953 gc_count=4096 reason=undersized
+[564061.063052] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=143729 gc_pages=118412 gc_count=4096 reason=undersized
+[564076.981158] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129963 gc_pages=132179 gc_count=4096 reason=undersized
+[564077.039783] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=130110 gc_pages=132022 gc_count=4096 reason=undersized
+[564077.345833] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=131394 gc_pages=130745 gc_count=4096 reason=undersized
+[564077.471047] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=131433 gc_pages=130706 gc_count=4096 reason=undersized
+[564094.284237] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=140554 gc_pages=121585 gc_count=4096 reason=undersized
+[564094.330739] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=140370 gc_pages=121770 gc_count=4096 reason=undersized
+[564094.634543] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=139820 gc_pages=122318 gc_count=4096 reason=undersized
+[564094.921915] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=141364 gc_pages=120775 gc_count=4096 reason=undersized
+[564110.103237] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=125516 gc_pages=136615 gc_count=4096 reason=undersized
+[564110.272054] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=126513 gc_pages=135625 gc_count=4096 reason=undersized
+[564110.577883] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=126562 gc_pages=135576 gc_count=4096 reason=undersized
+[564111.012275] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=128179 gc_pages=133959 gc_count=4096 reason=undersized
+[564126.488107] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=130964 gc_pages=131176 gc_count=4096 reason=undersized
+[564126.656777] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=131304 gc_pages=130835 gc_count=4096 reason=undersized
+[564127.063040] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=132068 gc_pages=130068 gc_count=4096 reason=undersized
+[564127.573843] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132750 gc_pages=129387 gc_count=4096 reason=undersized
+[564141.996220] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=122376 gc_pages=139771 gc_count=4096 reason=undersized
+[564142.175416] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=122504 gc_pages=139638 gc_count=4096 reason=undersized
+[564142.708554] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=123647 gc_pages=138501 gc_count=4096 reason=undersized
+[564143.329026] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=124772 gc_pages=137365 gc_count=4096 reason=undersized
+[564158.261317] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129620 gc_pages=132526 gc_count=4096 reason=undersized
+[564158.364663] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=128822 gc_pages=133333 gc_count=4096 reason=undersized
+[564158.924099] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=129677 gc_pages=132471 gc_count=4096 reason=undersized
+[564159.719842] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=131301 gc_pages=130836 gc_count=4096 reason=undersized
+[564173.843553] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=123251 gc_pages=138893 gc_count=4096 reason=undersized
+[564174.092962] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=124421 gc_pages=137721 gc_count=4096 reason=undersized
+[564174.582343] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=123465 gc_pages=138677 gc_count=4096 reason=undersized
+[564175.562667] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=125535 gc_pages=136601 gc_count=4096 reason=undersized
+[564190.351872] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=132266 gc_pages=129882 gc_count=4096 reason=undersized
+[564190.623961] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=132284 gc_pages=129863 gc_count=4096 reason=undersized
+[564191.024877] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=132054 gc_pages=130092 gc_count=4096 reason=undersized
+[564192.235928] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=134033 gc_pages=128105 gc_count=4096 reason=undersized
+[564206.121289] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=124743 gc_pages=137393 gc_count=4096 reason=undersized
+[564206.472350] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=125588 gc_pages=136557 gc_count=4096 reason=undersized
+[564206.840600] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=125427 gc_pages=136719 gc_count=4096 reason=undersized
+[564208.215279] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=127331 gc_pages=134804 gc_count=4096 reason=undersized
+[564222.921456] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=135202 gc_pages=126948 gc_count=4096 reason=undersized
+[564223.234253] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=135176 gc_pages=126973 gc_count=4096 reason=undersized
+[564223.686179] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=135582 gc_pages=126565 gc_count=4096 reason=undersized
+[564225.126901] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=136252 gc_pages=125886 gc_count=4096 reason=undersized
+[564238.830773] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=126361 gc_pages=135788 gc_count=4096 reason=undersized
+[564239.173270] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=125975 gc_pages=136171 gc_count=4096 reason=undersized
+[564239.566446] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=126397 gc_pages=135747 gc_count=4096 reason=undersized
+[564241.313504] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=128915 gc_pages=133222 gc_count=4096 reason=undersized
+[564255.914388] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=138156 gc_pages=123994 gc_count=4096 reason=undersized
+[564256.183524] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=137668 gc_pages=124489 gc_count=4096 reason=undersized
+[564256.496470] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=136432 gc_pages=125716 gc_count=4096 reason=undersized
+[564258.484126] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=138973 gc_pages=123164 gc_count=4096 reason=undersized
+[564271.975835] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127974 gc_pages=134176 gc_count=4096 reason=undersized
+[564272.248097] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=127799 gc_pages=134356 gc_count=4096 reason=undersized
+[564272.565573] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=127404 gc_pages=134733 gc_count=4096 reason=undersized
+[564274.942050] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=131946 gc_pages=130191 gc_count=4096 reason=undersized
+[564289.210023] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=139437 gc_pages=122711 gc_count=4096 reason=undersized
+[564289.341797] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=138370 gc_pages=123777 gc_count=4096 reason=undersized
+[564289.779111] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=139613 gc_pages=122532 gc_count=4096 reason=undersized
+[564292.403652] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=141728 gc_pages=120416 gc_count=4096 reason=undersized
+[564305.354133] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=128717 gc_pages=133427 gc_count=4096 reason=undersized
+[564305.489431] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=128845 gc_pages=133299 gc_count=4096 reason=undersized
+[564305.979010] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=128877 gc_pages=133265 gc_count=4096 reason=undersized
+[564309.225621] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135410 gc_pages=126735 gc_count=4096 reason=undersized
+[564322.729966] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=140929 gc_pages=121214 gc_count=4096 reason=undersized
+[564322.922927] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=141562 gc_pages=120580 gc_count=4096 reason=undersized
+[564323.501639] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=142657 gc_pages=119482 gc_count=4096 reason=undersized
+[564326.703990] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=141985 gc_pages=120165 gc_count=4096 reason=undersized
+[564339.076036] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=130590 gc_pages=131560 gc_count=4096 reason=undersized
+[564339.260899] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=130830 gc_pages=131310 gc_count=4096 reason=undersized
+[564339.922583] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=131356 gc_pages=130773 gc_count=4096 reason=undersized
+[564343.515921] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135184 gc_pages=126962 gc_count=4096 reason=undersized
+[564356.387685] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=140072 gc_pages=122067 gc_count=4096 reason=undersized
+[564356.728774] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=141673 gc_pages=120467 gc_count=4096 reason=undersized
+[564357.325004] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=141545 gc_pages=120596 gc_count=4096 reason=undersized
+[564360.347909] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135650 gc_pages=126501 gc_count=4096 reason=undersized
+[564372.138043] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=124792 gc_pages=137347 gc_count=4096 reason=undersized
+[564372.675253] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=126911 gc_pages=135226 gc_count=4096 reason=undersized
+[564373.339766] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=127259 gc_pages=134880 gc_count=4096 reason=undersized
+[564376.427206] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=127683 gc_pages=134450 gc_count=4096 reason=undersized
+[564388.363524] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129410 gc_pages=132732 gc_count=4096 reason=undersized
+[564389.128404] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=131785 gc_pages=130352 gc_count=4096 reason=undersized
+[564390.037545] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=134256 gc_pages=127895 gc_count=4096 reason=undersized
+[564392.425084] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=127266 gc_pages=134873 gc_count=4096 reason=undersized
+[564403.867828] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=122435 gc_pages=139707 gc_count=4096 reason=undersized
+[564404.730974] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=123208 gc_pages=138930 gc_count=4096 reason=undersized
+[564405.750725] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=124186 gc_pages=137961 gc_count=4096 reason=undersized
+[564408.209940] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=125495 gc_pages=136651 gc_count=4096 reason=undersized
+[564420.159612] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=130103 gc_pages=132043 gc_count=4096 reason=undersized
+[564420.991740] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=129554 gc_pages=132588 gc_count=4096 reason=undersized
+[564422.194000] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=131755 gc_pages=130369 gc_count=4096 reason=undersized
+[564424.498041] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129719 gc_pages=132443 gc_count=4096 reason=undersized
+[564435.782712] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=123584 gc_pages=138560 gc_count=4096 reason=undersized
+[564436.736175] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=124616 gc_pages=137526 gc_count=4096 reason=undersized
+[564438.167197] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=126791 gc_pages=135345 gc_count=4096 reason=undersized
+[564440.566114] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=128119 gc_pages=134030 gc_count=4096 reason=undersized
+[564452.343311] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=132894 gc_pages=129256 gc_count=4096 reason=undersized
+[564453.258158] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=132514 gc_pages=129621 gc_count=4096 reason=undersized
+[564454.780902] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=133497 gc_pages=128627 gc_count=4096 reason=undersized
+[564457.164932] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132836 gc_pages=129316 gc_count=4096 reason=undersized
+[564468.138704] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=125334 gc_pages=136814 gc_count=4096 reason=undersized
+[564469.183228] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=126421 gc_pages=135722 gc_count=4096 reason=undersized
+[564470.788379] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=127406 gc_pages=134731 gc_count=4096 reason=undersized
+[564473.477411] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=130487 gc_pages=131662 gc_count=4096 reason=undersized
+[564485.042327] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=136354 gc_pages=125796 gc_count=4096 reason=undersized
+[564486.001617] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=135137 gc_pages=127010 gc_count=4096 reason=undersized
+[564487.755449] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=136551 gc_pages=125586 gc_count=4096 reason=undersized
+[564490.186724] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=134415 gc_pages=127739 gc_count=4096 reason=undersized
+[564501.015728] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=126901 gc_pages=135248 gc_count=4096 reason=undersized
+[564501.879246] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=126258 gc_pages=135870 gc_count=4096 reason=undersized
+[564504.032804] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=129951 gc_pages=132184 gc_count=4096 reason=undersized
+[564506.567217] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=131080 gc_pages=131068 gc_count=4096 reason=undersized
+[564518.156940] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=138167 gc_pages=123983 gc_count=4096 reason=undersized
+[564518.723804] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=135849 gc_pages=126298 gc_count=4096 reason=undersized
+[564521.218405] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=139066 gc_pages=123074 gc_count=4096 reason=undersized
+[564523.381341] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135458 gc_pages=126693 gc_count=4096 reason=undersized
+[564534.175070] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127339 gc_pages=134810 gc_count=4096 reason=undersized
+[564534.719873] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=127508 gc_pages=134636 gc_count=4096 reason=undersized
+[564537.772246] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=132887 gc_pages=129254 gc_count=4096 reason=undersized
+[564539.998787] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=133096 gc_pages=129051 gc_count=4096 reason=undersized
+[564551.387626] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=139717 gc_pages=122431 gc_count=4096 reason=undersized
+[564552.043338] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=139964 gc_pages=122172 gc_count=4096 reason=undersized
+[564555.209619] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=141477 gc_pages=120670 gc_count=4096 reason=undersized
+[564556.881773] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=136008 gc_pages=126153 gc_count=4096 reason=undersized
+[564567.613743] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129480 gc_pages=132667 gc_count=4096 reason=undersized
+[564568.243222] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=129309 gc_pages=132830 gc_count=4096 reason=undersized
+[564572.050907] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=135777 gc_pages=126372 gc_count=4096 reason=undersized
+[564573.496431] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=133592 gc_pages=128567 gc_count=4096 reason=undersized
+[564585.055790] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=141721 gc_pages=120422 gc_count=4096 reason=undersized
+[564585.792600] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=142591 gc_pages=119547 gc_count=4096 reason=undersized
+[564589.364728] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=140202 gc_pages=121950 gc_count=4096 reason=undersized
+[564590.501114] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=137220 gc_pages=124924 gc_count=4096 reason=undersized
+[564601.463344] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=130895 gc_pages=131245 gc_count=4096 reason=undersized
+[564602.220773] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=131488 gc_pages=130642 gc_count=4096 reason=undersized
+[564606.091146] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=134742 gc_pages=127403 gc_count=4096 reason=undersized
+[564607.383599] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=136119 gc_pages=126025 gc_count=4096 reason=undersized
+[564618.888900] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=141429 gc_pages=120710 gc_count=4096 reason=undersized
+[564619.629209] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=141091 gc_pages=121050 gc_count=4096 reason=undersized
+[564622.862620] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=134872 gc_pages=127276 gc_count=4096 reason=undersized
+[564624.164611] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135254 gc_pages=126876 gc_count=4096 reason=undersized
+[564634.872488] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127066 gc_pages=135070 gc_count=4096 reason=undersized
+[564635.686478] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=127881 gc_pages=134260 gc_count=4096 reason=undersized
+[564638.946797] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=128022 gc_pages=134131 gc_count=4096 reason=undersized
+[564640.390921] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129533 gc_pages=132603 gc_count=4096 reason=undersized
+[564651.371867] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=132327 gc_pages=129799 gc_count=4096 reason=undersized
+[564652.278418] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133172 gc_pages=128981 gc_count=4096 reason=undersized
+[564654.935788] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=126930 gc_pages=135227 gc_count=4096 reason=undersized
+[564656.268556] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=126205 gc_pages=135936 gc_count=4096 reason=undersized
+[564667.062512] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=123778 gc_pages=138360 gc_count=4096 reason=undersized
+[564668.112431] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=125623 gc_pages=136511 gc_count=4096 reason=undersized
+[564670.712101] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=125160 gc_pages=136984 gc_count=4096 reason=undersized
+[564672.193665] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=126712 gc_pages=135427 gc_count=4096 reason=undersized
+[564683.239484] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129356 gc_pages=132785 gc_count=4096 reason=undersized
+[564684.744802] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133518 gc_pages=128620 gc_count=4096 reason=undersized
+[564686.873994] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=128806 gc_pages=133346 gc_count=4096 reason=undersized
+[564688.187465] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=126855 gc_pages=135290 gc_count=4096 reason=undersized
+[564698.995224] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=124333 gc_pages=137819 gc_count=4096 reason=undersized
+[564700.757325] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=127310 gc_pages=134826 gc_count=4096 reason=undersized
+[564702.989523] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=128508 gc_pages=133640 gc_count=4096 reason=undersized
+[564704.251711] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=127815 gc_pages=134328 gc_count=4096 reason=undersized
+[564715.502920] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=132498 gc_pages=129647 gc_count=4096 reason=undersized
+[564717.467396] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=134196 gc_pages=127941 gc_count=4096 reason=undersized
+[564719.564023] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=132806 gc_pages=129347 gc_count=4096 reason=undersized
+[564720.462808] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129409 gc_pages=132739 gc_count=4096 reason=undersized
+[564731.302591] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=125386 gc_pages=136752 gc_count=4096 reason=undersized
+[564733.664046] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=129192 gc_pages=132945 gc_count=4096 reason=undersized
+[564735.875839] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=130380 gc_pages=131768 gc_count=4096 reason=undersized
+[564736.766796] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=130053 gc_pages=132092 gc_count=4096 reason=undersized
+[564748.059168] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=134777 gc_pages=127369 gc_count=4096 reason=undersized
+[564750.671893] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=137293 gc_pages=124865 gc_count=4096 reason=undersized
+[564752.494444] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=133840 gc_pages=128312 gc_count=4096 reason=undersized
+[564753.335157] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132634 gc_pages=129515 gc_count=4096 reason=undersized
+[564763.937854] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=125731 gc_pages=136402 gc_count=4096 reason=undersized
+[564767.051797] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=131296 gc_pages=130837 gc_count=4096 reason=undersized
+[564768.958112] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=131638 gc_pages=130500 gc_count=4096 reason=undersized
+[564769.662703] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=130804 gc_pages=131341 gc_count=4096 reason=undersized
+[564780.890138] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=137064 gc_pages=125085 gc_count=4096 reason=undersized
+[564784.278527] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=139349 gc_pages=122796 gc_count=4096 reason=undersized
+[564785.763657] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=135010 gc_pages=127141 gc_count=4096 reason=undersized
+[564786.247739] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=133027 gc_pages=129120 gc_count=4096 reason=undersized
+[564796.969316] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127948 gc_pages=134195 gc_count=4096 reason=undersized
+[564800.901298] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133579 gc_pages=128567 gc_count=4096 reason=undersized
+[564802.289994] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=132444 gc_pages=129701 gc_count=4096 reason=undersized
+[564802.785221] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132371 gc_pages=129773 gc_count=4096 reason=undersized
+[564814.155490] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=139183 gc_pages=122961 gc_count=4096 reason=undersized
+[564818.064760] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=138715 gc_pages=123440 gc_count=4096 reason=undersized
+[564819.139161] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=136208 gc_pages=125948 gc_count=4096 reason=undersized
+[564819.535608] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=134810 gc_pages=127336 gc_count=4096 reason=undersized
+[564830.437553] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=129944 gc_pages=132198 gc_count=4096 reason=undersized
+[564834.663387] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133398 gc_pages=128749 gc_count=4096 reason=undersized
+[564835.993682] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=135224 gc_pages=126902 gc_count=4096 reason=undersized
+[564836.396412] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135811 gc_pages=126330 gc_count=4096 reason=undersized
+[564847.856030] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=141562 gc_pages=120577 gc_count=4096 reason=undersized
+[564851.702357] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=137557 gc_pages=124593 gc_count=4096 reason=undersized
+[564853.062761] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=138188 gc_pages=123955 gc_count=4096 reason=undersized
+[564853.425748] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=137472 gc_pages=124669 gc_count=4096 reason=undersized
+[564864.241323] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=131355 gc_pages=130782 gc_count=4096 reason=undersized
+[564868.396763] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133895 gc_pages=128249 gc_count=4096 reason=undersized
+[564870.074747] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=137045 gc_pages=125090 gc_count=4096 reason=undersized
+[564870.501882] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=138028 gc_pages=124109 gc_count=4096 reason=undersized
+[564881.572207] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=140533 gc_pages=121607 gc_count=4096 reason=undersized
+[564885.081870] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=134269 gc_pages=127877 gc_count=4096 reason=undersized
+[564886.836975] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=134962 gc_pages=127180 gc_count=4096 reason=undersized
+[564887.359372] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135686 gc_pages=126467 gc_count=4096 reason=undersized
+[564897.608383] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=127669 gc_pages=134469 gc_count=4096 reason=undersized
+[564901.175263] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=127963 gc_pages=134179 gc_count=4096 reason=undersized
+[564903.260673] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=131234 gc_pages=130904 gc_count=4096 reason=undersized
+[564903.900663] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132518 gc_pages=129624 gc_count=4096 reason=undersized
+[564914.199540] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=132949 gc_pages=129197 gc_count=4096 reason=undersized
+[564917.155091] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=127112 gc_pages=135043 gc_count=4096 reason=undersized
+[564919.469484] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=129483 gc_pages=132657 gc_count=4096 reason=undersized
+[564920.064683] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129066 gc_pages=133079 gc_count=4096 reason=undersized
+[564929.936094] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=124594 gc_pages=137542 gc_count=4096 reason=undersized
+[564932.971095] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=125243 gc_pages=136900 gc_count=4096 reason=undersized
+[564935.752011] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=130158 gc_pages=131979 gc_count=4096 reason=undersized
+[564936.382607] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=130439 gc_pages=131702 gc_count=4096 reason=undersized
+[564946.321047] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=131287 gc_pages=130849 gc_count=4096 reason=undersized
+[564949.073463] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=128443 gc_pages=133709 gc_count=4096 reason=undersized
+[564951.915949] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=128642 gc_pages=133496 gc_count=4096 reason=undersized
+[564952.625747] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=129696 gc_pages=132446 gc_count=4096 reason=undersized
+[564962.228981] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=125909 gc_pages=136228 gc_count=4096 reason=undersized
+[564965.170771] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=128249 gc_pages=133899 gc_count=4096 reason=undersized
+[564968.195315] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=130313 gc_pages=131822 gc_count=4096 reason=undersized
+[564969.191239] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132703 gc_pages=129436 gc_count=4096 reason=undersized
+[564978.854850] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=133589 gc_pages=128539 gc_count=4096 reason=undersized
+[564981.666836] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=132169 gc_pages=129983 gc_count=4096 reason=undersized
+[564984.461275] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=129631 gc_pages=132507 gc_count=4096 reason=undersized
+[564985.650913] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=131930 gc_pages=130212 gc_count=4096 reason=undersized
+[564994.844778] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=126906 gc_pages=135231 gc_count=4096 reason=undersized
+[564997.936111] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=130164 gc_pages=131974 gc_count=4096 reason=undersized
+[565000.999042] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=132795 gc_pages=129332 gc_count=4096 reason=undersized
+[565002.506503] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135635 gc_pages=126506 gc_count=4096 reason=undersized
+[565011.637617] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=135202 gc_pages=126936 gc_count=4096 reason=undersized
+[565014.618902] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=133704 gc_pages=128448 gc_count=4096 reason=undersized
+[565017.406774] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=131579 gc_pages=130558 gc_count=4096 reason=undersized
+[565019.082336] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=132909 gc_pages=129240 gc_count=4096 reason=undersized
+[565027.778176] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=128626 gc_pages=133509 gc_count=4096 reason=undersized
+[565030.984912] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=131001 gc_pages=131146 gc_count=4096 reason=undersized
+[565034.332423] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=136132 gc_pages=126005 gc_count=4096 reason=undersized
+[565035.913447] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=135836 gc_pages=126310 gc_count=4096 reason=undersized
+[565044.975542] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=139150 gc_pages=122987 gc_count=4096 reason=undersized
+[565047.804098] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=135201 gc_pages=126950 gc_count=4096 reason=undersized
+[565051.116917] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=135200 gc_pages=126941 gc_count=4096 reason=undersized
+[565052.497602] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=133046 gc_pages=129116 gc_count=4096 reason=undersized
+[565061.501488] NVMeVirt: WATGC_V2 discard ns=0 part=0 epoch=1 phase=2 arm=37 host=132306 gc_pages=129831 gc_count=4096 reason=undersized
+[565064.337693] NVMeVirt: WATGC_V2 discard ns=0 part=1 epoch=1 phase=2 arm=37 host=132725 gc_pages=129421 gc_count=4096 reason=undersized
+[565068.278833] NVMeVirt: WATGC_V2 discard ns=0 part=2 epoch=1 phase=2 arm=37 host=138680 gc_pages=123461 gc_count=4096 reason=undersized
+[565069.632734] NVMeVirt: WATGC_V2 discard ns=0 part=3 epoch=1 phase=2 arm=37 host=138604 gc_pages=123543 gc_count=4096 reason=undersized
+[565069.917934] mix-mixC-onlinev2-3820170 phase=B END
+[565069.921030] NVMeVirt: Measurement: command=stop epoch=1 host_bytes=368653238272 learner_active=0
+[565069.970032] EXT4-fs (nvme0n1): unmounting filesystem 27ba58b3-0270-412a-a9de-36444ec8ac1e.
+[565070.034193] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[565070.034242] NVMeVirt: WATGC_V2 summary ns=0 part=0 epoch=1 windows=0 epoch_windows=0 discarded=134 visited=0 covered=0 settled=0 phase=2 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0
+[565070.034246] NVMeVirt: WATGC_V2 summary ns=0 part=1 epoch=1 windows=0 epoch_windows=0 discarded=134 visited=0 covered=0 settled=0 phase=2 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0
+[565070.034250] NVMeVirt: WATGC_V2 summary ns=0 part=2 epoch=1 windows=0 epoch_windows=0 discarded=134 visited=0 covered=0 settled=0 phase=1 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0
+[565070.034252] NVMeVirt: WATGC_V2 summary ns=0 part=3 epoch=1 windows=0 epoch_windows=0 discarded=134 visited=0 covered=0 settled=0 phase=1 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0
+[565070.034255] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=90003232 gc_pages=84612578 gc_count=2728372 WAF=1.940 warmup_gc=100-per-part
+[565070.112888] NVMeVirt: Virtual NVMe device closed
