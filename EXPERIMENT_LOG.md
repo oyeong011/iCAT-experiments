@@ -11498,3 +11498,34 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(test4-hot128M) host_pages=72003961 gc_pages=56377665 WAF=1.782980
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixH fixed47 — started 2026-10-02T12:00:20+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 12000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh mixH fixed47`; evidence `result/mix-20260911/mixH-fixed47/`.
+
+- Finished 2026-10-02T13:24:43+09:00; mixH fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixH-fixed47-rep1-x3`; cleanup attempted.
+- total host_bytes=456631812096 host_pages=111482376 gc_pages=80332052 WAF=1.720581
+- phaseA(test3) host_pages=18001255 gc_pages=13787226 WAF=1.765904
+- phaseB(test4) host_pages=72001986 gc_pages=55402516 WAF=1.769458
+- phaseC(sqlite-a) host_pages=21479135 gc_pages=11142310 WAF=1.518750
+- phaseC-load host_pages=1398339 gc_pages=302017 WAF=1.215983
+- phaseC-run host_pages=20080796 gc_pages=10840293 WAF=1.539834
+- ycsb-load [OVERALL], Throughput(ops/sec), 25215.381382643413
+- ycsb-run [OVERALL], Throughput(ops/sec), 8956.85483028253
+
+### mix-20260911 mixH arm46 — started 2026-10-02T13:24:50+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 12000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm46.ko`.
+- Command: `bash script/mix-20260911.sh mixH arm46`; evidence `result/mix-20260911/mixH-arm46/`.
+
+## QUEUE33 — 고정 CAT 60개 전체 순위 (두 번째 컴퓨터) — 사전 등록 2026-10-02
+
+- 목적: 11개 전환 워크로드(O F J P B D K H G L Q)마다 고정 CAT 60개 전체의 WAF 순위를 구해, 워크로드별 실제 1등과 iCAT-v4의 순위를 "60개 중 몇 등"으로 보고한다. ("CAT-Best=47번"이라는 이름의 근거가 빠른 3영역 한 워크로드뿐이라는 사용자 지적에 따름.)
+- 명령: `script/gh-queue33-fullsweep.sh` (1단계 arm00–59 × 1배, 2단계 워크로드별 상위 5개 × 3배 MULT=3 VM_RUN=900). 결과는 브랜치 icat-2, run마다 HOST.txt.
+- 고정 조건: 원래 컴퓨터와 같은 커널 7.0.0-31, 같은 소스·빌드 스크립트(build-all-modules.sh), 같은 구간 지정 계측(mix-20260911.sh).
+- 컴퓨터 간 동일성 판정(사전 등록):
+  1. `validate-new-machine.sh` PASS (3개 정책 모두 원래 값 ±1% 이내) — 미통과 시 큐를 돌리지 않는다.
+  2. 원래 컴퓨터에서 이미 잰 arm(13개 + 37/47/50)을 새 컴퓨터도 다시 잰다. 겹치는 arm에서 WAF 차이 중앙값이 ±1% 이내이고 워크로드별 순위 상관(Spearman)이 0.9 이상이면 두 컴퓨터 결과를 합친다. 아니면 새 컴퓨터 결과만으로 순위를 보고한다.
+- 1배→3배 순위 유지 판정: 2단계에서 1배·3배 둘 다 있는 arm의 Spearman ≥ 0.8이면 "1배 순위로 60개 전체 순위를 매긴다"를 채택, 아니면 3배로 잰 상위 5개 안에서만 순위를 보고한다.
+- v4의 순위: 3배 길이 v4(1~3회 평균)를 3배로 잰 고정 arm들과만 비교한다. 1배 고정값과 3배 v4를 직접 비교하지 않는다.
