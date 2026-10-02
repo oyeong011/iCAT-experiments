@@ -3,8 +3,8 @@
 # Usage: mix-20260911.sh <smoke|main> <fixed47|online>
 set -Eeuo pipefail
 root=/home/oy/iCAT
-base="$root/result/mix-20260911"
-journal="$root/EXPERIMENT_LOG.md"
+base="${MIX_BASE:-$root/result/mix-20260911}"   # second PC writes to its own dir
+journal="${MIX_JOURNAL:-$root/EXPERIMENT_LOG.md}"
 control=/proc/nvmevirt_measurement
 label=${1:?Use smoke, main, long, t4, or mixA/B/C/D/F/G/H/J/K/L/M/O/P/Q}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
 case "$policy" in
@@ -57,7 +57,8 @@ loaded=0; collector=; dc=; series=
 marker="mix-$label-$policy-$$"
 printf '\n### mix-20260911 %s %s — started %s\n\n- Phase A fio test4 fixed payload (%s/%s/%s bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (%s records, %s ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `%s`.\n- Command: `bash script/mix-20260911.sh %s %s`; evidence `result/mix-20260911/%s-%s/`.\n' "$label" "$policy" "$(date -Is)" "$HOT_IO" "$WARM_IO" "$COLD_IO" "$RECORDS" "$OPS" "$(basename "$module")" "$label" "$policy" "$label" "$policy" >> "$journal"
 field() { awk -v key="$2" 'NR==1{for(i=1;i<=NF;i++){split($i,a,"=");if(a[1]==key)print a[2]}}' "$1"; }
-sectors() { awk '{print $7}' /sys/class/block/nvme0n1/stat; }
+nv=  # NVMeVirt controller (nvme0 here, nvme1 on a PC with a real NVMe SSD), found by model after insmod
+sectors() { awk '{print $7}' /sys/class/block/${nv}n1/stat; }
 kmsg() { printf '%s %s\n' "$marker" "$*" | sudo -n tee /dev/kmsg >/dev/null; }
 phase_waf() { # phase_waf <start.txt> <end.txt>
     awk -v h0="$(field "$1" host_pages)" -v g0="$(field "$1" gc_pages)" -v h1="$(field "$2" host_pages)" -v g1="$(field "$2" gc_pages)" \
@@ -97,14 +98,14 @@ mkdir -p "$dir/kernel-snapshots"
 ( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; i=0; while true; do printf -v s '%s/kernel-snapshots/%06d.log' "$dir" "$i"; sudo -n dmesg --color=never > "$s" || exit 1; i=$((i+1)); sleep 30 & sl=$!; wait $sl; done ) & collector=$!
 sudo -n insmod "$module" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid="$(id -u)"
 loaded=1
-for _ in {1..50}; do [[ -b /dev/nvme0n1 && -w "$control" ]] && break; sleep 0.2; done
-[[ -b /dev/nvme0n1 && -w "$control" ]]
+for _ in {1..50}; do for c in /sys/class/nvme/nvme*; do grep -qi CSL_Virt "$c/model" 2>/dev/null && nv=$(basename "$c"); done; [[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]] && break; sleep 0.2; done
+[[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]]
 # counter time series every 30 s (all policies): lets fixed arms be compared with the learner over time, not just per phase
 ( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; cat "$control" 2>/dev/null | head -1; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
-grep -q CSL_Virt /sys/class/nvme/nvme0/model
-cat /sys/class/nvme/nvme0/model /sys/class/block/nvme0n1/size > "$dir/device.txt"
-sudo -n mkfs.ext4 /dev/nvme0n1 > "$dir/mkfs.txt" 2>&1
-sudo -n mount -o nodiscard /dev/nvme0n1 "$root/mnt"
+grep -q CSL_Virt /sys/class/nvme/$nv/model
+cat /sys/class/nvme/$nv/model /sys/class/block/${nv}n1/size > "$dir/device.txt"
+sudo -n mkfs.ext4 /dev/${nv}n1 > "$dir/mkfs.txt" 2>&1
+sudo -n mount -o nodiscard /dev/${nv}n1 "$root/mnt"
 sudo -n chown -R oy:oy "$root/mnt"
 # preparation (identical to measured-cat / online-mix)
 fio --name=preset --filename="$FIO_TARGET" --size=6G --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/preset.json"

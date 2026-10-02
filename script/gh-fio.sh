@@ -16,7 +16,8 @@ readonly START_SCRIPT="${SCRIPT_DIR}/start_virt.sh"
 readonly END_SCRIPT="${SCRIPT_DIR}/end_virt.sh"
 readonly PRESET_JOB="${WORKLOAD_DIR}/gh-preset.fio"
 readonly TEST_JOB="${WORKLOAD_DIR}/${GH_TEST_JOB:-gh-test4.fio}"
-readonly DEVICE="/dev/nvme0n1"
+DEVICE=""   # set after the module loads: the NVMeVirt namespace found by model (nvme1n1 on a PC with a real NVMe SSD)
+virt_dev() { local c; for c in /sys/class/nvme/nvme*; do grep -qi CSL_Virt "$c/model" 2>/dev/null && { echo "/dev/$(basename "$c")n1"; return; }; done; return 1; }
 
 readonly SUDO_BIN="/usr/bin/sudo"
 readonly FIO_BIN="/usr/bin/fio"
@@ -166,6 +167,7 @@ main()
 	printf '[START] module=%s\n' "${MODULE_TAG}"
 	"${START_SCRIPT}" "${MODULE_TAG}"
 	virt_started=1
+	DEVICE="$(virt_dev)" || die "NVMeVirt namespace not found"
 
 	printf '[PRESET] size=%s job=%s\n' "${FIO_TEST_SIZE}" "${PRESET_JOB}"
 	"${FIO_BIN}" "${PRESET_JOB}"

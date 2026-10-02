@@ -41,7 +41,8 @@ readonly SCRIPT_DIR="/home/oy/iCAT/script"
 readonly RESULT_ROOT="/home/oy/iCAT/result/filebench"
 readonly START_SCRIPT="${SCRIPT_DIR}/start_virt.sh"
 readonly END_SCRIPT="${SCRIPT_DIR}/end_virt.sh"
-readonly DEVICE="/dev/nvme0n1"
+DEVICE=""   # set after the module loads: the NVMeVirt namespace found by model (nvme1n1 on a PC with a real NVMe SSD)
+virt_dev() { local c; for c in /sys/class/nvme/nvme*; do grep -qi CSL_Virt "$c/model" 2>/dev/null && { echo "/dev/$(basename "$c")n1"; return; }; done; return 1; }
 readonly MOUNT_POINT="/home/oy/iCAT/mnt"
 readonly TEST_DIR="${MOUNT_POINT}/filebench"
 
@@ -499,6 +500,7 @@ main() {
 
     printf '[START] module=%s\n' "${MODULE_TAG}"
     "${START_SCRIPT}" "${MODULE_TAG}"
+    DEVICE="$(virt_dev)" || die "NVMeVirt namespace not found"
     virt_started=1
     verify_mount_source
     true  # chown not needed: files owned by oy
