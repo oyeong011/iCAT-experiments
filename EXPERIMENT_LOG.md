@@ -11587,3 +11587,14 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Command: `bash script/mix-20260911.sh mixO onlinev4`; evidence `result/mix-20260911/mixO-onlinev4/`.
 
 - Finished 2026-10-03T05:20:15+09:00; mixO onlinev4 exit=124; evidence `/home/oy/iCAT/result/mix-20260911/mixO-onlinev4-rep1-x20`; cleanup attempted.
+
+### mix-20260911 mixO fixed50 — started 2026-10-03T05:22:34+09:00
+
+- Phase A fio test4 fixed payload (1179648000000/589824000000/196608000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixO fixed50`; evidence `result/mix-20260911/mixO-fixed50/`.
+
+### QUEUE34 결과 — mixO-onlinev4-rep1-x20 실패 (2026-10-03 05:20)
+- 상태: FAIL, exit=124 (구간 A OLTP filebench가 timeout 18900초에 강제 종료). 구간 B(Varmail) 미실행. 증거 `result/mix-20260911/mixO-onlinev4-rep1-x20/`.
+- 관찰: 시작 후 약 25분까지 정상(호스트 쓰기 약 88만 페이지/30초, 누적 WAF 1.26). 이후 시스템이 거의 멈춤: 30초 간격 기록이 20~50분씩 끊기고 쓰기 속도가 수백~수천 페이지/30초로 붕괴, 커널 로그 스냅샷도 5시간 동안 57개뿐. 같은 시간대에 세션 쪽에서 "메모리 부족" 경고 발생.
+- 3배 길이(OLTP 15분)에서는 이 현상이 나타나기 전에 구간이 끝났음 → 장시간 OLTP에서만 드러나는 문제. 원인 미확정(가설: OLTP 로그 파일 증가로 가상 SSD가 차면서 GC 폭주 → 쓰기 지연 → dirty page 회수로 시스템 정체, 또는 filebench 메모리 증가).
+- 조치: 큐34 중지. 이미 시작된 mixO-fixed50-rep1-x20은 원인 진단을 위해 40분간 df·메모리·dirty·filebench RSS를 30초마다 기록(scratchpad/oltp-diag.txt) 후 판단. 두 번째 PC의 CAT-37 10시간도 같은 설정이라 같은 실패 가능성 있음.
