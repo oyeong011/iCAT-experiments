@@ -15,6 +15,7 @@ run() { local d=$1; shift; [[ -e $R/$d/summary.txt ]] && return; free
   echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; tools || { echo "tools broken before $d, skipped"; return; }
   "$@" > $R/$d.console.txt 2>&1 || echo "FAIL $d"
   tools || { echo "SUSPECT $d: tools broken right after this run" | tee -a $R/$d/SUSPECT.txt; echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; }; }
+run t4-fixed37-rep1-x18 env MULT=18 bash script/mix-20260911.sh t4 fixed37 1; push "FIO-Fast 3h CAT-37 (default) for Fig.6"   # added 10-02: Fig.6 needs a long default-CAT curve
 for p in fixed47 fixed50 onlinev4; do run mixD-$p-rep1-x30 env MULT=30 bash script/mix-20260911.sh mixD $p 1; push "mixD $p"; done
 for p in fixed47 fixed50 onlinev4; do run mixJ-$p-rep1-x90 env MULT=90 bash script/mix-20260911.sh mixJ $p 1; push "mixJ $p"; done
 for p in fixed47 fixed50 onlinev4; do run mixO-$p-rep1-x20 env MULT=20 VM_RUN=18000 bash script/mix-20260911.sh mixO $p 1; push "mixO $p"; done
