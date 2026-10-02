@@ -11544,3 +11544,11 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseC-run host_pages=20317319 gc_pages=10163427 WAF=1.500235
 - ycsb-load [OVERALL], Throughput(ops/sec), 20970.222284356216
 - ycsb-run [OVERALL], Throughput(ops/sec), 12401.216559344472
+
+## QUEUE34 — 10시간 전환 워크로드: CAT-47 vs CAT-50 vs iCAT-v4 — 사전 등록 2026-10-02
+
+- 목적: 혼합(전환) 워크로드에서 실행이 10시간으로 길어지면 v4와 고정 CAT의 격차가 어떻게 되는지. 현재 가장 긴 혼합 결과는 6배(약 2시간; v4가 47번보다 +3.2~+6.8%).
+- 대상·길이(3배 실측 시간에서 환산, 각 약 10시간, 1회씩): FIO-Fast→FIO-Slow(mixD, MULT=30), YCSB-A→YCSB-B(mixJ, MULT=90), OLTP→Varmail(mixO, MULT=20, VM_RUN=18000). 정책 fixed47, fixed50, onlinev4. 순서 D→J→O, 총 약 90시간.
+- 명령: `script/gh-queue34-mix10h.sh` (queue31 종료 후 시작). queue32는 이 큐 종료 후로 연기.
+- 판정(사전 등록): 각 워크로드에서 v4 전체 WAF가 47번 대비 몇 %인지 보고. 6배 대비 격차가 줄면 "학습 시간이 길수록 따라잡음", 1% 이내면 "10시간에서 동률", v4가 낮으면 "우위". 1회 측정이므로 1% 미만 차이는 판정하지 않음.
+- 알려진 위험: YCSB-A→YCSB-B는 3배에서 v4가 전수 순회(45창)를 끝내지 못함 — 10시간에서 처음으로 순회 후 동작을 본다. OLTP→Varmail은 순회 중 전환으로 후보가 2개까지 붕괴하는 현상(코드 리뷰 2026-10-02)이 10시간에서도 나타나는지 함께 확인.

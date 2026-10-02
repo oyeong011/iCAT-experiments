@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# 2026-10-01: experiments requested by the first-time reviewer. After queue31.
+# 2026-10-01: experiments requested by the first-time reviewer. After queue34 (was queue31; 10 h mixes moved ahead 10-02).
 # A. iCAT-v4 to n=3 on all 13 transition workloads (x3)   B. fixed-arm repeats on OLTP->Varmail (the only "beats all fixed" case)
 # C. ablations: v3 components (window, sweep visits, drift threshold), v4 mechanisms (elimination, neighbour probe, partial reset), repeats.
 set -u
 cd /home/oy/iCAT
 S=/tmp/claude-1000/-home-oy-nvmevirt/644aa240-1852-482e-a060-ce2cfc119144/scratchpad
-until grep -q QUEUE31DONE $S/queue31.out 2>/dev/null; do sleep 300; done
+until grep -q QUEUE34DONE $S/queue34.out 2>/dev/null; do sleep 300; done
 free() { until ! pgrep -f "script/(mix-20260911|gh-fio|sqlite|gh-filebench).sh" >/dev/null && [[ ! -e /sys/module/nvmev ]]; do sleep 30; done; }
 tools() { fio --version >/dev/null 2>&1 && sqlite3 --version >/dev/null 2>&1 && java -version >/dev/null 2>&1; }
 push() { git add -A >/dev/null 2>&1; git commit -qm "review: $1" >/dev/null 2>&1; git push -q 2>/dev/null; echo "[push] $1 $(date -Is)"; }
