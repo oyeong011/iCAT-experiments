@@ -16,7 +16,9 @@ MIX = [('O', 'OLTP → Varmail'), ('F', 'FIO-Fast → Varmail'), ('J', 'YCSB-A �
 def series(d):
     s = [tuple(map(int, m.groups())) for l in open(d / 'control-series.txt') if (m := re.match(r'(\d+) .*active=1 .*host_pages=(\d+) gc_pages=(\d+)', l))]
     t0 = s[0][0]; b = (dt.datetime.fromisoformat((d / 'phase-B-start.time').read_text().strip()).timestamp() - t0) / 60
-    pts = [((t - t0) / 60, 1 + (g1 - g0) / (h1 - h0), 1 + g1 / h1) for (_, h0, g0), (t, h1, g1) in zip(s, s[1:]) if h1 - h0 > 2000]
+    med = sorted(h1 - h0 for (_, h0, _), (_, h1, _) in zip(s, s[1:]))[len(s) // 2]
+    # ponytail: 30 s intervals with <10% of the usual host writes (YCSB restart gap at a switch) give a meaningless ratio -> dropped
+    pts = [((t - t0) / 60, 1 + (g1 - g0) / (h1 - h0), 1 + g1 / h1) for (_, h0, g0), (t, h1, g1) in zip(s, s[1:]) if h1 - h0 > 0.1 * med]
     return pts, b
 def mean_total(m, p):
     xs = [float(re.search(r'^total .*WAF=([\d.]+)', open(f).read(), re.M)[1]) for f in glob.glob(str(M / f'mix{m}-{p}-rep[0-9]-x3/summary.txt'))]

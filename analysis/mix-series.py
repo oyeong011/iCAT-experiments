@@ -11,10 +11,10 @@ POL = [('onlinev4', 'iCAT-v4'), ('fixed47', 'CAT-47'), ('fixed50', 'CAT-50')]
 def run(d):
     s = [tuple(map(int, m.groups())) for l in open(d / 'control-series.txt') if (m := re.match(r'(\d+) .*active=1 .*host_pages=(\d+) gc_pages=(\d+)', l))]
     bounds = sorted((dt.datetime.fromisoformat(f.read_text().strip()).timestamp(), f.name[6]) for f in d.glob('phase-*-start.time'))
-    rows = []
+    rows = []; med = sorted(h1 - h0 for (_, h0, _), (_, h1, _) in zip(s, s[1:]))[len(s) // 2]   # intervals with <10% of usual host writes: ratio left blank
     for (a, h0, g0), (b, h1, g1) in zip(s, s[1:]):
         ph = [p for t, p in bounds if t <= b][-1:] or ['A']
-        rows.append((round((b - s[0][0]) / 60, 2), ph[0], 1 + (g1 - g0) / (h1 - h0) if h1 > h0 else None, 1 + g1 / h1 if h1 else None))
+        rows.append((round((b - s[0][0]) / 60, 2), ph[0], 1 + (g1 - g0) / (h1 - h0) if h1 - h0 > 0.1 * med else None, 1 + g1 / h1 if h1 else None))
     return rows
 for k, title in MIX.items():
     R = {lab: run(M / f'mix{k}-{p}-rep1-x3') for p, lab in POL if (M / f'mix{k}-{p}-rep1-x3' / 'control-series.txt').exists()}
