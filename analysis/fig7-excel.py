@@ -34,30 +34,37 @@ for wl in ['OLTP → Varmail', 'FIO-Fast → Varmail']:
     f = [(float(r['경과(분)']), float(r['30초 WAF'])) for r in F if r['워크로드'] == wl and r['정책'] == 'CAT-47 (최적)' and r['30초 WAF']]
     x = [float(r['경과(분)']) for r in t]
     best = step(x, [int(r['추정 최선 조합']) for r in t]); act = step(x, [int(r['남은 후보 수']) for r in t])
+    stt, swept = [], False   # 0 = 전수 순회 (첫 후보 제거 전), 1 = 탐색, 2 = 정착 — same rule as fig7-plot.py
+    for i, r in enumerate(t):
+        if i and int(r['남은 후보 수']) < int(t[i - 1]['남은 후보 수']): swept = True
+        stt.append(2 if r['정착(1=예)'] == '1' else (1 if swept else 0))
+    stp = step(x, stt)
     sw = next(float(r['경과(분)']) for r in t if r['구간'].startswith('뒤'))
     cols = [('v4 시간(분)', x), ('iCAT-v4 구간 WAF', [float(r['구간 WAF']) for r in t]),
             ('CAT-47 시간(분)', [a for a, _ in f]), ('CAT-47 (최적) 30초 WAF', [b for _, b in f]),
             ('v4 시간(분) ', x), ('시험·사용한 조합', [int(r['이번 구간에 쓴 조합']) for r in t]),
             ('계단 시간(분)', [a for a, _ in best]), ('추정 최선 조합', [b for _, b in best]),
             ('계단 시간(분) ', [a for a, _ in act]), ('남은 후보 수', [b for _, b in act]),
-            ('구간', [r['구간'] for r in t]), ('정착(1=예)', [int(r['정착(1=예)']) for r in t]), ('사건', [r['사건'] for r in t])]
+            ('구간', [r['구간'] for r in t]), ('정착(1=예)', [int(r['정착(1=예)']) for r in t]), ('사건', [r['사건'] for r in t]),
+            ('계단 시간(분)  ', [a for a, _ in stp]), ('학습 상태 (0=전수 순회, 1=탐색, 2=정착)', [b for _, b in stp])]
     ws = wb.create_sheet(wl.replace(' → ', '→'))
     for j, (h, v) in enumerate(cols, 1):
         ws.cell(row=1, column=j, value=h).font = Font(bold=True)
         for i, val in enumerate(v, 2): ws.cell(row=i, column=j, value=val)
         ws.column_dimensions[ws.cell(row=1, column=j).column_letter].width = 14
-    ws.cell(row=1, column=15, value='전환 시점(분)').font = Font(bold=True); ws.cell(row=2, column=15, value=round(sw, 2))
-    ws.cell(row=3, column=15, value='※ 각 열 쌍(시간, 값)이 그래프의 선 하나. 색·굵기·제목은 차트를 클릭해서 수정.')
+    ws.cell(row=1, column=17, value='전환 시점(분)').font = Font(bold=True); ws.cell(row=2, column=17, value=round(sw, 2))
+    ws.cell(row=3, column=17, value='※ 각 열 쌍(시간, 값)이 그래프의 선 하나. 색·굵기·제목은 차트를 클릭해서 수정.')
     xm = round(max(x) + 0.5); n = lambda c: len(cols[c - 1][1])
     def vline(col, lo, hi):   # two-point series = vertical line at the switch, named with its time so it shows in the legend
         ws.cell(row=1, column=col, value='전환 시간'); ws.cell(row=1, column=col + 1, value=f'워크로드 전환 ({sw:.1f}분)')
         for i, yv in enumerate((lo, hi), 2): ws.cell(row=i, column=col, value=round(sw, 2)); ws.cell(row=i, column=col + 1, value=yv)
         return (col, col + 1, 2, 'E5484D', 19050, False)
     wafs = cols[1][1] + cols[3][1]
-    chart(ws, f'(가) {wl}: 판단 구간별 WAF (낮을수록 좋음)', 'WAF', [(3, 4, n(4), '1D1D1F', 19050, False), (1, 2, n(2), '2A78D6', 12700, False), vline(17, round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1))],
-          round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1), xm, 'X2')
-    chart(ws, '(나) 적용한 파라미터 조합', '조합 번호', [(5, 6, n(6), 'B0B0B5', 0, True), (7, 8, n(8), '2A78D6', 28575, False), vline(19, 10, 62)], 10, 62, xm, 'X21')
-    chart(ws, '(다) 활성 후보 수', '남은 후보 수', [(9, 10, n(10), '2A78D6', 28575, False), vline(21, 0, 48)], 0, 48, xm, 'X40')
+    chart(ws, f'(가) {wl}: 판단 구간별 WAF (낮을수록 좋음)', 'WAF', [(3, 4, n(4), '1D1D1F', 19050, False), (1, 2, n(2), '2A78D6', 12700, False), vline(19, round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1))],
+          round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1), xm, 'Z2')
+    chart(ws, '(나) 학습 상태 (0 = 전수 순회, 1 = 탐색, 2 = 정착)', '상태', [(14, 15, n(15), '2A78D6', 28575, False), vline(21, -0.2, 2.2)], -0.2, 2.2, xm, 'Z21')
+    # 조합 번호(E~H열)는 그래프에서 뺐지만 데이터는 남겨 둠
+    chart(ws, '(다) 활성 후보 수', '남은 후보 수', [(9, 10, n(10), '2A78D6', 28575, False), vline(23, 0, 48)], 0, 48, xm, 'Z40')
     for r in range(2, len(t) + 2):
         if str(ws.cell(row=r, column=11).value).startswith('뒤'): ws.cell(row=r, column=11).fill = PatternFill('solid', fgColor='E8F0FB')
 wb.save('/home/oy/iCAT/figs/data/fig7.xlsx'); print('ok')
