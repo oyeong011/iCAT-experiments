@@ -11534,3 +11534,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 두 번째 PC에서 Codex가 시작 전 중단·보고: (1) 실행 스크립트가 `/dev/nvme0n1`을 고정 사용 — 그 PC에서는 실제 SSD(가상 SSD는 nvme1n1). `set -e` + `grep CSL_Virt nvme0/model` 검사가 mkfs 전에 있어 실제 SSD 포맷은 일어나지 않았을 것이나, 고정 경로 자체를 제거함. (2) 원래 PC 결과 디렉터리를 공유해 겹치는 17개 arm을 건너뛰어 사전 등록한 교차 확인이 불가능 → 결과 경로를 `result/icat2-fullsweep/`로 분리. (3) 미완료 run 디렉터리 삭제 → 이름 변경으로 보존. (4) `git add -A` → 결과 경로만.
 - 실행 스크립트 변경: `mix-20260911.sh`(가상 SSD를 모델명으로 탐지, `MIX_BASE`·`MIX_JOURNAL` 환경변수), `gh-fio.sh`, `gh-filebench.sh`(DEVICE를 모듈 적재 후 탐지). 이 PC(가상 SSD = nvme0)에서는 동작 동일 — 다음 queue31 run에서 확인.
 - 판정 기준·대상·횟수는 변경 없음.
+
+- Finished 2026-10-02T14:43:26+09:00; mixH arm46 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixH-arm46-rep1-x3`; cleanup attempted.
+- total host_bytes=457701343232 host_pages=111743492 gc_pages=80968702 WAF=1.724594
+- phaseA(test3) host_pages=18025836 gc_pages=13850868 WAF=1.768390
+- phaseB(test4) host_pages=72001986 gc_pages=56459624 WAF=1.784140
+- phaseC(sqlite-a) host_pages=21715670 gc_pages=10658210 WAF=1.490807
+- phaseC-load host_pages=1398351 gc_pages=494783 WAF=1.353833
+- phaseC-run host_pages=20317319 gc_pages=10163427 WAF=1.500235
+- ycsb-load [OVERALL], Throughput(ops/sec), 20970.222284356216
+- ycsb-run [OVERALL], Throughput(ops/sec), 12401.216559344472
