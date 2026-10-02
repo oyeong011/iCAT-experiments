@@ -31,7 +31,8 @@ def step(xs, ys):   # (x, y) pairs drawn as a staircase: hold the previous value
     return out
 for wl in ['OLTP → Varmail', 'FIO-Fast → Varmail']:
     t = [r for r in T if r['워크로드'] == wl and r['파티션'] == '0' and r['구간 WAF']]
-    f = [(float(r['경과(분)']), float(r['30초 WAF'])) for r in F if r['워크로드'] == wl and r['정책'] == 'CAT-47 (최적)' and r['30초 WAF']]
+    fx = {pol: [(float(r['경과(분)']), float(r['30초 WAF'])) for r in F if r['워크로드'] == wl and r['정책'] == pol and r['30초 WAF']] for pol in ('CAT-47 (최적)', 'CAT-37 (기본)', 'CAT-50 (견고)')}
+    f = fx['CAT-47 (최적)']
     x = [float(r['경과(분)']) for r in t]
     best = step(x, [int(r['추정 최선 조합']) for r in t]); act = step(x, [int(r['남은 후보 수']) for r in t])
     stt, swept = [], False   # 0 = 전수 순회 (첫 후보 제거 전), 1 = 탐색, 2 = 정착 — same rule as fig7-plot.py
@@ -46,25 +47,27 @@ for wl in ['OLTP → Varmail', 'FIO-Fast → Varmail']:
             ('계단 시간(분)', [a for a, _ in best]), ('추정 최선 조합', [b for _, b in best]),
             ('계단 시간(분) ', [a for a, _ in act]), ('남은 후보 수', [b for _, b in act]),
             ('구간', [r['구간'] for r in t]), ('정착(1=예)', [int(r['정착(1=예)']) for r in t]), ('사건', [r['사건'] for r in t]),
-            ('계단 시간(분)  ', [a for a, _ in stp]), ('학습 상태 (0=전수 순회, 1=탐색, 2=정착)', [b for _, b in stp])]
+            ('계단 시간(분)  ', [a for a, _ in stp]), ('학습 상태 (0=전수 순회, 1=탐색, 2=정착)', [b for _, b in stp]),
+            ('CAT-37 시간(분)', [a for a, _ in fx['CAT-37 (기본)']]), ('CAT-37 (기본) 30초 WAF', [b for _, b in fx['CAT-37 (기본)']]),
+            ('CAT-50 시간(분)', [a for a, _ in fx['CAT-50 (견고)']]), ('CAT-50 (견고) 30초 WAF', [b for _, b in fx['CAT-50 (견고)']])]
     ws = wb.create_sheet(wl.replace(' → ', '→'))
     for j, (h, v) in enumerate(cols, 1):
         ws.cell(row=1, column=j, value=h).font = Font(bold=True)
         for i, val in enumerate(v, 2): ws.cell(row=i, column=j, value=val)
         ws.column_dimensions[ws.cell(row=1, column=j).column_letter].width = 14
-    ws.cell(row=1, column=17, value='전환 시점(분)').font = Font(bold=True); ws.cell(row=2, column=17, value=round(sw, 2))
-    ws.cell(row=3, column=17, value='※ 각 열 쌍(시간, 값)이 그래프의 선 하나. 색·굵기·제목은 차트를 클릭해서 수정.')
+    ws.cell(row=1, column=21, value='전환 시점(분)').font = Font(bold=True); ws.cell(row=2, column=21, value=round(sw, 2))
+    ws.cell(row=3, column=21, value='※ 각 열 쌍(시간, 값)이 그래프의 선 하나. 색·굵기·제목은 차트를 클릭해서 수정.')
     xm = round(max(x) + 0.5); n = lambda c: len(cols[c - 1][1])
     def vline(col, lo, hi):   # two-point series = vertical line at the switch, named with its time so it shows in the legend
         ws.cell(row=1, column=col, value='전환 시간'); ws.cell(row=1, column=col + 1, value=f'워크로드 전환 ({sw:.1f}분)')
         for i, yv in enumerate((lo, hi), 2): ws.cell(row=i, column=col, value=round(sw, 2)); ws.cell(row=i, column=col + 1, value=yv)
         return (col, col + 1, 2, 'E5484D', 19050, False)
-    wafs = cols[1][1] + cols[3][1]
-    chart(ws, f'(가) {wl}: 판단 구간별 WAF (낮을수록 좋음)', 'WAF', [(3, 4, n(4), '1D1D1F', 19050, False), (1, 2, n(2), '2A78D6', 12700, False), vline(19, round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1))],
-          round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1), xm, 'Z2')
-    chart(ws, '(나) 학습 상태 (0 = 전수 순회, 1 = 탐색, 2 = 정착)', '상태', [(14, 15, n(15), '2A78D6', 28575, False), vline(21, -0.2, 2.2)], -0.2, 2.2, xm, 'Z21')
+    wafs = cols[1][1] + cols[3][1] + cols[15][1] + cols[17][1]
+    chart(ws, f'(가) {wl}: 판단 구간별 WAF (낮을수록 좋음)', 'WAF', [(16, 17, n(17), 'E3A33B', 22225, False), (18, 19, n(19), '8E8E93', 22225, False), (3, 4, n(4), '1D1D1F', 12700, False), (1, 2, n(2), '2A78D6', 15875, False), vline(23, round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1))],
+          round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1), xm, 'AD2')
+    chart(ws, '(나) 학습 상태 (0 = 전수 순회, 1 = 탐색, 2 = 정착)', '상태', [(14, 15, n(15), '2A78D6', 28575, False), vline(25, -0.2, 2.2)], -0.2, 2.2, xm, 'AD21')
     # 조합 번호(E~H열)는 그래프에서 뺐지만 데이터는 남겨 둠
-    chart(ws, '(다) 활성 후보 수', '남은 후보 수', [(9, 10, n(10), '2A78D6', 28575, False), vline(23, 0, 48)], 0, 48, xm, 'Z40')
+    chart(ws, '(다) 활성 후보 수', '남은 후보 수', [(9, 10, n(10), '2A78D6', 28575, False), vline(27, 0, 48)], 0, 48, xm, 'AD40')
     for r in range(2, len(t) + 2):
         if str(ws.cell(row=r, column=11).value).startswith('뒤'): ws.cell(row=r, column=11).fill = PatternFill('solid', fgColor='E8F0FB')
 wb.save('/home/oy/iCAT/figs/data/fig7.xlsx'); print('ok')

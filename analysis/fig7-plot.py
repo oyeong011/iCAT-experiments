@@ -32,11 +32,13 @@ def one(wl, out, a, b):
     for a_ in (ax[0], ax[2]): a_.axvspan(sw, X1, color=BG, zorder=0, lw=0)
     for a_ in ax: a_.set_xlim(0, X1)
     ax[0].text(sw / 2, 0.88, f'앞 워크로드: {a}', transform=ax[0].get_xaxis_transform(), ha='center', fontsize=11, color=INK2, weight='bold')
-    ax[0].text((sw + X1) / 2, 0.6, f'뒤 워크로드: {b}', transform=ax[0].get_xaxis_transform(), ha='center', fontsize=11, color=V4, weight='bold')
+    ax[0].text((sw + X1) / 2, 0.4, f'뒤 워크로드: {b}', transform=ax[0].get_xaxis_transform(), ha='center', fontsize=11, color=V4, weight='bold')
     # (가) WAF
-    f = [(float(r['경과(분)']), float(r['30초 WAF'])) for r in F if r['워크로드'] == wl and r['정책'] == 'CAT-47 (최적)' and r['30초 WAF']]
-    ax[0].plot([p for p, _ in f], [w for _, w in f], color=FIX, lw=1.6, label='CAT-47 (최적 고정값)')
-    ax[0].plot(x, [float(r['구간 WAF']) for r in t], color=V4, lw=1.1, alpha=0.9, label='iCAT-v4')
+    for pol, lab, col, lw, ls in [('CAT-37 (기본)', 'CAT-37 (기본값)', '#e3a33b', 1.8, '-'), ('CAT-50 (견고)', 'CAT-50 (견고 설정)', '#8e8e93', 1.8, '-'),
+                                  ('CAT-47 (최적)', 'CAT-47 (최적, 참고: 사후 튜닝값)', FIX, 1.0, (0, (4, 2)))]:
+        f = [(float(r['경과(분)']), float(r['30초 WAF'])) for r in F if r['워크로드'] == wl and r['정책'] == pol and r['30초 WAF']]
+        ax[0].plot([p for p, _ in f], [w for _, w in f], color=col, lw=lw, ls=ls, label=lab)
+    ax[0].plot(x, [float(r['구간 WAF']) for r in t], color=V4, lw=1.3, alpha=0.95, label='iCAT-v4 (제안)', zorder=5)
     ax[0].set_ylabel('구간 WAF\n(낮을수록 좋음)'); ax[0].legend(loc='center left', fontsize=9.5, frameon=False, bbox_to_anchor=(0.02, 0.55))
     ax[0].set_title('(가) 판단 구간별 WAF', loc='left', fontsize=11, color=INK, weight='bold')
     # (나) 학습 상태 띠
@@ -57,7 +59,7 @@ def one(wl, out, a, b):
     ax[0].text(sw, 0.02, f' 전환 {sw:.1f}분', transform=ax[0].get_xaxis_transform(), fontsize=10, color='#e5484d', weight='bold', va='bottom')
     for a_ in ax: a_.axvline(sw, color='#e5484d', lw=1.1, ls=(0, (3, 3)))
     fig.suptitle(f'그림 7. {wl} 전환에서 iCAT-v4의 학습 상태와 활성 후보 수 변화', x=0.06, ha='left', y=0.995, fontsize=13.5, weight='bold', color=INK)
-    fig.text(0.06, 0.95, '파티션 0의 학습 기록, 3배 길이 1회차. 비교선 CAT-47은 별도 실행이라 전환 시점이 약 1분 다르다.', fontsize=9.5, color=INK2)
+    fig.text(0.06, 0.95, '파티션 0의 학습 기록, 3배 길이 1회차. 비교선(고정 CAT)은 각각 별도 실행이라 전환 시점이 최대 약 1분 다르다.', fontsize=9.5, color=INK2)
     for e in ('png', 'svg', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/{out}.{e}', dpi=220, bbox_inches='tight')
 one('OLTP → Varmail', 'fig7_selection_oltp_varmail', 'OLTP', 'Varmail')
 one('FIO-Fast → Varmail', 'fig7_selection_fio_varmail', 'FIO-Fast', 'Varmail')
