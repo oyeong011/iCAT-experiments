@@ -31,6 +31,7 @@ for ax, (m, a, b) in zip(axs, MIX):
         ax.plot([x for x, _ in pts], [y for _, y in pts], color=col, lw=lw, label=f'{lab}   최종 WAF {fin[p]:.3f}' + ('  ← 1등' if p == best else ''), zorder=3 if p == 'onlinev4' else 2)
     s = st.mean(sw); x1 = ax.get_xlim()[1]
     ax.axvspan(s, x1, color='#f2f6fc', zorder=0); ax.set_xlim(0, x1)
+    ax.axvline(s, color='#e5484d', lw=1.1, ls=(0, (3, 3))); ax.text(s, 0.02, f' 전환 약 {s:.1f}분', transform=ax.get_xaxis_transform(), fontsize=9.5, color='#e5484d', weight='bold', va='bottom')
     ax.text(s / 2, 1.02, f'앞: {a}', transform=ax.get_xaxis_transform(), ha='center', fontsize=10.5, weight='bold', color=INK)
     ax.text((s + x1) / 2, 1.02, f'뒤: {b}', transform=ax.get_xaxis_transform(), ha='center', fontsize=10.5, weight='bold', color=INK)
     ax.set_title(f'{a} → {b}', loc='left', fontsize=12.5, weight='bold', color=INK, pad=24)

@@ -47,6 +47,8 @@ def one(wl, out, a, b):
         j = act.index(min(act)); note(ax[2], x[j], act[j], f'{x[j] - x[i_cov]:.1f}분 만에 45 → {min(act)}개', dx=-1.2, dy=22, ha='right')
         note(ax[2], x[-1], act[-1], f'이웃 탐침으로 {act[-1]}개까지 회복', dx=-2.5, dy=18, ha='right')
     for a_ in ax: a_.axvline(sw, color=INK2, lw=0.9, ls=(0, (3, 3)))
+    ax[0].text(sw, 0.02, f' 전환 {sw:.1f}분', transform=ax[0].get_xaxis_transform(), fontsize=10, color='#e5484d', weight='bold', va='bottom')
+    for a_ in ax: a_.axvline(sw, color='#e5484d', lw=1.1, ls=(0, (3, 3)))
     fig.suptitle(f'그림 7. {wl} 전환에서 iCAT-v4의 파라미터 선택과 활성 후보 수 변화', x=0.06, ha='left', y=0.985, fontsize=13.5, weight='bold', color=INK)
     fig.text(0.06, 0.945, '파티션 0의 학습 기록, 3배 길이 1회차. 비교선 CAT-47은 별도 실행이라 전환 시점이 약 1분 다르다.', fontsize=9.5, color=INK2)
     for e in ('png', 'svg', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/{out}.{e}', dpi=220, bbox_inches='tight')

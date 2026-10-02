@@ -37,5 +37,9 @@ for wl in dict.fromkeys(x['워크로드'] for x in r):
         sr = Series(Reference(ws, min_col=2 * j + 2, min_row=1, max_row=n + 1), xs, title_from_data=True)
         sr.marker.symbol = 'none'; sr.smooth = False; sr.graphicalProperties.line.solidFill = c; sr.graphicalProperties.line.width = 32000 if j == 0 else 15000
         ch.series.append(sr)
-    ws.add_chart(ch, 'L2'); ws.column_dimensions['J'].width = 26
+    sv = sw['iCAT-v4']; ws.cell(row=1, column=11, value='전환 시간'); ws.cell(row=1, column=12, value=f'워크로드 전환 (v4 기준 {sv:.1f}분)')
+    for i, yv in enumerate((ch.y_axis.scaling.min, ch.y_axis.scaling.max), 2): ws.cell(row=i, column=11, value=round(sv, 2)); ws.cell(row=i, column=12, value=yv)
+    vl = Series(Reference(ws, min_col=12, min_row=1, max_row=3), Reference(ws, min_col=11, min_row=2, max_row=3), title_from_data=True)
+    vl.marker.symbol = 'none'; vl.graphicalProperties.line.solidFill = 'E5484D'; vl.graphicalProperties.line.width = 19050; vl.graphicalProperties.line.dashStyle = 'dash'; ch.series.append(vl)
+    ws.add_chart(ch, 'N2'); ws.column_dimensions['J'].width = 26
 wb.save(D / 'fig14_lines.xlsx'); print('ok')
