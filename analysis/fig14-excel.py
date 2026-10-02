@@ -26,6 +26,7 @@ for wl in dict.fromkeys(x['워크로드'] for x in r):
     ch = ScatterChart(); ch.title = f'{wl}: 30초마다 잰 WAF (낮을수록 좋음)'; ch.style = 13
     ch.x_axis.title = '실험 시작 후 시간 (분)'; ch.y_axis.title = '30초 WAF'; 
     ch.x_axis.delete = False; ch.y_axis.delete = False; ch.height, ch.width = 14, 30; ch.legend.position = 'b'
+    ch.scatterStyle = 'lineMarker'; ch.display_blanks = 'span'   # without scatterStyle Excel may draw markers only (looks broken)
     ys = [v for p in POL for _, v in cols[p]]; xm = max(t for p in POL for t, _ in cols[p])
     lo, hi = min(ys), max(ys); pad = (hi - lo) * 0.08
     ch.y_axis.scaling.min = round(lo - pad, 2); ch.y_axis.scaling.max = round(hi + pad, 2)   # Excel would otherwise start at 0 and squash the lines
