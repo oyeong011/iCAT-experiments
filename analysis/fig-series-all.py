@@ -9,7 +9,7 @@ from matplotlib import font_manager
 font_manager.fontManager.addfont('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
 SURF, INK, INK2, GRID = '#fcfcfb', '#0b0b0b', '#52514e', '#e4e3df'
 plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 9, 'axes.facecolor': SURF, 'figure.facecolor': SURF, 'axes.edgecolor': INK2,
-                     'axes.spines.top': False, 'axes.spines.right': False, 'axes.grid': True, 'grid.color': GRID, 'axes.axisbelow': True})
+                     'axes.spines.top': False, 'axes.spines.right': False, 'axes.grid': True, 'grid.color': GRID, 'axes.axisbelow': True, 'lines.solid_joinstyle': 'round', 'lines.solid_capstyle': 'round', 'grid.linewidth': 0.6, 'legend.frameon': False, 'svg.fonttype': 'path'})
 COL = {'iCAT-v4': ('#2a78d6', 1.6), 'CAT-47': ('#3d3c39', 1.1), 'CAT-50': ('#a8a7a2', 1.1)}
 S = Path('/home/oy/iCAT/figs/series'); P = S / 'png'; P.mkdir(exist_ok=True)
 def load(f):
@@ -29,10 +29,10 @@ files = sorted(S.glob('*.csv'))
 for f in files:
     fig, ax = plt.subplots(figsize=(10, 4)); draw(ax, f)
     ax.set_xlabel('측정 시작 후 경과 시간 (분)'); ax.set_ylabel('30초 구간 WAF (낮을수록 우수)')
-    fig.tight_layout(); fig.savefig(P / f'{f.stem}.png', dpi=140); plt.close(fig)
+    fig.tight_layout(); [fig.savefig(P / f'{f.stem}.{e}', dpi=220, bbox_inches='tight') for e in ('png', 'svg')]; plt.close(fig)
 fig, axs = plt.subplots(5, 3, figsize=(16, 19)); axs = axs.ravel()
 for ax, f in zip(axs, files): draw(ax, f, small=True)
 for ax in axs[len(files):]: ax.axis('off')
 fig.suptitle('그림 13. 전환 워크로드별 30초 구간 WAF — iCAT-v4(파랑) · CAT-47(검정) · CAT-50(회색), 3배 길이 1회차, 범례 괄호 = 최종 누적 WAF', x=0.01, ha='left', fontsize=12, color=INK)
-fig.tight_layout(rect=(0, 0, 1, 0.985)); fig.savefig('/home/oy/iCAT/figs/fig13_series_all.png', dpi=110)
+fig.tight_layout(rect=(0, 0, 1, 0.985)); [fig.savefig(f'/home/oy/iCAT/figs/fig13_series_all.{e}', dpi=180, bbox_inches='tight') for e in ('png', 'svg')]
 print(len(files), 'workloads')

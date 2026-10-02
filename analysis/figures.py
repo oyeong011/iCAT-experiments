@@ -36,7 +36,7 @@ def curve(d):  # cumulative WAF vs hours from the 30 s counter series
     t0 = rows[0][0]
     return [(r[0] - t0) / 3600 for r in rows], [1 + r[2] / r[1] for r in rows]
 def save(fig, name):
-    fig.savefig(OUT / f'{name}.png', dpi=200, bbox_inches='tight'); fig.savefig(OUT / f'{name}.pdf', bbox_inches='tight'); plt.close(fig)
+    fig.savefig(OUT / f'{name}.png', dpi=200, bbox_inches='tight'); fig.savefig(OUT / f'{name}.pdf', bbox_inches='tight'); fig.savefig(OUT / f'{name}.svg', bbox_inches='tight'); plt.close(fig)
     print('wrote', name)
 
 # Fig 1 — parameter sensitivity: 60 fixed arms on fast 3-region writes (original-author method)

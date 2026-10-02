@@ -7,7 +7,7 @@ from matplotlib import font_manager
 font_manager.fontManager.addfont('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
 SURF, INK, INK2, GRID = '#fcfcfb', '#0b0b0b', '#52514e', '#e4e3df'
 plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 9.5, 'axes.facecolor': SURF, 'figure.facecolor': SURF, 'axes.edgecolor': INK2,
-                     'axes.spines.top': False, 'axes.spines.right': False, 'axes.grid': True, 'grid.color': GRID, 'axes.axisbelow': True})
+                     'axes.spines.top': False, 'axes.spines.right': False, 'axes.grid': True, 'grid.color': GRID, 'axes.axisbelow': True, 'lines.solid_joinstyle': 'round', 'lines.solid_capstyle': 'round', 'grid.linewidth': 0.6, 'legend.frameon': False, 'svg.fonttype': 'path'})
 M = '/home/oy/iCAT/result/mix-20260911/'
 POL = [('fixed47', 'CAT-47 (최적)', '#3d3c39'), ('fixed50', 'CAT-50 (견고)', '#9a9994'), ('onlinev4', 'iCAT-v4', '#2a78d6')]
 def series(d):
@@ -31,4 +31,4 @@ axs[0, 0].set_ylabel('30초 구간 WAF\n(낮을수록 우수)'); axs[1, 0].set_y
 axs[0, 0].legend(frameon=False, fontsize=8.5, loc='upper left')
 fig.suptitle('그림 12. 고정 CAT도 FIO 구간에서는 30초 구간 WAF가 크게 흔들리고(위 왼쪽), 응용 구간에서는 거의 일정하다(위 오른쪽)', x=0.01, ha='left', fontsize=10.5, color=INK)
 fig.tight_layout()
-for e in ('png', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/fig12_30s_waf.{e}', dpi=160)
+for e in ('png', 'pdf', 'svg'): fig.savefig(f'/home/oy/iCAT/figs/fig12_30s_waf.{e}', dpi=220, bbox_inches='tight')

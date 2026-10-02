@@ -57,4 +57,4 @@ for si in range(5): bx.text(-0.15, 4 - si + 0.46, f'{sc[si]}%', ha='right', va='
 bx.text(7.5, -0.95, '가로: 나이 비율 r (4·7·16)   세로: 임계 배율 s   조합 번호 = 15·k단계 + 3·s단계 + r단계', ha='center', fontsize=7.8, color=INK2)
 fig.text(0.6, 0.83, '이웃 = k·s·r 중 하나만 한 칸 이동 (최대 6개)', fontsize=10, weight='bold', color=INK)
 fig.text(0.6, 0.805, '47번 (10, 25%, 16) → 이웃 32·46·50 (격자 끝이라 3개)\n22번 (4, 100%, 7) → 이웃 19·21·23·25·37 (k=2 쪽 7번은 후보가 아니라 제외)', fontsize=8.6, color=INK2, va='top', linespacing=1.6)
-for ext in ('png', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/fig11_v4_flow.{ext}', dpi=170, bbox_inches='tight', pad_inches=0.15)
+for ext in ('png', 'pdf', 'svg'): fig.savefig(f'/home/oy/iCAT/figs/fig11_v4_flow.{ext}', dpi=220, bbox_inches='tight', pad_inches=0.15)
