@@ -11561,3 +11561,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 정책 순서: onlinev4 → fixed50(견고) → fixed37(기본) → fixed47(최적, 결과 표용). 각 약 10시간, 총 약 40시간. 이어서 t4-fixed37-rep1-x18(3시간).
 - 판정 기준(위 사전 등록)은 동일하게 적용: 47·50·37 대비 v4 전체 WAF 차이, 1회 측정이므로 1% 미만 차이는 판정하지 않음.
 - 사고 기록: 14:43~23:30 큐31이 약 8시간 45분 멈춤. 원인 = 내가 띄운 확인용 대기 명령의 명령줄에 `script/mix-20260911.sh` 문자열이 있어 큐의 "다른 측정 실행 중" 검사(pgrep -f)에 걸림. 대기 명령 종료 후 재개. 데이터 손상 없음(대기만 함).
+
+### mix-20260911 mixG fixed47 — started 2026-10-02T23:35:09+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 12000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `bash script/mix-20260911.sh mixG fixed47`; evidence `result/mix-20260911/mixG-fixed47/`.
+
+### QUEUE34 변경 2026-10-02 23:55 (시작 전, 사용자 지시: 최우선)
+- OLTP→Varmail 10시간은 **iCAT-v4와 CAT-50(견고)만**. CAT-37(기본)은 두 번째 PC에서 측정 중, CAT-47은 하지 않음.
+- 최우선: 큐31(전환 워크로드 상위 3개 확인)을 일시 중지하고, 진행 중이던 run(mixG fixed47 x3)만 끝나면 바로 v4 → CAT-50 순으로 시작. 큐31 나머지(G·L·Q 확인)는 그 뒤에 이어서, 이후 t4 CAT-37 3시간, 이후 큐32.
+- 중지 방식: 큐31 스크립트 프로세스만 종료, 진행 중 측정은 그대로 완료. 이 run은 큐의 사후 도구 점검(fio/sqlite/java)을 거치지 않으므로 다음 run 전 점검으로 대체.
