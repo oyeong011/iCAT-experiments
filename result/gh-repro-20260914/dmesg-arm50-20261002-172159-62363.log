@@ -1,0 +1,48 @@
+[88416.877503] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[88416.877511] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[88416.895933] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[88416.910699] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[88416.924681] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[88416.924699] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[88416.924703] NVMeVirt: Fixed CAT init ns=0 part=0 arm=50 k=10 scale_pct=50 age_ratio=16
+[88416.926171] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[88416.926203] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[88416.926205] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[88416.940377] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[88416.954240] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[88416.954256] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[88416.954259] NVMeVirt: Fixed CAT init ns=0 part=1 arm=50 k=10 scale_pct=50 age_ratio=16
+[88416.955782] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[88416.955785] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[88416.969811] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[88416.983749] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[88416.983765] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[88416.983768] NVMeVirt: Fixed CAT init ns=0 part=2 arm=50 k=10 scale_pct=50 age_ratio=16
+[88416.985259] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[88416.985262] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[88416.999161] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[88417.013155] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[88417.013170] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[88417.013173] NVMeVirt: Fixed CAT init ns=0 part=3 arm=50 k=10 scale_pct=50 age_ratio=16
+[88417.014676] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[88417.014679] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[88417.014687] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[88417.014690] NVMeVirt: ns 0/1: size 7655 MiB
+[88417.014761] PCI host bridge to bus 0001:10
+[88417.014764] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[88417.014767] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7ffffffffff]
+[88417.014770] pci_bus 0001:10: root bus resource [bus 00-ff]
+[88417.014782] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[88417.014788] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[88417.014792] pci 0001:10:00.0: enabling Extended Tags
+[88417.015037] NVMeVirt: Virtual PCI bus created (node 0)
+[88417.015352] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[88417.015394] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[88417.015414] NVMeVirt: Virtual NVMe device created
+[88417.015744] nvme nvme1: pci function 0001:10:00.0
+[88417.019322] nvme nvme1: 12/0/0 default/read/poll queues
+[88417.111839] EXT4-fs (nvme1n1): mounted filesystem f7944a61-cd15-496a-8fbc-59f98c40e13e r/w with ordered data mode. Quota mode: none.
+[89020.508894] EXT4-fs (nvme1n1): unmounting filesystem f7944a61-cd15-496a-8fbc-59f98c40e13e.
+[89020.602033] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[89020.602195] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=23500672 gc_pages=18491550 gc_count=656120 WAF=1.786 warmup_gc=100-per-part
+[89020.718583] NVMeVirt: Virtual NVMe device closed
