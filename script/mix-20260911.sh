@@ -101,7 +101,7 @@ loaded=1
 for _ in {1..50}; do for c in /sys/class/nvme/nvme*; do grep -qi CSL_Virt "$c/model" 2>/dev/null && nv=$(basename "$c"); done; [[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]] && break; sleep 0.2; done
 [[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]]
 # counter time series every 30 s (all policies): lets fixed arms be compared with the learner over time, not just per phase
-( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; cat "$control" 2>/dev/null | head -1; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
+( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; printf '%s memavail_mb=%s\n' "$(cat "$control" 2>/dev/null | head -1)" "$(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo)"; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
 grep -q CSL_Virt /sys/class/nvme/$nv/model
 cat /sys/class/nvme/$nv/model /sys/class/block/${nv}n1/size > "$dir/device.txt"
 sudo -n mkfs.ext4 /dev/${nv}n1 > "$dir/mkfs.txt" 2>&1
@@ -157,8 +157,17 @@ phase_filebench() { # phase_filebench <slot> <profile> [nfiles] [filesize]: File
     [[ -z "$fs" ]] || sed -i "s#^set \$filesize=.*#set \$filesize=$fs#" "$wl"   # the 6 GiB preset file stays; only ~1.5 GiB is free
     cat "$control" > "$dir/phase-$slot-start.txt"
     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
-    ( exec 9>&-; timeout --signal=TERM --kill-after=15 $(( ${VM_RUN:-300} + 900 )) setarch "$(uname -m)" -R "$root/tools/filebench-local/filebench" -f "$wl" ) > "$dir/filebench-$slot.txt" 2>&1
-    grep -q 'IO Summary' "$dir/filebench-$slot.txt"
+    # VM_CHUNKS=n (10-03): phase length = VM_RUN x n. filebench's OLTP profile grows ~300 MB/min (aio leak) and stalls the host
+    # after ~25 min, so a profile with reusable filesets (oltp) runs as n back-to-back VM_RUN pieces on the same files;
+    # others (varmail, no reuse) run once for VM_RUN x n. n=1 is the previous behaviour.
+    local c n=${VM_CHUNKS:-1} rt=${VM_RUN:-300}
+    grep -q ',reuse' "$wl" || { rt=$(( ${VM_RUN:-300} * n )); n=1; sed -i "s#^run .*#run $rt#" "$wl"; }
+    : > "$dir/filebench-$slot.txt"
+    for c in $(seq 1 $n); do
+        ( exec 9>&-; timeout --signal=TERM --kill-after=15 $(( rt + 900 )) setarch "$(uname -m)" -R "$root/tools/filebench-local/filebench" -f "$wl" ) >> "$dir/filebench-$slot.txt" 2>&1
+        kmsg phase=$slot chunk=$c/$n done
+    done
+    [[ $(grep -c 'IO Summary' "$dir/filebench-$slot.txt") -eq $n ]]
     rm -rf "$root/mnt/filebench"; sync   # next filebench phase starts from an empty dir (deleted data stays valid in the FTL, as everywhere here)
     cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
     kmsg phase=$slot END

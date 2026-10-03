@@ -11598,3 +11598,16 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 관찰: 시작 후 약 25분까지 정상(호스트 쓰기 약 88만 페이지/30초, 누적 WAF 1.26). 이후 시스템이 거의 멈춤: 30초 간격 기록이 20~50분씩 끊기고 쓰기 속도가 수백~수천 페이지/30초로 붕괴, 커널 로그 스냅샷도 5시간 동안 57개뿐. 같은 시간대에 세션 쪽에서 "메모리 부족" 경고 발생.
 - 3배 길이(OLTP 15분)에서는 이 현상이 나타나기 전에 구간이 끝났음 → 장시간 OLTP에서만 드러나는 문제. 원인 미확정(가설: OLTP 로그 파일 증가로 가상 SSD가 차면서 GC 폭주 → 쓰기 지연 → dirty page 회수로 시스템 정체, 또는 filebench 메모리 증가).
 - 조치: 큐34 중지. 이미 시작된 mixO-fixed50-rep1-x20은 원인 진단을 위해 40분간 df·메모리·dirty·filebench RSS를 30초마다 기록(scratchpad/oltp-diag.txt) 후 판단. 두 번째 PC의 CAT-37 10시간도 같은 설정이라 같은 실패 가능성 있음.
+
+- Finished 2026-10-03T10:40:20+09:00; mixO fixed50 exit=124; evidence `/home/oy/iCAT/result/mix-20260911/mixO-fixed50-rep1-x20`; cleanup attempted.
+
+### mix-20260911 mixO onlinev4 — started 2026-10-03T10:44:53+09:00
+
+- Phase A fio test4 fixed payload (1179648000000/589824000000/196608000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixO onlinev4`; evidence `result/mix-20260911/mixO-onlinev4/`.
+
+### QUEUE34 원인·수정 2026-10-03 10:50 (재시작)
+- mixO-fixed50-rep1-x20도 같은 방식으로 실패(exit=124, 구간 A). 진단 기록(scratchpad/oltp-diag.txt, 05:23~05:50): 가상 SSD 사용량은 6795/7438 MB로 **일정**(디스크가 차는 문제 아님). **filebench OLTP 프로세스 메모리(RSS 합)가 30초마다 약 150 MB씩 직선 증가**(1.7 GB → 6.7 GB, 27분), 가용 메모리 5.4 GB → 0.8 GB, 스왑 4 GB 소진 → 시스템 정체. 결론: filebench OLTP 장시간 실행 시 메모리 누수(aiowrite/aiowait 계열로 추정). 15분 실행(3배 길이)에서는 한계 전에 끝남.
+- 수정(`mix-20260911.sh`, VM_CHUNKS 추가): 구간 길이 = VM_RUN × VM_CHUNKS. reuse 파일셋을 쓰는 프로파일(OLTP)은 같은 파일 위에서 VM_RUN짜리 filebench를 VM_CHUNKS번 연속 실행(매 조각마다 프로세스 재시작으로 메모리 반환). reuse가 없는 Varmail은 VM_RUN×VM_CHUNKS 한 번 실행. VM_CHUNKS 미지정 시 기존과 동일. 30초 기록에 memavail_mb 필드 추가(기존 파서 영향 없음).
+- 새 설정: OLTP→Varmail 10시간 = MULT=20 VM_RUN=900 VM_CHUNKS=20 (OLTP 15분×20, Varmail 5시간 1회). 조각 하나는 3배 길이 실험의 OLTP 구간과 동일 조건. 해석 한계: 조각 사이 수 초의 filebench 재시작 공백, Varmail 5시간 단일 실행의 메모리 거동은 미검증(memavail_mb로 감시).
+- 실패 run은 run()이 -failed-<시각>으로 보존. 두 번째 PC의 CAT-37 10시간(VM_RUN=18000)도 같은 실패가 예상되어 같은 설정으로 재실행 필요.
