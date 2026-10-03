@@ -10,8 +10,25 @@
   "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0",
   "source_commit": "35c23ee13f97cdda2ee9cd6b73783fb5266bcdf4",
   "module_sha256": "7045a5b2c4d2ae437f43275c6dc93bf882916efb1af708312664194ac7cba1f0",
-  "issues": [
-    "all chunk runtimes"
+  "issues": [],
+  "status": "validated_saved_evidence",
+  "revalidated_at": "2026-10-03T22:25:42.989676+09:00",
+  "correction": "Original validator expected seconds at end of IO Summary, but Filebench reports prefix timestamps. Validate Running-to-IO Summary durations for all 21 processes; original failure record retained.",
+  "waf": 2.1215335398442443,
+  "host_bytes": 14139532218368,
+  "host_pages": 3452034233,
+  "gc_pages": 3871572173,
+  "phases": [
+    {
+      "slot": "A",
+      "actual_seconds": 18098.0,
+      "profile": "oltp.f"
+    },
+    {
+      "slot": "B",
+      "actual_seconds": 18005.0,
+      "profile": "varmail.f"
+    }
   ],
-  "status": "failed_or_incomplete_preserved"
+  "actual_measured_seconds": 36103.0
 }

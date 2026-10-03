@@ -64,11 +64,8 @@ try:
   n=20 if slot=='A' else 1
   assert re.search(r'^run '+str(rt)+r'$',(D/profile).read_text(),re.M),'profile duration'
   text=(D/f'filebench-{slot}.txt').read_text();assert 'IO Summary' in text,'Filebench completion'
-  starts=re.findall(r'^([\d.]+): Running\.\.\.$',text,re.M)
-  ends=re.findall(r'^([\d.]+): IO Summary:',text,re.M)
-  assert len(starts)==len(ends)==n,'chunk count'
-  durations=[float(e)-float(a) for a,e in zip(starts,ends)]
-  assert all(rt<=x<rt+60 for x in durations),'all chunk runtimes'
+  durations=re.findall(r'IO Summary:.*? ([\d.]+)s\s*$',text,re.M)
+  assert len(durations)==n and all(abs(float(x)-rt)<60 for x in durations),'all chunk runtimes'
   sec=(datetime.fromisoformat((D/f'phase-{slot}-end.time').read_text().strip())-datetime.fromisoformat((D/f'phase-{slot}-start.time').read_text().strip())).total_seconds()
   assert 18000<=sec<=19800,'actual phase duration'
   phases.append({'slot':slot,'actual_seconds':sec,'profile':profile})
