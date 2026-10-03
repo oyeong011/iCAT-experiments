@@ -1,0 +1,451 @@
+Oct 02 23:33:55 oy-B550M-DS3H systemd[1227]: Started icat-mixO-arm37-tenhour-20261002.service - /usr/bin/python3 /home/oy/iCAT/result/mixO-arm37-tenhour-20261002/launch.py.
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66677]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/cat /proc/iomem
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66677]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66677]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66712]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/tee /dev/kmsg
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66712]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66712]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66717]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66717]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66719]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/sbin/insmod /home/oy/iCAT/buildoutput/nvmev-arm37.ko memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid=1000
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66719]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66717]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66719]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66778]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/sbin/mkfs.ext4 /dev/nvme1n1
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66778]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66778]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66797]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/mount -o nodiscard /dev/nvme1n1 /home/oy/iCAT/mnt
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66797]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66797]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66820]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/chown -R oy:oy /home/oy/iCAT/mnt
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66820]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:33:55 oy-B550M-DS3H sudo[66820]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:34:25 oy-B550M-DS3H sudo[66860]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:34:25 oy-B550M-DS3H sudo[66860]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:34:25 oy-B550M-DS3H sudo[66860]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:34:55 oy-B550M-DS3H sudo[66884]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:34:55 oy-B550M-DS3H sudo[66884]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:34:55 oy-B550M-DS3H sudo[66884]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:35:17 oy-B550M-DS3H sudo[66926]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/tee /dev/kmsg
+Oct 02 23:35:17 oy-B550M-DS3H sudo[66926]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:35:17 oy-B550M-DS3H sudo[66926]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:35:25 oy-B550M-DS3H sudo[69218]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:35:25 oy-B550M-DS3H sudo[69218]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:35:25 oy-B550M-DS3H sudo[69218]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:35:55 oy-B550M-DS3H sudo[70354]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:35:55 oy-B550M-DS3H sudo[70354]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:35:55 oy-B550M-DS3H sudo[70354]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:36:25 oy-B550M-DS3H sudo[71567]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:36:25 oy-B550M-DS3H sudo[71567]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:36:25 oy-B550M-DS3H sudo[71567]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:36:55 oy-B550M-DS3H sudo[73182]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:36:55 oy-B550M-DS3H sudo[73182]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:36:55 oy-B550M-DS3H sudo[73182]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:37:25 oy-B550M-DS3H sudo[74843]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:37:25 oy-B550M-DS3H sudo[74843]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:37:25 oy-B550M-DS3H sudo[74843]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:37:55 oy-B550M-DS3H sudo[76440]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:37:55 oy-B550M-DS3H sudo[76440]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:37:55 oy-B550M-DS3H sudo[76440]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:38:26 oy-B550M-DS3H sudo[78148]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:38:26 oy-B550M-DS3H sudo[78148]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:38:26 oy-B550M-DS3H sudo[78148]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:38:56 oy-B550M-DS3H sudo[80009]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:38:56 oy-B550M-DS3H sudo[80009]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:38:56 oy-B550M-DS3H sudo[80009]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:39:26 oy-B550M-DS3H sudo[82260]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:39:26 oy-B550M-DS3H sudo[82260]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:39:26 oy-B550M-DS3H sudo[82260]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:39:56 oy-B550M-DS3H sudo[84912]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:39:56 oy-B550M-DS3H sudo[84912]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:39:56 oy-B550M-DS3H sudo[84912]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:40:26 oy-B550M-DS3H sudo[87795]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:40:26 oy-B550M-DS3H sudo[87795]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:40:26 oy-B550M-DS3H sudo[87795]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:40:56 oy-B550M-DS3H sudo[89434]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:40:56 oy-B550M-DS3H sudo[89434]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:40:56 oy-B550M-DS3H sudo[89434]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:41:26 oy-B550M-DS3H sudo[91527]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:41:26 oy-B550M-DS3H sudo[91527]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:41:26 oy-B550M-DS3H sudo[91527]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:41:56 oy-B550M-DS3H sudo[93275]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:41:56 oy-B550M-DS3H sudo[93275]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:41:57 oy-B550M-DS3H sudo[93275]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:42:27 oy-B550M-DS3H sudo[95750]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:42:27 oy-B550M-DS3H sudo[95750]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:42:27 oy-B550M-DS3H sudo[95750]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:42:57 oy-B550M-DS3H sudo[97562]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:42:57 oy-B550M-DS3H sudo[97562]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:42:57 oy-B550M-DS3H sudo[97562]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:43:27 oy-B550M-DS3H sudo[99035]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:43:27 oy-B550M-DS3H sudo[99035]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:43:27 oy-B550M-DS3H sudo[99035]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:43:57 oy-B550M-DS3H sudo[100742]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:43:57 oy-B550M-DS3H sudo[100742]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:43:57 oy-B550M-DS3H sudo[100742]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:44:27 oy-B550M-DS3H sudo[102933]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:44:27 oy-B550M-DS3H sudo[102933]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:44:27 oy-B550M-DS3H sudo[102933]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:44:57 oy-B550M-DS3H sudo[104468]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:44:57 oy-B550M-DS3H sudo[104468]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:44:57 oy-B550M-DS3H sudo[104468]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:45:27 oy-B550M-DS3H sudo[106367]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:45:27 oy-B550M-DS3H sudo[106367]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:45:27 oy-B550M-DS3H sudo[106367]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:45:57 oy-B550M-DS3H sudo[107550]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:45:57 oy-B550M-DS3H sudo[107550]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:45:57 oy-B550M-DS3H sudo[107550]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:46:27 oy-B550M-DS3H sudo[109006]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:46:27 oy-B550M-DS3H sudo[109006]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:46:27 oy-B550M-DS3H sudo[109006]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:46:57 oy-B550M-DS3H sudo[111141]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:46:57 oy-B550M-DS3H sudo[111141]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:46:58 oy-B550M-DS3H sudo[111141]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:47:28 oy-B550M-DS3H sudo[112677]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:47:28 oy-B550M-DS3H sudo[112677]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:47:28 oy-B550M-DS3H sudo[112677]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:47:58 oy-B550M-DS3H sudo[115558]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:47:58 oy-B550M-DS3H sudo[115558]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:47:58 oy-B550M-DS3H sudo[115558]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:48:28 oy-B550M-DS3H sudo[118509]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:48:28 oy-B550M-DS3H sudo[118509]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:48:28 oy-B550M-DS3H sudo[118509]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:48:58 oy-B550M-DS3H sudo[120259]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:48:58 oy-B550M-DS3H sudo[120259]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:48:58 oy-B550M-DS3H sudo[120259]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:49:28 oy-B550M-DS3H sudo[121781]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:49:28 oy-B550M-DS3H sudo[121781]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:49:28 oy-B550M-DS3H sudo[121781]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:49:58 oy-B550M-DS3H sudo[123896]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:49:58 oy-B550M-DS3H sudo[123896]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:49:58 oy-B550M-DS3H sudo[123896]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:50:28 oy-B550M-DS3H sudo[126789]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:50:28 oy-B550M-DS3H sudo[126789]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:50:28 oy-B550M-DS3H sudo[126789]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:50:58 oy-B550M-DS3H sudo[129385]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:50:58 oy-B550M-DS3H sudo[129385]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:50:58 oy-B550M-DS3H sudo[129385]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:51:28 oy-B550M-DS3H sudo[132303]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:51:28 oy-B550M-DS3H sudo[132303]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:51:28 oy-B550M-DS3H sudo[132303]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:51:58 oy-B550M-DS3H sudo[134494]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:51:58 oy-B550M-DS3H sudo[134494]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:51:58 oy-B550M-DS3H sudo[134494]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:52:29 oy-B550M-DS3H sudo[137656]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:52:29 oy-B550M-DS3H sudo[137656]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:52:29 oy-B550M-DS3H sudo[137656]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:52:59 oy-B550M-DS3H sudo[139885]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:52:59 oy-B550M-DS3H sudo[139885]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:52:59 oy-B550M-DS3H sudo[139885]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:53:29 oy-B550M-DS3H sudo[141604]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:53:29 oy-B550M-DS3H sudo[141604]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:53:29 oy-B550M-DS3H sudo[141604]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:54:00 oy-B550M-DS3H sudo[143924]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:54:00 oy-B550M-DS3H sudo[143924]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:54:00 oy-B550M-DS3H sudo[143924]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:54:30 oy-B550M-DS3H sudo[146004]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:54:30 oy-B550M-DS3H sudo[146004]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:54:30 oy-B550M-DS3H sudo[146004]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:55:00 oy-B550M-DS3H sudo[148028]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:55:00 oy-B550M-DS3H sudo[148028]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:55:00 oy-B550M-DS3H sudo[148028]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:55:30 oy-B550M-DS3H sudo[149520]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:55:30 oy-B550M-DS3H sudo[149520]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:55:30 oy-B550M-DS3H sudo[149520]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:56:00 oy-B550M-DS3H sudo[151566]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:56:00 oy-B550M-DS3H sudo[151566]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:56:00 oy-B550M-DS3H sudo[151566]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:56:30 oy-B550M-DS3H sudo[153965]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:56:30 oy-B550M-DS3H sudo[153965]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:56:30 oy-B550M-DS3H sudo[153965]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:57:00 oy-B550M-DS3H sudo[156022]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:57:00 oy-B550M-DS3H sudo[156022]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:57:00 oy-B550M-DS3H sudo[156022]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:57:30 oy-B550M-DS3H sudo[158289]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:57:30 oy-B550M-DS3H sudo[158289]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:57:30 oy-B550M-DS3H sudo[158289]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:58:00 oy-B550M-DS3H sudo[159967]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:58:00 oy-B550M-DS3H sudo[159967]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:58:00 oy-B550M-DS3H sudo[159967]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:58:31 oy-B550M-DS3H sudo[162613]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:58:31 oy-B550M-DS3H sudo[162613]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:58:31 oy-B550M-DS3H sudo[162613]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:59:01 oy-B550M-DS3H sudo[164832]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:59:01 oy-B550M-DS3H sudo[164832]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:59:01 oy-B550M-DS3H sudo[164832]: pam_unix(sudo:session): session closed for user root
+Oct 02 23:59:31 oy-B550M-DS3H sudo[166354]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 02 23:59:31 oy-B550M-DS3H sudo[166354]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 02 23:59:31 oy-B550M-DS3H sudo[166354]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:00:01 oy-B550M-DS3H sudo[167473]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:00:01 oy-B550M-DS3H sudo[167473]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:00:01 oy-B550M-DS3H sudo[167473]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:00:31 oy-B550M-DS3H sudo[168732]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:00:31 oy-B550M-DS3H sudo[168732]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:00:31 oy-B550M-DS3H sudo[168732]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:01:01 oy-B550M-DS3H sudo[169865]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:01:01 oy-B550M-DS3H sudo[169865]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:01:01 oy-B550M-DS3H sudo[169865]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:01:31 oy-B550M-DS3H sudo[170802]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:01:31 oy-B550M-DS3H sudo[170802]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:01:31 oy-B550M-DS3H sudo[170802]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:02:01 oy-B550M-DS3H sudo[171994]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:02:01 oy-B550M-DS3H sudo[171994]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:02:01 oy-B550M-DS3H sudo[171994]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:02:31 oy-B550M-DS3H sudo[173655]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:02:31 oy-B550M-DS3H sudo[173655]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:02:31 oy-B550M-DS3H sudo[173655]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:03:02 oy-B550M-DS3H sudo[174746]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:03:02 oy-B550M-DS3H sudo[174746]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:03:02 oy-B550M-DS3H sudo[174746]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:03:32 oy-B550M-DS3H sudo[176262]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:03:32 oy-B550M-DS3H sudo[176262]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:03:32 oy-B550M-DS3H sudo[176262]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:04:02 oy-B550M-DS3H sudo[178100]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:04:02 oy-B550M-DS3H sudo[178100]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:04:02 oy-B550M-DS3H sudo[178100]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:04:32 oy-B550M-DS3H sudo[180567]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:04:32 oy-B550M-DS3H sudo[180567]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:04:32 oy-B550M-DS3H sudo[180567]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:05:02 oy-B550M-DS3H sudo[182612]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:05:02 oy-B550M-DS3H sudo[182612]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:05:02 oy-B550M-DS3H sudo[182612]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:05:32 oy-B550M-DS3H sudo[184918]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:05:32 oy-B550M-DS3H sudo[184918]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:05:32 oy-B550M-DS3H sudo[184918]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:06:02 oy-B550M-DS3H sudo[187178]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:06:02 oy-B550M-DS3H sudo[187178]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:06:02 oy-B550M-DS3H sudo[187178]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:06:32 oy-B550M-DS3H sudo[189825]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:06:32 oy-B550M-DS3H sudo[189825]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:06:32 oy-B550M-DS3H sudo[189825]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:07:02 oy-B550M-DS3H sudo[192291]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:07:02 oy-B550M-DS3H sudo[192291]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:07:02 oy-B550M-DS3H sudo[192291]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:07:32 oy-B550M-DS3H sudo[194709]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:07:32 oy-B550M-DS3H sudo[194709]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:07:32 oy-B550M-DS3H sudo[194709]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:08:02 oy-B550M-DS3H sudo[197257]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:08:02 oy-B550M-DS3H sudo[197257]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:08:03 oy-B550M-DS3H sudo[197257]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:08:33 oy-B550M-DS3H sudo[199491]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:08:33 oy-B550M-DS3H sudo[199491]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:08:33 oy-B550M-DS3H sudo[199491]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:09:03 oy-B550M-DS3H sudo[202148]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:09:03 oy-B550M-DS3H sudo[202148]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:09:03 oy-B550M-DS3H sudo[202148]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:09:33 oy-B550M-DS3H sudo[204712]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:09:33 oy-B550M-DS3H sudo[204712]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:09:33 oy-B550M-DS3H sudo[204712]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:10:03 oy-B550M-DS3H sudo[207465]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:10:03 oy-B550M-DS3H sudo[207465]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:10:03 oy-B550M-DS3H sudo[207465]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:10:33 oy-B550M-DS3H sudo[209895]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:10:33 oy-B550M-DS3H sudo[209895]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:10:33 oy-B550M-DS3H sudo[209895]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:11:03 oy-B550M-DS3H sudo[212468]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:11:03 oy-B550M-DS3H sudo[212468]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:11:03 oy-B550M-DS3H sudo[212468]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:11:33 oy-B550M-DS3H sudo[216265]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:11:33 oy-B550M-DS3H sudo[216265]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:11:33 oy-B550M-DS3H sudo[216265]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:12:03 oy-B550M-DS3H sudo[218520]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:12:03 oy-B550M-DS3H sudo[218520]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:12:03 oy-B550M-DS3H sudo[218520]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:12:33 oy-B550M-DS3H sudo[221048]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:12:33 oy-B550M-DS3H sudo[221048]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:12:33 oy-B550M-DS3H sudo[221048]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:13:03 oy-B550M-DS3H sudo[223163]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:13:03 oy-B550M-DS3H sudo[223163]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:13:03 oy-B550M-DS3H sudo[223163]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:13:33 oy-B550M-DS3H sudo[225899]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:13:33 oy-B550M-DS3H sudo[225899]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:13:34 oy-B550M-DS3H sudo[225899]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:14:04 oy-B550M-DS3H sudo[229303]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:14:04 oy-B550M-DS3H sudo[229303]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:14:04 oy-B550M-DS3H sudo[229303]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:14:34 oy-B550M-DS3H sudo[233386]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:14:34 oy-B550M-DS3H sudo[233386]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:14:34 oy-B550M-DS3H sudo[233386]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:15:04 oy-B550M-DS3H sudo[236555]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:15:04 oy-B550M-DS3H sudo[236555]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:15:04 oy-B550M-DS3H sudo[236555]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:15:34 oy-B550M-DS3H sudo[240478]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:15:34 oy-B550M-DS3H sudo[240478]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:15:34 oy-B550M-DS3H sudo[240478]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:16:04 oy-B550M-DS3H sudo[243533]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:16:04 oy-B550M-DS3H sudo[243533]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:16:04 oy-B550M-DS3H sudo[243533]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:16:34 oy-B550M-DS3H sudo[246711]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:16:34 oy-B550M-DS3H sudo[246711]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:16:34 oy-B550M-DS3H sudo[246711]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:17:04 oy-B550M-DS3H sudo[250287]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:17:04 oy-B550M-DS3H sudo[250287]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:17:04 oy-B550M-DS3H sudo[250287]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:17:34 oy-B550M-DS3H sudo[253727]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:17:34 oy-B550M-DS3H sudo[253727]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:17:34 oy-B550M-DS3H sudo[253727]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:18:04 oy-B550M-DS3H sudo[257370]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:18:04 oy-B550M-DS3H sudo[257370]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:18:04 oy-B550M-DS3H sudo[257370]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:18:35 oy-B550M-DS3H sudo[260541]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:18:35 oy-B550M-DS3H sudo[260541]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:18:35 oy-B550M-DS3H sudo[260541]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:19:05 oy-B550M-DS3H sudo[264426]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:19:05 oy-B550M-DS3H sudo[264426]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:19:05 oy-B550M-DS3H sudo[264426]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:19:35 oy-B550M-DS3H sudo[267991]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:19:35 oy-B550M-DS3H sudo[267991]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:19:35 oy-B550M-DS3H sudo[267991]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:20:05 oy-B550M-DS3H sudo[271691]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:20:05 oy-B550M-DS3H sudo[271691]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:20:05 oy-B550M-DS3H sudo[271691]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:20:35 oy-B550M-DS3H sudo[275095]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:20:35 oy-B550M-DS3H sudo[275095]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:20:35 oy-B550M-DS3H sudo[275095]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:21:05 oy-B550M-DS3H sudo[277806]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:21:05 oy-B550M-DS3H sudo[277806]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:21:05 oy-B550M-DS3H sudo[277806]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:21:35 oy-B550M-DS3H sudo[279735]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:21:35 oy-B550M-DS3H sudo[279735]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:21:35 oy-B550M-DS3H sudo[279735]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:22:05 oy-B550M-DS3H sudo[282508]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:22:05 oy-B550M-DS3H sudo[282508]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:22:05 oy-B550M-DS3H sudo[282508]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:22:35 oy-B550M-DS3H sudo[286055]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:22:35 oy-B550M-DS3H sudo[286055]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:22:35 oy-B550M-DS3H sudo[286055]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:23:05 oy-B550M-DS3H sudo[288923]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:23:05 oy-B550M-DS3H sudo[288923]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:23:06 oy-B550M-DS3H sudo[288923]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:23:36 oy-B550M-DS3H sudo[291617]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:23:36 oy-B550M-DS3H sudo[291617]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:23:36 oy-B550M-DS3H sudo[291617]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:24:06 oy-B550M-DS3H sudo[294271]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:24:06 oy-B550M-DS3H sudo[294271]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:24:06 oy-B550M-DS3H sudo[294271]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:24:36 oy-B550M-DS3H sudo[296495]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:24:36 oy-B550M-DS3H sudo[296495]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:24:36 oy-B550M-DS3H sudo[296495]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:25:06 oy-B550M-DS3H sudo[299867]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:25:06 oy-B550M-DS3H sudo[299867]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:25:06 oy-B550M-DS3H sudo[299867]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:25:36 oy-B550M-DS3H sudo[302319]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:25:36 oy-B550M-DS3H sudo[302319]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:25:36 oy-B550M-DS3H sudo[302319]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:26:06 oy-B550M-DS3H sudo[305996]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:26:06 oy-B550M-DS3H sudo[305996]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:26:06 oy-B550M-DS3H sudo[305996]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:26:36 oy-B550M-DS3H sudo[308409]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:26:36 oy-B550M-DS3H sudo[308409]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:26:36 oy-B550M-DS3H sudo[308409]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:27:06 oy-B550M-DS3H sudo[310948]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:27:06 oy-B550M-DS3H sudo[310948]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:27:07 oy-B550M-DS3H sudo[310948]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:27:37 oy-B550M-DS3H sudo[313160]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:27:37 oy-B550M-DS3H sudo[313160]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:27:37 oy-B550M-DS3H sudo[313160]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:28:07 oy-B550M-DS3H sudo[315534]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:28:07 oy-B550M-DS3H sudo[315534]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:28:07 oy-B550M-DS3H sudo[315534]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:28:37 oy-B550M-DS3H sudo[317916]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:28:37 oy-B550M-DS3H sudo[317916]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:28:37 oy-B550M-DS3H sudo[317916]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:29:07 oy-B550M-DS3H sudo[321079]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:29:07 oy-B550M-DS3H sudo[321079]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:29:07 oy-B550M-DS3H sudo[321079]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:29:37 oy-B550M-DS3H sudo[323456]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:29:37 oy-B550M-DS3H sudo[323456]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:29:37 oy-B550M-DS3H sudo[323456]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:30:07 oy-B550M-DS3H sudo[326614]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:30:07 oy-B550M-DS3H sudo[326614]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:30:07 oy-B550M-DS3H sudo[326614]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:30:37 oy-B550M-DS3H sudo[329135]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:30:37 oy-B550M-DS3H sudo[329135]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:30:37 oy-B550M-DS3H sudo[329135]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:31:07 oy-B550M-DS3H sudo[331787]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:31:07 oy-B550M-DS3H sudo[331787]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:31:07 oy-B550M-DS3H sudo[331787]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:31:37 oy-B550M-DS3H sudo[333960]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:31:37 oy-B550M-DS3H sudo[333960]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:31:37 oy-B550M-DS3H sudo[333960]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:32:07 oy-B550M-DS3H sudo[336467]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:32:07 oy-B550M-DS3H sudo[336467]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:32:07 oy-B550M-DS3H sudo[336467]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:32:37 oy-B550M-DS3H sudo[339484]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:32:37 oy-B550M-DS3H sudo[339484]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:32:38 oy-B550M-DS3H sudo[339484]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:33:08 oy-B550M-DS3H sudo[342684]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:33:08 oy-B550M-DS3H sudo[342684]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:33:08 oy-B550M-DS3H sudo[342684]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:33:38 oy-B550M-DS3H sudo[345565]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:33:38 oy-B550M-DS3H sudo[345565]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:33:38 oy-B550M-DS3H sudo[345565]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:34:08 oy-B550M-DS3H sudo[349072]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:34:08 oy-B550M-DS3H sudo[349072]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:34:08 oy-B550M-DS3H sudo[349072]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:34:38 oy-B550M-DS3H sudo[352212]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:34:38 oy-B550M-DS3H sudo[352212]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:34:38 oy-B550M-DS3H sudo[352212]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:35:08 oy-B550M-DS3H sudo[355892]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:35:08 oy-B550M-DS3H sudo[355892]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:35:08 oy-B550M-DS3H sudo[355892]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:35:38 oy-B550M-DS3H sudo[358747]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:35:38 oy-B550M-DS3H sudo[358747]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:35:38 oy-B550M-DS3H sudo[358747]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:36:08 oy-B550M-DS3H sudo[362469]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:36:08 oy-B550M-DS3H sudo[362469]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:36:08 oy-B550M-DS3H sudo[362469]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:36:38 oy-B550M-DS3H sudo[365650]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:36:38 oy-B550M-DS3H sudo[365650]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:36:38 oy-B550M-DS3H sudo[365650]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:37:08 oy-B550M-DS3H sudo[368776]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:37:08 oy-B550M-DS3H sudo[368776]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:37:09 oy-B550M-DS3H sudo[368776]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:37:39 oy-B550M-DS3H sudo[371784]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:37:39 oy-B550M-DS3H sudo[371784]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:37:39 oy-B550M-DS3H sudo[371784]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:38:09 oy-B550M-DS3H sudo[374657]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:38:09 oy-B550M-DS3H sudo[374657]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:38:09 oy-B550M-DS3H sudo[374657]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:38:39 oy-B550M-DS3H sudo[377195]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:38:39 oy-B550M-DS3H sudo[377195]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:38:39 oy-B550M-DS3H sudo[377195]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:39:09 oy-B550M-DS3H sudo[379857]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:39:09 oy-B550M-DS3H sudo[379857]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:39:09 oy-B550M-DS3H sudo[379857]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:39:39 oy-B550M-DS3H sudo[382922]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:39:39 oy-B550M-DS3H sudo[382922]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:39:39 oy-B550M-DS3H sudo[382922]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:40:09 oy-B550M-DS3H sudo[386414]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:40:09 oy-B550M-DS3H sudo[386414]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:40:09 oy-B550M-DS3H sudo[386414]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:40:39 oy-B550M-DS3H sudo[388781]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:40:39 oy-B550M-DS3H sudo[388781]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:40:39 oy-B550M-DS3H sudo[388781]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:41:09 oy-B550M-DS3H sudo[391183]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:41:09 oy-B550M-DS3H sudo[391183]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:41:09 oy-B550M-DS3H sudo[391183]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:41:40 oy-B550M-DS3H sudo[393851]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:41:40 oy-B550M-DS3H sudo[393851]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:41:40 oy-B550M-DS3H sudo[393851]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:42:10 oy-B550M-DS3H sudo[399972]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:42:10 oy-B550M-DS3H sudo[399972]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:42:10 oy-B550M-DS3H sudo[399972]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:42:40 oy-B550M-DS3H sudo[411717]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:42:40 oy-B550M-DS3H sudo[411717]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:42:40 oy-B550M-DS3H sudo[411717]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:43:10 oy-B550M-DS3H sudo[416826]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:43:10 oy-B550M-DS3H sudo[416826]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:43:10 oy-B550M-DS3H sudo[416826]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:43:32 oy-B550M-DS3H systemd[1227]: icat-mixO-arm37-tenhour-20261002.service: A process of this unit has been killed by the OOM killer.
+Oct 03 00:43:32 oy-B550M-DS3H sudo[419105]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/umount /home/oy/iCAT/mnt
+Oct 03 00:43:32 oy-B550M-DS3H sudo[419105]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:43:32 oy-B550M-DS3H sudo[419105]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:43:32 oy-B550M-DS3H sudo[419107]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/sbin/rmmod nvmev
+Oct 03 00:43:32 oy-B550M-DS3H sudo[419107]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:43:32 oy-B550M-DS3H sudo[419107]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:43:32 oy-B550M-DS3H sudo[419116]:       oy : PWD=/home/oy/iCAT ; USER=root ; COMMAND=/usr/bin/dmesg --color=never
+Oct 03 00:43:32 oy-B550M-DS3H sudo[419116]: pam_unix(sudo:session): session opened for user root(uid=0) by oy(uid=1000)
+Oct 03 00:43:32 oy-B550M-DS3H sudo[419116]: pam_unix(sudo:session): session closed for user root
+Oct 03 00:43:33 oy-B550M-DS3H systemd[1227]: icat-mixO-arm37-tenhour-20261002.service: Failed with result 'oom-kill'.
+Oct 03 00:43:33 oy-B550M-DS3H systemd[1227]: icat-mixO-arm37-tenhour-20261002.service: Consumed 10h 10min 53.397s CPU time, 10.9G memory peak, 0B memory swap peak.

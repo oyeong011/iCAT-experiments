@@ -1,0 +1,18 @@
+{
+  "run_id": "mixO-arm37-tenhour-20261002",
+  "status": "failed_or_incomplete_preserved",
+  "exit_code": 1,
+  "systemd_result": "oom-kill",
+  "finished_at": "2026-10-03T00:43:33+09:00",
+  "completed_ten_hours": false,
+  "phase_completed": "none;interrupted during OLTP",
+  "actual_last_sample_seconds": 4063.0,
+  "last_partial_waf": 1.332890948164158,
+  "last_partial_host_bytes": 675186757632,
+  "sample_rows": 136,
+  "issues": [
+    "OOM during OLTP;no Varmail phase;no valid10h result",
+    "runner exit1;mount cleanup reported busy;virtual module was unloaded"
+  ],
+  "provenance": "Recovered from systemd journal, raw runner exit, 30s samples;post-mortem record;not successful measurement"
+}
