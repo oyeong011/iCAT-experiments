@@ -1,2 +1,8 @@
-FAIL line=160 command=( exec 9>&-; timeout --signal=TERM --kill-after=15 $(( ${VM_RUN:-300} + 900 )) setarch "$(uname -m)" -R "$root/tools/filebench-local/filebench" -f "$wl" ) > "$dir/filebench-$slot.txt" 2>&1
-MIX mixO onlinev4 exit=124
+FAIL line=258 command=grep -m1 'Throughput' "$dir/ycsb-load.txt"
+FAIL line=258 command=grep -m1 'Throughput' "$dir/ycsb-run.txt"
+total host_bytes=14893354717184 host_pages=3636072929 gc_pages=3372226114 WAF=1.927436
+phaseA(oltp) host_pages=546953713 gc_pages=123342620 WAF=1.225508
+phaseB(varmail) host_pages=3089119216 gc_pages=3248883494 WAF=2.051718
+ycsb-load 
+ycsb-run 
+MIX mixO onlinev4 exit=0

@@ -11611,3 +11611,28 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 수정(`mix-20260911.sh`, VM_CHUNKS 추가): 구간 길이 = VM_RUN × VM_CHUNKS. reuse 파일셋을 쓰는 프로파일(OLTP)은 같은 파일 위에서 VM_RUN짜리 filebench를 VM_CHUNKS번 연속 실행(매 조각마다 프로세스 재시작으로 메모리 반환). reuse가 없는 Varmail은 VM_RUN×VM_CHUNKS 한 번 실행. VM_CHUNKS 미지정 시 기존과 동일. 30초 기록에 memavail_mb 필드 추가(기존 파서 영향 없음).
 - 새 설정: OLTP→Varmail 10시간 = MULT=20 VM_RUN=900 VM_CHUNKS=20 (OLTP 15분×20, Varmail 5시간 1회). 조각 하나는 3배 길이 실험의 OLTP 구간과 동일 조건. 해석 한계: 조각 사이 수 초의 filebench 재시작 공백, Varmail 5시간 단일 실행의 메모리 거동은 미검증(memavail_mb로 감시).
 - 실패 run은 run()이 -failed-<시각>으로 보존. 두 번째 PC의 CAT-37 10시간(VM_RUN=18000)도 같은 실패가 예상되어 같은 설정으로 재실행 필요.
+
+- Finished 2026-10-03T20:49:37+09:00; mixO onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-onlinev4-rep1-x20`; cleanup attempted.
+- total host_bytes=14893354717184 host_pages=3636072929 gc_pages=3372226114 WAF=1.927436
+- phaseA(oltp) host_pages=546953713 gc_pages=123342620 WAF=1.225508
+- phaseB(varmail) host_pages=3089119216 gc_pages=3248883494 WAF=2.051718
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixO fixed50 — started 2026-10-03T20:50:15+09:00
+
+- Phase A fio test4 fixed payload (1179648000000/589824000000/196608000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixO fixed50`; evidence `result/mix-20260911/mixO-fixed50/`.
+
+### QUEUE34 결과 — OLTP→Varmail 10시간 (2026-10-03)
+- iCAT-v4 (이 PC, mixO-onlinev4-rep1-x20, VM_RUN=900 VM_CHUNKS=20): 전체 WAF 1.927 (OLTP 1.226, Varmail 2.052). 정상 종료, OLTP 조각 20개 모두 IO Summary, SUSPECT 없음. 4개 파티션 모두 전환 후 0.2~4.7분에 변화 감지·재설정.
+- CAT-37 기본 (두 번째 PC icat-2, `result/mixO-fixed37-chunked-20261003/`, 같은 명령): 전체 WAF 2.122 (OLTP 1.295, Varmail 2.336). Codex 검증: exit 0, OLTP 20조각 각 약 901초, Varmail 약 18001초.
+- 컴퓨터 간 비교 근거: 두 번째 PC 검증에서 CAT-47 +0.17%, CAT-50 +0.05%(기준 ±1% 이내), Greedy만 +1.7%(이 PC 자체 반복 범위 2.139~2.210 안의 잡음 수준). 사전 기준(3개 모두 ±1%)은 미충족이므로, CAT 비교에 한해 합친다는 점을 논문에 명시.
+- v4는 기본 대비 9.2% 낮음(1회씩). CAT-50 견고 10시간은 이 PC에서 진행 중(10/4 아침 종료 예정).
+
+## QUEUE35 — FIO-Fast→Varmail 10시간 (v4·견고·기본) — 사전 등록 2026-10-04 00:00
+- 목적(사용자): 10시간 혼합 워크로드에서 후보 축소가 보이는 사례. OLTP→Varmail은 OLTP 구간의 조합 간 차이가 6.7%로 제거 기준(15%) 미만이라 후보가 유지됨. FIO-Fast는 45개 조합 차이 25.7%, 21개가 기준 초과 → 축소가 예상됨. Varmail 18.4%.
+- 설정: `env MULT=30 VM_RUN=900 VM_CHUNKS=20 bash script/mix-20260911.sh mixF <정책> 1` = FIO-Fast 5시간(3배 길이에서 구간 A가 정확히 30분이었으므로 30배) + Varmail 5시간 1회(누수 없음 확인, OLTP만 조각 실행).
+- 배치: 이 PC = onlinev4 → fixed50 (`script/gh-queue35-mixF10h.sh`, 현재 진행 중인 mixO fixed50 종료 후 시작). 두 번째 PC = fixed37 (같은 명령). 이후 이 PC는 큐31 잔여 → t4 CAT-37 3시간 → QUEUE34DONE(큐32 시작).
+- 판정(사전 등록): 각 1회. 10시간 전체 WAF를 v4 대비 기본·견고로 보고, 1% 미만 차이는 판정하지 않음. 후보 수: FIO-Fast 구간 첫 순회 후 v4 후보가 30개 이하로 줄면 "축소 확인".
+- 큐34는 진행 중 run(mixO fixed50)만 남기고 스크립트 종료(그 run은 그대로 완료, 그림 재작성은 after-fixed50-figs.sh가 수행).
