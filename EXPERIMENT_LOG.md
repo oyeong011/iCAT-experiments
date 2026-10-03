@@ -11629,3 +11629,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - CAT-37 기본 (두 번째 PC icat-2, `result/mixO-fixed37-chunked-20261003/`, 같은 명령): 전체 WAF 2.122 (OLTP 1.295, Varmail 2.336). Codex 검증: exit 0, OLTP 20조각 각 약 901초, Varmail 약 18001초.
 - 컴퓨터 간 비교 근거: 두 번째 PC 검증에서 CAT-47 +0.17%, CAT-50 +0.05%(기준 ±1% 이내), Greedy만 +1.7%(이 PC 자체 반복 범위 2.139~2.210 안의 잡음 수준). 사전 기준(3개 모두 ±1%)은 미충족이므로, CAT 비교에 한해 합친다는 점을 논문에 명시.
 - v4는 기본 대비 9.2% 낮음(1회씩). CAT-50 견고 10시간은 이 PC에서 진행 중(10/4 아침 종료 예정).
+
+## QUEUE35 — FIO-Fast→Varmail 10시간 (v4·견고·기본) — 사전 등록 2026-10-04 00:00
+- 목적(사용자): 10시간 혼합 워크로드에서 후보 축소가 보이는 사례. OLTP→Varmail은 OLTP 구간의 조합 간 차이가 6.7%로 제거 기준(15%) 미만이라 후보가 유지됨. FIO-Fast는 45개 조합 차이 25.7%, 21개가 기준 초과 → 축소가 예상됨. Varmail 18.4%.
+- 설정: `env MULT=30 VM_RUN=900 VM_CHUNKS=20 bash script/mix-20260911.sh mixF <정책> 1` = FIO-Fast 5시간(3배 길이에서 구간 A가 정확히 30분이었으므로 30배) + Varmail 5시간 1회(누수 없음 확인, OLTP만 조각 실행).
+- 배치: 이 PC = onlinev4 → fixed50 (`script/gh-queue35-mixF10h.sh`, 현재 진행 중인 mixO fixed50 종료 후 시작). 두 번째 PC = fixed37 (같은 명령). 이후 이 PC는 큐31 잔여 → t4 CAT-37 3시간 → QUEUE34DONE(큐32 시작).
+- 판정(사전 등록): 각 1회. 10시간 전체 WAF를 v4 대비 기본·견고로 보고, 1% 미만 차이는 판정하지 않음. 후보 수: FIO-Fast 구간 첫 순회 후 v4 후보가 30개 이하로 줄면 "축소 확인".
+- 큐34는 진행 중 run(mixO fixed50)만 남기고 스크립트 종료(그 run은 그대로 완료, 그림 재작성은 after-fixed50-figs.sh가 수행).
