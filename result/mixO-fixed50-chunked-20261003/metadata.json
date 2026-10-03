@@ -1,0 +1,33 @@
+{
+  "registered_at": "2026-10-03T22:29:20.263986+09:00",
+  "workload": "mixO OLTP -> Varmail",
+  "policy": "fixed50",
+  "arm": 50,
+  "MULT": 20,
+  "VM_RUN": 900,
+  "requested_phase_seconds": [
+    18000,
+    18000
+  ],
+  "sampling_seconds": 30,
+  "latest_source_commit": "35c23ee13f97cdda2ee9cd6b73783fb5266bcdf4",
+  "execution_script_sha256": "8cb7f72976324c8faaf754056ecc88b6f5352b2a486bc121e7c21918b4dd4174",
+  "module_path": "/home/oy/iCAT/buildoutput/nvmev-fixed50.ko",
+  "module_sha256": "f476acff890da8e28ce745ec3f2cf2b0eced8cb33752d99b40a093178511b5b6",
+  "hostname": "oy-B550M-DS3H",
+  "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0",
+  "kernel": "7.0.0-31-generic",
+  "source_local_status": "source-status.txt",
+  "measurement": "manual=1;zero-start;continuous across OLTP20chunks and Varmail18000;v4 initial learning included",
+  "device_expected": "/dev/nvme1n1;same model/serial/PCI guards enforced by BASH_ENV adapter;source script latest unchanged",
+  "publish_branch": "icat-2",
+  "source_update": "clean icat-2 pull main; one physical-controller compatibility guard replacement documented upstream-local.diff; workload/measurement unchanged",
+  "source_commit": "35c23ee13f97cdda2ee9cd6b73783fb5266bcdf4",
+  "root_HEAD_before_file_update": "c06a372a5e940f911734946f1ffd574d2bdd7ca8",
+  "VM_CHUNKS": 20,
+  "command": "env MULT=20 VM_RUN=900 VM_CHUNKS=20 bash script/mix-20260911.sh mixO fixed50 1",
+  "execution": "immutable execution-script.sh snapshot of same CAT37 runner",
+  "preparation": "6GiB sequential128k + 3GiB random4k rate10000 seed20260907;manual inactive",
+  "wait_for": null,
+  "started_at": "2026-10-03T22:29:20.559224+09:00"
+}

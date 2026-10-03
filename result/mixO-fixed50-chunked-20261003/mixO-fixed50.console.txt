@@ -1,0 +1,3 @@
+FAIL line=168 command=( exec 9>&-; timeout --signal=TERM --kill-after=15 $(( rt + 900 )) setarch "$(uname -m)" -R "$root/tools/filebench-local/filebench" -f "$wl" ) >> "$dir/filebench-$slot.txt" 2>&1
+umount: /home/oy/iCAT/mnt: 대상이 사용중입니다.
+MIX mixO fixed50 exit=1
