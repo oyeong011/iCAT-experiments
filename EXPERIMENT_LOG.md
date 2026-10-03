@@ -11636,3 +11636,4 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 배치: 이 PC = onlinev4 → fixed50 (`script/gh-queue35-mixF10h.sh`, 현재 진행 중인 mixO fixed50 종료 후 시작). 두 번째 PC = fixed37 (같은 명령). 이후 이 PC는 큐31 잔여 → t4 CAT-37 3시간 → QUEUE34DONE(큐32 시작).
 - 판정(사전 등록): 각 1회. 10시간 전체 WAF를 v4 대비 기본·견고로 보고, 1% 미만 차이는 판정하지 않음. 후보 수: FIO-Fast 구간 첫 순회 후 v4 후보가 30개 이하로 줄면 "축소 확인".
 - 큐34는 진행 중 run(mixO fixed50)만 남기고 스크립트 종료(그 run은 그대로 완료, 그림 재작성은 after-fixed50-figs.sh가 수행).
+- 2026-10-04 변경: 두 번째 PC가 FIO-Fast→Varmail CAT-37(10:20 종료 예정)과 CAT-50(20:25 종료 예정)을 모두 맡음. 이 PC는 iCAT-v4만(중복 CAT-50 취소).
