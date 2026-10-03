@@ -68,54 +68,57 @@ def part(p):
 P = {p: part(p) for p in '0123'}
 x, act, stt, rs = P[PART]; X1 = max(x) + 0.1
 
-# ---- PNG: left = 10 h in 10-min bins (60 points), right = switch zoom in 1-min bins; one partition only
-BIG, SMALL = 10 / 60, 1 / 60
-Z0, Z1 = sw - 0.1, sw + 0.6
-def bins(lo, hi, step):
-    w = {lab: binned(d, t0, step, lo, hi) for lab, d, *_ in pol}
-    return w, bin_steps(x, stt, step, lo, hi, 'mode'), bin_steps(x, act, step, lo, hi, 'last')
-VIEW = [(0, (0, X1 - 0.1), BIG), (1, (Z0, Z1), SMALL)]
-fig, AX = plt.subplots(3, 2, figsize=(14, 7.8), gridspec_kw={'height_ratios': [1.25, 0.16, 0.9], 'width_ratios': [2.1, 1], 'hspace': 0.34, 'wspace': 0.08})
-BINNED = {}
-for col, (lo, hi), step in VIEW:
-    ax = AX[:, col]; zoom = col == 1; w, sb, ab = bins(lo, hi, step); BINNED[col] = (w, sb, ab)
-    for a_ in (ax[0], ax[2]): a_.axvspan(sw, hi + step, color='#f3f7fd', zorder=0, lw=0)
-    for a_ in ax: a_.set_xlim(lo, hi); a_.axvline(sw, color=RED, lw=1.1, ls=(0, (3, 3)))
-    for lab, d, c, lw in pol:
-        ax[0].plot([h for h, _ in w[lab]], [v for _, v in w[lab]], color=c, lw=lw + 0.6, marker='o', ms=3.2, label=f'{lab}   10시간 전체 WAF {total(d):.3f}', zorder=3 if 'v4' in lab else 2)
-    for h, s_ in sb: ax[1].axvspan(h - step / 2, h + step / 2, color=STATE[s_][1], lw=0)
-    ax[1].set_yticks([]); ax[1].grid(False); ax[1].spines['bottom'].set_visible(False)
-    ax[2].plot([h for h, _ in ab], [v for _, v in ab], color=V4, lw=2.2, drawstyle='steps-mid', marker='o', ms=3)
-    ax[2].set_ylim(0, 50); ax[2].set_yticks([0, 15, 30, 45])
-    for r_ in rs:
-        for a_ in ax: a_.axvline(r_, color=PUR, lw=1.6)
-    if zoom:
-        for a_ in (ax[0], ax[2]): a_.set_yticklabels([])
-        ax[0].set_title('전환 직후 확대 (1분 단위)', loc='left', fontsize=11, color=INK, weight='bold')
-        ax[0].set_ylim(AX[0, 0].get_ylim()); ax[2].set_xlabel('측정 시작 후 시간 (시간)')
-        lo_i = min(range(len(ab)), key=lambda i: ab[i][1] if sw <= ab[i][0] <= rs[0] + SMALL else 99)
-        ax[2].annotate(f'전환 후 {ab[lo_i][1]}개까지 감소', ab[lo_i], (ab[lo_i][0] + 0.08, 6), fontsize=9.5, color=INK, va='center', arrowprops=dict(arrowstyle='->', color=INK2, lw=0.9))
-        after = next(v for h, v in ab if h > rs[0] + 0.4)
-        ax[2].annotate(f'변화 감지 → 재설정\n(전환 {(rs[0] - sw) * 60:.1f}분 뒤)\n다시 순회 후 {after}개', (rs[0], 30), (rs[0] + 0.07, 34), fontsize=9.5, color=PUR, weight='bold', va='center')
+# ---- PNG: only where something changes. Three time windows (broken x-axis), 2-min bins (<100 points per line):
+#   start of OLTP (sweep -> settle), around the switch (collapse -> detect -> re-sweep -> settle), last 30 min (steady state).
+STEP = 2 / 60
+SEG = [('① OLTP 시작: 순회 → 정착', 0.0, 1.0), ('② 전환 직후: 감지 → 재탐색 → 재정착', sw - 0.1, sw + 0.7), ('③ 마지막 30분', X1 - 0.6, X1 - 0.1)]
+def seg_bins(lo, hi):
+    w = {lab: binned(d, t0, STEP, lo, hi) for lab, d, *_ in pol}
+    return w, bin_steps(x, stt, STEP, lo, hi, 'mode'), bin_steps(x, act, STEP, lo, hi, 'last')
+BINNED = {i: seg_bins(lo, hi) for i, (_, lo, hi) in enumerate(SEG)}
+fig, AX = plt.subplots(3, 3, figsize=(14, 7.6), sharey='row', gridspec_kw={'height_ratios': [1.25, 0.16, 0.9], 'width_ratios': [1, 0.8, 0.5], 'hspace': 0.36, 'wspace': 0.06})
+wafs = [v for i in BINNED for lab in BINNED[i][0] for _, v in BINNED[i][0][lab]]
+for i, (title, lo, hi) in enumerate(SEG):
+    ax = AX[:, i]; w, sb, ab = BINNED[i]
+    for a_ in ax: a_.set_xlim(lo, hi)
+    if hi > sw:
+        for a_ in (ax[0], ax[2]): a_.axvspan(max(lo, sw), hi, color='#f3f7fd', zorder=0, lw=0)
+    if lo < sw < hi:
+        for a_ in ax: a_.axvline(sw, color=RED, lw=1.1, ls=(0, (3, 3)))
         ax[0].text(sw, 0.02, ' 전환', transform=ax[0].get_xaxis_transform(), fontsize=10, color=RED, weight='bold')
-        ax[0].text(rs[0], 0.93, ' 재설정', transform=ax[0].get_xaxis_transform(), fontsize=10, color=PUR, weight='bold')
-    else:
-        ax[0].set_ylabel('구간 WAF (10분 단위)\n(낮을수록 좋음)'); ax[0].legend(loc='upper left', fontsize=9.5, frameon=False)
-        ax[0].set_title('(가) 구간 WAF', loc='left', fontsize=11, color=INK, weight='bold')
-        ax[0].text(sw / 2, 0.45, '앞 워크로드: OLTP', transform=ax[0].get_xaxis_transform(), ha='center', fontsize=11, color=INK2, weight='bold')
-        ax[0].text((sw + hi) / 2, 0.45, '뒤 워크로드: Varmail', transform=ax[0].get_xaxis_transform(), ha='center', fontsize=11, color=V4, weight='bold')
-        ax[0].text(sw, 0.02, f' 전환 {sw:.2f}시간', transform=ax[0].get_xaxis_transform(), fontsize=10, color=RED, weight='bold', va='bottom')
-        ax[1].set_title('(나) 학습 상태 (10분마다 가장 오래 머문 상태)', loc='left', fontsize=11, color=INK, weight='bold')
-        ax[2].set_ylabel('남은 후보 수'); ax[2].set_xlabel('측정 시작 후 시간 (시간)')
-        ax[2].set_title('(다) 활성 후보 수 (각 10분 끝의 값)', loc='left', fontsize=11, color=INK, weight='bold')
-        ax[0].axvspan(Z0, Z1, ymin=0, ymax=0.03, color=PUR, alpha=0.5, lw=0)
-AX[1, 1].legend(handles=[Patch(color=c, label=n) for n, c in STATE], loc='lower right', bbox_to_anchor=(1.0, 1.05), ncol=3, fontsize=9.5, frameon=False, handlelength=1.2)
+    for r_ in rs:
+        if lo < r_ < hi:
+            for a_ in ax: a_.axvline(r_, color=PUR, lw=1.6)
+            ax[0].text(r_, 0.93, ' 재설정', transform=ax[0].get_xaxis_transform(), fontsize=10, color=PUR, weight='bold')
+    for lab, d, c, lw in pol:
+        ax[0].plot([h for h, _ in w[lab]], [v for _, v in w[lab]], color=c, lw=lw + 0.6, marker='o', ms=3, label=f'{lab}   10시간 전체 WAF {total(d):.3f}', zorder=3 if 'v4' in lab else 2)
+    for h, s_ in sb: ax[1].axvspan(h - STEP / 2, h + STEP / 2, color=STATE[s_][1], lw=0)
+    ax[1].set_yticks([]); ax[1].grid(False)
+    # candidates: line + a dot and label only where the count changes
+    ax[2].plot([h for h, _ in ab], [v for _, v in ab], color=V4, lw=2.2, drawstyle='steps-mid')
+    ch = [(h, v) for k_, (h, v) in enumerate(ab) if k_ == 0 or v != ab[k_ - 1][1]]
+    ax[2].scatter([h for h, _ in ch], [v for _, v in ch], s=26, color=V4, zorder=4)
+    for k_, (h, v) in enumerate(ch):
+        if k_ == 0 or abs(v - ch[k_ - 1][1]) >= 3: ax[2].annotate(str(v), (h, v), (2, 7), textcoords='offset points', fontsize=9.5, color=V4, weight='bold')
+    ax[2].set_ylim(0, 52); ax[2].set_yticks([0, 15, 30, 45])
+    ax[0].set_title(title, loc='left', fontsize=10.5, color=INK, weight='bold')
+    ax[2].set_xlabel('시간 (시간)')
+    for a_ in ax: a_.xaxis.set_major_locator(plt.MaxNLocator(4))
+AX[0, 0].set_ylim(min(wafs) - 0.05, max(wafs) + 0.12)
+AX[0, 0].set_ylabel('구간 WAF (2분 단위)\n(낮을수록 좋음)'); AX[2, 0].set_ylabel('남은 후보 수')
+AX[0, 0].legend(loc='center left', fontsize=9.5, frameon=False, bbox_to_anchor=(0, 0.62))
+AX[1, 0].set_title(f'학습 상태 (파티션 {PART})', loc='left', fontsize=10, color=INK2)
+AX[2, 0].set_title('활성 후보 수 (바뀌는 지점에 점)', loc='left', fontsize=10, color=INK2)
+AX[2, 0].text(0.5, 0.42, 'OLTP에서는 조합 간 WAF 차이가 6.7%로\n제거 기준(15%)보다 작아 후보가 거의 유지됨', transform=AX[2, 0].transAxes, ha='center', fontsize=9.5, color=INK2)
+AX[1, 2].legend(handles=[Patch(color=c, label=n) for n, c in STATE], loc='lower right', bbox_to_anchor=(1.0, 1.08), ncol=3, fontsize=9, frameon=False, handlelength=1.0)
+for i in (1, 2):
+    for a_ in AX[:, i]: a_.spines['left'].set_visible(True); a_.spines['left'].set_linestyle((0, (2, 2)))   # broken-axis cue
 fig.suptitle('그림 7. OLTP → Varmail 10시간 실행에서 iCAT-v4의 학습 상태와 활성 후보 수 변화', x=0.06, ha='left', y=0.995, fontsize=13.5, weight='bold', color=INK)
-fig.text(0.06, 0.95, 'OLTP 15분×20회 연속 + Varmail 5시간. 학습 기록은 4개 파티션 중 파티션 2. 왼쪽 10분 단위, 오른쪽은 전환 직후 1분 단위 확대.', fontsize=9.5, color=INK2)
+fig.text(0.06, 0.95, '변화가 있는 세 구간만 표시(가로축이 끊겨 있음). 2분 단위. 학습 기록은 파티션 2. CAT-37은 같은 조건의 별도 실행(두 번째 PC).', fontsize=9.5, color=INK2)
 for e in ('png', 'svg', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/fig7_10h.{e}', dpi=200, bbox_inches='tight')
 
 # ---- xlsx: the same binned data (10-min bins over 10 h, and 1-min bins around the switch), partition 2 only
-wb = Workbook(); ws = wb.active; ws.title = '그림7 10시간 (10분 단위)'; wz = wb.create_sheet('전환 직후 (1분 단위)')
+wb = Workbook(); wb.remove(wb.active); SH = [wb.create_sheet(t.split(':')[0] + ' ' + ['OLTP 시작', '전환 직후', '마지막 30분'][i]) for i, (t, _, _) in enumerate(SEG)]
 def sheet(ws, col_i, unit):
     w, sb, ab = BINNED[col_i]; cols = []
     for lab, *_ in pol: cols += [(f'{lab} 시간(h)', [round(h, 4) for h, _ in w[lab]]), (f'{lab} {unit} 구간 WAF', [round(v, 4) for _, v in w[lab]])]
@@ -128,12 +131,12 @@ def sheet(ws, col_i, unit):
     ws.cell(row=1, column=c0, value='전환(시간)').font = Font(bold=True); ws.cell(row=2, column=c0, value=round(sw, 3))
     ws.cell(row=3, column=c0, value=f'재설정(시간, p{PART})').font = Font(bold=True); ws.cell(row=4, column=c0, value=round(rs[0], 3) if rs else None)
     for i, (lab, d, *_) in enumerate(pol): ws.cell(row=6 + i, column=c0, value=f'{lab} 10시간 전체 WAF'); ws.cell(row=6 + i, column=c0 + 1, value=round(total(d), 3))
-    L = ws.cell(row=1, column=c0 + 3).column_letter; lo, hi = VIEW[col_i][1]
+    L = ws.cell(row=1, column=c0 + 3).column_letter; lo, hi = SEG[col_i][1:]
     def chart(title, yt, ser, ymin, ymax, anchor, marker=True):
         ch = ScatterChart(); ch.title = title; ch.style = 13; ch.scatterStyle = 'lineMarker'; ch.display_blanks = 'span'
         ch.x_axis.title = '측정 시작 후 시간 (시간)'; ch.y_axis.title = yt; ch.height, ch.width = 9, 28; ch.legend.position = 'b'
         ch.x_axis.delete = False; ch.y_axis.delete = False; ch.x_axis.scaling.min = round(lo, 2); ch.x_axis.scaling.max = round(hi, 2)
-        ch.x_axis.majorUnit = 1 if col_i == 0 else 0.1; ch.y_axis.scaling.min = ymin; ch.y_axis.scaling.max = ymax
+        ch.x_axis.majorUnit = 0.1; ch.y_axis.scaling.min = ymin; ch.y_axis.scaling.max = ymax
         for xc, color, width in ser:
             n = len(cols[xc][1]); sr = Series(Reference(ws, min_col=xc + 2, min_row=1, max_row=n + 1), Reference(ws, min_col=xc + 1, min_row=2, max_row=n + 1), title_from_data=True)
             sr.smooth = False; sr.graphicalProperties.line.solidFill = color; sr.graphicalProperties.line.width = width
@@ -144,6 +147,6 @@ def sheet(ws, col_i, unit):
     chart(f'(가) OLTP → Varmail 10시간: {unit} 구간 WAF (낮을수록 좋음)', 'WAF', [(2 * i, c[1:].upper(), 22225) for i, (lab, d, c, lw) in enumerate(pol)], round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1), f'{L}2')
     chart(f'(나) 학습 상태 (0 = 전수 순회, 1 = 탐색, 2 = 정착)', '상태', [(k, '2A78D6', 22225)], -0.2, 2.2, f'{L}21')
     chart(f'(다) 활성 후보 수 (파티션 {PART})', '남은 후보 수', [(k + 2, '2A78D6', 28575)], 0, 48, f'{L}40')
-sheet(ws, 0, '10분'); sheet(wz, 1, '1분')
+[sheet(SH[i], i, '2분') for i in range(len(SEG))]
 wb.save('/home/oy/iCAT/figs/data/fig7_10h.xlsx')
-print('policies drawn:', [lab for lab, *_ in pol], '| points left/right', len(BINNED[0][0]['iCAT-v4 (제안)']), len(BINNED[1][0]['iCAT-v4 (제안)']))
+print('policies drawn:', [lab for lab, *_ in pol], '| points per segment', [len(BINNED[i][0]['iCAT-v4 (제안)']) for i in BINNED])
