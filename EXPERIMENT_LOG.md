@@ -11618,3 +11618,14 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(varmail) host_pages=3089119216 gc_pages=3248883494 WAF=2.051718
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixO fixed50 — started 2026-10-03T20:50:15+09:00
+
+- Phase A fio test4 fixed payload (1179648000000/589824000000/196608000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed50.ko`.
+- Command: `bash script/mix-20260911.sh mixO fixed50`; evidence `result/mix-20260911/mixO-fixed50/`.
+
+### QUEUE34 결과 — OLTP→Varmail 10시간 (2026-10-03)
+- iCAT-v4 (이 PC, mixO-onlinev4-rep1-x20, VM_RUN=900 VM_CHUNKS=20): 전체 WAF 1.927 (OLTP 1.226, Varmail 2.052). 정상 종료, OLTP 조각 20개 모두 IO Summary, SUSPECT 없음. 4개 파티션 모두 전환 후 0.2~4.7분에 변화 감지·재설정.
+- CAT-37 기본 (두 번째 PC icat-2, `result/mixO-fixed37-chunked-20261003/`, 같은 명령): 전체 WAF 2.122 (OLTP 1.295, Varmail 2.336). Codex 검증: exit 0, OLTP 20조각 각 약 901초, Varmail 약 18001초.
+- 컴퓨터 간 비교 근거: 두 번째 PC 검증에서 CAT-47 +0.17%, CAT-50 +0.05%(기준 ±1% 이내), Greedy만 +1.7%(이 PC 자체 반복 범위 2.139~2.210 안의 잡음 수준). 사전 기준(3개 모두 ±1%)은 미충족이므로, CAT 비교에 한해 합친다는 점을 논문에 명시.
+- v4는 기본 대비 9.2% 낮음(1회씩). CAT-50 견고 10시간은 이 PC에서 진행 중(10/4 아침 종료 예정).
