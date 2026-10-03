@@ -11611,3 +11611,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 수정(`mix-20260911.sh`, VM_CHUNKS 추가): 구간 길이 = VM_RUN × VM_CHUNKS. reuse 파일셋을 쓰는 프로파일(OLTP)은 같은 파일 위에서 VM_RUN짜리 filebench를 VM_CHUNKS번 연속 실행(매 조각마다 프로세스 재시작으로 메모리 반환). reuse가 없는 Varmail은 VM_RUN×VM_CHUNKS 한 번 실행. VM_CHUNKS 미지정 시 기존과 동일. 30초 기록에 memavail_mb 필드 추가(기존 파서 영향 없음).
 - 새 설정: OLTP→Varmail 10시간 = MULT=20 VM_RUN=900 VM_CHUNKS=20 (OLTP 15분×20, Varmail 5시간 1회). 조각 하나는 3배 길이 실험의 OLTP 구간과 동일 조건. 해석 한계: 조각 사이 수 초의 filebench 재시작 공백, Varmail 5시간 단일 실행의 메모리 거동은 미검증(memavail_mb로 감시).
 - 실패 run은 run()이 -failed-<시각>으로 보존. 두 번째 PC의 CAT-37 10시간(VM_RUN=18000)도 같은 실패가 예상되어 같은 설정으로 재실행 필요.
+
+- Finished 2026-10-03T20:49:37+09:00; mixO onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-onlinev4-rep1-x20`; cleanup attempted.
+- total host_bytes=14893354717184 host_pages=3636072929 gc_pages=3372226114 WAF=1.927436
+- phaseA(oltp) host_pages=546953713 gc_pages=123342620 WAF=1.225508
+- phaseB(varmail) host_pages=3089119216 gc_pages=3248883494 WAF=2.051718
+- ycsb-load 
+- ycsb-run 
