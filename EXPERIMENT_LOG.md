@@ -11657,3 +11657,16 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB(varmail) host_pages=2830111517 gc_pages=3616354052 WAF=2.277813
 - ycsb-load 
 - ycsb-run 
+
+### mix-20260911 mixF fixed37 — started 2026-10-04T16:58:47+09:00
+
+- Phase A fio test4 fixed payload (1769472000000/884736000000/294912000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixF fixed37`; evidence `result/mix-20260911/mixF-fixed37/`.
+
+### QUEUE35 결과 — FIO-Fast→Varmail 10시간 (2026-10-04)
+- iCAT-v4 (이 PC, mixF-onlinev4-rep1-x30): 전체 2.185 (FIO-Fast 1.819 / Varmail 2.278). 정상 종료.
+- CAT-50 견고 (두 번째 PC, result/mixF-fixed50-tenhour-20261004/): 전체 2.347 (1.816 / 2.496).
+- CAT-37 기본 (두 번째 PC, result/mixF-fixed37-tenhour-20261004/): 전체 2.486 (1.986 / 2.647).
+- 판정(사전 등록 기준): v4가 견고 대비 −6.9%, 기본 대비 −12.1% (각 1회). FIO-Fast 구간은 견고와 동률(+0.2%), 차이는 Varmail 구간(견고 대비 −8.7%)에서 발생.
+- 후보 축소 확인: 첫 순회 12분 뒤 4개 파티션 모두 45 → 18~20 (기준 30개 이하 충족). 전환(300.0분) 후 0.4~0.5분 안에 4개 파티션 모두 변화 감지·재설정, Varmail에서 4개까지 축소.
+- 그림 버그 수정: fig7-10h.py가 모든 실행에 v4의 시작 시각을 써서 다른 PC 실행의 시간축이 어긋났음(OLTP판은 시작 시각이 4분 차이라 우연히 거의 맞았음). 실행마다 자기 시작 시각을 쓰도록 고쳐 두 그림 모두 다시 생성.

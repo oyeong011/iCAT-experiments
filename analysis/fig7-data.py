@@ -12,7 +12,8 @@ RUNS = [('mixO-onlinev4-rep1-x3', 'OLTP → Varmail', 'OLTP', 'Varmail'), ('mixF
         ('mixJ-onlinev4-rep1-x3', 'YCSB-A → YCSB-B', 'YCSB-A', 'YCSB-B'), ('mixP-onlinev4-rep1-x3', 'YCSB-A → OLTP', 'YCSB-A', 'OLTP'),
         # runs where the change detector fired and the learner re-explored (10-03)
         ('mixF-onlinev4-rep2-x3', 'FIO-Fast → Varmail (2회차)', 'FIO-Fast', 'Varmail'), ('mixR-onlinev4-rep1-x3', 'FIO-Fast → YCSB-A → FIO-Fast', 'FIO-Fast', 'YCSB-A'),
-        ('mixO-onlinev4-rep1-x20', 'OLTP → Varmail (10시간)', 'OLTP', 'Varmail')]   # 10-03: 10 h run, detector fired in all 4 partitions
+        ('mixO-onlinev4-rep1-x20', 'OLTP → Varmail (10시간)', 'OLTP', 'Varmail'),
+        ('mixF-onlinev4-rep1-x30', 'FIO-Fast → Varmail (10시간)', 'FIO-Fast', 'Varmail')]   # 10-03: 10 h run, detector fired in all 4 partitions
 ts = lambda l: float(re.match(r'\[\s*(\d+\.\d+)\]', l)[1])
 with open('/home/oy/iCAT/figs/data/fig7_v4_trace.csv', 'w', newline='', encoding='utf-8-sig') as f:
     w = csv.writer(f)

@@ -1,0 +1,48 @@
+{
+  "registered_at": "2026-10-04T00:08:02.602657+09:00",
+  "workload": "mixF FIO-Fast -> Varmail",
+  "policy": "fixed37",
+  "arm": 37,
+  "MULT": 30,
+  "VM_RUN": 900,
+  "requested_phase_seconds": [
+    18000,
+    18000
+  ],
+  "sampling_seconds": 30,
+  "latest_source_commit": "4557a68510759320b79d083977959ffe16d6a5d8",
+  "execution_script_sha256": "8cb7f72976324c8faaf754056ecc88b6f5352b2a486bc121e7c21918b4dd4174",
+  "module_path": "/home/oy/iCAT/buildoutput/nvmev-fixed37.ko",
+  "module_sha256": "7045a5b2c4d2ae437f43275c6dc93bf882916efb1af708312664194ac7cba1f0",
+  "hostname": "oy-B550M-DS3H",
+  "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0",
+  "kernel": "7.0.0-31-generic",
+  "source_local_status": "source-status.txt",
+  "measurement": "manual=1 continuous FIO-Fast to Varmail;30sec samples",
+  "device_expected": "/dev/nvme1n1;same model/serial/PCI guards enforced by BASH_ENV adapter;source script latest unchanged",
+  "publish_branch": "icat-2",
+  "source_update": "clean icat-2 pull main; one physical-controller compatibility guard replacement documented upstream-local.diff; workload/measurement unchanged",
+  "source_commit": "4557a68510759320b79d083977959ffe16d6a5d8",
+  "root_HEAD_before_file_update": "c06a372a5e940f911734946f1ffd574d2bdd7ca8",
+  "VM_CHUNKS": 20,
+  "command": "env MULT=30 VM_RUN=900 VM_CHUNKS=20 bash script/mix-20260911.sh mixF fixed37 1",
+  "execution": "immutable execution-script.sh snapshot; explicit NVMeVirt guard adapter",
+  "wait_for": "only global device lock; old queue cancelled by user",
+  "workload_sha256": {
+    "workloads/mix-test4.fio": "b5edbcc77f269f500986eae375da8a94d4bf762d30f52a58d8ffd0d4901fa946",
+    "workloads/filebench/varmail.f": "44d34625ec29806d5b0ac2f3694bb40c0b1e70fba6a9c5157f4c8a16fbb7f23f"
+  },
+  "seeds": {
+    "hot": 20260911,
+    "warm": 20261011,
+    "cold": 20261111,
+    "prepare": 20260907
+  },
+  "expected_fio_bytes": {
+    "hot": 1769472000000,
+    "warm": 884736000000,
+    "cold": 294912000000
+  },
+  "priority_updated_at": "2026-10-04T00:16:20.857002+09:00",
+  "started_at": "2026-10-04T00:17:20.112863+09:00"
+}
