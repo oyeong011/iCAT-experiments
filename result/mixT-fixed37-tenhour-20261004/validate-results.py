@@ -1,0 +1,74 @@
+"""Read-only validation of all nine mixT phases; never launches experiments."""
+from pathlib import Path
+from datetime import datetime
+import re,json,gzip,csv
+P=Path(__file__).resolve().parent;D=P/'mixT-fixed37-rep1'
+meta=json.loads((P/'metadata.json').read_text())
+def require(condition,message):
+ if not condition:raise AssertionError(message)
+def read(name):
+ p=D/name
+ if p.exists():return p.read_text()
+ with gzip.open(str(p)+'.gz','rt') as f:return f.read()
+def counters(name):
+ return {k:int(v) for k,v in re.findall(r'\b(epoch|active|host_bytes|host_pages|gc_pages)=(\d+)',read(name).splitlines()[0])}
+def timestamp(name):return datetime.fromisoformat(read(name).strip()).timestamp()
+def check_fio(name,expected):
+ jobs=json.loads(read(name))['jobs']
+ require(all(j['error']==0 for j in jobs),name+' fio error')
+ require(sum(j['write']['io_bytes'] for j in jobs)==expected,name+' requested write bytes')
+ return jobs
+require(read('exit-code.txt').strip()=='0','runner nonzero including stop/block-stat/cleanup checks')
+a=counters('started.txt');b=counters('stopped.txt');prepared=counters('prepared.txt');z=counters('final-control.txt')
+require(a['active']==1 and all(a[k]==0 for k in ['host_bytes','host_pages','gc_pages']),'zero start')
+require(prepared['active']==0 and all(prepared[k]==0 for k in ['host_bytes','host_pages','gc_pages']),'unmeasured preparation')
+require(b==z and b['active']==0 and b['epoch']==a['epoch'] and b['host_pages']>0,'stop/final epoch/counters')
+parts=[dict((k,int(v)) for k,v in re.findall(r'(host_pages|gc_pages|arm)=(\d+)',line)) for line in read('stopped.txt').splitlines()[1:] if line.startswith('part=')]
+require(len(parts)==4 and all(p['arm']==37 for p in parts),'four fixed37 partitions')
+require(all(sum(p[k] for p in parts)==b[k] for k in ['host_pages','gc_pages']),'partition totals')
+check_fio('preset.json',6*1024**3);check_fio('prepare.json',3*1024**3)
+require('Fixed CAT init' in read('kernel.log') and 'arm=37 ' in read('kernel.log'),'observed fixed37')
+# YCSB operation successes and runtime; time-capped runs need not finish the 1e9 safety cap.
+def ycsb(name,load=False):
+ text=read(name)
+ failures=[(op,status,int(n)) for op,status,n in re.findall(r'^\[([^]]+)\], Return=([^,]+), (\d+)$',text,re.M) if status!='OK' and int(n)>0]
+ require(not failures,name+' operation errors '+str(failures))
+ require(not re.search(r'^\[[^]]*-FAILED\], Operations, [1-9]\d*$',text,re.M),name+' failed operations')
+ ok={op:int(n) for op,n in re.findall(r'^\[([^]]+)\], Return=OK, (\d+)$',text,re.M)}
+ if load:require(ok.get('INSERT')==300000,'complete initial 300000-record load')
+ else:require(ok.get('READ',0)>0 and ok.get('UPDATE',0)>0,name+' read/update successes')
+ runtimes=re.findall(r'^\[OVERALL\], RunTime\(ms\), ([\d.]+)$',text,re.M)
+ require(len(runtimes)==1,name+' runtime summary')
+ seconds=float(runtimes[0])/1000
+ if not load:require(3990<=seconds<=4300,name+' requested timed runtime')
+ return {'runtime_seconds':seconds,'successful_operations':ok}
+load=ycsb('ycsb-load.txt',True)
+require(re.search(r'^run 1000$',read('oltp.f'),re.M),'OLTP chunk profile')
+require(re.search(r'^run 4000$',read('varmail.f'),re.M),'Varmail profile')
+phases=[];previous_end=None
+for slot,name in zip('ABCDEFGHI',meta['phase_order']):
+ start=timestamp(f'phase-{slot}-start.time');end=timestamp(f'phase-{slot}-end.time');seconds=end-start
+ require(seconds>=3990,slot+' phase too short')
+ if previous_end is not None:require(start>=previous_end,slot+' order')
+ previous_end=end
+ c0=counters(f'phase-{slot}-start.txt');c1=counters(f'phase-{slot}-end.txt')
+ require(c0['active']==c1['active']==1 and c0['epoch']==c1['epoch']==a['epoch'],slot+' continuous measurement epoch')
+ dh=c1['host_pages']-c0['host_pages'];dg=c1['gc_pages']-c0['gc_pages'];db=c1['host_bytes']-c0['host_bytes']
+ require(dh>0 and dg>=0 and db>0,slot+' counters')
+ detail={}
+ if name.startswith('YCSB'):detail=ycsb(f'ycsb-run-{slot}.txt')
+ elif name=='FIO-Fast':
+  jobs=check_fio(f'phase-{slot}.json',sum(meta['expected_fio_bytes'].values()))
+  require(len(jobs)==3 and {j['jobname'] for j in jobs}==set(meta['expected_fio_bytes']),'FIO job identity')
+  require(all(j['write']['io_bytes']==meta['expected_fio_bytes'][j['jobname']] and j['write']['runtime']>=3990*1000 for j in jobs),'FIO job bytes/duration')
+ else:
+  text=read(f'filebench-{slot}.txt');starts=re.findall(r'^([\d.]+): Running\.\.\.$',text,re.M);ends=re.findall(r'^([\d.]+): IO Summary:',text,re.M)
+  n,rt=(4,1000) if name=='OLTP' else (1,4000)
+  require(len(starts)==len(ends)==n,slot+' Filebench completions')
+  times=[float(e)-float(s) for s,e in zip(starts,ends)]
+  require(all(rt<=t<rt+60 for t in times),slot+' Filebench runtime')
+  detail={'process_runtimes_seconds':times}
+ phases.append(dict(slot=slot,workload=name,actual_seconds=seconds,host_bytes=db,host_pages=dh,gc_pages=dg,waf=1+dg/dh,**detail))
+rows=list(csv.DictReader((P/'waf-series.csv').open()));active=[r for r in rows if r['cumulative_waf']]
+require(all(abs(float(r['cumulative_waf'])-(1+int(r['gc_pages'])/int(r['host_pages'])))<1e-12 for r in active),'CSV WAF formula')
+print(json.dumps(dict(waf=1+b['gc_pages']/b['host_pages'],host_bytes=b['host_bytes'],host_pages=b['host_pages'],gc_pages=b['gc_pages'],phases=phases,actual_measured_seconds=timestamp('phase-I-end.time')-timestamp('phase-A-start.time'),initial_load=load,active_sample_rows=len(active),block_stat_validation='upstream runner stop boundary and host_bytes assertion passed; not independent NAND measurement'),indent=2))
