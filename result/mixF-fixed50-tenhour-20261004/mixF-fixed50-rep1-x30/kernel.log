@@ -1,0 +1,76 @@
+[235830.251644] mix-mixF-fixed50-1329309 BEGIN
+[235830.268789] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[235830.268797] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[235830.287963] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[235830.302470] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[235830.317385] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[235830.317405] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[235830.317409] NVMeVirt: Fixed CAT init ns=0 part=0 arm=50 k=10 scale_pct=50 age_ratio=16
+[235830.318754] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[235830.318789] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[235830.318793] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[235830.333148] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[235830.347754] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[235830.347777] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[235830.347781] NVMeVirt: Fixed CAT init ns=0 part=1 arm=50 k=10 scale_pct=50 age_ratio=16
+[235830.349478] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[235830.349484] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[235830.363909] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[235830.378330] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[235830.378362] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[235830.378366] NVMeVirt: Fixed CAT init ns=0 part=2 arm=50 k=10 scale_pct=50 age_ratio=16
+[235830.380269] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[235830.380279] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[235830.394758] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[235830.409020] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[235830.409045] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[235830.409049] NVMeVirt: Fixed CAT init ns=0 part=3 arm=50 k=10 scale_pct=50 age_ratio=16
+[235830.410925] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[235830.410928] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=10 initial_scale_pct=50 initial_age_ratio=16 warmup_gc=100
+[235830.410939] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[235830.410941] NVMeVirt: ns 0/1: size 7655 MiB
+[235830.411043] PCI host bridge to bus 0001:10
+[235830.411047] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[235830.411052] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7ffffffffff]
+[235830.411055] pci_bus 0001:10: root bus resource [bus 00-ff]
+[235830.411072] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[235830.411078] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[235830.411082] pci 0001:10:00.0: enabling Extended Tags
+[235830.411441] NVMeVirt: Virtual PCI bus created (node 0)
+[235830.412005] NVMeVirt: Virtual NVMe device created
+[235830.412248] nvme nvme1: pci function 0001:10:00.0
+[235830.414339] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[235830.415266] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[235830.417160] nvme nvme1: 12/0/0 default/read/poll queues
+[235830.509510] EXT4-fs (nvme1n1): mounted filesystem 7fbf303d-52bd-4697-86a3-8f1b1ddd7d7d r/w with ordered data mode. Quota mode: none.
+[235912.552833] NVMeVirt: Fixed CAT init ns=0 part=0 arm=50 k=10 scale_pct=50 age_ratio=16
+[235912.552840] NVMeVirt: Fixed CAT init ns=0 part=1 arm=50 k=10 scale_pct=50 age_ratio=16
+[235912.552843] NVMeVirt: Fixed CAT init ns=0 part=2 arm=50 k=10 scale_pct=50 age_ratio=16
+[235912.552846] NVMeVirt: Fixed CAT init ns=0 part=3 arm=50 k=10 scale_pct=50 age_ratio=16
+[235912.552848] NVMeVirt: Measurement: command=start epoch=1 host_bytes=0 learner_active=1
+[235912.560653] mix-mixF-fixed50-1329309 phase=A START
+[241931.817326] audit: type=1400 audit(1791082838.623:378): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=1332740 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[252731.520124] audit: type=1400 audit(1791093638.634:379): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=1338355 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[253912.365780] mix-mixF-fixed50-1329309 phase=A END
+[253912.377152] mix-mixF-fixed50-1329309 phase=B START
+[259530.670528] loop11: detected capacity change from 0 to 26008
+[259531.067933] loop12: detected capacity change from 0 to 24232
+[259532.399575] audit: type=1400 audit(1791100439.711:380): apparmor="STATUS" operation="profile_replace" info="same as current profile, skipping" profile="unconfined" name="/snap/snapd/28254/usr/lib/snapd/snap-confine" pid=1342627 comm="apparmor_parser"
+[259532.596395] audit: type=1400 audit(1791100439.908:381): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.firmware-updater.hook.configure" pid=1342633 comm="apparmor_parser"
+[259532.736543] audit: type=1400 audit(1791100440.048:382): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap-update-ns.firmware-updater" pid=1342629 comm="apparmor_parser"
+[259532.762646] audit: type=1400 audit(1791100440.074:383): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.firmware-updater.firmware-updater" pid=1342631 comm="apparmor_parser"
+[259532.818060] audit: type=1400 audit(1791100440.129:384): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.firmware-updater.firmware-notifier" pid=1342630 comm="apparmor_parser"
+[259532.832389] audit: type=1400 audit(1791100440.144:385): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.firmware-updater.firmware-updater-app" pid=1342632 comm="apparmor_parser"
+[259532.840564] audit: type=1400 audit(1791100440.152:386): apparmor="STATUS" operation="profile_replace" info="same as current profile, skipping" profile="unconfined" name="snap-update-ns.mesa-2404" pid=1342635 comm="apparmor_parser"
+[259532.841429] audit: type=1400 audit(1791100440.153:387): apparmor="STATUS" operation="profile_replace" info="same as current profile, skipping" profile="unconfined" name="snap.mesa-2404.component-monitor" pid=1342636 comm="apparmor_parser"
+[259532.841885] audit: type=1400 audit(1791100440.153:388): apparmor="STATUS" operation="profile_replace" info="same as current profile, skipping" profile="unconfined" name="snap.mesa-2404.hook.connect-plug-kernel-gpu-2404" pid=1342637 comm="apparmor_parser"
+[259532.841932] audit: type=1400 audit(1791100440.153:389): apparmor="STATUS" operation="profile_replace" info="same as current profile, skipping" profile="unconfined" name="snap.mesa-2404.hook.install" pid=1342639 comm="apparmor_parser"
+[263531.498622] kauditd_printk_skb: 14 callbacks suppressed
+[263531.498627] audit: type=1400 audit(1791104438.924:404): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=1344831 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[271915.955541] mix-mixF-fixed50-1329309 phase=B chunk=1/1 done
+[271916.558276] mix-mixF-fixed50-1329309 phase=B END
+[271916.560886] NVMeVirt: Measurement: command=stop epoch=1 host_bytes=13382190190592 learner_active=0
+[271916.606250] EXT4-fs (nvme1n1): unmounting filesystem 7fbf303d-52bd-4697-86a3-8f1b1ddd7d7d.
+[271916.733168] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[271916.733312] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=3267136277 gc_pages=4399213881 gc_count=119786721 WAF=2.346 warmup_gc=100-per-part
+[271916.845350] NVMeVirt: Virtual NVMe device closed
