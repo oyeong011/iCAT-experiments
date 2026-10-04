@@ -11709,3 +11709,19 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - mixT: 9 time-based phases of 4000 s each — YCSB-A (load 600000 records) -> OLTP (32 MB x 10 files, 1000 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 4000/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-online-v4.ko`.
 - Command: `env PH_SECS=4000 bash script/mix-20260911.sh mixT onlinev4 1`; evidence `result/mix-20260911/mixT-onlinev4-rep1/`.
 - 정정(2026-10-04 21:55): 위 'mix-20260911 mixT onlinev4 — started 21:32:45' 항목의 첫 설명 줄(Phase A fio … rm test.dat … Phase B YCSB)은 옛 2구간 문구가 잘못 기록된 것. 실제는 mixT 9구간 연기 시험(구간당 120초, SMOKE=1: DB 2만 레코드, 파일 2000개, FIO 1/10 분량), 증거 result/mix-20260911/mixT-onlinev4-rep1-smoke/. 결과 exit=0, 9구간 모두 요약됨 → 통과. 이후 실행부터는 mixT 전용 설명이 기록됨. 이 PC 10시간 iCAT-v4 21:52 시작.
+
+- Finished 2026-10-05T07:56:58+09:00; mixT onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=7181815468032 host_pages=1753372917 gc_pages=1885961601 WAF=2.075619
+- phaseA(sqlite-a) host_pages=11906656 gc_pages=301371 WAF=1.025311
+- phaseB(oltp) host_pages=121293754 gc_pages=14624430 WAF=1.120570
+- phaseC(varmail) host_pages=742882323 gc_pages=454026159 WAF=1.611168
+- phaseD(sqlite-a) host_pages=11282643 gc_pages=69584 WAF=1.006167
+- phaseE(sqlite-b) host_pages=7838053 gc_pages=571292 WAF=1.072887
+- phaseF(test4) host_pages=160004422 gc_pages=731918572 WAF=5.574365
+- phaseG(varmail) host_pages=566560737 gc_pages=651015219 WAF=2.149065
+- phaseH(sqlite-a) host_pages=11312538 gc_pages=111351 WAF=1.009843
+- phaseI(oltp) host_pages=120291791 gc_pages=33323623 WAF=1.277023
+- phaseA-load host_pages=452310 gc_pages=203682 WAF=1.450315
+- phaseA-run host_pages=11454346 gc_pages=97689 WAF=1.008529
+- ycsb-load [OVERALL], Throughput(ops/sec), 25367.833587011668
+- ycsb-run [OVERALL], Throughput(ops/sec), 62933.339331818715
