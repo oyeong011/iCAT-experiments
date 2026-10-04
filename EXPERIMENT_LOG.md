@@ -11682,7 +11682,7 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 목적(사용자, 최우선): 워크로드가 무작위에 가깝게 여러 번 바뀌는 10시간 실행. FIO-Fast→Varmail처럼 한 번만 바뀌는 실험이 아님.
 - 순서(9구간, 각 4000초 = 10시간): YCSB-A → OLTP → Varmail → YCSB-A → YCSB-B → FIO-Fast → Varmail → YCSB-A → OLTP. 사용자 목록의 "ycsb"(5번째)는 읽기 위주 YCSB-B로 해석.
 - 구현(`mix-20260911.sh` mixT): 모든 구간이 시간 기준 — YCSB는 maxexecutiontime, filebench는 VM_RUN×4조각(OLTP 누수 대응), FIO는 1배(600초) 분량을 4000/600배.
-- 공간 제약에 따른 변경(다른 실험과 다름): 가상 SSD 7.4 GB 중 FIO 파일 6 GiB가 FIO 구간을 위해 남아 있어, SQLite DB 30만 레코드(약 0.4 GB, 다른 실험 60만), OLTP 파일 32 MB×10(다른 실험 64 MB).
+- 공간 제약에 따른 변경(다른 실험과 다름): 가상 SSD 7.4 GB 중 FIO 파일 6 GiB가 FIO 구간을 위해 남아 있어, SQLite DB 25만 레코드, OLTP 파일 32 MB×10 — 기존 YCSB-A→OLTP(mixP)와 같은 크기(mixP도 같은 이유로 60만·64 MB에서 ENOSPC가 나 줄였음). 10-04 22:00 30만→25만으로 맞춤(연기 시험은 30만으로 진행).
 - 진행: 먼저 구간당 120초 연기 시험(mixT-onlinev4-rep1-smoke, 약 25분) — 9구간 모두 요약되면 통과. 통과 시 이 PC에서 iCAT-v4 → CAT-50(견고), 두 번째 PC에서 CAT-37(기본) `env PH_SECS=4000 bash script/mix-20260911.sh mixT fixed37 1`.
 - 판정(사전 등록): 각 1회, 10시간 전체 WAF로 v4 대 견고·기본, 1% 미만 차이는 판정하지 않음. 전환 8번 중 변화 감지(재설정)가 일어난 횟수를 함께 보고.
 - 중단 기록: 예비로 돌던 mixF-fixed37-rep1-x30(이 PC)은 4시간 31분째 사용자 지시로 중지(exit=143, 결과 미사용; 두 번째 PC 결과 사용).

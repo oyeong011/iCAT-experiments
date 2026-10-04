@@ -241,8 +241,9 @@ case "$label" in
     mixT)  # 10-04 (user): app workloads in an irregular order, 9 phases x PH_SECS (default 4000 s) = 10 h:
            # YCSB-A -> OLTP -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast -> Varmail -> YCSB-A -> OLTP. Every phase is time-based:
            # YCSB via maxexecutiontime, filebench VM_RUN x 4 chunks (OLTP leak), FIO payload scaled from its 600 s x1 length.
-           # Space: the 6 GiB FIO file stays for the FIO phase, leaving ~1.3 GB; so the DB is 300k records (~0.4 GB) and OLTP files 32 MB (0.32 GB).
-           ps_=${PH_SECS:-4000}; OPS=1000000000; RECORDS=300000; i=0; ld=1
+           # Space: DB and OLTP files coexist next to the kept 6 GiB FIO file, so the same sizes as mixP (YCSB-A -> OLTP) are used:
+           # 250k records and 32 MB OLTP files (mixP hit ENOSPC with 600k records + 64 MB files).
+           ps_=${PH_SECS:-4000}; OPS=1000000000; RECORDS=250000; i=0; ld=1
            for w in YA O V YA YB F V YA O; do sl=$(printf "\\x$(printf %x $((65 + i)))"); i=$((i + 1))
                case $w in
                    YA) PN[$sl]=sqlite-a; YCSB_SECS=$ps_ phase_sqlite $sl a $ld; ld=0;;
