@@ -11638,3 +11638,22 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 큐34는 진행 중 run(mixO fixed50)만 남기고 스크립트 종료(그 run은 그대로 완료, 그림 재작성은 after-fixed50-figs.sh가 수행).
 - 2026-10-04 변경: 두 번째 PC가 FIO-Fast→Varmail CAT-37(10:20 종료 예정)과 CAT-50(20:25 종료 예정)을 모두 맡음. 이 PC는 iCAT-v4만(중복 CAT-50 취소).
 - 2026-10-04 00:40 변경(사용자): 예비로 이 PC에서도 FIO-Fast→Varmail CAT-37, CAT-50 10시간을 v4 뒤에 실행. 두 PC 값이 모두 나오면 같은 10시간 실험에서의 PC 간 차이도 확인.
+
+- Finished 2026-10-04T06:56:09+09:00; mixO fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-fixed50-rep1-x20`; cleanup attempted.
+- total host_bytes=15079363137536 host_pages=3681485141 gc_pages=3426660186 WAF=1.930782
+- phaseA(oltp) host_pages=542254157 gc_pages=128761018 WAF=1.237455
+- phaseB(varmail) host_pages=3139230984 gc_pages=3297899168 WAF=2.050544
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixF onlinev4 — started 2026-10-04T06:56:38+09:00
+
+- Phase A fio test4 fixed payload (1769472000000/884736000000/294912000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixF onlinev4`; evidence `result/mix-20260911/mixF-onlinev4/`.
+
+- Finished 2026-10-04T16:58:09+09:00; mixF onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixF-onlinev4-rep1-x30`; cleanup attempted.
+- total host_bytes=14541338312704 host_pages=3550131424 gc_pages=4205724174 WAF=2.184667
+- phaseA(test4) host_pages=720019907 gc_pages=589370122 WAF=1.818547
+- phaseB(varmail) host_pages=2830111517 gc_pages=3616354052 WAF=2.277813
+- ycsb-load 
+- ycsb-run 
