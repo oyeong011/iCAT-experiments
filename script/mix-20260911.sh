@@ -56,7 +56,11 @@ db="$root/mnt/ycsb.db"
 declare -A PN=()   # mixS: phase slot -> workload name
 loaded=0; collector=; dc=; series=
 marker="mix-$label-$policy-$$"
+if [[ "$label" == mixT ]]; then   # 10-04: the generic line below describes the original 2-phase mix, not mixT
+printf '\n### mix-20260911 %s %s — started %s\n\n- mixT: 9 time-based phases of %s s each — YCSB-A (load %s records) -> OLTP (32 MB x 10 files, %s s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x %s/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-20260911.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4000}" "$RECORDS" "$(( ${PH_SECS:-4000} / 4 ))" "${PH_SECS:-4000}" "$(basename "$module")" "${PH_SECS:-4000}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
+else
 printf '\n### mix-20260911 %s %s — started %s\n\n- Phase A fio test4 fixed payload (%s/%s/%s bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (%s records, %s ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `%s`.\n- Command: `bash script/mix-20260911.sh %s %s`; evidence `result/mix-20260911/%s-%s/`.\n' "$label" "$policy" "$(date -Is)" "$HOT_IO" "$WARM_IO" "$COLD_IO" "$RECORDS" "$OPS" "$(basename "$module")" "$label" "$policy" "$label" "$policy" >> "$journal"
+fi
 field() { awk -v key="$2" 'NR==1{for(i=1;i<=NF;i++){split($i,a,"=");if(a[1]==key)print a[2]}}' "$1"; }
 nv=  # NVMeVirt controller (nvme0 here, nvme1 on a PC with a real NVMe SSD), found by model after insmod
 sectors() { awk '{print $7}' /sys/class/block/${nv}n1/stat; }
