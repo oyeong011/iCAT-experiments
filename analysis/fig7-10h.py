@@ -14,11 +14,19 @@ from openpyxl.chart import ScatterChart, Reference, Series
 from openpyxl.styles import Font
 font_manager.fontManager.addfont('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
 M = Path('/home/oy/iCAT/result/mix-20260911')
-FIXED37 = Path(sys.argv[1]) if len(sys.argv) > 1 else Path('/home/oy/iCAT/result/mixO-fixed37-chunked-20261003/mixO-fixed37-rep1-x20')   # second PC (icat-2), validated: CAT-47/50 within 0.2% of this PC
-PART = '2'   # partition shown; the other three are drawn thin in panel (다)
+WL = sys.argv[1] if len(sys.argv) > 1 else 'O'
+CFG = {'O': ('OLTP', 'Varmail', 'mixO', 'x20', 'mixO-fixed37-chunked-20261003', None, 'oltp', 'OLTP 15분×20회 연속 + Varmail 5시간'),
+       'F': ('FIO-Fast', 'Varmail', 'mixF', 'x30', 'mixF-fixed37-tenhour-20261004', 'mixF-fixed50-tenhour-20261004', 'fio', 'FIO-Fast 5시간 + Varmail 5시간')}
+A_, B_, MX, XX, D37, D50, TAG, DESC = CFG[WL]
+RR = Path('/home/oy/iCAT/result')
+P50 = M / f'{MX}-fixed50-rep1-{XX}'
+if not (P50 / 'summary.txt').exists() and D50: P50 = RR / D50 / f'{MX}-fixed50-rep1-{XX}'   # second PC when this PC's run is not done
+P37 = M / f'{MX}-fixed37-rep1-{XX}'
+if not (P37 / 'summary.txt').exists(): P37 = RR / D37 / f'{MX}-fixed37-rep1-{XX}'
+OUT = 'fig7_10h' if WL == 'O' else f'fig7_10h_{TAG}'
+PART = '2'   # partition shown
 INK, INK2, V4, RED, PUR = '#1d1d1f', '#6e6e73', '#2a78d6', '#e5484d', '#7d3cff'
-POL = [('iCAT-v4 (제안)', M / 'mixO-onlinev4-rep1-x20', V4, 1.4), ('CAT-50 (견고 설정)', M / 'mixO-fixed50-rep1-x20', '#8e8e93', 1.6),
-       ('CAT-37 (기본값)', FIXED37, '#e3a33b', 1.6)]
+POL = [('iCAT-v4 (제안)', M / f'{MX}-onlinev4-rep1-{XX}', V4, 1.4), ('CAT-50 (견고 설정)', P50, '#8e8e93', 1.6), ('CAT-37 (기본값)', P37, '#e3a33b', 1.6)]
 STATE = [('전수 순회', '#d9d9de'), ('탐색', '#8e8e93'), ('정착', V4)]
 plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 10.5, 'axes.facecolor': 'white', 'figure.facecolor': 'white',
                      'axes.spines.top': False, 'axes.spines.right': False, 'axes.spines.left': False, 'axes.edgecolor': '#d2d2d7',
@@ -53,8 +61,8 @@ def total(d):
 pol = [(lab, d, c, lw) for lab, d, c, lw in POL if (d / 'summary.txt').exists()]
 W = {lab: series(d) for lab, d, *_ in pol}
 t0 = W['iCAT-v4 (제안)'][1]
-sw = (dt.datetime.fromisoformat((M / 'mixO-onlinev4-rep1-x20' / 'phase-B-start.time').read_text().strip()).timestamp() - t0) / 3600
-T = [r for r in csv.DictReader(open('/home/oy/iCAT/figs/data/fig7_v4_trace.csv', encoding='utf-8-sig')) if r['워크로드'] == 'OLTP → Varmail (10시간)']
+sw = (dt.datetime.fromisoformat((M / f'{MX}-onlinev4-rep1-{XX}' / 'phase-B-start.time').read_text().strip()).timestamp() - t0) / 3600
+T = [r for r in csv.DictReader(open('/home/oy/iCAT/figs/data/fig7_v4_trace.csv', encoding='utf-8-sig')) if r['워크로드'] == f'{A_} → {B_} (10시간)']
 def part(p):
     t = [r for r in T if r['파티션'] == p and r['구간 WAF']]
     x = [float(r['경과(분)']) / 60 for r in t]; act = [int(r['남은 후보 수']) for r in t]
@@ -71,9 +79,9 @@ x, act, stt, rs = P[PART]; X1 = max(x) + 0.1
 # ---- PNG: only where something changes. Three time windows (broken x-axis), 2-min bins (<100 points per line):
 #   start of OLTP (sweep -> settle), around the switch (collapse -> detect -> re-sweep -> settle), last 30 min (steady state).
 STEP = 2 / 60
-SEG = [('① OLTP 시작: 순회 → 정착', 0.0, 1.0), ('② 전환 직후: 감지 → 재탐색 → 재정착', sw - 0.1, sw + 0.7), ('③ 마지막 30분', X1 - 0.6, X1 - 0.1)]
+SEG = [(f'① {A_} 시작: 순회 → 정착', 0.0, 1.0), ('② 전환 직후: 감지 → 재탐색 → 재정착', sw - 0.1, sw + 0.7), ('③ 마지막 30분', X1 - 0.6, X1 - 0.1)]
 def seg_bins(lo, hi):
-    w = {lab: binned(d, t0, STEP, lo, hi) for lab, d, *_ in pol}
+    w = {lab: binned(d, W[lab][1], STEP, lo, hi) for lab, d, *_ in pol}   # each run on its own clock (runs from the second PC started at other times)
     return w, bin_steps(x, stt, STEP, lo, hi, 'mode'), bin_steps(x, act, STEP, lo, hi, 'last')
 BINNED = {i: seg_bins(lo, hi) for i, (_, lo, hi) in enumerate(SEG)}
 fig, AX = plt.subplots(3, 3, figsize=(14, 7.6), sharey='row', gridspec_kw={'height_ratios': [1.25, 0.16, 0.9], 'width_ratios': [1, 0.8, 0.5], 'hspace': 0.36, 'wspace': 0.06})
@@ -109,16 +117,16 @@ AX[0, 0].set_ylabel('구간 WAF (2분 단위)\n(낮을수록 좋음)'); AX[2, 0]
 AX[0, 0].legend(loc='center left', fontsize=9.5, frameon=False, bbox_to_anchor=(0, 0.62))
 AX[1, 0].set_title(f'학습 상태 (파티션 {PART})', loc='left', fontsize=10, color=INK2)
 AX[2, 0].set_title('활성 후보 수 (바뀌는 지점에 점)', loc='left', fontsize=10, color=INK2)
-AX[2, 0].text(0.5, 0.42, 'OLTP에서는 조합 간 WAF 차이가 6.7%로\n제거 기준(15%)보다 작아 후보가 거의 유지됨', transform=AX[2, 0].transAxes, ha='center', fontsize=9.5, color=INK2)
+WL == 'O' and AX[2, 0].text(0.5, 0.42, 'OLTP에서는 조합 간 WAF 차이가 6.7%로\n제거 기준(15%)보다 작아 후보가 거의 유지됨', transform=AX[2, 0].transAxes, ha='center', fontsize=9.5, color=INK2)
 AX[1, 2].legend(handles=[Patch(color=c, label=n) for n, c in STATE], loc='lower right', bbox_to_anchor=(1.0, 1.08), ncol=3, fontsize=9, frameon=False, handlelength=1.0)
 for i in (1, 2):
     for a_ in AX[:, i]: a_.spines['left'].set_visible(True); a_.spines['left'].set_linestyle((0, (2, 2)))   # broken-axis cue
-fig.suptitle('그림 7. OLTP → Varmail 10시간 실행에서 iCAT-v4의 학습 상태와 활성 후보 수 변화', x=0.06, ha='left', y=0.995, fontsize=13.5, weight='bold', color=INK)
-fig.text(0.06, 0.95, '변화가 있는 세 구간만 표시(가로축이 끊겨 있음). 2분 단위. 학습 기록은 파티션 2. CAT-37은 같은 조건의 별도 실행(두 번째 PC).', fontsize=9.5, color=INK2)
-for e in ('png', 'svg', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/fig7_10h.{e}', dpi=200, bbox_inches='tight')
+fig.suptitle(f'그림 7. {A_} → {B_} 10시간 실행에서 iCAT-v4의 학습 상태와 활성 후보 수 변화', x=0.06, ha='left', y=0.995, fontsize=13.5, weight='bold', color=INK)
+fig.text(0.06, 0.95, f'{DESC}. 변화가 있는 세 구간만 표시(가로축이 끊겨 있음), 2분 단위. 학습 기록은 파티션 {PART}. 고정 CAT은 같은 조건의 별도 실행' + ('(두 번째 PC).' if WL == 'F' else '(CAT-37은 두 번째 PC).'), fontsize=9.5, color=INK2)
+for e in ('png', 'svg', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/{OUT}.{e}', dpi=200, bbox_inches='tight')
 
 # ---- xlsx: the same binned data (10-min bins over 10 h, and 1-min bins around the switch), partition 2 only
-wb = Workbook(); wb.remove(wb.active); SH = [wb.create_sheet(t.split(':')[0] + ' ' + ['OLTP 시작', '전환 직후', '마지막 30분'][i]) for i, (t, _, _) in enumerate(SEG)]
+wb = Workbook(); wb.remove(wb.active); SH = [wb.create_sheet(t.split(':')[0] + ' ' + [f'{A_} 시작', '전환 직후', '마지막 30분'][i]) for i, (t, _, _) in enumerate(SEG)]
 def sheet(ws, col_i, unit):
     w, sb, ab = BINNED[col_i]; cols = []
     for lab, *_ in pol: cols += [(f'{lab} 시간(h)', [round(h, 4) for h, _ in w[lab]]), (f'{lab} {unit} 구간 WAF', [round(v, 4) for _, v in w[lab]])]
@@ -144,9 +152,9 @@ def sheet(ws, col_i, unit):
             ch.series.append(sr)
         ws.add_chart(ch, anchor)
     wafs = [v for lab, *_ in pol for _, v in w[lab]]; k = 2 * len(pol)
-    chart(f'(가) OLTP → Varmail 10시간: {unit} 구간 WAF (낮을수록 좋음)', 'WAF', [(2 * i, c[1:].upper(), 22225) for i, (lab, d, c, lw) in enumerate(pol)], round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1), f'{L}2')
+    chart(f'(가) {A_} → {B_} 10시간: {unit} 구간 WAF (낮을수록 좋음)', 'WAF', [(2 * i, c[1:].upper(), 22225) for i, (lab, d, c, lw) in enumerate(pol)], round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1), f'{L}2')
     chart(f'(나) 학습 상태 (0 = 전수 순회, 1 = 탐색, 2 = 정착)', '상태', [(k, '2A78D6', 22225)], -0.2, 2.2, f'{L}21')
     chart(f'(다) 활성 후보 수 (파티션 {PART})', '남은 후보 수', [(k + 2, '2A78D6', 28575)], 0, 48, f'{L}40')
 [sheet(SH[i], i, '2분') for i in range(len(SEG))]
-wb.save('/home/oy/iCAT/figs/data/fig7_10h.xlsx')
+wb.save(f'/home/oy/iCAT/figs/data/{OUT}.xlsx')
 print('policies drawn:', [lab for lab, *_ in pol], '| points per segment', [len(BINNED[i][0]['iCAT-v4 (제안)']) for i in BINNED])

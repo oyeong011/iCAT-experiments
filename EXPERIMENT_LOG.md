@@ -11636,3 +11636,53 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 배치: 이 PC = onlinev4 → fixed50 (`script/gh-queue35-mixF10h.sh`, 현재 진행 중인 mixO fixed50 종료 후 시작). 두 번째 PC = fixed37 (같은 명령). 이후 이 PC는 큐31 잔여 → t4 CAT-37 3시간 → QUEUE34DONE(큐32 시작).
 - 판정(사전 등록): 각 1회. 10시간 전체 WAF를 v4 대비 기본·견고로 보고, 1% 미만 차이는 판정하지 않음. 후보 수: FIO-Fast 구간 첫 순회 후 v4 후보가 30개 이하로 줄면 "축소 확인".
 - 큐34는 진행 중 run(mixO fixed50)만 남기고 스크립트 종료(그 run은 그대로 완료, 그림 재작성은 after-fixed50-figs.sh가 수행).
+- 2026-10-04 변경: 두 번째 PC가 FIO-Fast→Varmail CAT-37(10:20 종료 예정)과 CAT-50(20:25 종료 예정)을 모두 맡음. 이 PC는 iCAT-v4만(중복 CAT-50 취소).
+- 2026-10-04 00:40 변경(사용자): 예비로 이 PC에서도 FIO-Fast→Varmail CAT-37, CAT-50 10시간을 v4 뒤에 실행. 두 PC 값이 모두 나오면 같은 10시간 실험에서의 PC 간 차이도 확인.
+
+- Finished 2026-10-04T06:56:09+09:00; mixO fixed50 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixO-fixed50-rep1-x20`; cleanup attempted.
+- total host_bytes=15079363137536 host_pages=3681485141 gc_pages=3426660186 WAF=1.930782
+- phaseA(oltp) host_pages=542254157 gc_pages=128761018 WAF=1.237455
+- phaseB(varmail) host_pages=3139230984 gc_pages=3297899168 WAF=2.050544
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixF onlinev4 — started 2026-10-04T06:56:38+09:00
+
+- Phase A fio test4 fixed payload (1769472000000/884736000000/294912000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixF onlinev4`; evidence `result/mix-20260911/mixF-onlinev4/`.
+
+- Finished 2026-10-04T16:58:09+09:00; mixF onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixF-onlinev4-rep1-x30`; cleanup attempted.
+- total host_bytes=14541338312704 host_pages=3550131424 gc_pages=4205724174 WAF=2.184667
+- phaseA(test4) host_pages=720019907 gc_pages=589370122 WAF=1.818547
+- phaseB(varmail) host_pages=2830111517 gc_pages=3616354052 WAF=2.277813
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixF fixed37 — started 2026-10-04T16:58:47+09:00
+
+- Phase A fio test4 fixed payload (1769472000000/884736000000/294912000000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (0 records, 0 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixF fixed37`; evidence `result/mix-20260911/mixF-fixed37/`.
+
+### QUEUE35 결과 — FIO-Fast→Varmail 10시간 (2026-10-04)
+- iCAT-v4 (이 PC, mixF-onlinev4-rep1-x30): 전체 2.185 (FIO-Fast 1.819 / Varmail 2.278). 정상 종료.
+- CAT-50 견고 (두 번째 PC, result/mixF-fixed50-tenhour-20261004/): 전체 2.347 (1.816 / 2.496).
+- CAT-37 기본 (두 번째 PC, result/mixF-fixed37-tenhour-20261004/): 전체 2.486 (1.986 / 2.647).
+- 판정(사전 등록 기준): v4가 견고 대비 −6.9%, 기본 대비 −12.1% (각 1회). FIO-Fast 구간은 견고와 동률(+0.2%), 차이는 Varmail 구간(견고 대비 −8.7%)에서 발생.
+- 후보 축소 확인: 첫 순회 12분 뒤 4개 파티션 모두 45 → 18~20 (기준 30개 이하 충족). 전환(300.0분) 후 0.4~0.5분 안에 4개 파티션 모두 변화 감지·재설정, Varmail에서 4개까지 축소.
+- 그림 버그 수정: fig7-10h.py가 모든 실행에 v4의 시작 시각을 써서 다른 PC 실행의 시간축이 어긋났음(OLTP판은 시작 시각이 4분 차이라 우연히 거의 맞았음). 실행마다 자기 시작 시각을 쓰도록 고쳐 두 그림 모두 다시 생성.
+
+- Finished 2026-10-04T21:30:42+09:00; mixF fixed37 exit=143; evidence `/home/oy/iCAT/result/mix-20260911/mixF-fixed37-rep1-x30`; cleanup attempted.
+
+### mix-20260911 mixT onlinev4 — started 2026-10-04T21:32:45+09:00
+
+- Phase A fio test4 fixed payload (5898240000/2949120000/983040000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (20000 records, 20000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixT onlinev4`; evidence `result/mix-20260911/mixT-onlinev4/`.
+
+## QUEUE37 — 불규칙 순서 응용 혼합 10시간 (mixT) — 사전 등록 2026-10-04 21:50
+- 목적(사용자, 최우선): 워크로드가 무작위에 가깝게 여러 번 바뀌는 10시간 실행. FIO-Fast→Varmail처럼 한 번만 바뀌는 실험이 아님.
+- 순서(9구간, 각 4000초 = 10시간): YCSB-A → OLTP → Varmail → YCSB-A → YCSB-B → FIO-Fast → Varmail → YCSB-A → OLTP. 사용자 목록의 "ycsb"(5번째)는 읽기 위주 YCSB-B로 해석.
+- 구현(`mix-20260911.sh` mixT): 모든 구간이 시간 기준 — YCSB는 maxexecutiontime, filebench는 VM_RUN×4조각(OLTP 누수 대응), FIO는 1배(600초) 분량을 4000/600배.
+- 공간 제약에 따른 변경(다른 실험과 다름): 가상 SSD 7.4 GB 중 FIO 파일 6 GiB가 FIO 구간을 위해 남아 있어, SQLite DB 30만 레코드(약 0.4 GB, 다른 실험 60만), OLTP 파일 32 MB×10(다른 실험 64 MB).
+- 진행: 먼저 구간당 120초 연기 시험(mixT-onlinev4-rep1-smoke, 약 25분) — 9구간 모두 요약되면 통과. 통과 시 이 PC에서 iCAT-v4 → CAT-50(견고), 두 번째 PC에서 CAT-37(기본) `env PH_SECS=4000 bash script/mix-20260911.sh mixT fixed37 1`.
+- 판정(사전 등록): 각 1회, 10시간 전체 WAF로 v4 대 견고·기본, 1% 미만 차이는 판정하지 않음. 전환 8번 중 변화 감지(재설정)가 일어난 횟수를 함께 보고.
+- 중단 기록: 예비로 돌던 mixF-fixed37-rep1-x30(이 PC)은 4시간 31분째 사용자 지시로 중지(exit=143, 결과 미사용; 두 번째 PC 결과 사용).

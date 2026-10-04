@@ -13,9 +13,19 @@ from openpyxl.chart import ScatterChart, Reference, Series
 from openpyxl.styles import Font
 font_manager.fontManager.addfont('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
 R = Path('/home/oy/iCAT/result')
-POL = [('iCAT-v4 (제안)', R / 'mix-20260911/mixO-onlinev4-rep1-x20', '#2a78d6', 2.4),
-       ('CAT-50 (견고 설정)', R / 'mix-20260911/mixO-fixed50-rep1-x20', '#8e8e93', 1.8),
-       ('CAT-37 (기본값)', R / 'mixO-fixed37-chunked-20261003/mixO-fixed37-rep1-x20', '#e3a33b', 1.8)]
+import sys
+WL = sys.argv[1] if len(sys.argv) > 1 else 'O'
+CFG = {'O': ('OLTP', 'Varmail', 'mixO', 'x20', 'mixO-fixed37-chunked-20261003', None, 'OLTP (15분 × 20회)', 'oltp'),
+       'F': ('FIO-Fast', 'Varmail', 'mixF', 'x30', 'mixF-fixed37-tenhour-20261004', 'mixF-fixed50-tenhour-20261004', 'FIO-Fast (5시간)', 'fio')}
+A_, B_, MX, XX, D37, D50, ALAB, TAG = CFG[WL]
+P50 = R / 'mix-20260911' / f'{MX}-fixed50-rep1-{XX}'
+if not (P50 / 'summary.txt').exists() and D50: P50 = R / D50 / f'{MX}-fixed50-rep1-{XX}'   # second PC when this PC's run is not done
+P37 = R / 'mix-20260911' / f'{MX}-fixed37-rep1-{XX}'
+if not (P37 / 'summary.txt').exists(): P37 = R / D37 / f'{MX}-fixed37-rep1-{XX}'
+POL = [('iCAT-v4 (제안)', R / f'mix-20260911/{MX}-onlinev4-rep1-{XX}', '#2a78d6', 2.4),
+       ('CAT-50 (견고 설정)', P50, '#8e8e93', 1.8),
+       ('CAT-37 (기본값)', P37, '#e3a33b', 1.8)]
+OUT = 'fig6_10h' if WL == 'O' else f'fig6_10h_{TAG}'
 STEP = 10 / 60
 INK, INK2, RED = '#1d1d1f', '#6e6e73', '#e5484d'
 plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 10.5, 'axes.facecolor': 'white', 'figure.facecolor': 'white',
@@ -47,15 +57,15 @@ best = min(D, key=lambda l: D[l][2])
 for lab, d, c, lw in pol:
     w, _, tot, pa, pb = D[lab]
     ax.plot([h for h, _ in w], [v for _, v in w], color=c, lw=lw, marker='o', ms=3.5,
-            label=f'{lab}   전체 {tot:.3f}  (OLTP {pa:.3f} / Varmail {pb:.3f})' + ('  ← 가장 낮음' if lab == best and len(pol) > 1 else ''), zorder=3 if 'v4' in lab else 2)
-ax.text(sw / 2, 0.5, '앞 워크로드: OLTP (15분 × 20회)', transform=ax.get_xaxis_transform(), ha='center', fontsize=11, color=INK2, weight='bold')
-ax.text((sw + xmax) / 2, 0.5, '뒤 워크로드: Varmail (5시간)', transform=ax.get_xaxis_transform(), ha='center', fontsize=11, color='#2a78d6', weight='bold')
+            label=f'{lab}   전체 {tot:.3f}  ({A_} {pa:.3f} / {B_} {pb:.3f})' + ('  ← 가장 낮음' if lab == best and len(pol) > 1 else ''), zorder=3 if 'v4' in lab else 2)
+ax.text(sw / 2, 0.5, f'앞 워크로드: {ALAB}', transform=ax.get_xaxis_transform(), ha='center', fontsize=11, color=INK2, weight='bold')
+ax.text((sw + xmax) / 2, 0.5, f'뒤 워크로드: {B_} (5시간)', transform=ax.get_xaxis_transform(), ha='center', fontsize=11, color='#2a78d6', weight='bold')
 ax.set_xlabel('측정 시작 후 시간 (시간)'); ax.set_ylabel('구간 WAF (10분 단위, 낮을수록 좋음)'); ax.set_xticks(range(0, 11))
 ax.legend(loc='upper left', fontsize=9.5, frameon=False)
-fig.suptitle('그림 6. OLTP → Varmail 10시간 실행의 구간 WAF', x=0.06, ha='left', y=0.99, fontsize=13.5, weight='bold', color=INK)
-fig.text(0.06, 0.925, '각 점 = 10분 동안의 WAF. 범례 = 10시간 전체 WAF와 구간별 WAF. 정책마다 별도 실행(CAT-37은 두 번째 PC), 각 1회.', fontsize=9.5, color=INK2)
+fig.suptitle(f'그림 6. {A_} → {B_} 10시간 실행의 구간 WAF', x=0.06, ha='left', y=0.99, fontsize=13.5, weight='bold', color=INK)
+fig.text(0.06, 0.925, '각 점 = 10분 동안의 WAF. 범례 = 10시간 전체 WAF와 구간별 WAF. 정책마다 별도 실행' + (', CAT-37·CAT-50은 두 번째 PC' if WL == 'F' else ', CAT-37은 두 번째 PC') + ', 각 1회.', fontsize=9.5, color=INK2)
 fig.tight_layout(rect=(0, 0, 1, 0.91))
-for e in ('png', 'svg', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/fig6_10h.{e}', dpi=200, bbox_inches='tight')
+for e in ('png', 'svg', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/{OUT}.{e}', dpi=200, bbox_inches='tight')
 
 # ---- xlsx
 wb = Workbook(); ws = wb.active; ws.title = '그림6 10시간 (10분 단위)'
@@ -69,11 +79,11 @@ ws.cell(row=1, column=col + 1, value='전환 시간').font = Font(bold=True); ws
 wafs = [v for l in D for _, v in D[l][0]]; ylo, yhi = round(min(wafs) - 0.05, 1), round(max(wafs) + 0.05, 1)
 for i, yv in enumerate((ylo, yhi), 2): ws.cell(row=i, column=col + 1, value=round(sw, 3)); ws.cell(row=i, column=col + 2, value=yv)
 ws.cell(row=5, column=col + 1, value='정책').font = Font(bold=True)
-for j, h in enumerate(('10시간 전체 WAF', 'OLTP 구간', 'Varmail 구간'), 2): ws.cell(row=5, column=col + j, value=h).font = Font(bold=True)
+for j, h in enumerate(('10시간 전체 WAF', f'{A_} 구간', f'{B_} 구간'), 2): ws.cell(row=5, column=col + j, value=h).font = Font(bold=True)
 for i, (lab, *_) in enumerate(pol, 6):
     ws.cell(row=i, column=col + 1, value=lab)
     for j, v in enumerate(D[lab][2:], 2): ws.cell(row=i, column=col + j, value=round(v, 3))
-ch = ScatterChart(); ch.title = 'OLTP → Varmail 10시간: 10분 구간 WAF (낮을수록 좋음)'; ch.style = 13; ch.scatterStyle = 'lineMarker'; ch.display_blanks = 'span'
+ch = ScatterChart(); ch.title = f'{A_} → {B_} 10시간: 10분 구간 WAF (낮을수록 좋음)'; ch.style = 13; ch.scatterStyle = 'lineMarker'; ch.display_blanks = 'span'
 ch.x_axis.title = '측정 시작 후 시간 (시간)'; ch.y_axis.title = 'WAF'; ch.height, ch.width = 13, 28; ch.legend.position = 'b'
 ch.x_axis.delete = False; ch.y_axis.delete = False; ch.x_axis.scaling.min = 0; ch.x_axis.scaling.max = 10.5; ch.x_axis.majorUnit = 1
 ch.y_axis.scaling.min = ylo; ch.y_axis.scaling.max = yhi; ch.y_axis.number_format = '0.00'
@@ -85,5 +95,5 @@ for k, (lab, d, c, lw) in enumerate(pol):
 vl = Series(Reference(ws, min_col=col + 2, min_row=1, max_row=3), Reference(ws, min_col=col + 1, min_row=2, max_row=3), title_from_data=True)
 vl.marker.symbol = 'none'; vl.graphicalProperties.line.solidFill = 'E5484D'; vl.graphicalProperties.line.dashStyle = 'dash'; ch.series.append(vl)
 ws.add_chart(ch, f'{ws.cell(row=1, column=col + 6).column_letter}2')
-wb.save('/home/oy/iCAT/figs/data/fig6_10h.xlsx')
+wb.save(f'/home/oy/iCAT/figs/data/{OUT}.xlsx')
 print('drawn:', {l: round(D[l][2], 3) for l in D})
