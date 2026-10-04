@@ -1,0 +1,11 @@
+Oct 04 00:08:02 oy-B550M-DS3H systemd[1227]: Started icat-mixF-fixed37-tenhour-20261004.service - /usr/bin/python3 /home/oy/iCAT/result/mixF-fixed37-tenhour-20261004/launch.py.
+Oct 04 00:15:30 oy-B550M-DS3H systemd[1227]: Stopping icat-mixF-fixed37-tenhour-20261004.service - /usr/bin/python3 /home/oy/iCAT/result/mixF-fixed37-tenhour-20261004/launch.py...
+Oct 04 00:15:30 oy-B550M-DS3H systemd[1227]: Stopped icat-mixF-fixed37-tenhour-20261004.service - /usr/bin/python3 /home/oy/iCAT/result/mixF-fixed37-tenhour-20261004/launch.py.
+Oct 04 00:16:36 oy-B550M-DS3H systemd[1227]: Started icat-mixF-fixed37-tenhour-20261004.service - /usr/bin/python3 /home/oy/iCAT/result/mixF-fixed37-tenhour-20261004/launch.py.
+Oct 04 00:16:36 oy-B550M-DS3H python3[1305992]: Traceback (most recent call last):
+Oct 04 00:16:36 oy-B550M-DS3H python3[1305992]:   File "/home/oy/iCAT/result/mixF-fixed37-tenhour-20261004/launch.py", line 12, in <module>
+Oct 04 00:16:36 oy-B550M-DS3H python3[1305992]:     assert not Path('/sys/module/nvmev').exists(),'Virtual module occupied; no reset'
+Oct 04 00:16:36 oy-B550M-DS3H python3[1305992]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Oct 04 00:16:36 oy-B550M-DS3H python3[1305992]: AssertionError: Virtual module occupied; no reset
+Oct 04 00:16:36 oy-B550M-DS3H systemd[1227]: icat-mixF-fixed37-tenhour-20261004.service: Main process exited, code=exited, status=1/FAILURE
+Oct 04 00:16:36 oy-B550M-DS3H systemd[1227]: icat-mixF-fixed37-tenhour-20261004.service: Failed with result 'exit-code'.

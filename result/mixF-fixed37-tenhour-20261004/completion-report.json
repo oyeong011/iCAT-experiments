@@ -1,0 +1,34 @@
+{
+  "run_id": "mixF-fixed37-tenhour-20261004",
+  "exit_code": 0,
+  "sample_rows": 1203,
+  "started_at": "2026-10-04T00:17:20.112863+09:00",
+  "finished_at": "2026-10-04T10:18:48.932042+09:00",
+  "raw_path": "/home/oy/iCAT/result/mixF-fixed37-tenhour-20261004/mixF-fixed37-rep1-x30",
+  "measurement": "manual continuous FIO-Fast MULT30 -> Varmail18000",
+  "hostname": "oy-B550M-DS3H",
+  "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0",
+  "source_commit": "4557a68510759320b79d083977959ffe16d6a5d8",
+  "module_sha256": "7045a5b2c4d2ae437f43275c6dc93bf882916efb1af708312664194ac7cba1f0",
+  "waf": 2.4860586778714175,
+  "host_bytes": 12105020948480,
+  "host_pages": 2955327380,
+  "gc_pages": 4391789899,
+  "phases": [
+    {
+      "slot": "A",
+      "actual_seconds": 18000.0,
+      "profile": "mix-test4.fio",
+      "requested_write_bytes": 2949120000000,
+      "duration_note": "fixed I/O amount at rate caps; actual duration may exceed five hours"
+    },
+    {
+      "slot": "B",
+      "actual_seconds": 18005.0,
+      "profile": "varmail.f"
+    }
+  ],
+  "actual_measured_seconds": 36005.0,
+  "issues": [],
+  "status": "validated_saved_evidence"
+}
