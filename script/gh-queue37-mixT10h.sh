@@ -18,7 +18,7 @@ run() { local d=$1; shift; [[ -e $R/$d/summary.txt ]] && return; free
 run mixT-onlinev4-rep1-smoke env SMOKE=1 PH_SECS=120 bash script/mix-20260911.sh mixT onlinev4 1
 if [[ $(grep -c '^phase' $R/mixT-onlinev4-rep1-smoke/summary.txt 2>/dev/null) -lt 9 ]]; then echo "SMOKE FAILED — stopping"; push "mixT smoke FAILED"; exit 1; fi
 push "mixT smoke passed"
-for p in onlinev4 fixed50; do run mixT-$p-rep1 env PH_SECS=4000 bash script/mix-20260911.sh mixT $p 1; push "mixT 10h $p"; done
+for p in onlinev4 fixed47 fixed50; do run mixT-$p-rep1 env PH_SECS=4000 bash script/mix-20260911.sh mixT $p 1; push "mixT 10h $p"; done
 bash script/gh-queue31-screen-confirm.sh
 run t4-fixed37-rep1-x18 env MULT=18 bash script/mix-20260911.sh t4 fixed37 1; push "FIO-Fast 3h CAT-37 (default) for the long-run figure"
 echo QUEUE34DONE $(date -Is) >> $S/queue34.out
