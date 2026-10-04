@@ -11703,3 +11703,9 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=514331 gc_pages=114020 WAF=1.221686
 - ycsb-load [OVERALL], Throughput(ops/sec), 28879.47631882942
 - ycsb-run [OVERALL], Throughput(ops/sec), 53395.02678077726
+
+### mix-20260911 mixT onlinev4 — started 2026-10-04T21:52:11+09:00
+
+- mixT: 9 time-based phases of 4000 s each — YCSB-A (load 600000 records) -> OLTP (32 MB x 10 files, 1000 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 4000/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-20260911.sh mixT onlinev4 1`; evidence `result/mix-20260911/mixT-onlinev4-rep1/`.
+- 정정(2026-10-04 21:55): 위 'mix-20260911 mixT onlinev4 — started 21:32:45' 항목의 첫 설명 줄(Phase A fio … rm test.dat … Phase B YCSB)은 옛 2구간 문구가 잘못 기록된 것. 실제는 mixT 9구간 연기 시험(구간당 120초, SMOKE=1: DB 2만 레코드, 파일 2000개, FIO 1/10 분량), 증거 result/mix-20260911/mixT-onlinev4-rep1-smoke/. 결과 exit=0, 9구간 모두 요약됨 → 통과. 이후 실행부터는 mixT 전용 설명이 기록됨. 이 PC 10시간 iCAT-v4 21:52 시작.
