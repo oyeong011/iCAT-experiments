@@ -11687,3 +11687,19 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 판정(사전 등록): 각 1회, 10시간 전체 WAF로 v4 대 견고·기본, 1% 미만 차이는 판정하지 않음. 전환 8번 중 변화 감지(재설정)가 일어난 횟수를 함께 보고.
 - 중단 기록: 예비로 돌던 mixF-fixed37-rep1-x30(이 PC)은 4시간 31분째 사용자 지시로 중지(exit=143, 결과 미사용; 두 번째 PC 결과 사용).
 - 2026-10-04 22:10 변경(사용자): mixT 10시간 순서를 iCAT-v4 → CAT-47(최적) → CAT-50(견고)로. CAT-37(기본)은 두 번째 PC. (실행 중인 큐 파일을 같은 inode로 수정, 실행 중인 큐가 새 줄을 읽음을 fd 255 inode로 확인.)
+
+- Finished 2026-10-04T21:51:55+09:00; mixT onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev4-rep1-smoke`; cleanup attempted.
+- total host_bytes=195202289664 host_pages=47656809 gc_pages=18854173 WAF=1.395624
+- phaseA(sqlite-a) host_pages=1092694 gc_pages=373256 WAF=1.341592
+- phaseB(oltp) host_pages=3532408 gc_pages=791386 WAF=1.224036
+- phaseC(varmail) host_pages=20734643 gc_pages=2326292 WAF=1.112193
+- phaseD(sqlite-a) host_pages=466197 gc_pages=2424 WAF=1.005200
+- phaseE(sqlite-b) host_pages=197434 gc_pages=7564 WAF=1.038312
+- phaseF(test4) host_pages=480016 gc_pages=1007278 WAF=3.098426
+- phaseG(varmail) host_pages=17207897 gc_pages=12711947 WAF=1.738728
+- phaseH(sqlite-a) host_pages=508822 gc_pages=18137 WAF=1.035645
+- phaseI(oltp) host_pages=3436698 gc_pages=1615889 WAF=1.470186
+- phaseA-load host_pages=578363 gc_pages=259236 WAF=1.448224
+- phaseA-run host_pages=514331 gc_pages=114020 WAF=1.221686
+- ycsb-load [OVERALL], Throughput(ops/sec), 28879.47631882942
+- ycsb-run [OVERALL], Throughput(ops/sec), 53395.02678077726
