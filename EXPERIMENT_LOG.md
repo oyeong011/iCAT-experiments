@@ -11725,3 +11725,14 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=11454346 gc_pages=97689 WAF=1.008529
 - ycsb-load [OVERALL], Throughput(ops/sec), 25367.833587011668
 - ycsb-run [OVERALL], Throughput(ops/sec), 62933.339331818715
+
+### mix-20260911 mixT fixed47 — started 2026-10-05T07:57:43+09:00
+
+- mixT: 9 time-based phases of 4000 s each — YCSB-A (load 600000 records) -> OLTP (32 MB x 10 files, 1000 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 4000/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-20260911.sh mixT fixed47 1`; evidence `result/mix-20260911/mixT-fixed47-rep1/`.
+
+## iCAT-v5 — 사전 등록 2026-10-05
+- 변경(한 가지): GC 상한(8192회)에 도달한 판단 구간을 버리지 않고, 호스트 쓰기 64 MiB 이상이면 평가에 사용(`online-v5-src/conv_ftl.c` window_ready, `WATGC_V5_MIN_HOST_PAGES`). 그 외 v4와 동일. 모듈 sha256 84c41d6f…(modules.sha256에 추가).
+- 동기: 불규칙 순서 10시간(mixT)의 6번 FIO 구간에서 v4 판단 구간 327개가 모두 "undersized"로 버려져 학습이 없었음(GC 과다).
+- 실험: mixT 10시간 iCAT-v5 1회(이 PC, `script/gh-queue38-v5.sh`, 현재 CAT-47 실행 종료 후). 먼저 구간당 120초 연기 시험. 큐37의 CAT-50 예비 실행은 취소(두 번째 PC 결과 사용).
+- 판정(사전 등록): (1) 6번 FIO 구간의 버려진 판단 구간이 v4(327) 대비 크게 줄고 판단 구간이 생기는지, (2) 10시간 전체 WAF를 v4(2.076)·기본(2.330)과 비교, 1회이므로 1% 미만 차이는 판정하지 않음. v5는 v4 결과와 별도 버전으로 보고하며 v4 결론을 대체하지 않음.

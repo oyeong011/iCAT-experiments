@@ -13,6 +13,7 @@ case "$policy" in
     onlinev2) module="$root/buildoutput/nvmev-online-v2.ko";;   # v1 + 6x reward window
     onlinev3) module="$root/buildoutput/nvmev-online-v3.ko";;   # v2 src + window x2, k=2 arms skipped (45), 1 visit, no probe after settle, drift 25%
     onlinev4) module="$root/buildoutput/nvmev-online-v4.ko";;   # v3 + online elimination (15%) + neighbour probe every 8 + reset restores survivors+neighbours
+    onlinev5) module="$root/buildoutput/nvmev-online-v5.ko";;   # 10-05: v4 + GC-capped windows used (>= 64 MiB host) instead of discarded
     onlinev3k2) module="$root/buildoutput/nvmev-online-v3k2.ko";;   # ablation: v3 with k=2 arms back (60 arms)
     onlinev3probe) module="$root/buildoutput/nvmev-online-v3probe.ko";;   # ablation: v3 with v1 post-settle probing back
     onlinev3win1) module="$root/buildoutput/nvmev-online-v3win1.ko";;   # ablation

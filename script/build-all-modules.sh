@@ -19,6 +19,7 @@ b online-mix-20260907 online-mix-src      NVMEVIRT_GC_POLICY=WATGC_V2   # iCAT v
 b online-v2           online-v2-src       NVMEVIRT_GC_POLICY=WATGC_V2
 b online-v3           online-v3-src       NVMEVIRT_GC_POLICY=WATGC_V2
 b online-v4           online-v4-src       NVMEVIRT_GC_POLICY=WATGC_V2
+b online-v5           online-v5-src       NVMEVIRT_GC_POLICY=WATGC_V2   # v4 + use GC-capped windows
 b gh-greedy           gh-src-7236149      NVMEVIRT_GC_POLICY=GREEDY     # original-author scripts
 b gh-online           gh-src-7236149      NVMEVIRT_GC_POLICY=WATGC_V2
 echo "manifest: $man"
