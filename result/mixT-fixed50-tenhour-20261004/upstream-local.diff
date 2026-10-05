@@ -1,0 +1,12 @@
+--- /home/oy/iCAT/result/mixT-fixed37-tenhour-20261004/upstream-script.sh	2026-10-04 21:35:57.871537639 +0900
++++ /home/oy/iCAT/result/mixT-fixed37-tenhour-20261004/execution-script.sh	2026-10-04 21:35:57.871674841 +0900
+@@ -92,7 +92,8 @@
+ trap finish EXIT; trap 'exit 130' INT; trap 'exit 143' TERM
+ trap 'printf "FAIL line=%s command=%s\n" "$LINENO" "$BASH_COMMAND" >&2' ERR
+ if [[ -e /sys/module/nvmev ]] || mountpoint -q "$root/mnt"; then echo 'Device already in use'; exit 1; fi
+-if compgen -G '/sys/class/nvme/nvme*' >/dev/null; then echo 'Existing NVMe device: refusing initialization'; exit 1; fi
++# Physical NVMe controllers are preserved; BASH_ENV guard identifies virtual device before device writes.
++[[ -n ${BASH_ENV:-} && -f $BASH_ENV ]] || { echo 'Safety adapter required'; exit 1; }
+ { date -Is; uname -a; cat /proc/cmdline; fio --version; java -version 2>&1; sqlite3 --version; sha256sum "$module" "$0" "$root/workloads/mix-test4.fio" "$root/workloads/sqlite/workloada"; lscpu; free -h; } > "$dir/environment.txt"
+ kmsg BEGIN
+ mkdir -p "$dir/kernel-snapshots"

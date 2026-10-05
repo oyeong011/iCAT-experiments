@@ -1,0 +1,21 @@
+filename:       /home/oy/iCAT/buildoutput/nvmev-fixed50.ko
+license:        GPL v2
+srcversion:     87643475D0E0D5EF70FC808
+depends:        
+name:           nvmev
+retpoline:      Y
+vermagic:       7.0.0-31-generic SMP preempt mod_unload modversions 
+parm:           measurement_manual:Explicit measurement and cold-start learning gate (bool)
+parm:           measurement_uid:Owner UID for measurement control (uint)
+parm:           memmap_start:Reserved memory address
+parm:           memmap_size:Reserved memory size
+parm:           read_time:Read time in nanoseconds (uint)
+parm:           read_delay:Read delay in nanoseconds (uint)
+parm:           read_trailing:Read trailing in nanoseconds (uint)
+parm:           write_time:Write time in nanoseconds (uint)
+parm:           write_delay:Write delay in nanoseconds (uint)
+parm:           write_trailing:Write trailing in nanoseconds (uint)
+parm:           nr_io_units:Number of I/O units that operate in parallel (uint)
+parm:           io_unit_shift:Size of each I/O unit (2^) (uint)
+parm:           cpus:CPU list for process, completion(int.) threads, Seperated by Comma(,) (charp)
+parm:           debug:uint

@@ -1,0 +1,6 @@
+
+### mixT-fixed50-tenhour-20261004 preregistration 2026-10-04T21:39:50.993522+09:00
+
+User requests robust CAT50 after the current mixT CAT37. Command `env PH_SECS=4000 bash script/mix-20260911.sh mixT fixed50 1`. Wait for prior validation and global device lock; one experiment at a time. Same pinned source 1a81bcf8f5378ffcf0da5948946852a8f617fe1d, 9 phase order and PH_SECS4000; 6GiB+3GiB preparation outside measurement, continuous manual counters including initial300k DB load, YCSB run maxexecutiontime4000, OLTP4x1000s32MiB files, Varmail4000s24000files, FIO requested655360000000bytes and same seeds. Only policy/module differs. Input snapshots, SHA/kernel/module/source details in adjacent metadata/files; build-option equivalence not newly established.
+
+Validate all9 phases with shared criteria (YCSB success/error/runtime/load counts, Filebench chunks/duration, fio bytes/errors, initial zero, stop/final/part sums, upstream block-stat assertion, actual wall times, arm50); preserve failed logs, no automatic retry. 30s cumulative WAF samples are not independent replicates. Results and journal publish only to icat-2 after completion. Expected ~10h plus preparation/load/process overhead after CAT37; approximate finish Oct5 17:45 KST dependent on preceding run.

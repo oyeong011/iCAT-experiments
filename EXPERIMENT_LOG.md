@@ -11773,3 +11773,14 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=434186 gc_pages=92848 WAF=1.213844
 - ycsb-load [OVERALL], Throughput(ops/sec), 25765.22724930434
 - ycsb-run [OVERALL], Throughput(ops/sec), 59909.20211930602
+
+### mix-20260911 mixT onlinev5 — started 2026-10-05T18:22:30+09:00
+
+- mixT: 9 time-based phases of 4000 s each — YCSB-A (load 600000 records) -> OLTP (32 MB x 10 files, 1000 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 4000/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-online-v5.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-20260911.sh mixT onlinev5 1`; evidence `result/mix-20260911/mixT-onlinev5-rep1/`.
+
+### QUEUE37 결과 — 불규칙 순서 9구간 10시간 (2026-10-05)
+- 10시간 전체 WAF(각 1회): iCAT-v4 2.076, CAT-47 최적 2.029(이 PC), CAT-50 견고 2.094(두 번째 PC), CAT-37 기본 2.330(두 번째 PC).
+- 판정(사전 등록, 1% 미만은 판정하지 않음): v4 대 기본 −10.9%(우위), 대 견고 −0.9%(동률), 대 최적 +2.3%(열위).
+- v5 연기 시험 통과(9구간 모두 요약, 18:22). v5 10시간 18:2x 시작.
+- 표: figs/data/WAF_10h.xlsx (10시간 실험 3종, 구간별·전체 WAF).

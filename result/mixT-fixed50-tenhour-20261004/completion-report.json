@@ -1,0 +1,149 @@
+{
+  "run_id": "mixT-fixed50-tenhour-20261004",
+  "exit_code": 0,
+  "sample_rows": 1205,
+  "started_at": "2026-10-05T07:40:14.077030+09:00",
+  "finished_at": "2026-10-05T17:42:55.177117+09:00",
+  "raw_path": "/home/oy/iCAT/result/mixT-fixed50-tenhour-20261004/mixT-fixed50-rep1",
+  "measurement": "manual=1; preparation excluded; initial YCSB load included; one continuous counter epoch across all nine phases;30s samples",
+  "hostname": "oy-B550M-DS3H",
+  "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0",
+  "source_commit": "1a81bcf8f5378ffcf0da5948946852a8f617fe1d",
+  "module_sha256": "f476acff890da8e28ce745ec3f2cf2b0eced8cb33752d99b40a093178511b5b6",
+  "waf": 2.094049446936592,
+  "host_bytes": 7006951120896,
+  "host_pages": 1710681426,
+  "gc_pages": 1871570068,
+  "phases": [
+    {
+      "slot": "A",
+      "workload": "YCSB-A",
+      "actual_seconds": 4011.0,
+      "host_bytes": 59116003328,
+      "host_pages": 14432618,
+      "gc_pages": 274654,
+      "waf": 1.019030088650583,
+      "runtime_seconds": 4001.647,
+      "successful_operations": {
+        "READ": 153801847,
+        "UPDATE": 153797649
+      }
+    },
+    {
+      "slot": "B",
+      "workload": "OLTP",
+      "actual_seconds": 4021.0,
+      "host_bytes": 665355808768,
+      "host_pages": 162440383,
+      "gc_pages": 21467171,
+      "waf": 1.1321541515941882,
+      "process_runtimes_seconds": [
+        1001.174,
+        1001.4580000000001,
+        1001.5179999999999,
+        1001.4110000000001
+      ]
+    },
+    {
+      "slot": "C",
+      "workload": "Varmail",
+      "actual_seconds": 4004.0,
+      "host_bytes": 2733872586752,
+      "host_pages": 667449362,
+      "gc_pages": 435849561,
+      "waf": 1.6530076824015303,
+      "process_runtimes_seconds": [
+        4000.278
+      ]
+    },
+    {
+      "slot": "D",
+      "workload": "YCSB-A",
+      "actual_seconds": 4004.0,
+      "host_bytes": 56945942528,
+      "host_pages": 13902818,
+      "gc_pages": 122259,
+      "waf": 1.0087938287043676,
+      "runtime_seconds": 4002.065,
+      "successful_operations": {
+        "READ": 147040430,
+        "UPDATE": 147029054
+      }
+    },
+    {
+      "slot": "E",
+      "workload": "YCSB-B",
+      "actual_seconds": 4004.0,
+      "host_bytes": 29789655040,
+      "host_pages": 7272865,
+      "gc_pages": 1162232,
+      "waf": 1.1598038737141416,
+      "runtime_seconds": 4002.152,
+      "successful_operations": {
+        "READ": 147078610,
+        "UPDATE": 7744091
+      }
+    },
+    {
+      "slot": "F",
+      "workload": "FIO-Fast",
+      "actual_seconds": 4000.0,
+      "host_bytes": 655378014208,
+      "host_pages": 160004398,
+      "gc_pages": 701220441,
+      "waf": 5.382507292080809
+    },
+    {
+      "slot": "G",
+      "workload": "Varmail",
+      "actual_seconds": 4004.0,
+      "host_bytes": 2110677917696,
+      "host_pages": 515302226,
+      "gc_pages": 654587664,
+      "waf": 2.270298537386873,
+      "process_runtimes_seconds": [
+        4000.274
+      ]
+    },
+    {
+      "slot": "H",
+      "workload": "YCSB-A",
+      "actual_seconds": 4005.0,
+      "host_bytes": 56698982400,
+      "host_pages": 13842525,
+      "gc_pages": 130397,
+      "waf": 1.0094200299439589,
+      "runtime_seconds": 4004.366,
+      "successful_operations": {
+        "READ": 145330920,
+        "UPDATE": 145340013
+      }
+    },
+    {
+      "slot": "I",
+      "workload": "OLTP",
+      "actual_seconds": 4022.0,
+      "host_bytes": 639116210176,
+      "host_pages": 156034231,
+      "gc_pages": 56755689,
+      "waf": 1.363738704233432,
+      "process_runtimes_seconds": [
+        1001.478,
+        1001.499,
+        1001.4789999999999,
+        1001.379
+      ]
+    }
+  ],
+  "actual_measured_seconds": 36076.0,
+  "initial_load": {
+    "runtime_seconds": 8.462,
+    "successful_operations": {
+      "INSERT": 300000
+    }
+  },
+  "active_sample_rows": 1196,
+  "block_stat_validation": "upstream runner stop boundary and host_bytes assertion passed; not independent NAND measurement",
+  "issues": [],
+  "status": "validated_saved_evidence"
+}
