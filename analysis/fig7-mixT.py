@@ -22,6 +22,8 @@ POL = [('iCAT-v4 (제안)', M / 'mixT-onlinev4-rep1', '#2a78d6', 2.4), ('CAT-50 
        ('CAT-37 (기본값)', pick('fixed37', 'mixT-fixed37-tenhour-20261004'), '#e3a33b', 1.6)]
 PART, STEP = '2', 10 / 60
 NAMES = ['YCSB-A', 'OLTP', 'Varmail', 'YCSB-A', 'YCSB-B', 'FIO-Fast', 'Varmail', 'YCSB-A', 'OLTP']
+TYPE = {'YCSB-A': 'SQLite DB\n읽기50·수정50', 'YCSB-B': 'SQLite DB\n읽기95·수정5', 'OLTP': 'DB 서버 흉내\n(Filebench)',
+        'Varmail': '메일 서버 흉내\n(Filebench)', 'FIO-Fast': '합성 덮어쓰기\n(FIO 3영역)'}
 BAND = {'YCSB-A': '#f6f1e7', 'YCSB-B': '#f3ece0', 'OLTP': '#eaf3ee', 'Varmail': '#eef2fb', 'FIO-Fast': '#f7ecec'}
 INK, INK2, V4, PUR = '#1d1d1f', '#6e6e73', '#2a78d6', '#7d3cff'
 STATE = [('전수 순회', '#d9d9de'), ('탐색', '#8e8e93'), ('정착', V4)]
@@ -73,13 +75,14 @@ state = bin_last(lambda idx: max(set(stt[i] for i in idx), key=[stt[i] for i in 
 fig, ax = plt.subplots(3, 1, figsize=(14, 8.2), sharex=True, gridspec_kw={'height_ratios': [1.35, 0.16, 0.9], 'hspace': 0.3})
 for i, n in enumerate(NAMES):
     for a_ in (ax[0], ax[2]): a_.axvspan(bounds[i], bounds[i + 1], color=BAND[n], lw=0, zorder=0)
-    ax[0].text((bounds[i] + bounds[i + 1]) / 2, 1.01, f'{i + 1}. {n}', transform=ax[0].get_xaxis_transform(), ha='center', va='bottom', fontsize=9, color=INK, weight='bold')
+    ax[0].text((bounds[i] + bounds[i + 1]) / 2, 1.13, f'{i + 1}. {n}', transform=ax[0].get_xaxis_transform(), ha='center', va='bottom', fontsize=9.5, color=INK, weight='bold')
+    ax[0].text((bounds[i] + bounds[i + 1]) / 2, 1.01, TYPE[n], transform=ax[0].get_xaxis_transform(), ha='center', va='bottom', fontsize=7.8, color=INK2, linespacing=1.15)
     for a_ in ax: a_.axvline(bounds[i], color='#c7c7cc', lw=0.8)
 for lab, d, c, lw in pol:
     w, _, tot, ph, _ = D[lab]
     ax[0].plot([h for h, _ in w], [v for _, v in w], color=c, lw=lw, marker='o', ms=3, label=f'{lab}   10시간 전체 WAF {tot:.3f}', zorder=3 if 'v4' in lab else 2)
 ax[0].set_ylabel('구간 WAF (10분 단위)\n(낮을수록 좋음)'); ax[0].legend(loc='upper left', fontsize=9.5, frameon=True, facecolor='white', edgecolor='#e0dfdb', framealpha=0.95)
-ax[0].set_title('(가) 10분 구간 WAF', loc='left', fontsize=11, color=INK, weight='bold', pad=22)
+ax[0].set_title('(가) 10분 구간 WAF', loc='left', fontsize=11, color=INK, weight='bold', pad=52)
 for h, s_ in state: ax[1].axvspan(h - STEP / 2, h + STEP / 2, color=STATE[s_][1], lw=0)
 ax[1].set_yticks([]); ax[1].grid(False); ax[1].set_title(f'(나) v4 학습 상태 (파티션 {PART}, 10분마다 가장 오래 머문 상태)', loc='left', fontsize=10.5, color=INK2)
 ax[1].legend(handles=[Patch(color=c, label=n) for n, c in STATE], loc='lower right', bbox_to_anchor=(1.0, 1.0), ncol=3, fontsize=9, frameon=False, handlelength=1.0)
@@ -101,8 +104,9 @@ ax[2].annotate('4번 YCSB-A: GC가 거의 없어 쓰던 조합의 WAF≈1.00\n�
 ax[2].set_ylim(0, 52); ax[2].set_yticks([0, 15, 30, 45]); ax[2].set_ylabel('남은 후보 수'); ax[2].set_xlabel('측정 시작 후 시간 (시간)')
 ax[2].set_title(f'(다) v4 활성 후보 수 (파티션 {PART}, 바뀌는 지점에 점)', loc='left', fontsize=10.5, color=INK2)
 ax[2].set_xlim(0, X1); ax[2].set_xticks(range(0, int(X1) + 1))
-fig.suptitle('그림 7. 불규칙 순서 응용 혼합 10시간 실행에서 iCAT-v4의 WAF, 학습 상태, 활성 후보 수', x=0.06, ha='left', y=0.995, fontsize=13.5, weight='bold', color=INK)
-fig.text(0.06, 0.957, '9구간 각 4000초. 배경색 = 워크로드. 보라 선 = v4가 워크로드 변화를 감지해 재설정한 시점(전환 8번 중 2번). 고정 CAT은 같은 조건의 별도 실행(두 번째 PC), 각 1회.', fontsize=9.5, color=INK2)
+fig.subplots_adjust(top=0.80)
+fig.suptitle('그림 7. 불규칙 순서 응용 혼합 10시간 실행에서 iCAT-v4의 WAF, 학습 상태, 활성 후보 수', x=0.06, ha='left', y=0.985, fontsize=13.5, weight='bold', color=INK)
+fig.text(0.06, 0.945, '9구간 각 4000초. 배경색 = 워크로드. 보라 선 = v4가 워크로드 변화를 감지해 재설정한 시점(전환 8번 중 2번). 고정 CAT은 같은 조건의 별도 실행(두 번째 PC), 각 1회.', fontsize=9.5, color=INK2)
 for e in ('png', 'svg', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/fig7_mixT.{e}', dpi=200, bbox_inches='tight')
 
 # ---- xlsx
@@ -115,14 +119,14 @@ for j, (h, v) in enumerate(cols, 1):
     ws.cell(row=1, column=j, value=h).font = Font(bold=True)
     for i, val in enumerate(v, 2): ws.cell(row=i, column=j, value=val)
 c0 = len(cols) + 2
-for j, h in enumerate(['구간', '워크로드', '시작(h, v4)'] + [lab for lab, *_ in pol], c0): ws.cell(row=1, column=j, value=h).font = Font(bold=True)
+for j, h in enumerate(['구간', '워크로드', '종류', '시작(h, v4)'] + [lab for lab, *_ in pol], c0): ws.cell(row=1, column=j, value=h).font = Font(bold=True)
 for i, n in enumerate(NAMES):
-    ws.cell(row=2 + i, column=c0, value=i + 1); ws.cell(row=2 + i, column=c0 + 1, value=n); ws.cell(row=2 + i, column=c0 + 2, value=round(starts[i], 3))
-    for k, (lab, *_) in enumerate(pol): ws.cell(row=2 + i, column=c0 + 3 + k, value=round(D[lab][3][i], 3))
+    ws.cell(row=2 + i, column=c0, value=i + 1); ws.cell(row=2 + i, column=c0 + 1, value=n); ws.cell(row=2 + i, column=c0 + 2, value=TYPE[n].replace('\n', ' ')); ws.cell(row=2 + i, column=c0 + 3, value=round(starts[i], 3))
+    for k, (lab, *_) in enumerate(pol): ws.cell(row=2 + i, column=c0 + 4 + k, value=round(D[lab][3][i], 3))
 ws.cell(row=11, column=c0 + 1, value='10시간 전체').font = Font(bold=True)
-for k, (lab, *_) in enumerate(pol): ws.cell(row=11, column=c0 + 3 + k, value=round(D[lab][2], 3))
+for k, (lab, *_) in enumerate(pol): ws.cell(row=11, column=c0 + 4 + k, value=round(D[lab][2], 3))
 ws.cell(row=13, column=c0, value='재설정(h, p' + PART + ')').font = Font(bold=True); ws.cell(row=13, column=c0 + 1, value=', '.join(f'{r:.3f}' for r in resets))
-L_ = ws.cell(row=1, column=c0 + 8).column_letter
+L_ = ws.cell(row=1, column=c0 + 9).column_letter
 def chart(title, yt, ser, ymin, ymax, anchor):
     ch = ScatterChart(); ch.title = title; ch.style = 13; ch.scatterStyle = 'lineMarker'; ch.display_blanks = 'span'
     ch.x_axis.title = '측정 시작 후 시간 (시간)'; ch.y_axis.title = yt; ch.height, ch.width = 10, 30; ch.legend.position = 'b'
