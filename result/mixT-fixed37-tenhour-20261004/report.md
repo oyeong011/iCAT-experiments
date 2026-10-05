@@ -1,0 +1,8 @@
+
+### mixT-fixed37-tenhour-20261004 preregistration 2026-10-04T21:35:57.889027+09:00
+
+Command: `env PH_SECS=4000 bash script/mix-20260911.sh mixT fixed37 1`; latest main 1a81bcf8f5378ffcf0da5948946852a8f617fe1d. Only fixed37 on this PC, no other queue. Nine phases A-I: YCSB-A,OLTP,Varmail,YCSB-A,YCSB-B,FIO-Fast,Varmail,YCSB-A,OLTP, nominal4000s each. ~10h plus preparation, first YCSB load, and process startup overhead. Actual times recorded. Prior outputs preserved.
+
+Preparation6GiB sequential128k +3GiB random4k rate10000 seed20260907, measurement inactive; start zero then continuous manual epoch across all phases, including first DB load and process restarts. DB300k records reused; YCSB capped by maxexecutiontime4000 and OPS1e9 (not required to finish1e9); YCSB seed not specified by upstream. OLTP32MiB files,4x1000s reuse;Varmail24000files,one4000s each;FIO6GiB retained input,requested655360000000bytes at24000/12000/4000IOPS seeds20260911/20261011/20261111. No FTL reset between phases.
+
+Acceptance: runnerexit0; preparation and phaseF fio errors0/requestedbytes complete; all9 start/end counter/time boundaries; YCSB load300000 OK, run time≈4000s with successful read/update counts and no nonzero operation errors; each OLTP4 IO Summary runtimes, each Varmail1; active/zero start, stop/final equality, partition totals, block-stat equality asserted by runner, observed arm37. Raw30s counters/WAF and per-phase WAF saved. No independent repetition claim from samples. All failures retained, module/mount/device safety guards plus global lock. Exact module SHA/kernel/host/machine_id/source changes/input snapshots adjacent; build provenance limits in metadata. Results validated and pushed to icat-2 at completion.

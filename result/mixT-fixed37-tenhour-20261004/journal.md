@@ -1,0 +1,33 @@
+
+### mixT-fixed37-tenhour-20261004 preregistration 2026-10-04T21:35:57.889027+09:00
+
+Command: `env PH_SECS=4000 bash script/mix-20260911.sh mixT fixed37 1`; latest main 1a81bcf8f5378ffcf0da5948946852a8f617fe1d. Only fixed37 on this PC, no other queue. Nine phases A-I: YCSB-A,OLTP,Varmail,YCSB-A,YCSB-B,FIO-Fast,Varmail,YCSB-A,OLTP, nominal4000s each. ~10h plus preparation, first YCSB load, and process startup overhead. Actual times recorded. Prior outputs preserved.
+
+Preparation6GiB sequential128k +3GiB random4k rate10000 seed20260907, measurement inactive; start zero then continuous manual epoch across all phases, including first DB load and process restarts. DB300k records reused; YCSB capped by maxexecutiontime4000 and OPS1e9 (not required to finish1e9); YCSB seed not specified by upstream. OLTP32MiB files,4x1000s reuse;Varmail24000files,one4000s each;FIO6GiB retained input,requested655360000000bytes at24000/12000/4000IOPS seeds20260911/20261011/20261111. No FTL reset between phases.
+
+Acceptance: runnerexit0; preparation and phaseF fio errors0/requestedbytes complete; all9 start/end counter/time boundaries; YCSB load300000 OK, run time≈4000s with successful read/update counts and no nonzero operation errors; each OLTP4 IO Summary runtimes, each Varmail1; active/zero start, stop/final equality, partition totals, block-stat equality asserted by runner, observed arm37. Raw30s counters/WAF and per-phase WAF saved. No independent repetition claim from samples. All failures retained, module/mount/device safety guards plus global lock. Exact module SHA/kernel/host/machine_id/source changes/input snapshots adjacent; build provenance limits in metadata. Results validated and pushed to icat-2 at completion.
+
+### mix-20260911 mixT fixed37 — started 2026-10-04T21:37:17+09:00
+
+- Phase A fio test4 fixed payload (58982400000/29491200000/9830400000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 4000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-fixed37.ko`.
+- Command: `bash script/mix-20260911.sh mixT fixed37`; evidence `result/mix-20260911/mixT-fixed37/`.
+
+- 2026-10-04T21:39:50.993522+09:00 User added mixT fixed50 after validated completion of this run; separately preregistered at /home/oy/iCAT/result/mixT-fixed50-tenhour-20261004
+
+- Finished 2026-10-05T07:39:57+09:00; mixT fixed37 exit=0; evidence `/home/oy/iCAT/result/mixT-fixed37-tenhour-20261004/mixT-fixed37-rep1`; cleanup attempted.
+- total host_bytes=6952055250944 host_pages=1697279114 gc_pages=2257243930 WAF=2.329919
+- phaseA(sqlite-a) host_pages=14350697 gc_pages=391129 WAF=1.027255
+- phaseB(oltp) host_pages=161337628 gc_pages=28919090 WAF=1.179246
+- phaseC(varmail) host_pages=659431348 gc_pages=612595719 WAF=1.928976
+- phaseD(sqlite-a) host_pages=13801204 gc_pages=107083 WAF=1.007759
+- phaseE(sqlite-b) host_pages=7788045 gc_pages=1310871 WAF=1.168318
+- phaseF(test4) host_pages=160004398 gc_pages=752927649 WAF=5.705668
+- phaseG(varmail) host_pages=502228202 gc_pages=779727025 WAF=2.552535
+- phaseH(sqlite-a) host_pages=13868394 gc_pages=139151 WAF=1.010034
+- phaseI(oltp) host_pages=164469198 gc_pages=81126213 WAF=1.493261
+- phaseA-load host_pages=578363 gc_pages=269750 WAF=1.466403
+- phaseA-run host_pages=13772334 gc_pages=121379 WAF=1.008813
+- ycsb-load [OVERALL], Throughput(ops/sec), 27842.227378190255
+- ycsb-run [OVERALL], Throughput(ops/sec), 76168.24176628258
+
+- FINISHED {"run_id": "mixT-fixed37-tenhour-20261004", "exit_code": 0, "sample_rows": 1205, "started_at": "2026-10-04T21:37:17.180782+09:00", "finished_at": "2026-10-05T07:39:58.579455+09:00", "raw_path": "/home/oy/iCAT/result/mixT-fixed37-tenhour-20261004/mixT-fixed37-rep1", "measurement": "manual=1; preparation excluded; initial YCSB load included; one continuous counter epoch across all nine phases;30s samples", "hostname": "oy-B550M-DS3H", "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0", "source_commit": "1a81bcf8f5378ffcf0da5948946852a8f617fe1d", "module_sha256": "7045a5b2c4d2ae437f43275c6dc93bf882916efb1af708312664194ac7cba1f0", "waf": 2.3299191107585857, "host_bytes": 6952055250944, "host_pages": 1697279114, "gc_pages": 2257243930, "phases": [{"slot": "A", "workload": "YCSB-A", "actual_seconds": 4014.0, "host_bytes": 58780454912, "host_pages": 14350697, "gc_pages": 391129, "waf": 1.027255052489785, "runtime_seconds": 4001.756, "successful_operations": {"READ": 145860224, "UPDATE": 145858303}}, {"slot": "B", "workload": "OLTP", "actual_seconds": 4022.0, "host_bytes": 660838924288, "host_pages": 161337628, "gc_pages": 28919090, "waf": 1.1792457863580341, "process_runtimes_seconds": [1001.544, 1001.3149999999999, 1001.622, 1001.587]}, {"slot": "C", "workload": "Varmail", "actual_seconds": 4003.0, "host_bytes": 2701030801408, "host_pages": 659431348, "gc_pages": 612595719, "waf": 1.92897573167844, "process_runtimes_seconds": [4000.261]}, {"slot": "D", "workload": "YCSB-A", "actual_seconds": 4004.0, "host_bytes": 56529731584, "host_pages": 13801204, "gc_pages": 107083, "waf": 1.007758960739947, "runtime_seconds": 4001.939, "successful_operations": {"READ": 153285897, "UPDATE": 153281344}}, {"slot": "E", "workload": "YCSB-B", "actual_seconds": 4003.0, "host_bytes": 31899832320, "host_pages": 7788045, "gc_pages": 1310871, "waf": 1.1683183648784772, "runtime_seconds": 4001.733, "successful_operations": {"READ": 166730894, "UPDATE": 8771496}}, {"slot": "F", "workload": "FIO-Fast", "actual_seconds": 4001.0, "host_bytes": 655378014208, "host_pages": 160004398, "gc_pages": 752927649, "waf": 5.705668459188228}, {"slot": "G", "workload": "Varmail", "actual_seconds": 4004.0, "host_bytes": 2057126715392, "host_pages": 502228202, "gc_pages": 779727025, "waf": 2.552535325365898, "process_runtimes_seconds": [4000.259]}, {"slot": "H", "workload": "YCSB-A", "actual_seconds": 4005.0, "host_bytes": 56804941824, "host_pages": 13868394, "gc_pages": 139151, "waf": 1.0100336780163586, "runtime_seconds": 4004.297, "successful_operations": {"READ": 152497552, "UPDATE": 152502710}}, {"slot": "I", "workload": "OLTP", "actual_seconds": 4020.0, "host_bytes": 673665835008, "host_pages": 164469198, "gc_pages": 81126213, "waf": 1.4932608293013017, "process_runtimes_seconds": [1001.011, 1000.989, 1001.178, 1001.049]}], "actual_measured_seconds": 36076.0, "initial_load": {"runtime_seconds": 10.775, "successful_operations": {"INSERT": 300000}}, "active_sample_rows": 1196, "block_stat_validation": "upstream runner stop boundary and host_bytes assertion passed; not independent NAND measurement", "issues": [], "status": "validated_saved_evidence"}
