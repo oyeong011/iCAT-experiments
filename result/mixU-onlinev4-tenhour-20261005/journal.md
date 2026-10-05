@@ -1,0 +1,19 @@
+
+### mixU-onlinev4-tenhour-20261005 preregistration 2026-10-05T19:34:19.928958+09:00
+
+User command: `env PH_SECS=4500 bash script/mix-20260911.sh mixU onlinev4 1`. Latest main 2fbd45932484cb2ab1af8411353bf7675319e540; immutable guarded runner snapshot. Queue onlinev4 -> fixed37 -> fixed50, each10h nominal plus setup, same host one run/global lock. Policy onlinev4, exact module SHA/kernel/tool/source identity in metadata/module-info/environment; existing modules reused, original build command not recovered. NVMeVirt model+serial+vendor+PCI checks preserve physical SSD; mounted device guarded, no reset/overwrites.
+
+A-H = FIO-Fast,Varmail,FIO-Fast,Varmail,FIO-Fast,Varmail,FIO-Fast,Varmail; each4500s nominal. FIO fixed amount hot442368000000/warm221184000000/cold73728000000 bytes at24000/12000/4000IOPS, seeds20260911/20261011/20261111; actual time may exceed4500s. Varmail24000files one4500s process per V phase. Same6GiB sequential128k +3GiB random4k seed20260907 rate10000 preparation outside manual counters. FIO file retained. One continuous measured epoch, no per-phase FTL or learner resets imposed, early measured learning cost retained.
+
+Acceptance: all8 phase counters/time/order; everyfio error0+requestedbytes/runtime; four Varmail IO Summary runtimes; manual prepared0/start0/stop/final/partsum and upstream blockstat assertions; policy identity/sample evidence. Save30s cumulative WAF and raw kernel snapshots; onlinev4 learning-events CSV includes samples, active candidate count, evaluated/best/next, resets/discards/settled and raw records when emitted. Convergence itself is observed, not a pass criterion. Preserve failures and block following run on failed validation; post-completion publish campaign to icat-2.
+
+### mix-20260911 mixU onlinev4 — started 2026-10-05T19:35:33+09:00
+
+- mixU: FIO-Fast and Varmail alternate, 8 time-based phases of 4500 s (F V F V F V F V). FIO payload x 4500/600; Varmail one run per phase. FIO file kept. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=4500 bash script/mix-20260911.sh mixU onlinev4 1`; evidence `result/mixU-onlinev4-tenhour-20261005/mixU-onlinev4-rep1/`.
+
+- 2026-10-05T19:54:50.648288+09:00 User explicitly prioritizes v6 now. Stop current mixU v4 with TERM, preserve incomplete evidence, defer all mixU work until validated v6 completion. Interrupted v4 requires fresh run, not continuation of cumulative counters.
+
+- Finished 2026-10-05T19:54:51+09:00; mixU onlinev4 exit=143; evidence `/home/oy/iCAT/result/mixU-onlinev4-tenhour-20261005/mixU-onlinev4-rep1`; cleanup attempted.
+
+- FINISHED {"run_id": "mixU-onlinev4-tenhour-20261005", "exit_code": 143, "sample_rows": 39, "started_at": "2026-10-05T19:35:33.378130+09:00", "finished_at": "2026-10-05T19:54:52.001498+09:00", "raw_path": "/home/oy/iCAT/result/mixU-onlinev4-tenhour-20261005/mixU-onlinev4-rep1", "measurement": "manual=1;6GiB+3GiB preparation excluded;continuous measurement across8 phases;no initial measured samples trimmed;30s counter sampling", "hostname": "oy-B550M-DS3H", "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0", "source_commit": "2fbd45932484cb2ab1af8411353bf7675319e540", "module_sha256": "db93f822a2e79f1e9ae492ac733e783df175604814d6985641fae913f8f8eda4", "issues": ["runner_exit_nonzero", "saved-evidence validator failed; see validation logs"], "status": "failed_or_incomplete_preserved"}
