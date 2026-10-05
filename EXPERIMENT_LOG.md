@@ -11682,7 +11682,112 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 목적(사용자, 최우선): 워크로드가 무작위에 가깝게 여러 번 바뀌는 10시간 실행. FIO-Fast→Varmail처럼 한 번만 바뀌는 실험이 아님.
 - 순서(9구간, 각 4000초 = 10시간): YCSB-A → OLTP → Varmail → YCSB-A → YCSB-B → FIO-Fast → Varmail → YCSB-A → OLTP. 사용자 목록의 "ycsb"(5번째)는 읽기 위주 YCSB-B로 해석.
 - 구현(`mix-20260911.sh` mixT): 모든 구간이 시간 기준 — YCSB는 maxexecutiontime, filebench는 VM_RUN×4조각(OLTP 누수 대응), FIO는 1배(600초) 분량을 4000/600배.
-- 공간 제약에 따른 변경(다른 실험과 다름): 가상 SSD 7.4 GB 중 FIO 파일 6 GiB가 FIO 구간을 위해 남아 있어, SQLite DB 30만 레코드(약 0.4 GB, 다른 실험 60만), OLTP 파일 32 MB×10(다른 실험 64 MB).
+- 공간 제약에 따른 변경(다른 실험과 다름): 가상 SSD 7.4 GB 중 FIO 파일 6 GiB가 FIO 구간을 위해 남아 있어, SQLite DB 25만 레코드, OLTP 파일 32 MB×10 — 기존 YCSB-A→OLTP(mixP)와 같은 크기(mixP도 같은 이유로 60만·64 MB에서 ENOSPC가 나 줄였음). 10-04 22:00 30만→25만으로 맞춤(연기 시험은 30만으로 진행).
 - 진행: 먼저 구간당 120초 연기 시험(mixT-onlinev4-rep1-smoke, 약 25분) — 9구간 모두 요약되면 통과. 통과 시 이 PC에서 iCAT-v4 → CAT-50(견고), 두 번째 PC에서 CAT-37(기본) `env PH_SECS=4000 bash script/mix-20260911.sh mixT fixed37 1`.
 - 판정(사전 등록): 각 1회, 10시간 전체 WAF로 v4 대 견고·기본, 1% 미만 차이는 판정하지 않음. 전환 8번 중 변화 감지(재설정)가 일어난 횟수를 함께 보고.
 - 중단 기록: 예비로 돌던 mixF-fixed37-rep1-x30(이 PC)은 4시간 31분째 사용자 지시로 중지(exit=143, 결과 미사용; 두 번째 PC 결과 사용).
+- 2026-10-04 22:10 변경(사용자): mixT 10시간 순서를 iCAT-v4 → CAT-47(최적) → CAT-50(견고)로. CAT-37(기본)은 두 번째 PC. (실행 중인 큐 파일을 같은 inode로 수정, 실행 중인 큐가 새 줄을 읽음을 fd 255 inode로 확인.)
+
+- Finished 2026-10-04T21:51:55+09:00; mixT onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev4-rep1-smoke`; cleanup attempted.
+- total host_bytes=195202289664 host_pages=47656809 gc_pages=18854173 WAF=1.395624
+- phaseA(sqlite-a) host_pages=1092694 gc_pages=373256 WAF=1.341592
+- phaseB(oltp) host_pages=3532408 gc_pages=791386 WAF=1.224036
+- phaseC(varmail) host_pages=20734643 gc_pages=2326292 WAF=1.112193
+- phaseD(sqlite-a) host_pages=466197 gc_pages=2424 WAF=1.005200
+- phaseE(sqlite-b) host_pages=197434 gc_pages=7564 WAF=1.038312
+- phaseF(test4) host_pages=480016 gc_pages=1007278 WAF=3.098426
+- phaseG(varmail) host_pages=17207897 gc_pages=12711947 WAF=1.738728
+- phaseH(sqlite-a) host_pages=508822 gc_pages=18137 WAF=1.035645
+- phaseI(oltp) host_pages=3436698 gc_pages=1615889 WAF=1.470186
+- phaseA-load host_pages=578363 gc_pages=259236 WAF=1.448224
+- phaseA-run host_pages=514331 gc_pages=114020 WAF=1.221686
+- ycsb-load [OVERALL], Throughput(ops/sec), 28879.47631882942
+- ycsb-run [OVERALL], Throughput(ops/sec), 53395.02678077726
+
+### mix-20260911 mixT onlinev4 — started 2026-10-04T21:52:11+09:00
+
+- mixT: 9 time-based phases of 4000 s each — YCSB-A (load 600000 records) -> OLTP (32 MB x 10 files, 1000 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 4000/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-20260911.sh mixT onlinev4 1`; evidence `result/mix-20260911/mixT-onlinev4-rep1/`.
+- 정정(2026-10-04 21:55): 위 'mix-20260911 mixT onlinev4 — started 21:32:45' 항목의 첫 설명 줄(Phase A fio … rm test.dat … Phase B YCSB)은 옛 2구간 문구가 잘못 기록된 것. 실제는 mixT 9구간 연기 시험(구간당 120초, SMOKE=1: DB 2만 레코드, 파일 2000개, FIO 1/10 분량), 증거 result/mix-20260911/mixT-onlinev4-rep1-smoke/. 결과 exit=0, 9구간 모두 요약됨 → 통과. 이후 실행부터는 mixT 전용 설명이 기록됨. 이 PC 10시간 iCAT-v4 21:52 시작.
+
+- Finished 2026-10-05T07:56:58+09:00; mixT onlinev4 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=7181815468032 host_pages=1753372917 gc_pages=1885961601 WAF=2.075619
+- phaseA(sqlite-a) host_pages=11906656 gc_pages=301371 WAF=1.025311
+- phaseB(oltp) host_pages=121293754 gc_pages=14624430 WAF=1.120570
+- phaseC(varmail) host_pages=742882323 gc_pages=454026159 WAF=1.611168
+- phaseD(sqlite-a) host_pages=11282643 gc_pages=69584 WAF=1.006167
+- phaseE(sqlite-b) host_pages=7838053 gc_pages=571292 WAF=1.072887
+- phaseF(test4) host_pages=160004422 gc_pages=731918572 WAF=5.574365
+- phaseG(varmail) host_pages=566560737 gc_pages=651015219 WAF=2.149065
+- phaseH(sqlite-a) host_pages=11312538 gc_pages=111351 WAF=1.009843
+- phaseI(oltp) host_pages=120291791 gc_pages=33323623 WAF=1.277023
+- phaseA-load host_pages=452310 gc_pages=203682 WAF=1.450315
+- phaseA-run host_pages=11454346 gc_pages=97689 WAF=1.008529
+- ycsb-load [OVERALL], Throughput(ops/sec), 25367.833587011668
+- ycsb-run [OVERALL], Throughput(ops/sec), 62933.339331818715
+
+### mix-20260911 mixT fixed47 — started 2026-10-05T07:57:43+09:00
+
+- mixT: 9 time-based phases of 4000 s each — YCSB-A (load 600000 records) -> OLTP (32 MB x 10 files, 1000 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 4000/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-20260911.sh mixT fixed47 1`; evidence `result/mix-20260911/mixT-fixed47-rep1/`.
+
+## iCAT-v5 — 사전 등록 2026-10-05
+- 변경(한 가지): GC 상한(8192회)에 도달한 판단 구간을 버리지 않고, 호스트 쓰기 64 MiB 이상이면 평가에 사용(`online-v5-src/conv_ftl.c` window_ready, `WATGC_V5_MIN_HOST_PAGES`). 그 외 v4와 동일. 모듈 sha256 84c41d6f…(modules.sha256에 추가).
+- 동기: 불규칙 순서 10시간(mixT)의 6번 FIO 구간에서 v4 판단 구간 327개가 모두 "undersized"로 버려져 학습이 없었음(GC 과다).
+- 실험: mixT 10시간 iCAT-v5 1회(이 PC, `script/gh-queue38-v5.sh`, 현재 CAT-47 실행 종료 후). 먼저 구간당 120초 연기 시험. 큐37의 CAT-50 예비 실행은 취소(두 번째 PC 결과 사용).
+- 판정(사전 등록): (1) 6번 FIO 구간의 버려진 판단 구간이 v4(327) 대비 크게 줄고 판단 구간이 생기는지, (2) 10시간 전체 WAF를 v4(2.076)·기본(2.330)과 비교, 1회이므로 1% 미만 차이는 판정하지 않음. v5는 v4 결과와 별도 버전으로 보고하며 v4 결론을 대체하지 않음.
+
+- Finished 2026-10-05T18:02:35+09:00; mixT fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-fixed47-rep1`; cleanup attempted.
+- total host_bytes=6884922970112 host_pages=1680889397 gc_pages=1729578725 WAF=2.028966
+- phaseA(sqlite-a) host_pages=11909021 gc_pages=227496 WAF=1.019103
+- phaseB(oltp) host_pages=116731702 gc_pages=15395339 WAF=1.131887
+- phaseC(varmail) host_pages=711668767 gc_pages=478839843 WAF=1.672841
+- phaseD(sqlite-a) host_pages=11244617 gc_pages=84019 WAF=1.007472
+- phaseE(sqlite-b) host_pages=7846345 gc_pages=999582 WAF=1.127395
+- phaseF(test4) host_pages=160004425 gc_pages=585091684 WAF=4.656722
+- phaseG(varmail) host_pages=533435088 gc_pages=610095447 WAF=2.143711
+- phaseH(sqlite-a) host_pages=11389161 gc_pages=137928 WAF=1.012110
+- phaseI(oltp) host_pages=116660271 gc_pages=38707387 WAF=1.331796
+- phaseA-load host_pages=452310 gc_pages=121333 WAF=1.268252
+- phaseA-run host_pages=11456711 gc_pages=106163 WAF=1.009266
+- ycsb-load [OVERALL], Throughput(ops/sec), 18628.912071535022
+- ycsb-run [OVERALL], Throughput(ops/sec), 60676.57590662826
+
+### mix-20260911 mixT onlinev5 — started 2026-10-05T18:03:04+09:00
+
+- mixT: 9 time-based phases of 120 s each — YCSB-A (load 20000 records) -> OLTP (32 MB x 10 files, 30 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 120/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-online-v5.ko`.
+- Command: `env PH_SECS=120 bash script/mix-20260911.sh mixT onlinev5 1`; evidence `result/mix-20260911/mixT-onlinev5-rep1-smoke/`.
+
+- Finished 2026-10-05T18:22:04+09:00; mixT onlinev5 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev5-rep1-smoke`; cleanup attempted.
+- total host_bytes=194097082368 host_pages=47386983 gc_pages=17365609 WAF=1.366464
+- phaseA(sqlite-a) host_pages=886496 gc_pages=296458 WAF=1.334415
+- phaseB(oltp) host_pages=3589084 gc_pages=790011 WAF=1.220115
+- phaseC(varmail) host_pages=20853637 gc_pages=1733616 WAF=1.083133
+- phaseD(sqlite-a) host_pages=430932 gc_pages=1689 WAF=1.003919
+- phaseE(sqlite-b) host_pages=218596 gc_pages=7129 WAF=1.032613
+- phaseF(test4) host_pages=480016 gc_pages=881457 WAF=2.836308
+- phaseG(varmail) host_pages=16995258 gc_pages=12484078 WAF=1.734562
+- phaseH(sqlite-a) host_pages=431718 gc_pages=5571 WAF=1.012904
+- phaseI(oltp) host_pages=3501246 gc_pages=1165600 WAF=1.332910
+- phaseA-load host_pages=452310 gc_pages=203610 WAF=1.450156
+- phaseA-run host_pages=434186 gc_pages=92848 WAF=1.213844
+- ycsb-load [OVERALL], Throughput(ops/sec), 25765.22724930434
+- ycsb-run [OVERALL], Throughput(ops/sec), 59909.20211930602
+
+### mix-20260911 mixT onlinev5 — started 2026-10-05T18:22:30+09:00
+
+- mixT: 9 time-based phases of 4000 s each — YCSB-A (load 600000 records) -> OLTP (32 MB x 10 files, 1000 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 4000/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-online-v5.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-20260911.sh mixT onlinev5 1`; evidence `result/mix-20260911/mixT-onlinev5-rep1/`.
+
+### QUEUE37 결과 — 불규칙 순서 9구간 10시간 (2026-10-05)
+- 10시간 전체 WAF(각 1회): iCAT-v4 2.076, CAT-47 최적 2.029(이 PC), CAT-50 견고 2.094(두 번째 PC), CAT-37 기본 2.330(두 번째 PC).
+- 판정(사전 등록, 1% 미만은 판정하지 않음): v4 대 기본 −10.9%(우위), 대 견고 −0.9%(동률), 대 최적 +2.3%(열위).
+- v5 연기 시험 통과(9구간 모두 요약, 18:22). v5 10시간 18:2x 시작.
+- 표: figs/data/WAF_10h.xlsx (10시간 실험 3종, 구간별·전체 WAF).
+
+## mixU — 학습 과정 확인용 10시간 (FIO-Fast ↔ Varmail 교대) — 사전 등록 2026-10-05
+- 목적(사용자): "후보가 줄어들고, 전환이 일어나면 WAF가 다시 낮아질 때까지 재학습"하는 모습을 여러 번의 전환에서 확인. 불규칙 순서 실험(mixT)은 YCSB 구간(GC 거의 없음)과 FIO 구간(GC 폭주, 판단 구간 전부 폐기)에서 학습이 일어나지 않아 이 모습이 드러나지 않았음.
+- 설계 근거: 파라미터 영향이 큰(45조합 차이 > 제거 기준 15%) 두 워크로드만 사용 — FIO-Fast 25.7%, Varmail 18.4%. 기존 로그에서 다른 워크로드 뒤의 FIO 구간도 판단 구간 폐기 없음(mixB 121, mixR 129).
+- 설정: `env PH_SECS=4500 bash script/mix-20260911.sh mixU <정책> 1` = F V F V F V F V, 각 4500초(75분), 총 10시간. 전환 7번.
+- 이 실험은 결과 비교용이 아니라 학습 과정 확인용이며, 논문에 목적을 명시. mixT 결과는 그대로 보고.
+- 판정(사전 등록): v4가 전환 7번 중 몇 번 변화를 감지·재설정했는지, 재설정 후 후보가 다시 줄었는지, 구간 내 WAF가 감소했는지를 보고. WAF 비교(기본·견고)는 해당 실행이 있을 때만.
