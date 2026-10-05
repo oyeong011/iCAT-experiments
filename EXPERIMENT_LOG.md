@@ -11798,3 +11798,19 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 실험: 두 번째 PC에서 `bash script/icat2-v6-mixT.sh` (빌드 → 120초 연기 시험 → mixT 10시간). 이 PC는 v5 진행 중.
 - 판정(사전 등록): (1) mixT에서 YCSB-A 진입 시 후보가 1~2개로 무너지지 않는지, (2) 전환 8번 중 재설정 횟수(v4 2번), (3) 10시간 전체 WAF를 v4 2.076 / v5 / 최적 2.029 / 견고 2.094 / 기본 2.330과 비교, 1회이므로 1% 미만 차이는 판정하지 않음. v4 결론은 대체하지 않고 개선 버전으로 별도 보고.
 - 2026-10-06 02:15: 두 번째 PC의 v6 실행 여부 미확인 → 이 PC 큐38에 v5 다음으로 v6(연기 시험 → mixT 10시간) 추가.
+
+- Finished 2026-10-06T04:27:02+09:00; mixT onlinev5 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev5-rep1`; cleanup attempted.
+- total host_bytes=6951457095680 host_pages=1697133080 gc_pages=1498737161 WAF=1.883099
+- phaseA(sqlite-a) host_pages=11898606 gc_pages=321055 WAF=1.026983
+- phaseB(oltp) host_pages=115903671 gc_pages=14087879 WAF=1.121548
+- phaseC(varmail) host_pages=708682696 gc_pages=357642553 WAF=1.504658
+- phaseD(sqlite-a) host_pages=11364518 gc_pages=48172 WAF=1.004239
+- phaseE(sqlite-b) host_pages=7581929 gc_pages=561739 WAF=1.074089
+- phaseF(test4) host_pages=160004422 gc_pages=597243988 WAF=4.732672
+- phaseG(varmail) host_pages=551891267 gc_pages=498179284 WAF=1.902677
+- phaseH(sqlite-a) host_pages=11530608 gc_pages=98917 WAF=1.008579
+- phaseI(oltp) host_pages=118275363 gc_pages=30553574 WAF=1.258326
+- phaseA-load host_pages=452312 gc_pages=203654 WAF=1.450251
+- phaseA-run host_pages=11446294 gc_pages=117401 WAF=1.010257
+- ycsb-load [OVERALL], Throughput(ops/sec), 25544.089097782773
+- ycsb-run [OVERALL], Throughput(ops/sec), 62644.46298895527
