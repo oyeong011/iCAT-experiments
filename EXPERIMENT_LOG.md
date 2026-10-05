@@ -11736,3 +11736,40 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 동기: 불규칙 순서 10시간(mixT)의 6번 FIO 구간에서 v4 판단 구간 327개가 모두 "undersized"로 버려져 학습이 없었음(GC 과다).
 - 실험: mixT 10시간 iCAT-v5 1회(이 PC, `script/gh-queue38-v5.sh`, 현재 CAT-47 실행 종료 후). 먼저 구간당 120초 연기 시험. 큐37의 CAT-50 예비 실행은 취소(두 번째 PC 결과 사용).
 - 판정(사전 등록): (1) 6번 FIO 구간의 버려진 판단 구간이 v4(327) 대비 크게 줄고 판단 구간이 생기는지, (2) 10시간 전체 WAF를 v4(2.076)·기본(2.330)과 비교, 1회이므로 1% 미만 차이는 판정하지 않음. v5는 v4 결과와 별도 버전으로 보고하며 v4 결론을 대체하지 않음.
+
+- Finished 2026-10-05T18:02:35+09:00; mixT fixed47 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-fixed47-rep1`; cleanup attempted.
+- total host_bytes=6884922970112 host_pages=1680889397 gc_pages=1729578725 WAF=2.028966
+- phaseA(sqlite-a) host_pages=11909021 gc_pages=227496 WAF=1.019103
+- phaseB(oltp) host_pages=116731702 gc_pages=15395339 WAF=1.131887
+- phaseC(varmail) host_pages=711668767 gc_pages=478839843 WAF=1.672841
+- phaseD(sqlite-a) host_pages=11244617 gc_pages=84019 WAF=1.007472
+- phaseE(sqlite-b) host_pages=7846345 gc_pages=999582 WAF=1.127395
+- phaseF(test4) host_pages=160004425 gc_pages=585091684 WAF=4.656722
+- phaseG(varmail) host_pages=533435088 gc_pages=610095447 WAF=2.143711
+- phaseH(sqlite-a) host_pages=11389161 gc_pages=137928 WAF=1.012110
+- phaseI(oltp) host_pages=116660271 gc_pages=38707387 WAF=1.331796
+- phaseA-load host_pages=452310 gc_pages=121333 WAF=1.268252
+- phaseA-run host_pages=11456711 gc_pages=106163 WAF=1.009266
+- ycsb-load [OVERALL], Throughput(ops/sec), 18628.912071535022
+- ycsb-run [OVERALL], Throughput(ops/sec), 60676.57590662826
+
+### mix-20260911 mixT onlinev5 — started 2026-10-05T18:03:04+09:00
+
+- mixT: 9 time-based phases of 120 s each — YCSB-A (load 20000 records) -> OLTP (32 MB x 10 files, 30 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 120/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-online-v5.ko`.
+- Command: `env PH_SECS=120 bash script/mix-20260911.sh mixT onlinev5 1`; evidence `result/mix-20260911/mixT-onlinev5-rep1-smoke/`.
+
+- Finished 2026-10-05T18:22:04+09:00; mixT onlinev5 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev5-rep1-smoke`; cleanup attempted.
+- total host_bytes=194097082368 host_pages=47386983 gc_pages=17365609 WAF=1.366464
+- phaseA(sqlite-a) host_pages=886496 gc_pages=296458 WAF=1.334415
+- phaseB(oltp) host_pages=3589084 gc_pages=790011 WAF=1.220115
+- phaseC(varmail) host_pages=20853637 gc_pages=1733616 WAF=1.083133
+- phaseD(sqlite-a) host_pages=430932 gc_pages=1689 WAF=1.003919
+- phaseE(sqlite-b) host_pages=218596 gc_pages=7129 WAF=1.032613
+- phaseF(test4) host_pages=480016 gc_pages=881457 WAF=2.836308
+- phaseG(varmail) host_pages=16995258 gc_pages=12484078 WAF=1.734562
+- phaseH(sqlite-a) host_pages=431718 gc_pages=5571 WAF=1.012904
+- phaseI(oltp) host_pages=3501246 gc_pages=1165600 WAF=1.332910
+- phaseA-load host_pages=452310 gc_pages=203610 WAF=1.450156
+- phaseA-run host_pages=434186 gc_pages=92848 WAF=1.213844
+- ycsb-load [OVERALL], Throughput(ops/sec), 25765.22724930434
+- ycsb-run [OVERALL], Throughput(ops/sec), 59909.20211930602
