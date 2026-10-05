@@ -1,0 +1,136 @@
+{
+  "waf": 1.483469178498226,
+  "host_bytes": 219564670976,
+  "host_pages": 53604656,
+  "gc_pages": 25916199,
+  "phases": [
+    {
+      "slot": "A",
+      "workload": "YCSB-A",
+      "actual_seconds": 133.0,
+      "host_bytes": 3631771648,
+      "host_pages": 886663,
+      "gc_pages": 303822,
+      "waf": 1.3426578079834166,
+      "runtime_seconds": 121.088,
+      "successful_operations": {
+        "READ": 4335810,
+        "UPDATE": 4338530
+      }
+    },
+    {
+      "slot": "B",
+      "workload": "OLTP",
+      "actual_seconds": 133.0,
+      "host_bytes": 20194041856,
+      "host_pages": 4930186,
+      "gc_pages": 964420,
+      "waf": 1.195615337839181,
+      "process_runtimes_seconds": [
+        30.049999999999997,
+        30.059,
+        30.056,
+        30.063
+      ]
+    },
+    {
+      "slot": "C",
+      "workload": "Varmail",
+      "actual_seconds": 122.0,
+      "host_bytes": 80217489408,
+      "host_pages": 19584348,
+      "gc_pages": 1969177,
+      "waf": 1.1005485094525485,
+      "process_runtimes_seconds": [
+        120.009
+      ]
+    },
+    {
+      "slot": "D",
+      "workload": "YCSB-A",
+      "actual_seconds": 123.0,
+      "host_bytes": 1786675200,
+      "host_pages": 436200,
+      "gc_pages": 2030,
+      "waf": 1.004653828519028,
+      "runtime_seconds": 121.109,
+      "successful_operations": {
+        "READ": 4315350,
+        "UPDATE": 4317039
+      }
+    },
+    {
+      "slot": "E",
+      "workload": "YCSB-B",
+      "actual_seconds": 124.0,
+      "host_bytes": 927883264,
+      "host_pages": 226534,
+      "gc_pages": 4510,
+      "waf": 1.0199087112751286,
+      "runtime_seconds": 121.204,
+      "successful_operations": {
+        "READ": 3538361,
+        "UPDATE": 186909
+      }
+    },
+    {
+      "slot": "F",
+      "workload": "FIO-Fast",
+      "actual_seconds": 120.0,
+      "host_bytes": 19661344768,
+      "host_pages": 4800133,
+      "gc_pages": 11777764,
+      "waf": 3.453632847256524
+    },
+    {
+      "slot": "G",
+      "workload": "Varmail",
+      "actual_seconds": 122.0,
+      "host_bytes": 72039071744,
+      "host_pages": 17587664,
+      "gc_pages": 9439492,
+      "waf": 1.5367109583171477,
+      "process_runtimes_seconds": [
+        120.009
+      ]
+    },
+    {
+      "slot": "H",
+      "workload": "YCSB-A",
+      "actual_seconds": 123.0,
+      "host_bytes": 1781223424,
+      "host_pages": 434869,
+      "gc_pages": 4571,
+      "waf": 1.0105112114222905,
+      "runtime_seconds": 121.106,
+      "successful_operations": {
+        "READ": 4299127,
+        "UPDATE": 4298684
+      }
+    },
+    {
+      "slot": "I",
+      "workload": "OLTP",
+      "actual_seconds": 133.0,
+      "host_bytes": 19325169664,
+      "host_pages": 4718059,
+      "gc_pages": 1450413,
+      "waf": 1.3074173086856269,
+      "process_runtimes_seconds": [
+        30.076,
+        30.049,
+        30.07,
+        30.047
+      ]
+    }
+  ],
+  "actual_measured_seconds": 1134.0,
+  "initial_load": {
+    "runtime_seconds": 9.217,
+    "successful_operations": {
+      "INSERT": 250000
+    }
+  },
+  "active_sample_rows": 38,
+  "block_stat_validation": "upstream runner stop boundary and host_bytes assertion passed; not independent NAND measurement"
+}
