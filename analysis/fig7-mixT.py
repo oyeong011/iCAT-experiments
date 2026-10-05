@@ -77,7 +77,8 @@ for i, n in enumerate(NAMES):
     for a_ in (ax[0], ax[2]): a_.axvspan(bounds[i], bounds[i + 1], color=BAND[n], lw=0, zorder=0)
     ax[0].text((bounds[i] + bounds[i + 1]) / 2, 1.13, f'{i + 1}. {n}', transform=ax[0].get_xaxis_transform(), ha='center', va='bottom', fontsize=9.5, color=INK, weight='bold')
     ax[0].text((bounds[i] + bounds[i + 1]) / 2, 1.01, TYPE[n], transform=ax[0].get_xaxis_transform(), ha='center', va='bottom', fontsize=7.8, color=INK2, linespacing=1.15)
-    for a_ in ax: a_.axvline(bounds[i], color='#c7c7cc', lw=0.8)
+    if i:   # workload switch: dashed line + the new workload's name on it
+        for a_ in ax: a_.axvline(bounds[i], color='#5a5955', lw=1.2, ls=(0, (4, 3)), zorder=1)
 for lab, d, c, lw in pol:
     w, _, tot, ph, _ = D[lab]
     ax[0].plot([h for h, _ in w], [v for _, v in w], color=c, lw=lw, marker='o', ms=3, label=f'{lab}   10시간 전체 WAF {tot:.3f}', zorder=3 if 'v4' in lab else 2)
@@ -106,13 +107,15 @@ ax[2].set_title(f'(다) v4 활성 후보 수 (파티션 {PART}, 바뀌는 지점
 ax[2].set_xlim(0, X1); ax[2].set_xticks(range(0, int(X1) + 1))
 fig.subplots_adjust(top=0.80)
 fig.suptitle('그림 7. 불규칙 순서 응용 혼합 10시간 실행에서 iCAT-v4의 WAF, 학습 상태, 활성 후보 수', x=0.06, ha='left', y=0.985, fontsize=13.5, weight='bold', color=INK)
-fig.text(0.06, 0.945, '9구간 각 4000초. 배경색 = 워크로드. 보라 선 = v4가 워크로드 변화를 감지해 재설정한 시점(전환 8번 중 2번). 고정 CAT은 같은 조건의 별도 실행(CAT-37·50은 두 번째 PC), 각 1회.', fontsize=9.5, color=INK2)
+fig.text(0.06, 0.945, '9구간 각 4000초. 배경색·점선 = 워크로드 구간과 전환 시점. 보라 선 = v4가 워크로드 변화를 감지해 재설정한 시점(전환 8번 중 2번). 고정 CAT은 같은 조건의 별도 실행(CAT-37·50은 두 번째 PC), 각 1회.', fontsize=9.5, color=INK2)
 for e in ('png', 'svg', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/fig7_mixT.{e}', dpi=200, bbox_inches='tight')
 
 # ---- Fig.6: the WAF panel alone (same 10-min data), with the 10 h totals and the gap to v4 in the legend
 f6, a6 = plt.subplots(figsize=(14, 5.6))
 for i, n in enumerate(NAMES):
-    a6.axvspan(bounds[i], bounds[i + 1], color=BAND[n], lw=0, zorder=0); a6.axvline(bounds[i], color='#c7c7cc', lw=0.8)
+    a6.axvspan(bounds[i], bounds[i + 1], color=BAND[n], lw=0, zorder=0)
+    if i:
+        a6.axvline(bounds[i], color='#5a5955', lw=1.2, ls=(0, (4, 3)), zorder=1)
     a6.text((bounds[i] + bounds[i + 1]) / 2, 1.13, f'{i + 1}. {n}', transform=a6.get_xaxis_transform(), ha='center', va='bottom', fontsize=9.5, color=INK, weight='bold')
     a6.text((bounds[i] + bounds[i + 1]) / 2, 1.01, TYPE[n], transform=a6.get_xaxis_transform(), ha='center', va='bottom', fontsize=7.8, color=INK2, linespacing=1.15)
 v4t = D['iCAT-v4 (제안)'][2]
@@ -121,10 +124,10 @@ for lab, d, c, lw in pol:
     gap = '' if 'v4' in lab else f'  (v4 {(v4t / tot - 1) * 100:+.1f}%)'
     a6.plot([h for h, _ in w], [v for _, v in w], color=c, lw=lw, marker='o', ms=3, label=f'{lab}   10시간 전체 {tot:.3f}{gap}', zorder=3 if 'v4' in lab else 2)
 a6.set_xlim(0, X1); a6.set_xticks(range(0, int(X1) + 1)); a6.set_xlabel('측정 시작 후 시간 (시간)'); a6.set_ylabel('구간 WAF (10분 단위, 낮을수록 좋음)')
-a6.legend(loc='upper left', fontsize=9.5, frameon=True, facecolor='white', edgecolor='#e0dfdb', framealpha=0.95)
+a6.legend(loc='upper center', bbox_to_anchor=(0.5, -0.13), ncol=2, fontsize=9.5, frameon=False)
 f6.subplots_adjust(top=0.74)
 f6.suptitle('그림 6. 불규칙 순서 응용 혼합 10시간 실행의 구간 WAF: iCAT-v4 vs 최적·견고·기본', x=0.06, ha='left', y=0.985, fontsize=13.5, weight='bold', color=INK)
-f6.text(0.06, 0.93, '각 점 = 10분 동안의 WAF. 범례 괄호 = 그 정책 대비 v4의 차이(음수 = v4가 낮음). 각 1회, CAT-37·50은 두 번째 PC.', fontsize=9.5, color=INK2)
+f6.text(0.06, 0.93, '점선 = 워크로드 전환 시점(위에 바뀐 워크로드 이름). 각 점 = 10분 동안의 WAF. 범례 괄호 = 그 정책 대비 v4의 차이(음수 = v4가 낮음). 각 1회, CAT-37·50은 두 번째 PC.', fontsize=9.5, color=INK2)
 for e in ('png', 'svg', 'pdf'): f6.savefig(f'/home/oy/iCAT/figs/fig6_mixT.{e}', dpi=200, bbox_inches='tight')
 
 # ---- xlsx
@@ -144,7 +147,12 @@ for i, n in enumerate(NAMES):
 ws.cell(row=11, column=c0 + 1, value='10시간 전체').font = Font(bold=True)
 for k, (lab, *_) in enumerate(pol): ws.cell(row=11, column=c0 + 4 + k, value=round(D[lab][2], 3))
 ws.cell(row=13, column=c0, value='재설정(h, p' + PART + ')').font = Font(bold=True); ws.cell(row=13, column=c0 + 1, value=', '.join(f'{r:.3f}' for r in resets))
-L_ = ws.cell(row=1, column=c0 + 9).column_letter
+BC = c0 + 10   # switch-line data: per switch two rows (time, 0) and (time, 60)
+for i in range(1, len(NAMES)):
+    bc = BC + 2 * (i - 1)
+    ws.cell(row=1, column=bc, value=f'전환{i} 시간'); ws.cell(row=1, column=bc + 1, value=f'→ {i + 1}. {NAMES[i]}')
+    for r, yv in ((2, -1), (3, 60)): ws.cell(row=r, column=bc, value=round(bounds[i], 3)); ws.cell(row=r, column=bc + 1, value=yv)
+L_ = ws.cell(row=1, column=BC + 2 * len(NAMES)).column_letter
 def chart(title, yt, ser, ymin, ymax, anchor):
     ch = ScatterChart(); ch.title = title; ch.style = 13; ch.scatterStyle = 'lineMarker'; ch.display_blanks = 'span'
     ch.x_axis.title = '측정 시작 후 시간 (시간)'; ch.y_axis.title = yt; ch.height, ch.width = 10, 30; ch.legend.position = 'b'
@@ -154,6 +162,11 @@ def chart(title, yt, ser, ymin, ymax, anchor):
         n = len(cols[xc][1]); s = Series(Reference(ws, min_col=xc + 2, min_row=1, max_row=n + 1), Reference(ws, min_col=xc + 1, min_row=2, max_row=n + 1), title_from_data=True)
         s.smooth = False; s.graphicalProperties.line.solidFill = color; s.graphicalProperties.line.width = width
         s.marker.symbol = 'circle'; s.marker.size = 3; s.marker.graphicalProperties.solidFill = color; s.marker.graphicalProperties.line.solidFill = color
+        ch.series.append(s)
+    for i in range(1, len(NAMES)):   # one 2-point series per switch: a dashed vertical line, legend = the new workload
+        bc = BC + 2 * (i - 1)
+        s = Series(Reference(ws, min_col=bc + 1, min_row=1, max_row=3), Reference(ws, min_col=bc, min_row=2, max_row=3), title_from_data=True)
+        s.smooth = False; s.marker.symbol = 'none'; s.graphicalProperties.line.solidFill = '5A5955'; s.graphicalProperties.line.dashStyle = 'dash'; s.graphicalProperties.line.width = 12700
         ch.series.append(s)
     ws.add_chart(ch, anchor)
 wafs = [v for lab in D for _, v in D[lab][0]]; k = 2 * len(pol)
