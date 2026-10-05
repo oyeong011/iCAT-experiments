@@ -18,8 +18,8 @@ R = Path('/home/oy/iCAT/result'); M = R / 'mix-20260911'
 def pick(p, other):   # this PC first, else the second PC's copy
     d = M / f'mixT-{p}-rep1'
     return d if (d / 'summary.txt').exists() else R / other / f'mixT-{p}-rep1'
-POL = [('iCAT-v4 (제안)', M / 'mixT-onlinev4-rep1', '#2a78d6', 2.4), ('CAT-50 (견고 설정)', pick('fixed50', 'mixT-fixed50-tenhour-20261004'), '#8e8e93', 1.6),
-       ('CAT-37 (기본값)', pick('fixed37', 'mixT-fixed37-tenhour-20261004'), '#e3a33b', 1.6)]
+POL = [('iCAT-v4 (제안)', M / 'mixT-onlinev4-rep1', '#2a78d6', 2.4), ('CAT-47 (최적)', M / 'mixT-fixed47-rep1', '#2b2a28', 1.4), ('CAT-50 (견고 설정)', pick('fixed50', 'mixT-fixed50-tenhour-20261004'), '#9a9994', 1.4),
+       ('CAT-37 (기본값)', pick('fixed37', 'mixT-fixed37-tenhour-20261004'), '#e3a33b', 1.4)]
 PART, STEP = '2', 10 / 60
 NAMES = ['YCSB-A', 'OLTP', 'Varmail', 'YCSB-A', 'YCSB-B', 'FIO-Fast', 'Varmail', 'YCSB-A', 'OLTP']
 TYPE = {'YCSB-A': 'SQLite DB\n읽기50·수정50', 'YCSB-B': 'SQLite DB\n읽기95·수정5', 'OLTP': 'DB 서버 흉내\n(Filebench)',
@@ -106,8 +106,26 @@ ax[2].set_title(f'(다) v4 활성 후보 수 (파티션 {PART}, 바뀌는 지점
 ax[2].set_xlim(0, X1); ax[2].set_xticks(range(0, int(X1) + 1))
 fig.subplots_adjust(top=0.80)
 fig.suptitle('그림 7. 불규칙 순서 응용 혼합 10시간 실행에서 iCAT-v4의 WAF, 학습 상태, 활성 후보 수', x=0.06, ha='left', y=0.985, fontsize=13.5, weight='bold', color=INK)
-fig.text(0.06, 0.945, '9구간 각 4000초. 배경색 = 워크로드. 보라 선 = v4가 워크로드 변화를 감지해 재설정한 시점(전환 8번 중 2번). 고정 CAT은 같은 조건의 별도 실행(두 번째 PC), 각 1회.', fontsize=9.5, color=INK2)
+fig.text(0.06, 0.945, '9구간 각 4000초. 배경색 = 워크로드. 보라 선 = v4가 워크로드 변화를 감지해 재설정한 시점(전환 8번 중 2번). 고정 CAT은 같은 조건의 별도 실행(CAT-37·50은 두 번째 PC), 각 1회.', fontsize=9.5, color=INK2)
 for e in ('png', 'svg', 'pdf'): fig.savefig(f'/home/oy/iCAT/figs/fig7_mixT.{e}', dpi=200, bbox_inches='tight')
+
+# ---- Fig.6: the WAF panel alone (same 10-min data), with the 10 h totals and the gap to v4 in the legend
+f6, a6 = plt.subplots(figsize=(14, 5.6))
+for i, n in enumerate(NAMES):
+    a6.axvspan(bounds[i], bounds[i + 1], color=BAND[n], lw=0, zorder=0); a6.axvline(bounds[i], color='#c7c7cc', lw=0.8)
+    a6.text((bounds[i] + bounds[i + 1]) / 2, 1.13, f'{i + 1}. {n}', transform=a6.get_xaxis_transform(), ha='center', va='bottom', fontsize=9.5, color=INK, weight='bold')
+    a6.text((bounds[i] + bounds[i + 1]) / 2, 1.01, TYPE[n], transform=a6.get_xaxis_transform(), ha='center', va='bottom', fontsize=7.8, color=INK2, linespacing=1.15)
+v4t = D['iCAT-v4 (제안)'][2]
+for lab, d, c, lw in pol:
+    w, _, tot, ph, _ = D[lab]
+    gap = '' if 'v4' in lab else f'  (v4 {(v4t / tot - 1) * 100:+.1f}%)'
+    a6.plot([h for h, _ in w], [v for _, v in w], color=c, lw=lw, marker='o', ms=3, label=f'{lab}   10시간 전체 {tot:.3f}{gap}', zorder=3 if 'v4' in lab else 2)
+a6.set_xlim(0, X1); a6.set_xticks(range(0, int(X1) + 1)); a6.set_xlabel('측정 시작 후 시간 (시간)'); a6.set_ylabel('구간 WAF (10분 단위, 낮을수록 좋음)')
+a6.legend(loc='upper left', fontsize=9.5, frameon=True, facecolor='white', edgecolor='#e0dfdb', framealpha=0.95)
+f6.subplots_adjust(top=0.74)
+f6.suptitle('그림 6. 불규칙 순서 응용 혼합 10시간 실행의 구간 WAF: iCAT-v4 vs 최적·견고·기본', x=0.06, ha='left', y=0.985, fontsize=13.5, weight='bold', color=INK)
+f6.text(0.06, 0.93, '각 점 = 10분 동안의 WAF. 범례 괄호 = 그 정책 대비 v4의 차이(음수 = v4가 낮음). 각 1회, CAT-37·50은 두 번째 PC.', fontsize=9.5, color=INK2)
+for e in ('png', 'svg', 'pdf'): f6.savefig(f'/home/oy/iCAT/figs/fig6_mixT.{e}', dpi=200, bbox_inches='tight')
 
 # ---- xlsx
 wb = Workbook(); ws = wb.active; ws.title = '그림7 불규칙 혼합 10시간'
@@ -142,5 +160,5 @@ wafs = [v for lab in D for _, v in D[lab][0]]; k = 2 * len(pol)
 chart('(가) 불규칙 순서 응용 혼합 10시간: 10분 구간 WAF (낮을수록 좋음)', 'WAF', [(2 * i, c[1:].upper(), 22225) for i, (lab, d, c, lw) in enumerate(pol)], round(min(wafs) - 0.1, 1), round(max(wafs) + 0.1, 1), f'{L_}2')
 chart('(나) v4 학습 상태 (0 = 전수 순회, 1 = 탐색, 2 = 정착)', '상태', [(k, '2A78D6', 22225)], -0.2, 2.2, f'{L_}23')
 chart(f'(다) v4 활성 후보 수 (파티션 {PART})', '남은 후보 수', [(k + 2, '2A78D6', 28575)], 0, 48, f'{L_}44')
-wb.save('/home/oy/iCAT/figs/data/fig7_mixT.xlsx')
+wb.save('/home/oy/iCAT/figs/data/fig7_mixT.xlsx'); wb.save('/home/oy/iCAT/figs/data/fig6_mixT.xlsx')   # Fig.6 = chart (가) of the same workbook
 print('drawn:', {l: round(D[l][2], 3) for l in D}, '| resets h', [round(r, 2) for r in resets])
