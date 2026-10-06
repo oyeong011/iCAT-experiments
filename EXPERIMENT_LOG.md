@@ -11968,3 +11968,5 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 사용자 결정: 표 3 워크로드를 이어 붙이는 실험이므로 준비도 표 3과 똑같이 — 6 GiB 순차 + 3 GiB 무작위 4K, **FIO 파일을 10시간 내내 유지**, 6번 FIO는 그 파일을 덮어씀, 8번 전 파일 삭제 없음. 나머지 전환 규칙(표 3 방식, FIO 전 DB 삭제, 8번 DB 재적재)은 11:29 수정과 같음. 이전 준비로 시작했다가 중단한 mixV 실행들은 `-fillprep`으로 이름 바꿔 보존.
 - 공간 위험: 2·9번 OLTP에서 DB 60만 + OLTP 32 MB×10 + FIO 6 GiB 공존(mixP는 60만 + 64 MB에서 ENOSPC). 그래서 연기 시험을 실제 크기(DB 60만, 구간당 60초, `result/inherit-20261006/fitcheck/`)로 먼저 실행; 실패하면 10시간을 시작하지 않고 사용자와 DB 크기를 다시 정함.
 - 순서(queue43): 이 PC = 실제 크기 확인(v4) → v4 10시간 → CAT-47 10시간. 두 번째 PC = `script/icat2-mixV.sh`(CAT-37 → CAT-50, 각 실제 크기 확인 후 10시간).
+
+- Finished 2026-10-06T13:12:07+09:00; mixW1 fixed47 exit=127; evidence `/home/oy/iCAT/result/inherit-20261006/mixW1-fixed47`; cleanup attempted.
