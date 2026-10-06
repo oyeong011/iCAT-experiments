@@ -1,0 +1,43 @@
+/usr/bin/java  -classpath /home/oy/YCSB/ycsb-0.17.0/conf:/home/oy/YCSB/ycsb-0.17.0/lib/HdrHistogram-2.1.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/core-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/lib/htrace-core4-4.1.0-incubating.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-core-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/lib/jackson-mapper-asl-1.9.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/conf:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-collections-3.2.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-lang-2.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/commons-pool-1.5.4.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jms_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/geronimo-jta_1.1_spec-1.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/jdbc-binding-0.17.0.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-jdbc-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-kernel-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/openjpa-lib-2.1.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/serp-1.13.1.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/slf4j-api-1.7.25.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/slf4j-simple-1.7.25.jar:/home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar site.ycsb.Client -load -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -p recordcount=600000 -p operationcount=1000000000 -p maxexecutiontime=60 -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+Picked up JAVA_TOOL_OPTIONS: -Xshare:off
+Command line: -load -db site.ycsb.db.JdbcDBClient -s -P /home/oy/iCAT/workloads/sqlite/workloada -p recordcount=600000 -p operationcount=1000000000 -p maxexecutiontime=60 -threads 1 -p db.driver=org.sqlite.JDBC -p db.url=jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false
+YCSB Client 0.17.0
+
+Loading workload...
+Starting test.
+Maximum execution time specified as: 60 secs
+Adding shard node URL: jdbc:sqlite:/home/oy/iCAT/mnt/ycsb.db
+2026-10-06 19:42:30:418 0 sec: 0 operations; est completion in 0 second 
+Using shards: 1, batchSize:1000, fetchSize: -1
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-10-06 19:42:40:374 10 sec: 327599 operations; 32759.9 current ops/sec; est completion in 9 second [INSERT: Count=327654, Max=21519, Min=7, Avg=28.99, 90=19, 99=34, 99.9=3519, 99.99=19615] 
+2026-10-06 19:42:50:374 20 sec: 590999 operations; 26340 current ops/sec; est completion in 1 second [INSERT: Count=263345, Max=24079, Min=7, Avg=36.95, 90=24, 99=40, 99.9=1121, 99.99=22447] 
+Could not wait until max specified time, TerminatorThread interrupted.
+2026-10-06 19:42:50:738 20 sec: 600000 operations; 24796.14 current ops/sec; [CLEANUP: Count=1, Max=2103, Min=2102, Avg=2103, 90=2103, 99=2103, 99.9=2103, 99.99=2103] [INSERT: Count=9001, Max=22719, Min=7, Avg=39.97, 90=26, 99=45, 99.9=18783, 99.99=21855] 
+[OVERALL], RunTime(ms), 20364
+[OVERALL], Throughput(ops/sec), 29463.759575721862
+[TOTAL_GCS_G1_Young_Generation], Count, 30
+[TOTAL_GC_TIME_G1_Young_Generation], Time(ms), 22
+[TOTAL_GC_TIME_%_G1_Young_Generation], Time(%), 0.10803378511098016
+[TOTAL_GCS_G1_Concurrent_GC], Count, 0
+[TOTAL_GC_TIME_G1_Concurrent_GC], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Concurrent_GC], Time(%), 0.0
+[TOTAL_GCS_G1_Old_Generation], Count, 0
+[TOTAL_GC_TIME_G1_Old_Generation], Time(ms), 0
+[TOTAL_GC_TIME_%_G1_Old_Generation], Time(%), 0.0
+[TOTAL_GCs], Count, 30
+[TOTAL_GC_TIME], Time(ms), 22
+[TOTAL_GC_TIME_%], Time(%), 0.10803378511098016
+[CLEANUP], Operations, 1
+[CLEANUP], AverageLatency(us), 2103.0
+[CLEANUP], MinLatency(us), 2102
+[CLEANUP], MaxLatency(us), 2103
+[CLEANUP], 95thPercentileLatency(us), 2103
+[CLEANUP], 99thPercentileLatency(us), 2103
+[INSERT], Operations, 600000
+[INSERT], AverageLatency(us), 32.64478
+[INSERT], MinLatency(us), 7
+[INSERT], MaxLatency(us), 24079
+[INSERT], 95thPercentileLatency(us), 27
+[INSERT], 99thPercentileLatency(us), 38
+[INSERT], Return=OK, 600000

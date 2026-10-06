@@ -13,3 +13,23 @@
 
 - mixV (inheritance): 9 time-based phases of 60 s — YCSB-A (load 600000 records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x 60/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `nvmev-fixed37.ko`.
 - Command: `env PH_SECS=60 bash script/mix-inherit-20261006.sh mixV fixed37 1`; evidence `result/inherit-20261006/fitcheck/mixV-fixed37-rep1/`.
+
+- Finished 2026-10-06T19:49:50+09:00; mixV fixed37 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/fitcheck/mixV-fixed37-rep1`; cleanup attempted.
+- total host_bytes=116991696896 host_pages=28562426 gc_pages=57276061 WAF=3.005294
+- phaseA(sqlite-a) host_pages=2820731 gc_pages=1522945 WAF=1.539911
+- phaseB(oltp) host_pages=2452694 gc_pages=1131989 WAF=1.461529
+- phaseC(varmail) host_pages=8698022 gc_pages=13479088 WAF=2.549673
+- phaseD(sqlite-a) host_pages=2404903 gc_pages=2717348 WAF=2.129920
+- phaseE(sqlite-b) host_pages=317910 gc_pages=236498 WAF=1.743915
+- phaseF(test4) host_pages=2400067 gc_pages=11612948 WAF=5.838593
+- phaseG(varmail) host_pages=4899229 gc_pages=18335138 WAF=4.742454
+- phaseH(sqlite-a) host_pages=2328072 gc_pages=5151433 WAF=3.212746
+- phaseI(oltp) host_pages=2240693 gc_pages=3088597 WAF=2.378412
+- phaseA-load host_pages=1398339 gc_pages=626720 WAF=1.448189
+- phaseA-run host_pages=1422392 gc_pages=896225 WAF=1.630083
+- ycsb-load [OVERALL], Throughput(ops/sec), 24395.202276885546
+- ycsb-run [OVERALL], Throughput(ops/sec), 10282.619202373215
+
+- mixV fixed37 fitcheck finished {"policy": "fixed37", "stage": "fitcheck", "finished_at": "2026-10-06T19:49:51.158385+09:00", "validation_exit": 1, "status": "failed_validation_preserved"}
+
+- mixV campaign FINISHED {"run_id": "inherit-20261006", "exit_code": 1, "status": "failed_or_incomplete_preserved", "issues": ["entrypoint exited 1; inspect pipeline console and stage logs", "fixed37 fitcheck not validated", "fixed37 long not validated", "fixed50 fitcheck not validated", "fixed50 long not validated"], "finished_at": "2026-10-06T19:49:53.019719+09:00", "source_commit": "13b5b1835321c2cd0265c42ec7e9a09c6fda04da", "raw_path": "/home/oy/iCAT/result/inherit-20261006"}

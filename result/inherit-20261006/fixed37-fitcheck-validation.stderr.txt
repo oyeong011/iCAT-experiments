@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/oy/iCAT/result/inherit-20261006/validate-results.py", line 63, in <module>
+    if name.startswith('YCSB'):detail=ycsb(f'ycsb-run-{slot}.txt')
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/oy/iCAT/result/inherit-20261006/validate-results.py", line 42, in ycsb
+    require(not re.search(r'SQLITE_FULL|No space left on device|Exception in thread|Return=ERROR|ERROR:',text),name+' explicit error')
+  File "/home/oy/iCAT/result/inherit-20261006/validate-results.py", line 10, in require
+    if not ok:raise AssertionError(msg)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ycsb-run-A.txt explicit error
