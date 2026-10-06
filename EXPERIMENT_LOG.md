@@ -11904,3 +11904,19 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Command: `env PH_SECS=120 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/mixV-onlinev4-rep1-smoke/`.
 
 - 2026-10-06 11:46 순서 정정(사용자: v4부터). mixV CAT-47 10시간을 시작 4분 만에 중단(exit 143, `result/inherit-20261006/mixV-fixed47-rep1/` 부분 증거; queue40이 다시 돌 때 -failed-로 이름 변경). 그 틈에 queue38→queue31이 `mixG arm46 rep1 x3`을 시작해 준비 단계에서 중단(이 실행은 큐가 나중에 다시 돌림). queue40 재시작: v4 연기 시험(11:48) → v4 10시간 → CAT-47 10시간. CAT-47 연기 시험(통과)은 유지.
+
+- Finished 2026-10-06T11:57:58+09:00; mixV onlinev4 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/mixV-onlinev4-rep1-smoke`; cleanup attempted.
+- total host_bytes=205566955520 host_pages=50187245 gc_pages=14715102 WAF=1.293204
+- phaseA(sqlite-a) host_pages=34841 gc_pages=0 WAF=1.000000
+- phaseB(oltp) host_pages=3660937 gc_pages=253093 WAF=1.069133
+- phaseC(varmail) host_pages=22721728 gc_pages=1093536 WAF=1.048127
+- phaseD(sqlite-a) host_pages=8942 gc_pages=3 WAF=1.000335
+- phaseE(sqlite-b) host_pages=1700 gc_pages=0 WAF=1.000000
+- phaseF(test4) host_pages=2052991 gc_pages=391187 WAF=1.190545
+- phaseG(varmail) host_pages=18308393 gc_pages=10672376 WAF=1.582923
+- phaseH(sqlite-a) host_pages=25233 gc_pages=3715 WAF=1.147228
+- phaseI(oltp) host_pages=3371328 gc_pages=2301135 WAF=1.682560
+- phaseA-load host_pages=18818 gc_pages=0 WAF=1.000000
+- phaseA-run host_pages=16023 gc_pages=0 WAF=1.000000
+- ycsb-load [OVERALL], Throughput(ops/sec), 21008.40336134454
+- ycsb-run [OVERALL], Throughput(ops/sec), 26990.55330634278

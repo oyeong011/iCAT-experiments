@@ -1,0 +1,32 @@
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.006: Varmail Version 3.0 personality successfully loaded
+0.006: Populating and pre-allocating filesets
+0.007: bigfileset populated: 2000 files, avg. dir. width = 1000000, avg. dir. depth = 0.6, 0 leafdirs, 30.312MB total size
+0.007: Removing bigfileset tree (if exists)
+0.008: Pre-allocating directories in bigfileset tree
+0.008: Pre-allocating files in bigfileset tree
+0.059: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.059: Population and pre-allocation of filesets completed
+0.059: Starting 1 filereader instances
+1.062: Running...
+121.072: Run took 120 seconds...
+121.073: Per-Operation Breakdown
+closefile4           1362773ops    11356ops/s   0.0mb/s      0.0ms/op [0.00ms -  1.03ms]
+readfile4            1362773ops    11356ops/s 177.9mb/s      0.0ms/op [0.00ms -  3.67ms]
+openfile4            1362773ops    11356ops/s   0.0mb/s      0.0ms/op [0.00ms -  2.93ms]
+closefile3           1362773ops    11356ops/s   0.0mb/s      0.0ms/op [0.00ms -  1.12ms]
+fsyncfile3           1362774ops    11356ops/s   0.0mb/s      0.3ms/op [0.00ms -  6.88ms]
+appendfilerand3      1362777ops    11356ops/s  88.7mb/s      0.0ms/op [0.00ms -  4.71ms]
+readfile3            1362777ops    11356ops/s 178.0mb/s      0.0ms/op [0.00ms -  3.82ms]
+openfile3            1362777ops    11356ops/s   0.0mb/s      0.0ms/op [0.00ms -  2.15ms]
+closefile2           1362777ops    11356ops/s   0.0mb/s      0.0ms/op [0.00ms -  1.23ms]
+fsyncfile2           1362779ops    11356ops/s   0.0mb/s      0.3ms/op [0.04ms - 12.79ms]
+appendfilerand2      1362779ops    11356ops/s  88.7mb/s      0.0ms/op [0.00ms -  6.97ms]
+createfile2          1362783ops    11356ops/s   0.0mb/s      0.2ms/op [0.01ms - 14.82ms]
+deletefile1          1362788ops    11356ops/s   0.0mb/s      0.5ms/op [0.02ms - 14.74ms]
+121.073: IO Summary: 17716103 ops 147622.125 ops/s 22711/22711 rd/wr 533.3mb/s   0.3ms/op
+121.073: Shutting down processes
