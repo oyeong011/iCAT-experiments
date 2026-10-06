@@ -11855,3 +11855,8 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 측정 전 파일시스템 전체 1회 쓰기 후 삭제, extents 기록, 실행 순서·판정 기준은 11:16 사전 등록과 같음. 이 수정 전에 mixV로 실행된 것은 없음.
 
 - Finished 2026-10-06T11:32:44+09:00; mixT onlinev6 exit=143; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev6-rep1`; cleanup attempted.
+
+### inherit-20261006 mixV fixed47 — started 2026-10-06T11:33:03+09:00
+
+- mixV (inheritance): 9 time-based phases of 120 s — YCSB-A (load 20000 records) -> OLTP -> Varmail -> YCSB-A (same DB) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; 6 GiB file written then overwritten, payload x 120/600) -> Varmail (FIO file kept) -> YCSB-A (FIO file deleted, DB reloaded) -> OLTP (DB kept). Switches follow the Table-3 two-phase mixes; whole FS written+deleted once before measuring. Extents recorded per switch. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=120 bash script/mix-inherit-20261006.sh mixV fixed47 1`; evidence `result/inherit-20261006/mixV-fixed47-rep1-smoke/`.
