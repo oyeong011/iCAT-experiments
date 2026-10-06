@@ -1,0 +1,41 @@
+--- upstream-mix-inherit-20261006.sh
++++ execution-mix.sh
+@@ -106,7 +106,9 @@
+ trap finish EXIT; trap 'exit 130' INT; trap 'exit 143' TERM
+ trap 'printf "FAIL line=%s command=%s\n" "$LINENO" "$BASH_COMMAND" >&2' ERR
+ if [[ -e /sys/module/nvmev ]] || mountpoint -q "$root/mnt"; then echo 'Device already in use'; exit 1; fi
+-if compgen -G '/sys/class/nvme/nvme*' >/dev/null; then echo 'Existing NVMe device: refusing initialization'; exit 1; fi
++# This host has a physical NVMe SSD. The mandatory adapter enforces NVMeVirt model/serial/PCI identity.
++[[ "${BASH_ENV:-}" == /home/oy/iCAT/result/inherit-20261006/safety-env.sh && "${MIXV_LOCK_HELD:-}" == 1 ]] || exit 1
++declare -F sudo assert_virtual_dev assert_virtual_mount >/dev/null || exit 1
+ { date -Is; uname -a; cat /proc/cmdline; fio --version; java -version 2>&1; sqlite3 --version; sha256sum "$module" "$0" "$root/workloads/mix-test4.fio" "$root/workloads/sqlite/workloada"; lscpu; free -h; } > "$dir/environment.txt"
+ kmsg BEGIN
+ mkdir -p "$dir/kernel-snapshots"
+@@ -138,7 +140,7 @@
+ fi
+ cat "$control" > "$dir/prepared.txt"
+ [[ $(field "$dir/prepared.txt" host_bytes) == 0 && $(field "$dir/prepared.txt" gc_pages) == 0 ]]
+-before=$(sectors)
++before=$(sectors); printf "%s\n" "$before" > "$dir/block-stat-before.txt"
+ printf 'start\n' > "$control"
+ cat "$control" > "$dir/started.txt"
+ # ---- phases. Slot A runs first, slot B second; which workload fills each slot depends on the label.
+@@ -164,6 +166,7 @@
+     if ((load)); then
+         kmsg phase=$slot LOAD; yc load > "$dir/ycsb-load.txt" 2>&1
+         grep -q '^\[INSERT\], Return=OK, ' "$dir/ycsb-load.txt"
++        cp "$dir/ycsb-load.txt" "$dir/ycsb-load-$slot.txt"
+         sync; cat "$control" > "$dir/phase-$slot-loaded.txt"
+     fi
+     touch "$dir/dc.flag"
+@@ -321,7 +324,9 @@
+            phase_sqlite B;;
+ esac
+ # ---- stop
+-stop_before=$(sectors); printf 'stop\n' > "$control"; after=$(sectors)
++stop_before=$(sectors); printf "%s\n" "$before" > "$dir/block-stat-before.txt"; printf 'stop\n' > "$control"; after=$(sectors)
++printf "%s\n" "$stop_before" > "$dir/block-stat-stop-before.txt"
++printf "%s\n" "$after" > "$dir/block-stat-after.txt"
+ [[ "$stop_before" == "$after" ]]
+ cat "$control" > "$dir/stopped.txt"
+ host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pages); bytes=$(field "$dir/stopped.txt" host_bytes)

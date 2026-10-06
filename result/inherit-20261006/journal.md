@@ -1,0 +1,12 @@
+
+## icat-2 상속형 혼합(mixV) — local preregistration 2026-10-06T11:46:08.336008+09:00
+
+Run ID: inherit-20261006; latest main 7a9f902bb10ca04201813235ea02407c3c347d98 pulled into clean icat-2 worktree, dirty root preserved. Execute `bash script/icat2-mixV.sh`: fixed37 smoke -> fixed37 long -> fixed50 smoke -> fixed50 long. No run overwrite/retry. Each smoke must satisfy runner exit0,9 phases, fio exact requested bytes/errors0,YCSB successful requested operations/time limit, Filebench all chunks/runtime,no ENOSPC, valid counters/block-stat, valid recorded extents before proceeding. Long failure also stops. Preserve and publish failures to icat-2.
+
+Same upstream workload definitions, file retention/deletion and smoke scaling retained. Smoke uses20000 YCSB operations (may finish before120s),FIO12s,Filebench120s; not9x120s timed-equivalence evidence. Long600000records,YCSB max4000s,FIO4000s plus6GiBcreation,OLTP4x1000s,Varmail4000s. Approx21h total after active v4 completes (~16:20); mixV placed before pending mixUfixed37/fixed50 by stated default. No active-run interruption.
+
+Prep writes df available minus256MiB rounded downMiB then deletes nodiscard: not literally everyLBA. Extent overlaps quantify saved physical-file-block snapshots, not complete dynamicI/O overlap or guaranteed inheritance. Initial state preserved across phase switches. End WAF includes preparation inside measured phases and transition metadata writes; phase sum may differ from whole counter totals due to transitions outside phase boundaries.
+
+Local-only execution differences: mandatory existing NVMeVirt guards instead of rejecting all NVMe controllers; outer campaign holds shared device.lock; immutable input hashes; preserve A/Hload logs and block-stat boundaries; stronger validation/publish between stages. Actual hostname/machineid/kernel/modulehash/build provenance/cpus/seeds/input source listed in metadata.json and host-environment.txt. Physicalnvme0n1 untouched. Source/extents/rawlogs/result reports under `result/inherit-20261006/`.
+
+- 2026-10-06T11:48:48.514858+09:00 Queue ordering: running mixU onlinev4 preserved; then inherit-20261006 fixed37 smoke/long, fixed50 smoke/long; then previous mixU fixed37/fixed50. Only idle waiter services restarted, no measured process interrupted. Previous launcher preserved in mixV campaign.
