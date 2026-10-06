@@ -11933,3 +11933,27 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 사용자 승인으로 mixV v4 10시간 중단(exit 143, 부분 증거 보존), queue40 종료. 다른 큐는 hold 프로세스로 대기.
 - 보정 시험(CAT-47, 각 15분 + 적재): mixW1 = 표 3과 같은 준비 후 FIO 파일 삭제 → YCSB-A 60만만; mixW2 = 표 3과 같은 준비, FIO 파일 유지(mixJ와 같은 상태) → YCSB-A 60만만.
 - 판정: 적재 WAF와 요청 WAF를 mixJ(1.26 / 1.51)와 비교. mixW1이 mixJ에 가까우면 mixV 준비 단계를 "표 3 준비 + 파일 삭제"로 바꿔 10시간 재시작. W1이 1에 가깝고 W2만 가까우면 FIO 파일 유지가 필요하다는 뜻이므로 설계를 사용자와 다시 정함. 두 번째 PC의 mixV 실행은 보류.
+
+### inherit-20261006 mixW1 fixed47 — started 2026-10-06T12:35:57+09:00
+
+- Calibration mixW1: Table-3 prep (6 GiB preset + 3 GiB random 4K prepare), FIO file deleted before the phase, then YCSB-A only (load 600000 records, run 900 s). Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=900 bash script/mix-inherit-20261006.sh mixW1 fixed47 1`; evidence `result/inherit-20261006/mixW1-fixed47/`.
+
+- Finished 2026-10-06T12:37:43+09:00; mixW1 fixed47 exit=139; evidence `/home/oy/iCAT/result/inherit-20261006/mixW1-fixed47`; cleanup attempted.
+
+### inherit-20261006 mixW2 fixed47 — started 2026-10-06T12:37:44+09:00
+
+- Calibration mixW2: Table-3 prep (6 GiB preset + 3 GiB random 4K prepare), FIO file kept, then YCSB-A only (load 600000 records, run 900 s). Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=900 bash script/mix-inherit-20261006.sh mixW2 fixed47 1`; evidence `result/inherit-20261006/mixW2-fixed47/`.
+- 2026-10-06 12:45 mixW1 실패: YCSB 적재 시작 5초 후 JVM segfault(libjvm.so, exit 139). 장치·커널 오류 없음. 증거는 mixW1-fixed47-failed-jvmsegv로 보존하고 mixW2 뒤에 한 번 재실행(queue42).
+
+- Finished 2026-10-06T12:54:47+09:00; mixW2 fixed47 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/mixW2-fixed47`; cleanup attempted.
+- total host_bytes=60044075008 host_pages=14659198 gc_pages=7009760 WAF=1.478182
+- phaseA(sqlite-a) host_pages=14659198 gc_pages=7009760 WAF=1.478182
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseA-load host_pages=1398341 gc_pages=373520 WAF=1.267117
+- phaseA-run host_pages=13260857 gc_pages=6636240 WAF=1.500438
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load [OVERALL], Throughput(ops/sec), 25900.0259000259
+- ycsb-run [OVERALL], Throughput(ops/sec), 8793.275271892197
