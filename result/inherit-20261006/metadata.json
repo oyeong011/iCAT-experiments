@@ -1,0 +1,82 @@
+{
+  "run_id": "inherit-20261006",
+  "registered_at": "2026-10-06T19:36:52.338390+09:00",
+  "hostname": "oy-B550M-DS3H",
+  "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0",
+  "kernel": "7.0.0-31-generic",
+  "source_commit": "13b5b1835321c2cd0265c42ec7e9a09c6fda04da",
+  "publish_branch": "icat-2",
+  "modules": {
+    "fixed37": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-fixed37.ko",
+      "sha256": "7045a5b2c4d2ae437f43275c6dc93bf882916efb1af708312664194ac7cba1f0",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "build_provenance": "existing local current-kernel modules reused, no rebuild; previous campaign metadata retained"
+    },
+    "fixed50": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-fixed50.ko",
+      "sha256": "f476acff890da8e28ce745ec3f2cf2b0eced8cb33752d99b40a093178511b5b6",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "build_provenance": "existing local current-kernel modules reused, no rebuild; previous campaign metadata retained"
+    }
+  },
+  "phase_order": [
+    "YCSB-A",
+    "OLTP",
+    "Varmail",
+    "YCSB-A",
+    "YCSB-B",
+    "FIO-Fast",
+    "Varmail",
+    "YCSB-A",
+    "OLTP"
+  ],
+  "measurement": "manual=1; single epoch9phases; prefill/preparation excluded; A/D/H DB loads and deletion metadata included;30s sampling",
+  "preparation": "6GiB sequential128KiB preset +3GiB random4KiB seed20260907 at10kIOPS; kept6GiB file",
+  "long": {
+    "PH_SECS": 4000,
+    "RECORDS": 600000,
+    "OPS": 1000000000,
+    "fio_runtime_expected": 4000,
+    "Varmail_files": 24000,
+    "OLTP_chunks": "4x1000s"
+  },
+  "wait_for": "none; obsolete run stopped and virtual module/mount absent; acquire shared device.lock",
+  "device": "/dev/nvme1n1 guarded CSL_Virt model/serial/vendor/PCI; physical nvme0n1 forbidden",
+  "seeds": {
+    "FIO_hot": 20260911,
+    "FIO_warm": 20261011,
+    "FIO_cold": 20261111,
+    "YCSB": "not explicitly seeded",
+    "Filebench": "not explicitly seeded"
+  },
+  "workload_sha256": {
+    "workloads/mix-test4.fio": "b5edbcc77f269f500986eae375da8a94d4bf762d30f52a58d8ffd0d4901fa946",
+    "workloads/filebench/oltp.f": "2dd0b5b422a656b07c03ef4322525a701b4872820548e6ae2342e01c2f2c8ea4",
+    "workloads/filebench/varmail.f": "44d34625ec29806d5b0ac2f3694bb40c0b1e70fba6a9c5157f4c8a16fbb7f23f",
+    "workloads/sqlite/workloada": "c0aff8a25402e3f8178b47db2cf0575ce9cacba4eeb4c4657e84cf748db8d92d",
+    "workloads/sqlite/workloadb": "34a7d090c7b87cd5482d0d2ee1f402e11deb3eafea7bfd8024321b6c6b97ef9b"
+  },
+  "execution_sha256": {
+    "execution-mix.sh": "5bec47c7125fc9959d5b26543cbf3698b7348820a7f0f2140fd69f350b8acd05",
+    "execution-entrypoint.sh": "1dea58da53f2ead2c1e6887ee30b79b20cb63475b5f194f7b76b6cd8ea59fee5",
+    "safety-env.sh": "7762144df2ae4db2ee4a33298fa604e08309e595f08bf8738d91c71a14fa5331",
+    "env-snapshot.sh": "d46a267d43fdbc10ad8cb6eb730a5d1c9ea468b9f1a227ff7a4aeda0fde0c943",
+    "validate-results.py": "d092406cfd93b5f342bd77088876b34c9508a7ccff27d002f30cad7f53098c37",
+    "stage-finished.py": "6316ad12c204b49d62f013c2cb933794d38c5b0a990cd6ea98f16623b7b8852e",
+    "publish-results.py": "ca06310dc91590fdce92a75a1b4b6ca224071471e695327421171cf2db260a11"
+  },
+  "minimum_commit": "40b28518",
+  "minimum_commit_ancestor_verified": true,
+  "design": "Table3 preparation with kept6GiB FIO file; DB deleted before B/F/I; 600k loaded at A/D/H",
+  "fitcheck": {
+    "PH_SECS": 60,
+    "RECORDS": 600000,
+    "OPS": 1000000000,
+    "fio_runtime_expected": 60,
+    "Varmail_files": 24000,
+    "OLTP_chunks": "4x15s"
+  },
+  "oldprep_archive": "/home/oy/iCAT/result/inherit-20261006-oldprep",
+  "started_at": "2026-10-06T19:37:18.298756+09:00"
+}
