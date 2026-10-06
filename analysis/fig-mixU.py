@@ -171,5 +171,8 @@ w4 = wb.create_sheet('판단별 원자료')
 for j, h in enumerate(['시간(h)', '학습 회차', f'남은 후보 수 (파티션 {PART})'], 1): put(w4, 1, j, h, True)
 for i, (h, e, a) in enumerate(tr, 2): put(w4, i, 1, round(h, 4)); put(w4, i, 2, e); put(w4, i, 3, a)
 wb.save(FIG / 'data' / 'mixU_v4.xlsx')
+# Fig.7 file on its own (same layout as fig7_v6_mixT.xlsx): only the learning sheets
+for name in ('WAF 추이', '구간별 WAF'): wb.remove(wb[name])
+wb.save(FIG / 'data' / 'fig7_mixU_v4.xlsx')
 print('total', TOT, 'phases', PH, 'resets', [round(r, 2) for r in resets])
 for r in rounds: print(r[0], r[3], len(r[4]), r[4][0], '->', min(r[4]), 'best', best.get(r[0]))
