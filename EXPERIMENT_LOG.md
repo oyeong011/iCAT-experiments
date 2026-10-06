@@ -11983,3 +11983,24 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 13:15 실제 크기 확인(v4, 구간 60초) 실패: 1번 YCSB-A(60만) 뒤 2번 OLTP 시작 시 `mkdir .../mnt/filebench: No space left on device`. FIO 파일 6 GiB + DB 60만이면 OLTP 자리가 없음(mixP와 같은 이유). 실패 증거 `fitcheck/mixV-onlinev4-rep1-failed-dbkept`. 실패를 2시간 늦게 보고(제가 감시를 걸지 않음), 그동안 장치 유휴.
 - 사용자 결정: OLTP(2·9번) 직전에도 DB 삭제, DB 60만은 1·4·8번에서 적재. 표 3 준비(FIO 파일 유지)와 나머지 전환은 13:00 수정과 같음. 표 3 mixP(DB 유지, 25만)와 다른 점으로 보고.
 - 순서(queue44): 실제 크기 확인(v4) → v4 10시간 → CAT-47 10시간. 두 번째 PC는 같은 runner를 쓰므로 `script/icat2-mixV.sh` 그대로.
+
+### inherit-20261006 mixV onlinev4 — started 2026-10-06T15:09:52+09:00
+
+- mixV (inheritance): 9 time-based phases of 60 s — YCSB-A (load 600000 records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x 60/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=60 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/fitcheck/mixV-onlinev4-rep1/`.
+
+- Finished 2026-10-06T15:23:09+09:00; mixV onlinev4 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/fitcheck/mixV-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=116020330496 host_pages=28325276 gc_pages=54910021 WAF=2.938552
+- phaseA(sqlite-a) host_pages=2726778 gc_pages=1407845 WAF=1.516303
+- phaseB(oltp) host_pages=1806589 gc_pages=609322 WAF=1.337278
+- phaseC(varmail) host_pages=9694335 gc_pages=13087241 WAF=2.349989
+- phaseD(sqlite-a) host_pages=2334413 gc_pages=2164436 WAF=1.927186
+- phaseE(sqlite-b) host_pages=211490 gc_pages=146605 WAF=1.693201
+- phaseF(test4) host_pages=2400067 gc_pages=11511242 WAF=5.796217
+- phaseG(varmail) host_pages=4868816 gc_pages=18293625 WAF=4.757305
+- phaseH(sqlite-a) host_pages=2570928 gc_pages=5897941 WAF=3.294090
+- phaseI(oltp) host_pages=1711759 gc_pages=1791764 WAF=2.046738
+- phaseA-load host_pages=1398339 gc_pages=633333 WAF=1.452918
+- phaseA-run host_pages=1328439 gc_pages=774512 WAF=1.583024
+- ycsb-load [OVERALL], Throughput(ops/sec), 23385.4308765639
+- ycsb-run [OVERALL], Throughput(ops/sec), 12364.166083974294
