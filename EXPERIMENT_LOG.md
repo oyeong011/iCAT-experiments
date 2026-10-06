@@ -12036,7 +12036,28 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 - Finished 2026-10-06T21:10:53+09:00; mixV onlinev4 exit=143; evidence `/home/oy/iCAT/result/inherit-20261006/fitcheck-400000/mixV-onlinev4-rep1`; cleanup attempted.
 
-### mixV FIO 파일 5 GiB — 사전 등록 2026-10-06 21:35 (사용자 결정)
+### mixV FIO 파일 5 GiB — 사전 등록 2026-10-06 21:11 (사용자 결정)
 - 사용자: 6 GiB 파일 때문에 실패하는 것보다 FIO 파일을 줄이는 게 낫다. → FIO-Fast의 차가운 영역 4 GiB → 3 GiB(`workloads/mix-test4-cold3g.fio`, 나머지 영역·IOPS·쓰기량 동일), 파일 5 GiB. 준비 = 5 GiB 순차 + 2.5 GiB 무작위 4K(표 3과 같은 비율). DB 60만.
 - 따라서 mixV의 FIO 구간은 논문의 FIO-Fast(6 GiB)와 다른 워크로드이며 직접 비교하지 않음.
 - 실제 크기 확인(구간 5분, YCSB 오류 시 실패) 1회 → 통과 시 v4 10시간 → CAT-47 10시간(queue46). DB 크기 탐색(queue45, 45만 확인 준비 단계에서 중단 → fitcheck-450000-stopped)은 취소.
+
+### inherit-20261006 mixV onlinev4 — started 2026-10-06T21:11:45+09:00
+
+- mixV (inheritance): 9 time-based phases of 300 s — YCSB-A (load 600000 records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x 300/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=300 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/fitcheck-fio5g-600000/mixV-onlinev4-rep1/`.
+
+- Finished 2026-10-06T22:01:00+09:00; mixV onlinev4 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/fitcheck-fio5g-600000/mixV-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=471910846464 host_pages=115212609 gc_pages=207532971 WAF=2.801304
+- phaseA(sqlite-a) host_pages=3541462 gc_pages=705319 WAF=1.199160
+- phaseB(oltp) host_pages=8908955 gc_pages=1122976 WAF=1.126050
+- phaseC(varmail) host_pages=46159922 gc_pages=69938596 WAF=2.515137
+- phaseD(sqlite-a) host_pages=3483178 gc_pages=1939741 WAF=1.556888
+- phaseE(sqlite-b) host_pages=425616 gc_pages=115241 WAF=1.270763
+- phaseF(test4) host_pages=12000331 gc_pages=39181556 WAF=4.265040
+- phaseG(varmail) host_pages=28228639 gc_pages=86417369 WAF=4.061337
+- phaseH(sqlite-a) host_pages=3455416 gc_pages=3855506 WAF=2.115786
+- phaseI(oltp) host_pages=9008997 gc_pages=4256636 WAF=1.472487
+- phaseA-load host_pages=1398350 gc_pages=330639 WAF=1.236449
+- phaseA-run host_pages=2143112 gc_pages=374680 WAF=1.174830
+- ycsb-load [OVERALL], Throughput(ops/sec), 25689.33036478849
+- ycsb-run [OVERALL], Throughput(ops/sec), 27175.597386066896
