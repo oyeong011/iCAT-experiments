@@ -12004,3 +12004,15 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=1328439 gc_pages=774512 WAF=1.583024
 - ycsb-load [OVERALL], Throughput(ops/sec), 23385.4308765639
 - ycsb-run [OVERALL], Throughput(ops/sec), 12364.166083974294
+
+### inherit-20261006 mixV onlinev4 — started 2026-10-06T15:23:22+09:00
+
+- mixV (inheritance): 9 time-based phases of 4000 s — YCSB-A (load 600000 records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x 4000/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/mixV-onlinev4-rep1/`.
+
+- Finished 2026-10-06T20:54:24+09:00; mixV onlinev4 exit=143; evidence `/home/oy/iCAT/result/inherit-20261006/mixV-onlinev4-rep1`; cleanup attempted.
+
+## YCSB 요청 실패(SQLITE_FULL) 발견 — 2026-10-06 20:50
+- 두 번째 PC(Codex)가 mixV CAT-37 실제 크기 확인에서 SQLITE_FULL을 발견해 중단. 이 PC의 mixV v4 10시간도 같은 상태(가상 SSD 파일시스템 100%, 1번 YCSB-A 수정 요청 약 10% 실패, 5번 YCSB-B 실패 로그 17 GB) → 20:45 중단(exit 143). 그 실행의 구간 WAF(표 3 대비 ±2% 보고 포함)는 쓰지 않음.
+- 전체 YCSB 실행 기록 358개 검사(`analysis/ycsb-errors-20261006.txt`): **DB 60만 + 6 GiB FIO 파일이 함께 있던 모든 실행(mixA 93, mixB 37, mixH 35, mixJ 82, mixR 11, mixV 5)에서 요청 실패, 최대 50~90%**. 4M 레코드 long 2개도 실패. 실패 0: mixP(25만), mixT(25만·30만), v6-mixT, main(4M, FIO 파일 삭제 후), 연기 시험(2만).
+- 결론: 위 60만 실행들의 YCSB 구간 WAF는 지정된 워크로드를 측정한 값이 아님 → YCSB 결과로 사용 불가. 오늘 W2가 mixJ를 "재현"한 것도 같은 오류 상태의 재현. runner가 요청 실패를 검사하지 않은 것이 원인(제 결함).
