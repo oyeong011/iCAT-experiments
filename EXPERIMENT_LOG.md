@@ -12021,3 +12021,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - runner 수정: YCSB 요청/적재에 Return=ERROR가 하나라도 있으면 그 구간에서 실행 실패(exit 3).
 - DB 크기: 실제 크기 확인(구간 5분)을 45만 → 40만 → 35만 → 30만 순으로, 오류 없이 9구간을 마친 가장 큰 크기를 사용(`chosen-records.txt`). 그 크기로 v4 10시간 → CAT-47 10시간(queue45). 그 외 설계는 15:20 수정과 같음.
 - SQLITE_FULL로 무효가 된 v4 10시간은 `mixV-onlinev4-rep1-sqlitefull`로 보존.
+
+### inherit-20261006 mixV onlinev4 — started 2026-10-06T21:02:25+09:00
+
+- mixV (inheritance): 9 time-based phases of 300 s — YCSB-A (load 450000 records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x 300/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=300 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/fitcheck-450000/mixV-onlinev4-rep1/`.
+
+- Finished 2026-10-06T21:09:27+09:00; mixV onlinev4 exit=3; evidence `/home/oy/iCAT/result/inherit-20261006/fitcheck-450000/mixV-onlinev4-rep1`; cleanup attempted.
