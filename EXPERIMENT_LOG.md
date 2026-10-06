@@ -11860,3 +11860,5 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 - mixV (inheritance): 9 time-based phases of 120 s — YCSB-A (load 20000 records) -> OLTP -> Varmail -> YCSB-A (same DB) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; 6 GiB file written then overwritten, payload x 120/600) -> Varmail (FIO file kept) -> YCSB-A (FIO file deleted, DB reloaded) -> OLTP (DB kept). Switches follow the Table-3 two-phase mixes; whole FS written+deleted once before measuring. Extents recorded per switch. Module `nvmev-varmail-20260908-fixed47.ko`.
 - Command: `env PH_SECS=120 bash script/mix-inherit-20261006.sh mixV fixed47 1`; evidence `result/inherit-20261006/mixV-fixed47-rep1-smoke/`.
+
+- 2026-10-06 11:32 사용자 결정으로 이 PC의 mixT onlinev6 10시간 실행을 7번 Varmail 구간 중 중단(exit=143). 이유: mixT 설계 자체가 영역을 나눠 써서(6 GiB FIO 파일 고정, DB 25만 축소) 결과 해석이 이상함 → 상속형 혼합(mixV)을 먼저 실행. 부분 증거는 `result/mix-20260911/mixT-onlinev6-rep1/`에 보존(10시간 전체 WAF 없음). mixV CAT-47 연기 시험 11:33 시작.
