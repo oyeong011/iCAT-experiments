@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # For the SECOND PC (Codex), 10-06: inheritance mix (mixV) — iCAT-v4 then CAT-47, smoke first. Pre-registered in EXPERIMENT_LOG.md
 # ("상속형 혼합(mixV) — 사전 등록 2026-10-06"). mixV = mixT's 9-phase order without the permanent 6 GiB FIO file: at every switch
-# the outgoing workload's files are deleted (nodiscard) and the next workload allocates on the freed LBAs (inherits them).
+# matching Table-3 two-phase mix (revised 10-06 12:10, see EXPERIMENT_LOG).
 # This PC runs the same pair in the opposite order (CAT-47 then v4), so each PC has its own v4-vs-CAT-47 comparison.
 # Usage: bash script/icat2-v4-mixV.sh   (results under result/inherit-20261006/, push to icat-2 as usual)
 set -euo pipefail
