@@ -11883,3 +11883,24 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=9056 gc_pages=0 WAF=1.000000
 - ycsb-load [OVERALL], Throughput(ops/sec), 17605.6338028169
 - ycsb-run [OVERALL], Throughput(ops/sec), 27739.251040221912
+
+### inherit-20261006 mixV fixed47 — started 2026-10-06T11:43:27+09:00
+
+- mixV (inheritance): 9 time-based phases of 4000 s — YCSB-A (load 600000 records) -> OLTP -> Varmail -> YCSB-A (same DB) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; 6 GiB file written then overwritten, payload x 4000/600) -> Varmail (FIO file kept) -> YCSB-A (FIO file deleted, DB reloaded) -> OLTP (DB kept). Switches follow the Table-3 two-phase mixes; whole FS written+deleted once before measuring. Extents recorded per switch. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-inherit-20261006.sh mixV fixed47 1`; evidence `result/inherit-20261006/mixV-fixed47-rep1/`.
+
+- Finished 2026-10-06T11:46:57+09:00; mixV fixed47 exit=143; evidence `/home/oy/iCAT/result/inherit-20261006/mixV-fixed47-rep1`; cleanup attempted.
+
+### mix-20260911 mixG arm46 — started 2026-10-06T11:47:15+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 12000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-arm46.ko`.
+- Command: `bash script/mix-20260911.sh mixG arm46`; evidence `result/mix-20260911/mixG-arm46/`.
+
+- Finished 2026-10-06T11:48:01+09:00; mixG arm46 exit=143; evidence `/home/oy/iCAT/result/mix-20260911/mixG-arm46-rep1-x3`; cleanup attempted.
+
+### inherit-20261006 mixV onlinev4 — started 2026-10-06T11:48:05+09:00
+
+- mixV (inheritance): 9 time-based phases of 120 s — YCSB-A (load 20000 records) -> OLTP -> Varmail -> YCSB-A (same DB) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; 6 GiB file written then overwritten, payload x 120/600) -> Varmail (FIO file kept) -> YCSB-A (FIO file deleted, DB reloaded) -> OLTP (DB kept). Switches follow the Table-3 two-phase mixes; whole FS written+deleted once before measuring. Extents recorded per switch. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=120 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/mixV-onlinev4-rep1-smoke/`.
+
+- 2026-10-06 11:46 순서 정정(사용자: v4부터). mixV CAT-47 10시간을 시작 4분 만에 중단(exit 143, `result/inherit-20261006/mixV-fixed47-rep1/` 부분 증거; queue40이 다시 돌 때 -failed-로 이름 변경). 그 틈에 queue38→queue31이 `mixG arm46 rep1 x3`을 시작해 준비 단계에서 중단(이 실행은 큐가 나중에 다시 돌림). queue40 재시작: v4 연기 시험(11:48) → v4 10시간 → CAT-47 10시간. CAT-47 연기 시험(통과)은 유지.
