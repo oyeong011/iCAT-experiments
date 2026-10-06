@@ -105,7 +105,7 @@ def seq_points(maxpts=70):
         out.append(pts)
     return out
 SEQ = seq_points()
-RW = {i: f'{r[0]}회차\n{"+".join(w.split(".")[1] for w in r[3])}\n{r[1]:.1f}~{r[2]:.1f}h · 판단 {len(r[4])}번' for i, r in enumerate(rounds)}
+RW = {i: f'{r[0]}회차\n{"+".join(w.split(".")[1] for w in r[3])}\n{r[1]:.1f}~{r[2]:.1f}h · 시험 {len(r[4])}번' for i, r in enumerate(rounds)}
 f7, a7 = plt.subplots(figsize=(14, 6.4))
 for i, r in enumerate(rounds):
     wl = r[3][0].split('.')[1]
@@ -116,7 +116,9 @@ xs = [x for pts in SEQ for x, _ in pts]; ys = [y for pts in SEQ for _, y in pts]
 xs2, ys2 = [], []
 for k, pts in enumerate(SEQ):   # connect rounds: end of round k -> 45 at the start of round k+1 (the reset jump)
     xs2 += [x for x, _ in pts]; ys2 += [y for _, y in pts]
-a7.plot(xs2, ys2, color=BLUE, lw=2.2, marker='o', ms=3.2, zorder=3)
+a7.plot(xs2, ys2, color=BLUE, lw=2.2, zorder=3)
+CH = [(i + j / len(r[4]), v) for i, r in enumerate(rounds) for j, v in enumerate(r[4]) if j == 0 or v != r[4][j - 1]]   # round start + every removal
+a7.scatter([x for x, _ in CH], [y for _, y in CH], s=26, color=BLUE, edgecolor='white', linewidth=0.8, zorder=5)
 for i, r in enumerate(rounds):
     lo = min(r[4])
     if i: a7.annotate('초기화\n→ 45개로', (i, 45), (i + 0.03, 49.5), fontsize=8.5, color=PUR, weight='bold', va='top')
@@ -126,10 +128,11 @@ for i, r in enumerate(rounds):
         a7.text(i + 0.5, 41, '안 줄어듦\n(후보끼리 차이 작음)', ha='center', va='top', fontsize=8.5, color=INK2)
 a7.set_xlim(0, len(rounds)); a7.set_xticks([]); a7.set_ylim(0, 50); a7.set_yticks([0, 5, 15, 30, 45]); a7.set_ylabel('남은 후보 수 (파티션 2)')
 a7.grid(False); a7.yaxis.grid(True)
-f7.subplots_adjust(top=0.78, bottom=0.2)
+f7.subplots_adjust(top=0.74, bottom=0.2)
 f7.suptitle('그림 7. iCAT-v6의 학습: 후보 45개 → 줄이기 → (워크로드 변화 감지) 초기화 → 다시 45개 → 다시 줄이기', x=0.06, ha='left', y=0.985, fontsize=13.5, weight='bold', color=INK)
-f7.text(0.06, 0.89, '불규칙 순서 응용 혼합 10시간. 칸 하나 = 학습 1회차(폭은 같게 맞춤, 칸 안에서 왼쪽→오른쪽 = 그 회차의 판단 순서). 보라 선 = 초기화. 점 = 판단(평평한 곳은 일부만 표시).\n'
-         '각 회차는 먼저 45개를 한 번씩 다 시험하고(평평) 그다음 나쁜 후보를 버린다(하락). FIO-Fast·7번 Varmail에서 45→5. ' + NOTE, fontsize=9, color=INK2)
+f7.text(0.06, 0.89, '불규칙 순서 응용 혼합 10시간. 칸 하나 = 학습 1회차(폭은 같게 맞춤, 칸 안 왼쪽→오른쪽 = 시간 순서). 보라 선 = 초기화. 점 = 회차 시작과 후보를 버린 순간.\n'
+         '시험 1번 = 후보 하나를 512 MiB 쓰는 동안(GC 128번 이상) 써 보고 WAF 점수를 매기는 것.\n'
+         '각 회차는 먼저 45개를 한 번씩 다 시험하고(평평) 그다음 나쁜 후보를 버린다(하락). FIO-Fast·7번 Varmail에서 45→5.  ' + NOTE, fontsize=9, color=INK2)
 for e in ('png', 'pdf'): f7.savefig(FIG / f'fig7_v6_mixT.{e}', dpi=200, bbox_inches='tight')
 # ---------------- xlsx
 HDR = PatternFill('solid', fgColor='EEF2FB')
@@ -226,7 +229,13 @@ for i, r in enumerate(rounds):    # round names written at the top of each slot
     put(ws, 1, lc + 2 * i, f'라벨{i + 1} x', True); put(ws, 1, lc + 2 * i + 1, RW[i].replace('\n', ' / '), True)
     put(ws, 2, lc + 2 * i, i + 0.5); put(ws, 2, lc + 2 * i + 1, 1)
 ch = scatter('그림 7. v6 학습: 45개 → 줄이기 → 초기화(보라) → 다시 45개 → 다시 줄이기', '학습 회차 (칸 하나 = 1회차, 아래 글자 = 그 회차의 워크로드·시간)', '남은 후보 수', 14, 36, 0, len(rounds), 1, 0, 50)
-add(ch, ws, 1, len(xs), '2A78D6', 25400, 'circle', 4)
+add(ch, ws, 1, len(xs), '2A78D6', 25400, 'none')
+put(ws, 1, 3, '점: 회차 시작·후보 버린 순간 x', True)
+for k, (x, y) in enumerate(CH, 2): put(ws, k, 3, round(x, 4)); put(ws, k, c0 + 4 * len(rounds) + 2, y)
+put(ws, 1, c0 + 4 * len(rounds) + 2, '회차 시작·후보 버린 순간', True)
+s = Series(Reference(ws, min_col=c0 + 4 * len(rounds) + 2, min_row=1, max_row=len(CH) + 1), Reference(ws, min_col=3, min_row=2, max_row=len(CH) + 1), title_from_data=True)
+s.marker.symbol = 'circle'; s.marker.size = 6; s.marker.graphicalProperties.solidFill = '2A78D6'; s.marker.graphicalProperties.line.solidFill = 'FFFFFF'; s.graphicalProperties.line.noFill = True
+ch.series.append(s)
 hidden = []
 for i in range(1, len(rounds)):
     c = c0 + 2 * (i - 1)
