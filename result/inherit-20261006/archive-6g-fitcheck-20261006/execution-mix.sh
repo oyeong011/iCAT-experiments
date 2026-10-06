@@ -40,7 +40,7 @@ case "$label" in
     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
     t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
     mixA|mixB|mixG|mixH|mixJ|mixT) scale=1; RECORDS=600000; OPS=4000000;;
-    mixV)  scale=1;  RECORDS=${MIXV_RECORDS:-600000}; OPS=1000000000;;   # 20:50: 600k + kept FIO file = SQLITE_FULL; size chosen by fit check
+    mixV)  scale=1;  RECORDS=600000; OPS=1000000000;;
     mixW1|mixW2) scale=1; RECORDS=600000; OPS=1000000000;;   # 10-06 calibration: YCSB-A 600k only, after Table-3 prep   # no permanent FIO file, so the original 600k DB fits again
     mixP)  scale=1;  RECORDS=250000; OPS=4000000;;   # sqlite then oltp: 600k records + WAL left no room for the oltp fileset (ENOSPC on rep1)
     mixR)  scale=1;  RECORDS=600000; OPS=14000000;;   # test4 -> sqlite-a -> test4, each phase ~24M host pages (sqlite-a run ~1.7 pages/op)
@@ -109,7 +109,9 @@ finish() {
 trap finish EXIT; trap 'exit 130' INT; trap 'exit 143' TERM
 trap 'printf "FAIL line=%s command=%s\n" "$LINENO" "$BASH_COMMAND" >&2' ERR
 if [[ -e /sys/module/nvmev ]] || mountpoint -q "$root/mnt"; then echo 'Device already in use'; exit 1; fi
-if compgen -G '/sys/class/nvme/nvme*' >/dev/null; then echo 'Existing NVMe device: refusing initialization'; exit 1; fi
+# Mandatory existing NVMeVirt adapter: physical controller may coexist but is never an allowed target.
+[[ "${BASH_ENV:-}" == /home/oy/iCAT/result/inherit-20261006/safety-env.sh && "${MIXV_LOCK_HELD:-}" == 1 ]] || exit 1
+declare -F sudo assert_virtual_dev assert_virtual_mount >/dev/null || exit 1
 { date -Is; uname -a; cat /proc/cmdline; fio --version; java -version 2>&1; sqlite3 --version; sha256sum "$module" "$0" "$root/workloads/mix-test4.fio" "$root/workloads/sqlite/workloada"; lscpu; free -h; } > "$dir/environment.txt"
 kmsg BEGIN
 mkdir -p "$dir/kernel-snapshots"
@@ -134,15 +136,14 @@ if [[ "$label" == mixV-fill ]]; then   # 10-06 13:00: retired (load WAF 1.00 vs 
     ext 0 fill "$root/mnt/fill.dat"; rm -f "$root/mnt/fill.dat"; sync; sleep 10; sync
     df -B1 "$root/mnt" > "$dir/fill-df.txt"; cp "$dir/preset.json" "$dir/prepare.json"
 else
-FGB=6; [[ $label != mixV ]] || FGB=${MIXV_FIO_GB:-6}   # 21:30: mixV may use a 5 GiB FIO-Fast (cold region 3 GiB)
-fio --name=preset --filename="$FIO_TARGET" --size=${FGB}G --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/preset.json"
-fio --name=prepare --filename="$FIO_TARGET" --size=${FGB}G --io_size=$((FGB * 512))M --rw=randwrite --bs=4k --direct=1 --ioengine=libaio --iodepth=32 --rate_iops=10000 --randrepeat=1 --randseed=20260907 --end_fsync=1 --output-format=json --output="$dir/prepare.json"
+fio --name=preset --filename="$FIO_TARGET" --size=6G --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/preset.json"
+fio --name=prepare --filename="$FIO_TARGET" --size=6G --io_size=3G --rw=randwrite --bs=4k --direct=1 --ioengine=libaio --iodepth=32 --rate_iops=10000 --randrepeat=1 --randseed=20260907 --end_fsync=1 --output-format=json --output="$dir/prepare.json"
 sync -f "$FIO_TARGET"
 jq -s -e 'all(.[]; all(.jobs[]; .error == 0))' "$dir/preset.json" "$dir/prepare.json" >/dev/null
 fi
 cat "$control" > "$dir/prepared.txt"
 [[ $(field "$dir/prepared.txt" host_bytes) == 0 && $(field "$dir/prepared.txt" gc_pages) == 0 ]]
-before=$(sectors)
+before=$(sectors); printf "%s\n" "$before" > "$dir/block-stat-before.txt"
 printf 'start\n' > "$control"
 cat "$control" > "$dir/started.txt"
 # ---- phases. Slot A runs first, slot B second; which workload fills each slot depends on the label.
@@ -150,6 +151,7 @@ phase_fio() { # phase_fio <slot> <fio job file>
     local slot=$1 job=$2
     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
     cat "$control" > "$dir/phase-$slot-start.txt"
+    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"
     [[ -z "${PRE_FIO:-}" ]] || fio --name=create --filename="$FIO_TARGET" --size=6G --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/phase-$slot-create.json"
     fio "$root/workloads/$job" --output-format=json --output="$dir/phase-$slot.json"
     sync -f "$FIO_TARGET"
@@ -160,6 +162,7 @@ phase_fio() { # phase_fio <slot> <fio job file>
 phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHub sqlite.sh: WAL, batch 1000, drop_caches 4s during run)
     local slot=$1 wl=${2:-a} load=${3:-1}
     cat "$control" > "$dir/phase-$slot-start.txt"
+    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"
     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
     ((load)) && sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
      CREATE TABLE usertable (YCSB_KEY VARCHAR(255) PRIMARY KEY, FIELD0 TEXT, FIELD1 TEXT, FIELD2 TEXT, FIELD3 TEXT, FIELD4 TEXT, FIELD5 TEXT, FIELD6 TEXT, FIELD7 TEXT, FIELD8 TEXT, FIELD9 TEXT);"
@@ -168,6 +171,7 @@ phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHu
     if ((load)); then
         kmsg phase=$slot LOAD; yc load > "$dir/ycsb-load.txt" 2>&1
         grep -q '^\[INSERT\], Return=OK, ' "$dir/ycsb-load.txt"
+        cp "$dir/ycsb-load.txt" "$dir/ycsb-load-$slot.txt"
         sync; cat "$control" > "$dir/phase-$slot-loaded.txt"
     fi
     touch "$dir/dc.flag"
@@ -175,9 +179,6 @@ phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHu
     kmsg phase=$slot RUN; yc run > "$dir/ycsb-run-$slot.txt" 2>&1; cp "$dir/ycsb-run-$slot.txt" "$dir/ycsb-run.txt"
     rm -f "$dir/dc.flag"; wait "$dc"; dc=
     grep -q '^\[\(UPDATE\|READ\)\], Return=OK, ' "$dir/ycsb-run-$slot.txt"
-    # 10-06 20:50: a request that failed (e.g. SQLITE_FULL) makes the run invalid — stop instead of measuring a broken workload
-    ! grep -q '], Return=ERROR, ' "$dir/ycsb-run-$slot.txt" || { kmsg phase=$slot YCSB_ERRORS; echo "YCSB request errors in phase $slot" >&2; exit 3; }
-    ((load == 0)) || ! grep -q '], Return=ERROR, ' "$dir/ycsb-load.txt" || { echo "YCSB load errors in phase $slot" >&2; exit 3; }
     sync; cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
     kmsg phase=$slot END
 }
@@ -188,6 +189,7 @@ phase_filebench() { # phase_filebench <slot> <profile> [nfiles] [filesize]: File
     [[ -z "$nf" ]] || sed -i "s#^set \$nfiles=.*#set \$nfiles=${VM_FILES:-$nf}#" "$wl"
     [[ -z "$fs" ]] || sed -i "s#^set \$filesize=.*#set \$filesize=$fs#" "$wl"   # the 6 GiB preset file stays; only ~1.5 GiB is free
     cat "$control" > "$dir/phase-$slot-start.txt"
+    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"
     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
     # VM_CHUNKS=n (10-03): phase length = VM_RUN x n. filebench's OLTP profile grows ~300 MB/min (aio leak) and stalls the host
     # after ~25 min, so a profile with reusable filesets (oltp) runs as n back-to-back VM_RUN pieces on the same files;
@@ -208,7 +210,8 @@ phase_filebench() { # phase_filebench <slot> <profile> [nfiles] [filesize]: File
 phase_varmail() { phase_filebench "$1" varmail 24000; }   # 24000 files = the GitHub sweep condition
 phase_alternate() { # phase_alternate <slot>: 5 cycles of (fast test4 60 s, slow test3 60 s) — repeated speed changes
     local slot=$1 i
-    cat "$control" > "$dir/phase-$slot-start.txt"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    cat "$control" > "$dir/phase-$slot-start.txt"
+    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
     for i in 1 2 3 4 5; do
         kmsg phase=$slot cycle=$i fast
         HOT_IO=$((HOT_IO/10)) WARM_IO=$((WARM_IO/10)) COLD_IO=$((COLD_IO/10)) fio "$root/workloads/mix-test4.fio" --output-format=json --output="$dir/phase-$slot-c$i-fast.json"
@@ -220,7 +223,8 @@ phase_alternate() { # phase_alternate <slot>: 5 cycles of (fast test4 60 s, slow
 }
 phase_ramp() { # phase_ramp <slot>: IOPS ramps 10k -> 20k -> 30k -> 40k -> 50k, 120 s each (gradual drift instead of a step)
     local slot=$1 m
-    cat "$control" > "$dir/phase-$slot-start.txt"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    cat "$control" > "$dir/phase-$slot-start.txt"
+    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
     for m in 1 2 3 4 5; do   # test3 rates x m; payload = 120 s worth
         kmsg phase=$slot step=$m
         HOT_R=$((6000*m)) WARM_R=$((3000*m)) COLD_R=$((1000*m)) HOT_IO=$((6000*m*120*4096/scale)) WARM_IO=$((3000*m*120*4096/scale)) COLD_IO=$((1000*m*120*4096/scale)) \
@@ -231,13 +235,15 @@ phase_ramp() { # phase_ramp <slot>: IOPS ramps 10k -> 20k -> 30k -> 40k -> 50k, 
 }
 phase_idle() { # phase_idle <slot> <seconds>: no I/O; block ages keep growing
     local slot=$1 sec=$2
-    cat "$control" > "$dir/phase-$slot-start.txt"; kmsg phase=$slot START idle=$sec; date -Is > "$dir/phase-$slot-start.time"
+    cat "$control" > "$dir/phase-$slot-start.txt"
+    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"; kmsg phase=$slot START idle=$sec; date -Is > "$dir/phase-$slot-start.time"
     sleep "$sec"
     cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"; kmsg phase=$slot END
 }
 phase_concurrent() { # phase_concurrent <slot>: fio test4 (half payload) in background while sqlite-a runs; both tenants share the device
     local slot=$1 fpid
     cat "$control" > "$dir/phase-$slot-start.txt"
+    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"
     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
     ( exec 9>&-; HOT_IO=$((HOT_IO/2)) WARM_IO=$((WARM_IO/2)) COLD_IO=$((COLD_IO/2)) fio "$root/workloads/mix-test4.fio" --output-format=json --output="$dir/phase-$slot.json" ) & fpid=$!
     sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
@@ -303,7 +309,7 @@ case "$label" in
                    V)  PN[$sl]=varmail; VM_RUN=$((ps_ / 4)) VM_CHUNKS=4 phase_varmail $sl;;
                    F)  PN[$sl]=test4   # 6 GiB file written sequentially inside the phase, then the usual test4 overwrites
                        HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) \
-                         phase_fio $sl $([[ $FGB == 5 ]] && echo mix-test4-cold3g.fio || echo mix-test4.fio); ext $sl files "$FIO_TARGET";;   # the Table-3 prep file, kept all run
+                         phase_fio $sl mix-test4.fio; ext $sl files "$FIO_TARGET";;   # the Table-3 prep file, kept all run
                esac
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
     mixT)  # 10-04 (user): app workloads in an irregular order, 9 phases x PH_SECS (default 4000 s) = 10 h:
@@ -333,7 +339,9 @@ case "$label" in
            phase_sqlite B;;
 esac
 # ---- stop
-stop_before=$(sectors); printf 'stop\n' > "$control"; after=$(sectors)
+stop_before=$(sectors); printf "%s\n" "$before" > "$dir/block-stat-before.txt"; printf 'stop\n' > "$control"; after=$(sectors)
+printf "%s\n" "$stop_before" > "$dir/block-stat-stop-before.txt"
+printf "%s\n" "$after" > "$dir/block-stat-after.txt"
 [[ "$stop_before" == "$after" ]]
 cat "$control" > "$dir/stopped.txt"
 host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pages); bytes=$(field "$dir/stopped.txt" host_bytes)

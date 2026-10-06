@@ -13,31 +13,28 @@ shared=(R/'result/mix-20260911/device.lock').open('w');fcntl.flock(shared,fcntl.
 meta=json.loads((P/'metadata.json').read_text());rc=1;issues=[];proc=None
 try:
  for f,h in meta['execution_sha256'].items():assert digest(P/f)==h,'Changed execution input '+f
- assert (R/'script/mix-inherit-20261006.sh').read_bytes()==(P/'execution-mix.sh').read_bytes(),'runner changed'
+ assert (R/'script/icat2-mixV.sh').read_bytes()==(P/'execution-entrypoint.sh').read_bytes(),'entrypoint changed'
  for f,h in meta['workload_sha256'].items():assert digest(R/f)==h,'Changed workload '+f
  for policy,m in meta['modules'].items():
   assert digest(Path(m['path']))==m['sha256'],'Changed module '+policy
   assert subprocess.check_output(['modinfo','-F','vermagic',m['path']],text=True).split()[0]==os.uname().release,'Kernel/module mismatch'
-  for base in [P]:assert not (base/f'mixV-{policy}-rep1').exists(),'Refuse overwrite'
+  for base in [P,P/'fitcheck']:assert not (base/f'mixV-{policy}-rep1').exists(),'Refuse overwrite'
  assert not Path('/sys/module/nvmev').exists(),'Device module occupied'
  assert subprocess.run(['mountpoint','-q',str(R/'mnt')]).returncode!=0,'Mount occupied'
  meta['started_at']=now();(P/'metadata.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n')
  env=os.environ.copy()
- for k in ['SMOKE','PH_SECS','MULT','VM_FILES','VM_RUN','VM_CHUNKS','YCSB_SECS','PRE_FIO','ICAT_ROOT','MNT_DIR','MIXV_FIO_GB','MIXV_RECORDS']:env.pop(k,None)
+ for k in ['SMOKE','PH_SECS','MULT','VM_FILES','VM_RUN','VM_CHUNKS','YCSB_SECS','PRE_FIO','ICAT_ROOT','MNT_DIR']:env.pop(k,None)
  env.update(DEV='/dev/nvme1n1',ICAT_ROOT=str(R),MNT_DIR=str(R/'mnt'),MIX_BASE=str(P),MIX_JOURNAL=str(P/'journal.md'),BASH_ENV=str(P/'safety-env.sh'),MIXV_LOCK_HELD='1')
  with (P/'pipeline.console.txt').open('x') as output:
-  proc=subprocess.Popen(['bash',str(P/'execution-entrypoint.sh')],cwd=R,env=env,stdout=output,stderr=subprocess.STDOUT)
+  proc=subprocess.Popen(['bash','script/icat2-mixV.sh'],cwd=R,env=env,stdout=output,stderr=subprocess.STDOUT)
   (P/'pipeline.pid').write_text(str(proc.pid)+'\n')
   while proc.poll() is None:
    stage=(P/'current-stage.txt').read_text().strip() if (P/'current-stage.txt').exists() else 'preparation'
-   policy=stage.split('-')[0]
-   raw=P/f'mixV-{policy}-rep1'
-   begun=[slot for slot in 'ABCDEFGHI' if (raw/f'phase-{slot}-start.time').exists()]
-   status('running_'+stage+'_'+(begun[-1] if begun else 'preparation'));time.sleep(2)
+   status('running_'+stage);time.sleep(2)
   rc=proc.wait()
  if rc:issues.append('entrypoint exited '+str(rc)+'; inspect pipeline console and stage logs')
  for policy in ['fixed37','fixed50']:
-  for stage in ['long']:
+  for stage in ['fitcheck','long']:
    f=P/f'{policy}-{stage}-result.json'
    if not f.exists() or json.loads(f.read_text()).get('status')!='validated_saved_evidence':issues.append(policy+' '+stage+' not validated')
 except Exception:

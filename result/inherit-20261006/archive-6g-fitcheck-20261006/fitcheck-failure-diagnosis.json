@@ -1,0 +1,101 @@
+{
+  "checked_at": "2026-10-06T19:57:34.774680+09:00",
+  "status": "failed_fitcheck_SQLITE_FULL",
+  "runner_exit": 0,
+  "validation_exit": 1,
+  "successful_performance_result": false,
+  "failed_operations": 2056988,
+  "phases": [
+    {
+      "phase": "A",
+      "first_SQLITE_FULL": "Error in processing read of table usertable: org.sqlite.SQLiteException: [SQLITE_FULL] Insertion failed because database is full (database or disk is full)",
+      "return_counts": [
+        {
+          "operation": "READ",
+          "status": "OK",
+          "count": 34894
+        },
+        {
+          "operation": "READ",
+          "status": "ERROR",
+          "count": 420199
+        },
+        {
+          "operation": "UPDATE",
+          "status": "OK",
+          "count": 454527
+        }
+      ],
+      "source": "/home/oy/iCAT/result/inherit-20261006/fitcheck/mixV-fixed37-rep1/ycsb-run-A.txt.gz"
+    },
+    {
+      "phase": "D",
+      "first_SQLITE_FULL": "Error in processing update to table: usertableorg.sqlite.SQLiteException: [SQLITE_FULL] Insertion failed because database is full (database or disk is full)",
+      "return_counts": [
+        {
+          "operation": "READ",
+          "status": "OK",
+          "count": 336984
+        },
+        {
+          "operation": "UPDATE",
+          "status": "OK",
+          "count": 306177
+        },
+        {
+          "operation": "UPDATE",
+          "status": "ERROR",
+          "count": 30209
+        }
+      ],
+      "source": "/home/oy/iCAT/result/inherit-20261006/fitcheck/mixV-fixed37-rep1/ycsb-run-D.txt.gz"
+    },
+    {
+      "phase": "E",
+      "first_SQLITE_FULL": "Error in processing read of table usertable: org.sqlite.SQLiteException: [SQLITE_FULL] Insertion failed because database is full (database or disk is full)",
+      "return_counts": [
+        {
+          "operation": "READ",
+          "status": "OK",
+          "count": 639148
+        },
+        {
+          "operation": "READ",
+          "status": "ERROR",
+          "count": 1579197
+        },
+        {
+          "operation": "UPDATE",
+          "status": "OK",
+          "count": 116533
+        }
+      ],
+      "source": "/home/oy/iCAT/result/inherit-20261006/fitcheck/mixV-fixed37-rep1/ycsb-run-E.txt.gz"
+    },
+    {
+      "phase": "H",
+      "first_SQLITE_FULL": "Error in processing update to table: usertableorg.sqlite.SQLiteException: [SQLITE_FULL] Insertion failed because database is full (database or disk is full)",
+      "return_counts": [
+        {
+          "operation": "READ",
+          "status": "OK",
+          "count": 308700
+        },
+        {
+          "operation": "UPDATE",
+          "status": "OK",
+          "count": 280905
+        },
+        {
+          "operation": "UPDATE",
+          "status": "ERROR",
+          "count": 27383
+        }
+      ],
+      "source": "/home/oy/iCAT/result/inherit-20261006/fitcheck/mixV-fixed37-rep1/ycsb-run-H.txt.gz"
+    }
+  ],
+  "long_fixed37_started": false,
+  "fixed50_started": false,
+  "interpretation": "Actual SQLite full errors, not validator false positive. runner exit0 and9summary lines are insufficient. WAF summary is failed-workload diagnostic only. No parameter changes or retries made."
+}

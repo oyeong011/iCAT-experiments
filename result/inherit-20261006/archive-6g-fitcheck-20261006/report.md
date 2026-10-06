@@ -1,0 +1,16 @@
+
+## icat-2 mixV Table-3 prep restart — 2026-10-06T19:36:52.338390+09:00
+- User explicitly interrupted obsolete mixV fixed37 (exit143). All544 files byte-verified and archived under result/inherit-20261006-oldprep; raw names end-oldprep; archive pushed53f08223. No old values are valid results of this new design.
+- main pulled at 13b5b1835321c2cd0265c42ec7e9a09c6fda04da; git merge-base verifies40b28518 is ancestor. Dirty root preserved; exact upstream scripts and local safety/evidence diffs saved here.
+- Command: bash script/icat2-mixV.sh; order fixed37 full-size fitcheck60s -> fixed37 long4000s -> fixed50 fitcheck60s -> fixed50 long4000s. Each has9phases YA/O/V/YA/YB/F/V/YA/O. Estimated fitcheck12–16min each including prep and loads, full campaign~20h40m. Never overwrite, shrink DB, or retry failed fitcheck automatically.
+- Identical latest-main workload:6GiB sequential128KiB preset then3GiB random4KiB at10kIOPS seed20260907, excluded from measurement;6GiB FIO file kept through9phases. DB600000records loaded inA/D/H; deleted beforeB/F/I. OLTP32MiB files4chunks;Varmail24000files;YCSBA/B sameDB onlyD->E. This differs from older Table3 mixP in deletion beforeOLTP; not claim all transitions identical.
+- Safety: current-kernel fixed37/fixed50 modules identified inmetadata, reused; NVMeVirt model/serial/PCI/vendor guards; physicalnvme0 forbidden; exclusive shareddevice.lock. One experiment at a time. Actualmachine/kernel/module hashes/source/seeds/environment inmetadata andhost-environment. YCSB/Filebench seeds not explicitly supplied.
+- Measurement:manual=1, one continuous epoch per run;30s samples; keep initial learning/preparation-inside-phase costs. Validate9phase duration/order, DB600000insert successes forA/D/H, noYCSBerrors, fioerror0 exactbytes/time, Filebench allchunks, counters, host_bytes vsblockstats, same6GiBfileinode/size atphase starts, usableextent snapshots. GCpageWAF is not independent physicalNAND measurement.
+- Local changes only safety adapter, stronger post-stage validation/publication, preserve overwritten DBload summaries/blockstats and fileidentity evidence. Raw extents are end-phase snapshots, not complete LBAwrite traces.
+- Any failed stage stops all remaining stages; raw partiallogs/counters retained and pushedicat-2. Existing mixUfixed37/fixed50 waiters resume only after this newcampaign validates. Result rootresult/inherit-20261006; fitcheck subdirectoryfitcheck/.
+
+- mixV campaign FINISHED {"run_id": "inherit-20261006", "exit_code": 1, "status": "failed_or_incomplete_preserved", "issues": ["entrypoint exited 1; inspect pipeline console and stage logs", "fixed37 fitcheck not validated", "fixed37 long not validated", "fixed50 fitcheck not validated", "fixed50 long not validated"], "finished_at": "2026-10-06T19:49:53.019719+09:00", "source_commit": "13b5b1835321c2cd0265c42ec7e9a09c6fda04da", "raw_path": "/home/oy/iCAT/result/inherit-20261006"}
+
+## 공간 확인 실패 진단 2026-10-06T19:57:34.774680+09:00
+
+CAT-37 fitcheck ended19:49 with runner exit0 but validation exit1. SQLITE_FULL occurred in A/D/E/H; failed YCSB operations: 2056988. CAT-37 long and CAT-50 were not started. WAF3.005294 is a failed-workload diagnostic, not valid policy performance. Raw compressed YCSB logs preserved; full counts/source paths in fitcheck-failure-diagnosis.json. No automatic retry or workload-size change.

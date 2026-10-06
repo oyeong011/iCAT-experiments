@@ -2,9 +2,9 @@
 from pathlib import Path
 from datetime import datetime
 import sys,re,json,gzip,csv
-P=Path(__file__).resolve().parent;policy,stage=sys.argv[1:];assert policy in ('fixed37','fixed50') and stage=='long'
-D=P/f'mixV-{policy}-rep1'
-smoke=False;secs=4000;records=600000
+P=Path(__file__).resolve().parent;policy,stage=sys.argv[1:];assert policy in ('fixed37','fixed50') and stage in ('fitcheck','long')
+D=(P/'fitcheck' if stage=='fitcheck' else P)/f'mixV-{policy}-rep1'
+smoke=False;secs=60 if stage=='fitcheck' else 4000;records=600000
 meta=json.loads((P/'metadata.json').read_text())
 def require(ok,msg):
  if not ok:raise AssertionError(msg)
@@ -29,15 +29,13 @@ require(len(parts)==4 and all(p['arm']==int(policy[-2:]) for p in parts),'four p
 require(all(sum(p[k] for p in parts)==b[k] for k in ['host_pages','gc_pages']),'partition totals')
 before=int(read('block-stat-before.txt'));after=int(read('block-stat-after.txt'))
 require(after==int(read('block-stat-stop-before.txt')) and b['host_bytes']==(after-before)*512,'block-stat/host-byte mismatch')
-fio('preset.json',5*1024**3);fio('prepare.json',2560*1024**2)
+fio('preset.json',6*1024**3);fio('prepare.json',3*1024**3)
 require(not (D/'phase-F-create.json').exists(),'FIO recreated instead of kept')
 identities=[read(f'fio-file-{slot}-start.stat').strip().split() for slot in 'ABCDEFGHI']
-require(all(len(x)==2 and int(x[1])==5*1024**3 for x in identities) and len({x[0] for x in identities})==1,'same5GiB FIO file retained')
+require(all(len(x)==2 and int(x[1])==6*1024**3 for x in identities) and len({x[0] for x in identities})==1,'same6GiB FIO file retained')
 expected={k:n*secs//600//(10 if smoke else 1) for k,n in [('hot',58982400000),('warm',29491200000),('cold',9830400000)]}
 jobs=fio('phase-F.json',sum(expected.values()))
 require(len(jobs)==3 and {j['jobname'] for j in jobs}==set(expected),'FIO jobs')
-regions={'hot':('0','512M'),'warm':('512M','1536M'),'cold':('2G','3G')}
-require(all((str(j['job options']['offset']),str(j['job options']['size']))==regions[j['jobname']] for j in jobs),'5GiB file regions; cold3GiB')
 require(all(j['write']['io_bytes']==expected[j['jobname']] and j['write']['runtime']>=(secs/(10 if smoke else 1)-2)*1000 for j in jobs),'FIO duration/bytes')
 def ycsb(name,load=False):
  text=read(name)
