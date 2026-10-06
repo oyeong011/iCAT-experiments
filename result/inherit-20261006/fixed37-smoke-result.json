@@ -1,0 +1,223 @@
+{
+  "policy": "fixed37",
+  "stage": "smoke",
+  "finished_at": "2026-10-06T16:30:02.882829+09:00",
+  "validation_exit": 0,
+  "status": "validated_saved_evidence",
+  "waf": 1.4273262689822195,
+  "host_bytes": 202903883776,
+  "host_pages": 49537081,
+  "gc_pages": 21168496,
+  "actual_measured_seconds": 555.0,
+  "loads": {
+    "A": {
+      "runtime_seconds": 0.669,
+      "successful_operations": {
+        "INSERT": 20000
+      }
+    },
+    "H": {
+      "runtime_seconds": 0.758,
+      "successful_operations": {
+        "INSERT": 20000
+      }
+    }
+  },
+  "phases": [
+    {
+      "slot": "A",
+      "workload": "YCSB-A",
+      "actual_seconds": 5.0,
+      "waf": 1.0,
+      "host_bytes": 107401216,
+      "host_pages": 26221,
+      "gc_pages": 0,
+      "runtime_seconds": 0.499,
+      "successful_operations": {
+        "READ": 10192,
+        "UPDATE": 9808
+      }
+    },
+    {
+      "slot": "B",
+      "workload": "OLTP",
+      "actual_seconds": 134.0,
+      "waf": 1.0576099924714204,
+      "host_bytes": 21158498304,
+      "host_pages": 5165649,
+      "gc_pages": 297593,
+      "process_runtimes_seconds": [
+        30.085,
+        30.046,
+        30.064,
+        30.063
+      ]
+    },
+    {
+      "slot": "C",
+      "workload": "Varmail",
+      "actual_seconds": 122.0,
+      "waf": 1.0719831578271901,
+      "host_bytes": 85788942336,
+      "host_pages": 20944566,
+      "gc_pages": 1507656,
+      "process_runtimes_seconds": [
+        120.009
+      ]
+    },
+    {
+      "slot": "D",
+      "workload": "YCSB-A",
+      "actual_seconds": 4.0,
+      "waf": 1.0128332780174798,
+      "host_bytes": 37023744,
+      "host_pages": 9039,
+      "gc_pages": 116,
+      "runtime_seconds": 0.947,
+      "successful_operations": {
+        "READ": 9951,
+        "UPDATE": 10049
+      }
+    },
+    {
+      "slot": "E",
+      "workload": "YCSB-B",
+      "actual_seconds": 4.0,
+      "waf": 1.027479091995221,
+      "host_bytes": 6856704,
+      "host_pages": 1674,
+      "gc_pages": 46,
+      "runtime_seconds": 0.79,
+      "successful_operations": {
+        "READ": 18980,
+        "UPDATE": 1020
+      }
+    },
+    {
+      "slot": "F",
+      "workload": "FIO-Fast",
+      "actual_seconds": 16.0,
+      "waf": 1.1745255953013014,
+      "host_bytes": 8409063424,
+      "host_pages": 2052994,
+      "gc_pages": 358300
+    },
+    {
+      "slot": "G",
+      "workload": "Varmail",
+      "actual_seconds": 122.0,
+      "waf": 1.8983833527158303,
+      "host_bytes": 68810838016,
+      "host_pages": 16799521,
+      "gc_pages": 15092410,
+      "process_runtimes_seconds": [
+        120.009
+      ]
+    },
+    {
+      "slot": "H",
+      "workload": "YCSB-A",
+      "actual_seconds": 5.0,
+      "waf": 1.3967921621301307,
+      "host_bytes": 103682048,
+      "host_pages": 25313,
+      "gc_pages": 10044,
+      "runtime_seconds": 0.612,
+      "successful_operations": {
+        "READ": 9854,
+        "UPDATE": 10146
+      }
+    },
+    {
+      "slot": "I",
+      "workload": "OLTP",
+      "actual_seconds": 133.0,
+      "waf": 1.8648593719733313,
+      "host_bytes": 18481045504,
+      "host_pages": 4511974,
+      "gc_pages": 3902223,
+      "process_runtimes_seconds": [
+        30.080000000000002,
+        30.035,
+        30.06,
+        30.049
+      ]
+    }
+  ],
+  "extent_overlaps": [
+    {
+      "previous": "A",
+      "current": "B",
+      "overlap_blocks_4KiB": 0,
+      "previous_snapshot_blocks": 6856,
+      "current_snapshot_blocks": 84480,
+      "fraction_current_snapshot_overlapping_previous": 0.0,
+      "scope": "end-of-phase saved-file extent snapshots; excludes files deleted during workloads and metadata"
+    },
+    {
+      "previous": "B",
+      "current": "C",
+      "overlap_blocks_4KiB": 0,
+      "previous_snapshot_blocks": 84480,
+      "current_snapshot_blocks": 7959,
+      "fraction_current_snapshot_overlapping_previous": 0.0,
+      "scope": "end-of-phase saved-file extent snapshots; excludes files deleted during workloads and metadata"
+    },
+    {
+      "previous": "C",
+      "current": "D",
+      "overlap_blocks_4KiB": 0,
+      "previous_snapshot_blocks": 7959,
+      "current_snapshot_blocks": 6856,
+      "fraction_current_snapshot_overlapping_previous": 0.0,
+      "scope": "end-of-phase saved-file extent snapshots; excludes files deleted during workloads and metadata"
+    },
+    {
+      "previous": "D",
+      "current": "E",
+      "overlap_blocks_4KiB": 6856,
+      "previous_snapshot_blocks": 6856,
+      "current_snapshot_blocks": 6856,
+      "fraction_current_snapshot_overlapping_previous": 1.0,
+      "scope": "end-of-phase saved-file extent snapshots; excludes files deleted during workloads and metadata"
+    },
+    {
+      "previous": "E",
+      "current": "F",
+      "overlap_blocks_4KiB": 6853,
+      "previous_snapshot_blocks": 6856,
+      "current_snapshot_blocks": 1572864,
+      "fraction_current_snapshot_overlapping_previous": 0.0043570200602213545,
+      "scope": "end-of-phase saved-file extent snapshots; excludes files deleted during workloads and metadata"
+    },
+    {
+      "previous": "F",
+      "current": "G",
+      "overlap_blocks_4KiB": 0,
+      "previous_snapshot_blocks": 1572864,
+      "current_snapshot_blocks": 8129,
+      "fraction_current_snapshot_overlapping_previous": 0.0,
+      "scope": "end-of-phase saved-file extent snapshots; excludes files deleted during workloads and metadata"
+    },
+    {
+      "previous": "G",
+      "current": "H",
+      "overlap_blocks_4KiB": 0,
+      "previous_snapshot_blocks": 8129,
+      "current_snapshot_blocks": 6856,
+      "fraction_current_snapshot_overlapping_previous": 0.0,
+      "scope": "end-of-phase saved-file extent snapshots; excludes files deleted during workloads and metadata"
+    },
+    {
+      "previous": "H",
+      "current": "I",
+      "overlap_blocks_4KiB": 0,
+      "previous_snapshot_blocks": 6856,
+      "current_snapshot_blocks": 84480,
+      "fraction_current_snapshot_overlapping_previous": 0.0,
+      "scope": "end-of-phase saved-file extent snapshots; excludes files deleted during workloads and metadata"
+    }
+  ],
+  "sample_rows": 19,
+  "measurement": "FTL page WAF, block-stat verifies host bytes; no independent NAND measurement"
+}
