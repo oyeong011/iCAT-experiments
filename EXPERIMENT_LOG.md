@@ -12028,3 +12028,15 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Command: `env PH_SECS=300 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/fitcheck-450000/mixV-onlinev4-rep1/`.
 
 - Finished 2026-10-06T21:09:27+09:00; mixV onlinev4 exit=3; evidence `/home/oy/iCAT/result/inherit-20261006/fitcheck-450000/mixV-onlinev4-rep1`; cleanup attempted.
+
+### inherit-20261006 mixV onlinev4 — started 2026-10-06T21:09:40+09:00
+
+- mixV (inheritance): 9 time-based phases of 300 s — YCSB-A (load 400000 records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x 300/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=300 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/fitcheck-400000/mixV-onlinev4-rep1/`.
+
+- Finished 2026-10-06T21:10:53+09:00; mixV onlinev4 exit=143; evidence `/home/oy/iCAT/result/inherit-20261006/fitcheck-400000/mixV-onlinev4-rep1`; cleanup attempted.
+
+### mixV FIO 파일 5 GiB — 사전 등록 2026-10-06 21:35 (사용자 결정)
+- 사용자: 6 GiB 파일 때문에 실패하는 것보다 FIO 파일을 줄이는 게 낫다. → FIO-Fast의 차가운 영역 4 GiB → 3 GiB(`workloads/mix-test4-cold3g.fio`, 나머지 영역·IOPS·쓰기량 동일), 파일 5 GiB. 준비 = 5 GiB 순차 + 2.5 GiB 무작위 4K(표 3과 같은 비율). DB 60만.
+- 따라서 mixV의 FIO 구간은 논문의 FIO-Fast(6 GiB)와 다른 워크로드이며 직접 비교하지 않음.
+- 실제 크기 확인(구간 5분, YCSB 오류 시 실패) 1회 → 통과 시 v4 10시간 → CAT-47 10시간(queue46). DB 크기 탐색(queue45, 45만 확인 준비 단계에서 중단 → fitcheck-450000-stopped)은 취소.
