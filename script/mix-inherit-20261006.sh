@@ -66,7 +66,7 @@ marker="mix-$label-$policy-$$"
 if [[ "$label" == mixU ]]; then   # 10-05
 printf '\n### mix-20260911 %s %s — started %s\n\n- mixU: FIO-Fast and Varmail alternate, 8 time-based phases of %s s (F V F V F V F V). FIO payload x %s/600; Varmail one run per phase. FIO file kept. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-20260911.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4500}" "${PH_SECS:-4500}" "$(basename "$module")" "${PH_SECS:-4500}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == mixV ]]; then
-printf '\n### inherit-20261006 %s %s — started %s\n\n- mixV (inheritance): 9 time-based phases of %s s — YCSB-A (load %s records) -> OLTP -> Varmail -> YCSB-A (same DB) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; 6 GiB file written then overwritten, payload x %s/600) -> Varmail (FIO file kept) -> YCSB-A (FIO file deleted, DB reloaded) -> OLTP (DB kept). Switches follow the Table-3 two-phase mixes; whole FS written+deleted once before measuring. Extents recorded per switch. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4000}" "$RECORDS" "${PH_SECS:-4000}" "$(basename "$module")" "${PH_SECS:-4000}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
+printf '\n### inherit-20261006 %s %s — started %s\n\n- mixV (inheritance): 9 time-based phases of %s s — YCSB-A (load %s records) -> OLTP -> Varmail -> YCSB-A (same DB) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x %s/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB kept). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4000}" "$RECORDS" "${PH_SECS:-4000}" "$(basename "$module")" "${PH_SECS:-4000}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == mixW* ]]; then   # 10-06 calibration
 printf '\n### inherit-20261006 %s %s — started %s\n\n- Calibration %s: Table-3 prep (6 GiB preset + 3 GiB random 4K prepare)%s, then YCSB-A only (load %s records, run %s s). Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "$label" "$([[ $label == mixW1 ]] && echo ', FIO file deleted before the phase' || echo ', FIO file kept')" "$RECORDS" "${PH_SECS:-900}" "$(basename "$module")" "${PH_SECS:-900}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == mixT ]]; then   # 10-04: the generic line below describes the original 2-phase mix, not mixT
@@ -128,7 +128,7 @@ sudo -n chown -R oy:oy "$root/mnt"
 # preparation. mixV: write the whole file system once, then delete (every LBA now holds data the FTL treats as valid)
 ext() { # ext <slot> <tag> <paths...>: physical extents (4 KiB fs blocks; whole-device ext4, so block x 8 = LBA sector)
     local s=$1 t=$2; shift 2; find "$@" -type f -print0 2>/dev/null | xargs -0 -r filefrag -v -b4096 > "$dir/extents-$s-$t.txt" 2>&1 || true; }
-if [[ "$label" == mixV ]]; then
+if [[ "$label" == mixV-fill ]]; then   # 10-06 13:00: retired (load WAF 1.00 vs Table-3 1.26); mixV now uses the Table-3 prep below
     avail=$(df -B1 --output=avail "$root/mnt" | tail -1); fill=$(( (avail - 268435456) / 1048576 ))M
     fio --name=fill --filename="$root/mnt/fill.dat" --size=$fill --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/preset.json"
     ext 0 fill "$root/mnt/fill.dat"; rm -f "$root/mnt/fill.dat"; sync; sleep 10; sync
@@ -284,11 +284,12 @@ case "$label" in
            # A->OLTP keeps the DB (mixP); OLTP->Varmail deletes the OLTP files (mixO); YCSB-A->B same DB (mixJ); FIO->Varmail keeps
            # the FIO file (mixF). Not in Table 3: YCSB-B->FIO deletes the DB first (user), Varmail->YCSB-A deletes the FIO file so
            # the 600k DB and the following OLTP fit (mixP's ENOSPC came from the kept FIO file). No file exists before phase 6.
+           # 13:00 revision (user): prep identical to Table 3 (6 GiB preset + 3 GiB random prepare) and the FIO file is KEPT all
+           # run, as in every Table-3 mix; phase 6 overwrites it; nothing is deleted before phase 8 (DB reload only).
            ps_=${PH_SECS:-4000}; i=0
            for w in YA O V YA YB F V YA O; do sl=$(printf "\\x$(printf %x $((65 + i)))"); i=$((i + 1))
                case $sl in
                    F) ext $sl prevdb "$db" "$db-wal"; rm -f "$db" "$db-wal" "$db-shm"; sync; sleep 5; sync;;
-                   H) ext $sl prevfio "$FIO_TARGET"; rm -f "$FIO_TARGET"; sync; sleep 5; sync;;
                esac
                ld=0; [[ $sl == A || $sl == H ]] && ld=1   # DB loaded in phase 1 and again in 8 (deleted before FIO); 4/5 reuse it
                case $w in
@@ -298,7 +299,7 @@ case "$label" in
                    V)  PN[$sl]=varmail; VM_RUN=$((ps_ / 4)) VM_CHUNKS=4 phase_varmail $sl;;
                    F)  PN[$sl]=test4   # 6 GiB file written sequentially inside the phase, then the usual test4 overwrites
                        HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) \
-                         PRE_FIO=1 phase_fio $sl mix-test4.fio; ext $sl files "$FIO_TARGET";;
+                         phase_fio $sl mix-test4.fio; ext $sl files "$FIO_TARGET";;   # the Table-3 prep file, kept all run
                esac
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
     mixT)  # 10-04 (user): app workloads in an irregular order, 9 phases x PH_SECS (default 4000 s) = 10 h:
