@@ -11978,3 +11978,8 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 2026-10-06 13:15 mixW1 재시험: YCSB 구간은 끝까지 돌았으나 끝에서 runner 오류(exit 127, 'line 330: dle: command not found'). 원인: 실행 중에 제가 같은 runner 파일(mix-inherit-20261006.sh)을 수정해 bash가 읽는 위치가 어긋남 — 제 실수. summary는 없지만 카운터 파일로 계산: 적재 WAF 1.250, 요청 WAF 1.161 (W2: 1.267 / 1.500, mixJ: 1.264 / 1.511). 즉 표 3 준비 후 파일을 지우면 적재는 같고 요청 WAF는 낮아짐. 결정(파일 유지)은 바뀌지 않음. 이후 실행 중인 runner는 수정하지 않음.
 
 - Finished 2026-10-06T13:15:18+09:00; mixV onlinev4 exit=1; evidence `/home/oy/iCAT/result/inherit-20261006/fitcheck/mixV-onlinev4-rep1`; cleanup attempted.
+
+### mixV 공간 확인 실패와 수정 — 2026-10-06 15:20 (사용자 결정)
+- 13:15 실제 크기 확인(v4, 구간 60초) 실패: 1번 YCSB-A(60만) 뒤 2번 OLTP 시작 시 `mkdir .../mnt/filebench: No space left on device`. FIO 파일 6 GiB + DB 60만이면 OLTP 자리가 없음(mixP와 같은 이유). 실패 증거 `fitcheck/mixV-onlinev4-rep1-failed-dbkept`. 실패를 2시간 늦게 보고(제가 감시를 걸지 않음), 그동안 장치 유휴.
+- 사용자 결정: OLTP(2·9번) 직전에도 DB 삭제, DB 60만은 1·4·8번에서 적재. 표 3 준비(FIO 파일 유지)와 나머지 전환은 13:00 수정과 같음. 표 3 mixP(DB 유지, 25만)와 다른 점으로 보고.
+- 순서(queue44): 실제 크기 확인(v4) → v4 10시간 → CAT-47 10시간. 두 번째 PC는 같은 runner를 쓰므로 `script/icat2-mixV.sh` 그대로.
