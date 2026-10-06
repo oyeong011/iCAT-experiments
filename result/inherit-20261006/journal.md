@@ -33,3 +33,7 @@
 - mixV fixed37 fitcheck finished {"policy": "fixed37", "stage": "fitcheck", "finished_at": "2026-10-06T19:49:51.158385+09:00", "validation_exit": 1, "status": "failed_validation_preserved"}
 
 - mixV campaign FINISHED {"run_id": "inherit-20261006", "exit_code": 1, "status": "failed_or_incomplete_preserved", "issues": ["entrypoint exited 1; inspect pipeline console and stage logs", "fixed37 fitcheck not validated", "fixed37 long not validated", "fixed50 fitcheck not validated", "fixed50 long not validated"], "finished_at": "2026-10-06T19:49:53.019719+09:00", "source_commit": "13b5b1835321c2cd0265c42ec7e9a09c6fda04da", "raw_path": "/home/oy/iCAT/result/inherit-20261006"}
+
+## 공간 확인 실패 진단 2026-10-06T19:57:34.774680+09:00
+
+CAT-37 fitcheck ended19:49 with runner exit0 but validation exit1. SQLITE_FULL occurred in A/D/E/H; failed YCSB operations: 2056988. CAT-37 long and CAT-50 were not started. WAF3.005294 is a failed-workload diagnostic, not valid policy performance. Raw compressed YCSB logs preserved; full counts/source paths in fitcheck-failure-diagnosis.json. No automatic retry or workload-size change.
