@@ -40,7 +40,8 @@ case "$label" in
     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
     t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
     mixA|mixB|mixG|mixH|mixJ|mixT) scale=1; RECORDS=600000; OPS=4000000;;
-    mixV)  scale=1;  RECORDS=600000; OPS=1000000000;;   # no permanent FIO file, so the original 600k DB fits again
+    mixV)  scale=1;  RECORDS=600000; OPS=1000000000;;
+    mixW1|mixW2) scale=1; RECORDS=600000; OPS=1000000000;;   # 10-06 calibration: YCSB-A 600k only, after Table-3 prep   # no permanent FIO file, so the original 600k DB fits again
     mixP)  scale=1;  RECORDS=250000; OPS=4000000;;   # sqlite then oltp: 600k records + WAL left no room for the oltp fileset (ENOSPC on rep1)
     mixR)  scale=1;  RECORDS=600000; OPS=14000000;;   # test4 -> sqlite-a -> test4, each phase ~24M host pages (sqlite-a run ~1.7 pages/op)
     mixC|mixD|mixF|mixK|mixL|mixM|mixO|mixQ|mixS|mixU)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
@@ -66,6 +67,8 @@ if [[ "$label" == mixU ]]; then   # 10-05
 printf '\n### mix-20260911 %s %s — started %s\n\n- mixU: FIO-Fast and Varmail alternate, 8 time-based phases of %s s (F V F V F V F V). FIO payload x %s/600; Varmail one run per phase. FIO file kept. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-20260911.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4500}" "${PH_SECS:-4500}" "$(basename "$module")" "${PH_SECS:-4500}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == mixV ]]; then
 printf '\n### inherit-20261006 %s %s — started %s\n\n- mixV (inheritance): 9 time-based phases of %s s — YCSB-A (load %s records) -> OLTP -> Varmail -> YCSB-A (same DB) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; 6 GiB file written then overwritten, payload x %s/600) -> Varmail (FIO file kept) -> YCSB-A (FIO file deleted, DB reloaded) -> OLTP (DB kept). Switches follow the Table-3 two-phase mixes; whole FS written+deleted once before measuring. Extents recorded per switch. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4000}" "$RECORDS" "${PH_SECS:-4000}" "$(basename "$module")" "${PH_SECS:-4000}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
+elif [[ "$label" == mixW* ]]; then   # 10-06 calibration
+printf '\n### inherit-20261006 %s %s — started %s\n\n- Calibration %s: Table-3 prep (6 GiB preset + 3 GiB random 4K prepare)%s, then YCSB-A only (load %s records, run %s s). Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "$label" "$([[ $label == mixW1 ]] && echo ', FIO file deleted before the phase' || echo ', FIO file kept')" "$RECORDS" "${PH_SECS:-900}" "$(basename "$module")" "${PH_SECS:-900}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == mixT ]]; then   # 10-04: the generic line below describes the original 2-phase mix, not mixT
 printf '\n### mix-20260911 %s %s — started %s\n\n- mixT: 9 time-based phases of %s s each — YCSB-A (load %s records) -> OLTP (32 MB x 10 files, %s s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x %s/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-20260911.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4000}" "$RECORDS" "$(( ${PH_SECS:-4000} / 4 ))" "${PH_SECS:-4000}" "$(basename "$module")" "${PH_SECS:-4000}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 else
@@ -273,6 +276,10 @@ case "$label" in
                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
                esac
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
+    mixW1|mixW2)  # 10-06 calibration: does the Table-3 starting state bring the 600k load/run WAF back (mixJ: 1.26 / 1.51)?
+           [[ $label == mixW2 ]] || { rm -f "$FIO_TARGET"; sync; sleep 5; sync; }   # W1: delete the prepared file (space for later phases)
+           A_NAME=sqlite-a; B_NAME=none; YCSB_SECS=${PH_SECS:-900} phase_sqlite A a 1
+           for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;   # not skip_slot: it empties the YCSB logs
     mixV)  # 10-06 (user, revised 11:29): every switch handles data the way the matching two-phase mix in Table 3 did.
            # A->OLTP keeps the DB (mixP); OLTP->Varmail deletes the OLTP files (mixO); YCSB-A->B same DB (mixJ); FIO->Varmail keeps
            # the FIO file (mixF). Not in Table 3: YCSB-B->FIO deletes the DB first (user), Varmail->YCSB-A deletes the FIO file so

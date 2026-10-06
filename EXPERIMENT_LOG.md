@@ -11920,3 +11920,16 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=16023 gc_pages=0 WAF=1.000000
 - ycsb-load [OVERALL], Throughput(ops/sec), 21008.40336134454
 - ycsb-run [OVERALL], Throughput(ops/sec), 26990.55330634278
+
+### inherit-20261006 mixV onlinev4 — started 2026-10-06T11:58:13+09:00
+
+- mixV (inheritance): 9 time-based phases of 4000 s — YCSB-A (load 600000 records) -> OLTP -> Varmail -> YCSB-A (same DB) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; 6 GiB file written then overwritten, payload x 4000/600) -> Varmail (FIO file kept) -> YCSB-A (FIO file deleted, DB reloaded) -> OLTP (DB kept). Switches follow the Table-3 two-phase mixes; whole FS written+deleted once before measuring. Extents recorded per switch. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/mixV-onlinev4-rep1/`.
+
+- Finished 2026-10-06T12:31:52+09:00; mixV onlinev4 exit=143; evidence `/home/oy/iCAT/result/inherit-20261006/mixV-onlinev4-rep1`; cleanup attempted.
+
+### mixV 중단과 보정 시험(mixW1/W2) — 사전 등록 2026-10-06 12:35
+- 관찰: mixV v4 10시간 시작 후 28분, 1번 YCSB-A(60만) WAF 1.019. DB 적재만 보면 쓰기량은 mixJ와 거의 같은데(1,398,390 vs 1,398,349 페이지) WAF는 1.0003 vs mixJ 1.26. DB 크기가 아니라 측정 전 디스크 상태가 다름: 표 3 = 6 GiB 순차 + 3 GiB 무작위 4K 준비, mixV = 전체 순차 채우기 후 삭제(제가 추가한 단계, 표 3 규칙 아님). 원인 메커니즘은 아직 모름.
+- 사용자 승인으로 mixV v4 10시간 중단(exit 143, 부분 증거 보존), queue40 종료. 다른 큐는 hold 프로세스로 대기.
+- 보정 시험(CAT-47, 각 15분 + 적재): mixW1 = 표 3과 같은 준비 후 FIO 파일 삭제 → YCSB-A 60만만; mixW2 = 표 3과 같은 준비, FIO 파일 유지(mixJ와 같은 상태) → YCSB-A 60만만.
+- 판정: 적재 WAF와 요청 WAF를 mixJ(1.26 / 1.51)와 비교. mixW1이 mixJ에 가까우면 mixV 준비 단계를 "표 3 준비 + 파일 삭제"로 바꿔 10시간 재시작. W1이 1에 가깝고 W2만 가까우면 FIO 파일 유지가 필요하다는 뜻이므로 설계를 사용자와 다시 정함. 두 번째 PC의 mixV 실행은 보류.
