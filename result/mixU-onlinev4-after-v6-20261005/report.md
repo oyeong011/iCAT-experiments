@@ -1,0 +1,3 @@
+
+### mixU-onlinev4-after-v6-20261005 preregistration 2026-10-05T19:56:05.052462+09:00
+User priority: v6 first, then defer original mixU v4 ->37 ->50. Original v4 stopped with exit143 and preserved. This is a fresh 10h run after successful v6 long-run validation, not continuation; settings, module and pinned runner/workload inputs copied exactly from original preregistration. Same manual measurement/preparation/8x4500s/30s data and learning traces; moduleSHA/kernel/host/source/seed documented in metadata. Existing global lock and device guards retained. Validate eight completed phases/error0/requestedbytes/runtime/counters and publish icat-2. If v6 fails, this queue stops without running.

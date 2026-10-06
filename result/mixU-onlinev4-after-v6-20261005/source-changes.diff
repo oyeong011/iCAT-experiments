@@ -1,0 +1,684 @@
+diff --git a/script/env.sh b/script/env.sh
+index 3e851b2f..9029bef5 100644
+--- a/script/env.sh
++++ b/script/env.sh
+@@ -1,23 +1,46 @@
+ # Shared paths. Override any of these in the environment.
+ ICAT_ROOT="${ICAT_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+-SRC_DIR="${ICAT_ROOT}/nvmevirt_test"
+-BUILD_DIR="${ICAT_ROOT}/buildoutput"
+-RESULT_DIR="${ICAT_ROOT}/result"
+-WORKLOAD_DIR="${ICAT_ROOT}/workloads"
++[[ -v SRC_DIR ]] || SRC_DIR="${ICAT_ROOT}/nvmevirt_test"
++[[ -v BUILD_DIR ]] || BUILD_DIR="${ICAT_ROOT}/buildoutput"
++[[ -v RESULT_DIR ]] || RESULT_DIR="${ICAT_ROOT}/result"
++[[ -v WORKLOAD_DIR ]] || WORKLOAD_DIR="${ICAT_ROOT}/workloads"
+ MNT_DIR="${MNT_DIR:-${ICAT_ROOT}/mnt}"
+ # The NVMeVirt namespace, identified by its model string (CSL_Virt_MN_01, set in
+ # admin.c) rather than a fixed index: with no physical NVMe it is nvme0n1.
++assert_virtual_dev() {
++    local dev name ctrl model serial vendor address
++    dev="$(readlink -f "${1:?device required}")" || return 1
++    [[ "$dev" =~ ^/dev/(nvme[0-9]+)n1$ && "$dev" != /dev/nvme0n1 && -b "$dev" ]] || return 1
++    name="${BASH_REMATCH[1]}"
++    ctrl="/sys/class/nvme/$name"
++    model="$(cat "$ctrl/model")" || return 1
++    [[ "$model" =~ ^CSL_Virt_MN_[0-9]+[[:space:]]*$ ]] || return 1
++    [[ -d /sys/module/nvmev ]] || return 1
++    serial="$(cat "$ctrl/serial")" || return 1
++    vendor="$(cat "$ctrl/device/vendor")" || return 1
++    address="$(cat "$ctrl/address")" || return 1
++    [[ "$serial" =~ ^CSL_Virt_SN_[0-9]+[[:space:]]*$ && "$vendor" == 0x0c51 && "$address" =~ ^[[:xdigit:]]{4}:10:00\.0$ ]] || return 1
++}
+ detect_dev() {
+-	local ctrl
+-	if [[ -n "${DEV:-}" ]]; then printf '%s\n' "${DEV}"; return; fi
+-	for ctrl in /sys/class/nvme/nvme*; do
+-		[[ -r "${ctrl}/model" ]] || continue
+-		if grep -qiE "CSL_Virt|nvmevirt" "${ctrl}/model"; then
+-			printf '/dev/%sn1\n' "$(basename "${ctrl}")"
+-			return
+-		fi
+-	done
+-	return 1
++    local ctrl candidate found=""
++    if [[ -n "${DEV:-}" ]]; then
++        assert_virtual_dev "$DEV" || { echo "Unsafe DEV override rejected: $DEV" >&2; return 1; }
++        readlink -f "$DEV"; return
++    fi
++    for ctrl in /sys/class/nvme/nvme*; do
++        candidate="/dev/$(basename "$ctrl")n1"
++        assert_virtual_dev "$candidate" || continue
++        [[ -z "$found" ]] || { echo "Multiple virtual devices; refusing selection" >&2; return 1; }
++        found="$candidate"
++    done
++    [[ -n "$found" ]] || return 1
++    printf '%s\n' "$found"
++}
++assert_virtual_mount() {
++    local dev="$1" source
++    assert_virtual_dev "$dev" || return 1
++    source="$(findmnt -rn -M "$MNT_DIR" -o SOURCE)" || return 1
++    [[ "$(readlink -f "$source")" == "$(readlink -f "$dev")" ]]
+ }
+ KDIR="/lib/modules/$(uname -r)/build"
+ MEMMAP_START="${MEMMAP_START:-4G}"
+diff --git a/script/gh-filebench.sh b/script/gh-filebench.sh
+index 8edd9636..f9f5ac1a 100755
+--- a/script/gh-filebench.sh
++++ b/script/gh-filebench.sh
+@@ -41,7 +41,8 @@ readonly SCRIPT_DIR="/home/oy/iCAT/script"
+ readonly RESULT_ROOT="/home/oy/iCAT/result/filebench"
+ readonly START_SCRIPT="${SCRIPT_DIR}/start_virt.sh"
+ readonly END_SCRIPT="${SCRIPT_DIR}/end_virt.sh"
+-readonly DEVICE="/dev/nvme0n1"
++source "${SCRIPT_DIR}/env.sh"
++DEVICE=""
+ readonly MOUNT_POINT="/home/oy/iCAT/mnt"
+ readonly TEST_DIR="${MOUNT_POINT}/filebench"
+ 
+@@ -500,6 +501,8 @@ main() {
+     printf '[START] module=%s\n' "${MODULE_TAG}"
+     "${START_SCRIPT}" "${MODULE_TAG}"
+     virt_started=1
++    DEVICE="$(detect_dev)"
++    assert_virtual_mount "$DEVICE" || die "Virtual mount verification failed"
+     verify_mount_source
+     true  # chown not needed: files owned by oy
+     mkdir -p "${TEST_DIR}"
+diff --git a/script/gh-fio.sh b/script/gh-fio.sh
+index bc621f1d..266c464f 100755
+--- a/script/gh-fio.sh
++++ b/script/gh-fio.sh
+@@ -16,7 +16,8 @@ readonly START_SCRIPT="${SCRIPT_DIR}/start_virt.sh"
+ readonly END_SCRIPT="${SCRIPT_DIR}/end_virt.sh"
+ readonly PRESET_JOB="${WORKLOAD_DIR}/gh-preset.fio"
+ readonly TEST_JOB="${WORKLOAD_DIR}/${GH_TEST_JOB:-gh-test4.fio}"
+-readonly DEVICE="/dev/nvme0n1"
++source "${SCRIPT_DIR}/env.sh"
++DEVICE=""
+ 
+ readonly SUDO_BIN="/usr/bin/sudo"
+ readonly FIO_BIN="/usr/bin/fio"
+@@ -166,6 +167,8 @@ main()
+ 	printf '[START] module=%s\n' "${MODULE_TAG}"
+ 	"${START_SCRIPT}" "${MODULE_TAG}"
+ 	virt_started=1
++    DEVICE="$(detect_dev)"
++    assert_virtual_mount "$DEVICE" || die "Virtual mount verification failed"
+ 
+ 	printf '[PRESET] size=%s job=%s\n' "${FIO_TEST_SIZE}" "${PRESET_JOB}"
+ 	"${FIO_BIN}" "${PRESET_JOB}"
+diff --git a/script/gh-llama.sh b/script/gh-llama.sh
+index 2c4444c0..8b961e9d 100755
+--- a/script/gh-llama.sh
++++ b/script/gh-llama.sh
+@@ -38,7 +38,8 @@ readonly SCRIPT_DIR="/home/oy/iCAT/script"
+ readonly RESULT_ROOT="/home/oy/iCAT/result/llama"
+ readonly START_SCRIPT="${SCRIPT_DIR}/start_virt.sh"
+ readonly END_SCRIPT="${SCRIPT_DIR}/end_virt.sh"
+-readonly DEVICE="/dev/nvme0n1"
++source "${SCRIPT_DIR}/env.sh"
++DEVICE=""
+ readonly MOUNT_POINT="/home/oy/iCAT/mnt"
+ 
+ readonly MEMORY_SWAP_MAX="${MEMORY_SWAP_MAX:-0}"
+@@ -337,6 +338,8 @@ main() {
+     printf '[START] module=%s\n' "${MODULE_TAG}"
+     "${START_SCRIPT}" "${MODULE_TAG}"
+     virt_started=1
++    DEVICE="$(detect_dev)"
++    assert_virtual_mount "$DEVICE" || die "Virtual mount verification failed"
+     verify_mount_source
+     true  # chown not needed: files owned by oy
+ 
+diff --git a/script/gh-rocksdb.sh b/script/gh-rocksdb.sh
+index 23543064..f69e2f5e 100755
+--- a/script/gh-rocksdb.sh
++++ b/script/gh-rocksdb.sh
+@@ -32,7 +32,8 @@ readonly WORKLOAD_DIR="${ROCKSDB_WORKLOAD_DIR:-/home/oy/iCAT/workloads/rocksdb}"
+ readonly RESULT_ROOT="/home/oy/iCAT/result/rocksdb"
+ readonly START_SCRIPT="${SCRIPT_DIR}/start_virt.sh"
+ readonly END_SCRIPT="${SCRIPT_DIR}/end_virt.sh"
+-readonly DEVICE="/dev/nvme0n1"
++source "${SCRIPT_DIR}/env.sh"
++DEVICE=""
+ readonly MOUNT_POINT="/home/oy/iCAT/mnt"
+ readonly DB_DIR="${MOUNT_POINT}/ycsb-rocksdb"
+ 
+@@ -336,16 +337,27 @@ resolve_ycsb() {
+     ROCKSDB_BINDING_DIR="${YCSB_HOME}/rocksdb-binding"
+ }
+ 
++# YCSB 0.17.0's RocksDB JNI library needs jemalloc symbols on this host.
++# Apply the local allocator only to Java, leaving other workload tools alone.
++ycsb_command() {
++    local allocator="${ICAT_ROOT}/tools/rocksdb-local/usr/lib/x86_64-linux-gnu/libjemalloc.so.2"
++    if [[ -f "${allocator}" ]]; then
++        LD_PRELOAD="${allocator}${LD_PRELOAD:+:${LD_PRELOAD}}" bash ./bin/ycsb.sh "$@"
++    else
++        bash ./bin/ycsb.sh "$@"
++    fi
++}
++
+ run_ycsb_load() {
+     pushd "${YCSB_HOME}" >/dev/null
+-    bash ./bin/ycsb.sh load rocksdb -s -P "${WL}" -threads "${YCSB_THREADS}" \
++    ycsb_command load rocksdb -s -P "${WL}" -threads "${YCSB_THREADS}" \
+         -p rocksdb.dir="${DB_DIR}"
+     popd >/dev/null
+ }
+ 
+ run_ycsb_run() {
+     pushd "${YCSB_HOME}" >/dev/null
+-    bash ./bin/ycsb.sh run rocksdb -s -P "${WL}" -threads "${YCSB_THREADS}" \
++    ycsb_command run rocksdb -s -P "${WL}" -threads "${YCSB_THREADS}" \
+         -p rocksdb.dir="${DB_DIR}" \
+         -p hdrhistogram.percentiles=95,99,99.9,99.99,99.999,99.9999
+     popd >/dev/null
+@@ -389,6 +401,8 @@ main() {
+     printf '[START] module=%s\n' "${MODULE_TAG}"
+     "${START_SCRIPT}" "${MODULE_TAG}"
+     virt_started=1
++    DEVICE="$(detect_dev)"
++    assert_virtual_mount "$DEVICE" || die "Virtual mount verification failed"
+     verify_mount_source
+     true  # chown not needed: files owned by oy
+ 
+diff --git a/script/gh-run_all.sh b/script/gh-run_all.sh
+index 7dedf0e4..36f525a4 100755
+--- a/script/gh-run_all.sh
++++ b/script/gh-run_all.sh
+@@ -50,11 +50,11 @@ readonly MODULE_DIR="/home/oy/iCAT/buildoutput"
+ readonly WORKLOAD_DIR="/home/oy/iCAT/workloads"
+ readonly RESULT_ROOT="/home/oy/iCAT/result"
+ 
+-readonly FIO_SCRIPT="${SCRIPT_DIR}/fio.sh"
++readonly FIO_SCRIPT="${SCRIPT_DIR}/gh-fio.sh"
+ readonly SQLITE_SCRIPT="${SCRIPT_DIR}/sqlite.sh"
+-readonly ROCKSDB_SCRIPT="${SCRIPT_DIR}/rocksdb.sh"
+-readonly FILEBENCH_SCRIPT="${SCRIPT_DIR}/filebench.sh"
+-readonly LLAMA_SCRIPT="${SCRIPT_DIR}/llama.sh"
++readonly ROCKSDB_SCRIPT="${SCRIPT_DIR}/gh-rocksdb.sh"
++readonly FILEBENCH_SCRIPT="${SCRIPT_DIR}/gh-filebench.sh"
++readonly LLAMA_SCRIPT="${SCRIPT_DIR}/gh-llama.sh"
+ 
+ readonly MKDIR_BIN="/usr/bin/mkdir"
+ readonly TEE_BIN="/usr/bin/tee"
+@@ -64,7 +64,7 @@ readonly -a CAT_KS=(02 04 07 10)
+ readonly -a CAT_SCALES=(025 050 100 200 400)
+ readonly -a CAT_RATIOS=(04 07 16)
+ 
+-declare -a MODULE_TAGS=(greedy)
++declare -a MODULE_TAGS=(greedy-m)
+ 
+ RUNNER=""
+ TARGET=""
+@@ -107,17 +107,11 @@ is_positive_integer()
+ 
+ prepare_module_tags()
+ {
+-	local k
+-	local scale
+-	local ratio
+-
+-	for k in "${CAT_KS[@]}"; do
+-		for scale in "${CAT_SCALES[@]}"; do
+-			for ratio in "${CAT_RATIOS[@]}"; do
+-				MODULE_TAGS+=("cat-fig7-k${k}-s${scale}-r${ratio}")
+-			done
+-		done
+-	done
++    local arm tag
++    for ((arm = 0; arm < 60; arm++)); do
++        printf -v tag 'arm%02d' "$arm"
++        MODULE_TAGS+=("$tag")
++    done
+ }
+ 
+ resolve_suite_and_args()
+@@ -134,10 +128,14 @@ resolve_suite_and_args()
+ 			if [[ "${TARGET}" == *.fio ]]; then
+ 				WORKLOAD_FILE="${TARGET}"
+ 				WORKLOAD_NAME="${TARGET%.fio}"
+-			else
+-				WORKLOAD_FILE="${TARGET}.fio"
+-				WORKLOAD_NAME="${TARGET}"
+-			fi
++            else
++                WORKLOAD_FILE="${TARGET}.fio"
++                WORKLOAD_NAME="${TARGET}"
++            fi
++
++            if [[ ! -f "${WORKLOAD_DIR}/${WORKLOAD_FILE}" && -f "${WORKLOAD_DIR}/gh-${WORKLOAD_FILE}" ]]; then
++                WORKLOAD_FILE="gh-${WORKLOAD_FILE}"
++            fi
+ 
+ 			RUNNER="${FIO_SCRIPT}"
+ 			RESULT_DIR="${RESULT_ROOT}/${WORKLOAD_NAME}"
+@@ -264,6 +262,8 @@ validate_runner_inputs()
+ 		module_path="${MODULE_DIR}/nvmev-${tag}.ko"
+ 		[[ -f "${module_path}" ]] ||
+ 			die "module not found: ${module_path}"
++		[[ "$(modinfo -F vermagic "${module_path}" | cut -d' ' -f1)" == "$(uname -r)" ]] ||
++			die "module kernel mismatch: ${module_path}"
+ 	done
+ }
+ 
+@@ -272,8 +272,8 @@ run_one()
+ 	local tag="$1"
+ 
+ 	case "${SUITE}" in
+-		fio)
+-			"${RUNNER}" "${tag}" "${TARGET}"
++        fio)
++            GH_TEST_JOB="${WORKLOAD_FILE}" "${RUNNER}" "${tag}"
+ 			;;
+ 
+ 		sqlite|rocksdb|filebench)
+diff --git a/script/measured-cat-20260907.sh b/script/measured-cat-20260907.sh
+index ffbdea4a..9b4ec364 100644
+--- a/script/measured-cat-20260907.sh
++++ b/script/measured-cat-20260907.sh
+@@ -1,4 +1,6 @@
+ #!/usr/bin/env bash
++# Legacy fixed-device workload: disabled to protect the physical Windows SSD.
++if [[ "$(hostname)" == oy-B550M-DS3H ]]; then echo "Unsafe legacy nvme0n1 script disabled; use scripts with detect_dev" >&2; exit 2; fi
+ set -Eeuo pipefail
+ root=/home/oy/iCAT
+ batch="$root/result/measured-cat-20260907"
+diff --git a/script/mix-20260911.sh b/script/mix-20260911.sh
+index 1e24bfda..c4fa26eb 100755
+--- a/script/mix-20260911.sh
++++ b/script/mix-20260911.sh
+@@ -3,8 +3,8 @@
+ # Usage: mix-20260911.sh <smoke|main> <fixed47|online>
+ set -Eeuo pipefail
+ root=/home/oy/iCAT
+-base="$root/result/mix-20260911"
+-journal="$root/EXPERIMENT_LOG.md"
++base="${MIX_BASE:-$root/result/mix-20260911}"   # second PC writes to its own dir
++journal="${MIX_JOURNAL:-$root/EXPERIMENT_LOG.md}"
+ control=/proc/nvmevirt_measurement
+ label=${1:?Use smoke, main, long, t4, or mixA/B/C/D/F/G/H/J/K/L/M/O/P/Q}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
+ case "$policy" in
+@@ -13,6 +13,7 @@ case "$policy" in
+     onlinev2) module="$root/buildoutput/nvmev-online-v2.ko";;   # v1 + 6x reward window
+     onlinev3) module="$root/buildoutput/nvmev-online-v3.ko";;   # v2 src + window x2, k=2 arms skipped (45), 1 visit, no probe after settle, drift 25%
+     onlinev4) module="$root/buildoutput/nvmev-online-v4.ko";;   # v3 + online elimination (15%) + neighbour probe every 8 + reset restores survivors+neighbours
++    onlinev5) module="$root/buildoutput/nvmev-online-v5.ko";;   # 10-05: v4 + GC-capped windows used (>= 64 MiB host) instead of discarded
+     onlinev3k2) module="$root/buildoutput/nvmev-online-v3k2.ko";;   # ablation: v3 with k=2 arms back (60 arms)
+     onlinev3probe) module="$root/buildoutput/nvmev-online-v3probe.ko";;   # ablation: v3 with v1 post-settle probing back
+     onlinev3win1) module="$root/buildoutput/nvmev-online-v3win1.ko";;   # ablation
+@@ -34,10 +35,10 @@ case "$label" in
+     main)  scale=1;  RECORDS=4000000; OPS=1000000;;
+     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
+     t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
+-    mixA|mixB|mixG|mixH|mixJ) scale=1; RECORDS=600000; OPS=4000000;;
++    mixA|mixB|mixG|mixH|mixJ|mixT) scale=1; RECORDS=600000; OPS=4000000;;
+     mixP)  scale=1;  RECORDS=250000; OPS=4000000;;   # sqlite then oltp: 600k records + WAL left no room for the oltp fileset (ENOSPC on rep1)
+     mixR)  scale=1;  RECORDS=600000; OPS=14000000;;   # test4 -> sqlite-a -> test4, each phase ~24M host pages (sqlite-a run ~1.7 pages/op)
+-    mixC|mixD|mixF|mixK|mixL|mixM|mixO|mixQ)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
++    mixC|mixD|mixF|mixK|mixL|mixM|mixO|mixQ|mixS|mixU)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
+     *) exit 2;;
+ esac
+ mult=${MULT:-1}; [[ "$label" != long && "$label" != t4long ]] || mult=6   # MULT=n: every phase n times longer (fio payload and YCSB ops); for phase-length vs learning-time analysis   # long: phase A 6x payload (3600 s) so the learner can exploit after its 600 s sweep
+@@ -53,11 +54,19 @@ exec 9>"$base/device.lock"; flock -n 9 || exit 1
+ export FIO_TARGET="$root/mnt/test.dat"
+ ycsb=/home/oy/YCSB/ycsb-0.17.0
+ db="$root/mnt/ycsb.db"
++declare -A PN=()   # mixS: phase slot -> workload name
+ loaded=0; collector=; dc=; series=
+ marker="mix-$label-$policy-$$"
++if [[ "$label" == mixU ]]; then   # 10-05
++printf '\n### mix-20260911 %s %s — started %s\n\n- mixU: FIO-Fast and Varmail alternate, 8 time-based phases of %s s (F V F V F V F V). FIO payload x %s/600; Varmail one run per phase. FIO file kept. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-20260911.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4500}" "${PH_SECS:-4500}" "$(basename "$module")" "${PH_SECS:-4500}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
++elif [[ "$label" == mixT ]]; then   # 10-04: the generic line below describes the original 2-phase mix, not mixT
++printf '\n### mix-20260911 %s %s — started %s\n\n- mixT: 9 time-based phases of %s s each — YCSB-A (load %s records) -> OLTP (32 MB x 10 files, %s s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x %s/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-20260911.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4000}" "$RECORDS" "$(( ${PH_SECS:-4000} / 4 ))" "${PH_SECS:-4000}" "$(basename "$module")" "${PH_SECS:-4000}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
++else
+ printf '\n### mix-20260911 %s %s — started %s\n\n- Phase A fio test4 fixed payload (%s/%s/%s bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (%s records, %s ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `%s`.\n- Command: `bash script/mix-20260911.sh %s %s`; evidence `result/mix-20260911/%s-%s/`.\n' "$label" "$policy" "$(date -Is)" "$HOT_IO" "$WARM_IO" "$COLD_IO" "$RECORDS" "$OPS" "$(basename "$module")" "$label" "$policy" "$label" "$policy" >> "$journal"
++fi
+ field() { awk -v key="$2" 'NR==1{for(i=1;i<=NF;i++){split($i,a,"=");if(a[1]==key)print a[2]}}' "$1"; }
+-sectors() { awk '{print $7}' /sys/class/block/nvme0n1/stat; }
++nv=  # NVMeVirt controller (nvme0 here, nvme1 on a PC with a real NVMe SSD), found by model after insmod
++sectors() { awk '{print $7}' /sys/class/block/${nv}n1/stat; }
+ kmsg() { printf '%s %s\n' "$marker" "$*" | sudo -n tee /dev/kmsg >/dev/null; }
+ phase_waf() { # phase_waf <start.txt> <end.txt>
+     awk -v h0="$(field "$1" host_pages)" -v g0="$(field "$1" gc_pages)" -v h1="$(field "$2" host_pages)" -v g1="$(field "$2" gc_pages)" \
+@@ -90,21 +99,22 @@ finish() {
+ trap finish EXIT; trap 'exit 130' INT; trap 'exit 143' TERM
+ trap 'printf "FAIL line=%s command=%s\n" "$LINENO" "$BASH_COMMAND" >&2' ERR
+ if [[ -e /sys/module/nvmev ]] || mountpoint -q "$root/mnt"; then echo 'Device already in use'; exit 1; fi
+-if compgen -G '/sys/class/nvme/nvme*' >/dev/null; then echo 'Existing NVMe device: refusing initialization'; exit 1; fi
++# Guarded sudo permits only positively identified NVMeVirt; existing physical controllers are preserved.
++[[ -n ${BASH_ENV:-} && -f $BASH_ENV ]] || { echo 'Safety adapter required'; exit 1; }
+ { date -Is; uname -a; cat /proc/cmdline; fio --version; java -version 2>&1; sqlite3 --version; sha256sum "$module" "$0" "$root/workloads/mix-test4.fio" "$root/workloads/sqlite/workloada"; lscpu; free -h; } > "$dir/environment.txt"
+ kmsg BEGIN
+ mkdir -p "$dir/kernel-snapshots"
+ ( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; i=0; while true; do printf -v s '%s/kernel-snapshots/%06d.log' "$dir" "$i"; sudo -n dmesg --color=never > "$s" || exit 1; i=$((i+1)); sleep 30 & sl=$!; wait $sl; done ) & collector=$!
+ sudo -n insmod "$module" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid="$(id -u)"
+ loaded=1
+-for _ in {1..50}; do [[ -b /dev/nvme0n1 && -w "$control" ]] && break; sleep 0.2; done
+-[[ -b /dev/nvme0n1 && -w "$control" ]]
++for _ in {1..50}; do for c in /sys/class/nvme/nvme*; do grep -qi CSL_Virt "$c/model" 2>/dev/null && nv=$(basename "$c"); done; [[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]] && break; sleep 0.2; done
++[[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]]
+ # counter time series every 30 s (all policies): lets fixed arms be compared with the learner over time, not just per phase
+-( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; cat "$control" 2>/dev/null | head -1; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
+-grep -q CSL_Virt /sys/class/nvme/nvme0/model
+-cat /sys/class/nvme/nvme0/model /sys/class/block/nvme0n1/size > "$dir/device.txt"
+-sudo -n mkfs.ext4 /dev/nvme0n1 > "$dir/mkfs.txt" 2>&1
+-sudo -n mount -o nodiscard /dev/nvme0n1 "$root/mnt"
++( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; printf '%s memavail_mb=%s\n' "$(cat "$control" 2>/dev/null | head -1)" "$(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo)"; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
++grep -q CSL_Virt /sys/class/nvme/$nv/model
++cat /sys/class/nvme/$nv/model /sys/class/block/${nv}n1/size > "$dir/device.txt"
++sudo -n mkfs.ext4 /dev/${nv}n1 > "$dir/mkfs.txt" 2>&1
++sudo -n mount -o nodiscard /dev/${nv}n1 "$root/mnt"
+ sudo -n chown -R oy:oy "$root/mnt"
+ # preparation (identical to measured-cat / online-mix)
+ fio --name=preset --filename="$FIO_TARGET" --size=6G --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/preset.json"
+@@ -133,7 +143,7 @@ phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHu
+     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+     ((load)) && sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
+      CREATE TABLE usertable (YCSB_KEY VARCHAR(255) PRIMARY KEY, FIELD0 TEXT, FIELD1 TEXT, FIELD2 TEXT, FIELD3 TEXT, FIELD4 TEXT, FIELD5 TEXT, FIELD6 TEXT, FIELD7 TEXT, FIELD8 TEXT, FIELD9 TEXT);"
+-    yc() { (cd "$ycsb" && JAVA_TOOL_OPTIONS="-Xshare:off" bash bin/ycsb.sh "$1" jdbc -s -P "$root/workloads/sqlite/workload$wl" -p recordcount="$RECORDS" -p operationcount="$OPS" -threads 1 \
++    yc() { (cd "$ycsb" && JAVA_TOOL_OPTIONS="-Xshare:off" bash bin/ycsb.sh "$1" jdbc -s -P "$root/workloads/sqlite/workload$wl" -p recordcount="$RECORDS" -p operationcount="$OPS" ${YCSB_SECS:+-p maxexecutiontime=$YCSB_SECS} -threads 1 \
+             -p db.driver=org.sqlite.JDBC -p db.url="jdbc:sqlite:$db" -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false); }
+     if ((load)); then
+         kmsg phase=$slot LOAD; yc load > "$dir/ycsb-load.txt" 2>&1
+@@ -156,8 +166,17 @@ phase_filebench() { # phase_filebench <slot> <profile> [nfiles] [filesize]: File
+     [[ -z "$fs" ]] || sed -i "s#^set \$filesize=.*#set \$filesize=$fs#" "$wl"   # the 6 GiB preset file stays; only ~1.5 GiB is free
+     cat "$control" > "$dir/phase-$slot-start.txt"
+     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+-    ( exec 9>&-; timeout --signal=TERM --kill-after=15 $(( ${VM_RUN:-300} + 900 )) setarch "$(uname -m)" -R "$root/tools/filebench-local/filebench" -f "$wl" ) > "$dir/filebench-$slot.txt" 2>&1
+-    grep -q 'IO Summary' "$dir/filebench-$slot.txt"
++    # VM_CHUNKS=n (10-03): phase length = VM_RUN x n. filebench's OLTP profile grows ~300 MB/min (aio leak) and stalls the host
++    # after ~25 min, so a profile with reusable filesets (oltp) runs as n back-to-back VM_RUN pieces on the same files;
++    # others (varmail, no reuse) run once for VM_RUN x n. n=1 is the previous behaviour.
++    local c n=${VM_CHUNKS:-1} rt=${VM_RUN:-300}
++    grep -q ',reuse' "$wl" || { rt=$(( ${VM_RUN:-300} * n )); n=1; sed -i "s#^run .*#run $rt#" "$wl"; }
++    : > "$dir/filebench-$slot.txt"
++    for c in $(seq 1 $n); do
++        ( exec 9>&-; timeout --signal=TERM --kill-after=15 $(( rt + 900 )) setarch "$(uname -m)" -R "$root/tools/filebench-local/filebench" -f "$wl" ) >> "$dir/filebench-$slot.txt" 2>&1
++        kmsg phase=$slot chunk=$c/$n done
++    done
++    [[ $(grep -c 'IO Summary' "$dir/filebench-$slot.txt") -eq $n ]]
+     rm -rf "$root/mnt/filebench"; sync   # next filebench phase starts from an empty dir (deleted data stays valid in the FTL, as everywhere here)
+     cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
+     kmsg phase=$slot END
+@@ -227,6 +246,36 @@ case "$label" in
+     mixM)  A_NAME=ramp-10k-to-50k; B_NAME=none; phase_ramp A; skip_slot;;                    # gradual drift
+     mixO)  A_NAME=oltp; B_NAME=varmail;  phase_filebench A oltp "" 64m; phase_varmail B;;            # two filebench apps
+     mixP)  A_NAME=sqlite-a; B_NAME=oltp; phase_sqlite A a 1; phase_filebench B oltp "" 32m;;         # DB -> DB-like app
++    mixU)  # 10-05 (user): learning-dynamics run — FIO-Fast and Varmail alternate, 8 phases x PH_SECS (default 4500 s) = 10 h.
++           # Both are workloads where the CAT parameters matter (45-combo spread 25.7% / 18.4% > 15% elimination threshold)
++           # and GC is moderate, so every phase can show sweep -> narrowing -> (switch) detect -> re-sweep -> narrowing.
++           ps_=${PH_SECS:-4500}; i=0
++           for w in F V F V F V F V; do sl=$(printf "\\x$(printf %x $((65 + i)))"); i=$((i + 1))
++               case $w in
++                   V) PN[$sl]=varmail; VM_RUN=$((ps_ / 4)) VM_CHUNKS=4 phase_varmail $sl;;
++                   F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
++               esac
++           done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
++    mixT)  # 10-04 (user): app workloads in an irregular order, 9 phases x PH_SECS (default 4000 s) = 10 h:
++           # YCSB-A -> OLTP -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast -> Varmail -> YCSB-A -> OLTP. Every phase is time-based:
++           # YCSB via maxexecutiontime, filebench VM_RUN x 4 chunks (OLTP leak), FIO payload scaled from its 600 s x1 length.
++           # Space: DB and OLTP files coexist next to the kept 6 GiB FIO file, so the same sizes as mixP (YCSB-A -> OLTP) are used:
++           # 250k records and 32 MB OLTP files (mixP hit ENOSPC with 600k records + 64 MB files).
++           ps_=${PH_SECS:-4000}; OPS=1000000000; RECORDS=250000; i=0; ld=1
++           for w in YA O V YA YB F V YA O; do sl=$(printf "\\x$(printf %x $((65 + i)))"); i=$((i + 1))
++               case $w in
++                   YA) PN[$sl]=sqlite-a; YCSB_SECS=$ps_ phase_sqlite $sl a $ld; ld=0;;
++                   YB) PN[$sl]=sqlite-b; YCSB_SECS=$ps_ phase_sqlite $sl b 0;;
++                   O)  PN[$sl]=oltp; VM_RUN=$((ps_ / 4)) VM_CHUNKS=4 phase_filebench $sl oltp "" 32m;;
++                   V)  PN[$sl]=varmail; VM_RUN=$((ps_ / 4)) VM_CHUNKS=4 phase_varmail $sl;;
++                   F)  PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
++               esac
++           done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
++    mixS)  # 10-04: ten phases cycling FIO-Fast -> Varmail -> OLTP (F V O F V O F V O F), each 10 min x MULT
++           # (MULT=6 -> 1 h each, ~10 h). Filebench phases last VM_RUN x VM_CHUNKS (OLTP in chunks: memory leak).
++           i=0; for w in F V O F V O F V O F; do sl=$(printf "\\x$(printf %x $((65 + i)))"); i=$((i + 1))
++               case $w in F) PN[$sl]=test4; phase_fio $sl mix-test4.fio;; V) PN[$sl]=varmail; phase_varmail $sl;; O) PN[$sl]=oltp; phase_filebench $sl oltp "" 64m;; esac
++           done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
+     mixR)  A_NAME=test4; B_NAME=sqlite-a; C_NAME=test4; phase_fio A mix-test4.fio; phase_sqlite B; phase_fio C mix-test4.fio;;   # equal writes per phase so the phase-B optimum (arm17) matters in the total
+     mixQ)  A_NAME=test4; B_NAME=idle-300s; C_NAME=test4; HOT_IO=$((HOT_IO/2)) WARM_IO=$((WARM_IO/2)) COLD_IO=$((COLD_IO/2)) phase_fio A mix-test4.fio; phase_idle B $(( ${SMOKE:+30} + ${SMOKE:-300} )); HOT_IO=$((HOT_IO/2)) WARM_IO=$((WARM_IO/2)) COLD_IO=$((COLD_IO/2)) phase_fio C mix-test4.fio;;  # idle gap between two identical phases
+     *)     A_NAME=test4; B_NAME=sqlite-a; phase_fio A mix-test4.fio
+@@ -243,7 +292,7 @@ host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pa
+     awk -v h="$host" -v g="$gc" -v b="$bytes" 'BEGIN{printf "total host_bytes=%.0f host_pages=%.0f gc_pages=%.0f WAF=%.6f\n",b,h,g,1+g/h}'
+     printf 'phaseA(%s) %s\n' "$A_NAME" "$(phase_waf "$dir/phase-A-start.txt" "$dir/phase-A-end.txt")"
+     printf 'phaseB(%s) %s\n' "$B_NAME" "$(phase_waf "$dir/phase-B-start.txt" "$dir/phase-B-end.txt")"
+-    [[ ! -f "$dir/phase-C-end.txt" ]] || printf 'phaseC(%s) %s\n' "${C_NAME:-}" "$(phase_waf "$dir/phase-C-start.txt" "$dir/phase-C-end.txt")"
++    for sl in C D E F G H I J; do [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]:-${C_NAME:-}}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
+     for sl in A B C; do [[ -f "$dir/phase-$sl-loaded.txt" ]] && printf 'phase%s-load %s\nphase%s-run %s\n' "$sl" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-loaded.txt")" "$sl" "$(phase_waf "$dir/phase-$sl-loaded.txt" "$dir/phase-$sl-end.txt")"; done
+     printf 'ycsb-load %s\nycsb-run %s\n' "$(grep -m1 'Throughput' "$dir/ycsb-load.txt")" "$(grep -m1 'Throughput' "$dir/ycsb-run.txt")"
+ } > "$dir/summary.txt"
+diff --git a/script/online-mix-20260907.sh b/script/online-mix-20260907.sh
+index ad9c34e2..34ecbcc9 100644
+--- a/script/online-mix-20260907.sh
++++ b/script/online-mix-20260907.sh
+@@ -1,4 +1,6 @@
+ #!/usr/bin/env bash
++# Legacy fixed-device workload: disabled to protect the physical Windows SSD.
++if [[ "$(hostname)" == oy-B550M-DS3H ]]; then echo "Unsafe legacy nvme0n1 script disabled; use scripts with detect_dev" >&2; exit 2; fi
+ set -Eeuo pipefail
+ root=/home/oy/iCAT
+ base="$root/result/online-mix-20260907"
+diff --git a/script/setup-new-machine.sh b/script/setup-new-machine.sh
+index bb2dffb8..0a130f1c 100755
+--- a/script/setup-new-machine.sh
++++ b/script/setup-new-machine.sh
+@@ -4,36 +4,83 @@
+ set -Eeuo pipefail
+ cd /home/oy/iCAT
+ if ! grep -q 'memmap=8G\$4G' /proc/cmdline; then
++  [[ "$(hostname)" == oy-B550M-DS3H && "$(uname -r)" == 7.0.0-31-generic ]] || { echo 'Wrong host/kernel'; exit 2; }
++  sudo -v
+   echo "== stage 1: packages, sudo rules, 8 GiB memory reservation"
+   [[ $(awk '/MemTotal/{print int($2/1048576)}' /proc/meminfo) -ge 15 ]] || { echo "need >= 16 GiB RAM"; exit 1; }
++  sudo python3 - <<'CHECK'
++from pathlib import Path
++assert Path('/etc/hostname').read_text().strip() == 'oy-B550M-DS3H'
++lo, hi = 4 * 1024**3, 12 * 1024**3 - 1
++ranges = []
++for line in Path('/proc/iomem').read_text().splitlines():
++    if line.startswith(' ') or not line.endswith(': System RAM'):
++        continue
++    span = line.split(' : ')[0]
++    a, b = [int(x, 16) for x in span.split('-')]
++    ranges.append((a,b))
++assert any(a <= lo and b >= hi for a,b in ranges), '4–12 GiB is not contiguous System RAM; STOP'
++print('4–12 GiB System RAM verified')
++CHECK
+   sudo apt-get update
+   sudo apt-get install -y build-essential "linux-headers-$(uname -r)" fio jq sqlite3 openjdk-21-jre-headless python3 python3-matplotlib \
+-       git autoconf automake libtool bison flex
++       git curl nvme-cli autoconf automake libtool bison flex
++  backup="/var/backups/icat-setup-$(date +%Y%m%d-%H%M%S)"
++  sudo mkdir -p "$backup"
++  for config in /etc/default/grub /etc/default/grub.d/99-icat-kernel.cfg /etc/default/grub.d/99-nvmevirt.cfg /etc/sudoers.d/icat; do
++    [[ ! -f "$config" ]] || sudo cp -a "$config" "$backup/"
++  done
+   sudo tee /etc/sudoers.d/icat >/dev/null <<'SUDO'
+ oy ALL=(root) NOPASSWD: /usr/sbin/insmod /home/oy/iCAT/buildoutput/nvmev-*.ko *
+ oy ALL=(root) NOPASSWD: /usr/sbin/rmmod nvmev
+-oy ALL=(root) NOPASSWD: /usr/sbin/mkfs.ext4 /dev/nvme*n1
+-oy ALL=(root) NOPASSWD: /usr/bin/mount -o nodiscard /dev/nvme*n1 /home/oy/iCAT/mnt
++oy ALL=(root) NOPASSWD: /usr/sbin/mkfs.ext4 /dev/nvme[1-9]*n1
++oy ALL=(root) NOPASSWD: /usr/bin/mount -o nodiscard /dev/nvme[1-9]*n1 /home/oy/iCAT/mnt
+ oy ALL=(root) NOPASSWD: /usr/bin/umount /home/oy/iCAT/mnt
+ oy ALL=(root) NOPASSWD: /usr/bin/chown -R oy\:oy /home/oy/iCAT/mnt
+ oy ALL=(root) NOPASSWD: /usr/bin/tee /dev/kmsg
+ oy ALL=(root) NOPASSWD: /usr/bin/dmesg --color=never
++oy ALL=(root) NOPASSWD: /usr/sbin/nvme flush /dev/nvme[1-9]*n1 -n 1
++oy ALL=(root) NOPASSWD: /usr/bin/cat /proc/iomem
+ oy ALL=(root) NOPASSWD: /usr/bin/true
+ oy ALL=(root) NOPASSWD: /usr/bin/tee /proc/sys/vm/drop_caches
+ SUDO
+   sudo chmod 0440 /etc/sudoers.d/icat && sudo visudo -cf /etc/sudoers.d/icat
+   # physical 4 GiB..12 GiB is handed to NVMeVirt, the same layout as the original machine
+-  echo 'GRUB_CMDLINE_LINUX_DEFAULT="$GRUB_CMDLINE_LINUX_DEFAULT memmap=8G\\\$4G"' | sudo tee /etc/default/grub.d/99-nvmevirt.cfg
++  printf '%s\n' 'GRUB_CMDLINE_LINUX="${GRUB_CMDLINE_LINUX} memmap=8G\\\$4G"' | sudo tee /etc/default/grub.d/99-nvmevirt.cfg
++  sudo sh -n /etc/default/grub.d/99-nvmevirt.cfg
+   sudo update-grub
++  sudo python3 - <<'VERIFY'
++from pathlib import Path
++s=Path('/boot/grub/grub.cfg').read_text()
++lines=[x for x in s.splitlines() if x.lstrip().startswith('linux') and 'vmlinuz-7.0.0-31-generic' in x]
++assert lines and all('memmap=8G\\$4G' in x or "'memmap=8G$4G'" in x for x in lines), 'GRUB kernel argument escaping check failed'
++print('PASS: generated GRUB preserves memmap dollar')
++VERIFY
++  printf '%s\n' "Stage 1 complete. Backup: $backup. Reboot required; see /home/oy/iCAT/NEW_MACHINE_PROGRESS.txt" > /home/oy/iCAT/result/stage1-complete.txt
+   echo "== reboot now, then run this script again"; exit 0
+ fi
+ echo "== stage 2: modules, YCSB, filebench"
++[[ "$(uname -r)" == 7.0.0-31-generic ]] || { echo 'Wrong kernel'; exit 2; }
++sudo -n cat /proc/iomem | python3 -c '
++import sys
++lo,hi=4*1024**3,12*1024**3-1
++ranges=[]
++for line in sys.stdin:
++    if line.startswith(" "): continue
++    span,_,kind=line.strip().partition(" : ")
++    a,b=[int(x,16) for x in span.split("-")]
++    if kind=="System RAM" and a<=hi and b>=lo: raise SystemExit("Reserved range overlaps System RAM; STOP")
++    if kind=="Reserved": ranges.append((a,b))
++assert any(a<=lo and b>=hi for a,b in ranges), "8GiB reservation not found; STOP"
++print("PASS: physical 4–12GiB is Reserved")
++'
+ bash script/build-all-modules.sh
+ if [[ ! -d /home/oy/YCSB/ycsb-0.17.0 ]]; then
+   mkdir -p /home/oy/YCSB && cd /home/oy/YCSB
+   curl -fLO https://github.com/brianfrankcooper/YCSB/releases/download/0.17.0/ycsb-0.17.0.tar.gz && tar xzf ycsb-0.17.0.tar.gz
+-  curl -fL -o ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar https://repo1.maven.org/maven2/org/xerial/sqlite-jdbc/3.46.1.3/sqlite-jdbc-3.46.1.3.jar
+   cd /home/oy/iCAT
+ fi
+-(cd tools/filebench-local && { [[ -x configure ]] || autoreconf -i; } && ./configure >/dev/null && make -j"$(nproc)" >/dev/null) && echo "filebench built"
++mkdir -p /home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib
++[[ -s /home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar ]] || curl -fL -o /home/oy/YCSB/ycsb-0.17.0/jdbc-binding/lib/sqlite-jdbc-3.46.1.3.jar https://repo.maven.apache.org/maven2/org/xerial/sqlite-jdbc/3.46.1.3/sqlite-jdbc-3.46.1.3.jar
++(cd tools/filebench-local && touch filebench-1.5-alpha3/{aclocal.m4,configure,Makefile.in,config.h.in,cvars/Makefile.in,workloads/Makefile.in} && ./filebench-1.5-alpha3/configure --prefix="$PWD/install" >/dev/null && make -j"$(nproc)" LEX=flex 'YACC=bison -y' CFLAGS='-O2 -g -fcommon -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types' >/dev/null && make install >/dev/null) && echo "filebench built"
+ echo "== done. Next: bash script/validate-new-machine.sh"
+diff --git a/script/sqlite.sh b/script/sqlite.sh
+index dfb33952..2ca9c2df 100755
+--- a/script/sqlite.sh
++++ b/script/sqlite.sh
+@@ -32,6 +32,7 @@ readonly WORKLOAD_DIR="${SQLITE_WORKLOAD_DIR:-/home/oy/iCAT/workloads/sqlite}"
+ readonly RESULT_ROOT="/home/oy/iCAT/result/sqlite"
+ readonly START_SCRIPT="${SCRIPT_DIR}/start_virt.sh"
+ readonly END_SCRIPT="${SCRIPT_DIR}/end_virt.sh"
++source "${SCRIPT_DIR}/env.sh"
+ DEVICE=""  # resolved after insmod via detect_dev
+ readonly MOUNT_POINT="/home/oy/iCAT/mnt"
+ readonly DB_FILE="${MOUNT_POINT}/ycsb.db"
+@@ -403,6 +404,8 @@ main() {
+     printf '[START] module=%s\n' "${MODULE_TAG}"
+     "${START_SCRIPT}" "${MODULE_TAG}"
+     virt_started=1
++    DEVICE="$(detect_dev)"
++    assert_virtual_mount "$DEVICE" || die "Virtual mount verification failed"
+     verify_mount_source
+ 
+     printf '[SQLITE] schema setup: %s\n' "${DB_FILE}"
+diff --git a/script/start_virt.sh b/script/start_virt.sh
+index 12d3faa3..a3969d87 100755
+--- a/script/start_virt.sh
++++ b/script/start_virt.sh
+@@ -10,6 +10,9 @@ if grep -q '^nvmev ' /proc/modules; then
+ 	sudo rmmod nvmev
+ 	sleep 1
+ fi
++grep -Fq 'memmap=8G$4G' /proc/cmdline || { echo "Missing reserved memory" >&2; exit 2; }
++[[ "$MEMMAP_START" == 4G && "$MEMMAP_SIZE" == 8192M ]] || exit 2
++mountpoint -q "$MNT_DIR" && { echo "Mount point already occupied" >&2; exit 2; }
+ mkdir -p "${MNT_DIR}"
+ sudo insmod "${module}" memmap_start="${MEMMAP_START}" memmap_size="${MEMMAP_SIZE}" cpus="${NVMEV_CPUS}"
+ trap 'sudo rmmod nvmev 2>/dev/null || true' ERR
+@@ -22,7 +25,11 @@ done
+ [[ -b "${dev:-}" ]] || { echo "NVMeVirt namespace never appeared" >&2; exit 2; }
+ echo "[DEV] ${dev}"
+ 
++assert_virtual_dev "$dev" || { echo "Unsafe device" >&2; exit 2; }
++[[ -z "$(lsblk -nr -o MOUNTPOINTS "$dev" | tr -d '[:space:]')" ]] || exit 2
++cat "/sys/class/nvme/$(basename "$dev" n1)/model"
+ echo y | sudo mkfs.ext4 "${dev}" >/dev/null
+ sudo mount -o nodiscard "${dev}" "${MNT_DIR}"
+ sudo chown -R "$(id -un):$(id -gn)" "${MNT_DIR}"
++assert_virtual_mount "$dev" || exit 2
+ echo "Virt ready: ${MNT_DIR}"
+diff --git a/script/validate-new-machine.sh b/script/validate-new-machine.sh
+index e51d5da0..d3e2a731 100755
+--- a/script/validate-new-machine.sh
++++ b/script/validate-new-machine.sh
+@@ -1,17 +1,38 @@
+ #!/usr/bin/env bash
+-# Does this machine reproduce the original one? Fast 3-region writes, 10 min each, original-author method.
+-# Pass = every WAF within 1% of the original machine (arm47 1.746, arm50 1.786, gh-greedy 2.186 = mean of 3).
+-set -u
+-cd /home/oy/iCAT; o=result/validate-$(hostname)-$(date +%Y%m%d); mkdir -p "$o"
+-for t in arm47 arm50 gh-greedy; do GH_TEST_JOB=gh-test4.fio bash script/gh-fio.sh $t > "$o/$t.console.txt" 2>&1; done
+-python3 - "$o" <<'PY'
++# Original 3-region writes, 600 seconds each; WAF must be within 1% per arm.
++set -Eeuo pipefail
++cd /home/oy/iCAT
++source script/env.sh
++grep -Fq 'memmap=8G$4G' /proc/cmdline || { echo 'BLOCKED: memory reservation missing'; exit 2; }
++sudo -n true || { echo 'BLOCKED: administrator setup missing'; exit 2; }
++o="result/validate-$(hostname)-$(date +%Y%m%d-%H%M%S)-$$"
++mkdir -p "$o"
++echo "Evidence: $o"
++for t in arm47 arm50 gh-greedy; do
++    [[ -f "buildoutput/nvmev-$t.ko" ]] || { echo "BLOCKED: missing module $t"; exit 2; }
++done
++for t in arm47 arm50 gh-greedy; do
++    status=0
++    GH_TEST_JOB=gh-test4.fio bash script/gh-fio.sh "$t" > "$o/$t.console.txt" 2>&1 || status=$?
++    printf '%s\n' "$status" > "$o/$t.exit-code.txt"
++done
++python3 - "$o" <<'CHECK' | tee "$o/summary.txt"
+ import re, sys, pathlib
+-ref = {'arm47': 1.7455, 'arm50': 1.7859, 'gh-greedy': 2.186}; ok = True
+-for t, r in ref.items():
+-    c = (pathlib.Path(sys.argv[1]) / f'{t}.console.txt').read_text(errors='replace')
+-    m = re.search(r'^\[RESULT\] (\S+)', c, re.M); g = re.findall(r'GC stats: .*?host_pages=(\d+) gc_pages=(\d+)', pathlib.Path(m[1]).read_text()) if m else []
+-    w = 1 + int(g[-1][1]) / int(g[-1][0]) if g else None
+-    d = (w / r - 1) * 100 if w else None; ok &= d is not None and abs(d) <= 1
+-    print(f'{t:10s} original {r:.3f}  here {w if w is None else round(w, 3)}  diff {d if d is None else f"{d:+.1f}%"}')
+-print('PASS' if ok else 'FAIL: do not mix this machine\'s results with the original machine\'s')
+-PY
++root = pathlib.Path(sys.argv[1])
++ref = {'arm47': 1.7455, 'arm50': 1.7859, 'gh-greedy': 2.186}
++ok = True
++for tag, baseline in ref.items():
++    console = (root / f'{tag}.console.txt').read_text(errors='replace')
++    status = int((root / f'{tag}.exit-code.txt').read_text())
++    match = re.search(r'^\[RESULT\] (\S+)', console, re.M)
++    stats = []
++    if match and pathlib.Path(match[1]).is_file():
++        stats = re.findall(r'GC stats: .*?host_pages=(\d+) gc_pages=(\d+)', pathlib.Path(match[1]).read_text(errors='replace'))
++    waf = 1 + int(stats[-1][1]) / int(stats[-1][0]) if stats and int(stats[-1][0]) > 0 else None
++    diff = (waf / baseline - 1) * 100 if waf is not None else None
++    passed = status == 0 and diff is not None and abs(diff) <= 1
++    ok &= passed
++    print(f'{tag}: exit={status}, reference={baseline}, WAF={waf}, difference_percent={diff}, {"PASS" if passed else "FAIL"}')
++print('PASS' if ok else 'FAIL: do not mix results with original machine')
++sys.exit(0 if ok else 1)
++CHECK
+diff --git a/script/varmail-20260908.sh b/script/varmail-20260908.sh
+index a435a26a..1a63aad7 100644
+--- a/script/varmail-20260908.sh
++++ b/script/varmail-20260908.sh
+@@ -1,4 +1,6 @@
+ #!/usr/bin/env bash
++# Legacy fixed-device workload: disabled to protect the physical Windows SSD.
++if [[ "$(hostname)" == oy-B550M-DS3H ]]; then echo "Unsafe legacy nvme0n1 script disabled; use scripts with detect_dev" >&2; exit 2; fi
+ set -Eeuo pipefail
+ root=/home/oy/iCAT
+ base="$root/result/varmail-20260908"
+diff --git a/script/verify-measurement-20260907.sh b/script/verify-measurement-20260907.sh
+index 8589d629..7f341819 100644
+--- a/script/verify-measurement-20260907.sh
++++ b/script/verify-measurement-20260907.sh
+@@ -1,4 +1,6 @@
+ #!/usr/bin/env bash
++# Legacy fixed-device workload: disabled to protect the physical Windows SSD.
++if [[ "$(hostname)" == oy-B550M-DS3H ]]; then echo "Unsafe legacy nvme0n1 script disabled; use scripts with detect_dev" >&2; exit 2; fi
+ set -Eeuo pipefail
+ root=/home/oy/iCAT
+ tag=${1:?Module tag required}

@@ -1,0 +1,101 @@
+{
+  "waf": 2.9385775702213235,
+  "host_bytes": 12889691312128,
+  "host_pages": 3146897293,
+  "gc_pages": 6100504508,
+  "phases": [
+    {
+      "slot": "A",
+      "workload": "FIO-Fast",
+      "actual_seconds": 4501.0,
+      "waf": 1.859997942670884,
+      "host_bytes": 737400967168,
+      "host_pages": 180029533,
+      "gc_pages": 154825028,
+      "requested_write_bytes": 737280000000
+    },
+    {
+      "slot": "B",
+      "workload": "Varmail",
+      "actual_seconds": 4503.0,
+      "waf": 2.4192670198649058,
+      "host_bytes": 2750137536512,
+      "host_pages": 671420297,
+      "gc_pages": 952924684,
+      "process_runtime_seconds": 4500.293
+    },
+    {
+      "slot": "C",
+      "workload": "FIO-Fast",
+      "actual_seconds": 4501.0,
+      "waf": 5.213880836966015,
+      "host_bytes": 737300344832,
+      "host_pages": 180004967,
+      "gc_pages": 758519481,
+      "requested_write_bytes": 737280000000
+    },
+    {
+      "slot": "D",
+      "workload": "Varmail",
+      "actual_seconds": 4504.0,
+      "waf": 2.542934940018419,
+      "host_bytes": 2387648978944,
+      "host_pages": 582922114,
+      "gc_pages": 899410897,
+      "process_runtime_seconds": 4500.302
+    },
+    {
+      "slot": "E",
+      "workload": "FIO-Fast",
+      "actual_seconds": 4500.0,
+      "waf": 5.0119005728003625,
+      "host_bytes": 737300271104,
+      "host_pages": 180004949,
+      "gc_pages": 722161958,
+      "requested_write_bytes": 737280000000
+    },
+    {
+      "slot": "F",
+      "workload": "Varmail",
+      "actual_seconds": 4504.0,
+      "waf": 2.6138471847631477,
+      "host_bytes": 2391378837504,
+      "host_pages": 583832724,
+      "gc_pages": 942216798,
+      "process_runtime_seconds": 4500.298000000001
+    },
+    {
+      "slot": "G",
+      "workload": "FIO-Fast",
+      "actual_seconds": 4500.0,
+      "waf": 5.138547374050255,
+      "host_bytes": 737300271104,
+      "host_pages": 180004949,
+      "gc_pages": 744959009,
+      "requested_write_bytes": 737280000000
+    },
+    {
+      "slot": "H",
+      "workload": "Varmail",
+      "actual_seconds": 4504.0,
+      "waf": 2.572144755392152,
+      "host_bytes": 2411224104960,
+      "host_pages": 588677760,
+      "gc_pages": 925486653,
+      "process_runtime_seconds": 4500.29
+    }
+  ],
+  "actual_measured_seconds": 36017.0,
+  "active_sample_rows": 1199,
+  "learning_event_counts": {
+    "discard": 4157,
+    "init": 8,
+    "reset": 12,
+    "sample": 18332,
+    "settled": 47,
+    "summary": 4,
+    "warmup-done": 4
+  },
+  "learning_note": "Kernel learner epoch differs from measurement epoch; preparation events labeled separately; event presence does not prove convergence",
+  "block_stat_validation": "upstream runner assertions passed; no independent NAND claim"
+}
