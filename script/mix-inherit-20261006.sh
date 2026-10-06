@@ -40,7 +40,7 @@ case "$label" in
     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
     t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
     mixA|mixB|mixG|mixH|mixJ|mixT) scale=1; RECORDS=600000; OPS=4000000;;
-    mixV)  scale=1;  RECORDS=600000; OPS=1000000000;;
+    mixV)  scale=1;  RECORDS=${MIXV_RECORDS:-600000}; OPS=1000000000;;   # 20:50: 600k + kept FIO file = SQLITE_FULL; size chosen by fit check
     mixW1|mixW2) scale=1; RECORDS=600000; OPS=1000000000;;   # 10-06 calibration: YCSB-A 600k only, after Table-3 prep   # no permanent FIO file, so the original 600k DB fits again
     mixP)  scale=1;  RECORDS=250000; OPS=4000000;;   # sqlite then oltp: 600k records + WAL left no room for the oltp fileset (ENOSPC on rep1)
     mixR)  scale=1;  RECORDS=600000; OPS=14000000;;   # test4 -> sqlite-a -> test4, each phase ~24M host pages (sqlite-a run ~1.7 pages/op)
@@ -134,8 +134,9 @@ if [[ "$label" == mixV-fill ]]; then   # 10-06 13:00: retired (load WAF 1.00 vs 
     ext 0 fill "$root/mnt/fill.dat"; rm -f "$root/mnt/fill.dat"; sync; sleep 10; sync
     df -B1 "$root/mnt" > "$dir/fill-df.txt"; cp "$dir/preset.json" "$dir/prepare.json"
 else
-fio --name=preset --filename="$FIO_TARGET" --size=6G --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/preset.json"
-fio --name=prepare --filename="$FIO_TARGET" --size=6G --io_size=3G --rw=randwrite --bs=4k --direct=1 --ioengine=libaio --iodepth=32 --rate_iops=10000 --randrepeat=1 --randseed=20260907 --end_fsync=1 --output-format=json --output="$dir/prepare.json"
+FGB=6; [[ $label != mixV ]] || FGB=${MIXV_FIO_GB:-6}   # 21:30: mixV may use a 5 GiB FIO-Fast (cold region 3 GiB)
+fio --name=preset --filename="$FIO_TARGET" --size=${FGB}G --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/preset.json"
+fio --name=prepare --filename="$FIO_TARGET" --size=${FGB}G --io_size=$((FGB * 512))M --rw=randwrite --bs=4k --direct=1 --ioengine=libaio --iodepth=32 --rate_iops=10000 --randrepeat=1 --randseed=20260907 --end_fsync=1 --output-format=json --output="$dir/prepare.json"
 sync -f "$FIO_TARGET"
 jq -s -e 'all(.[]; all(.jobs[]; .error == 0))' "$dir/preset.json" "$dir/prepare.json" >/dev/null
 fi
@@ -174,6 +175,9 @@ phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHu
     kmsg phase=$slot RUN; yc run > "$dir/ycsb-run-$slot.txt" 2>&1; cp "$dir/ycsb-run-$slot.txt" "$dir/ycsb-run.txt"
     rm -f "$dir/dc.flag"; wait "$dc"; dc=
     grep -q '^\[\(UPDATE\|READ\)\], Return=OK, ' "$dir/ycsb-run-$slot.txt"
+    # 10-06 20:50: a request that failed (e.g. SQLITE_FULL) makes the run invalid — stop instead of measuring a broken workload
+    ! grep -q '], Return=ERROR, ' "$dir/ycsb-run-$slot.txt" || { kmsg phase=$slot YCSB_ERRORS; echo "YCSB request errors in phase $slot" >&2; exit 3; }
+    ((load == 0)) || ! grep -q '], Return=ERROR, ' "$dir/ycsb-load.txt" || { echo "YCSB load errors in phase $slot" >&2; exit 3; }
     sync; cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
     kmsg phase=$slot END
 }
@@ -299,7 +303,7 @@ case "$label" in
                    V)  PN[$sl]=varmail; VM_RUN=$((ps_ / 4)) VM_CHUNKS=4 phase_varmail $sl;;
                    F)  PN[$sl]=test4   # 6 GiB file written sequentially inside the phase, then the usual test4 overwrites
                        HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) \
-                         phase_fio $sl mix-test4.fio; ext $sl files "$FIO_TARGET";;   # the Table-3 prep file, kept all run
+                         phase_fio $sl $([[ $FGB == 5 ]] && echo mix-test4-cold3g.fio || echo mix-test4.fio); ext $sl files "$FIO_TARGET";;   # the Table-3 prep file, kept all run
                esac
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
     mixT)  # 10-04 (user): app workloads in an irregular order, 9 phases x PH_SECS (default 4000 s) = 10 h:
