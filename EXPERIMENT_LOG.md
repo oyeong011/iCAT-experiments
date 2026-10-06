@@ -12061,3 +12061,24 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=2143112 gc_pages=374680 WAF=1.174830
 - ycsb-load [OVERALL], Throughput(ops/sec), 25689.33036478849
 - ycsb-run [OVERALL], Throughput(ops/sec), 27175.597386066896
+
+### inherit-20261006 mixV onlinev4 — started 2026-10-06T22:01:15+09:00
+
+- mixV (inheritance): 9 time-based phases of 4000 s — YCSB-A (load 600000 records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x 4000/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/mixV-onlinev4-rep1/`.
+
+- Finished 2026-10-07T08:07:30+09:00; mixV onlinev4 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/mixV-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=5943123849216 host_pages=1450957971 gc_pages=2816748704 WAF=2.941303
+- phaseA(sqlite-a) host_pages=27997692 gc_pages=1780130 WAF=1.063581
+- phaseB(oltp) host_pages=119386784 gc_pages=10523885 WAF=1.088149
+- phaseC(varmail) host_pages=573372846 gc_pages=973653037 WAF=2.698115
+- phaseD(sqlite-a) host_pages=26859969 gc_pages=3876311 WAF=1.144316
+- phaseE(sqlite-b) host_pages=4258653 gc_pages=1753887 WAF=1.411841
+- phaseF(test4) host_pages=160004414 gc_pages=598527264 WAF=4.740692
+- phaseG(varmail) host_pages=391067529 gc_pages=1183975851 WAF=4.027548
+- phaseH(sqlite-a) host_pages=30940372 gc_pages=6541462 WAF=1.211422
+- phaseI(oltp) host_pages=117069615 gc_pages=36116873 WAF=1.308508
+- phaseA-load host_pages=1398346 gc_pages=321299 WAF=1.229771
+- phaseA-run host_pages=26599346 gc_pages=1458831 WAF=1.054845
+- ycsb-load [OVERALL], Throughput(ops/sec), 22424.87666317835
+- ycsb-run [OVERALL], Throughput(ops/sec), 26930.751886761343
