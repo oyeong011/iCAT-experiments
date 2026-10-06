@@ -273,7 +273,7 @@ case "$label" in
                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
                esac
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
-    mixV)  # 10-06 (user, revised 12:10): every switch handles data the way the matching two-phase mix in Table 3 did.
+    mixV)  # 10-06 (user, revised 11:29): every switch handles data the way the matching two-phase mix in Table 3 did.
            # A->OLTP keeps the DB (mixP); OLTP->Varmail deletes the OLTP files (mixO); YCSB-A->B same DB (mixJ); FIO->Varmail keeps
            # the FIO file (mixF). Not in Table 3: YCSB-B->FIO deletes the DB first (user), Varmail->YCSB-A deletes the FIO file so
            # the 600k DB and the following OLTP fit (mixP's ENOSPC came from the kept FIO file). No file exists before phase 6.
