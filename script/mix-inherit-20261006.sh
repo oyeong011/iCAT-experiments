@@ -40,7 +40,7 @@ case "$label" in
     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
     t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
     mixA|mixB|mixG|mixH|mixJ|mixT) scale=1; RECORDS=600000; OPS=4000000;;
-    mixV)  scale=1;  RECORDS=600000; OPS=1000000000;;
+    mixV)  scale=1;  RECORDS=${MIXV_RECORDS:-600000}; OPS=1000000000;;   # 20:50: 600k + kept FIO file = SQLITE_FULL; size chosen by fit check
     mixW1|mixW2) scale=1; RECORDS=600000; OPS=1000000000;;   # 10-06 calibration: YCSB-A 600k only, after Table-3 prep   # no permanent FIO file, so the original 600k DB fits again
     mixP)  scale=1;  RECORDS=250000; OPS=4000000;;   # sqlite then oltp: 600k records + WAL left no room for the oltp fileset (ENOSPC on rep1)
     mixR)  scale=1;  RECORDS=600000; OPS=14000000;;   # test4 -> sqlite-a -> test4, each phase ~24M host pages (sqlite-a run ~1.7 pages/op)
@@ -174,6 +174,9 @@ phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHu
     kmsg phase=$slot RUN; yc run > "$dir/ycsb-run-$slot.txt" 2>&1; cp "$dir/ycsb-run-$slot.txt" "$dir/ycsb-run.txt"
     rm -f "$dir/dc.flag"; wait "$dc"; dc=
     grep -q '^\[\(UPDATE\|READ\)\], Return=OK, ' "$dir/ycsb-run-$slot.txt"
+    # 10-06 20:50: a request that failed (e.g. SQLITE_FULL) makes the run invalid — stop instead of measuring a broken workload
+    ! grep -q '], Return=ERROR, ' "$dir/ycsb-run-$slot.txt" || { kmsg phase=$slot YCSB_ERRORS; echo "YCSB request errors in phase $slot" >&2; exit 3; }
+    ((load == 0)) || ! grep -q '], Return=ERROR, ' "$dir/ycsb-load.txt" || { echo "YCSB load errors in phase $slot" >&2; exit 3; }
     sync; cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
     kmsg phase=$slot END
 }
