@@ -11867,3 +11867,19 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 실험 조건이 바뀌었으므로 기본(CAT-37)·견고(CAT-50)·최적(CAT-47)·iCAT-v4 네 정책 모두 mixV 10시간 1회씩 실행.
 - 분담: 이 PC = CAT-47 → v4 (queue40, 진행 중). 두 번째 PC = CAT-37 → CAT-50 (`script/icat2-mixV.sh`). 각 정책 연기 시험 통과 후 10시간.
 - 핵심 비교(v4 vs 최적 CAT-47)는 같은 PC. 기본·견고와의 비교는 PC가 다름(mixT 때와 같은 한계)으로 보고.
+
+- Finished 2026-10-06T11:43:21+09:00; mixV fixed47 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/mixV-fixed47-rep1-smoke`; cleanup attempted.
+- total host_bytes=200789127168 host_pages=49020783 gc_pages=9940729 WAF=1.202786
+- phaseA(sqlite-a) host_pages=25319 gc_pages=0 WAF=1.000000
+- phaseB(oltp) host_pages=3659769 gc_pages=250801 WAF=1.068529
+- phaseC(varmail) host_pages=22700423 gc_pages=296347 WAF=1.013055
+- phaseD(sqlite-a) host_pages=9058 gc_pages=63 WAF=1.006955
+- phaseE(sqlite-b) host_pages=1620 gc_pages=26 WAF=1.016049
+- phaseF(test4) host_pages=2052991 gc_pages=369370 WAF=1.179918
+- phaseG(varmail) host_pages=17229601 gc_pages=7321142 WAF=1.424917
+- phaseH(sqlite-a) host_pages=25217 gc_pages=3401 WAF=1.134869
+- phaseI(oltp) host_pages=3316655 gc_pages=1699542 WAF=1.512427
+- phaseA-load host_pages=16263 gc_pages=0 WAF=1.000000
+- phaseA-run host_pages=9056 gc_pages=0 WAF=1.000000
+- ycsb-load [OVERALL], Throughput(ops/sec), 17605.6338028169
+- ycsb-run [OVERALL], Throughput(ops/sec), 27739.251040221912

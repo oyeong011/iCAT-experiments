@@ -1,0 +1,142 @@
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.832: OLTP Version 3.0 personality successfully loaded
+0.832: Populating and pre-allocating filesets
+0.832: logfile populated: 1 files, avg. dir. width = 1024, avg. dir. depth = 0.0, 0 leafdirs, 10.000MB total size
+0.832: Removing logfile tree (if exists)
+0.902: Pre-allocating directories in logfile tree
+0.902: Pre-allocating files in logfile tree
+0.904: datafiles populated: 10 files, avg. dir. width = 1024, avg. dir. depth = 0.3, 0 leafdirs, 320.000MB total size
+0.904: Removing datafiles tree (if exists)
+0.905: Pre-allocating directories in datafiles tree
+0.905: Pre-allocating files in datafiles tree
+0.960: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.960: Population and pre-allocation of filesets completed
+0.960: Starting 200 shadow instances
+1.065: Starting 10 dbwr instances
+1.074: Starting 1 lgwr instances
+2.104: Running...
+32.122: Run took 30 seconds...
+32.145: Per-Operation Breakdown
+random-rate          0ops        0ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+shadow-post-dbwr     659942ops    21985ops/s   0.0mb/s      7.6ms/op [0.01ms - 187.26ms]
+shadow-post-lg       659948ops    21985ops/s   0.0mb/s      0.1ms/op [0.00ms - 100.27ms]
+shadowhog            659969ops    21986ops/s   0.0mb/s      0.5ms/op [0.05ms - 160.62ms]
+shadowread           685580ops    22839ops/s  42.9mb/s      0.3ms/op [0.00ms - 420.33ms]
+dbwr-aiowait         6588ops      219ops/s   0.0mb/s      2.4ms/op [0.00ms - 111.37ms]
+dbwr-block           6589ops      220ops/s   0.0mb/s     39.4ms/op [0.00ms - 105.16ms]
+dbwr-hog             6598ops      220ops/s   0.0mb/s      0.0ms/op [0.00ms - 27.14ms]
+dbwrite-a            661080ops    22023ops/s  42.9mb/s      0.0ms/op [0.00ms - 56.97ms]
+lg-block             206ops        7ops/s   0.0mb/s    145.0ms/op [57.16ms - 242.41ms]
+lg-aiowait           207ops        7ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+lg-write             208ops        7ops/s   1.7mb/s      0.0ms/op [0.00ms -  1.90ms]
+32.145: IO Summary: 1353663 ops 45095.414 ops/s 22839/22030 rd/wr  87.6mb/s   0.3ms/op
+32.145: Shutting down processes
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.005: OLTP Version 3.0 personality successfully loaded
+0.005: Populating and pre-allocating filesets
+0.006: logfile populated: 1 files, avg. dir. width = 1024, avg. dir. depth = 0.0, 0 leafdirs, 10.000MB total size
+0.006: Reusing existing logfile tree
+0.006: Pre-allocating files in logfile tree
+0.006: datafiles populated: 10 files, avg. dir. width = 1024, avg. dir. depth = 0.3, 0 leafdirs, 320.000MB total size
+0.006: Reusing existing datafiles tree
+0.006: Pre-allocating files in datafiles tree
+0.006: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.006: Population and pre-allocation of filesets completed
+0.006: Starting 200 shadow instances
+0.119: Starting 10 dbwr instances
+0.125: Starting 1 lgwr instances
+1.135: Running...
+31.180: Run took 30 seconds...
+31.197: Per-Operation Breakdown
+random-rate          0ops        0ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+shadow-post-dbwr     683523ops    22751ops/s   0.0mb/s      7.3ms/op [0.01ms - 176.65ms]
+shadow-post-lg       683537ops    22751ops/s   0.0mb/s      0.1ms/op [0.00ms - 79.89ms]
+shadowhog            683548ops    22752ops/s   0.0mb/s      0.5ms/op [0.05ms - 141.74ms]
+shadowread           709162ops    23604ops/s  44.4mb/s      0.3ms/op [0.00ms - 334.93ms]
+dbwr-aiowait         6828ops      227ops/s   0.0mb/s      3.9ms/op [0.00ms - 99.13ms]
+dbwr-block           6829ops      227ops/s   0.0mb/s     35.6ms/op [0.00ms - 111.92ms]
+dbwr-hog             6838ops      228ops/s   0.0mb/s      0.0ms/op [0.00ms -  3.82ms]
+dbwrite-a            685080ops    22803ops/s  44.5mb/s      0.0ms/op [0.00ms - 42.62ms]
+lg-block             213ops        7ops/s   0.0mb/s    140.3ms/op [73.53ms - 231.10ms]
+lg-aiowait           214ops        7ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+lg-write             215ops        7ops/s   1.8mb/s      0.0ms/op [0.00ms -  0.31ms]
+31.197: IO Summary: 1401499 ops 46648.550 ops/s 23604/22810 rd/wr  90.7mb/s   0.3ms/op
+31.197: Shutting down processes
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.005: OLTP Version 3.0 personality successfully loaded
+0.005: Populating and pre-allocating filesets
+0.005: logfile populated: 1 files, avg. dir. width = 1024, avg. dir. depth = 0.0, 0 leafdirs, 10.000MB total size
+0.005: Reusing existing logfile tree
+0.005: Pre-allocating files in logfile tree
+0.005: datafiles populated: 10 files, avg. dir. width = 1024, avg. dir. depth = 0.3, 0 leafdirs, 320.000MB total size
+0.005: Reusing existing datafiles tree
+0.005: Pre-allocating files in datafiles tree
+0.005: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.005: Population and pre-allocation of filesets completed
+0.005: Starting 200 shadow instances
+0.092: Starting 10 dbwr instances
+0.095: Starting 1 lgwr instances
+1.105: Running...
+31.133: Run took 30 seconds...
+31.148: Per-Operation Breakdown
+random-rate          0ops        0ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+shadow-post-dbwr     712000ops    23712ops/s   0.0mb/s      7.0ms/op [0.01ms - 142.99ms]
+shadow-post-lg       712200ops    23719ops/s   0.0mb/s      0.1ms/op [0.00ms - 67.42ms]
+shadowhog            712200ops    23719ops/s   0.0mb/s      0.4ms/op [0.05ms - 165.06ms]
+shadowread           737798ops    24571ops/s  46.3mb/s      0.3ms/op [0.00ms - 299.63ms]
+dbwr-aiowait         7117ops      237ops/s   0.0mb/s      3.2ms/op [0.00ms - 109.15ms]
+dbwr-block           7118ops      237ops/s   0.0mb/s     34.8ms/op [0.00ms - 117.52ms]
+dbwr-hog             7127ops      237ops/s   0.0mb/s      0.0ms/op [0.00ms -  1.17ms]
+dbwrite-a            713980ops    23778ops/s  46.4mb/s      0.0ms/op [0.00ms - 62.95ms]
+lg-block             222ops        7ops/s   0.0mb/s    134.6ms/op [68.50ms - 240.00ms]
+lg-aiowait           223ops        7ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+lg-write             224ops        7ops/s   1.9mb/s      0.0ms/op [0.00ms -  0.15ms]
+31.148: IO Summary: 1459342 ops 48601.384 ops/s 24571/23786 rd/wr  94.5mb/s   0.3ms/op
+31.148: Shutting down processes
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.006: OLTP Version 3.0 personality successfully loaded
+0.006: Populating and pre-allocating filesets
+0.006: logfile populated: 1 files, avg. dir. width = 1024, avg. dir. depth = 0.0, 0 leafdirs, 10.000MB total size
+0.006: Reusing existing logfile tree
+0.006: Pre-allocating files in logfile tree
+0.006: datafiles populated: 10 files, avg. dir. width = 1024, avg. dir. depth = 0.3, 0 leafdirs, 320.000MB total size
+0.006: Reusing existing datafiles tree
+0.006: Pre-allocating files in datafiles tree
+0.006: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.006: Population and pre-allocation of filesets completed
+0.006: Starting 200 shadow instances
+0.099: Starting 10 dbwr instances
+0.103: Starting 1 lgwr instances
+1.107: Running...
+31.138: Run took 30 seconds...
+31.154: Per-Operation Breakdown
+random-rate          0ops        0ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+shadow-post-dbwr     724405ops    24124ops/s   0.0mb/s      6.8ms/op [0.01ms - 192.15ms]
+shadow-post-lg       724415ops    24124ops/s   0.0mb/s      0.1ms/op [0.00ms - 167.21ms]
+shadowhog            724428ops    24124ops/s   0.0mb/s      0.6ms/op [0.05ms - 261.12ms]
+shadowread           750022ops    24977ops/s  47.1mb/s      0.3ms/op [0.00ms - 283.19ms]
+dbwr-aiowait         7238ops      241ops/s   0.0mb/s      1.4ms/op [0.00ms - 103.47ms]
+dbwr-block           7238ops      241ops/s   0.0mb/s     37.0ms/op [0.00ms - 106.47ms]
+dbwr-hog             7248ops      241ops/s   0.0mb/s      0.0ms/op [0.00ms - 32.40ms]
+dbwrite-a            726080ops    24179ops/s  47.1mb/s      0.0ms/op [0.00ms - 63.39ms]
+lg-block             226ops        8ops/s   0.0mb/s    132.2ms/op [52.66ms - 233.89ms]
+lg-aiowait           227ops        8ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+lg-write             228ops        8ops/s   1.9mb/s      0.0ms/op [0.00ms -  0.34ms]
+31.154: IO Summary: 1483795 ops 49412.109 ops/s 24977/24187 rd/wr  96.1mb/s   0.3ms/op
+31.154: Shutting down processes
