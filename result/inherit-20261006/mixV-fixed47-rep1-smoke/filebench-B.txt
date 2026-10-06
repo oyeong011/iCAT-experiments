@@ -1,0 +1,21 @@
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.247: OLTP Version 3.0 personality successfully loaded
+0.247: Populating and pre-allocating filesets
+0.247: logfile populated: 1 files, avg. dir. width = 1024, avg. dir. depth = 0.0, 0 leafdirs, 10.000MB total size
+0.247: Removing logfile tree (if exists)
+0.385: Pre-allocating directories in logfile tree
+0.385: Pre-allocating files in logfile tree
+0.387: datafiles populated: 10 files, avg. dir. width = 1024, avg. dir. depth = 0.3, 0 leafdirs, 320.000MB total size
+0.387: Removing datafiles tree (if exists)
+0.388: Pre-allocating directories in datafiles tree
+0.388: Pre-allocating files in datafiles tree
+0.440: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.440: Population and pre-allocation of filesets completed
+0.441: Starting 200 shadow instances
+0.529: Starting 10 dbwr instances
+0.532: Starting 1 lgwr instances
+1.565: Running...
