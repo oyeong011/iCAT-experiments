@@ -1,0 +1,17 @@
+--- /home/oy/iCAT/result/v6-mixT-20261005/upstream-entrypoint.sh	2026-10-05 19:45:46.215405455 +0900
++++ /home/oy/iCAT/result/v6-mixT-20261005/execution-entrypoint.sh	2026-10-05 19:46:48.793745497 +0900
+@@ -10,6 +10,11 @@
+ make -C "$K" M="$PWD/online-v6-src" -j"$(nproc)" NVMEVIRT_GC_POLICY=WATGC_V2 modules > buildoutput/build-online-v6.log 2>&1
+ install -m0644 online-v6-src/nvmev.ko buildoutput/nvmev-online-v6.ko
+ sha256sum buildoutput/nvmev-online-v6.ko
+-env SMOKE=1 PH_SECS=120 bash script/mix-20260911.sh mixT onlinev6 1
+-[[ $(grep -c '^phase' result/mix-20260911/mixT-onlinev6-rep1-smoke/summary.txt) -ge 9 ]] || { echo "v6 smoke failed"; exit 1; }
+-env PH_SECS=4000 bash script/mix-20260911.sh mixT onlinev6 1
++python3 "$CAMPAIGN_DIR/step.py" build
++python3 "$CAMPAIGN_DIR/step.py" pre smoke
++env SMOKE=1 PH_SECS=120 bash "$CAMPAIGN_DIR/execution-mix.sh" mixT onlinev6 1
++python3 "$CAMPAIGN_DIR/step.py" post smoke
++[[ $(grep -c '^phase' "$MIX_BASE/mixT-onlinev6-rep1-smoke/summary.txt") -ge 9 ]] || { echo "v6 smoke failed"; exit 1; }
++python3 "$CAMPAIGN_DIR/step.py" pre long
++env PH_SECS=4000 bash "$CAMPAIGN_DIR/execution-mix.sh" mixT onlinev6 1
++python3 "$CAMPAIGN_DIR/step.py" post long

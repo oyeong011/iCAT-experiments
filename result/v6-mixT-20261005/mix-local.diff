@@ -1,0 +1,23 @@
+--- /home/oy/iCAT/result/v6-mixT-20261005/upstream-mix.sh	2026-10-05 19:45:46.217651669 +0900
++++ /home/oy/iCAT/result/v6-mixT-20261005/execution-mix.sh	2026-10-05 19:46:48.793640056 +0900
+@@ -45,6 +45,10 @@
+ mult=${MULT:-1}; [[ "$label" != long && "$label" != t4long ]] || mult=6   # MULT=n: every phase n times longer (fio payload and YCSB ops); for phase-length vs learning-time analysis   # long: phase A 6x payload (3600 s) so the learner can exploit after its 600 s sweep
+ [[ -z "${SMOKE:-}" ]] || { scale=$((scale*10)); RECORDS=20000; OPS=20000; export VM_FILES=2000 VM_RUN=20; }   # SMOKE=1: 1/10 payload, tiny DB
+ export HOT_IO=$((58982400000*mult/scale)) WARM_IO=$((29491200000*mult/scale)) COLD_IO=$((9830400000*mult/scale))
++# Smoke mixT v6: honor PH_SECS for FIO too (generic SMOKE scale would shorten it tenfold).
++if [[ "$label" == mixT && "$policy" == onlinev6 && -n "${SMOKE:-}" ]]; then
++    export HOT_IO=$((58982400000*mult)) WARM_IO=$((29491200000*mult)) COLD_IO=$((9830400000*mult))
++fi
+ export SEED_HOT=$((20260910+rep)) SEED_WARM=$((20261010+rep)) SEED_COLD=$((20261110+rep))
+ dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != t4long && "$label" != mix[A-Z] ]] || dir="$base/$label-$policy-rep$rep"
+ [[ -z "${MULT:-}" || "$MULT" == 1 ]] || { dir="$dir-x$MULT"; OPS=$((OPS*MULT)); }
+@@ -100,7 +104,8 @@
+ trap finish EXIT; trap 'exit 130' INT; trap 'exit 143' TERM
+ trap 'printf "FAIL line=%s command=%s\n" "$LINENO" "$BASH_COMMAND" >&2' ERR
+ if [[ -e /sys/module/nvmev ]] || mountpoint -q "$root/mnt"; then echo 'Device already in use'; exit 1; fi
+-if compgen -G '/sys/class/nvme/nvme*' >/dev/null; then echo 'Existing NVMe device: refusing initialization'; exit 1; fi
++# Preserve physical controllers; mandatory sudo adapter checks NVMeVirt identity before device operations.
++[[ -n ${BASH_ENV:-} && -f $BASH_ENV ]] || exit 1
+ { date -Is; uname -a; cat /proc/cmdline; fio --version; java -version 2>&1; sqlite3 --version; sha256sum "$module" "$0" "$root/workloads/mix-test4.fio" "$root/workloads/sqlite/workloada"; lscpu; free -h; } > "$dir/environment.txt"
+ kmsg BEGIN
+ mkdir -p "$dir/kernel-snapshots"

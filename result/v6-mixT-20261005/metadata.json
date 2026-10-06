@@ -1,0 +1,84 @@
+{
+  "registered_at": "2026-10-05T19:45:46.221050+09:00",
+  "workload": "mixT irregular nine application phases",
+  "policy": "onlinev6",
+  "arm": "adaptive",
+  "requested_phase_seconds": [
+    4000,
+    4000,
+    4000,
+    4000,
+    4000,
+    4000,
+    4000,
+    4000,
+    4000
+  ],
+  "sampling_seconds": 30,
+  "latest_source_commit": "e5f84db1c3e71f6baaed39a8b3b33b3ad46b3017",
+  "execution_script_sha256": "536bc829b3a381579c5b7e4b3433d6ddfaf221a05b882508b02b281a854a1d0c",
+  "module_path": "/home/oy/iCAT/buildoutput/nvmev-online-v6.ko",
+  "hostname": "oy-B550M-DS3H",
+  "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0",
+  "kernel": "7.0.0-31-generic",
+  "source_local_status": "source-status.txt",
+  "measurement": "manual continuous across9 phases; preparation outside counters; first YCSB load inside; learner traces kept;30s samples",
+  "device_expected": "/dev/nvme1n1;same model/serial/PCI guards enforced by BASH_ENV adapter;source script latest unchanged",
+  "publish_branch": "icat-2",
+  "source_update": "pull in clean publishing worktree; exact new online-v6-src extracted; root existing modifications preserved",
+  "source_commit": "e5f84db1c3e71f6baaed39a8b3b33b3ad46b3017",
+  "root_HEAD_before_file_update": "c06a372a5e940f911734946f1ffd574d2bdd7ca8",
+  "command": "env PH_SECS=4000 bash script/mix-20260911.sh mixT fixed37 1",
+  "execution": "immutable snapshot of latest runner; only documented existing-controller safety guard changed",
+  "wait_for": null,
+  "workload_sha256": {
+    "workloads/mix-test4.fio": "b5edbcc77f269f500986eae375da8a94d4bf762d30f52a58d8ffd0d4901fa946",
+    "workloads/filebench/oltp.f": "2dd0b5b422a656b07c03ef4322525a701b4872820548e6ae2342e01c2f2c8ea4",
+    "workloads/filebench/varmail.f": "44d34625ec29806d5b0ac2f3694bb40c0b1e70fba6a9c5157f4c8a16fbb7f23f",
+    "workloads/sqlite/workloada": "c0aff8a25402e3f8178b47db2cf0575ce9cacba4eeb4c4657e84cf748db8d92d",
+    "workloads/sqlite/workloadb": "34a7d090c7b87cd5482d0d2ee1f402e11deb3eafea7bfd8024321b6c6b97ef9b"
+  },
+  "seeds": {
+    "hot": 20260911,
+    "warm": 20261011,
+    "cold": 20261111,
+    "prepare": 20260907
+  },
+  "run_id": "v6-mixT-20261005",
+  "PH_SECS": {
+    "smoke": 120,
+    "long": 4000
+  },
+  "phase_order": [
+    "YCSB-A",
+    "OLTP",
+    "Varmail",
+    "YCSB-A",
+    "YCSB-B",
+    "FIO-Fast",
+    "Varmail",
+    "YCSB-A",
+    "OLTP"
+  ],
+  "YCSB_RECORDS": 250000,
+  "YCSB_OPS_CAP": 1000000000,
+  "YCSB_maxexecutiontime": 4000,
+  "YCSB_seed": "not explicitly set by upstream runner",
+  "OLTP": {
+    "smoke": "4x30s32MiB",
+    "long": "4x1000s32MiB"
+  },
+  "Varmail": {
+    "smoke": "2000files120s",
+    "long": "24000files4000s"
+  },
+  "build_provenance": "new local build of pinned online-v6-src for current kernel; NVMEVIRT_GC_POLICY=WATGC_V2; Kbuild and compiler logs preserved",
+  "module_sha256": "94cb134314e56567e050c7d2a25be8fbf06a90c1ef4de822a7f237fbaeaa95ac",
+  "requested_command": "bash script/icat2-v6-mixT.sh",
+  "smoke_fio_correction": "upstream SMOKE=1 sets scale10, yielding12s FIO in mixT. Restore FIO base byte amounts only for smoke mixT onlinev6, so PH_SECS120 means120s; document patch. Long run unchanged.",
+  "entrypoint_sha256": "624b4a42de0fa91c49e5c5087358ac601ef1b44427bf9098928bc8ca8c301cf5",
+  "priority_updated_at": "2026-10-05T19:55:06.276789+09:00",
+  "priority": "v6 first per user; old mixU interrupted and deferred",
+  "pipeline_started_at": "2026-10-05T19:55:13.305528+09:00",
+  "built_at": "2026-10-05T19:55:15.662864+09:00"
+}
