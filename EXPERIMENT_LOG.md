@@ -11970,3 +11970,11 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 순서(queue43): 이 PC = 실제 크기 확인(v4) → v4 10시간 → CAT-47 10시간. 두 번째 PC = `script/icat2-mixV.sh`(CAT-37 → CAT-50, 각 실제 크기 확인 후 10시간).
 
 - Finished 2026-10-06T13:12:07+09:00; mixW1 fixed47 exit=127; evidence `/home/oy/iCAT/result/inherit-20261006/mixW1-fixed47`; cleanup attempted.
+
+### inherit-20261006 mixV onlinev4 — started 2026-10-06T13:12:19+09:00
+
+- mixV (inheritance): 9 time-based phases of 60 s — YCSB-A (load 600000 records) -> OLTP -> Varmail -> YCSB-A (same DB) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x 60/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB kept). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=60 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/fitcheck/mixV-onlinev4-rep1/`.
+- 2026-10-06 13:15 mixW1 재시험: YCSB 구간은 끝까지 돌았으나 끝에서 runner 오류(exit 127, 'line 330: dle: command not found'). 원인: 실행 중에 제가 같은 runner 파일(mix-inherit-20261006.sh)을 수정해 bash가 읽는 위치가 어긋남 — 제 실수. summary는 없지만 카운터 파일로 계산: 적재 WAF 1.250, 요청 WAF 1.161 (W2: 1.267 / 1.500, mixJ: 1.264 / 1.511). 즉 표 3 준비 후 파일을 지우면 적재는 같고 요청 WAF는 낮아짐. 결정(파일 유지)은 바뀌지 않음. 이후 실행 중인 runner는 수정하지 않음.
+
+- Finished 2026-10-06T13:15:18+09:00; mixV onlinev4 exit=1; evidence `/home/oy/iCAT/result/inherit-20261006/fitcheck/mixV-onlinev4-rep1`; cleanup attempted.
