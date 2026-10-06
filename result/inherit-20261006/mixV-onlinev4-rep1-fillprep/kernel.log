@@ -1,0 +1,721 @@
+[2131988.882754] mix-mixV-onlinev4-131207 BEGIN
+[2131989.019824] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[2131989.019830] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[2131989.031048] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[2131989.041292] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2131989.051464] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2131989.051478] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[2131989.051480] NVMeVirt: WATGC_V2 init ns=0 part=0 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[2131989.052321] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[2131989.052358] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[2131989.052360] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=0 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[2131989.063169] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2131989.073188] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2131989.073202] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[2131989.073204] NVMeVirt: WATGC_V2 init ns=0 part=1 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[2131989.074188] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[2131989.074191] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=1 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[2131989.084487] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2131989.096964] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2131989.096979] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[2131989.096982] NVMeVirt: WATGC_V2 init ns=0 part=2 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[2131989.097938] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[2131989.097941] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=2 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[2131989.108587] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2131989.118678] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2131989.118691] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[2131989.118693] NVMeVirt: WATGC_V2 init ns=0 part=3 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[2131989.119731] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[2131989.119734] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=3 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[2131989.119740] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[2131989.119741] NVMeVirt: ns 0/1: size 7655 MiB
+[2131989.119790] PCI host bridge to bus 0001:10
+[2131989.119792] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[2131989.119795] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[2131989.119797] pci_bus 0001:10: root bus resource [bus 00-ff]
+[2131989.119819] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[2131989.119823] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[2131989.119825] pci 0001:10:00.0: enabling Extended Tags
+[2131989.119949] NVMeVirt: Virtual PCI bus created (node 0)
+[2131989.120286] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[2131989.120359] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[2131989.120385] NVMeVirt: Virtual NVMe device created
+[2131989.120518] nvme nvme0: pci function 0001:10:00.0
+[2131989.124385] nvme nvme0: 8/0/0 default/read/poll queues
+[2131989.680342] EXT4-fs (nvme0n1): mounted filesystem 080bce60-365d-4ef7-9006-ac8095c6c3fa r/w with ordered data mode. Quota mode: none.
+[2132004.359773] NVMeVirt: WATGC_V2 init ns=0 part=0 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[2132004.359780] NVMeVirt: WATGC_V2 init ns=0 part=1 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[2132004.359783] NVMeVirt: WATGC_V2 init ns=0 part=2 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[2132004.359785] NVMeVirt: WATGC_V2 init ns=0 part=3 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[2132004.359787] NVMeVirt: Measurement: command=start epoch=1 host_bytes=0 learner_active=1
+[2132004.371361] mix-mixV-onlinev4-131207 phase=A START
+[2132004.382428] mix-mixV-onlinev4-131207 phase=A LOAD
+[2132011.777352] NVMeVirt: WATGC_V2 warmup-done ns=0 part=3 gc_count=100
+[2132011.806015] NVMeVirt: WATGC_V2 warmup-done ns=0 part=1 gc_count=100
+[2132011.829693] NVMeVirt: WATGC_V2 warmup-done ns=0 part=2 gc_count=100
+[2132011.858543] NVMeVirt: WATGC_V2 warmup-done ns=0 part=0 gc_count=100
+[2132020.088049] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=1 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=131072 gc_pages=0 gc_count=2048 waf_q16=65536 best=37 next=15 settled=0 active=45
+[2132020.122832] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=1 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=131072 gc_pages=0 gc_count=2048 waf_q16=65536 best=37 next=15 settled=0 active=45
+[2132020.223635] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=1 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=131072 gc_pages=0 gc_count=2048 waf_q16=65536 best=37 next=15 settled=0 active=45
+[2132020.256189] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=1 phase=measure evaluated=37 k=7 scale_pct=100 age_ratio=7 host=131072 gc_pages=0 gc_count=2048 waf_q16=65536 best=37 next=15 settled=0 active=45
+[2132025.470824] mix-mixV-onlinev4-131207 phase=A RUN
+[2132029.636418] tee (131517): drop_caches: 3
+[2132034.813475] tee (131521): drop_caches: 3
+[2132040.321829] tee (131529): drop_caches: 3
+[2132045.271881] tee (131540): drop_caches: 3
+[2132050.058191] tee (131558): drop_caches: 3
+[2132055.216523] tee (131566): drop_caches: 3
+[2132061.070883] tee (131571): drop_caches: 3
+[2132066.504382] tee (131576): drop_caches: 3
+[2132071.559966] tee (131589): drop_caches: 3
+[2132076.602787] tee (131595): drop_caches: 3
+[2132081.907340] tee (131615): drop_caches: 3
+[2132087.188418] tee (131621): drop_caches: 3
+[2132092.160068] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=2 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=131112 gc_pages=473 gc_count=2055 waf_q16=65772 best=37 next=16 settled=0 active=45
+[2132092.172239] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=2 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=131098 gc_pages=487 gc_count=2055 waf_q16=65779 best=37 next=16 settled=0 active=45
+[2132092.181749] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=2 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=131118 gc_pages=531 gc_count=2056 waf_q16=65801 best=37 next=16 settled=0 active=45
+[2132092.186521] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=2 phase=measure evaluated=15 k=4 scale_pct=25 age_ratio=4 host=131107 gc_pages=608 gc_count=2057 waf_q16=65839 best=37 next=16 settled=0 active=45
+[2132092.887301] tee (131626): drop_caches: 3
+[2132098.041210] tee (131657): drop_caches: 3
+[2132105.690856] tee (131705): drop_caches: 3
+[2132114.559730] tee (131763): drop_caches: 3
+[2132125.770709] tee (131828): drop_caches: 3
+[2132135.791654] tee (131891): drop_caches: 3
+[2132142.351810] tee (131919): drop_caches: 3
+[2132147.263157] audit: type=1400 audit(1791255655.039:3925): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=131901 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132148.359605] tee (132169): drop_caches: 3
+[2132153.802967] tee (132245): drop_caches: 3
+[2132153.965155] audit: type=1400 audit(1791255661.741:3926): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132175 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132159.040236] tee (132319): drop_caches: 3
+[2132159.512447] audit: type=1400 audit(1791255667.288:3927): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132251 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132163.987114] audit: type=1400 audit(1791255671.763:3928): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132334 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132164.516510] tee (132411): drop_caches: 3
+[2132169.477614] audit: type=1400 audit(1791255677.253:3929): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132412 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132169.989545] tee (132494): drop_caches: 3
+[2132174.880579] audit: type=1400 audit(1791255682.656:3930): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132496 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132175.373859] tee (132570): drop_caches: 3
+[2132180.128084] tee (132641): drop_caches: 3
+[2132181.462901] audit: type=1400 audit(1791255689.238:3931): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132574 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132185.243792] audit: type=1400 audit(1791255693.019:3932): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132659 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132185.638735] tee (132732): drop_caches: 3
+[2132187.432224] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=3 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=131127 gc_pages=4287 gc_count=2116 waf_q16=67678 best=37 next=17 settled=0 active=45
+[2132187.442675] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=3 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=131077 gc_pages=4086 gc_count=2112 waf_q16=67578 best=37 next=17 settled=0 active=45
+[2132190.800274] audit: type=1400 audit(1791255698.575:3933): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132735 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132191.195281] tee (132814): drop_caches: 3
+[2132192.863511] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=3 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=131076 gc_pages=3961 gc_count=2110 waf_q16=67516 best=37 next=17 settled=0 active=45
+[2132192.871150] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=3 phase=measure evaluated=16 k=4 scale_pct=25 age_ratio=7 host=131102 gc_pages=3938 gc_count=2110 waf_q16=67504 best=37 next=17 settled=0 active=45
+[2132195.496602] audit: type=1400 audit(1791255703.272:3934): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132818 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132196.141782] audit: type=1400 audit(1791255703.917:3935): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132892 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132196.284260] tee (132960): drop_caches: 3
+[2132201.396714] audit: type=1400 audit(1791255709.172:3936): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=132971 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132201.693017] tee (133043): drop_caches: 3
+[2132206.338334] audit: type=1400 audit(1791255714.114:3937): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133047 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132207.170127] audit: type=1400 audit(1791255714.945:3938): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133126 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132207.394954] tee (133195): drop_caches: 3
+[2132212.063960] tee (133255): drop_caches: 3
+[2132213.845964] audit: type=1400 audit(1791255721.621:3939): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133200 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132217.249948] audit: type=1400 audit(1791255725.025:3940): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133279 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132217.559726] tee (133352): drop_caches: 3
+[2132222.574521] audit: type=1400 audit(1791255730.349:3941): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133354 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132223.035873] tee (133438): drop_caches: 3
+[2132227.686117] audit: type=1400 audit(1791255735.461:3942): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133439 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132228.328092] tee (133520): drop_caches: 3
+[2132232.409369] audit: type=1400 audit(1791255740.184:3943): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133521 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132233.937703] audit: type=1400 audit(1791255741.713:3944): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133594 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132234.244946] tee (133667): drop_caches: 3
+[2132239.357915] audit: type=1400 audit(1791255747.133:3945): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133668 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132240.102151] tee (133750): drop_caches: 3
+[2132245.216663] tee (133822): drop_caches: 3
+[2132245.801566] audit: type=1400 audit(1791255753.576:3946): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133751 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132249.897710] audit: type=1400 audit(1791255757.672:3947): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133830 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132250.393506] audit: type=1400 audit(1791255758.168:3948): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133911 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132250.629329] tee (133981): drop_caches: 3
+[2132255.824807] audit: type=1400 audit(1791255763.599:3949): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=133985 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132256.109625] tee (134059): drop_caches: 3
+[2132260.712321] audit: type=1400 audit(1791255768.487:3950): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134063 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132261.401328] audit: type=1400 audit(1791255769.176:3951): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134145 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132261.488590] tee (134208): drop_caches: 3
+[2132266.513641] audit: type=1400 audit(1791255774.287:3952): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134217 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132266.815192] tee (134288): drop_caches: 3
+[2132271.417206] audit: type=1400 audit(1791255779.192:3953): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134292 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132272.142130] audit: type=1400 audit(1791255779.916:3954): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134373 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132272.245607] tee (134401): drop_caches: 3
+[2132276.853869] tee (134491): drop_caches: 3
+[2132278.909478] audit: type=1400 audit(1791255786.684:3955): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134445 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132282.482223] audit: type=1400 audit(1791255790.256:3956): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134525 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132282.785602] tee (134605): drop_caches: 3
+[2132287.291095] audit: type=1400 audit(1791255795.065:3957): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134610 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132287.880147] audit: type=1400 audit(1791255795.654:3958): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134691 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132288.139827] tee (134761): drop_caches: 3
+[2132292.844294] audit: type=1400 audit(1791255800.618:3959): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134765 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132293.448073] tee (134838): drop_caches: 3
+[2132298.303083] audit: type=1400 audit(1791255806.077:3960): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134840 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132298.945413] tee (134927): drop_caches: 3
+[2132300.898234] audit: type=1400 audit(1791255808.672:3961): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134914 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132302.641126] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=4 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=131092 gc_pages=4586 gc_count=2120 waf_q16=67828 best=37 next=18 settled=0 active=45
+[2132302.651791] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=4 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=131104 gc_pages=4511 gc_count=2119 waf_q16=67790 best=37 next=18 settled=0 active=45
+[2132304.211604] audit: type=1400 audit(1791255811.986:3962): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=134995 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132304.514530] tee (135067): drop_caches: 3
+[2132309.255608] tee (135125): drop_caches: 3
+[2132310.059438] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=4 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=131081 gc_pages=4343 gc_count=2116 waf_q16=67707 best=37 next=18 settled=0 active=45
+[2132310.067078] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=4 phase=measure evaluated=17 k=4 scale_pct=25 age_ratio=16 host=131134 gc_pages=4354 gc_count=2117 waf_q16=67711 best=37 next=18 settled=0 active=45
+[2132310.867849] audit: type=1400 audit(1791255818.642:3963): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135071 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132314.560184] audit: type=1400 audit(1791255822.334:3964): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135156 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132314.972995] tee (135229): drop_caches: 3
+[2132319.533560] audit: type=1400 audit(1791255827.307:3965): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135232 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132320.170187] audit: type=1400 audit(1791255827.944:3966): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135315 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132320.438777] tee (135384): drop_caches: 3
+[2132325.459187] audit: type=1400 audit(1791255833.233:3967): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135389 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132326.182108] audit: type=1400 audit(1791255833.956:3968): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135467 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132326.447209] tee (135537): drop_caches: 3
+[2132330.950163] audit: type=1400 audit(1791255838.724:3969): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135541 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132331.651569] audit: type=1400 audit(1791255839.425:3970): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135617 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132332.449913] tee (135706): drop_caches: 3
+[2132334.494321] audit: type=1400 audit(1791255842.268:3971): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135692 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132337.971193] tee (135805): drop_caches: 3
+[2132340.257641] audit: type=1400 audit(1791255848.030:3972): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135766 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132343.614543] tee (135887): drop_caches: 3
+[2132346.312477] audit: type=1400 audit(1791255854.085:3973): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135852 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132349.364429] tee (135972): drop_caches: 3
+[2132351.475584] audit: type=1400 audit(1791255859.249:3974): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=135932 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132354.319174] audit: type=1400 audit(1791255862.092:3975): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136016 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132354.791200] tee (136091): drop_caches: 3
+[2132358.801403] audit: type=1400 audit(1791255866.575:3976): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136092 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132360.020027] audit: type=1400 audit(1791255867.793:3977): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136165 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132360.400430] tee (136238): drop_caches: 3
+[2132366.105946] tee (136323): drop_caches: 3
+[2132366.411617] audit: type=1400 audit(1791255874.185:3978): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136240 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132370.777718] tee (136381): drop_caches: 3
+[2132372.491359] audit: type=1400 audit(1791255880.264:3979): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136329 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132375.710314] audit: type=1400 audit(1791255883.483:3980): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136416 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132376.033111] tee (136490): drop_caches: 3
+[2132380.997459] audit: type=1400 audit(1791255888.770:3981): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136492 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132381.472296] tee (136571): drop_caches: 3
+[2132386.621146] audit: type=1400 audit(1791255894.394:3982): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136573 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132387.092506] tee (136648): drop_caches: 3
+[2132391.724752] audit: type=1400 audit(1791255899.498:3983): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136650 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132392.396340] tee (136728): drop_caches: 3
+[2132396.267883] audit: type=1400 audit(1791255904.041:3984): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136722 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132397.979720] tee (136817): drop_caches: 3
+[2132402.764043] tee (136894): drop_caches: 3
+[2132403.017814] audit: type=1400 audit(1791255910.790:3985): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136808 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132408.302380] tee (136978): drop_caches: 3
+[2132409.289422] audit: type=1400 audit(1791255917.062:3986): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136900 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132414.064305] tee (137047): drop_caches: 3
+[2132415.148114] audit: type=1400 audit(1791255922.921:3987): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=136989 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132416.127338] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=5 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=131092 gc_pages=2476 gc_count=2087 waf_q16=66773 best=37 next=19 settled=0 active=45
+[2132416.137450] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=5 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=131080 gc_pages=2554 gc_count=2088 waf_q16=66812 best=37 next=19 settled=0 active=45
+[2132418.859023] audit: type=1400 audit(1791255926.630:3988): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137064 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132419.378306] tee (137139): drop_caches: 3
+[2132421.776784] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=5 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=131111 gc_pages=2394 gc_count=2086 waf_q16=66732 best=37 next=19 settled=0 active=45
+[2132421.785190] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=5 phase=measure evaluated=18 k=4 scale_pct=50 age_ratio=4 host=131086 gc_pages=2353 gc_count=2085 waf_q16=66712 best=37 next=19 settled=0 active=45
+[2132424.019699] audit: type=1400 audit(1791255931.791:3989): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137141 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132424.831091] tee (137216): drop_caches: 3
+[2132429.324928] audit: type=1400 audit(1791255937.097:3990): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137217 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132430.772953] audit: type=1400 audit(1791255938.545:3991): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137304 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132430.987610] tee (137375): drop_caches: 3
+[2132435.733564] tee (137436): drop_caches: 3
+[2132437.413996] audit: type=1400 audit(1791255945.186:3992): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137379 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132441.414083] audit: type=1400 audit(1791255949.186:3993): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137466 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132441.620466] tee (137537): drop_caches: 3
+[2132446.226124] audit: type=1400 audit(1791255953.998:3994): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137541 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132446.971703] tee (137630): drop_caches: 3
+[2132449.367667] audit: type=1400 audit(1791255957.140:3995): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137615 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132451.577790] audit: type=1400 audit(1791255959.350:3996): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137691 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132452.109433] tee (137771): drop_caches: 3
+[2132455.629076] audit: type=1400 audit(1791255963.401:3997): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137765 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132457.915959] audit: type=1400 audit(1791255965.688:3998): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137838 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132458.383765] audit: type=1400 audit(1791255966.156:3999): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137917 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132458.518854] tee (137982): drop_caches: 3
+[2132463.576117] audit: type=1400 audit(1791255971.348:4000): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=137992 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132463.935967] tee (138074): drop_caches: 3
+[2132468.575282] audit: type=1400 audit(1791255976.347:4001): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138078 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132469.073617] tee (138167): drop_caches: 3
+[2132473.239318] audit: type=1400 audit(1791255981.011:4002): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138161 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132474.854331] audit: type=1400 audit(1791255982.626:4003): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138235 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132475.027974] tee (138306): drop_caches: 3
+[2132479.358984] audit: type=1400 audit(1791255987.131:4004): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138310 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132479.903362] audit: type=1400 audit(1791255987.675:4005): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138385 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132480.214982] tee (138457): drop_caches: 3
+[2132484.904393] audit: type=1400 audit(1791255992.676:4006): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138459 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132485.542177] tee (138531): drop_caches: 3
+[2132491.025946] tee (138618): drop_caches: 3
+[2132491.357344] audit: type=1400 audit(1791255999.129:4007): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138532 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132495.638324] tee (138668): drop_caches: 3
+[2132497.583034] audit: type=1400 audit(1791256005.353:4008): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138624 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132500.763027] audit: type=1400 audit(1791256008.533:4009): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138711 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132500.978965] tee (138781): drop_caches: 3
+[2132506.033833] audit: type=1400 audit(1791256013.805:4010): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138785 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132506.508684] tee (138861): drop_caches: 3
+[2132508.220942] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=6 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=131110 gc_pages=4070 gc_count=2112 waf_q16=67570 best=37 next=20 settled=0 active=45
+[2132508.232329] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=6 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=131085 gc_pages=4992 gc_count=2126 waf_q16=68031 best=37 next=20 settled=0 active=45
+[2132508.247582] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=6 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=131118 gc_pages=5140 gc_count=2129 waf_q16=68105 best=37 next=20 settled=0 active=45
+[2132508.256677] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=6 phase=measure evaluated=19 k=4 scale_pct=50 age_ratio=7 host=131108 gc_pages=5226 gc_count=2130 waf_q16=68148 best=37 next=20 settled=0 active=45
+[2132511.097519] audit: type=1400 audit(1791256018.869:4011): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138862 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132511.964894] tee (138955): drop_caches: 3
+[2132513.624660] audit: type=1400 audit(1791256021.396:4012): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=138936 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132517.104245] audit: type=1400 audit(1791256024.875:4013): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139010 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132517.427333] tee (139082): drop_caches: 3
+[2132522.933608] audit: type=1400 audit(1791256030.705:4014): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139086 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132523.124341] tee (139173): drop_caches: 3
+[2132527.660225] tee (139236): drop_caches: 3
+[2132529.416918] audit: type=1400 audit(1791256037.188:4015): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139177 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132533.288789] tee (139312): drop_caches: 3
+[2132535.040387] audit: type=1400 audit(1791256042.811:4016): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139264 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132539.206435] audit: type=1400 audit(1791256046.977:4017): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139340 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132539.401755] tee (139412): drop_caches: 3
+[2132544.016346] audit: type=1400 audit(1791256051.787:4018): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139416 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132544.633584] audit: type=1400 audit(1791256052.404:4019): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139492 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132545.145927] tee (139565): drop_caches: 3
+[2132549.857259] audit: type=1400 audit(1791256057.628:4020): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139567 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132550.515220] tee (139648): drop_caches: 3
+[2132556.121438] audit: type=1400 audit(1791256063.892:4021): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139649 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132556.211544] tee (139729): drop_caches: 3
+[2132561.273837] tee (139804): drop_caches: 3
+[2132562.765599] audit: type=1400 audit(1791256070.536:4022): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139744 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132567.102360] audit: type=1400 audit(1791256074.873:4023): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139822 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132567.201520] tee (139889): drop_caches: 3
+[2132572.441150] audit: type=1400 audit(1791256080.211:4024): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139897 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132572.724475] tee (139971): drop_caches: 3
+[2132579.551968] audit: type=1400 audit(1791256087.322:4025): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=139973 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132579.771782] tee (140053): drop_caches: 3
+[2132586.033376] tee (140106): drop_caches: 3
+[2132589.601763] audit: type=1400 audit(1791256097.372:4026): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140059 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132591.472288] tee (140178): drop_caches: 3
+[2132596.061270] audit: type=1400 audit(1791256103.831:4027): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140161 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132597.307934] tee (140244): drop_caches: 3
+[2132602.380050] audit: type=1400 audit(1791256110.150:4028): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140243 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132603.513784] audit: type=1400 audit(1791256111.284:4029): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140319 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132603.639320] tee (140388): drop_caches: 3
+[2132607.409098] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=7 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=131119 gc_pages=10710 gc_count=2216 waf_q16=70889 best=37 next=21 settled=0 active=45
+[2132607.420024] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=7 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=131115 gc_pages=10772 gc_count=2217 waf_q16=70920 best=37 next=21 settled=0 active=45
+[2132607.431788] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=7 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=131112 gc_pages=10781 gc_count=2217 waf_q16=70924 best=37 next=21 settled=0 active=45
+[2132607.440062] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=7 phase=measure evaluated=20 k=4 scale_pct=50 age_ratio=16 host=131083 gc_pages=11067 gc_count=2221 waf_q16=71069 best=37 next=21 settled=0 active=45
+[2132608.915601] audit: type=1400 audit(1791256116.686:4030): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140393 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132609.411689] audit: type=1400 audit(1791256117.182:4031): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140469 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132609.665467] tee (140538): drop_caches: 3
+[2132616.254948] tee (140627): drop_caches: 3
+[2132617.256532] audit: type=1400 audit(1791256125.026:4032): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140551 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132621.892723] tee (140702): drop_caches: 3
+[2132623.554049] audit: type=1400 audit(1791256131.324:4033): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140642 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132627.536897] tee (140762): drop_caches: 3
+[2132629.755036] audit: type=1400 audit(1791256137.525:4034): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140723 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132633.330883] tee (140838): drop_caches: 3
+[2132635.504182] audit: type=1400 audit(1791256143.274:4035): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140800 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132639.134301] tee (140910): drop_caches: 3
+[2132641.487510] audit: type=1400 audit(1791256149.257:4036): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140877 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132644.822953] audit: type=1400 audit(1791256152.592:4037): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=140960 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132645.063248] tee (141031): drop_caches: 3
+[2132650.986627] tee (141111): drop_caches: 3
+[2132652.255507] audit: type=1400 audit(1791256160.024:4038): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141035 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132655.952503] tee (141147): drop_caches: 3
+[2132659.043704] audit: type=1400 audit(1791256166.813:4039): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141129 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132660.773160] audit: type=1400 audit(1791256168.542:4040): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141208 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132661.261363] tee (141280): drop_caches: 3
+[2132667.051585] audit: type=1400 audit(1791256174.821:4041): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141281 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132667.244183] tee (141362): drop_caches: 3
+[2132672.739336] audit: type=1400 audit(1791256180.508:4042): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141367 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132673.099280] tee (141448): drop_caches: 3
+[2132679.276098] tee (141537): drop_caches: 3
+[2132679.634338] audit: type=1400 audit(1791256187.403:4043): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141450 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132684.528339] audit: type=1400 audit(1791256192.297:4044): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141543 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132684.805313] tee (141616): drop_caches: 3
+[2132689.958805] tee (141663): drop_caches: 3
+[2132692.004058] audit: type=1400 audit(1791256199.773:4045): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141619 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132695.981613] tee (141740): drop_caches: 3
+[2132702.394020] audit: type=1400 audit(1791256210.163:4046): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141703 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132704.131976] tee (141841): drop_caches: 3
+[2132711.528850] tee (141937): drop_caches: 3
+[2132714.766772] audit: type=1400 audit(1791256222.535:4047): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141839 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132715.878451] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=8 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=131105 gc_pages=2142 gc_count=2082 waf_q16=66606 best=37 next=22 settled=0 active=45
+[2132715.888223] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=8 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=131092 gc_pages=2283 gc_count=2084 waf_q16=66677 best=37 next=22 settled=0 active=45
+[2132715.900696] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=8 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=131125 gc_pages=2250 gc_count=2084 waf_q16=66660 best=37 next=22 settled=0 active=45
+[2132715.905505] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=8 phase=measure evaluated=21 k=4 scale_pct=100 age_ratio=4 host=131084 gc_pages=2098 gc_count=2081 waf_q16=66584 best=37 next=22 settled=0 active=45
+[2132719.522330] tee (141975): drop_caches: 3
+[2132727.208796] audit: type=1400 audit(1791256234.976:4048): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=141957 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132727.643650] tee (142043): drop_caches: 3
+[2132734.381047] tee (142112): drop_caches: 3
+[2132737.501212] audit: type=1400 audit(1791256245.270:4049): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142044 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132740.413204] tee (142179): drop_caches: 3
+[2132744.169573] audit: type=1400 audit(1791256251.938:4050): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142158 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132746.146055] audit: type=1400 audit(1791256253.914:4051): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142246 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132746.275673] tee (142317): drop_caches: 3
+[2132751.642579] audit: type=1400 audit(1791256259.411:4052): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142322 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132752.006173] tee (142398): drop_caches: 3
+[2132756.934184] audit: type=1400 audit(1791256264.702:4053): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142401 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132757.505922] tee (142477): drop_caches: 3
+[2132763.246661] audit: type=1400 audit(1791256271.015:4054): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142479 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132763.347698] tee (142557): drop_caches: 3
+[2132769.073671] tee (142624): drop_caches: 3
+[2132770.636412] audit: type=1400 audit(1791256278.404:4055): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142563 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132774.859098] tee (142702): drop_caches: 3
+[2132776.692121] audit: type=1400 audit(1791256284.460:4056): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142645 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132780.350642] tee (142767): drop_caches: 3
+[2132782.569164] audit: type=1400 audit(1791256290.337:4057): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142730 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132785.313143] tee (142818): drop_caches: 3
+[2132788.935644] audit: type=1400 audit(1791256296.703:4058): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142806 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132790.805399] audit: type=1400 audit(1791256298.573:4059): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142883 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132791.428054] audit: type=1400 audit(1791256299.196:4060): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=142962 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132792.020373] tee (143072): drop_caches: 3
+[2132795.822653] audit: type=1400 audit(1791256303.590:4061): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143037 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132799.225871] tee (143156): drop_caches: 3
+[2132801.895598] audit: type=1400 audit(1791256309.663:4062): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143117 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132805.094961] tee (143226): drop_caches: 3
+[2132808.793281] audit: type=1400 audit(1791256316.560:4063): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143200 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132810.639682] audit: type=1400 audit(1791256318.407:4064): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143285 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132810.929786] tee (143359): drop_caches: 3
+[2132816.026417] tee (143430): drop_caches: 3
+[2132817.308448] audit: type=1400 audit(1791256325.076:4065): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143362 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132817.703270] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=9 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=131106 gc_pages=3166 gc_count=2098 waf_q16=67118 best=37 next=23 settled=0 active=45
+[2132817.715362] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=9 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=131097 gc_pages=3111 gc_count=2097 waf_q16=67091 best=37 next=23 settled=0 active=45
+[2132817.727808] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=9 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=131086 gc_pages=3251 gc_count=2099 waf_q16=67161 best=37 next=23 settled=0 active=45
+[2132817.736572] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=9 phase=measure evaluated=22 k=4 scale_pct=100 age_ratio=7 host=131075 gc_pages=3005 gc_count=2095 waf_q16=67038 best=37 next=23 settled=0 active=45
+[2132821.512835] tee (143488): drop_caches: 3
+[2132823.616655] audit: type=1400 audit(1791256331.384:4066): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143440 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132827.497613] audit: type=1400 audit(1791256335.265:4067): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143523 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132827.689979] tee (143603): drop_caches: 3
+[2132833.232795] audit: type=1400 audit(1791256341.000:4068): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143607 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132833.496283] tee (143680): drop_caches: 3
+[2132839.660110] tee (143761): drop_caches: 3
+[2132840.856011] audit: type=1400 audit(1791256348.623:4069): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143684 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132845.477231] audit: type=1400 audit(1791256353.244:4070): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143775 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132845.579692] tee (143848): drop_caches: 3
+[2132850.374647] tee (143903): drop_caches: 3
+[2132852.375517] audit: type=1400 audit(1791256360.142:4071): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143852 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132856.281270] tee (143975): drop_caches: 3
+[2132858.884927] audit: type=1400 audit(1791256366.652:4072): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=143937 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132862.324498] tee (144053): drop_caches: 3
+[2132865.319676] audit: type=1400 audit(1791256373.086:4073): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144020 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132868.080149] tee (144121): drop_caches: 3
+[2132871.676183] audit: type=1400 audit(1791256379.443:4074): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144098 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132873.650524] audit: type=1400 audit(1791256381.417:4075): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144183 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132873.936435] tee (144253): drop_caches: 3
+[2132878.767074] audit: type=1400 audit(1791256386.534:4076): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144256 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132879.400969] audit: type=1400 audit(1791256387.167:4077): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144331 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132879.706189] tee (144412): drop_caches: 3
+[2132885.436758] audit: type=1400 audit(1791256393.202:4078): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144413 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132885.486209] tee (144485): drop_caches: 3
+[2132891.253840] tee (144566): drop_caches: 3
+[2132892.065814] audit: type=1400 audit(1791256399.832:4079): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144491 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132897.267208] audit: type=1400 audit(1791256405.033:4080): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144575 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132897.376369] tee (144643): drop_caches: 3
+[2132902.318451] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=10 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=131077 gc_pages=4028 gc_count=2111 waf_q16=67549 best=37 next=24 settled=0 active=45
+[2132902.331286] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=10 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=131119 gc_pages=4110 gc_count=2113 waf_q16=67590 best=37 next=24 settled=0 active=45
+[2132902.343714] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=10 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=131114 gc_pages=3992 gc_count=2111 waf_q16=67531 best=37 next=24 settled=0 active=45
+[2132902.352530] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=10 phase=measure evaluated=23 k=4 scale_pct=100 age_ratio=16 host=131115 gc_pages=3797 gc_count=2108 waf_q16=67433 best=37 next=24 settled=0 active=45
+[2132903.102824] audit: type=1400 audit(1791256410.869:4081): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144654 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132903.544499] tee (144733): drop_caches: 3
+[2132908.689600] audit: type=1400 audit(1791256416.456:4082): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144734 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132909.110610] tee (144807): drop_caches: 3
+[2132913.932056] tee (144864): drop_caches: 3
+[2132916.231378] audit: type=1400 audit(1791256423.997:4083): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144818 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132920.173160] tee (144944): drop_caches: 3
+[2132922.325498] audit: type=1400 audit(1791256430.091:4084): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144898 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132926.167812] tee (145019): drop_caches: 3
+[2132928.723260] audit: type=1400 audit(1791256436.489:4085): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=144982 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132931.870027] tee (145088): drop_caches: 3
+[2132935.600511] audit: type=1400 audit(1791256443.366:4086): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145064 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132937.236611] audit: type=1400 audit(1791256445.002:4087): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145148 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132937.813557] tee (145222): drop_caches: 3
+[2132942.257889] audit: type=1400 audit(1791256450.024:4088): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145223 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132943.590083] tee (145308): drop_caches: 3
+[2132948.026230] audit: type=1400 audit(1791256455.792:4089): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145306 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132949.519050] audit: type=1400 audit(1791256457.285:4090): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145391 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132949.651168] tee (145461): drop_caches: 3
+[2132955.332638] audit: type=1400 audit(1791256463.098:4091): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145465 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132955.527419] tee (145541): drop_caches: 3
+[2132960.339752] audit: type=1400 audit(1791256468.104:4092): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145545 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132961.171078] tee (145629): drop_caches: 3
+[2132964.664455] audit: type=1400 audit(1791256472.429:4093): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145620 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132967.062223] tee (145726): drop_caches: 3
+[2132969.915756] audit: type=1400 audit(1791256477.681:4094): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145705 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132972.157933] audit: type=1400 audit(1791256479.923:4095): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145788 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132972.616899] tee (145869): drop_caches: 3
+[2132977.671641] audit: type=1400 audit(1791256485.437:4096): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145863 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132977.785584] tee (145945): drop_caches: 3
+[2132983.712022] tee (146019): drop_caches: 3
+[2132984.082468] audit: type=1400 audit(1791256491.848:4097): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=145950 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132989.318576] tee (146088): drop_caches: 3
+[2132990.481689] audit: type=1400 audit(1791256498.247:4098): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146026 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2132994.828850] tee (146151): drop_caches: 3
+[2132996.872976] audit: type=1400 audit(1791256504.638:4099): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146102 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133000.063783] audit: type=1400 audit(1791256507.829:4100): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146189 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133000.306443] tee (146268): drop_caches: 3
+[2133005.534414] audit: type=1400 audit(1791256513.299:4101): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146272 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133005.840980] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=11 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=131088 gc_pages=944 gc_count=2063 waf_q16=66007 best=37 next=25 settled=0 active=45
+[2133005.853131] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=11 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=131074 gc_pages=1020 gc_count=2064 waf_q16=66045 best=37 next=25 settled=0 active=45
+[2133005.863191] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=11 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=131091 gc_pages=940 gc_count=2063 waf_q16=66005 best=37 next=25 settled=0 active=45
+[2133005.873679] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=11 phase=measure evaluated=24 k=4 scale_pct=200 age_ratio=4 host=131083 gc_pages=884 gc_count=2062 waf_q16=65977 best=37 next=25 settled=0 active=45
+[2133006.142439] tee (146345): drop_caches: 3
+[2133010.922654] tee (146427): drop_caches: 3
+[2133011.796564] audit: type=1400 audit(1791256519.561:4102): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146346 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133016.235930] audit: type=1400 audit(1791256524.001:4103): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146436 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133016.468709] tee (146512): drop_caches: 3
+[2133022.001510] tee (146587): drop_caches: 3
+[2133022.232360] audit: type=1400 audit(1791256529.997:4104): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146516 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133027.976929] tee (146658): drop_caches: 3
+[2133029.456733] audit: type=1400 audit(1791256537.221:4105): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146593 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133033.694178] tee (146740): drop_caches: 3
+[2133034.769306] audit: type=1400 audit(1791256542.534:4106): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146687 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133039.639090] audit: type=1400 audit(1791256547.402:4107): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146761 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133039.802839] tee (146841): drop_caches: 3
+[2133045.402775] tee (146909): drop_caches: 3
+[2133047.290240] audit: type=1400 audit(1791256555.055:4108): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146847 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133051.476766] tee (146984): drop_caches: 3
+[2133052.939614] audit: type=1400 audit(1791256560.704:4109): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=146929 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133057.067777] audit: type=1400 audit(1791256564.832:4110): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147004 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133057.339650] tee (147084): drop_caches: 3
+[2133062.373044] audit: type=1400 audit(1791256570.137:4111): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147088 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133063.160162] tee (147184): drop_caches: 3
+[2133066.550101] audit: type=1400 audit(1791256574.314:4112): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147171 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133068.345377] audit: type=1400 audit(1791256576.109:4113): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147251 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133068.770421] tee (147322): drop_caches: 3
+[2133073.591826] tee (147377): drop_caches: 3
+[2133075.162971] audit: type=1400 audit(1791256582.927:4114): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147326 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133079.223472] audit: type=1400 audit(1791256586.987:4115): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147405 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133079.362016] tee (147478): drop_caches: 3
+[2133085.011882] tee (147551): drop_caches: 3
+[2133085.387754] audit: type=1400 audit(1791256593.152:4116): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147482 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133090.914443] audit: type=1400 audit(1791256598.678:4117): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147561 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133091.082282] tee (147645): drop_caches: 3
+[2133095.796259] audit: type=1400 audit(1791256603.560:4118): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147649 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133096.448366] audit: type=1400 audit(1791256604.212:4119): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147723 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133096.945170] tee (147795): drop_caches: 3
+[2133102.262560] audit: type=1400 audit(1791256610.026:4120): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147804 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133102.799857] tee (147877): drop_caches: 3
+[2133108.556599] tee (147951): drop_caches: 3
+[2133108.861317] audit: type=1400 audit(1791256616.625:4121): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147879 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133114.088920] audit: type=1400 audit(1791256621.851:4122): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=147957 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133114.210780] tee (148031): drop_caches: 3
+[2133120.671865] tee (148085): drop_caches: 3
+[2133125.506626] audit: type=1400 audit(1791256633.270:4123): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148037 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133128.842755] tee (148164): drop_caches: 3
+[2133130.903895] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=12 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=131111 gc_pages=858 gc_count=2062 waf_q16=65964 best=37 next=26 settled=0 active=45
+[2133130.912140] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=12 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=131118 gc_pages=912 gc_count=2063 waf_q16=65991 best=37 next=26 settled=0 active=45
+[2133130.924827] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=12 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=131129 gc_pages=902 gc_count=2063 waf_q16=65986 best=37 next=26 settled=0 active=45
+[2133130.938392] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=12 phase=measure evaluated=25 k=4 scale_pct=200 age_ratio=7 host=131131 gc_pages=901 gc_count=2063 waf_q16=65986 best=37 next=26 settled=0 active=45
+[2133136.588198] tee (148223): drop_caches: 3
+[2133137.062227] audit: type=1400 audit(1791256644.825:4124): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148138 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133143.272318] tee (148273): drop_caches: 3
+[2133146.917430] audit: type=1400 audit(1791256654.680:4125): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148232 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133150.690483] tee (148334): drop_caches: 3
+[2133157.611041] audit: type=1400 audit(1791256665.374:4126): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148309 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133158.296205] tee (148408): drop_caches: 3
+[2133165.075493] tee (148448): drop_caches: 3
+[2133170.086284] audit: type=1400 audit(1791256677.849:4127): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148409 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133171.264958] tee (148492): drop_caches: 3
+[2133177.880648] tee (148536): drop_caches: 3
+[2133181.534695] audit: type=1400 audit(1791256689.297:4128): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148489 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133185.594372] tee (148600): drop_caches: 3
+[2133193.189529] tee (148665): drop_caches: 3
+[2133193.478331] audit: type=1400 audit(1791256701.240:4129): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148584 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133200.330100] tee (148715): drop_caches: 3
+[2133204.999910] audit: type=1400 audit(1791256712.762:4130): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148671 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133206.135059] tee (148755): drop_caches: 3
+[2133213.226207] tee (148816): drop_caches: 3
+[2133216.824650] audit: type=1400 audit(1791256724.587:4131): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148754 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133220.763779] tee (148869): drop_caches: 3
+[2133222.906370] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=13 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=131117 gc_pages=1557 gc_count=2073 waf_q16=66314 best=37 next=27 settled=0 active=45
+[2133222.915841] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=13 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=131097 gc_pages=1576 gc_count=2073 waf_q16=66323 best=37 next=27 settled=0 active=45
+[2133222.932267] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=13 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=131128 gc_pages=1737 gc_count=2076 waf_q16=66404 best=37 next=27 settled=0 active=45
+[2133222.941325] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=13 phase=measure evaluated=26 k=4 scale_pct=200 age_ratio=16 host=131099 gc_pages=1574 gc_count=2073 waf_q16=66322 best=37 next=27 settled=0 active=45
+[2133228.717807] audit: type=1400 audit(1791256736.480:4132): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148857 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133228.845287] tee (148935): drop_caches: 3
+[2133237.134828] tee (148989): drop_caches: 3
+[2133241.275350] audit: type=1400 audit(1791256749.037:4133): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=148941 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133242.446988] tee (149031): drop_caches: 3
+[2133249.374295] tee (149089): drop_caches: 3
+[2133253.317802] audit: type=1400 audit(1791256761.079:4134): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=149028 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133257.090860] tee (149133): drop_caches: 3
+[2133264.982774] tee (149206): drop_caches: 3
+[2133265.950280] audit: type=1400 audit(1791256773.712:4135): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=149123 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133272.565190] tee (149259): drop_caches: 3
+[2133276.257491] audit: type=1400 audit(1791256784.019:4136): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=149212 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133280.039035] tee (149325): drop_caches: 3
+[2133287.509668] audit: type=1400 audit(1791256795.271:4137): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=149299 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133288.526361] tee (149393): drop_caches: 3
+[2133295.253615] tee (149435): drop_caches: 3
+[2133301.322270] audit: type=1400 audit(1791256809.083:4138): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=149392 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133303.470932] tee (149533): drop_caches: 3
+[2133309.272631] tee (149583): drop_caches: 3
+[2133315.361821] audit: type=1400 audit(1791256823.122:4139): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=149523 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133315.853117] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=14 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=131083 gc_pages=1398 gc_count=2070 waf_q16=66234 best=37 next=28 settled=0 active=45
+[2133315.857137] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=14 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=131133 gc_pages=1411 gc_count=2071 waf_q16=66241 best=37 next=28 settled=0 active=45
+[2133315.869287] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=14 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=131091 gc_pages=1452 gc_count=2071 waf_q16=66261 best=37 next=28 settled=0 active=45
+[2133315.876612] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=14 phase=measure evaluated=27 k=4 scale_pct=400 age_ratio=4 host=131134 gc_pages=1411 gc_count=2071 waf_q16=66241 best=37 next=28 settled=0 active=45
+[2133318.205659] tee (149650): drop_caches: 3
+[2133327.237266] tee (149719): drop_caches: 3
+[2133329.646079] audit: type=1400 audit(1791256837.405:4140): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=149649 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133336.604354] tee (149752): drop_caches: 3
+[2133343.189137] tee (149806): drop_caches: 3
+[2133347.599137] audit: type=1400 audit(1791256855.359:4141): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=149735 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133350.995081] tee (149870): drop_caches: 3
+[2133359.257793] audit: type=1400 audit(1791256867.018:4142): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=149840 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133359.416526] tee (149941): drop_caches: 3
+[2133366.901801] tee (149991): drop_caches: 3
+[2133370.691523] audit: type=1400 audit(1791256878.451:4143): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=149953 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133375.011368] tee (150053): drop_caches: 3
+[2133382.482032] audit: type=1400 audit(1791256890.242:4144): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150036 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133382.671785] tee (150122): drop_caches: 3
+[2133389.833287] tee (150176): drop_caches: 3
+[2133393.983207] audit: type=1400 audit(1791256901.743:4145): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150128 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133395.163249] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=15 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=131085 gc_pages=1587 gc_count=2073 waf_q16=66329 best=37 next=29 settled=0 active=45
+[2133395.171422] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=15 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=131134 gc_pages=1602 gc_count=2074 waf_q16=66336 best=37 next=29 settled=0 active=45
+[2133395.187116] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=15 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=131085 gc_pages=1588 gc_count=2073 waf_q16=66329 best=37 next=29 settled=0 active=45
+[2133395.195526] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=15 phase=measure evaluated=28 k=4 scale_pct=400 age_ratio=7 host=131126 gc_pages=1546 gc_count=2073 waf_q16=66308 best=37 next=29 settled=0 active=45
+[2133397.725614] tee (150232): drop_caches: 3
+[2133405.039570] audit: type=1400 audit(1791256912.799:4146): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150214 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133406.109402] tee (150302): drop_caches: 3
+[2133413.014470] tee (150360): drop_caches: 3
+[2133416.249309] audit: type=1400 audit(1791256924.008:4147): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150300 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133420.235604] tee (150417): drop_caches: 3
+[2133425.940459] audit: type=1400 audit(1791256933.699:4148): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150388 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133428.347259] tee (150492): drop_caches: 3
+[2133436.707386] tee (150555): drop_caches: 3
+[2133437.853280] audit: type=1400 audit(1791256945.612:4149): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150477 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133441.834093] tee (150583): drop_caches: 3
+[2133448.761853] audit: type=1400 audit(1791256956.521:4150): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150562 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133449.440915] tee (150653): drop_caches: 3
+[2133456.539531] tee (150703): drop_caches: 3
+[2133460.422589] audit: type=1400 audit(1791256968.181:4151): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150662 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133464.727267] tee (150755): drop_caches: 3
+[2133472.678125] audit: type=1400 audit(1791256980.435:4152): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150744 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133473.339336] tee (150832): drop_caches: 3
+[2133480.328784] tee (150887): drop_caches: 3
+[2133483.710720] audit: type=1400 audit(1791256991.469:4153): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150836 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133487.717226] tee (150938): drop_caches: 3
+[2133494.623924] audit: type=1400 audit(1791257002.382:4154): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=150921 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133495.876362] tee (151006): drop_caches: 3
+[2133497.620292] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=16 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=131076 gc_pages=763 gc_count=2060 waf_q16=65917 best=37 next=30 settled=0 active=45
+[2133497.628977] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=16 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=131097 gc_pages=743 gc_count=2060 waf_q16=65907 best=37 next=30 settled=0 active=45
+[2133497.640417] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=16 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=131130 gc_pages=774 gc_count=2061 waf_q16=65922 best=37 next=30 settled=0 active=45
+[2133497.648760] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=16 phase=measure evaluated=29 k=4 scale_pct=400 age_ratio=16 host=131080 gc_pages=760 gc_count=2060 waf_q16=65915 best=37 next=30 settled=0 active=45
+[2133504.146151] tee (151069): drop_caches: 3
+[2133507.869824] audit: type=1400 audit(1791257015.628:4155): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151005 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133509.251067] tee (151095): drop_caches: 3
+[2133516.794247] tee (151163): drop_caches: 3
+[2133519.334422] audit: type=1400 audit(1791257027.092:4156): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151092 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133523.980756] tee (151210): drop_caches: 3
+[2133530.214135] audit: type=1400 audit(1791257037.972:4157): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151188 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133532.424647] tee (151277): drop_caches: 3
+[2133540.094013] tee (151356): drop_caches: 3
+[2133541.779783] audit: type=1400 audit(1791257049.536:4158): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151271 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133547.232240] tee (151411): drop_caches: 3
+[2133551.396475] audit: type=1400 audit(1791257059.154:4159): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151370 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133555.132332] tee (151470): drop_caches: 3
+[2133563.121596] audit: type=1400 audit(1791257070.879:4160): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151454 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133563.634989] tee (151535): drop_caches: 3
+[2133570.690318] tee (151596): drop_caches: 3
+[2133575.562924] audit: type=1400 audit(1791257083.320:4161): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151542 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133575.959149] tee (151641): drop_caches: 3
+[2133582.952875] tee (151691): drop_caches: 3
+[2133586.895665] audit: type=1400 audit(1791257094.652:4162): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151643 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133590.392796] tee (151734): drop_caches: 3
+[2133597.216526] tee (151803): drop_caches: 3
+[2133598.213702] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=17 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=131135 gc_pages=768 gc_count=2061 waf_q16=65919 best=37 next=31 settled=0 active=45
+[2133598.219482] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=17 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=131101 gc_pages=739 gc_count=2060 waf_q16=65905 best=37 next=31 settled=0 active=45
+[2133598.233424] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=17 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=131112 gc_pages=728 gc_count=2060 waf_q16=65899 best=37 next=31 settled=0 active=45
+[2133598.241129] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=17 phase=measure evaluated=30 k=7 scale_pct=25 age_ratio=4 host=131125 gc_pages=780 gc_count=2061 waf_q16=65925 best=37 next=31 settled=0 active=45
+[2133598.561212] audit: type=1400 audit(1791257106.318:4163): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151725 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133605.092345] tee (151854): drop_caches: 3
+[2133610.087623] audit: type=1400 audit(1791257117.843:4164): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151811 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133613.011406] tee (151924): drop_caches: 3
+[2133620.820462] audit: type=1400 audit(1791257128.577:4165): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151914 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133621.454614] tee (151990): drop_caches: 3
+[2133628.400263] tee (152032): drop_caches: 3
+[2133632.437535] audit: type=1400 audit(1791257140.194:4166): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=151994 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133636.248811] tee (152098): drop_caches: 3
+[2133643.620331] audit: type=1400 audit(1791257151.376:4167): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152085 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133644.157916] tee (152174): drop_caches: 3
+[2133651.289338] tee (152218): drop_caches: 3
+[2133655.044938] audit: type=1400 audit(1791257162.801:4168): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152177 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133658.436292] tee (152262): drop_caches: 3
+[2133666.394811] tee (152342): drop_caches: 3
+[2133667.118071] audit: type=1400 audit(1791257174.874:4169): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152252 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133672.383497] tee (152375): drop_caches: 3
+[2133678.870637] audit: type=1400 audit(1791257186.626:4170): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152356 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133680.236490] tee (152435): drop_caches: 3
+[2133686.001610] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=18 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=131120 gc_pages=1873 gc_count=2078 waf_q16=66472 best=37 next=32 settled=0 active=45
+[2133686.008369] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=18 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=131075 gc_pages=2046 gc_count=2080 waf_q16=66558 best=37 next=32 settled=0 active=45
+[2133686.021658] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=18 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=131132 gc_pages=1923 gc_count=2079 waf_q16=66497 best=37 next=32 settled=0 active=45
+[2133688.282678] tee (152493): drop_caches: 3
+[2133689.504274] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=18 phase=measure evaluated=31 k=7 scale_pct=25 age_ratio=7 host=131106 gc_pages=1886 gc_count=2078 waf_q16=66478 best=37 next=32 settled=0 active=45
+[2133690.359212] audit: type=1400 audit(1791257198.115:4171): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152434 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133695.492889] tee (152552): drop_caches: 3
+[2133701.338231] tee (152612): drop_caches: 3
+[2133702.535852] audit: type=1400 audit(1791257210.291:4172): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152518 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133709.324228] tee (152663): drop_caches: 3
+[2133712.911996] audit: type=1400 audit(1791257220.667:4173): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152620 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133716.912773] tee (152707): drop_caches: 3
+[2133724.658231] audit: type=1400 audit(1791257232.413:4174): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152697 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133724.839174] tee (152778): drop_caches: 3
+[2133732.511642] tee (152843): drop_caches: 3
+[2133736.645917] audit: type=1400 audit(1791257244.401:4175): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152783 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133737.690274] tee (152883): drop_caches: 3
+[2133745.883077] tee (152939): drop_caches: 3
+[2133750.346001] audit: type=1400 audit(1791257258.101:4176): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152880 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133754.741339] tee (152994): drop_caches: 3
+[2133762.644114] tee (153074): drop_caches: 3
+[2133763.967976] audit: type=1400 audit(1791257271.722:4177): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=152977 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133769.718609] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=19 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=131084 gc_pages=3764 gc_count=2107 waf_q16=67417 best=37 next=33 settled=0 active=45
+[2133769.728640] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=19 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=131075 gc_pages=3773 gc_count=2107 waf_q16=67422 best=37 next=33 settled=0 active=45
+[2133769.746010] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=19 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=131103 gc_pages=4196 gc_count=2114 waf_q16=67633 best=37 next=33 settled=0 active=45
+[2133769.835021] tee (153113): drop_caches: 3
+[2133774.746390] audit: type=1400 audit(1791257282.501:4178): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153082 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133775.359494] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=19 phase=measure evaluated=32 k=7 scale_pct=25 age_ratio=16 host=131087 gc_pages=4017 gc_count=2111 waf_q16=67544 best=37 next=33 settled=0 active=45
+[2133777.439198] tee (153171): drop_caches: 3
+[2133785.565953] audit: type=1400 audit(1791257293.320:4179): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153163 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133785.865949] tee (153236): drop_caches: 3
+[2133793.086790] tee (153290): drop_caches: 3
+[2133797.370444] audit: type=1400 audit(1791257305.124:4180): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153240 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133801.203241] tee (153356): drop_caches: 3
+[2133807.851196] tee (153399): drop_caches: 3
+[2133811.299386] audit: type=1400 audit(1791257319.053:4181): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153333 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133815.258657] tee (153434): drop_caches: 3
+[2133823.286946] audit: type=1400 audit(1791257331.040:4182): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153423 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133823.555735] tee (153517): drop_caches: 3
+[2133831.334351] tee (153564): drop_caches: 3
+[2133836.290857] audit: type=1400 audit(1791257344.044:4183): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153521 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133837.034785] tee (153601): drop_caches: 3
+[2133843.754960] tee (153642): drop_caches: 3
+[2133847.979109] audit: type=1400 audit(1791257355.732:4184): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153603 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133851.734773] tee (153704): drop_caches: 3
+[2133853.568815] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=20 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=131080 gc_pages=3255 gc_count=2099 waf_q16=67163 best=37 next=34 settled=0 active=45
+[2133853.581676] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=20 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=131112 gc_pages=3415 gc_count=2102 waf_q16=67242 best=37 next=34 settled=0 active=45
+[2133853.594471] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=20 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=131096 gc_pages=3430 gc_count=2102 waf_q16=67250 best=37 next=34 settled=0 active=45
+[2133853.602030] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=20 phase=measure evaluated=33 k=7 scale_pct=50 age_ratio=4 host=131082 gc_pages=3126 gc_count=2097 waf_q16=67098 best=37 next=34 settled=0 active=45
+[2133859.092254] audit: type=1400 audit(1791257366.845:4185): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153687 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133859.806509] tee (153776): drop_caches: 3
+[2133867.047030] tee (153822): drop_caches: 3
+[2133871.892827] audit: type=1400 audit(1791257379.646:4186): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153777 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133872.913039] tee (153866): drop_caches: 3
+[2133880.389434] tee (153938): drop_caches: 3
+[2133883.736185] audit: type=1400 audit(1791257391.489:4187): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153863 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133888.281662] tee (153983): drop_caches: 3
+[2133896.007113] tee (154025): drop_caches: 3
+[2133902.573984] tee (154058): drop_caches: 3
+[2133905.541296] audit: type=1400 audit(1791257413.293:4188): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=153959 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133908.994915] tee (154104): drop_caches: 3
+[2133918.218488] tee (154181): drop_caches: 3
+[2133926.374753] tee (154213): drop_caches: 3
+[2133928.313452] audit: type=1400 audit(1791257436.066:4189): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=154078 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133934.174257] tee (154244): drop_caches: 3
+[2133939.343547] NVMeVirt: WATGC_V2 sample ns=0 part=1 epoch=1 window=21 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=131096 gc_pages=2280 gc_count=2084 waf_q16=66675 best=37 next=35 settled=0 active=45
+[2133942.485247] NVMeVirt: WATGC_V2 sample ns=0 part=3 epoch=1 window=21 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=131112 gc_pages=2325 gc_count=2085 waf_q16=66698 best=37 next=35 settled=0 active=45
+[2133942.501087] NVMeVirt: WATGC_V2 sample ns=0 part=0 epoch=1 window=21 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=131126 gc_pages=2315 gc_count=2085 waf_q16=66693 best=37 next=35 settled=0 active=45
+[2133942.510304] NVMeVirt: WATGC_V2 sample ns=0 part=2 epoch=1 window=21 phase=measure evaluated=34 k=7 scale_pct=50 age_ratio=7 host=131133 gc_pages=2116 gc_count=2082 waf_q16=66593 best=37 next=35 settled=0 active=45
+[2133944.694505] tee (154325): drop_caches: 3
+[2133956.301359] audit: type=1400 audit(1791257464.053:4190): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=154225 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133963.850789] tee (154454): drop_caches: 3
+[2133977.728687] tee (154574): drop_caches: 3
+[2133986.632358] audit: type=1400 audit(1791257494.384:4191): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=154405 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2133989.766546] tee (154635): drop_caches: 3
+[2133994.571830] NVMeVirt: Measurement: command=stop epoch=1 host_bytes=59495251968 learner_active=0
+[2134000.117673] EXT4-fs (nvme0n1): unmounting filesystem 080bce60-365d-4ef7-9006-ac8095c6c3fa.
+[2134000.791572] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[2134000.791629] NVMeVirt: WATGC_V2 summary ns=0 part=0 epoch=1 windows=21 epoch_windows=21 discarded=0 visited=21 covered=0 settled=0 phase=2 current=35 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=1 best_waf_q16=65536
+[2134000.791635] NVMeVirt: WATGC_V2 summary ns=0 part=1 epoch=1 windows=21 epoch_windows=21 discarded=0 visited=21 covered=0 settled=0 phase=2 current=35 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=1 best_waf_q16=65536
+[2134000.791640] NVMeVirt: WATGC_V2 summary ns=0 part=2 epoch=1 windows=21 epoch_windows=21 discarded=0 visited=21 covered=0 settled=0 phase=2 current=35 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=1 best_waf_q16=65536
+[2134000.791643] NVMeVirt: WATGC_V2 summary ns=0 part=3 epoch=1 windows=21 epoch_windows=21 discarded=0 visited=21 covered=0 settled=0 phase=2 current=35 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=1 best_waf_q16=65536
+[2134000.791646] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=14525208 gc_pages=290320 gc_count=226633 WAF=1.019 warmup_gc=100-per-part
+[2134000.867534] NVMeVirt: Virtual NVMe device closed

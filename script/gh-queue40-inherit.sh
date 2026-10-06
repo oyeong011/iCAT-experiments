@@ -12,7 +12,7 @@ run() { local d=$1; shift; [[ -e $R/$d/summary.txt ]] && return; wait_dev
   [[ -d $R/$d ]] && mv $R/$d $R/$d-failed-$(date +%Y%m%d%H%M%S)
   echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null
   echo "start $d $(date -Is)"; "$@" > $R/$d.console.txt 2>&1 || echo "FAIL $d"; }
-for p in fixed47 onlinev4; do   # second PC runs onlinev4 first (script/icat2-v4-mixV.sh)
+for p in onlinev4 fixed47; do   # 10-06 user: v4 first (CAT-47 smoke already passed; its 10 h restarts after v4)
   run mixV-$p-rep1-smoke env SMOKE=1 PH_SECS=120 bash script/mix-inherit-20261006.sh mixV $p 1
   if ! smoke_ok mixV-$p-rep1-smoke; then echo "SMOKE FAILED $p — stopping"; push "mixV $p smoke FAILED"; exit 1; fi
   push "mixV $p smoke passed"
