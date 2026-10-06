@@ -18,6 +18,9 @@ run mixT-onlinev5-rep1-smoke env SMOKE=1 PH_SECS=120 bash script/mix-20260911.sh
 if [[ $(grep -c '^phase' $R/mixT-onlinev5-rep1-smoke/summary.txt 2>/dev/null) -lt 9 ]]; then echo "V5 SMOKE FAILED — stopping"; push "mixT v5 smoke FAILED"; exit 1; fi
 push "mixT v5 smoke passed"
 run mixT-onlinev5-rep1 env PH_SECS=4000 bash script/mix-20260911.sh mixT onlinev5 1; push "mixT 10h onlinev5"
+# 10-06: v6 here too (the second PC's v6 status is unknown); skipped automatically if its summary already exists
+[[ -f buildoutput/nvmev-online-v6.ko ]] && { run mixT-onlinev6-rep1-smoke env SMOKE=1 PH_SECS=120 bash script/mix-20260911.sh mixT onlinev6 1
+  [[ $(grep -c '^phase' $R/mixT-onlinev6-rep1-smoke/summary.txt 2>/dev/null) -ge 9 ]] && { run mixT-onlinev6-rep1 env PH_SECS=4000 bash script/mix-20260911.sh mixT onlinev6 1; push "mixT 10h onlinev6"; } || echo "V6 SMOKE FAILED"; }
 bash script/gh-queue31-screen-confirm.sh
 run t4-fixed37-rep1-x18 env MULT=18 bash script/mix-20260911.sh t4 fixed37 1; push "FIO-Fast 3h CAT-37 (default) for the long-run figure"
 echo QUEUE34DONE $(date -Is) >> $S/queue34.out

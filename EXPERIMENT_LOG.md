@@ -11797,3 +11797,89 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 변경(v5 대비 한 가지 메커니즘): 정착 여부와 무관하게, 현재 조합의 표본이 자기 평균과 25%(DRIFT) 넘게 다르면 그 창에서 후보 제거를 멈추고, 3창 연속이면 재설정하며 후보를 45개 전체로 되돌림(재순회). 로그 `WATGC_V6 shift-reset`. 소스 online-v6-src, 이 PC 빌드 sha256 94cb1343….
 - 실험: 두 번째 PC에서 `bash script/icat2-v6-mixT.sh` (빌드 → 120초 연기 시험 → mixT 10시간). 이 PC는 v5 진행 중.
 - 판정(사전 등록): (1) mixT에서 YCSB-A 진입 시 후보가 1~2개로 무너지지 않는지, (2) 전환 8번 중 재설정 횟수(v4 2번), (3) 10시간 전체 WAF를 v4 2.076 / v5 / 최적 2.029 / 견고 2.094 / 기본 2.330과 비교, 1회이므로 1% 미만 차이는 판정하지 않음. v4 결론은 대체하지 않고 개선 버전으로 별도 보고.
+- 2026-10-06 02:15: 두 번째 PC의 v6 실행 여부 미확인 → 이 PC 큐38에 v5 다음으로 v6(연기 시험 → mixT 10시간) 추가.
+
+- Finished 2026-10-06T04:27:02+09:00; mixT onlinev5 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev5-rep1`; cleanup attempted.
+- total host_bytes=6951457095680 host_pages=1697133080 gc_pages=1498737161 WAF=1.883099
+- phaseA(sqlite-a) host_pages=11898606 gc_pages=321055 WAF=1.026983
+- phaseB(oltp) host_pages=115903671 gc_pages=14087879 WAF=1.121548
+- phaseC(varmail) host_pages=708682696 gc_pages=357642553 WAF=1.504658
+- phaseD(sqlite-a) host_pages=11364518 gc_pages=48172 WAF=1.004239
+- phaseE(sqlite-b) host_pages=7581929 gc_pages=561739 WAF=1.074089
+- phaseF(test4) host_pages=160004422 gc_pages=597243988 WAF=4.732672
+- phaseG(varmail) host_pages=551891267 gc_pages=498179284 WAF=1.902677
+- phaseH(sqlite-a) host_pages=11530608 gc_pages=98917 WAF=1.008579
+- phaseI(oltp) host_pages=118275363 gc_pages=30553574 WAF=1.258326
+- phaseA-load host_pages=452312 gc_pages=203654 WAF=1.450251
+- phaseA-run host_pages=11446294 gc_pages=117401 WAF=1.010257
+- ycsb-load [OVERALL], Throughput(ops/sec), 25544.089097782773
+- ycsb-run [OVERALL], Throughput(ops/sec), 62644.46298895527
+
+### mix-20260911 mixT onlinev6 — started 2026-10-06T04:27:39+09:00
+
+- mixT: 9 time-based phases of 120 s each — YCSB-A (load 20000 records) -> OLTP (32 MB x 10 files, 30 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 120/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-online-v6.ko`.
+- Command: `env PH_SECS=120 bash script/mix-20260911.sh mixT onlinev6 1`; evidence `result/mix-20260911/mixT-onlinev6-rep1-smoke/`.
+
+- Finished 2026-10-06T04:46:36+09:00; mixT onlinev6 exit=0; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev6-rep1-smoke`; cleanup attempted.
+- total host_bytes=202762489856 host_pages=49502561 gc_pages=17136373 WAF=1.346171
+- phaseA(sqlite-a) host_pages=894328 gc_pages=318500 WAF=1.356133
+- phaseB(oltp) host_pages=3602255 gc_pages=795926 WAF=1.220952
+- phaseC(varmail) host_pages=21589251 gc_pages=1547971 WAF=1.071701
+- phaseD(sqlite-a) host_pages=428268 gc_pages=656 WAF=1.001532
+- phaseE(sqlite-b) host_pages=234880 gc_pages=12195 WAF=1.051920
+- phaseF(test4) host_pages=480016 gc_pages=892785 WAF=2.859907
+- phaseG(varmail) host_pages=18346658 gc_pages=12285432 WAF=1.669628
+- phaseH(sqlite-a) host_pages=427765 gc_pages=4980 WAF=1.011642
+- phaseI(oltp) host_pages=3499140 gc_pages=1277928 WAF=1.365212
+- phaseA-load host_pages=453846 gc_pages=221312 WAF=1.487637
+- phaseA-run host_pages=440482 gc_pages=97188 WAF=1.220640
+- ycsb-load [OVERALL], Throughput(ops/sec), 34073.872154831675
+- ycsb-run [OVERALL], Throughput(ops/sec), 65679.9255890864
+
+### mix-20260911 mixT onlinev6 — started 2026-10-06T04:46:44+09:00
+
+- mixT: 9 time-based phases of 4000 s each — YCSB-A (load 600000 records) -> OLTP (32 MB x 10 files, 1000 s x 4 chunks) -> Varmail -> YCSB-A -> YCSB-B -> FIO-Fast test4 (payload x 4000/600) -> Varmail -> YCSB-A -> OLTP. FIO file (6 GiB) kept throughout. Module `nvmev-online-v6.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-20260911.sh mixT onlinev6 1`; evidence `result/mix-20260911/mixT-onlinev6-rep1/`.
+
+## 상속형 혼합(mixV) — 사전 등록 2026-10-06 11:16
+- 이유(사용자 지적): mixT는 6 GiB FIO 파일을 10시간 내내 고정해 두어 디스크가 영역별로 나뉘어 있었음. FIO는 자기 파일만, DB·Filebench는 남은 약 1.5 GiB만 썼음. 그 공간 때문에 DB를 25만 레코드로 줄였고, YCSB 구간 WAF가 약 1.00이 됨(학습할 것이 없음).
+- 설계(`script/mix-inherit-20261006.sh mixV`, 원본 runner는 v6 실행 중이라 복사본 사용): mixT와 같은 9구간 순서·길이(각 4000초). 고정 파일 없음. 측정 전에 파일시스템 전체를 한 번 쓰고 삭제(nodiscard → FTL에는 유효 데이터로 남음). 전환마다 앞 워크로드 파일 삭제 후 다음 워크로드가 해제된 LBA에 할당되어 앞 데이터를 덮어씀. YCSB-A→YCSB-B는 같은 DB 유지. DB 60만 레코드(YCSB-A마다 새로 적재). FIO 구간은 구간 안에서 6 GiB 파일을 순차로 만든 뒤 기존과 같은 test4 덮어쓰기, 구간 끝에 삭제.
+- 증거: 전환마다 앞/뒤 파일의 물리 extent(`extents-<구간>-*.txt`, filefrag) 기록 → 전환별 LBA 겹침 비율을 보고(이어받기를 주장이 아니라 측정으로 확인).
+- 실행(이 PC, `script/gh-queue40-inherit.sh`): 현재 v6 10시간 종료 후 → v4 연기 시험(구간 120초) → 통과 시 v4 10시간 → CAT-47 연기 시험 → CAT-47 10시간. 연기 시험 통과 조건: exit 0, 9구간 요약, ENOSPC 없음, extents 파일 존재.
+- 판정: 구간별·전체 WAF를 v4 vs CAT-47로 비교(각 1회, 1% 미만 차이는 판정하지 않음). 이 결과는 mixT와 다른 조건이므로 mixT 결과와 직접 비교하지 않음. YCSB 구간 WAF가 1.05를 넘는지(설계 목적 달성 여부)도 보고.
+
+### 상속형 혼합(mixV) 설계 수정 — 2026-10-06 11:29 (실행 전, 사용자 결정)
+- 전환마다 데이터 처리를 표 3의 두 구간 실험과 같게 맞춤: YCSB-A→OLTP는 DB 남김(mixP), OLTP→Varmail은 OLTP 파일 삭제(mixO), YCSB-A→B는 같은 DB(mixJ), FIO→Varmail은 FIO 파일 남김(mixF).
+- 표 3에 없는 전환: YCSB-B→FIO 전에 DB 삭제(사용자 확인), Varmail→YCSB-A(8번) 전에 FIO 파일 삭제 후 DB 60만 재적재(그래야 8·9번이 공간 부족 없이 들어감 — mixP의 ENOSPC는 남아 있던 FIO 파일 때문).
+- 9구간: ① YCSB-A(DB 60만 적재) ② OLTP(DB 남김) ③ Varmail(OLTP 파일 삭제됨) ④ YCSB-A(같은 DB) ⑤ YCSB-B(같은 DB) ⑥ FIO(DB 삭제, 6 GiB 파일 생성 후 덮어쓰기) ⑦ Varmail(FIO 파일 남김) ⑧ YCSB-A(FIO 삭제, DB 재적재) ⑨ OLTP(DB 남김).
+- 측정 전 파일시스템 전체 1회 쓰기 후 삭제, extents 기록, 실행 순서·판정 기준은 11:16 사전 등록과 같음. 이 수정 전에 mixV로 실행된 것은 없음.
+
+- Finished 2026-10-06T11:32:44+09:00; mixT onlinev6 exit=143; evidence `/home/oy/iCAT/result/mix-20260911/mixT-onlinev6-rep1`; cleanup attempted.
+
+### inherit-20261006 mixV fixed47 — started 2026-10-06T11:33:03+09:00
+
+- mixV (inheritance): 9 time-based phases of 120 s — YCSB-A (load 20000 records) -> OLTP -> Varmail -> YCSB-A (same DB) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; 6 GiB file written then overwritten, payload x 120/600) -> Varmail (FIO file kept) -> YCSB-A (FIO file deleted, DB reloaded) -> OLTP (DB kept). Switches follow the Table-3 two-phase mixes; whole FS written+deleted once before measuring. Extents recorded per switch. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=120 bash script/mix-inherit-20261006.sh mixV fixed47 1`; evidence `result/inherit-20261006/mixV-fixed47-rep1-smoke/`.
+
+- 2026-10-06 11:32 사용자 결정으로 이 PC의 mixT onlinev6 10시간 실행을 7번 Varmail 구간 중 중단(exit=143). 이유: mixT 설계 자체가 영역을 나눠 써서(6 GiB FIO 파일 고정, DB 25만 축소) 결과 해석이 이상함 → 상속형 혼합(mixV)을 먼저 실행. 부분 증거는 `result/mix-20260911/mixT-onlinev6-rep1/`에 보존(10시간 전체 WAF 없음). mixV CAT-47 연기 시험 11:33 시작.
+
+### 상속형 혼합(mixV) 정책 추가 — 2026-10-06 (사용자 결정)
+- 실험 조건이 바뀌었으므로 기본(CAT-37)·견고(CAT-50)·최적(CAT-47)·iCAT-v4 네 정책 모두 mixV 10시간 1회씩 실행.
+- 분담: 이 PC = CAT-47 → v4 (queue40, 진행 중). 두 번째 PC = CAT-37 → CAT-50 (`script/icat2-mixV.sh`). 각 정책 연기 시험 통과 후 10시간.
+- 핵심 비교(v4 vs 최적 CAT-47)는 같은 PC. 기본·견고와의 비교는 PC가 다름(mixT 때와 같은 한계)으로 보고.
+
+- Finished 2026-10-06T11:43:21+09:00; mixV fixed47 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/mixV-fixed47-rep1-smoke`; cleanup attempted.
+- total host_bytes=200789127168 host_pages=49020783 gc_pages=9940729 WAF=1.202786
+- phaseA(sqlite-a) host_pages=25319 gc_pages=0 WAF=1.000000
+- phaseB(oltp) host_pages=3659769 gc_pages=250801 WAF=1.068529
+- phaseC(varmail) host_pages=22700423 gc_pages=296347 WAF=1.013055
+- phaseD(sqlite-a) host_pages=9058 gc_pages=63 WAF=1.006955
+- phaseE(sqlite-b) host_pages=1620 gc_pages=26 WAF=1.016049
+- phaseF(test4) host_pages=2052991 gc_pages=369370 WAF=1.179918
+- phaseG(varmail) host_pages=17229601 gc_pages=7321142 WAF=1.424917
+- phaseH(sqlite-a) host_pages=25217 gc_pages=3401 WAF=1.134869
+- phaseI(oltp) host_pages=3316655 gc_pages=1699542 WAF=1.512427
+- phaseA-load host_pages=16263 gc_pages=0 WAF=1.000000
+- phaseA-run host_pages=9056 gc_pages=0 WAF=1.000000
+- ycsb-load [OVERALL], Throughput(ops/sec), 17605.6338028169
+- ycsb-run [OVERALL], Throughput(ops/sec), 27739.251040221912
