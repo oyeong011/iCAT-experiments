@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """v6 불규칙 순서 혼합 10시간(mixT) 그림 2개 + 엑셀.
 그림 6: 20분 구간 WAF 추이 - CAT-37(기본) / CAT-50(견고) / CAT-47(최적) / iCAT-v6, 구간별 평균 WAF 표.
-그림 7: v6가 후보를 줄여 가며 학습했는지 - (가) 10시간 동안 남은 후보 수(판단마다 1점, 재설정 표시),
-        (나) 학습 회차별 곡선: 재설정 후 판단 횟수 vs 남은 후보 수 (45개 전부 한 번씩 시험 -> 나쁜 후보 제거).
+그림 7: v6 학습 - 학습 회차를 같은 폭으로 시간 순서대로 이어 그림: 45개 -> 줄이기 -> 초기화(다시 45개) -> 다시 줄이기.
 -> figs/fig6_v6_mixT.(png|pdf), figs/fig7_v6_mixT.(png|pdf), figs/data/fig6_v6_mixT.xlsx, figs/data/fig7_v6_mixT.xlsx
 원천: control-series.txt, phase-X-start.time, summary.txt, kernel 로그(analysis/v4-log.py). v6 = 두 번째 PC(icat-2) 실행."""
 import re, datetime as dt, importlib.util
@@ -91,35 +90,47 @@ f6.suptitle('그림 6. 불규칙 순서 응용 혼합 10시간: iCAT-v6 vs 최�
 f6.text(0.06, 0.93, '점선 = 워크로드 전환. 각 점 = 20분 동안의 WAF. 범례 괄호 = 그 정책 대비 v6의 차이(음수 = v6가 낮음). ' + NOTE, fontsize=9, color=INK2)
 for e in ('png', 'pdf'): f6.savefig(FIG / f'fig6_v6_mixT.{e}', dpi=200, bbox_inches='tight')
 
-f7, ax = plt.subplots(2, 1, figsize=(14, 9.4), gridspec_kw={'height_ratios': [1, 1.15], 'hspace': 0.42})
-bands(ax[0])
-ax[0].plot([h for h, _, _ in tr], [a for _, _, a in tr], color=BLUE, lw=1.6, drawstyle='steps-post', marker='o', ms=2.2, zorder=3)
-for r in resets: ax[0].axvline(r, color=PUR, lw=1.6, zorder=4)
-for ep, h0, h1, wl, a in rounds:   # how far each round narrowed, written at its lowest point
-    lo = min(a)
-    if lo == a[0]: continue   # nothing removed: no label
-    hl = next(h for h, e, x in tr if e == ep and x == lo)
-    ax[0].annotate(f'{a[0]}→{lo}', (hl, lo), (4, -14 if lo > 20 else 6), textcoords='offset points', fontsize=9.5, color=BLUE, weight='bold')
-ax[0].set_ylim(0, 50); ax[0].set_yticks([0, 15, 30, 45]); ax[0].set_ylabel('남은 후보 수'); ax[0].set_xlabel('측정 시작 후 시간 (시간)')
-ax[0].set_xlim(0, X1); ax[0].set_xticks(range(0, int(X1) + 1))
-ax[0].set_title(f'(가) 10시간 동안 v6의 남은 후보 수 (파티션 {PART}, 점 1개 = 판단 1번). 보라 선 = 변화 감지 → 45개로 되돌리고 다시 학습', loc='left', fontsize=11, color=INK, weight='bold', pad=52)
-for r, c in zip(rounds, RCOL):
-    a = r[4][:MAXJ]; strong = any(w.split('.')[1] in NARROW for w in r[3]) and min(a) <= 10
-    ax[1].plot(range(1, len(a) + 1), a, color=c, lw=2.6 if strong else 1.5, marker='o', ms=3.2 if strong else 2.4, markevery=5 if len(a) > 60 else 1,
-               label=rlabel(r), zorder=3 if strong else 2)
-ax[1].axvspan(0, 45, color='#f4f4f6', lw=0, zorder=0)
-ax[1].text(22.5, 40, '① 45개를 한 번씩 다 시험\n(아직 아무것도 안 버림)', ha='center', va='top', fontsize=9.5, color=INK2)
-ax[1].text(52, 30, '② 나쁜 후보를 버림\n→ 좋은 5개만 남음', ha='left', va='center', fontsize=9.5, color='#d9534f', weight='bold')
-ax[1].set_xlim(0, MAXJ); ax[1].set_ylim(0, 50); ax[1].set_yticks([0, 5, 15, 30, 45]); ax[1].set_ylabel('남은 후보 수')
-ax[1].set_xlabel(f'재설정 후 판단 횟수 (처음 {MAXJ}번)')
-ax[1].set_title('(나) 학습 회차별로 겹쳐 보기: 판단이 쌓일수록 후보가 줄면 = 학습', loc='left', fontsize=11, color=INK, weight='bold')
-ax[1].legend(loc='center left', bbox_to_anchor=(1.01, 0.5), fontsize=9, frameon=False)
-f7.subplots_adjust(top=0.82)
-f7.suptitle('그림 7. 불규칙 순서 응용 혼합 10시간에서 iCAT-v6가 후보를 줄여 가며 학습했는지', x=0.06, ha='left', y=0.985, fontsize=13.5, weight='bold', color=INK)
-f7.text(0.06, 0.935, 'GC 후보 설정 45개 중 좋은 것을 찾는 과정. 6번 FIO-Fast와 7번 Varmail에서는 45→5로 좁혔다. YCSB·OLTP와 3번 Varmail에서는 후보끼리 차이가 작아 거의 안 줄었다.\n' + NOTE,
-         fontsize=9, color=INK2, wrap=True)
+# Fig.7: every learning round gets the same width, drawn left to right in time order, so each reset is visible as
+# "drop -> purple line -> back to 45 -> drop again". x inside a round = how far through that round's judgments.
+def seq_points(maxpts=70):
+    """step-shaped (x, y) per round: changes kept exactly, flat stretches thinned to ~maxpts markers"""
+    out = []
+    for i, (ep, h0, h1, wl, a) in enumerate(rounds):
+        n = len(a); keep = set(range(0, n, max(1, n // maxpts))) | {n - 1}
+        pts = []
+        for j, v in enumerate(a):
+            x = i + j / n
+            if j and v != a[j - 1]: pts.append((x, a[j - 1]))   # step corner
+            if j in keep or (j and v != a[j - 1]): pts.append((x, v))
+        out.append(pts)
+    return out
+SEQ = seq_points()
+RW = {i: f'{r[0]}회차\n{"+".join(w.split(".")[1] for w in r[3])}\n{r[1]:.1f}~{r[2]:.1f}h · 판단 {len(r[4])}번' for i, r in enumerate(rounds)}
+f7, a7 = plt.subplots(figsize=(14, 6.4))
+for i, r in enumerate(rounds):
+    wl = r[3][0].split('.')[1]
+    a7.axvspan(i, i + 1, color=BAND[wl], lw=0, zorder=0)
+    a7.text(i + 0.5, -0.04, RW[i], transform=a7.get_xaxis_transform(), ha='center', va='top', fontsize=9, color=INK, linespacing=1.3)
+    if i: a7.axvline(i, color=PUR, lw=2, zorder=4)
+xs = [x for pts in SEQ for x, _ in pts]; ys = [y for pts in SEQ for _, y in pts]
+xs2, ys2 = [], []
+for k, pts in enumerate(SEQ):   # connect rounds: end of round k -> 45 at the start of round k+1 (the reset jump)
+    xs2 += [x for x, _ in pts]; ys2 += [y for _, y in pts]
+a7.plot(xs2, ys2, color=BLUE, lw=2.2, marker='o', ms=3.2, zorder=3)
+for i, r in enumerate(rounds):
+    lo = min(r[4])
+    if i: a7.annotate('초기화\n→ 45개로', (i, 45), (i + 0.03, 49.5), fontsize=8.5, color=PUR, weight='bold', va='top')
+    if lo < r[4][0]:
+        jl = r[4].index(lo); a7.annotate(f'{r[4][0]}→{lo}개', (i + jl / len(r[4]), lo), (6, -16 if lo > 10 else 8), textcoords='offset points', fontsize=10, color=BLUE, weight='bold')
+    else:
+        a7.text(i + 0.5, 41, '안 줄어듦\n(후보끼리 차이 작음)', ha='center', va='top', fontsize=8.5, color=INK2)
+a7.set_xlim(0, len(rounds)); a7.set_xticks([]); a7.set_ylim(0, 50); a7.set_yticks([0, 5, 15, 30, 45]); a7.set_ylabel('남은 후보 수 (파티션 2)')
+a7.grid(False); a7.yaxis.grid(True)
+f7.subplots_adjust(top=0.78, bottom=0.2)
+f7.suptitle('그림 7. iCAT-v6의 학습: 후보 45개 → 줄이기 → (워크로드 변화 감지) 초기화 → 다시 45개 → 다시 줄이기', x=0.06, ha='left', y=0.985, fontsize=13.5, weight='bold', color=INK)
+f7.text(0.06, 0.89, '불규칙 순서 응용 혼합 10시간. 칸 하나 = 학습 1회차(폭은 같게 맞춤, 칸 안에서 왼쪽→오른쪽 = 그 회차의 판단 순서). 보라 선 = 초기화. 점 = 판단(평평한 곳은 일부만 표시).\n'
+         '각 회차는 먼저 45개를 한 번씩 다 시험하고(평평) 그다음 나쁜 후보를 버린다(하락). FIO-Fast·7번 Varmail에서 45→5. ' + NOTE, fontsize=9, color=INK2)
 for e in ('png', 'pdf'): f7.savefig(FIG / f'fig7_v6_mixT.{e}', dpi=200, bbox_inches='tight')
-
 # ---------------- xlsx
 HDR = PatternFill('solid', fgColor='EEF2FB')
 def put(ws, r, c, v, bold=False, fmt=None):
@@ -202,35 +213,38 @@ ws2.add_chart(bc, 'A14')
 put(ws2, 13, 1, '음수(%) = v6의 WAF가 더 낮음(좋음). ' + NOTE)
 wb.save(FIG / 'data' / 'fig6_v6_mixT.xlsx')
 
-# ---- Fig.7 workbook: sheet 1 = (가) timeline, sheet 2 = (나) per-round curves; both charts also on sheet 1
-wb = Workbook(); ws = wb.active; ws.title = '그림7 후보 줄이기'
-cols = [('시간(h)', [round(h, 4) for h, _, _ in tr]), (f'남은 후보 수 (파티션 {PART}, 판단마다)', [a for _, _, a in tr]), ('학습 회차', [e for _, e, _ in tr])]
-table(ws, 1, cols)
-c0 = len(cols) + 2; lc, nl = helpers(ws, c0, 49, 0, [(f'재설정{i + 1}', r) for i, r in enumerate(resets)])
-ch = scatter(f'(가) 10시간 동안 v6의 남은 후보 수 (점 1개 = 판단 1번, 보라 선 = 변화 감지 → 다시 학습)', '측정 시작 후 시간 (시간)', '남은 후보 수', 12, 34, 0, 10, 1, 0, 50)
-add(ch, ws, 1, len(tr), '2A78D6', 19050, 'circle', 3)
-decorate(ch, ws, c0, lc, nl, '7D3CFF')
-anchor = ws.cell(row=1, column=lc + 2 * len(NAMES) + 1).column_letter
-ws.add_chart(ch, f'{anchor}2')
-ws2 = wb.create_sheet('회차별 학습 곡선')
-put(ws2, 1, 1, '판단 횟수', True); ws2.column_dimensions['A'].width = 10
-for j in range(MAXJ): put(ws2, 2 + j, 1, j + 1)
-for k, r in enumerate(rounds):
-    a = r[4][:MAXJ]; put(ws2, 1, 2 + k, rlabel(r), True); ws2.column_dimensions[ws2.cell(row=1, column=2 + k).column_letter].width = 22
-    for j, v in enumerate(a): put(ws2, 2 + j, 2 + k, v)
-ch2 = scatter('(나) 학습 회차별: 재설정 후 판단이 쌓일수록 남은 후보 수 (줄어들면 = 학습). 처음 45번은 45개를 한 번씩 시험', '재설정 후 판단 횟수', '남은 후보 수', 13, 34, 0, MAXJ, 25, 0, 50)
-for k, (r, c) in enumerate(zip(rounds, RCOL)):
-    a = r[4][:MAXJ]; strong = any(w.split('.')[1] in NARROW for w in r[3]) and min(a) <= 10
-    s = Series(Reference(ws2, min_col=2 + k, min_row=1, max_row=len(a) + 1), Reference(ws2, min_col=1, min_row=2, max_row=len(a) + 1), title_from_data=True)
-    s.smooth = False; s.graphicalProperties.line.solidFill = c[1:].upper(); s.graphicalProperties.line.width = 34925 if strong else 19050
-    s.marker.symbol = 'circle'; s.marker.size = 4 if strong else 3
-    s.marker.graphicalProperties.solidFill = c[1:].upper(); s.marker.graphicalProperties.line.solidFill = c[1:].upper()
-    ch2.series.append(s)
-ws2.add_chart(ch2, 'J2')
-put(ws2, 30, 10, '굵은 빨강·파랑 = 6번 FIO-Fast, 7번 Varmail 회차(45→5). 회색 = 나머지 회차(후보끼리 차이가 작아 거의 안 줄어듦).')
-from copy import deepcopy
-ch2b = deepcopy(ch2); ch2b.anchor = f'{anchor}27'; ws.add_chart(ch2b)   # same chart also under (가) on sheet 1
-put(ws, len(tr) + 4, 1, f'보라 = 변화 감지 → 처음부터 다시 학습 (파티션 {PART}, {len(resets)}번). ' + NOTE)
+# ---- Fig.7 workbook: same sequential-round chart; sheet 2 = raw per-judgment data
+wb = Workbook(); ws = wb.active; ws.title = '그림7 v6 학습'
+xs, ys = [round(x, 4) for pts in SEQ for x, _ in pts], [y for pts in SEQ for _, y in pts]
+table(ws, 1, [('진행 위치 (회차 번호 + 회차 안 비율)', xs), ('남은 후보 수 (파티션 2)', ys)])
+c0 = 4
+for i in range(1, len(rounds)):   # purple reset lines
+    c = c0 + 2 * (i - 1); put(ws, 1, c, f'초기화{i} x', True); put(ws, 1, c + 1, f'초기화{i}', True)
+    for r_, y in ((2, 0), (3, 48)): put(ws, r_, c, i); put(ws, r_, c + 1, y)
+lc = c0 + 2 * (len(rounds) - 1)
+for i, r in enumerate(rounds):    # round names written at the top of each slot
+    put(ws, 1, lc + 2 * i, f'라벨{i + 1} x', True); put(ws, 1, lc + 2 * i + 1, RW[i].replace('\n', ' / '), True)
+    put(ws, 2, lc + 2 * i, i + 0.5); put(ws, 2, lc + 2 * i + 1, 1)
+ch = scatter('그림 7. v6 학습: 45개 → 줄이기 → 초기화(보라) → 다시 45개 → 다시 줄이기', '학습 회차 (칸 하나 = 1회차, 아래 글자 = 그 회차의 워크로드·시간)', '남은 후보 수', 14, 36, 0, len(rounds), 1, 0, 50)
+add(ch, ws, 1, len(xs), '2A78D6', 25400, 'circle', 4)
+hidden = []
+for i in range(1, len(rounds)):
+    c = c0 + 2 * (i - 1)
+    s = Series(Reference(ws, min_col=c + 1, min_row=1, max_row=3), Reference(ws, min_col=c, min_row=2, max_row=3), title_from_data=True)
+    s.smooth = False; s.marker.symbol = 'none'; s.graphicalProperties.line.solidFill = '7D3CFF'; s.graphicalProperties.line.width = 22225
+    hidden.append(len(ch.series)); ch.series.append(s)
+for i in range(len(rounds)):
+    c = lc + 2 * i
+    s = Series(Reference(ws, min_col=c + 1, min_row=1, max_row=2), Reference(ws, min_col=c, min_row=2, max_row=2), title_from_data=True)
+    s.marker.symbol = 'none'; s.graphicalProperties.line.noFill = True
+    s.dLbls = DataLabelList(); s.dLbls.showSerName = True; s.dLbls.showVal = False; s.dLbls.showLegendKey = False; s.dLbls.position = 't'
+    hidden.append(len(ch.series)); ch.series.append(s)
+ch.legend.legendEntry = [LegendEntry(idx=i, delete=True) for i in hidden]
+ch.x_axis.majorGridlines = None
+ws.add_chart(ch, f'{ws.cell(row=1, column=lc + 2 * len(rounds) + 1).column_letter}2')
+put(ws, 32, lc + 2 * len(rounds) + 1, '보라 선 = 워크로드 변화 감지 → 초기화(다시 45개). 각 칸: 먼저 45개를 한 번씩 시험(평평) → 나쁜 후보 버림(하락). ' + NOTE)
+ws2 = wb.create_sheet('판단별 원자료')
+table(ws2, 1, [('시간(h)', [round(h, 4) for h, _, _ in tr]), ('학습 회차', [e for _, e, _ in tr]), ('남은 후보 수 (파티션 2)', [a for _, _, a in tr])])
 wb.save(FIG / 'data' / 'fig7_v6_mixT.xlsx')
 print('totals', {l: round(D[l][2], 3) for l in D}, '| resets h', [round(r, 2) for r in resets])
 for r in rounds: print(rlabel(r), 'min', min(r[4]))
