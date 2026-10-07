@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # 10-07 cycle mix (copy of mix-inherit-20261006.sh, which a run was executing). mixX: only GC-heavy workloads, short phases:
-# (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 5 = 30 phases x PH_SECS (default 1200 s) = 10 h. Table-3 prep, 6 GiB FIO
+# (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 phases x PH_SECS (default 1800 s) = 10 h. Table-3 prep, 6 GiB FIO
 # file kept all run (FIO phases overwrite it), Filebench files deleted at the end of each Filebench phase. No YCSB.
 # mixV: mixT's 9-phase order, no 6 GiB FIO file kept from the start; each switch keeps or deletes data as the matching
 # Table-3 two-phase mix did (see the mixV case). Before measuring, the whole file system is written once and deleted
@@ -71,7 +71,7 @@ printf '\n### mix-20260911 %s %s — started %s\n\n- mixU: FIO-Fast and Varmail 
 elif [[ "$label" == mixV ]]; then
 printf '\n### inherit-20261006 %s %s — started %s\n\n- mixV (inheritance): 9 time-based phases of %s s — YCSB-A (load %s records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x %s/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4000}" "$RECORDS" "${PH_SECS:-4000}" "$(basename "$module")" "${PH_SECS:-4000}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == mixX ]]; then
-printf '\n### cycle-20261007 %s %s — started %s\n\n- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 5 = 30 time-based phases of %s s. Table-3 prep, 6 GiB FIO file kept; FIO payload x %s/600; Filebench files deleted after each Filebench phase; no YCSB. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-cycle-20261007.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-1200}" "${PH_SECS:-1200}" "$(basename "$module")" "${PH_SECS:-1200}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
+printf '\n### cycle-20261007 %s %s — started %s\n\n- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of %s s. Table-3 prep, 6 GiB FIO file kept; FIO payload x %s/600; Filebench files deleted after each Filebench phase; no YCSB. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-cycle-20261007.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-1800}" "${PH_SECS:-1800}" "$(basename "$module")" "${PH_SECS:-1800}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == mixW* ]]; then   # 10-06 calibration
 printf '\n### inherit-20261006 %s %s — started %s\n\n- Calibration %s: Table-3 prep (6 GiB preset + 3 GiB random 4K prepare)%s, then YCSB-A only (load %s records, run %s s). Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "$label" "$([[ $label == mixW1 ]] && echo ', FIO file deleted before the phase' || echo ', FIO file kept')" "$RECORDS" "${PH_SECS:-900}" "$(basename "$module")" "${PH_SECS:-900}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == mixT ]]; then   # 10-04: the generic line below describes the original 2-phase mix, not mixT
@@ -285,9 +285,9 @@ case "$label" in
                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
                esac
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
-    mixX)  # 10-07 (user): GC-heavy workloads only, 20-min phases, every transition type among F/V/O appears 5 times
-           ps_=${PH_SECS:-1200}; i=0
-           for w in F V O F O V F V O F O V F V O F O V F V O F O V F V O F O V; do i=$((i + 1)); sl=$(printf 'S%02d' $i)
+    mixX)  # 10-07 (user): GC-heavy workloads only, 30-min phases, 20 phases
+           ps_=${PH_SECS:-1800}; i=0
+           for w in F V O F O V F V O F O V F V O F O V F V; do   # 10-07 (user): 30-min phases, 20 phases i=$((i + 1)); sl=$(printf 'S%02d' $i)
                case $w in
                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
                    V) PN[$sl]=varmail; VM_RUN=$ps_ VM_CHUNKS=1 phase_varmail $sl;;
@@ -357,7 +357,7 @@ host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pa
     awk -v h="$host" -v g="$gc" -v b="$bytes" 'BEGIN{printf "total host_bytes=%.0f host_pages=%.0f gc_pages=%.0f WAF=%.6f\n",b,h,g,1+g/h}'
     printf 'phaseA(%s) %s\n' "$A_NAME" "$(phase_waf "$dir/phase-A-start.txt" "$dir/phase-A-end.txt")"
     printf 'phaseB(%s) %s\n' "$B_NAME" "$(phase_waf "$dir/phase-B-start.txt" "$dir/phase-B-end.txt")"
-    [[ $label != mixX ]] || for i in $(seq 1 30); do sl=$(printf 'S%02d' $i); [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
+    [[ $label != mixX ]] || for i in $(seq 1 20); do sl=$(printf 'S%02d' $i); [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
     [[ $label == mixX ]] || for sl in C D E F G H I J; do [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]:-${C_NAME:-}}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
     for sl in A B C; do [[ -f "$dir/phase-$sl-loaded.txt" ]] && printf 'phase%s-load %s\nphase%s-run %s\n' "$sl" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-loaded.txt")" "$sl" "$(phase_waf "$dir/phase-$sl-loaded.txt" "$dir/phase-$sl-end.txt")"; done
     printf 'ycsb-load %s\nycsb-run %s\n' "$(grep -m1 'Throughput' "$dir/ycsb-load.txt")" "$(grep -m1 'Throughput' "$dir/ycsb-run.txt")"
