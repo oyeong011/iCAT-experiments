@@ -1,0 +1,32 @@
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.002: Varmail Version 3.0 personality successfully loaded
+0.002: Populating and pre-allocating filesets
+0.010: bigfileset populated: 24000 files, avg. dir. width = 1000000, avg. dir. depth = 0.7, 0 leafdirs, 372.312MB total size
+0.010: Removing bigfileset tree (if exists)
+0.012: Pre-allocating directories in bigfileset tree
+0.012: Pre-allocating files in bigfileset tree
+0.880: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.880: Population and pre-allocation of filesets completed
+0.880: Starting 1 filereader instances
+1.883: Running...
+61.887: Run took 60 seconds...
+61.888: Per-Operation Breakdown
+closefile4           264782ops     4413ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.28ms]
+readfile4            264782ops     4413ops/s  68.3mb/s      0.1ms/op [0.00ms - 13.57ms]
+openfile4            264782ops     4413ops/s   0.0mb/s      0.0ms/op [0.00ms -  1.00ms]
+closefile3           264782ops     4413ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.26ms]
+fsyncfile3           264782ops     4413ops/s   0.0mb/s      1.1ms/op [0.00ms - 14.97ms]
+appendfilerand3      264789ops     4413ops/s  34.4mb/s      0.0ms/op [0.00ms - 13.59ms]
+readfile3            264789ops     4413ops/s  68.4mb/s      0.1ms/op [0.00ms - 15.20ms]
+openfile3            264789ops     4413ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.38ms]
+closefile2           264789ops     4413ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.37ms]
+fsyncfile2           264789ops     4413ops/s   0.0mb/s      1.1ms/op [0.13ms - 14.97ms]
+appendfilerand2      264796ops     4413ops/s  34.5mb/s      0.1ms/op [0.01ms -  2.86ms]
+createfile2          264796ops     4413ops/s   0.0mb/s      0.3ms/op [0.01ms - 17.32ms]
+deletefile1          264795ops     4413ops/s   0.0mb/s      0.8ms/op [0.02ms - 18.47ms]
+61.888: IO Summary: 3442242 ops 57367.119 ops/s 8826/8826 rd/wr 205.6mb/s   0.9ms/op
+61.888: Shutting down processes
