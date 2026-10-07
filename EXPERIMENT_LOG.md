@@ -12094,3 +12094,19 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 수정(같은 날, 실행 전, 사용자): 구간 20분은 학습(FIO 약 10분, Varmail 약 16분)에 빠듯해 **30분 × 20구간**으로 변경 — (F, V, O, F, O, V) × 3 + (F, V). 표 3 준비(6 GiB 순차 + 3 GiB 무작위), FIO 파일 계속 유지(FIO 구간이 덮어씀), Filebench 파일은 각 구간 끝에 삭제(표 3 mixO와 같음). OLTP는 메모리 누수 때문에 600초 × 2조각. YCSB 없음.
 - 정책: 이 PC = iCAT-v6 → CAT-47(queue47, 현재 mixV CAT-47 종료 후), 두 번째 PC = CAT-50 → CAT-37(`script/icat2-mixX.sh`). 각 정책 전에 실제 크기 짧은 확인(구간 60초, 30구간 완료·exit 0).
 - 판정: 10시간 전체 WAF와 구간별 WAF로 v6 vs CAT-47(같은 PC)과 vs CAT-50·37(다른 PC) 비교, 각 1회라 1% 미만 차이는 판정하지 않음. v6 학습 회차(후보 줄이기·전환 감지 횟수)를 그림 7 형식으로 보고.
+
+- Finished 2026-10-07T18:14:36+09:00; mixV fixed47 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/mixV-fixed47-rep1`; cleanup attempted.
+- total host_bytes=6291748405248 host_pages=1536071388 gc_pages=2487666580 WAF=2.619499
+- phaseA(sqlite-a) host_pages=27537263 gc_pages=1935877 WAF=1.070300
+- phaseB(oltp) host_pages=125606561 gc_pages=12810655 WAF=1.101990
+- phaseC(varmail) host_pages=602892683 gc_pages=964100624 WAF=2.599125
+- phaseD(sqlite-a) host_pages=28444318 gc_pages=3526467 WAF=1.123978
+- phaseE(sqlite-b) host_pages=4125593 gc_pages=1725040 WAF=1.418131
+- phaseF(test4) host_pages=160004416 gc_pages=469413886 WAF=3.933756
+- phaseG(varmail) host_pages=443125619 gc_pages=989258774 WAF=3.232457
+- phaseH(sqlite-a) host_pages=27925830 gc_pages=5467796 WAF=1.195797
+- phaseI(oltp) host_pages=116409006 gc_pages=39427461 WAF=1.338698
+- phaseA-load host_pages=1401933 gc_pages=189658 WAF=1.135283
+- phaseA-run host_pages=26135330 gc_pages=1746219 WAF=1.066814
+- ycsb-load [OVERALL], Throughput(ops/sec), 21565.667457407806
+- ycsb-run [OVERALL], Throughput(ops/sec), 24003.009599050092
