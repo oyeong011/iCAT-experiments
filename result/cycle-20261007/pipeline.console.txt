@@ -36,3 +36,324 @@ phaseS30(varmail) host_pages=6243605 gc_pages=16730585 WAF=3.679635
 ycsb-load 
 ycsb-run 
 MIX mixX fixed50 exit=0
+[icat-2 f2dfd06e] icat-2: mixX cycle CAT50 CAT37 evidence
+ 282 files changed, 374660 insertions(+), 2 deletions(-)
+ create mode 100644 result/cycle-20261007/current-stage.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/block-stat-after.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/block-stat-before.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/block-stat-stop-before.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/control-series.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/device.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/environment.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/exit-code.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S02.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S03.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S05.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S06.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S08.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S09.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S11.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S12.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S14.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S15.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S17.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S18.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S20.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S21.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S23.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S24.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S26.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S27.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S29.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/filebench-S30.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/final-control.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S01-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S02-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S03-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S04-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S05-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S06-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S07-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S08-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S09-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S10-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S11-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S12-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S13-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S14-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S15-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S16-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S17-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S18-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S19-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S20-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S21-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S22-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S23-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S24-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S25-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S26-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S27-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S28-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S29-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/fio-file-S30-start.stat
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-final.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000000.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000001.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000002.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000003.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000004.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000005.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000006.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000007.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000008.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000009.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000010.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000011.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000012.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000013.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000014.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000015.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000016.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000017.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000018.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000019.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000020.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000021.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000022.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000023.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000024.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000025.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000026.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000027.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000028.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000029.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000030.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000031.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000032.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000033.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000034.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000035.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000036.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000037.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000038.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000039.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000040.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000041.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000042.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000043.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000044.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000045.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000046.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000047.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000048.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000049.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000050.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000051.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000052.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000053.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000054.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000055.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000056.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000057.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000058.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000059.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000060.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000061.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000062.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000063.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000064.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000065.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel-snapshots/000066.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/kernel.log
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/mkfs.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/oltp.f
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-A-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-A-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-B-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-B-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S01-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S01-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S01-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S01-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S01.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S02-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S02-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S02-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S02-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S03-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S03-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S03-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S03-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S04-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S04-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S04-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S04-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S04.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S05-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S05-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S05-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S05-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S06-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S06-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S06-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S06-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S07-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S07-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S07-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S07-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S07.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S08-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S08-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S08-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S08-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S09-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S09-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S09-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S09-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S10-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S10-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S10-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S10-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S10.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S11-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S11-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S11-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S11-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S12-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S12-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S12-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S12-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S13-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S13-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S13-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S13-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S13.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S14-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S14-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S14-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S14-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S15-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S15-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S15-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S15-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S16-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S16-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S16-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S16-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S16.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S17-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S17-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S17-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S17-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S18-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S18-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S18-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S18-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S19-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S19-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S19-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S19-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S19.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S20-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S20-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S20-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S20-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S21-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S21-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S21-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S21-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S22-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S22-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S22-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S22-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S22.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S23-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S23-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S23-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S23-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S24-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S24-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S24-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S24-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S25-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S25-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S25-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S25-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S25.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S26-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S26-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S26-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S26-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S27-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S27-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S27-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S27-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S28-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S28-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S28-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S28-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S28.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S29-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S29-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S29-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S29-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S30-end.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S30-end.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S30-start.time
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/phase-S30-start.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/prepare.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/prepared.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/preset.json
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/started.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/stopped.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/summary.txt
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/varmail.f
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/waf-series.csv
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/ycsb-load.txt.gz
+ create mode 100644 result/cycle-20261007/fitcheck/mixX-fixed50-rep1/ycsb-run.txt.gz
+ create mode 100644 result/cycle-20261007/fixed50-fitcheck-result.json
+ create mode 100644 result/cycle-20261007/fixed50-fitcheck-validation.stderr.txt
+ create mode 100644 result/cycle-20261007/fixed50-fitcheck-validation.stdout.txt
+ create mode 100644 result/cycle-20261007/pipeline.console.txt
+ create mode 100644 result/cycle-20261007/pipeline.pid
+To https://github.com/oyeong011/iCAT-experiments.git
+   bfc69ff0..f2dfd06e  HEAD -> icat-2
+FAIL line=374 command=grep -m1 'Throughput' "$dir/ycsb-load.txt"
+FAIL line=374 command=grep -m1 'Throughput' "$dir/ycsb-run.txt"
+total host_bytes=9468651184128 host_pages=2311682418 gc_pages=5471258124 WAF=3.366786
+phaseA(test4) host_pages=48001318 gc_pages=39143549 WAF=1.815468
+phaseB(varmail) host_pages=157830161 gc_pages=305559291 WAF=2.936001
+phaseS01(test4) host_pages=48001318 gc_pages=39143549 WAF=1.815468
+phaseS02(varmail) host_pages=157830161 gc_pages=305559291 WAF=2.936001
+phaseS03(oltp) host_pages=50099089 gc_pages=21252773 WAF=1.424215
+phaseS04(test4) host_pages=48001319 gc_pages=224868408 WAF=5.684630
+phaseS05(oltp) host_pages=48185936 gc_pages=30002272 WAF=1.622635
+phaseS06(varmail) host_pages=133233211 gc_pages=311314811 WAF=3.336616
+phaseS07(test4) host_pages=48001325 gc_pages=229021673 WAF=5.771153
+phaseS08(varmail) host_pages=130503202 gc_pages=311546111 WAF=3.387268
+phaseS09(oltp) host_pages=46206050 gc_pages=20716049 WAF=1.448341
+phaseS10(test4) host_pages=48001318 gc_pages=225898254 WAF=5.706084
+phaseS11(oltp) host_pages=44146361 gc_pages=28159130 WAF=1.637858
+phaseS12(varmail) host_pages=132014032 gc_pages=308753735 WAF=3.338795
+phaseS13(test4) host_pages=48001319 gc_pages=229117791 WAF=5.773156
+phaseS14(varmail) host_pages=130165013 gc_pages=310953318 WAF=3.388916
+phaseS15(oltp) host_pages=44863766 gc_pages=19869080 WAF=1.442876
+phaseS16(test4) host_pages=48001319 gc_pages=225985076 WAF=5.707893
+phaseS17(oltp) host_pages=46716020 gc_pages=29694350 WAF=1.635635
+phaseS18(varmail) host_pages=135596228 gc_pages=317314035 WAF=3.340139
+phaseS19(test4) host_pages=48001319 gc_pages=229228046 WAF=5.775453
+phaseS20(varmail) host_pages=134249683 gc_pages=319126834 WAF=3.377114
+phaseS21(oltp) host_pages=48131398 gc_pages=21904513 WAF=1.455098
+phaseS22(test4) host_pages=48001319 gc_pages=225845287 WAF=5.704981
+phaseS23(oltp) host_pages=48677312 gc_pages=30191159 WAF=1.620231
+phaseS24(varmail) host_pages=135071268 gc_pages=314609115 WAF=3.329208
+phaseS25(test4) host_pages=48001319 gc_pages=229122969 WAF=5.773264
+phaseS26(varmail) host_pages=133587056 gc_pages=318702329 WAF=3.385728
+phaseS27(oltp) host_pages=49235679 gc_pages=22229969 WAF=1.451501
+phaseS28(test4) host_pages=48001318 gc_pages=226157628 WAF=5.711488
+phaseS29(oltp) host_pages=48125750 gc_pages=29575199 WAF=1.614540
+phaseS30(varmail) host_pages=135032005 gc_pages=315395370 WAF=3.335708
+ycsb-load 
+ycsb-run 
+MIX mixX fixed50 exit=0
