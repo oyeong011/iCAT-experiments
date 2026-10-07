@@ -114,22 +114,16 @@ def series(ws, xc, yc, n, color, width, marker, size=4, r0=2, noline=False):
     if marker != 'none': s.marker.size = size; s.marker.graphicalProperties.solidFill = color; s.marker.graphicalProperties.line.solidFill = 'FFFFFF' if noline else color
     return s
 def deco(ch, ws, c0, xs, ytop, ybot, labels, color='8A8984', dash=True):
-    """vertical lines at xs + a name above each label position; hidden from the legend"""
-    hid = []
+    """10-07: same construction as the earlier working Excel figures (fig7-mixT.py): one 2-point series per vertical line,
+    named after the segment that starts there, shown in the legend. No data-label series, no hidden legend entries."""
     for i, x in enumerate(xs):
-        c = c0 + 2 * i; put(ws, 1, c, f'선{i + 1} x', True); put(ws, 1, c + 1, f'선{i + 1}', True)
+        c = c0 + 2 * i; name = '→ ' + labels[i + 1][1] if i + 1 < len(labels) else f'선{i + 1}'
+        put(ws, 1, c, f'{name} x', True); put(ws, 1, c + 1, name, True)
         for r, y in ((2, ybot), (3, ytop)): put(ws, r, c, round(x, 3)); put(ws, r, c + 1, y)
         s = series(ws, c, c + 1, 2, color, 12700, 'none')
         if dash: s.graphicalProperties.line.dashStyle = 'dash'
-        hid.append(len(ch.series)); ch.series.append(s)
-    lc = c0 + 2 * len(xs)
-    for i, (x, name) in enumerate(labels):
-        c = lc + 2 * i; put(ws, 1, c, f'라벨{i + 1} x', True); put(ws, 1, c + 1, name, True); put(ws, 2, c, round(x, 3)); put(ws, 2, c + 1, ytop)
-        s = series(ws, c, c + 1, 1, 'FFFFFF', 0, 'none', noline=True)
-        s.dLbls = DataLabelList(); s.dLbls.showSerName = True; s.dLbls.showVal = False; s.dLbls.showLegendKey = False; s.dLbls.position = 't'
-        hid.append(len(ch.series)); ch.series.append(s)
-    ch.legend.legendEntry = [LegendEntry(idx=i, delete=True) for i in hid]
-    return lc + 2 * len(labels)
+        ch.series.append(s)
+    return c0 + 2 * len(xs)
 
 wb = Workbook(); ws = wb.active; ws.title = 'WAF 추이'
 put(ws, 1, 1, '시간(h)', True); put(ws, 1, 2, f'iCAT-v4 (10시간 전체 {TOT:.3f})', True)

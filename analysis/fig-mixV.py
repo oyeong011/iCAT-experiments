@@ -118,21 +118,16 @@ def series(ws, xc, yc, n, color, width, marker, size=4, noline=False):
     if marker != 'none': s.marker.size = size; s.marker.graphicalProperties.solidFill = color; s.marker.graphicalProperties.line.solidFill = 'FFFFFF' if noline else color
     return s
 def deco(ch, ws, c0, xs, ytop, ybot, labels, color='8A8984', dash=True):
-    hid = []
+    """10-07: same construction as the earlier working Excel figures (fig7-mixT.py): one 2-point series per vertical line,
+    named after the segment that starts there, shown in the legend. No data-label series, no hidden legend entries."""
     for i, x in enumerate(xs):
-        c = c0 + 2 * i; put(ws, 1, c, f'선{i + 1} x', True); put(ws, 1, c + 1, f'선{i + 1}', True)
+        c = c0 + 2 * i; name = '→ ' + labels[i + 1][1] if i + 1 < len(labels) else f'선{i + 1}'
+        put(ws, 1, c, f'{name} x', True); put(ws, 1, c + 1, name, True)
         for r, y in ((2, ybot), (3, ytop)): put(ws, r, c, round(x, 3)); put(ws, r, c + 1, y)
         s = series(ws, c, c + 1, 2, color, 12700, 'none')
         if dash: s.graphicalProperties.line.dashStyle = 'dash'
-        hid.append(len(ch.series)); ch.series.append(s)
-    lc = c0 + 2 * len(xs)
-    for i, (x, name) in enumerate(labels):
-        c = lc + 2 * i; put(ws, 1, c, f'라벨{i + 1} x', True); put(ws, 1, c + 1, name, True); put(ws, 2, c, round(x, 3)); put(ws, 2, c + 1, ytop)
-        s = series(ws, c, c + 1, 1, 'FFFFFF', 0, 'none', noline=True)
-        s.dLbls = DataLabelList(); s.dLbls.showSerName = True; s.dLbls.showVal = False; s.dLbls.showLegendKey = False; s.dLbls.position = 't'
-        hid.append(len(ch.series)); ch.series.append(s)
-    ch.legend.legendEntry = [LegendEntry(idx=i, delete=True) for i in hid]
-    return lc + 2 * len(labels)
+        ch.series.append(s)
+    return c0 + 2 * len(xs)
 
 # ---- Fig.6 workbook
 wb = Workbook(); ws = wb.active; ws.title = '그림6 WAF 추이'
@@ -162,8 +157,6 @@ bc.add_data(Reference(w2, min_col=3, max_col=2 + len(POL), min_row=1, max_row=11
 for sr, (lab, d, c, lw) in zip(bc.series, POL): sr.graphicalProperties.solidFill = c[1:].upper(); sr.graphicalProperties.line.noFill = True
 bc.legend.position = 'b'; bc.x_axis.delete = False; bc.y_axis.delete = False; w2.add_chart(bc, 'A14')
 put(w2, 13, 1, '음수(%) = v4의 WAF가 더 낮음(좋음). ' + NOTE)
-wi = wb.create_sheet('그림(이미지)', 0); wi.add_image(XLImage(str(FIG / 'fig6_mixV.png')), 'A1')
-_im = wi._images[0]; _im.width, _im.height = _im.width * 0.45, _im.height * 0.45   # same picture as the PNG; never breaks
 wb.save(FIG / 'data' / 'fig6_mixV.xlsx')
 
 # ---- Fig.7 workbook (v4 learning)
@@ -185,8 +178,6 @@ for i, r in enumerate(rounds):
 w4 = wb.create_sheet('판단별 원자료')
 for j, h in enumerate(['시간(h)', '학습 회차', f'남은 후보 수 (파티션 {PART})'], 1): put(w4, 1, j, h, True)
 for i, (h, e, a) in enumerate(tr, 2): put(w4, i, 1, round(h, 4)); put(w4, i, 2, e); put(w4, i, 3, a)
-wi = wb.create_sheet('그림(이미지)', 0); wi.add_image(XLImage(str(FIG / 'fig7_mixV_v4.png')), 'A1')
-_im = wi._images[0]; _im.width, _im.height = _im.width * 0.45, _im.height * 0.45   # same picture as the PNG; never breaks
 wb.save(FIG / 'data' / 'fig7_mixV_v4.xlsx')
 print({l: DATA[l][2] for l in DATA})
 for r in rounds: print(r[0], r[3], len(r[4]), r[4][0], '->', min(r[4]), 'best', best.get(r[0]))
