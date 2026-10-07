@@ -147,7 +147,7 @@ def table(ws, c0, cols):   # cols = [(header, values)] written from row 1
         for i, val in enumerate(v, 2): put(ws, i, j, val, fmt='0.000' if isinstance(val, float) else None)
 def helpers(ws, c0, ytop, ybot, lines=None):
     """vertical lines (2 rows each; default = workload switches) + one label point per phase at ytop"""
-    lines = lines or [(f'전환{i}', bounds[i]) for i in range(1, len(NAMES))]
+    lines = lines or [(f'→ {i + 1}.{NAMES[i]}', bounds[i]) for i in range(1, len(NAMES))]   # 10-07: named lines in the legend
     for i, (nm, x) in enumerate(lines):
         c = c0 + 2 * i; put(ws, 1, c, f'{nm} 시간', True); put(ws, 1, c + 1, nm, True)
         for r, y in ((2, ybot), (3, ytop)): put(ws, r, c, round(x, 3)); put(ws, r, c + 1, y)
@@ -176,13 +176,7 @@ def decorate(ch, ws, c0, lc, nlines, lcolor='8A8984'):   # vertical lines + phas
         s.smooth = False; s.marker.symbol = 'none'; s.graphicalProperties.line.solidFill = lcolor; s.graphicalProperties.line.width = 12700
         if lcolor == '8A8984': s.graphicalProperties.line.dashStyle = 'dash'
         hidden.append(len(ch.series)); ch.series.append(s)
-    for i in range(len(NAMES)):
-        c = lc + 2 * i
-        s = Series(Reference(ws, min_col=c + 1, min_row=1, max_row=2), Reference(ws, min_col=c, min_row=2, max_row=2), title_from_data=True)
-        s.marker.symbol = 'none'; s.graphicalProperties.line.noFill = True
-        s.dLbls = DataLabelList(); s.dLbls.showSerName = True; s.dLbls.showVal = False; s.dLbls.showLegendKey = False; s.dLbls.position = 't'
-        hidden.append(len(ch.series)); ch.series.append(s)
-    ch.legend.legendEntry = [LegendEntry(idx=i, delete=True) for i in hidden]
+    # 10-07: no data-label series / hidden legend entries (Excel showed these charts broken); lines are named in the legend
 
 # ---- Fig.6 workbook
 wb = Workbook(); ws = wb.active; ws.title = '그림6 WAF 추이'
@@ -222,7 +216,7 @@ xs, ys = [round(x, 4) for pts in SEQ for x, _ in pts], [y for pts in SEQ for _, 
 table(ws, 1, [('진행 위치 (회차 번호 + 회차 안 비율)', xs), ('남은 후보 수 (파티션 2)', ys)])
 c0 = 4
 for i in range(1, len(rounds)):   # purple reset lines
-    c = c0 + 2 * (i - 1); put(ws, 1, c, f'초기화{i} x', True); put(ws, 1, c + 1, f'초기화{i}', True)
+    c = c0 + 2 * (i - 1); put(ws, 1, c, f'초기화{i} x', True); put(ws, 1, c + 1, f'초기화 → {i + 1}회차', True)
     for r_, y in ((2, 0), (3, 48)): put(ws, r_, c, i); put(ws, r_, c + 1, y)
 lc = c0 + 2 * (len(rounds) - 1)
 for i, r in enumerate(rounds):    # round names written at the top of each slot
@@ -242,13 +236,6 @@ for i in range(1, len(rounds)):
     s = Series(Reference(ws, min_col=c + 1, min_row=1, max_row=3), Reference(ws, min_col=c, min_row=2, max_row=3), title_from_data=True)
     s.smooth = False; s.marker.symbol = 'none'; s.graphicalProperties.line.solidFill = '7D3CFF'; s.graphicalProperties.line.width = 22225
     hidden.append(len(ch.series)); ch.series.append(s)
-for i in range(len(rounds)):
-    c = lc + 2 * i
-    s = Series(Reference(ws, min_col=c + 1, min_row=1, max_row=2), Reference(ws, min_col=c, min_row=2, max_row=2), title_from_data=True)
-    s.marker.symbol = 'none'; s.graphicalProperties.line.noFill = True
-    s.dLbls = DataLabelList(); s.dLbls.showSerName = True; s.dLbls.showVal = False; s.dLbls.showLegendKey = False; s.dLbls.position = 't'
-    hidden.append(len(ch.series)); ch.series.append(s)
-ch.legend.legendEntry = [LegendEntry(idx=i, delete=True) for i in hidden]
 ch.x_axis.majorGridlines = None
 ws.add_chart(ch, f'{ws.cell(row=1, column=lc + 2 * len(rounds) + 1).column_letter}2')
 put(ws, 32, lc + 2 * len(rounds) + 1, '보라 선 = 워크로드 변화 감지 → 초기화(다시 45개). 각 칸: 먼저 45개를 한 번씩 시험(평평) → 나쁜 후보 버림(하락). ' + NOTE)

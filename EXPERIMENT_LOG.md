@@ -12061,3 +12061,35 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=2143112 gc_pages=374680 WAF=1.174830
 - ycsb-load [OVERALL], Throughput(ops/sec), 25689.33036478849
 - ycsb-run [OVERALL], Throughput(ops/sec), 27175.597386066896
+
+### inherit-20261006 mixV onlinev4 — started 2026-10-06T22:01:15+09:00
+
+- mixV (inheritance): 9 time-based phases of 4000 s — YCSB-A (load 600000 records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x 4000/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `nvmev-online-v4.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-inherit-20261006.sh mixV onlinev4 1`; evidence `result/inherit-20261006/mixV-onlinev4-rep1/`.
+
+- Finished 2026-10-07T08:07:30+09:00; mixV onlinev4 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/mixV-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=5943123849216 host_pages=1450957971 gc_pages=2816748704 WAF=2.941303
+- phaseA(sqlite-a) host_pages=27997692 gc_pages=1780130 WAF=1.063581
+- phaseB(oltp) host_pages=119386784 gc_pages=10523885 WAF=1.088149
+- phaseC(varmail) host_pages=573372846 gc_pages=973653037 WAF=2.698115
+- phaseD(sqlite-a) host_pages=26859969 gc_pages=3876311 WAF=1.144316
+- phaseE(sqlite-b) host_pages=4258653 gc_pages=1753887 WAF=1.411841
+- phaseF(test4) host_pages=160004414 gc_pages=598527264 WAF=4.740692
+- phaseG(varmail) host_pages=391067529 gc_pages=1183975851 WAF=4.027548
+- phaseH(sqlite-a) host_pages=30940372 gc_pages=6541462 WAF=1.211422
+- phaseI(oltp) host_pages=117069615 gc_pages=36116873 WAF=1.308508
+- phaseA-load host_pages=1398346 gc_pages=321299 WAF=1.229771
+- phaseA-run host_pages=26599346 gc_pages=1458831 WAF=1.054845
+- ycsb-load [OVERALL], Throughput(ops/sec), 22424.87666317835
+- ycsb-run [OVERALL], Throughput(ops/sec), 26930.751886761343
+
+### inherit-20261006 mixV fixed47 — started 2026-10-07T08:08:04+09:00
+
+- mixV (inheritance): 9 time-based phases of 4000 s — YCSB-A (load 600000 records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x 4000/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=4000 bash script/mix-inherit-20261006.sh mixV fixed47 1`; evidence `result/inherit-20261006/mixV-fixed47-rep1/`.
+
+## 주기 혼합(mixX) — 사전 등록 2026-10-07 (사용자: 시작)
+- 이유: 긴 YCSB 구간은 WAF가 1 근처로 수렴(mixV 67분 구간 1.03~1.07)해 정책 차이가 없음. 표 3 YCSB 값(1.2~1.3)은 1.5~4분 구간(적재 직후)의 값이었음.
+- 설계(`script/mix-cycle-20261007.sh mixX`): GC 부담이 큰 워크로드만 — (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) × 5 = 30구간 × 1200초 = 10시간. F/V/O 사이 6가지 전환이 각 5번. 표 3 준비(6 GiB 순차 + 3 GiB 무작위), FIO 파일 계속 유지(FIO 구간이 덮어씀), Filebench 파일은 각 구간 끝에 삭제(표 3 mixO와 같음). OLTP는 메모리 누수 때문에 600초 × 2조각. YCSB 없음.
+- 정책: 이 PC = iCAT-v6 → CAT-47(queue47, 현재 mixV CAT-47 종료 후), 두 번째 PC = CAT-50 → CAT-37(`script/icat2-mixX.sh`). 각 정책 전에 실제 크기 짧은 확인(구간 60초, 30구간 완료·exit 0).
+- 판정: 10시간 전체 WAF와 구간별 WAF로 v6 vs CAT-47(같은 PC)과 vs CAT-50·37(다른 PC) 비교, 각 1회라 1% 미만 차이는 판정하지 않음. v6 학습 회차(후보 줄이기·전환 감지 횟수)를 그림 7 형식으로 보고.
