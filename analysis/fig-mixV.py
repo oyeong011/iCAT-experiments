@@ -13,6 +13,7 @@ from openpyxl.chart import ScatterChart, BarChart, Reference, Series
 from openpyxl.chart.label import DataLabelList
 from openpyxl.chart.legend import LegendEntry
 from openpyxl.styles import Font, PatternFill, Alignment
+from openpyxl.drawing.image import Image as XLImage
 font_manager.fontManager.addfont('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
 spec = importlib.util.spec_from_file_location('v4log', '/home/oy/iCAT/analysis/v4-log.py'); v4log = importlib.util.module_from_spec(spec); spec.loader.exec_module(v4log)
 R = Path('/home/oy/iCAT/result/inherit-20261006'); FIG = Path('/home/oy/iCAT/figs')
@@ -161,6 +162,8 @@ bc.add_data(Reference(w2, min_col=3, max_col=2 + len(POL), min_row=1, max_row=11
 for sr, (lab, d, c, lw) in zip(bc.series, POL): sr.graphicalProperties.solidFill = c[1:].upper(); sr.graphicalProperties.line.noFill = True
 bc.legend.position = 'b'; bc.x_axis.delete = False; bc.y_axis.delete = False; w2.add_chart(bc, 'A14')
 put(w2, 13, 1, '음수(%) = v4의 WAF가 더 낮음(좋음). ' + NOTE)
+wi = wb.create_sheet('그림(이미지)', 0); wi.add_image(XLImage(str(FIG / 'fig6_mixV.png')), 'A1')
+_im = wi._images[0]; _im.width, _im.height = _im.width * 0.45, _im.height * 0.45   # same picture as the PNG; never breaks
 wb.save(FIG / 'data' / 'fig6_mixV.xlsx')
 
 # ---- Fig.7 workbook (v4 learning)
@@ -182,6 +185,8 @@ for i, r in enumerate(rounds):
 w4 = wb.create_sheet('판단별 원자료')
 for j, h in enumerate(['시간(h)', '학습 회차', f'남은 후보 수 (파티션 {PART})'], 1): put(w4, 1, j, h, True)
 for i, (h, e, a) in enumerate(tr, 2): put(w4, i, 1, round(h, 4)); put(w4, i, 2, e); put(w4, i, 3, a)
+wi = wb.create_sheet('그림(이미지)', 0); wi.add_image(XLImage(str(FIG / 'fig7_mixV_v4.png')), 'A1')
+_im = wi._images[0]; _im.width, _im.height = _im.width * 0.45, _im.height * 0.45   # same picture as the PNG; never breaks
 wb.save(FIG / 'data' / 'fig7_mixV_v4.xlsx')
 print({l: DATA[l][2] for l in DATA})
 for r in rounds: print(r[0], r[3], len(r[4]), r[4][0], '->', min(r[4]), 'best', best.get(r[0]))
