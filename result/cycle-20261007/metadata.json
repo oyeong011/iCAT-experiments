@@ -1,0 +1,132 @@
+{
+  "hostname": "oy-B550M-DS3H",
+  "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0",
+  "kernel": "7.0.0-31-generic",
+  "modules": {
+    "fixed37": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-fixed37.ko",
+      "sha256": "7045a5b2c4d2ae437f43275c6dc93bf882916efb1af708312664194ac7cba1f0",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "build_provenance": "existing local current-kernel modules reused, no rebuild; previous campaign metadata retained"
+    },
+    "fixed50": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-fixed50.ko",
+      "sha256": "f476acff890da8e28ce745ec3f2cf2b0eced8cb33752d99b40a093178511b5b6",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "build_provenance": "existing local current-kernel modules reused, no rebuild; previous campaign metadata retained"
+    }
+  },
+  "device": "/dev/nvme1n1 guarded CSL_Virt model/serial/vendor/PCI; physical nvme0n1 forbidden",
+  "publish_branch": "icat-2",
+  "run_id": "cycle-20261007",
+  "registered_at": "2026-10-07T14:12:22.158197+09:00",
+  "source_commit": "fe9b74047a2b774301bef63578d08dd8c217e84a",
+  "minimum_commit": "fe9b7404",
+  "command": "bash script/icat2-mixX.sh",
+  "order": [
+    "fixed50-fitcheck",
+    "fixed50-long",
+    "fixed37-fitcheck",
+    "fixed37-long"
+  ],
+  "phase_order": [
+    "FIO-Fast",
+    "Varmail",
+    "OLTP",
+    "FIO-Fast",
+    "OLTP",
+    "Varmail",
+    "FIO-Fast",
+    "Varmail",
+    "OLTP",
+    "FIO-Fast",
+    "OLTP",
+    "Varmail",
+    "FIO-Fast",
+    "Varmail",
+    "OLTP",
+    "FIO-Fast",
+    "OLTP",
+    "Varmail",
+    "FIO-Fast",
+    "Varmail",
+    "OLTP",
+    "FIO-Fast",
+    "OLTP",
+    "Varmail",
+    "FIO-Fast",
+    "Varmail",
+    "OLTP",
+    "FIO-Fast",
+    "OLTP",
+    "Varmail"
+  ],
+  "phase_slots": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17",
+    "S18",
+    "S19",
+    "S20",
+    "S21",
+    "S22",
+    "S23",
+    "S24",
+    "S25",
+    "S26",
+    "S27",
+    "S28",
+    "S29",
+    "S30"
+  ],
+  "fitcheck": {
+    "PH_SECS": 60,
+    "OLTP": "2x30s",
+    "Varmail": "24000files60s"
+  },
+  "long": {
+    "PH_SECS": 1200,
+    "OLTP": "2x600s",
+    "Varmail": "24000files1200s"
+  },
+  "FIO_file_bytes": 6442450944,
+  "preparation": "6GiB sequential128KiB +3GiB random4KiB at10kIOPS seed20260907, excluded; file kept; cold4GiB",
+  "measurement": "manual=1;continuous30phases,30s counters;full measured costs retained",
+  "wait_for": "inherit-20261006 complete validated result then exclusive globaldevice.lock",
+  "seeds": {
+    "hot": 20260911,
+    "warm": 20261011,
+    "cold": 20261111,
+    "prepare": 20260907,
+    "Filebench": "not explicitly seeded"
+  },
+  "transition_note": "30phases have29 transitions: Varmail->FIO occurs4times, other5directed types5times; no wraparound after finalphase",
+  "workload_sha256": {
+    "workloads/mix-test4.fio": "b5edbcc77f269f500986eae375da8a94d4bf762d30f52a58d8ffd0d4901fa946",
+    "workloads/filebench/oltp.f": "2dd0b5b422a656b07c03ef4322525a701b4872820548e6ae2342e01c2f2c8ea4",
+    "workloads/filebench/varmail.f": "44d34625ec29806d5b0ac2f3694bb40c0b1e70fba6a9c5157f4c8a16fbb7f23f"
+  },
+  "execution_sha256": {
+    "execution-mix.sh": "0fa276aac7eed40d5ad79dc6befa6910d7960d738b8b97e3537bac6ac296a247",
+    "execution-entrypoint.sh": "91b6c3f72a2f76d6d35039b95c716abc147f0e4861e57d00dfa7677ddcc087fa",
+    "env-snapshot.sh": "d46a267d43fdbc10ad8cb6eb730a5d1c9ea468b9f1a227ff7a4aeda0fde0c943",
+    "safety-env.sh": "09729ee2d2fd3fe06c5771b66dd0931040bd578c2ddc9bc2cef27cd91e554f1d",
+    "validate-results.py": "f46ac6e52168876b08e5151641c5afd416a492ed400174d95e1d60a402345981",
+    "stage-finished.py": "108a1b34042f518e6c1ecaa0a5fd5b09dc40b41e32619e76a7351b2f45e36a2f",
+    "publish-results.py": "8768b4a0415cbcb8b577364952e4034acf01c87ee37f2c7749815265feb190e7"
+  }
+}

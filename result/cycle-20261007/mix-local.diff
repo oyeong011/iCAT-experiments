@@ -1,0 +1,94 @@
+--- upstream-mix-cycle-20261007.sh
++++ execution-mix.sh
+@@ -114,7 +114,9 @@
+ trap finish EXIT; trap 'exit 130' INT; trap 'exit 143' TERM
+ trap 'printf "FAIL line=%s command=%s\n" "$LINENO" "$BASH_COMMAND" >&2' ERR
+ if [[ -e /sys/module/nvmev ]] || mountpoint -q "$root/mnt"; then echo 'Device already in use'; exit 1; fi
+-if compgen -G '/sys/class/nvme/nvme*' >/dev/null; then echo 'Existing NVMe device: refusing initialization'; exit 1; fi
++# Existing-controller compatibility requires all NVMeVirt model/serial/PCI/mount guards.
++[[ "${BASH_ENV:-}" == /home/oy/iCAT/result/cycle-20261007/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
++declare -F sudo assert_virtual_dev assert_virtual_mount >/dev/null || exit 1
+ { date -Is; uname -a; cat /proc/cmdline; fio --version; java -version 2>&1; sqlite3 --version; sha256sum "$module" "$0" "$root/workloads/mix-test4.fio" "$root/workloads/sqlite/workloada"; lscpu; free -h; } > "$dir/environment.txt"
+ kmsg BEGIN
+ mkdir -p "$dir/kernel-snapshots"
+@@ -147,7 +149,7 @@
+ fi
+ cat "$control" > "$dir/prepared.txt"
+ [[ $(field "$dir/prepared.txt" host_bytes) == 0 && $(field "$dir/prepared.txt" gc_pages) == 0 ]]
+-before=$(sectors)
++before=$(sectors); printf "%s\n" "$before" > "$dir/block-stat-before.txt"
+ printf 'start\n' > "$control"
+ cat "$control" > "$dir/started.txt"
+ # ---- phases. Slot A runs first, slot B second; which workload fills each slot depends on the label.
+@@ -155,6 +157,7 @@
+     local slot=$1 job=$2
+     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+     cat "$control" > "$dir/phase-$slot-start.txt"
++    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"
+     [[ -z "${PRE_FIO:-}" ]] || fio --name=create --filename="$FIO_TARGET" --size=6G --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/phase-$slot-create.json"
+     fio "$root/workloads/$job" --output-format=json --output="$dir/phase-$slot.json"
+     sync -f "$FIO_TARGET"
+@@ -165,6 +168,7 @@
+ phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHub sqlite.sh: WAL, batch 1000, drop_caches 4s during run)
+     local slot=$1 wl=${2:-a} load=${3:-1}
+     cat "$control" > "$dir/phase-$slot-start.txt"
++    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"
+     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+     ((load)) && sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
+      CREATE TABLE usertable (YCSB_KEY VARCHAR(255) PRIMARY KEY, FIELD0 TEXT, FIELD1 TEXT, FIELD2 TEXT, FIELD3 TEXT, FIELD4 TEXT, FIELD5 TEXT, FIELD6 TEXT, FIELD7 TEXT, FIELD8 TEXT, FIELD9 TEXT);"
+@@ -193,6 +197,7 @@
+     [[ -z "$nf" ]] || sed -i "s#^set \$nfiles=.*#set \$nfiles=${VM_FILES:-$nf}#" "$wl"
+     [[ -z "$fs" ]] || sed -i "s#^set \$filesize=.*#set \$filesize=$fs#" "$wl"   # the 6 GiB preset file stays; only ~1.5 GiB is free
+     cat "$control" > "$dir/phase-$slot-start.txt"
++    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"
+     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+     # VM_CHUNKS=n (10-03): phase length = VM_RUN x n. filebench's OLTP profile grows ~300 MB/min (aio leak) and stalls the host
+     # after ~25 min, so a profile with reusable filesets (oltp) runs as n back-to-back VM_RUN pieces on the same files;
+@@ -213,7 +218,8 @@
+ phase_varmail() { phase_filebench "$1" varmail 24000; }   # 24000 files = the GitHub sweep condition
+ phase_alternate() { # phase_alternate <slot>: 5 cycles of (fast test4 60 s, slow test3 60 s) — repeated speed changes
+     local slot=$1 i
+-    cat "$control" > "$dir/phase-$slot-start.txt"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
++    cat "$control" > "$dir/phase-$slot-start.txt"
++    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+     for i in 1 2 3 4 5; do
+         kmsg phase=$slot cycle=$i fast
+         HOT_IO=$((HOT_IO/10)) WARM_IO=$((WARM_IO/10)) COLD_IO=$((COLD_IO/10)) fio "$root/workloads/mix-test4.fio" --output-format=json --output="$dir/phase-$slot-c$i-fast.json"
+@@ -225,7 +231,8 @@
+ }
+ phase_ramp() { # phase_ramp <slot>: IOPS ramps 10k -> 20k -> 30k -> 40k -> 50k, 120 s each (gradual drift instead of a step)
+     local slot=$1 m
+-    cat "$control" > "$dir/phase-$slot-start.txt"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
++    cat "$control" > "$dir/phase-$slot-start.txt"
++    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+     for m in 1 2 3 4 5; do   # test3 rates x m; payload = 120 s worth
+         kmsg phase=$slot step=$m
+         HOT_R=$((6000*m)) WARM_R=$((3000*m)) COLD_R=$((1000*m)) HOT_IO=$((6000*m*120*4096/scale)) WARM_IO=$((3000*m*120*4096/scale)) COLD_IO=$((1000*m*120*4096/scale)) \
+@@ -236,13 +243,15 @@
+ }
+ phase_idle() { # phase_idle <slot> <seconds>: no I/O; block ages keep growing
+     local slot=$1 sec=$2
+-    cat "$control" > "$dir/phase-$slot-start.txt"; kmsg phase=$slot START idle=$sec; date -Is > "$dir/phase-$slot-start.time"
++    cat "$control" > "$dir/phase-$slot-start.txt"
++    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"; kmsg phase=$slot START idle=$sec; date -Is > "$dir/phase-$slot-start.time"
+     sleep "$sec"
+     cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"; kmsg phase=$slot END
+ }
+ phase_concurrent() { # phase_concurrent <slot>: fio test4 (half payload) in background while sqlite-a runs; both tenants share the device
+     local slot=$1 fpid
+     cat "$control" > "$dir/phase-$slot-start.txt"
++    stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"
+     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+     ( exec 9>&-; HOT_IO=$((HOT_IO/2)) WARM_IO=$((WARM_IO/2)) COLD_IO=$((COLD_IO/2)) fio "$root/workloads/mix-test4.fio" --output-format=json --output="$dir/phase-$slot.json" ) & fpid=$!
+     sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
+@@ -348,7 +357,9 @@
+            phase_sqlite B;;
+ esac
+ # ---- stop
+-stop_before=$(sectors); printf 'stop\n' > "$control"; after=$(sectors)
++stop_before=$(sectors); printf "%s\n" "$before" > "$dir/block-stat-before.txt"; printf 'stop\n' > "$control"; after=$(sectors)
++printf "%s\n" "$stop_before" > "$dir/block-stat-stop-before.txt"
++printf "%s\n" "$after" > "$dir/block-stat-after.txt"
+ [[ "$stop_before" == "$after" ]]
+ cat "$control" > "$dir/stopped.txt"
+ host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pages); bytes=$(field "$dir/stopped.txt" host_bytes)

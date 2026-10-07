@@ -1,0 +1,16 @@
+--- upstream-icat2-mixX.sh
++++ execution-entrypoint.sh
+@@ -7,7 +7,11 @@
+ R=result/cycle-20261007
+ ok() { [[ $(cat $1/exit-code.txt 2>/dev/null) == 0 && $(grep -c '^phaseS[0-9]*(' $1/summary.txt 2>/dev/null) -ge 30 ]]; }
+ for p in fixed50 fixed37; do
+-  env PH_SECS=60 MIX_BASE=$PWD/$R/fitcheck bash script/mix-cycle-20261007.sh mixX $p 1
++  printf "%s\n" "$p-fitcheck" > /home/oy/iCAT/result/cycle-20261007/current-stage.txt
++  env PH_SECS=60 MIX_BASE=$PWD/$R/fitcheck bash /home/oy/iCAT/result/cycle-20261007/execution-mix.sh mixX $p 1
+   ok $R/fitcheck/mixX-$p-rep1 || { echo "mixX $p short check failed"; exit 1; }
+-  env PH_SECS=1200 bash script/mix-cycle-20261007.sh mixX $p 1
++  python3 /home/oy/iCAT/result/cycle-20261007/stage-finished.py "$p" fitcheck
++  printf "%s\n" "$p-long" > /home/oy/iCAT/result/cycle-20261007/current-stage.txt
++  env PH_SECS=1200 bash /home/oy/iCAT/result/cycle-20261007/execution-mix.sh mixX $p 1
++  python3 /home/oy/iCAT/result/cycle-20261007/stage-finished.py "$p" long
+ done

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# For the SECOND PC (Codex), 10-07: cycle mix mixX — CAT-50 (robust) then CAT-37 (default). This PC runs iCAT-v6 then CAT-47.
+# mixX = (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 5, 30 phases x 1200 s = 10 h, Table-3 prep (6 GiB FIO file kept), no YCSB.
+# Pre-registered in EXPERIMENT_LOG.md ("주기 혼합(mixX) — 사전 등록 2026-10-07").  Usage: bash script/icat2-mixX.sh
+set -euo pipefail
+cd ~/iCAT
+R=result/cycle-20261007
+ok() { [[ $(cat $1/exit-code.txt 2>/dev/null) == 0 && $(grep -c '^phaseS[0-9]*(' $1/summary.txt 2>/dev/null) -ge 30 ]]; }
+for p in fixed50 fixed37; do
+  printf "%s\n" "$p-fitcheck" > /home/oy/iCAT/result/cycle-20261007/current-stage.txt
+  env PH_SECS=60 MIX_BASE=$PWD/$R/fitcheck bash /home/oy/iCAT/result/cycle-20261007/execution-mix.sh mixX $p 1
+  ok $R/fitcheck/mixX-$p-rep1 || { echo "mixX $p short check failed"; exit 1; }
+  python3 /home/oy/iCAT/result/cycle-20261007/stage-finished.py "$p" fitcheck
+  printf "%s\n" "$p-long" > /home/oy/iCAT/result/cycle-20261007/current-stage.txt
+  env PH_SECS=1200 bash /home/oy/iCAT/result/cycle-20261007/execution-mix.sh mixX $p 1
+  python3 /home/oy/iCAT/result/cycle-20261007/stage-finished.py "$p" long
+done
