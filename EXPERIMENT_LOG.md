@@ -12110,3 +12110,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseA-run host_pages=26135330 gc_pages=1746219 WAF=1.066814
 - ycsb-load [OVERALL], Throughput(ops/sec), 21565.667457407806
 - ycsb-run [OVERALL], Throughput(ops/sec), 24003.009599050092
+
+### cycle-20261007 mixX onlinev6 — started 2026-10-07T18:15:05+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of 60 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 60/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-online-v6.ko`.
+- Command: `env PH_SECS=60 bash script/mix-cycle-20261007.sh mixX onlinev6 1`; evidence `result/cycle-20261007/fitcheck/mixX-onlinev6-rep1/`.
+
+- Finished 2026-10-07T18:16:38+09:00; mixX onlinev6 exit=1; evidence `/home/oy/iCAT/result/cycle-20261007/fitcheck/mixX-onlinev6-rep1`; cleanup attempted.
