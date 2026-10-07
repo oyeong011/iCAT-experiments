@@ -12118,3 +12118,35 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 - Finished 2026-10-07T18:16:38+09:00; mixX onlinev6 exit=1; evidence `/home/oy/iCAT/result/cycle-20261007/fitcheck/mixX-onlinev6-rep1`; cleanup attempted.
 - 2026-10-07 18:16 mixX 짧은 확인 실패(exit 1, 'sl: unbound variable'): 30분 수정 때 제가 넣은 주석이 반복문의 구간 번호 계산을 주석 처리함 — 제 실수. 측정 전 단계에서 멈춤. 수정 후 재시작(queue47 재실행).
+
+### cycle-20261007 mixX onlinev6 — started 2026-10-07T18:18:29+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of 60 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 60/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-online-v6.ko`.
+- Command: `env PH_SECS=60 bash script/mix-cycle-20261007.sh mixX onlinev6 1`; evidence `result/cycle-20261007/fitcheck/mixX-onlinev6-rep1/`.
+
+- Finished 2026-10-07T18:41:08+09:00; mixX onlinev6 exit=0; evidence `/home/oy/iCAT/result/cycle-20261007/fitcheck/mixX-onlinev6-rep1`; cleanup attempted.
+- total host_bytes=276131876864 host_pages=67415009 gc_pages=193320968 WAF=3.867625
+- phaseA(test4) host_pages=2400067 gc_pages=2275713 WAF=1.948187
+- phaseB(varmail) host_pages=6766000 gc_pages=15608506 WAF=3.306903
+- phaseS01(test4) host_pages=2400067 gc_pages=2275713 WAF=1.948187
+- phaseS02(varmail) host_pages=6766000 gc_pages=15608506 WAF=3.306903
+- phaseS03(oltp) host_pages=1727212 gc_pages=4124836 WAF=3.388147
+- phaseS04(test4) host_pages=2400067 gc_pages=7540758 WAF=4.141895
+- phaseS05(oltp) host_pages=1696461 gc_pages=2361786 WAF=2.392184
+- phaseS06(varmail) host_pages=5958897 gc_pages=16830398 WAF=3.824415
+- phaseS07(test4) host_pages=2400068 gc_pages=8354436 WAF=4.480916
+- phaseS08(varmail) host_pages=5263359 gc_pages=17224918 WAF=4.272609
+- phaseS09(oltp) host_pages=1704454 gc_pages=3283854 WAF=2.926631
+- phaseS10(test4) host_pages=2400067 gc_pages=9245283 WAF=4.852094
+- phaseS11(oltp) host_pages=1702062 gc_pages=2752301 WAF=2.617039
+- phaseS12(varmail) host_pages=5563116 gc_pages=17714355 WAF=4.184251
+- phaseS13(test4) host_pages=2400068 gc_pages=8797244 WAF=4.665414
+- phaseS14(varmail) host_pages=5699295 gc_pages=18218721 WAF=4.196662
+- phaseS15(oltp) host_pages=1659846 gc_pages=3871070 WAF=3.332186
+- phaseS16(test4) host_pages=2400068 gc_pages=8130020 WAF=4.387412
+- phaseS17(oltp) host_pages=1688682 gc_pages=2289015 WAF=2.355504
+- phaseS18(varmail) host_pages=5918700 gc_pages=17064609 WAF=3.883168
+- phaseS19(test4) host_pages=2400068 gc_pages=9534472 WAF=4.972584
+- phaseS20(varmail) host_pages=5266449 gc_pages=18098673 WAF=4.436599
+- ycsb-load 
+- ycsb-run 
