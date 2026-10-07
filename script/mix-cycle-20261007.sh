@@ -287,7 +287,7 @@ case "$label" in
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
     mixX)  # 10-07 (user): GC-heavy workloads only, 30-min phases, 20 phases
            ps_=${PH_SECS:-1800}; i=0
-           for w in F V O F O V F V O F O V F V O F O V F V; do   # 10-07 (user): 30-min phases, 20 phases i=$((i + 1)); sl=$(printf 'S%02d' $i)
+           for w in F V O F O V F V O F O V F V O F O V F V; do i=$((i + 1)); sl=$(printf 'S%02d' $i)   # 10-07 (user): 30-min phases, 20 phases
                case $w in
                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
                    V) PN[$sl]=varmail; VM_RUN=$ps_ VM_CHUNKS=1 phase_varmail $sl;;

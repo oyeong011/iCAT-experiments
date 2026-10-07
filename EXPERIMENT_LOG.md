@@ -12117,3 +12117,4 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Command: `env PH_SECS=60 bash script/mix-cycle-20261007.sh mixX onlinev6 1`; evidence `result/cycle-20261007/fitcheck/mixX-onlinev6-rep1/`.
 
 - Finished 2026-10-07T18:16:38+09:00; mixX onlinev6 exit=1; evidence `/home/oy/iCAT/result/cycle-20261007/fitcheck/mixX-onlinev6-rep1`; cleanup attempted.
+- 2026-10-07 18:16 mixX 짧은 확인 실패(exit 1, 'sl: unbound variable'): 30분 수정 때 제가 넣은 주석이 반복문의 구간 번호 계산을 주석 처리함 — 제 실수. 측정 전 단계에서 멈춤. 수정 후 재시작(queue47 재실행).
