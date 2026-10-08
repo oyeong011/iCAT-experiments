@@ -12182,3 +12182,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS20(varmail) host_pages=239077690 gc_pages=385700609 WAF=2.613286
 - ycsb-load 
 - ycsb-run 
+
+### cycle-20261007 mixX fixed47 — started 2026-10-08T04:45:57+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of 1800 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 1800/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX fixed47 1`; evidence `result/cycle-20261007/mixX-fixed47-rep1/`.
+
+## 기준 워크로드 고정 — 2026-10-08 (사용자 결정)
+- 이후 정책·알고리즘 비교는 모두 **mixX**(FIO·Varmail·OLTP, 30분 × 20구간, 표 3 준비, 6 GiB FIO 파일 유지, YCSB 없음; `script/mix-cycle-20261007.sh`, 커밋 ff8b573a) 위에서만 한다. 이 runner와 워크로드 파일은 더 바꾸지 않는다.
+- 기준 결과: v6(완료, 2.905), CAT-47(이 PC 진행 중), CAT-50·CAT-37(두 번째 PC, 30분 버전으로 재실행 필요 — 그 PC가 20분 × 30구간 예전 버전으로 돌린 CAT-50(3.367)과 진행 중이던 CAT-37은 별도 참고 자료).
+- v6 mixX 관찰: 전환 20번 중 19번을 약 1분 만에 감지, FIO는 약 10분·Varmail은 약 20분 만에 5개 이하로 좁힘, 최종 최고 후보는 FIO·Varmail 모두 47(가끔 46). OLTP는 정착하지 못함(후보 간 차이 작음). FIO 구간 WAF는 CAT-47보다 약 9% 높음(매 FIO 구간 약 10분 재탐색 비용).
