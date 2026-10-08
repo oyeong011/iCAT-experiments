@@ -12261,3 +12261,10 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS20(varmail) host_pages=208150098 gc_pages=366108530 WAF=2.758868
 - ycsb-load 
 - ycsb-run 
+
+### cycle-20261007 mixX fixed37 — started 2026-10-09T04:57:27+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of 1800 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 1800/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-fixed37.ko`.
+- Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX fixed37 1`; evidence `result/cycle-20261007/mixX-fixed37-rep1/`.
+
+- Finished 2026-10-09T04:57:57+09:00; mixX fixed37 exit=139; evidence `/home/oy/iCAT/result/cycle-20261007/mixX-fixed37-rep1`; cleanup attempted.

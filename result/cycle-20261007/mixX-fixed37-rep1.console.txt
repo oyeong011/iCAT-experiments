@@ -1,0 +1,3 @@
+script/mix-cycle-20261007.sh: line 147: 1920185 Segmentation fault      (core dumped) fio --name=prepare --filename="$FIO_TARGET" --size=${FGB}G --io_size=$((FGB * 512))M --rw=randwrite --bs=4k --direct=1 --ioengine=libaio --iodepth=32 --rate_iops=10000 --randrepeat=1 --randseed=20260907 --end_fsync=1 --output-format=json --output="$dir/prepare.json"
+FAIL line=144 command=fio --name=prepare --filename="$FIO_TARGET" --size=${FGB}G --io_size=$((FGB * 512))M --rw=randwrite --bs=4k --direct=1 --ioengine=libaio --iodepth=32 --rate_iops=10000 --randrepeat=1 --randseed=20260907 --end_fsync=1 --output-format=json --output="$dir/prepare.json"
+MIX mixX fixed37 exit=139
