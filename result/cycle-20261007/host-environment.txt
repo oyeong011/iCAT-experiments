@@ -1,0 +1,114 @@
+2026-10-08T10:33:57.060443+09:00
+hostname=oy-B550M-DS3H
+
+['uname', '-a']
+Linux oy-B550M-DS3H 7.0.0-31-generic #31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+['cat', '/proc/cmdline']
+BOOT_IMAGE=/boot/vmlinuz-7.0.0-31-generic root=UUID=2a66e830-8280-4bf1-b239-68732ae9e380 ro memmap=8G$4G quiet splash vt.handoff=7
+
+['cat', '/etc/machine-id']
+f4f3e77cb5bf4a08ab288227cf288de0
+
+['lscpu']
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           43 bits physical, 48 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  12
+On-line CPU(s) list:                     0-11
+Vendor ID:                               AuthenticAMD
+Model name:                              AMD Ryzen 5 3600XT 6-Core Processor
+CPU family:                              23
+Model:                                   113
+Thread(s) per core:                      2
+Core(s) per socket:                      6
+Socket(s):                               1
+Stepping:                                0
+Frequency boost:                         enabled
+CPU(s) scaling MHz:                      75%
+CPU max MHz:                             4634.9600
+CPU min MHz:                             2200.0000
+BogoMIPS:                                7586.09
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr rdpru wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif v_spec_ctrl umip rdpid overflow_recov succor smca sev sev_es
+Virtualization:                          AMD-V
+L1d cache:                               192 KiB (6 instances)
+L1i cache:                               192 KiB (6 instances)
+L2 cache:                                3 MiB (6 instances)
+L3 cache:                                32 MiB (2 instances)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-11
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Ghostwrite:                Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Not affected
+Vulnerability Old microcode:             Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Mitigation; untrained return thunk; SMT enabled with STIBP protection
+Vulnerability Spec rstack overflow:      Mitigation; Safe RET
+Vulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Retpolines; IBPB conditional; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Not affected
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Mitigation; IBPB before exit to userspace
+
+['free', '-h']
+               total        used        free      shared  buff/cache   available
+Mem:            23Gi       3.7Gi        16Gi       737Mi       4.4Gi        19Gi
+Swap:          8.0Gi       280Mi       7.7Gi
+
+['lsblk', '-o', 'NAME,SIZE,TYPE,MODEL,SERIAL,MOUNTPOINTS']
+NAME          SIZE TYPE MODEL                        SERIAL          MOUNTPOINTS
+loop0        66.8M loop                                              /snap/core24/2124
+loop1           4K loop                                              /snap/bare/5
+loop2       260.8M loop                                              /snap/firefox/8863
+loop3        91.7M loop                                              /snap/gtk-common-themes/1535
+loop4        16.5M loop                                              /snap/firmware-updater/226
+loop5         402M loop                                              /snap/mesa-2404/1839
+loop6       614.5M loop                                              /snap/gnome-46-2404/164
+loop7        11.8M loop                                              /snap/snap-store/1390
+loop8        50.3M loop                                              /snap/snapd/27738
+loop9         828K loop                                              /snap/snapd-desktop-integration/391
+loop10       44.7M loop                                              /snap/snapd/28254
+loop11       12.7M loop                                              /snap/firmware-updater/258
+loop12       11.8M loop                                              /snap/snap-store/1427
+loop13      262.2M loop                                              /snap/firefox/8995
+nvme0n1     931.5G disk Samsung SSD 970 EVO Plus 1TB S4EWNZFN713780Z 
+├─nvme0n1p1   529M part                                              
+├─nvme0n1p2    99M part                                              /boot/efi
+├─nvme0n1p3    16M part                                              
+├─nvme0n1p4 401.9G part                                              
+├─nvme0n1p5 195.3G part                                              
+└─nvme0n1p6 333.7G part                                              /
+
+['fio', '--version']
+fio-3.36
+
+['/home/oy/iCAT/tools/filebench-local/filebench', '-v']
+Usage error: Unrecognized option
+
+Usage: filebench {-f <wmlscript> | -h | -c [cvartype]}
+
+  Filebench version 1.5-alpha3
+
+  Filebench is a file system and storage benchmark that interprets a script
+  written in its Workload Model Language (WML), and procees to generate the
+  specified workload. Refer to the README for more details.
+
+  Visit github.com/filebench/filebench for WML definition and tutorials.
+
+Options:
+   -f <wmlscript> generate workload from the specified file
+   -h             display this help message
+   -c             display supported cvar types
+   -c [cvartype]  display options of the specific cvar type
+
+
+['git', '-C', '/home/oy/iCAT', 'rev-parse', 'HEAD']
+c06a372a5e940f911734946f1ffd574d2bdd7ca8
