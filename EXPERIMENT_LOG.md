@@ -12224,3 +12224,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 이 PC: v6 2.905, CAT-47 2.897 (차이 +0.3%, 1% 미만이라 판정 안 함). 워크로드별 평균: FIO v6 5.29 / 47 4.87(v6 +8.5%), Varmail 2.62 / 2.71(v6 −3.2%), OLTP 1.42 / 1.45(v6 −1.9%). 각 1회.
 - 14:50 CAT-47 종료 후 다음 실행을 걸어 두지 않아 18:55까지 장치 유휴(제 실수).
 - 18:55 queue48: CAT-50 → CAT-37 mixX 10시간을 **이 PC에서** 실행(네 정책을 한 기계에서 비교). 두 번째 PC의 20분 버전 CAT-50(3.367)·CAT-37(중단)은 참고 자료로만 둠.
+
+### cycle-20261007 mixX fixed50 — started 2026-10-08T18:53:23+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of 1800 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 1800/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-fixed50.ko`.
+- Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX fixed50 1`; evidence `result/cycle-20261007/mixX-fixed50-rep1/`.
+
+## 후보 워크로드 선별 — 사전 등록 2026-10-08 (사용자: 30분 유지, WAF≈1이면 제외)
+- 기존 sweep 정리 결과(측정된 모든 워크로드에서 arm47이 1등이거나 3% 이내) 이후, 한 번도 측정하지 않은 Filebench webproxy(작은 파일 생성·삭제, 약 160 MiB)와 fileserver(파일 6000개로 축소 — 원본 1만 개는 6 GiB 파일 옆에 안 들어갈 수 있음, `workloads/filebench/fileserver.f` = filebench 1.5 기본 프로필 사본)를 단독 30분씩 측정.
+- 조건: 표 3 준비(6 GiB FIO 파일 유지, mixX 안과 같은 상태), CAT-47과 CAT-37 각 1회 (`script/screen-20261008.sh`, 두 번째 PC `script/icat2-screen.sh`).
+- 판정: 30분 WAF가 1.2 미만이면 기준 워크로드 후보에서 제외. 1.2 이상이고 CAT-47 대비 CAT-37 차이가 5% 이상이면 핵심 15조합 sweep을 따로 사전 등록.
