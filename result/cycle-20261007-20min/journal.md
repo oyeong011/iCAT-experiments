@@ -150,5 +150,3 @@
 - Finished 2026-10-08T10:30:20+09:00; mixX fixed37 exit=143; evidence `/home/oy/iCAT/result/cycle-20261007/mixX-fixed37-rep1`; cleanup attempted.
 
 - mixX campaign FINISHED {"run_id": "cycle-20261007", "exit_code": 143, "status": "failed_or_incomplete_preserved", "issues": ["entrypoint exited 143; inspect pipeline console and stage logs", "fixed37 long not validated"], "finished_at": "2026-10-08T10:30:21.073253+09:00", "source_commit": "fe9b74047a2b774301bef63578d08dd8c217e84a", "raw_path": "/home/oy/iCAT/result/cycle-20261007"}
-
-- 2026-10-08T10:30:59.053035+09:00 Archived old mixX20min campaign at /home/oy/iCAT/result/cycle-20261007-20min; all 2677 source files SHA256 verified. Raw run folders suffix -20min. CAT50 valid only forold20min design; CAT37 interrupted exit143. Original provenance paths retained in old metadata, resolved via20min-preservation.json.
