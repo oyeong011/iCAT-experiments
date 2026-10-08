@@ -11,3 +11,5 @@
 - Evidence `/home/oy/iCAT/result/cycle-20261007`; publishonlyicat-2,atstagecompletionandfailure. Currentstatepreregistered,notyetstarted.
 
 - Launch confirmed {"time": "2026-10-08T10:34:36.822603+09:00", "unit": "icat-cycle-20261008-30min", "command": "bash script/icat2-mixX.sh", "status": "started_fixed50_fitcheck_preparation", "source_commit": "5e569073f2e980708ebebccb5104810c6c95779a", "remote_prereg_commit": "187ab4a6618cfcebdf0bdd0211c32e3a3216bd35", "old_archive_commit": "e11980d6", "old_cancel_exit_code": 143}
+
+- mixX campaign FINISHED {"run_id": "cycle-20261007-30min-20261008", "exit_code": 0, "status": "validated_saved_evidence", "issues": [], "finished_at": "2026-10-09T07:25:21.940915+09:00", "source_commit": "5e569073f2e980708ebebccb5104810c6c95779a", "raw_path": "/home/oy/iCAT/result/cycle-20261007"}
