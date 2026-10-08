@@ -9,3 +9,5 @@
 - Validateexit0,exact20phasecompletion/order/durations,FIOfullrequestedI/O,error0,Filebenchcompletedchunks/noerrors,start/stop/flushboundaries,constantmeasurementepoch,counter/partitionvalidity,host_bytes=blockstatdelta*512,retained6GiBfile.30ssamplesaretime series,notindependentrepeats. WAF=1+gc_pages/host_pages,notindependentNANDmeasurement. LegacyA/Baliasesarenotadditionalphases.
 - Oldresults preservedbyteexactly under `/home/oy/iCAT/result/cycle-20261007-20min`, manifest20min-preservation.json;CAT50completedoldWAF3.366786233869258,CAT37partialexit143. Do notpoolwith30minresults. Already pushedcd4e3f98.
 - Evidence `/home/oy/iCAT/result/cycle-20261007`; publishonlyicat-2,atstagecompletionandfailure. Currentstatepreregistered,notyetstarted.
+
+- Launch confirmed {"time": "2026-10-08T10:34:36.822603+09:00", "unit": "icat-cycle-20261008-30min", "command": "bash script/icat2-mixX.sh", "status": "started_fixed50_fitcheck_preparation", "source_commit": "5e569073f2e980708ebebccb5104810c6c95779a", "remote_prereg_commit": "187ab4a6618cfcebdf0bdd0211c32e3a3216bd35", "old_archive_commit": "e11980d6", "old_cancel_exit_code": 143}
