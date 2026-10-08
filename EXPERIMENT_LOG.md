@@ -12234,3 +12234,30 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 기존 sweep 정리 결과(측정된 모든 워크로드에서 arm47이 1등이거나 3% 이내) 이후, 한 번도 측정하지 않은 Filebench webproxy(작은 파일 생성·삭제, 약 160 MiB)와 fileserver(파일 6000개로 축소 — 원본 1만 개는 6 GiB 파일 옆에 안 들어갈 수 있음, `workloads/filebench/fileserver.f` = filebench 1.5 기본 프로필 사본)를 단독 30분씩 측정.
 - 조건: 표 3 준비(6 GiB FIO 파일 유지, mixX 안과 같은 상태), CAT-47과 CAT-37 각 1회 (`script/screen-20261008.sh`, 두 번째 PC `script/icat2-screen.sh`).
 - 판정: 30분 WAF가 1.2 미만이면 기준 워크로드 후보에서 제외. 1.2 이상이고 CAT-47 대비 CAT-37 차이가 5% 이상이면 핵심 15조합 sweep을 따로 사전 등록.
+
+- Finished 2026-10-09T04:57:14+09:00; mixX fixed50 exit=0; evidence `/home/oy/iCAT/result/cycle-20261007/mixX-fixed50-rep1`; cleanup attempted.
+- total host_bytes=9596654542848 host_pages=2342933238 gc_pages=4483757018 WAF=2.913737
+- phaseA(test4) host_pages=72001987 gc_pages=58318770 WAF=1.809961
+- phaseB(varmail) host_pages=253309749 gc_pages=352474581 WAF=2.391477
+- phaseS01(test4) host_pages=72001987 gc_pages=58318770 WAF=1.809961
+- phaseS02(varmail) host_pages=253309749 gc_pages=352474581 WAF=2.391477
+- phaseS03(oltp) host_pages=52394957 gc_pages=14694937 WAF=1.280465
+- phaseS04(test4) host_pages=72001996 gc_pages=290815138 WAF=5.038987
+- phaseS05(oltp) host_pages=49972135 gc_pages=26782771 WAF=1.535954
+- phaseS06(varmail) host_pages=220184136 gc_pages=357917379 WAF=2.625537
+- phaseS07(test4) host_pages=72002000 gc_pages=298877650 WAF=5.150963
+- phaseS08(varmail) host_pages=217553763 gc_pages=361701962 WAF=2.662587
+- phaseS09(oltp) host_pages=50635587 gc_pages=14813252 WAF=1.292546
+- phaseS10(test4) host_pages=72001984 gc_pages=294705663 WAF=5.093021
+- phaseS11(oltp) host_pages=50629114 gc_pages=27093962 WAF=1.535146
+- phaseS12(varmail) host_pages=213635187 gc_pages=348789838 WAF=2.632642
+- phaseS13(test4) host_pages=72001982 gc_pages=300397646 WAF=5.172075
+- phaseS14(varmail) host_pages=212338684 gc_pages=353623974 WAF=2.665377
+- phaseS15(oltp) host_pages=51764391 gc_pages=15695781 WAF=1.303216
+- phaseS16(test4) host_pages=72001984 gc_pages=294841676 WAF=5.094910
+- phaseS17(oltp) host_pages=49276996 gc_pages=27076089 WAF=1.549467
+- phaseS18(varmail) host_pages=209074523 gc_pages=362646607 WAF=2.734533
+- phaseS19(test4) host_pages=72001982 gc_pages=316380812 WAF=5.394057
+- phaseS20(varmail) host_pages=208150098 gc_pages=366108530 WAF=2.758868
+- ycsb-load 
+- ycsb-run 
