@@ -12090,6 +12090,95 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 ## 주기 혼합(mixX) — 사전 등록 2026-10-07 (사용자: 시작)
 - 이유: 긴 YCSB 구간은 WAF가 1 근처로 수렴(mixV 67분 구간 1.03~1.07)해 정책 차이가 없음. 표 3 YCSB 값(1.2~1.3)은 1.5~4분 구간(적재 직후)의 값이었음.
-- 설계(`script/mix-cycle-20261007.sh mixX`): GC 부담이 큰 워크로드만 — (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) × 5 = 30구간 × 1200초 = 10시간. F/V/O 사이 6가지 전환이 각 5번. 표 3 준비(6 GiB 순차 + 3 GiB 무작위), FIO 파일 계속 유지(FIO 구간이 덮어씀), Filebench 파일은 각 구간 끝에 삭제(표 3 mixO와 같음). OLTP는 메모리 누수 때문에 600초 × 2조각. YCSB 없음.
+- 설계(`script/mix-cycle-20261007.sh mixX`): GC 부담이 큰 워크로드만 — (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) × 5 = 30구간 × 1200초 = 10시간. F/V/O 사이 6가지 전환이 각 5번.
+- 수정(같은 날, 실행 전, 사용자): 구간 20분은 학습(FIO 약 10분, Varmail 약 16분)에 빠듯해 **30분 × 20구간**으로 변경 — (F, V, O, F, O, V) × 3 + (F, V). 표 3 준비(6 GiB 순차 + 3 GiB 무작위), FIO 파일 계속 유지(FIO 구간이 덮어씀), Filebench 파일은 각 구간 끝에 삭제(표 3 mixO와 같음). OLTP는 메모리 누수 때문에 600초 × 2조각. YCSB 없음.
 - 정책: 이 PC = iCAT-v6 → CAT-47(queue47, 현재 mixV CAT-47 종료 후), 두 번째 PC = CAT-50 → CAT-37(`script/icat2-mixX.sh`). 각 정책 전에 실제 크기 짧은 확인(구간 60초, 30구간 완료·exit 0).
 - 판정: 10시간 전체 WAF와 구간별 WAF로 v6 vs CAT-47(같은 PC)과 vs CAT-50·37(다른 PC) 비교, 각 1회라 1% 미만 차이는 판정하지 않음. v6 학습 회차(후보 줄이기·전환 감지 횟수)를 그림 7 형식으로 보고.
+
+- Finished 2026-10-07T18:14:36+09:00; mixV fixed47 exit=0; evidence `/home/oy/iCAT/result/inherit-20261006/mixV-fixed47-rep1`; cleanup attempted.
+- total host_bytes=6291748405248 host_pages=1536071388 gc_pages=2487666580 WAF=2.619499
+- phaseA(sqlite-a) host_pages=27537263 gc_pages=1935877 WAF=1.070300
+- phaseB(oltp) host_pages=125606561 gc_pages=12810655 WAF=1.101990
+- phaseC(varmail) host_pages=602892683 gc_pages=964100624 WAF=2.599125
+- phaseD(sqlite-a) host_pages=28444318 gc_pages=3526467 WAF=1.123978
+- phaseE(sqlite-b) host_pages=4125593 gc_pages=1725040 WAF=1.418131
+- phaseF(test4) host_pages=160004416 gc_pages=469413886 WAF=3.933756
+- phaseG(varmail) host_pages=443125619 gc_pages=989258774 WAF=3.232457
+- phaseH(sqlite-a) host_pages=27925830 gc_pages=5467796 WAF=1.195797
+- phaseI(oltp) host_pages=116409006 gc_pages=39427461 WAF=1.338698
+- phaseA-load host_pages=1401933 gc_pages=189658 WAF=1.135283
+- phaseA-run host_pages=26135330 gc_pages=1746219 WAF=1.066814
+- ycsb-load [OVERALL], Throughput(ops/sec), 21565.667457407806
+- ycsb-run [OVERALL], Throughput(ops/sec), 24003.009599050092
+
+### cycle-20261007 mixX onlinev6 — started 2026-10-07T18:15:05+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of 60 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 60/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-online-v6.ko`.
+- Command: `env PH_SECS=60 bash script/mix-cycle-20261007.sh mixX onlinev6 1`; evidence `result/cycle-20261007/fitcheck/mixX-onlinev6-rep1/`.
+
+- Finished 2026-10-07T18:16:38+09:00; mixX onlinev6 exit=1; evidence `/home/oy/iCAT/result/cycle-20261007/fitcheck/mixX-onlinev6-rep1`; cleanup attempted.
+- 2026-10-07 18:16 mixX 짧은 확인 실패(exit 1, 'sl: unbound variable'): 30분 수정 때 제가 넣은 주석이 반복문의 구간 번호 계산을 주석 처리함 — 제 실수. 측정 전 단계에서 멈춤. 수정 후 재시작(queue47 재실행).
+
+### cycle-20261007 mixX onlinev6 — started 2026-10-07T18:18:29+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of 60 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 60/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-online-v6.ko`.
+- Command: `env PH_SECS=60 bash script/mix-cycle-20261007.sh mixX onlinev6 1`; evidence `result/cycle-20261007/fitcheck/mixX-onlinev6-rep1/`.
+
+- Finished 2026-10-07T18:41:08+09:00; mixX onlinev6 exit=0; evidence `/home/oy/iCAT/result/cycle-20261007/fitcheck/mixX-onlinev6-rep1`; cleanup attempted.
+- total host_bytes=276131876864 host_pages=67415009 gc_pages=193320968 WAF=3.867625
+- phaseA(test4) host_pages=2400067 gc_pages=2275713 WAF=1.948187
+- phaseB(varmail) host_pages=6766000 gc_pages=15608506 WAF=3.306903
+- phaseS01(test4) host_pages=2400067 gc_pages=2275713 WAF=1.948187
+- phaseS02(varmail) host_pages=6766000 gc_pages=15608506 WAF=3.306903
+- phaseS03(oltp) host_pages=1727212 gc_pages=4124836 WAF=3.388147
+- phaseS04(test4) host_pages=2400067 gc_pages=7540758 WAF=4.141895
+- phaseS05(oltp) host_pages=1696461 gc_pages=2361786 WAF=2.392184
+- phaseS06(varmail) host_pages=5958897 gc_pages=16830398 WAF=3.824415
+- phaseS07(test4) host_pages=2400068 gc_pages=8354436 WAF=4.480916
+- phaseS08(varmail) host_pages=5263359 gc_pages=17224918 WAF=4.272609
+- phaseS09(oltp) host_pages=1704454 gc_pages=3283854 WAF=2.926631
+- phaseS10(test4) host_pages=2400067 gc_pages=9245283 WAF=4.852094
+- phaseS11(oltp) host_pages=1702062 gc_pages=2752301 WAF=2.617039
+- phaseS12(varmail) host_pages=5563116 gc_pages=17714355 WAF=4.184251
+- phaseS13(test4) host_pages=2400068 gc_pages=8797244 WAF=4.665414
+- phaseS14(varmail) host_pages=5699295 gc_pages=18218721 WAF=4.196662
+- phaseS15(oltp) host_pages=1659846 gc_pages=3871070 WAF=3.332186
+- phaseS16(test4) host_pages=2400068 gc_pages=8130020 WAF=4.387412
+- phaseS17(oltp) host_pages=1688682 gc_pages=2289015 WAF=2.355504
+- phaseS18(varmail) host_pages=5918700 gc_pages=17064609 WAF=3.883168
+- phaseS19(test4) host_pages=2400068 gc_pages=9534472 WAF=4.972584
+- phaseS20(varmail) host_pages=5266449 gc_pages=18098673 WAF=4.436599
+- ycsb-load 
+- ycsb-run 
+
+### cycle-20261007 mixX onlinev6 — started 2026-10-07T18:41:17+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of 1800 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 1800/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-online-v6.ko`.
+- Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX onlinev6 1`; evidence `result/cycle-20261007/mixX-onlinev6-rep1/`.
+
+- Finished 2026-10-08T04:45:23+09:00; mixX onlinev6 exit=0; evidence `/home/oy/iCAT/result/cycle-20261007/mixX-onlinev6-rep1`; cleanup attempted.
+- total host_bytes=10348928806912 host_pages=2526593947 gc_pages=4812983804 WAF=2.904930
+- phaseA(test4) host_pages=72002146 gc_pages=64956783 WAF=1.902151
+- phaseB(varmail) host_pages=264253153 gc_pages=408600804 WAF=2.546248
+- phaseS01(test4) host_pages=72002146 gc_pages=64956783 WAF=1.902151
+- phaseS02(varmail) host_pages=264253153 gc_pages=408600804 WAF=2.546248
+- phaseS03(oltp) host_pages=52613091 gc_pages=14523138 WAF=1.276037
+- phaseS04(test4) host_pages=72001999 gc_pages=306710932 WAF=5.259756
+- phaseS05(oltp) host_pages=50894872 gc_pages=27181404 WAF=1.534070
+- phaseS06(varmail) host_pages=241495253 gc_pages=392869038 WAF=2.626819
+- phaseS07(test4) host_pages=72002009 gc_pages=310444248 WAF=5.311605
+- phaseS08(varmail) host_pages=231357231 gc_pages=380394708 WAF=2.644188
+- phaseS09(oltp) host_pages=53620320 gc_pages=16960153 WAF=1.316301
+- phaseS10(test4) host_pages=72002005 gc_pages=306291956 WAF=5.253936
+- phaseS11(oltp) host_pages=50246287 gc_pages=28147203 WAF=1.560185
+- phaseS12(varmail) host_pages=248310648 gc_pages=405444985 WAF=2.632814
+- phaseS13(test4) host_pages=72001982 gc_pages=310959717 WAF=5.318766
+- phaseS14(varmail) host_pages=236269069 gc_pages=387485519 WAF=2.640018
+- phaseS15(oltp) host_pages=54452400 gc_pages=18183221 WAF=1.333929
+- phaseS16(test4) host_pages=72002005 gc_pages=306780072 WAF=5.260716
+- phaseS17(oltp) host_pages=52326489 gc_pages=27031323 WAF=1.516590
+- phaseS18(varmail) host_pages=247663313 gc_pages=403529613 WAF=2.629348
+- phaseS19(test4) host_pages=72001982 gc_pages=310788378 WAF=5.316386
+- phaseS20(varmail) host_pages=239077690 gc_pages=385700609 WAF=2.613286
+- ycsb-load 
+- ycsb-run 
