@@ -12330,4 +12330,60 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrWP fixed47 1`; evidence `result/screen-20261008/scrWP-fixed47/`.
 
 - Finished 2026-10-09T23:47:43+09:00; scrWP fixed47 exit=143; evidence `/home/oy/iCAT/result/screen-20261008/scrWP-fixed47`; cleanup attempted.
-- 2026-10-10 00:00 선별 webproxy 수정·재실행. 파일 수 5만 개. (수정 중 runner 한 줄에 넣은 주석이 줄 뒷부분을 가린 문법 오류를 한 번 냈다가 고침. 그사이 시작된 실행은 *-failed-syntax로 보존.)
+- 2026-10-09 23:45 선별 webproxy 수정·재실행. 파일 수 5만 개. (수정 중 runner 한 줄에 넣은 주석이 줄 뒷부분을 가린 문법 오류를 한 번 냈다가 고침. 그사이 시작된 실행은 *-failed-syntax로 보존.)
+
+### screen-20261008 scrWP fixed47 — started 2026-10-09T23:48:19+09:00
+
+- Screening: webproxy alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrWP fixed47 1`; evidence `result/screen-20261008/scrWP-fixed47/`.
+
+- Finished 2026-10-10T00:19:52+09:00; scrWP fixed47 exit=0; evidence `/home/oy/iCAT/result/screen-20261008/scrWP-fixed47`; cleanup attempted.
+- total host_bytes=15353315328 host_pages=3748368 gc_pages=160597 WAF=1.042845
+- phaseA(webproxy) host_pages=3748368 gc_pages=160597 WAF=1.042845
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### screen-20261008 scrWP fixed37 — started 2026-10-10T00:19:54+09:00
+
+- Screening: webproxy alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-fixed37.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrWP fixed37 1`; evidence `result/screen-20261008/scrWP-fixed37/`.
+
+- Finished 2026-10-10T00:51:27+09:00; scrWP fixed37 exit=0; evidence `/home/oy/iCAT/result/screen-20261008/scrWP-fixed37`; cleanup attempted.
+- total host_bytes=15857385472 host_pages=3871432 gc_pages=246037 WAF=1.063552
+- phaseA(webproxy) host_pages=3871432 gc_pages=246037 WAF=1.063552
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### screen-20261008 scrFS fixed47 — started 2026-10-10T00:51:28+09:00
+
+- Screening: fileserver (6000 files) alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrFS fixed47 1`; evidence `result/screen-20261008/scrFS-fixed47/`.
+
+- Finished 2026-10-10T01:23:00+09:00; scrFS fixed47 exit=0; evidence `/home/oy/iCAT/result/screen-20261008/scrFS-fixed47`; cleanup attempted.
+- total host_bytes=1513540587520 host_pages=369516745 gc_pages=33025328 WAF=1.089374
+- phaseA(fileserver) host_pages=369516745 gc_pages=33025328 WAF=1.089374
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### screen-20261008 scrFS fixed37 — started 2026-10-10T01:23:01+09:00
+
+- Screening: fileserver (6000 files) alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-fixed37.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrFS fixed37 1`; evidence `result/screen-20261008/scrFS-fixed37/`.
+
+- Finished 2026-10-10T01:54:33+09:00; scrFS fixed37 exit=0; evidence `/home/oy/iCAT/result/screen-20261008/scrFS-fixed37`; cleanup attempted.
+- total host_bytes=1434678255616 host_pages=350263246 gc_pages=55402198 WAF=1.158173
+- phaseA(fileserver) host_pages=350263246 gc_pages=55402198 WAF=1.158173
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 

@@ -1,0 +1,39 @@
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.053: Web proxy-server Version 3.0 personality successfully loaded
+0.053: Populating and pre-allocating filesets
+0.066: bigfileset populated: 50000 files, avg. dir. width = 1000000, avg. dir. depth = 0.8, 0 leafdirs, 781.250MB total size
+0.066: Removing bigfileset tree (if exists)
+0.123: Pre-allocating directories in bigfileset tree
+0.123: Pre-allocating files in bigfileset tree
+1.412: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+1.412: Population and pre-allocation of filesets completed
+1.412: Starting 1 proxycache instances
+2.417: Running...
+1802.945: Run took 1800 seconds...
+1802.985: Per-Operation Breakdown
+limit                0ops        0ops/s   0.0mb/s      0.0ms/op [0.00ms -  0.00ms]
+closefile6           49320505ops    27392ops/s   0.0mb/s      0.0ms/op [0.00ms - 54.04ms]
+readfile6            49320505ops    27392ops/s 214.2mb/s      0.0ms/op [0.00ms - 52.64ms]
+openfile6            49320516ops    27392ops/s   0.0mb/s      0.1ms/op [0.00ms - 244.13ms]
+closefile5           49320527ops    27392ops/s   0.0mb/s      0.0ms/op [0.00ms - 68.03ms]
+readfile5            49320527ops    27392ops/s 214.1mb/s      0.0ms/op [0.00ms - 54.85ms]
+openfile5            49320536ops    27392ops/s   0.0mb/s      0.1ms/op [0.00ms - 83.75ms]
+closefile4           49320544ops    27392ops/s   0.0mb/s      0.0ms/op [0.00ms - 50.27ms]
+readfile4            49320544ops    27392ops/s 214.1mb/s      0.0ms/op [0.00ms - 57.84ms]
+openfile4            49320549ops    27392ops/s   0.0mb/s      0.2ms/op [0.00ms - 216.16ms]
+closefile3           49320550ops    27392ops/s   0.0mb/s      0.0ms/op [0.00ms - 44.04ms]
+readfile3            49320550ops    27392ops/s 214.1mb/s      0.0ms/op [0.00ms - 61.37ms]
+openfile3            49320561ops    27392ops/s   0.0mb/s      0.2ms/op [0.00ms - 90.75ms]
+closefile2           49320567ops    27392ops/s   0.0mb/s      0.0ms/op [0.00ms - 87.90ms]
+readfile2            49320568ops    27392ops/s 214.2mb/s      0.0ms/op [0.00ms - 64.19ms]
+openfile2            49320571ops    27392ops/s   0.0mb/s      0.2ms/op [0.00ms - 65.20ms]
+closefile1           49320577ops    27392ops/s   0.0mb/s      0.0ms/op [0.00ms - 58.82ms]
+appendfilerand1      49320578ops    27392ops/s 214.0mb/s      0.0ms/op [0.00ms - 56.50ms]
+createfile1          49320589ops    27392ops/s   0.0mb/s      0.2ms/op [0.01ms - 280.57ms]
+deletefile1          49318313ops    27391ops/s   0.0mb/s      0.1ms/op [0.01ms - 306.89ms]
+1802.985: IO Summary: 937088177 ops 520452.418 ops/s 136961/27392 rd/wr 1284.8mb/s   0.2ms/op
+1802.985: Shutting down processes

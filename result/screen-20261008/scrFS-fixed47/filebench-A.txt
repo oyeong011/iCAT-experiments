@@ -1,0 +1,30 @@
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.068: File-server Version 3.0 personality successfully loaded
+0.068: Populating and pre-allocating filesets
+0.070: bigfileset populated: 6000 files, avg. dir. width = 20, avg. dir. depth = 2.9, 0 leafdirs, 736.291MB total size
+0.070: Removing bigfileset tree (if exists)
+0.129: Pre-allocating directories in bigfileset tree
+0.135: Pre-allocating files in bigfileset tree
+0.333: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.333: Population and pre-allocation of filesets completed
+0.334: Starting 1 filereader instances
+1.337: Running...
+1802.653: Run took 1800 seconds...
+1802.659: Per-Operation Breakdown
+statfile1            38041478ops    21119ops/s   0.0mb/s      0.0ms/op [0.00ms - 56.62ms]
+deletefile1          38040837ops    21118ops/s   0.0mb/s      0.2ms/op [0.01ms - 127.18ms]
+closefile3           38041487ops    21119ops/s   0.0mb/s      0.0ms/op [0.00ms - 66.22ms]
+readfile1            38041490ops    21119ops/s 2767.5mb/s      0.1ms/op [0.00ms - 119.00ms]
+openfile2            38041495ops    21119ops/s   0.0mb/s      0.1ms/op [0.00ms - 130.04ms]
+closefile2           38041502ops    21119ops/s   0.0mb/s      0.0ms/op [0.00ms - 55.21ms]
+appendfilerand1      38041502ops    21119ops/s 165.0mb/s      0.0ms/op [0.00ms - 88.09ms]
+openfile1            38041505ops    21119ops/s   0.0mb/s      0.1ms/op [0.00ms - 107.26ms]
+closefile1           38041510ops    21119ops/s   0.0mb/s      0.0ms/op [0.00ms - 59.36ms]
+wrtfile1             38041513ops    21119ops/s 2591.8mb/s      0.1ms/op [0.00ms - 120.22ms]
+createfile1          38041518ops    21119ops/s   0.0mb/s      0.1ms/op [0.01ms - 127.34ms]
+1802.659: IO Summary: 418455837 ops 232305.678 ops/s 21119/42237 rd/wr 5524.3mb/s   0.3ms/op
+1802.659: Shutting down processes
