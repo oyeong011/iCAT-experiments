@@ -33,3 +33,22 @@
 - ycsb-run 
 
 - CAT60 screen90 {"event": "finished", "policy": "arm00", "finished_at": "2026-10-09T16:15:14.579647+09:00", "runner_exit": 0, "status": "validated_saved_evidence", "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009/mixX-arm00-rep1", "validation_exit": 0, "stage": "screen90", "waf": 3.269210600331783, "host_bytes": 1241684865024, "host_pages": 303145719, "gc_pages": 687901479, "actual_measured_seconds": 5414.0, "phases": [{"slot": "S01", "workload": "FIO-Fast", "actual_seconds": 1801.0, "waf": 2.265303053094868, "host_bytes": 294920679424, "host_pages": 72002119, "gc_pages": 91104501}, {"slot": "S02", "workload": "Varmail", "actual_seconds": 1803.0, "waf": 4.227692835693549, "host_bytes": 669871058944, "host_pages": 163542739, "gc_pages": 527865727, "process_runtimes_seconds": [1800.133]}, {"slot": "S03", "workload": "OLTP", "actual_seconds": 1810.0, "waf": 2.019680089868679, "host_bytes": 276893122560, "host_pages": 67600860, "gc_pages": 68931251, "process_runtimes_seconds": [901.073, 901.16]}], "sample_rows": 184, "transition_count": 2, "measurement": "manual FTLpageWAF, hostbytes verified againstblockstat, no independentNANDmeasurement"}
+
+- CAT60 screen90 {"event": "started", "policy": "arm01", "time": "2026-10-09T16:15:18.002226+09:00", "module": {"path": "/home/oy/iCAT/buildoutput/nvmev-arm01.ko", "sha256": "6df3c9595e4385036ded1fb9d05724bf4bbcfd72d390ab8d026bcad21c4ea9dc", "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions", "k": 2, "scale_pct": 25, "age_ratio": 7, "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"}, "phase_order": ["FIO-Fast", "Varmail", "OLTP"], "phase_seconds": 1800}
+
+### cycle-20261007 mixX arm01 — started 2026-10-09T16:15:18+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP) = 3 time-based phases of 1800 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 1800/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-arm01.ko`.
+- Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX arm01 1`; evidence `result/mixX-cat60-90min-20261009/mixX-arm01-rep1/`.
+
+- Finished 2026-10-09T17:46:55+09:00; mixX arm01 exit=0; evidence `/home/oy/iCAT/result/mixX-cat60-90min-20261009/mixX-arm01-rep1`; cleanup attempted.
+- total host_bytes=1221698535424 host_pages=298266244 gc_pages=690548190 WAF=3.315207
+- phaseA(test4) host_pages=72001984 gc_pages=91153165 WAF=2.265981
+- phaseB(varmail) host_pages=158292303 gc_pages=536736223 WAF=4.390792
+- phaseS01(test4) host_pages=72001984 gc_pages=91153165 WAF=2.265981
+- phaseS02(varmail) host_pages=158292303 gc_pages=536736223 WAF=4.390792
+- phaseS03(oltp) host_pages=67971956 gc_pages=62658802 WAF=1.921833
+- ycsb-load 
+- ycsb-run 
+
+- CAT60 screen90 {"event": "finished", "policy": "arm01", "finished_at": "2026-10-09T17:46:57.385175+09:00", "runner_exit": 0, "status": "validated_saved_evidence", "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009/mixX-arm01-rep1", "validation_exit": 0, "stage": "screen90", "waf": 3.3152073152468438, "host_bytes": 1221698535424, "host_pages": 298266244, "gc_pages": 690548190, "actual_measured_seconds": 5415.0, "phases": [{"slot": "S01", "workload": "FIO-Fast", "actual_seconds": 1800.0, "waf": 2.2659812957376286, "host_bytes": 294920126464, "host_pages": 72001984, "gc_pages": 91153165}, {"slot": "S02", "workload": "Varmail", "actual_seconds": 1804.0, "waf": 4.390791673553451, "host_bytes": 648365273088, "host_pages": 158292303, "gc_pages": 536736223, "process_runtimes_seconds": [1800.117]}, {"slot": "S03", "workload": "OLTP", "actual_seconds": 1811.0, "waf": 1.9218331454225033, "host_bytes": 278413131776, "host_pages": 67971956, "gc_pages": 62658802, "process_runtimes_seconds": [901.32, 901.119]}], "sample_rows": 184, "transition_count": 2, "measurement": "manual FTLpageWAF, hostbytes verified againstblockstat, no independentNANDmeasurement"}
