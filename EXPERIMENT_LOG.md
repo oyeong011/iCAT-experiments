@@ -12302,3 +12302,4 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - ycsb-load 
 - ycsb-run 
 - 2026-10-09 23:00 mixX 네 정책 완료(모두 이 PC, 각 1회): CAT-47 2.897, v6 2.905, CAT-50 2.914, CAT-37 3.836. v6는 기본(CAT-37) 대비 −24.3%, 최적·견고와는 ±0.3%(판정 안 함). 그림: figs/fig6_mixX.png, figs/fig7_mixX_v6.png, figs/data/fig6_mixX.xlsx, fig7_mixX_v6.xlsx (analysis/fig-mixX.py).
+- 2026-10-09 23:10 후보 선별(webproxy·fileserver × CAT-47/37, 30분)을 이 PC에서 실행(queue50): 장치가 비었고 두 번째 PC는 시작하지 않았음. 사전 등록 내용 그대로.
