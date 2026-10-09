@@ -1,0 +1,82 @@
+--- source-runner.sh
++++ execution-mix.sh
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env bash
+ # 10-07 cycle mix (copy of mix-inherit-20261006.sh, which a run was executing). mixX: only GC-heavy workloads, short phases:
+-# (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 phases x PH_SECS (default 1800 s) = 10 h. Table-3 prep, 6 GiB FIO
++# (FIO-Fast, Varmail, OLTP) = 3 phases x PH_SECS (default 1800 s) = 90 min. Table-3 prep, 6 GiB FIO
+ # file kept all run (FIO phases overwrite it), Filebench files deleted at the end of each Filebench phase. No YCSB.
+ # mixV: mixT's 9-phase order, no 6 GiB FIO file kept from the start; each switch keeps or deletes data as the matching
+ # Table-3 two-phase mix did (see the mixV case). Before measuring, the whole file system is written once and deleted
+@@ -8,10 +8,12 @@
+ # Usage: mix-inherit-20261006.sh mixV <policy> [rep]
+ set -Eeuo pipefail
+ root=/home/oy/iCAT
+-base="${MIX_BASE:-$root/result/cycle-20261007}"   # second PC writes to its own dir
++[[ "${BASH_ENV:-}" == /home/oy/iCAT/result/mixX-cat60-90min-20261009/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
++base="${MIX_BASE:-$root/result/mixX-cat60-90min-20261009}"   # second PC writes to its own dir
+ journal="${MIX_JOURNAL:-$root/EXPERIMENT_LOG.md}"
+ control=/proc/nvmevirt_measurement
+ label=${1:?Use smoke, main, long, t4, or mixA/B/C/D/F/G/H/J/K/L/M/O/P/Q}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
++[[ "$label" == mixX && "$policy" =~ ^arm[0-5][0-9]$ ]] || exit 2
+ case "$policy" in
+     fixed47) module="$root/buildoutput/nvmev-varmail-20260908-fixed47.ko";;
+     online)  module="$root/buildoutput/nvmev-online-mix-20260907.ko";;
+@@ -71,7 +73,7 @@
+ elif [[ "$label" == mixV ]]; then
+ printf '\n### inherit-20261006 %s %s — started %s\n\n- mixV (inheritance): 9 time-based phases of %s s — YCSB-A (load %s records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x %s/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4000}" "$RECORDS" "${PH_SECS:-4000}" "$(basename "$module")" "${PH_SECS:-4000}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
+ elif [[ "$label" == mixX ]]; then
+-printf '\n### cycle-20261007 %s %s — started %s\n\n- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of %s s. Table-3 prep, 6 GiB FIO file kept; FIO payload x %s/600; Filebench files deleted after each Filebench phase; no YCSB. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-cycle-20261007.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-1800}" "${PH_SECS:-1800}" "$(basename "$module")" "${PH_SECS:-1800}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
++printf '\n### cycle-20261007 %s %s — started %s\n\n- mixX: (FIO-Fast, Varmail, OLTP) = 3 time-based phases of %s s. Table-3 prep, 6 GiB FIO file kept; FIO payload x %s/600; Filebench files deleted after each Filebench phase; no YCSB. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-cycle-20261007.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-1800}" "${PH_SECS:-1800}" "$(basename "$module")" "${PH_SECS:-1800}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
+ elif [[ "$label" == mixW* ]]; then   # 10-06 calibration
+ printf '\n### inherit-20261006 %s %s — started %s\n\n- Calibration %s: Table-3 prep (6 GiB preset + 3 GiB random 4K prepare)%s, then YCSB-A only (load %s records, run %s s). Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "$label" "$([[ $label == mixW1 ]] && echo ', FIO file deleted before the phase' || echo ', FIO file kept')" "$RECORDS" "${PH_SECS:-900}" "$(basename "$module")" "${PH_SECS:-900}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
+ elif [[ "$label" == mixT ]]; then   # 10-04: the generic line below describes the original 2-phase mix, not mixT
+@@ -115,7 +117,7 @@
+ trap 'printf "FAIL line=%s command=%s\n" "$LINENO" "$BASH_COMMAND" >&2' ERR
+ if [[ -e /sys/module/nvmev ]] || mountpoint -q "$root/mnt"; then echo 'Device already in use'; exit 1; fi
+ # Existing-controller compatibility requires all NVMeVirt model/serial/PCI/mount guards.
+-[[ "${BASH_ENV:-}" == /home/oy/iCAT/result/cycle-20261007/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
++[[ "${BASH_ENV:-}" == /home/oy/iCAT/result/mixX-cat60-90min-20261009/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+ declare -F sudo assert_virtual_dev assert_virtual_mount >/dev/null || exit 1
+ { date -Is; uname -a; cat /proc/cmdline; fio --version; java -version 2>&1; sqlite3 --version; sha256sum "$module" "$0" "$root/workloads/mix-test4.fio" "$root/workloads/sqlite/workloada"; lscpu; free -h; } > "$dir/environment.txt"
+ kmsg BEGIN
+@@ -125,6 +127,9 @@
+ loaded=1
+ for _ in {1..50}; do for c in /sys/class/nvme/nvme*; do grep -qi CSL_Virt "$c/model" 2>/dev/null && nv=$(basename "$c"); done; [[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]] && break; sleep 0.2; done
+ [[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]]
++assert_virtual_dev /dev/${nv}n1 || exit 1
++expected_arm=$((10#${policy#arm}))
++[[ $(awk -v arm="$expected_arm" '/^part=/{n++;for(i=1;i<=NF;i++)if($i=="arm="arm)ok++} END{print (n==4 && ok==4)?1:0}' "$control") == 1 ]] || { echo 'Loaded arm mismatch'; exit 1; }
+ # counter time series every 30 s (all policies): lets fixed arms be compared with the learner over time, not just per phase
+ ( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; printf '%s memavail_mb=%s\n' "$(cat "$control" 2>/dev/null | head -1)" "$(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo)"; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
+ grep -q CSL_Virt /sys/class/nvme/$nv/model
+@@ -159,7 +164,7 @@
+     cat "$control" > "$dir/phase-$slot-start.txt"
+     stat -c "%i %s" "$FIO_TARGET" > "$dir/fio-file-$slot-start.stat"
+     [[ -z "${PRE_FIO:-}" ]] || fio --name=create --filename="$FIO_TARGET" --size=6G --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/phase-$slot-create.json"
+-    fio "$root/workloads/$job" --output-format=json --output="$dir/phase-$slot.json"
++    timeout --signal=TERM --kill-after=30 $(( ${PH_SECS:-1800} + 900 )) fio "$root/workloads/$job" --output-format=json --output="$dir/phase-$slot.json"
+     sync -f "$FIO_TARGET"
+     jq -e 'all(.jobs[]; .error == 0 and .write.io_bytes > 0)' "$dir/phase-$slot.json" >/dev/null
+     cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
+@@ -294,9 +299,9 @@
+                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
+                esac
+            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
+-    mixX)  # 10-07 (user): GC-heavy workloads only, 30-min phases, 20 phases
++    mixX)  # 10-07 (user): GC-heavy workloads only, 30-min phases, 3 phases
+            ps_=${PH_SECS:-1800}; i=0
+-           for w in F V O F O V F V O F O V F V O F O V F V; do i=$((i + 1)); sl=$(printf 'S%02d' $i)   # 10-07 (user): 30-min phases, 20 phases
++           for w in F V O; do i=$((i + 1)); sl=$(printf 'S%02d' $i)   # 10-07 (user): 30-min phases, 3 phases
+                case $w in
+                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
+                    V) PN[$sl]=varmail; VM_RUN=$ps_ VM_CHUNKS=1 phase_varmail $sl;;
+@@ -368,7 +373,7 @@
+     awk -v h="$host" -v g="$gc" -v b="$bytes" 'BEGIN{printf "total host_bytes=%.0f host_pages=%.0f gc_pages=%.0f WAF=%.6f\n",b,h,g,1+g/h}'
+     printf 'phaseA(%s) %s\n' "$A_NAME" "$(phase_waf "$dir/phase-A-start.txt" "$dir/phase-A-end.txt")"
+     printf 'phaseB(%s) %s\n' "$B_NAME" "$(phase_waf "$dir/phase-B-start.txt" "$dir/phase-B-end.txt")"
+-    [[ $label != mixX ]] || for i in $(seq 1 20); do sl=$(printf 'S%02d' $i); [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
++    [[ $label != mixX ]] || for i in $(seq 1 3); do sl=$(printf 'S%02d' $i); [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
+     [[ $label == mixX ]] || for sl in C D E F G H I J; do [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]:-${C_NAME:-}}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
+     for sl in A B C; do [[ -f "$dir/phase-$sl-loaded.txt" ]] && printf 'phase%s-load %s\nphase%s-run %s\n' "$sl" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-loaded.txt")" "$sl" "$(phase_waf "$dir/phase-$sl-loaded.txt" "$dir/phase-$sl-end.txt")"; done
+     printf 'ycsb-load %s\nycsb-run %s\n' "$(grep -m1 'Throughput' "$dir/ycsb-load.txt")" "$(grep -m1 'Throughput' "$dir/ycsb-run.txt")"

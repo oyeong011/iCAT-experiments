@@ -1,0 +1,668 @@
+{
+  "hostname": "oy-B550M-DS3H",
+  "machine_id": "f4f3e77cb5bf4a08ab288227cf288de0",
+  "kernel": "7.0.0-31-generic",
+  "device": "/dev/nvme1n1 guarded CSL_Virt model/serial/vendor/PCI; physical nvme0n1 forbidden",
+  "publish_branch": "icat-2",
+  "seeds": {
+    "hot": 20260911,
+    "warm": 20261011,
+    "cold": 20261111,
+    "prepare": 20260907,
+    "Filebench": "not explicitly seeded"
+  },
+  "FIO_file_bytes": 6442450944,
+  "preparation": "6GiB sequential128KiB +3GiB random4KiB at10kIOPS seed20260907, excluded; file kept; cold4GiB",
+  "workload_sha256": {
+    "workloads/mix-test4.fio": "b5edbcc77f269f500986eae375da8a94d4bf762d30f52a58d8ffd0d4901fa946",
+    "workloads/filebench/oltp.f": "2dd0b5b422a656b07c03ef4322525a701b4872820548e6ae2342e01c2f2c8ea4",
+    "workloads/filebench/varmail.f": "44d34625ec29806d5b0ac2f3694bb40c0b1e70fba6a9c5157f4c8a16fbb7f23f"
+  },
+  "run_id": "mixX-cat60-90min-20261009",
+  "registered_at": "2026-10-09T14:39:59.929597+09:00",
+  "source_commit": "5e569073f2e980708ebebccb5104810c6c95779a",
+  "source_runner": "/home/oy/iCAT/result/cycle-20261007/execution-mix.sh",
+  "source_runner_sha256": "26317694d5e2394cdd1a28951af0afdc1c68b328b8914de743c12438dc2019fc",
+  "source_root_head": "c06a372a5e940f911734946f1ffd574d2bdd7ca8",
+  "latest_main_inspected": "bb1ba2af22be4a3de9a8113df63beb2aa4cbbf12",
+  "label": "mixX",
+  "phase_seconds": 1800,
+  "phase_order": [
+    "FIO-Fast",
+    "Varmail",
+    "OLTP"
+  ],
+  "phase_slots": [
+    "S01",
+    "S02",
+    "S03"
+  ],
+  "policy_order": [
+    "arm00",
+    "arm01",
+    "arm02",
+    "arm03",
+    "arm04",
+    "arm05",
+    "arm06",
+    "arm07",
+    "arm08",
+    "arm09",
+    "arm10",
+    "arm11",
+    "arm12",
+    "arm13",
+    "arm14",
+    "arm15",
+    "arm16",
+    "arm17",
+    "arm18",
+    "arm19",
+    "arm20",
+    "arm21",
+    "arm22",
+    "arm23",
+    "arm24",
+    "arm25",
+    "arm26",
+    "arm27",
+    "arm28",
+    "arm29",
+    "arm30",
+    "arm31",
+    "arm32",
+    "arm33",
+    "arm34",
+    "arm35",
+    "arm36",
+    "arm37",
+    "arm38",
+    "arm39",
+    "arm40",
+    "arm41",
+    "arm42",
+    "arm43",
+    "arm44",
+    "arm45",
+    "arm46",
+    "arm47",
+    "arm48",
+    "arm49",
+    "arm50",
+    "arm51",
+    "arm52",
+    "arm53",
+    "arm54",
+    "arm55",
+    "arm56",
+    "arm57",
+    "arm58",
+    "arm59"
+  ],
+  "measurement": "measurement_manual=1,start after6GiBseq+3GiBrandprep,stopafterphase3sync;30ssamples;FTLpageWAF",
+  "module_options": "memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid=1000",
+  "nominal_total_seconds": 324000,
+  "ranking_scope": "samehost90minFVO;no10hrankclaim;singleexecutionperarm",
+  "filebench": {
+    "varmail_files": 24000,
+    "varmail_seconds": 1800,
+    "oltp_file_size": "32m",
+    "oltp_chunk_seconds": 900,
+    "oltp_chunks": 2,
+    "delete_after_phase": true,
+    "trim": false
+  },
+  "modules": {
+    "arm00": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm00.ko",
+      "sha256": "2af2e56dbb46b7d3eb3c519d8802f8252f9472425bf9b633be21b607d2a99951",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 25,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm01": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm01.ko",
+      "sha256": "6df3c9595e4385036ded1fb9d05724bf4bbcfd72d390ab8d026bcad21c4ea9dc",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 25,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm02": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm02.ko",
+      "sha256": "f84ebdf7ac5e7d99b80810524d6ed7b2f57732dc4bbbed693deacb2922aed654",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 25,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm03": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm03.ko",
+      "sha256": "3bb87a28f73f01c5db2e235b41994ebd1afa9a629c7022b3928b056021a5b22e",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 50,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm04": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm04.ko",
+      "sha256": "bc11277eb39b4ed4b0e9ed2b31becc6385372190b67c9d0a920189b6b3e5806b",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 50,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm05": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm05.ko",
+      "sha256": "7f786656f4821080e04de0dc6406b51be118813f8155094482be135c6f7a25de",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 50,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm06": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm06.ko",
+      "sha256": "3546c8f6a0087baeed0fe0552bc83cdc927f83d416fe13ac16341af974f25319",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 100,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm07": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm07.ko",
+      "sha256": "cb9fdd4d3879a8ec0d96f99ce71b037769a021206d3207cf7d4bed631dc034b2",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 100,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm08": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm08.ko",
+      "sha256": "1f9dfdfadac90ddbba9118a4dcdf78bfff615eb8149ffcf94cdf9c0f0a6d1fad",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 100,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm09": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm09.ko",
+      "sha256": "f4f070ff06be5b8e97046aac05c982c1ac043173c368ed610af5078492a6dc74",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 200,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm10": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm10.ko",
+      "sha256": "05e5e1e2654f527f67de009c93c6b5891611ce8f0f93f0bcc58aa6c910753482",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 200,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm11": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm11.ko",
+      "sha256": "596778e682d72d0825b95ebc019ded637484262d77f206dd792e8de342452eff",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 200,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm12": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm12.ko",
+      "sha256": "3d9ab2d2c7b44697944f4434b4107895b4fd5c6cd2bd1b9f14bd99b9cf5c87d0",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 400,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm13": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm13.ko",
+      "sha256": "ffe2f767dc808ab5f41a084f099d3a9d646a0068ac68ab6d23ddcf64941de715",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 400,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm14": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm14.ko",
+      "sha256": "96c313c89665ad31893c4292e1817c24310bfb63f63c51cdcb76bb4cd07a009a",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 2,
+      "scale_pct": 400,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm15": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm15.ko",
+      "sha256": "9001b1b4b9416d99838942029d00f8c1ae633ed3b629150e07ef8f55d4dee6cc",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 25,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm16": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm16.ko",
+      "sha256": "60f019a15e970243c79686a288e30ff50a6555464d42186f18aa4e29c1d5718f",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 25,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm17": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm17.ko",
+      "sha256": "6a9ec9664ce49458fb7067cd328afd20f73e61a5a2b5940d4d08635bda1adfaf",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 25,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm18": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm18.ko",
+      "sha256": "f680b834b05029dc2632cb524f0bc182316e07184a02d1befa1f0fdd97c1e008",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 50,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm19": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm19.ko",
+      "sha256": "7c1cd15170a2e8f79e98f2a258b479242ce57a31582b68e80036e113d05a881c",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 50,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm20": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm20.ko",
+      "sha256": "ed673daf5a5dabe516d06c2b2b040448103e8f73535d56ceaa0b316f59c7f789",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 50,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm21": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm21.ko",
+      "sha256": "8ef547766343596b2c5d0b4a2278e21fafc5ce53a04e4614b93c7cacf543b0c4",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 100,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm22": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm22.ko",
+      "sha256": "399c51787aeb10a5cfb2278d861b33f17982ab76e2f5a7442be839f3338588e0",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 100,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm23": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm23.ko",
+      "sha256": "2400a0a3f89559ea174f63e8ed32e80e9bfb6750eea1d3a0e5678ec74fba5c94",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 100,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm24": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm24.ko",
+      "sha256": "64eb1d7a15ca285a50fcede31c94b92e14e4f7c0cd5184f79f1c292c3df5ddc9",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 200,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm25": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm25.ko",
+      "sha256": "c9de518e0f9cbb9d2c783f661eed7e02fb62e956e3fa37820c902089a56edd6c",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 200,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm26": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm26.ko",
+      "sha256": "6f2daca6624dfbe95f5e803ac18657e88371bf3d16adcd8acab6c143f564f686",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 200,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm27": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm27.ko",
+      "sha256": "41aa9d1b50409253d8a75a0a7fe7d2ad843d0fa992c6740fdc1ccc00dfa167e7",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 400,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm28": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm28.ko",
+      "sha256": "adf4ed06d3f33b908a76368e5f785a6c63fec6b387412804993f8ad2e5a7f57b",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 400,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm29": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm29.ko",
+      "sha256": "227908335ab3aef088ab9b6fc20c0e3895be883f80da2532eb3de501d392b75e",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 4,
+      "scale_pct": 400,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm30": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm30.ko",
+      "sha256": "eef356ecba359fc8f347316390f1a8feb6348a0546c26d8b90b6075d07b0c28d",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 25,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm31": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm31.ko",
+      "sha256": "153c591ac5b4394b9207622e2397e9a52b0b81c3b4b37c28ad858465b898648d",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 25,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm32": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm32.ko",
+      "sha256": "1e50868e39b32e2feb10c46783ba859d0cfa16d341be0aa579b4124b84c82c5c",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 25,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm33": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm33.ko",
+      "sha256": "e3deccaa2e56e22f7748f7790cb4bc1e793baa23e0e89bc8e0a6c3e79201d640",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 50,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm34": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm34.ko",
+      "sha256": "9067ccb818847478837c2277854f37a0130db9aa90f4b32c14f35cb0e8c90b6d",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 50,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm35": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm35.ko",
+      "sha256": "90ebef098a672ad3aa4be504547958653c1a5acdd821b54cfdc34c7fee2d4608",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 50,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm36": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm36.ko",
+      "sha256": "55bd16ba790d6936a15c7fec7d7449930b5930921e25beb4fd767e1f76d83c7f",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 100,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm37": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm37.ko",
+      "sha256": "7045a5b2c4d2ae437f43275c6dc93bf882916efb1af708312664194ac7cba1f0",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 100,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm38": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm38.ko",
+      "sha256": "f8e45186a7f81414e07bb68aad2ed1c568f8016f0de3a837bf132ce4fdb32590",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 100,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm39": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm39.ko",
+      "sha256": "f1ada376f4d289b218d0586e87fc1b661ad504c792d1906411aabb58029d6ab9",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 200,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm40": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm40.ko",
+      "sha256": "b528807aedaa5bde260292b5103474c52af4b646a59fe17d1acfef4e0f81373d",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 200,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm41": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm41.ko",
+      "sha256": "3012e21e2a1684d7f49ee290c9258d13f0d6345bdaa66be6d2ad162355267a16",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 200,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm42": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm42.ko",
+      "sha256": "57dd1004a4879cdac0f367180a2b57c440142cd1a60e695256b1f0f1c9284886",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 400,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm43": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm43.ko",
+      "sha256": "cf6398e6373894f0e167896c08d5d5f0d05b38fb01ecc7ef86767d905ae3f552",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 400,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm44": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm44.ko",
+      "sha256": "9723f0a4a8711d2c328653acc88c5542d9c1ab76015bd9498c3df2c66afa42bc",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 7,
+      "scale_pct": 400,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm45": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm45.ko",
+      "sha256": "b8806101b1e25e8b4d84ab15e8887f929214d6dcd588c6dc9699da82c4a355b0",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 25,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm46": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm46.ko",
+      "sha256": "daae97757142484c1103eba4c1f9beee0459beb3946421e9e17eb97dc90f9899",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 25,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm47": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm47.ko",
+      "sha256": "9fde0ea49892b1c8fa31c5bfa453ca55f5f2525806964c427d3f640266b8ce7d",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 25,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm48": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm48.ko",
+      "sha256": "916689c55ee7a2dc40c8feb59c0a40117574d4b8ae811a389d62556f750a08a8",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 50,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm49": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm49.ko",
+      "sha256": "69c14526539affb589c22d85d86537a41f9a9a35786b0cd1b1efa6bcd3314b05",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 50,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm50": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm50.ko",
+      "sha256": "f476acff890da8e28ce745ec3f2cf2b0eced8cb33752d99b40a093178511b5b6",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 50,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm51": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm51.ko",
+      "sha256": "d798b72795cf1559c0573185b4b92c376f791689e91e6c5d950b35b6b1c3bf60",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 100,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm52": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm52.ko",
+      "sha256": "a1f02a1105fe15a52b6f35122dc43a40be27beae50a6647ebb6e4de6f5e5cf83",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 100,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm53": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm53.ko",
+      "sha256": "374fd71aa5e4897ad9318db35e7892ced50cabb4ac047de4a026af312ca74ebb",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 100,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm54": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm54.ko",
+      "sha256": "377b528bc5184073ab24cec4ecb10a19770fef6a03989810c06ae4d2e43275af",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 200,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm55": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm55.ko",
+      "sha256": "c1fd40f1247490324bb236a8a66d22046b9fcbdc4850d2a988fa809c13d6f652",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 200,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm56": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm56.ko",
+      "sha256": "039e2f66b4168182b78453554e54d2f280661ee3281001447ce16836212de400",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 200,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm57": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm57.ko",
+      "sha256": "34cc075e5b8833ba22a6a6aac8093579dc41b63dedacceb8bf14cf480717d611",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 400,
+      "age_ratio": 4,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm58": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm58.ko",
+      "sha256": "48353092ea35fd8819a365febc5e61389de5c49399f37aee55bcc148e5db9339",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 400,
+      "age_ratio": 7,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    },
+    "arm59": {
+      "path": "/home/oy/iCAT/buildoutput/nvmev-arm59.ko",
+      "sha256": "3f43f6fb1db4116f66a1848edb704d745edfa4c390fffe090dff28359bd21b14",
+      "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions",
+      "k": 10,
+      "scale_pct": 400,
+      "age_ratio": 16,
+      "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"
+    }
+  },
+  "design_decision": "User requested allfixedCAT ranking and reducedduration around90min with30minworkloads; interpretedFIO30min->Varmail30min->OLTP30min. Optional6x15m alternative asked, noanswer received before stated3x30m assumption. 90minrank only.",
+  "execution_sha256": {
+    "rank-results.py": "485898072b5a508bb4026b02427b0aa319e43b3aea45d2f297afd8e45b3043c8",
+    "safety-env.sh": "ee749f9c44f80952772afcff3e0f1fc07845ce621e3c9f76104dee4f753823cc",
+    "validate-results.py": "a3aa882d50d3076ee84622a6d979a6dddd074e0f4404fbbca96dc29d3c45043f",
+    "source-runner.sh": "26317694d5e2394cdd1a28951af0afdc1c68b328b8914de743c12438dc2019fc",
+    "launch.py": "8a1c755f553ab072c95a4aa3190d8aa77c544332f52807015ff69e701d73f3af",
+    "env-snapshot.sh": "d46a267d43fdbc10ad8cb6eb730a5d1c9ea468b9f1a227ff7a4aeda0fde0c943",
+    "execution-mix.sh": "73baf91856a44a344abc072380211b6a16729484f2ede271786d78ebda0c84c7",
+    "publish-results.py": "00837638a665fa4bbe9e500af1e4b1fe38623a13a8683e4e86b34904dd9fbb9b"
+  }
+}
