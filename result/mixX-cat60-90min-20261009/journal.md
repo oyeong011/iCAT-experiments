@@ -71,3 +71,16 @@
 - ycsb-run 
 
 - CAT60 screen90 {"event": "finished", "policy": "arm02", "finished_at": "2026-10-09T19:18:40.480726+09:00", "runner_exit": 0, "status": "validated_saved_evidence", "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009/mixX-arm02-rep1", "validation_exit": 0, "stage": "screen90", "waf": 3.398911042238103, "host_bytes": 1193889259520, "host_pages": 291476870, "gc_pages": 699227082, "actual_measured_seconds": 5414.0, "phases": [{"slot": "S01", "workload": "FIO-Fast", "actual_seconds": 1800.0, "waf": 2.2685680801713533, "host_bytes": 294920101888, "host_pages": 72001978, "gc_pages": 91339411}, {"slot": "S02", "workload": "Varmail", "actual_seconds": 1804.0, "waf": 4.636775342500042, "host_bytes": 609721217024, "host_pages": 148857719, "gc_pages": 541362082, "process_runtimes_seconds": [1800.118]}, {"slot": "S03", "workload": "OLTP", "actual_seconds": 1810.0, "waf": 1.9420596593701034, "host_bytes": 289247936512, "host_pages": 70617172, "gc_pages": 66525589, "process_runtimes_seconds": [901.1610000000001, 901.309]}], "sample_rows": 184, "transition_count": 2, "measurement": "manual FTLpageWAF, hostbytes verified againstblockstat, no independentNANDmeasurement"}
+
+- CAT60 screen90 {"event": "started", "policy": "arm03", "time": "2026-10-09T19:18:44.491519+09:00", "module": {"path": "/home/oy/iCAT/buildoutput/nvmev-arm03.ko", "sha256": "3bb87a28f73f01c5db2e235b41994ebd1afa9a629c7022b3928b056021a5b22e", "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions", "k": 2, "scale_pct": 50, "age_ratio": 4, "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"}, "phase_order": ["FIO-Fast", "Varmail", "OLTP"], "phase_seconds": 1800}
+
+### cycle-20261007 mixX arm03 — started 2026-10-09T19:18:44+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP) = 3 time-based phases of 1800 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 1800/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-arm03.ko`.
+- Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX arm03 1`; evidence `result/mixX-cat60-90min-20261009/mixX-arm03-rep1/`.
+
+- Finished 2026-10-09T20:50:20+09:00; mixX arm03 exit=1; evidence `/home/oy/iCAT/result/mixX-cat60-90min-20261009/mixX-arm03-rep1`; cleanup attempted.
+
+- CAT60 screen90 {"event": "finished", "policy": "arm03", "finished_at": "2026-10-09T20:50:23.753652+09:00", "runner_exit": 1, "status": "failed_run_preserved", "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009/mixX-arm03-rep1"}
+
+- CAT60 screen90 {"run_id": "mixX-cat60-90min-20261009", "status": "failed_or_incomplete_preserved", "exit_code": 1, "completed_count": 3, "completed": ["arm00", "arm01", "arm02"], "current_policy": "arm03", "issues": ["arm03 failed; no subsequent arm executed"], "finished_at": "2026-10-09T20:50:23.777679+09:00", "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009"}

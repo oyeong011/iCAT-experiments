@@ -14,3 +14,5 @@
 - 결과: inventory.csv, rank-reference.csv(전체WAF), phase-ranks.csv(구간별), ranking.md, 30초series/armNN.csv, 원본mixX-armNN-rep1/ 및resultJSON. rank=1+count(고정CAT WAF<해당값), 분모60; 중간순위는완료풀크기와미측정수/가능순위범위명시. 단일실행차이를통계적우열로해석하지않음. v4/v6는이번60개고정조합에포함하지않음; 나중에추가하면동일90분/동일호스트조건필요.
 - 기존20분/30분10시간결과는보존. 다른호스트결과를같은풀로합치지않음. 구간길이축소에대한10시간수렴증거없음;90분전체순위를10시간전체순위로표현하지않음.
 - 공개: 요청된기존방식대로 검증된각arm후icat-2만push. 실패원본도보존push. main수정/push없음.
+
+Campaign outcome: {"run_id": "mixX-cat60-90min-20261009", "status": "failed_or_incomplete_preserved", "exit_code": 1, "completed_count": 3, "completed": ["arm00", "arm01", "arm02"], "current_policy": "arm03", "issues": ["arm03 failed; no subsequent arm executed"], "finished_at": "2026-10-09T20:50:23.777679+09:00", "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009"}
