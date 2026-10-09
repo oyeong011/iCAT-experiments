@@ -12388,3 +12388,35 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - ycsb-load 
 - ycsb-run 
 - 2026-10-10T01:55:32+09:00 mixY 구성 결정(사전 등록 규칙): 선별 WAF webproxy(CAT-47)=1.042845 / CAT-37=1.063552, fileserver(CAT-47)=1.089374 / CAT-37=1.158173 → 워크로드 [F S V], 순서 `F S V F V S F S V F V S F S V F V S F S` (`result/gc-20261010/mixy-seq.txt`).
+
+### gc-20261010 mixY onlinev6 — started 2026-10-10T01:55:36+09:00
+
+- mixY (GC-heavy): 20 phases of 60 s, order F S V F V S F S V F V S F S V F V S F S (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-online-v6.ko`.
+- Command: `env MIXY_SEQ="F S V F V S F S V F V S F S V F V S F S" PH_SECS=60 bash script/mix-gc-20261010.sh mixY onlinev6 1`; evidence `result/gc-20261010/fitcheck/mixY-onlinev6-rep1/`.
+
+- Finished 2026-10-10T02:17:31+09:00; mixY onlinev6 exit=0; evidence `/home/oy/iCAT/result/gc-20261010/fitcheck/mixY-onlinev6-rep1`; cleanup attempted.
+- total host_bytes=230178074624 host_pages=56195819 gc_pages=169023937 WAF=4.007767
+- phaseA(test4) host_pages=2400067 gc_pages=2274502 WAF=1.947683
+- phaseB(test3) host_pages=600046 gc_pages=371287 WAF=1.618764
+- phaseS01(test4) host_pages=2400067 gc_pages=2274502 WAF=1.947683
+- phaseS02(test3) host_pages=600046 gc_pages=371287 WAF=1.618764
+- phaseS03(varmail) host_pages=6659651 gc_pages=15809807 WAF=3.373969
+- phaseS04(test4) host_pages=2400068 gc_pages=8001458 WAF=4.333846
+- phaseS05(varmail) host_pages=5801627 gc_pages=16597183 WAF=3.860781
+- phaseS06(test3) host_pages=600044 gc_pages=2428606 WAF=5.047380
+- phaseS07(test4) host_pages=2400070 gc_pages=8250623 WAF=4.437659
+- phaseS08(test3) host_pages=600046 gc_pages=1571586 WAF=3.619109
+- phaseS09(varmail) host_pages=5656477 gc_pages=17076935 WAF=4.019005
+- phaseS10(test4) host_pages=2400068 gc_pages=9425532 WAF=4.927194
+- phaseS11(varmail) host_pages=5531888 gc_pages=16939275 WAF=4.062115
+- phaseS12(test3) host_pages=600047 gc_pages=2413963 WAF=5.022957
+- phaseS13(test4) host_pages=2400070 gc_pages=9443584 WAF=4.934712
+- phaseS14(test3) host_pages=600046 gc_pages=2419161 WAF=5.031626
+- phaseS15(varmail) host_pages=5727201 gc_pages=16923736 WAF=3.954975
+- phaseS16(test4) host_pages=2400068 gc_pages=9517175 WAF=4.965377
+- phaseS17(varmail) host_pages=5818175 gc_pages=16737472 WAF=3.876756
+- phaseS18(test3) host_pages=600047 gc_pages=2104145 WAF=4.506634
+- phaseS19(test4) host_pages=2400067 gc_pages=8637056 WAF=4.598673
+- phaseS20(test3) host_pages=600046 gc_pages=2080851 WAF=4.467819
+- ycsb-load 
+- ycsb-run 
