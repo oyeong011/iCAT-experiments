@@ -109,7 +109,7 @@ def scatter(title, xt, yt, xmin, xmax, unit, ymin, ymax, h=12, w=32):
 def series(ws, xc, yc, n, color, width, marker, size=4, r0=2, noline=False):
     s = Series(Reference(ws, min_col=yc, min_row=1, max_row=r0 + n - 1), Reference(ws, min_col=xc, min_row=r0, max_row=r0 + n - 1), title_from_data=True)
     s.smooth = False; s.graphicalProperties.line.solidFill = color; s.graphicalProperties.line.width = width
-    if noline: s.graphicalProperties.line.noFill = True
+    if noline: s.graphicalProperties.line.solidFill = None; s.graphicalProperties.line.noFill = True   # 10-09: both fills in one <a:ln> made Excel drop the chart
     s.marker.symbol = marker
     if marker != 'none': s.marker.size = size; s.marker.graphicalProperties.solidFill = color; s.marker.graphicalProperties.line.solidFill = 'FFFFFF' if noline else color
     return s
