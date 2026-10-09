@@ -12269,3 +12269,35 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 
 - Finished 2026-10-09T04:57:57+09:00; mixX fixed37 exit=139; evidence `/home/oy/iCAT/result/cycle-20261007/mixX-fixed37-rep1`; cleanup attempted.
 - 2026-10-09 04:58 mixX CAT-37: 준비 단계(prepare fio)에서 fio segfault(exit 139), 측정 전 실패. 장치 유휴 04:58~13:00(감시를 걸지 않음). 증거 mixX-fixed37-rep1-failed-fiosegv. 13:00 재실행(queue49). 참고: 10-06에도 YCSB의 JVM이 segfault — 서로 다른 프로그램의 간헐적 segfault 2건.
+
+### cycle-20261007 mixX fixed37 — started 2026-10-09T12:57:29+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of 1800 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 1800/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-fixed37.ko`.
+- Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX fixed37 1`; evidence `result/cycle-20261007/mixX-fixed37-rep1/`.
+
+- Finished 2026-10-09T23:01:06+09:00; mixX fixed37 exit=0; evidence `/home/oy/iCAT/result/cycle-20261007/mixX-fixed37-rep1`; cleanup attempted.
+- total host_bytes=8438998700032 host_pages=2060302417 gc_pages=5843323311 WAF=3.836148
+- phaseA(test4) host_pages=72001990 gc_pages=70509227 WAF=1.979268
+- phaseB(varmail) host_pages=192618852 gc_pages=445789733 WAF=3.314362
+- phaseS01(test4) host_pages=72001990 gc_pages=70509227 WAF=1.979268
+- phaseS02(varmail) host_pages=192618852 gc_pages=445789733 WAF=3.314362
+- phaseS03(oltp) host_pages=49778078 gc_pages=28944362 WAF=1.581468
+- phaseS04(test4) host_pages=72001984 gc_pages=391774706 WAF=6.441165
+- phaseS05(oltp) host_pages=49808705 gc_pages=50690722 WAF=2.017708
+- phaseS06(varmail) host_pages=178930185 gc_pages=455808218 WAF=3.547408
+- phaseS07(test4) host_pages=72001982 gc_pages=395052106 WAF=6.486684
+- phaseS08(varmail) host_pages=173761985 gc_pages=451692726 WAF=3.599491
+- phaseS09(oltp) host_pages=53240677 gc_pages=32429852 WAF=1.609118
+- phaseS10(test4) host_pages=72002016 gc_pages=391721635 WAF=6.440426
+- phaseS11(oltp) host_pages=50711473 gc_pages=48248243 WAF=1.951427
+- phaseS12(varmail) host_pages=175437012 gc_pages=449066272 WAF=3.559701
+- phaseS13(test4) host_pages=72001994 gc_pages=395294237 WAF=6.490046
+- phaseS14(varmail) host_pages=177605137 gc_pages=460936196 WAF=3.595286
+- phaseS15(oltp) host_pages=50796346 gc_pages=30919882 WAF=1.608703
+- phaseS16(test4) host_pages=72001987 gc_pages=389979953 WAF=6.416239
+- phaseS17(oltp) host_pages=50287707 gc_pages=47131692 WAF=1.937241
+- phaseS18(varmail) host_pages=178803996 gc_pages=457959605 WAF=3.561238
+- phaseS19(test4) host_pages=72001994 gc_pages=395127442 WAF=6.487729
+- phaseS20(varmail) host_pages=174508315 gc_pages=454246502 WAF=3.603008
+- ycsb-load 
+- ycsb-run 
