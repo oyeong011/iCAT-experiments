@@ -14,3 +14,22 @@
 - 결과: inventory.csv, rank-reference.csv(전체WAF), phase-ranks.csv(구간별), ranking.md, 30초series/armNN.csv, 원본mixX-armNN-rep1/ 및resultJSON. rank=1+count(고정CAT WAF<해당값), 분모60; 중간순위는완료풀크기와미측정수/가능순위범위명시. 단일실행차이를통계적우열로해석하지않음. v4/v6는이번60개고정조합에포함하지않음; 나중에추가하면동일90분/동일호스트조건필요.
 - 기존20분/30분10시간결과는보존. 다른호스트결과를같은풀로합치지않음. 구간길이축소에대한10시간수렴증거없음;90분전체순위를10시간전체순위로표현하지않음.
 - 공개: 요청된기존방식대로 검증된각arm후icat-2만push. 실패원본도보존push. main수정/push없음.
+
+- CAT60 screen90 {"event": "started", "policy": "arm00", "time": "2026-10-09T14:43:35.323910+09:00", "module": {"path": "/home/oy/iCAT/buildoutput/nvmev-arm00.ko", "sha256": "2af2e56dbb46b7d3eb3c519d8802f8252f9472425bf9b633be21b607d2a99951", "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions", "k": 2, "scale_pct": 25, "age_ratio": 4, "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"}, "phase_order": ["FIO-Fast", "Varmail", "OLTP"], "phase_seconds": 1800}
+
+### cycle-20261007 mixX arm00 — started 2026-10-09T14:43:35+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP) = 3 time-based phases of 1800 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 1800/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-arm00.ko`.
+- Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX arm00 1`; evidence `result/mixX-cat60-90min-20261009/mixX-arm00-rep1/`.
+
+- Finished 2026-10-09T16:15:11+09:00; mixX arm00 exit=0; evidence `/home/oy/iCAT/result/mixX-cat60-90min-20261009/mixX-arm00-rep1`; cleanup attempted.
+- total host_bytes=1241684865024 host_pages=303145719 gc_pages=687901479 WAF=3.269211
+- phaseA(test4) host_pages=72002119 gc_pages=91104501 WAF=2.265303
+- phaseB(varmail) host_pages=163542739 gc_pages=527865727 WAF=4.227693
+- phaseS01(test4) host_pages=72002119 gc_pages=91104501 WAF=2.265303
+- phaseS02(varmail) host_pages=163542739 gc_pages=527865727 WAF=4.227693
+- phaseS03(oltp) host_pages=67600860 gc_pages=68931251 WAF=2.019680
+- ycsb-load 
+- ycsb-run 
+
+- CAT60 screen90 {"event": "finished", "policy": "arm00", "finished_at": "2026-10-09T16:15:14.579647+09:00", "runner_exit": 0, "status": "validated_saved_evidence", "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009/mixX-arm00-rep1", "validation_exit": 0, "stage": "screen90", "waf": 3.269210600331783, "host_bytes": 1241684865024, "host_pages": 303145719, "gc_pages": 687901479, "actual_measured_seconds": 5414.0, "phases": [{"slot": "S01", "workload": "FIO-Fast", "actual_seconds": 1801.0, "waf": 2.265303053094868, "host_bytes": 294920679424, "host_pages": 72002119, "gc_pages": 91104501}, {"slot": "S02", "workload": "Varmail", "actual_seconds": 1803.0, "waf": 4.227692835693549, "host_bytes": 669871058944, "host_pages": 163542739, "gc_pages": 527865727, "process_runtimes_seconds": [1800.133]}, {"slot": "S03", "workload": "OLTP", "actual_seconds": 1810.0, "waf": 2.019680089868679, "host_bytes": 276893122560, "host_pages": 67600860, "gc_pages": 68931251, "process_runtimes_seconds": [901.073, 901.16]}], "sample_rows": 184, "transition_count": 2, "measurement": "manual FTLpageWAF, hostbytes verified againstblockstat, no independentNANDmeasurement"}
