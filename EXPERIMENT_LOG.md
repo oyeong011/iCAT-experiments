@@ -12321,3 +12321,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 순서: `analysis/mixy-seq.py`(같은 워크로드 연속 없음, 가장 적게 나온 전환 우선, 결정적)로 20구간, 각 1800초 = 10시간. 표 3 준비, 6 GiB FIO 파일 유지, Filebench 파일은 구간 끝에 삭제. runner `script/mix-gc-20261010.sh mixY`(MIXY_SEQ).
 - 실행: 이 PC = 짧은 확인(60초 구간, v6) → v6 10시간 → CAT-47 10시간(queue51). 두 번째 PC = CAT-50 → CAT-37(`script/icat2-mixY.sh`, 이 PC가 커밋한 순서 파일 사용).
 - 판정: 10시간 전체·워크로드별 WAF로 v6 vs 고정 3개, 각 1회라 1% 미만은 판정 안 함.
+
+- Finished 2026-10-09T23:47:01+09:00; scrWP fixed37 exit=143; evidence `/home/oy/iCAT/result/screen-20261008/scrWP-fixed37`; cleanup attempted.
+
+### screen-20261008 scrWP fixed47 — started 2026-10-09T23:47:34+09:00
+
+- Screening: webproxy alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrWP fixed47 1`; evidence `result/screen-20261008/scrWP-fixed47/`.
+
+- Finished 2026-10-09T23:47:43+09:00; scrWP fixed47 exit=143; evidence `/home/oy/iCAT/result/screen-20261008/scrWP-fixed47`; cleanup attempted.
+- 2026-10-10 00:00 선별 webproxy 수정·재실행. 파일 수 5만 개. (수정 중 runner 한 줄에 넣은 주석이 줄 뒷부분을 가린 문법 오류를 한 번 냈다가 고침. 그사이 시작된 실행은 *-failed-syntax로 보존.)

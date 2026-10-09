@@ -291,7 +291,7 @@ case "$label" in
                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
                esac
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
-    scrWP) A_NAME=webproxy; B_NAME=none; VM_RUN=${PH_SECS:-1800} VM_CHUNKS=1 phase_filebench A webproxy; for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;
+    scrWP) A_NAME=webproxy; B_NAME=none; VM_RUN=${PH_SECS:-1800} VM_CHUNKS=1 phase_filebench A webproxy 50000; for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;   # 10-10: 50k files (10k ran out after ~12 min)
     scrFS) A_NAME=fileserver; B_NAME=none; VM_RUN=${PH_SECS:-1800} VM_CHUNKS=1 phase_filebench A fileserver 6000; for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;
     mixX)  # 10-07 (user): GC-heavy workloads only, 30-min phases, 20 phases
            ps_=${PH_SECS:-1800}; i=0

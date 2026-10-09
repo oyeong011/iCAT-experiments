@@ -303,7 +303,7 @@ case "$label" in
                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
                    S) PN[$sl]=test3; HOT_IO=$((HOT_IO * ps_ / 2400)) WARM_IO=$((WARM_IO * ps_ / 2400)) COLD_IO=$((COLD_IO * ps_ / 2400)) phase_fio $sl mix-test3.fio;;   # 1/4 rate, 1/4 payload
                    V) PN[$sl]=varmail; VM_RUN=$ps_ VM_CHUNKS=1 phase_varmail $sl;;
-                   P) PN[$sl]=webproxy; VM_RUN=$ps_ VM_CHUNKS=1 phase_filebench $sl webproxy;;
+                   P) PN[$sl]=webproxy; VM_RUN=$ps_ VM_CHUNKS=1 phase_filebench $sl webproxy 50000;;   # 10k files ran out after ~12 min
                    W) PN[$sl]=fileserver; VM_RUN=$ps_ VM_CHUNKS=1 phase_filebench $sl fileserver 6000;;
                    O) PN[$sl]=oltp; VM_RUN=$((ps_ / 2)) VM_CHUNKS=2 phase_filebench $sl oltp "" 32m;;
                    *) echo "bad letter $w"; exit 2;;

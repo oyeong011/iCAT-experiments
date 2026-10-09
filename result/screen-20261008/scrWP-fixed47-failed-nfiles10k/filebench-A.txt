@@ -1,0 +1,20 @@
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.053: Web proxy-server Version 3.0 personality successfully loaded
+0.053: Populating and pre-allocating filesets
+0.055: bigfileset populated: 10000 files, avg. dir. width = 1000000, avg. dir. depth = 0.7, 0 leafdirs, 156.250MB total size
+0.055: Removing bigfileset tree (if exists)
+0.116: Pre-allocating directories in bigfileset tree
+0.116: Pre-allocating files in bigfileset tree
+0.356: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.356: Population and pre-allocation of filesets completed
+0.356: Starting 1 proxycache instances
+1.361: Running...
+709.937: WARNING! Run stopped early:
+                flowop createfile1-1 could not obtain a file. Please
+                reduce runtime, increase fileset entries ($nfiles), or switch modes.
+710.550: Run took 709 seconds...
+710.550: Shutting down processes
