@@ -12268,3 +12268,4 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX fixed37 1`; evidence `result/cycle-20261007/mixX-fixed37-rep1/`.
 
 - Finished 2026-10-09T04:57:57+09:00; mixX fixed37 exit=139; evidence `/home/oy/iCAT/result/cycle-20261007/mixX-fixed37-rep1`; cleanup attempted.
+- 2026-10-09 04:58 mixX CAT-37: 준비 단계(prepare fio)에서 fio segfault(exit 139), 측정 전 실패. 장치 유휴 04:58~13:00(감시를 걸지 않음). 증거 mixX-fixed37-rep1-failed-fiosegv. 13:00 재실행(queue49). 참고: 10-06에도 YCSB의 JVM이 segfault — 서로 다른 프로그램의 간헐적 segfault 2건.
