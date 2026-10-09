@@ -12303,3 +12303,21 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - ycsb-run 
 - 2026-10-09 23:00 mixX 네 정책 완료(모두 이 PC, 각 1회): CAT-47 2.897, v6 2.905, CAT-50 2.914, CAT-37 3.836. v6는 기본(CAT-37) 대비 −24.3%, 최적·견고와는 ±0.3%(판정 안 함). 그림: figs/fig6_mixX.png, figs/fig7_mixX_v6.png, figs/data/fig6_mixX.xlsx, fig7_mixX_v6.xlsx (analysis/fig-mixX.py).
 - 2026-10-09 23:10 후보 선별(webproxy·fileserver × CAT-47/37, 30분)을 이 PC에서 실행(queue50): 장치가 비었고 두 번째 PC는 시작하지 않았음. 사전 등록 내용 그대로.
+
+### screen-20261008 scrWP fixed47 — started 2026-10-09T23:30:39+09:00
+
+- Screening: webproxy alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrWP fixed47 1`; evidence `result/screen-20261008/scrWP-fixed47/`.
+
+- Finished 2026-10-09T23:43:58+09:00; scrWP fixed47 exit=1; evidence `/home/oy/iCAT/result/screen-20261008/scrWP-fixed47`; cleanup attempted.
+
+### screen-20261008 scrWP fixed37 — started 2026-10-09T23:44:00+09:00
+
+- Screening: webproxy alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-fixed37.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrWP fixed37 1`; evidence `result/screen-20261008/scrWP-fixed37/`.
+
+## GC 부담 혼합(mixY) — 사전 등록 2026-10-10 (사용자: GC 부담 주는 실험 위주)
+- 워크로드: 기본 FIO-Fast(F), FIO-Slow(S: 같은 3영역, 1/4 속도), Varmail(V). 선별(webproxy·fileserver, 30분)에서 CAT-47 WAF ≥ 1.2이고 exit 0이면 webproxy(P)·fileserver(W, 파일 6000개)를 추가. OLTP·YCSB는 GC 부담이 작아 제외.
+- 순서: `analysis/mixy-seq.py`(같은 워크로드 연속 없음, 가장 적게 나온 전환 우선, 결정적)로 20구간, 각 1800초 = 10시간. 표 3 준비, 6 GiB FIO 파일 유지, Filebench 파일은 구간 끝에 삭제. runner `script/mix-gc-20261010.sh mixY`(MIXY_SEQ).
+- 실행: 이 PC = 짧은 확인(60초 구간, v6) → v6 10시간 → CAT-47 10시간(queue51). 두 번째 PC = CAT-50 → CAT-37(`script/icat2-mixY.sh`, 이 PC가 커밋한 순서 파일 사용).
+- 판정: 10시간 전체·워크로드별 WAF로 v6 vs 고정 3개, 각 1회라 1% 미만은 판정 안 함.
