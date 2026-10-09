@@ -12387,3 +12387,4 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=0 gc_pages=0 WAF=N/A
 - ycsb-load 
 - ycsb-run 
+- 2026-10-10T01:55:32+09:00 mixY 구성 결정(사전 등록 규칙): 선별 WAF webproxy(CAT-47)=1.042845 / CAT-37=1.063552, fileserver(CAT-47)=1.089374 / CAT-37=1.158173 → 워크로드 [F S V], 순서 `F S V F V S F S V F V S F S V F V S F S` (`result/gc-20261010/mixy-seq.txt`).
