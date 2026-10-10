@@ -12567,3 +12567,18 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrWS fixed37 1`; evidence `result/screen-20261008/scrWS-fixed37/`.
 
 - Finished 2026-10-11T01:44:19+09:00; scrWS fixed37 exit=1; evidence `/home/oy/iCAT/result/screen-20261008/scrWS-fixed37`; cleanup attempted.
+
+### gc-20261010 mixY arm00 — started 2026-10-11T01:45:04+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F V O (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-arm00.ko`.
+- Command: `env MIXY_SEQ="F V O" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY arm00 1`; evidence `result/cat60-90min-thispc-20261011/mixY-arm00-rep1/`.
+
+- Finished 2026-10-11T03:17:09+09:00; mixY arm00 exit=0; evidence `/home/oy/iCAT/result/cat60-90min-thispc-20261011/mixY-arm00-rep1`; cleanup attempted.
+- total host_bytes=1199841673216 host_pages=292930096 gc_pages=673807419 WAF=3.300233
+- phaseA(test4) host_pages=72026052 gc_pages=90575884 WAF=2.257543
+- phaseB(varmail) host_pages=169402374 gc_pages=532390844 WAF=4.142759
+- phaseS01(test4) host_pages=72026052 gc_pages=90575884 WAF=2.257543
+- phaseS02(varmail) host_pages=169402374 gc_pages=532390844 WAF=4.142759
+- phaseS03(oltp) host_pages=51501669 gc_pages=50840691 WAF=1.987166
+- ycsb-load 
+- ycsb-run 
