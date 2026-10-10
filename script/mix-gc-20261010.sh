@@ -297,7 +297,7 @@ case "$label" in
                esac
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
     mixY)  # 10-10 (user): GC-heavy workloads only; sequence chosen after the webproxy/fileserver screening (MIXY_SEQ, 20 letters)
-           ps_=${PH_SECS:-1800}; i=0; [[ $(wc -w <<<"$MIXY_SEQ") == 20 ]] || { echo 'MIXY_SEQ must have 20 letters'; exit 2; }
+           ps_=${PH_SECS:-1800}; i=0; (( $(wc -w <<<"$MIXY_SEQ") >= 1 && $(wc -w <<<"$MIXY_SEQ") <= 20 )) || { echo 'MIXY_SEQ: 1..20 letters'; exit 2; }
            for w in $MIXY_SEQ; do i=$((i + 1)); sl=$(printf 'S%02d' $i)
                case $w in
                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;

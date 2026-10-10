@@ -12488,3 +12488,27 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 ### 후보 선별 1차 결과 + 2차 사전 등록 — 2026-10-10 (사용자: 워크로드도 다 해 보기)
 - 1차(30분, 표 3 준비): webproxy(5만 파일) CAT-47 1.043 / CAT-37 1.064, fileserver(6000 파일) 1.089 / 1.158 → 둘 다 1.2 미만, 제외. mixY는 F/S/V로 자동 구성.
 - 2차(이 PC, mixY CAT-47 뒤, queue52): FIO-Shift(test5: 뜨거운 영역이 중간에 이동, 900초 × 2, `workloads/mix-test5-30m.fio`), YCSB-A uniform(키를 고르게, 30만 레코드, `workloads/sqlite/workloadu`, 요청 오류 시 실패), webserver(읽기 위주, 대조군). 각 30분, CAT-47·CAT-37. 같은 판정(1.2 미만 제외). videoserver는 3.6 GB라 6 GiB 파일 옆에 안 들어가 제외.
+
+### screen-20261008 scrSH fixed47 — started 2026-10-10T23:34:27+09:00
+
+- Screening: scrSH alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrSH fixed47 1`; evidence `result/screen-20261008/scrSH-fixed47/`.
+
+- Finished 2026-10-11T00:05:57+09:00; scrSH fixed47 exit=0; evidence `/home/oy/iCAT/result/screen-20261008/scrSH-fixed47`; cleanup attempted.
+- total host_bytes=294916427776 host_pages=72001081 gc_pages=43687881 WAF=1.606767
+- phaseA(test5-shift) host_pages=72001081 gc_pages=43687881 WAF=1.606767
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### screen-20261008 scrSH fixed37 — started 2026-10-11T00:05:59+09:00
+
+- Screening: scrSH alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-fixed37.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrSH fixed37 1`; evidence `result/screen-20261008/scrSH-fixed37/`.
+
+## 고정 CAT 60조합 기준(baseline) — 이 PC 분담, 사전 등록 2026-10-11 (사용자: 파라미터별 baseline 우선)
+- 두 번째 PC의 `mixX-cat60-90min-20261009`(FIO-Fast 30분 → Varmail 30분 → OLTP 30분, 표 3 준비, arm00부터 오름차순)가 arm00·01·02 완료 후 arm03에서 바이트 일치 검사 실패(측정 자체는 끝까지 진행)로 10-09 20:50부터 멈춰 있음.
+- 이 PC: 같은 90분 혼합(`script/mix-gc-20261010.sh mixY`, MIXY_SEQ="F V O", 각 1800초)으로 arm00(호스트 비교용, 두 번째 PC 3.269) → arm59부터 arm30까지 내림차순(queue53, 현재 2차 선별 종료 후). 두 번째 PC는 arm03부터 오름차순 재개 권고. 두 PC 결과는 호스트별로 따로 보고하고 arm00 비교로 차이를 표시.
+- 결과: `result/cat60-90min-thispc-20261011/totals.txt`(전체 WAF), 각 실행의 구간별 WAF.
