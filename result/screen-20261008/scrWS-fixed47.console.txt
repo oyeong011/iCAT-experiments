@@ -1,0 +1,3 @@
+FAIL line=214 command=grep -c 'IO Summary' "$dir/filebench-$slot.txt"
+FAIL line=214 command=[[ $(grep -c 'IO Summary' "$dir/filebench-$slot.txt") -eq $n ]]
+MIX scrWS fixed47 exit=1

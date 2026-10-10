@@ -1,0 +1,44 @@
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.054: Web-server Version 3.1 personality successfully loaded
+0.054: Populating and pre-allocating filesets
+0.054: logfiles populated: 1 files, avg. dir. width = 20, avg. dir. depth = 0.0, 0 leafdirs, 0.002MB total size
+0.054: Removing logfiles tree (if exists)
+0.064: Pre-allocating directories in logfiles tree
+0.064: Pre-allocating files in logfiles tree
+0.065: bigfileset populated: 1000 files, avg. dir. width = 20, avg. dir. depth = 2.3, 0 leafdirs, 14.760MB total size
+0.065: Removing bigfileset tree (if exists)
+0.067: Pre-allocating directories in bigfileset tree
+0.068: Pre-allocating files in bigfileset tree
+0.094: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.094: Population and pre-allocation of filesets completed
+0.095: Starting 1 filereader instances
+1.100: Running...
+6.960: Failed to write 6189 bytes on fd 22: Success
+6.960: filereaderthread-25: flowop appendlog-1 failed
+6.960: Failed to write 2056 bytes on fd 10: No space left on device
+6.960: filereaderthread-11: flowop appendlog-1 failed
+6.960: Failed to write 6840 bytes on fd 87: No space left on device
+6.960: filereaderthread-93: flowop appendlog-1 failed
+6.961: Failed to write 5145 bytes on fd 94: No space left on device
+6.961: filereaderthread-67: flowop appendlog-1 failed
+6.961: Failed to write 3261 bytes on fd 30: No space left on device
+6.961: filereaderthread-30: flowop appendlog-1 failed
+6.961: Failed to write 5569 bytes on fd 48: No space left on device
+6.961: filereaderthread-39: flowop appendlog-1 failed
+6.961: Failed to write 9597 bytes on fd 27: No space left on device
+6.961: filereaderthread-4: flowop appendlog-1 failed
+6.961: Failed to write 146 bytes on fd 128: No space left on device
+6.961: filereaderthread-19: flowop appendlog-1 failed
+6.961: Failed to write 1673 bytes on fd 85: No space left on device
+6.961: filereaderthread-98: flowop appendlog-1 failed
+6.961: Failed to write 15401 bytes on fd 56: No space left on device
+6.961: filereaderthread-82: flowop appendlog-1 failed
+6.961: Failed to write 15036 bytes on fd 59: No space left on device
+6.961: filereaderthread-55: flowop appendlog-1 failed
+7.105: Run took 6 seconds...
+7.105: NO VALID RESULTS! Filebench run terminated prematurely around line 77
+7.105: Shutting down processes

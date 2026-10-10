@@ -12512,3 +12512,58 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 두 번째 PC의 `mixX-cat60-90min-20261009`(FIO-Fast 30분 → Varmail 30분 → OLTP 30분, 표 3 준비, arm00부터 오름차순)가 arm00·01·02 완료 후 arm03에서 바이트 일치 검사 실패(측정 자체는 끝까지 진행)로 10-09 20:50부터 멈춰 있음.
 - 이 PC: 같은 90분 혼합(`script/mix-gc-20261010.sh mixY`, MIXY_SEQ="F V O", 각 1800초)으로 arm00(호스트 비교용, 두 번째 PC 3.269) → arm59부터 arm30까지 내림차순(queue53, 현재 2차 선별 종료 후). 두 번째 PC는 arm03부터 오름차순 재개 권고. 두 PC 결과는 호스트별로 따로 보고하고 arm00 비교로 차이를 표시.
 - 결과: `result/cat60-90min-thispc-20261011/totals.txt`(전체 WAF), 각 실행의 구간별 WAF.
+
+- Finished 2026-10-11T00:37:27+09:00; scrSH fixed37 exit=0; evidence `/home/oy/iCAT/result/screen-20261008/scrSH-fixed37`; cleanup attempted.
+- total host_bytes=294916427776 host_pages=72001081 gc_pages=43511718 WAF=1.604320
+- phaseA(test5-shift) host_pages=72001081 gc_pages=43511718 WAF=1.604320
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### screen-20261008 scrYU fixed47 — started 2026-10-11T00:37:28+09:00
+
+- Screening: scrYU alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrYU fixed47 1`; evidence `result/screen-20261008/scrYU-fixed47/`.
+
+- Finished 2026-10-11T01:09:13+09:00; scrYU fixed47 exit=0; evidence `/home/oy/iCAT/result/screen-20261008/scrYU-fixed47`; cleanup attempted.
+- total host_bytes=28111925248 host_pages=6863263 gc_pages=284256 WAF=1.041417
+- phaseA(sqlite-uniform) host_pages=6863263 gc_pages=284256 WAF=1.041417
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseA-load host_pages=579387 gc_pages=155647 WAF=1.268641
+- phaseA-run host_pages=6283876 gc_pages=128609 WAF=1.020467
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load [OVERALL], Throughput(ops/sec), 32075.269966855554
+- ycsb-run [OVERALL], Throughput(ops/sec), 54372.121269988595
+
+### screen-20261008 scrYU fixed37 — started 2026-10-11T01:09:14+09:00
+
+- Screening: scrYU alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-fixed37.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrYU fixed37 1`; evidence `result/screen-20261008/scrYU-fixed37/`.
+
+- Finished 2026-10-11T01:41:03+09:00; scrYU fixed37 exit=0; evidence `/home/oy/iCAT/result/screen-20261008/scrYU-fixed37`; cleanup attempted.
+- total host_bytes=28228509696 host_pages=6891726 gc_pages=378098 WAF=1.054863
+- phaseA(sqlite-uniform) host_pages=6891726 gc_pages=378098 WAF=1.054863
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseA-load host_pages=578363 gc_pages=255483 WAF=1.441735
+- phaseA-run host_pages=6313363 gc_pages=122615 WAF=1.019422
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load [OVERALL], Throughput(ops/sec), 27958.993476234857
+- ycsb-run [OVERALL], Throughput(ops/sec), 56908.15047074097
+
+### screen-20261008 scrWS fixed47 — started 2026-10-11T01:41:04+09:00
+
+- Screening: scrWS alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrWS fixed47 1`; evidence `result/screen-20261008/scrWS-fixed47/`.
+
+- Finished 2026-10-11T01:42:39+09:00; scrWS fixed47 exit=1; evidence `/home/oy/iCAT/result/screen-20261008/scrWS-fixed47`; cleanup attempted.
+
+### screen-20261008 scrWS fixed37 — started 2026-10-11T01:42:41+09:00
+
+- Screening: scrWS alone for 1800 s after the Table-3 prep (6 GiB FIO file kept). Module `nvmev-fixed37.ko`.
+- Command: `env PH_SECS=1800 bash script/screen-20261008.sh scrWS fixed37 1`; evidence `result/screen-20261008/scrWS-fixed37/`.
+
+- Finished 2026-10-11T01:44:19+09:00; scrWS fixed37 exit=1; evidence `/home/oy/iCAT/result/screen-20261008/scrWS-fixed37`; cleanup attempted.
