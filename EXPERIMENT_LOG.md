@@ -12484,3 +12484,7 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS20(test3) host_pages=18001249 gc_pages=57554830 WAF=4.197269
 - ycsb-load 
 - ycsb-run 
+
+### 후보 선별 1차 결과 + 2차 사전 등록 — 2026-10-10 (사용자: 워크로드도 다 해 보기)
+- 1차(30분, 표 3 준비): webproxy(5만 파일) CAT-47 1.043 / CAT-37 1.064, fileserver(6000 파일) 1.089 / 1.158 → 둘 다 1.2 미만, 제외. mixY는 F/S/V로 자동 구성.
+- 2차(이 PC, mixY CAT-47 뒤, queue52): FIO-Shift(test5: 뜨거운 영역이 중간에 이동, 900초 × 2, `workloads/mix-test5-30m.fio`), YCSB-A uniform(키를 고르게, 30만 레코드, `workloads/sqlite/workloadu`, 요청 오류 시 실패), webserver(읽기 위주, 대조군). 각 30분, CAT-47·CAT-37. 같은 판정(1.2 미만 제외). videoserver는 3.6 GB라 6 GiB 파일 옆에 안 들어가 제외.

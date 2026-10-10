@@ -45,7 +45,8 @@ case "$label" in
     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
     t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
     mixA|mixB|mixG|mixH|mixJ|mixT) scale=1; RECORDS=600000; OPS=4000000;;
-    scrWP|scrFS) scale=1; RECORDS=0; OPS=0;;
+    scrWP|scrFS|scrSH|scrWS) scale=1; RECORDS=0; OPS=0;;
+    scrYU) scale=1; RECORDS=300000; OPS=1000000000;;   # 300k fits next to the 6 GiB file (mixT ran 300k without request errors)
     mixX)  scale=1;  RECORDS=0; OPS=0;;
     mixV)  scale=1;  RECORDS=${MIXV_RECORDS:-600000}; OPS=1000000000;;   # 20:50: 600k + kept FIO file = SQLITE_FULL; size chosen by fit check
     mixW1|mixW2) scale=1; RECORDS=600000; OPS=1000000000;;   # 10-06 calibration: YCSB-A 600k only, after Table-3 prep   # no permanent FIO file, so the original 600k DB fits again
@@ -75,7 +76,7 @@ printf '\n### mix-20260911 %s %s — started %s\n\n- mixU: FIO-Fast and Varmail 
 elif [[ "$label" == mixV ]]; then
 printf '\n### inherit-20261006 %s %s — started %s\n\n- mixV (inheritance): 9 time-based phases of %s s — YCSB-A (load %s records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x %s/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4000}" "$RECORDS" "${PH_SECS:-4000}" "$(basename "$module")" "${PH_SECS:-4000}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == scr* ]]; then
-printf '\n### screen-20261008 %s %s — started %s\n\n- Screening: %s alone for %s s after the Table-3 prep (6 GiB FIO file kept). Module `%s`.\n- Command: `env PH_SECS=%s bash script/screen-20261008.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "$([[ $label == scrWP ]] && echo webproxy || echo 'fileserver (6000 files)')" "${PH_SECS:-1800}" "$(basename "$module")" "${PH_SECS:-1800}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
+printf '\n### screen-20261008 %s %s — started %s\n\n- Screening: %s alone for %s s after the Table-3 prep (6 GiB FIO file kept). Module `%s`.\n- Command: `env PH_SECS=%s bash script/screen-20261008.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "$label" "${PH_SECS:-1800}" "$(basename "$module")" "${PH_SECS:-1800}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == mixX ]]; then
 printf '\n### cycle-20261007 %s %s — started %s\n\n- mixX: (FIO-Fast, Varmail, OLTP, FIO-Fast, OLTP, Varmail) x 3 + (FIO-Fast, Varmail) = 20 time-based phases of %s s. Table-3 prep, 6 GiB FIO file kept; FIO payload x %s/600; Filebench files deleted after each Filebench phase; no YCSB. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-cycle-20261007.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-1800}" "${PH_SECS:-1800}" "$(basename "$module")" "${PH_SECS:-1800}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
 elif [[ "$label" == mixW* ]]; then   # 10-06 calibration
@@ -291,6 +292,9 @@ case "$label" in
                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
                esac
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
+    scrSH) A_NAME=test5-shift; B_NAME=none; phase_fio A mix-test5-30m.fio; for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;   # 10-10: hot region moves halfway, 2 x 900 s
+    scrWS) A_NAME=webserver; B_NAME=none; VM_RUN=${PH_SECS:-1800} VM_CHUNKS=1 phase_filebench A webserver; for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;   # 10-10: read-heavy control
+    scrYU) A_NAME=sqlite-uniform; B_NAME=none; YCSB_SECS=${PH_SECS:-1800} phase_sqlite A u 1; for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;   # 10-10: YCSB-A with uniform keys, 300k records
     scrWP) A_NAME=webproxy; B_NAME=none; VM_RUN=${PH_SECS:-1800} VM_CHUNKS=1 phase_filebench A webproxy 50000; for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;   # 10-10: 50k files (10k ran out after ~12 min)
     scrFS) A_NAME=fileserver; B_NAME=none; VM_RUN=${PH_SECS:-1800} VM_CHUNKS=1 phase_filebench A fileserver 6000; for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;
     mixX)  # 10-07 (user): GC-heavy workloads only, 30-min phases, 20 phases
