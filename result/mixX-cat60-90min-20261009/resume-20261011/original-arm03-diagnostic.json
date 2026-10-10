@@ -1,0 +1,52 @@
+{
+  "status": "failed_byte_accounting_preserved",
+  "continue_allowed": true,
+  "block_bytes": 1198938116096,
+  "byte_difference": 520192,
+  "policy": "arm03",
+  "stage": "screen90",
+  "diagnostic_waf_not_rank_eligible": 3.5445273269587876,
+  "host_bytes": 1198937595904,
+  "host_pages": 292709374,
+  "gc_pages": 744807001,
+  "actual_measured_seconds": 5414.0,
+  "phases": [
+    {
+      "slot": "S01",
+      "workload": "FIO-Fast",
+      "actual_seconds": 1801.0,
+      "waf": 2.2817973501582687,
+      "host_bytes": 294941052928,
+      "host_pages": 72007093,
+      "gc_pages": 92298501
+    },
+    {
+      "slot": "S02",
+      "workload": "Varmail",
+      "actual_seconds": 1803.0,
+      "waf": 4.68163298597932,
+      "host_bytes": 608437153792,
+      "host_pages": 148544227,
+      "gc_pages": 546885326,
+      "process_runtimes_seconds": [
+        1800.112
+      ]
+    },
+    {
+      "slot": "S03",
+      "workload": "OLTP",
+      "actual_seconds": 1810.0,
+      "waf": 2.4637752767525476,
+      "host_bytes": 295559385088,
+      "host_pages": 72158053,
+      "gc_pages": 105623174,
+      "process_runtimes_seconds": [
+        901.088,
+        900.872
+      ]
+    }
+  ],
+  "sample_rows": 184,
+  "transition_count": 2,
+  "measurement": "INVALID byte accounting mismatch; diagnostic counters only; excluded from ranks"
+}
