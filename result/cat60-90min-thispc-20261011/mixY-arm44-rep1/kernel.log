@@ -1,0 +1,74 @@
+[2615593.455997] mix-mixY-arm44-3554907 BEGIN
+[2615593.676533] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[2615593.676540] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[2615593.687380] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[2615593.699621] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2615593.710835] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2615593.710848] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[2615593.710850] NVMeVirt: Fixed CAT init ns=0 part=0 arm=44 k=7 scale_pct=400 age_ratio=16
+[2615593.712043] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[2615593.712079] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[2615593.712081] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=7 initial_scale_pct=400 initial_age_ratio=16 warmup_gc=100
+[2615593.723208] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2615593.733907] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2615593.733920] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[2615593.733922] NVMeVirt: Fixed CAT init ns=0 part=1 arm=44 k=7 scale_pct=400 age_ratio=16
+[2615593.735148] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[2615593.735151] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=7 initial_scale_pct=400 initial_age_ratio=16 warmup_gc=100
+[2615593.746556] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2615593.757826] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2615593.757845] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[2615593.757848] NVMeVirt: Fixed CAT init ns=0 part=2 arm=44 k=7 scale_pct=400 age_ratio=16
+[2615593.759812] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[2615593.759817] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=7 initial_scale_pct=400 initial_age_ratio=16 warmup_gc=100
+[2615593.771083] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2615593.781579] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[2615593.781593] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[2615593.781595] NVMeVirt: Fixed CAT init ns=0 part=3 arm=44 k=7 scale_pct=400 age_ratio=16
+[2615593.782800] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[2615593.782803] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=7 initial_scale_pct=400 initial_age_ratio=16 warmup_gc=100
+[2615593.782810] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[2615593.782811] NVMeVirt: ns 0/1: size 7655 MiB
+[2615593.782866] PCI host bridge to bus 0001:10
+[2615593.782869] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[2615593.782871] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[2615593.782874] pci_bus 0001:10: root bus resource [bus 00-ff]
+[2615593.782881] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[2615593.782885] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[2615593.782887] pci 0001:10:00.0: enabling Extended Tags
+[2615593.783009] NVMeVirt: Virtual PCI bus created (node 0)
+[2615593.783276] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[2615593.783379] NVMeVirt: Virtual NVMe device created
+[2615593.783383] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[2615593.783583] nvme nvme0: pci function 0001:10:00.0
+[2615593.786309] nvme nvme0: 8/0/0 default/read/poll queues
+[2615594.389322] EXT4-fs (nvme0n1): mounted filesystem da0e9908-b099-435d-bed2-5b9262eefcd4 r/w with ordered data mode. Quota mode: none.
+[2615596.516689] fwupd[6317]: segfault at 0 ip 0000000000000000 sp 00007ffddee18e88 error 14 likely on CPU 0 (core 0, socket 0)
+[2615596.516698] Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+[2615676.727289] NVMeVirt: Fixed CAT init ns=0 part=0 arm=44 k=7 scale_pct=400 age_ratio=16
+[2615676.727294] NVMeVirt: Fixed CAT init ns=0 part=1 arm=44 k=7 scale_pct=400 age_ratio=16
+[2615676.727296] NVMeVirt: Fixed CAT init ns=0 part=2 arm=44 k=7 scale_pct=400 age_ratio=16
+[2615676.727298] NVMeVirt: Fixed CAT init ns=0 part=3 arm=44 k=7 scale_pct=400 age_ratio=16
+[2615676.727299] NVMeVirt: Measurement: command=start epoch=1 host_bytes=0 learner_active=1
+[2615676.806246] mix-mixY-arm44-3554907 phase=S01 START
+[2616818.304864] fwupdmgr[3556322]: segfault at 20 ip 00007cf3c78ecdbe sp 00007ffdbcc21610 error 4 in libgobject-2.0.so.0.8000.0[34dbe,7cf3c78c7000+37000] likely on CPU 4 (core 0, socket 0)
+[2616818.304879] Code: 45 a0 41 83 e6 01 48 83 e1 fe 0f 29 45 b0 41 c1 e6 1b 48 89 cf 48 89 8d 80 fe ff ff e8 7b 8d 00 00 48 8b 8d 80 fe ff ff 31 f6 <48> 8b 78 20 49 89 c0 48 8b 85 88 fe ff ff 48 89 08 0f b6 07 84 c0
+[2617477.094160] mix-mixY-arm44-3554907 phase=S01 END
+[2617477.150508] mix-mixY-arm44-3554907 phase=S02 START
+[2618150.499386] audit: type=1400 audit(1791741651.835:5772): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=3557900 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2618151.568435] audit: type=1400 audit(1791741652.904:5773): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=3558160 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2618152.494057] audit: type=1400 audit(1791741653.829:5774): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=3558231 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2618153.170713] audit: type=1400 audit(1791741654.506:5775): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=3558305 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2618153.895216] audit: type=1400 audit(1791741655.230:5776): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=3558376 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[2619280.136213] mix-mixY-arm44-3554907 phase=S02 chunk=1/1 done
+[2619280.854635] mix-mixY-arm44-3554907 phase=S02 END
+[2619280.896474] mix-mixY-arm44-3554907 phase=S03 START
+[2620185.811381] mix-mixY-arm44-3554907 phase=S03 chunk=1/2 done
+[2621070.364660] systemd-journald[2668730]: Under memory pressure, flushing caches.
+[2621102.676952] mix-mixY-arm44-3554907 phase=S03 chunk=2/2 done
+[2621103.297357] mix-mixY-arm44-3554907 phase=S03 END
+[2621103.656346] NVMeVirt: Measurement: command=stop epoch=1 host_bytes=1226761506816 learner_active=0
+[2621103.910928] EXT4-fs (nvme0n1): unmounting filesystem da0e9908-b099-435d-bed2-5b9262eefcd4.
+[2621104.291903] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[2621104.292002] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=299502321 gc_pages=637786007 gc_count=14645130 WAF=3.129 warmup_gc=100-per-part
+[2621104.363623] NVMeVirt: Virtual NVMe device closed
