@@ -12700,3 +12700,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 예상 판정 횟수(30분, 파티션당): FIO-Slow 약 300, FIO-Fast 약 1,300, Varmail 약 2,300.
 - 실행: queue54(`script/gh-queue54-v7.sh`), queue53(baseline) 끝난 뒤 자동 시작. ① 90분 혼합(F V O, baseline과 동일) ② mixY 20구간(v6·CAT-47과 같은 순서). 결과 `result/v7-20261011/`.
 - 판정: ① 60개 고정 CAT 순위 안 어디에 오는지, ② mixY에서 CAT-47(2.864) 대비 차이. 실패해도 기록 유지.
+
+- Finished 2026-10-11T15:33:42+09:00; mixY arm52 exit=0; evidence `/home/oy/iCAT/result/cat60-90min-thispc-20261011/mixY-arm52-rep1`; cleanup attempted.
+- total host_bytes=1297532534784 host_pages=316780404 gc_pages=529902369 WAF=2.672775
+- phaseA(test4) host_pages=72002044 gc_pages=67915800 WAF=1.943248
+- phaseB(varmail) host_pages=194611785 gc_pages=433813954 WAF=3.229125
+- phaseS01(test4) host_pages=72002044 gc_pages=67915800 WAF=1.943248
+- phaseS02(varmail) host_pages=194611785 gc_pages=433813954 WAF=3.229125
+- phaseS03(oltp) host_pages=50166574 gc_pages=28172615 WAF=1.561581
+- ycsb-load 
+- ycsb-run 
