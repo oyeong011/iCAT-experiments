@@ -12710,3 +12710,18 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS03(oltp) host_pages=50166574 gc_pages=28172615 WAF=1.561581
 - ycsb-load 
 - ycsb-run 
+
+### gc-20261010 mixY arm51 — started 2026-10-11T15:33:50+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F V O (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-arm51.ko`.
+- Command: `env MIXY_SEQ="F V O" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY arm51 1`; evidence `result/cat60-90min-thispc-20261011/mixY-arm51-rep1/`.
+
+- Finished 2026-10-11T17:05:38+09:00; mixY arm51 exit=0; evidence `/home/oy/iCAT/result/cat60-90min-thispc-20261011/mixY-arm51-rep1`; cleanup attempted.
+- total host_bytes=1307861598208 host_pages=319302148 gc_pages=483908533 WAF=2.515519
+- phaseA(test4) host_pages=72001981 gc_pages=72922866 WAF=2.012790
+- phaseB(varmail) host_pages=198435537 gc_pages=377841534 WAF=2.904102
+- phaseS01(test4) host_pages=72001981 gc_pages=72922866 WAF=2.012790
+- phaseS02(varmail) host_pages=198435537 gc_pages=377841534 WAF=2.904102
+- phaseS03(oltp) host_pages=48864629 gc_pages=33144133 WAF=1.678285
+- ycsb-load 
+- ycsb-run 
