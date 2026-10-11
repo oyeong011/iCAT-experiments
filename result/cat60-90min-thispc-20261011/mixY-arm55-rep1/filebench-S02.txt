@@ -1,0 +1,32 @@
+WARNING: Could not open /proc/sys/kernel/shmmax file!
+It means that you probably ran Filebench not as a root. Filebench will not increase shared
+region limits in this case, which can lead to the failures on certain workloads.
+Filebench Version 1.5-alpha3
+0.000: Allocated 173MB of shared memory
+0.071: Varmail Version 3.0 personality successfully loaded
+0.071: Populating and pre-allocating filesets
+0.080: bigfileset populated: 24000 files, avg. dir. width = 1000000, avg. dir. depth = 0.7, 0 leafdirs, 372.312MB total size
+0.080: Removing bigfileset tree (if exists)
+0.091: Pre-allocating directories in bigfileset tree
+0.091: Pre-allocating files in bigfileset tree
+0.704: Waiting for pre-allocation to finish (in case of a parallel pre-allocation)
+0.704: Population and pre-allocation of filesets completed
+0.705: Starting 1 filereader instances
+1.707: Running...
+1801.827: Run took 1800 seconds...
+1801.828: Per-Operation Breakdown
+closefile4           10351689ops     5751ops/s   0.0mb/s      0.0ms/op [0.00ms -  2.10ms]
+readfile4            10351690ops     5751ops/s  90.5mb/s      0.1ms/op [0.00ms - 17.15ms]
+openfile4            10351693ops     5751ops/s   0.0mb/s      0.0ms/op [0.00ms -  2.01ms]
+closefile3           10351693ops     5751ops/s   0.0mb/s      0.0ms/op [0.00ms -  1.65ms]
+fsyncfile3           10351694ops     5751ops/s   0.0mb/s      0.8ms/op [0.00ms - 18.10ms]
+appendfilerand3      10351698ops     5751ops/s  44.9mb/s      0.1ms/op [0.00ms - 17.90ms]
+readfile3            10351699ops     5751ops/s  90.5mb/s      0.1ms/op [0.00ms - 17.16ms]
+openfile3            10351699ops     5751ops/s   0.0mb/s      0.0ms/op [0.00ms -  2.73ms]
+closefile2           10351699ops     5751ops/s   0.0mb/s      0.0ms/op [0.00ms -  1.62ms]
+fsyncfile2           10351702ops     5751ops/s   0.0mb/s      0.8ms/op [0.07ms - 18.15ms]
+appendfilerand2      10351704ops     5751ops/s  44.9mb/s      0.0ms/op [0.00ms - 17.15ms]
+createfile2          10351704ops     5751ops/s   0.0mb/s      0.2ms/op [0.01ms - 49.84ms]
+deletefile1          10351700ops     5751ops/s   0.0mb/s      0.6ms/op [0.01ms - 18.24ms]
+1801.828: IO Summary: 134572064 ops 74757.297 ops/s 11501/11501 rd/wr 270.8mb/s   0.7ms/op
+1801.828: Shutting down processes
