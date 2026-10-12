@@ -40,3 +40,37 @@
 - ycsb-run 
 
 - v7 icat-2 {"event": "experiment_finished", "time": "2026-10-12T20:02:07.174128+09:00", "stage": "fvo90", "status": "validated_saved_evidence", "runner_exit": 0, "waf": 2.201098676539881, "issues": [], "raw_path": "/home/oy/iCAT/result/v7-20261011-icat2/fvo90/mixX-onlinev7-rep1"}
+
+- v7 icat-2 {"event": "experiment_started", "time": "2026-10-12T20:02:13.967678+09:00", "stage": "mixY", "command": ["bash", "/home/oy/iCAT/result/v7-20261011-icat2/execution-v7.sh", "mixY", "onlinev7", "1"], "sequence": "F S V F V S F S V F V S F S V F V S F S", "module_sha256": "eca51601893326439f79854dedf7a2cfa75296812b8f08d3fff7ad4bdb00e5ac", "raw_path": "/home/oy/iCAT/result/v7-20261011-icat2/mixY/mixY-onlinev7-rep1"}
+
+### v7 mixY onlinev7 — started 2026-10-12T20:02:13+09:00
+- Sequence: F S V F V S F S V F V S F S V F V S F S; PH_SECS=1800; Table-3 prep; evidence `/home/oy/iCAT/result/v7-20261011-icat2/mixY/mixY-onlinev7-rep1`; module `/home/oy/iCAT/buildoutput/nvmev-online-v7.ko`.
+
+- Finished 2026-10-13T06:04:04+09:00; mixY onlinev7 exit=0; evidence `/home/oy/iCAT/result/v7-20261011-icat2/mixY/mixY-onlinev7-rep1`; cleanup attempted.
+- total host_bytes=8484397760512 host_pages=2071386172 gc_pages=4803265475 WAF=3.318865
+- phaseA(test4) host_pages=72001978 gc_pages=67396807 WAF=1.936041
+- phaseB(test3) host_pages=18001245 gc_pages=14745452 WAF=1.819135
+- phaseS01(test4) host_pages=72001978 gc_pages=67396807 WAF=1.936041
+- phaseS02(test3) host_pages=18001245 gc_pages=14745452 WAF=1.819135
+- phaseS03(varmail) host_pages=255533300 gc_pages=383284609 WAF=2.499940
+- phaseS04(test4) host_pages=72001981 gc_pages=317153870 WAF=5.404794
+- phaseS05(varmail) host_pages=232011172 gc_pages=380771730 WAF=2.641178
+- phaseS06(test3) host_pages=18001282 gc_pages=72198726 WAF=5.010755
+- phaseS07(test4) host_pages=72001978 gc_pages=332248333 WAF=5.614433
+- phaseS08(test3) host_pages=18001246 gc_pages=70469281 WAF=4.914689
+- phaseS09(varmail) host_pages=242423018 gc_pages=412334436 WAF=2.700888
+- phaseS10(test4) host_pages=72001981 gc_pages=318369704 WAF=5.421680
+- phaseS11(varmail) host_pages=239481368 gc_pages=395964183 WAF=2.653424
+- phaseS12(test3) host_pages=18001246 gc_pages=72420720 WAF=5.023095
+- phaseS13(test4) host_pages=72001978 gc_pages=329392146 WAF=5.574765
+- phaseS14(test3) host_pages=18001246 gc_pages=67563721 WAF=4.753280
+- phaseS15(varmail) host_pages=231146932 gc_pages=392875178 WAF=2.699677
+- phaseS16(test4) host_pages=72001981 gc_pages=309956860 WAF=5.304838
+- phaseS17(varmail) host_pages=240767770 gc_pages=392301633 WAF=2.629378
+- phaseS18(test3) host_pages=18001246 gc_pages=73312512 WAF=5.072635
+- phaseS19(test4) host_pages=72001978 gc_pages=330787205 WAF=5.594141
+- phaseS20(test3) host_pages=18001246 gc_pages=69718369 WAF=4.872975
+- ycsb-load 
+- ycsb-run 
+
+- v7 icat-2 {"event": "experiment_finished", "time": "2026-10-13T06:04:05.385911+09:00", "stage": "mixY", "status": "validated_saved_evidence", "runner_exit": 0, "waf": 3.3188652796510025, "issues": [], "raw_path": "/home/oy/iCAT/result/v7-20261011-icat2/mixY/mixY-onlinev7-rep1"}
