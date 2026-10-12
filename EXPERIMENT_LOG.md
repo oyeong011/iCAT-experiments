@@ -12974,3 +12974,13 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 ### 변경 2026-10-12 18:50 — v7을 이 PC에서도 바로 (사용자 요청)
 - queue53(baseline)·queue54(v7)를 멈추고 queue55(`script/gh-queue55-v7now.sh`)로 대체. 진행 중이던 arm34 실행은 그대로 끝까지 둠.
 - 순서: arm34 마무리 → v7 90분 혼합(F V O) → baseline arm33~30 → v7 mixY 20구간. 조건은 위 사전 등록과 동일.
+
+- Finished 2026-10-12T19:10:47+09:00; mixY arm34 exit=0; evidence `/home/oy/iCAT/result/cat60-90min-thispc-20261011/mixY-arm34-rep1`; cleanup attempted.
+- total host_bytes=1357520084992 host_pages=331425802 gc_pages=509965210 WAF=2.538701
+- phaseA(test4) host_pages=72028111 gc_pages=61119325 WAF=1.848548
+- phaseB(varmail) host_pages=207471567 gc_pages=423940568 WAF=3.043367
+- phaseS01(test4) host_pages=72028111 gc_pages=61119325 WAF=1.848548
+- phaseS02(varmail) host_pages=207471567 gc_pages=423940568 WAF=3.043367
+- phaseS03(oltp) host_pages=51926124 gc_pages=24905317 WAF=1.479630
+- ycsb-load 
+- ycsb-run 
