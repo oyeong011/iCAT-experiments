@@ -1,0 +1,49 @@
+{
+  "status": "validated_saved_evidence",
+  "policy": "arm24",
+  "stage": "screen90",
+  "waf": 3.2121378157096716,
+  "host_bytes": 1271070392320,
+  "host_pages": 310319920,
+  "gc_pages": 686470430,
+  "actual_measured_seconds": 5415.0,
+  "phases": [
+    {
+      "slot": "S01",
+      "workload": "FIO-Fast",
+      "actual_seconds": 1800.0,
+      "waf": 2.235257675846343,
+      "host_bytes": 294920171520,
+      "host_pages": 72001995,
+      "gc_pages": 88941017
+    },
+    {
+      "slot": "S02",
+      "workload": "Varmail",
+      "actual_seconds": 1804.0,
+      "waf": 4.050974783440852,
+      "host_bytes": 702074015744,
+      "host_pages": 171404789,
+      "gc_pages": 522951689,
+      "process_runtimes_seconds": [
+        1800.1209999999999
+      ]
+    },
+    {
+      "slot": "S03",
+      "workload": "OLTP",
+      "actual_seconds": 1811.0,
+      "waf": 2.1145453579480322,
+      "host_bytes": 274076200960,
+      "host_pages": 66913135,
+      "gc_pages": 74577724,
+      "process_runtimes_seconds": [
+        901.374,
+        901.328
+      ]
+    }
+  ],
+  "sample_rows": 184,
+  "transition_count": 2,
+  "measurement": "manual FTLpageWAF, hostbytes verified againstblockstat, no independentNANDmeasurement"
+}
