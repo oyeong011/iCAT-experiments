@@ -1,0 +1,66 @@
+# Select one of the targets to build
+#CONFIG_NVMEVIRT_NVM := y
+CONFIG_NVMEVIRT_SSD := y
+#CONFIG_NVMEVIRT_ZNS := y
+#CONFIG_NVMEVIRT_KV := y
+# GC victim policy: GREEDY, fixed CAT_FIG7, or online WATGC_V2
+NVMEVIRT_GC_POLICY ?= WATGC_V2
+# CAT Fig. 7 compile-time tuning parameters
+NVMEVIRT_CAT_K ?= 7
+NVMEVIRT_CAT_SCALE_PCT ?= 100
+NVMEVIRT_CAT_AGE_RATIO ?= 7
+VALID_CAT_KS := 2 4 7 10
+VALID_CAT_SCALE_PCTS := 25 50 100 200 400
+VALID_CAT_AGE_RATIOS := 4 7 16
+obj-m := nvmev.o
+nvmev-objs := main.o pci.o admin.o io.o dma.o
+ccflags-y += -Wno-unused-variable -Wno-unused-function
+ccflags-$(CONFIG_NVMEVIRT_NVM) += -DBASE_SSD=INTEL_OPTANE
+nvmev-$(CONFIG_NVMEVIRT_NVM) += simple_ftl.o
+# Conventional SSD
+ccflags-$(CONFIG_NVMEVIRT_SSD) += -DBASE_SSD=SAMSUNG_970PRO
+nvmev-$(CONFIG_NVMEVIRT_SSD) += \
+	ssd.o \
+	conv_ftl.o \
+	pqueue/pqueue.o \
+	channel_model.o
+ifeq ($(CONFIG_NVMEVIRT_SSD),y)
+ifeq ($(NVMEVIRT_GC_POLICY),GREEDY)
+ccflags-y += -DCONV_GC_POLICY=0
+else ifeq ($(NVMEVIRT_GC_POLICY),CAT_FIG7)
+ifeq ($(filter $(NVMEVIRT_CAT_K),$(VALID_CAT_KS)),)
+$(error Invalid NVMEVIRT_CAT_K="$(NVMEVIRT_CAT_K)". Use 2, 4, 7, or 10)
+endif
+ifeq ($(filter $(NVMEVIRT_CAT_SCALE_PCT),$(VALID_CAT_SCALE_PCTS)),)
+$(error Invalid NVMEVIRT_CAT_SCALE_PCT="$(NVMEVIRT_CAT_SCALE_PCT)". Use 25, 50, 100, 200, or 400)
+endif
+ifeq ($(filter $(NVMEVIRT_CAT_AGE_RATIO),$(VALID_CAT_AGE_RATIOS)),)
+$(error Invalid NVMEVIRT_CAT_AGE_RATIO="$(NVMEVIRT_CAT_AGE_RATIO)". Use 4, 7, or 16)
+endif
+ccflags-y += -DCONV_GC_POLICY=1
+ifneq ($(NVMEVIRT_CAT_K):$(NVMEVIRT_CAT_SCALE_PCT):$(NVMEVIRT_CAT_AGE_RATIO),7:100:7)
+$(error CAT_FIG7 is the fixed 7:100:7 reference in this online source)
+endif
+else ifeq ($(NVMEVIRT_GC_POLICY),WATGC_V2)
+ccflags-y += -DCONV_GC_POLICY=2
+else
+$(error Invalid NVMEVIRT_GC_POLICY="$(NVMEVIRT_GC_POLICY)". Use GREEDY, CAT_FIG7 or WATGC_V2)
+endif
+endif
+# ZNS SSD
+ccflags-$(CONFIG_NVMEVIRT_ZNS) += -DBASE_SSD=WD_ZN540
+#ccflags-$(CONFIG_NVMEVIRT_ZNS) += -DBASE_SSD=ZNS_PROTOTYPE
+ccflags-$(CONFIG_NVMEVIRT_ZNS) += -Wno-implicit-fallthrough
+nvmev-$(CONFIG_NVMEVIRT_ZNS) += \
+	ssd.o \
+	zns_ftl.o \
+	zns_read_write.o \
+	zns_mgmt_send.o \
+	zns_mgmt_recv.o \
+	channel_model.o
+# KV SSD
+ccflags-$(CONFIG_NVMEVIRT_KV) += -DBASE_SSD=KV_PROTOTYPE
+nvmev-$(CONFIG_NVMEVIRT_KV) += \
+	kv_ftl.o \
+	append_only.o \
+	bitmap.o

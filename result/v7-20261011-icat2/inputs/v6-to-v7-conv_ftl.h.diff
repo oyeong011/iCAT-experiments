@@ -1,0 +1,14 @@
+--- online-v6-src/conv_ftl.h
++++ online-v7-src/conv_ftl.h
+@@ -38,9 +38,9 @@
+ 
+ /* All thresholds are PER FTL PARTITION.  Count only completed GC cycles. */
+ #define WATGC_V2_WARMUP_GC 100ULL
+-#define WATGC_V2_BURNIN_GC 32ULL
++#define WATGC_V2_BURNIN_GC 256ULL /* v7: burn-in by GC count only (v6: 32 GC AND 128 MiB) */
+ #define WATGC_V2_BURNIN_HOST_PAGES 32768ULL
+-#define WATGC_V2_WINDOW_GC 128ULL   /* v3: 2x v1 (64); v2 was 3x */
++#define WATGC_V2_WINDOW_GC 1024ULL   /* v7: a window ends after 1024 GC cycles, host writes ignored (v6: 128 GC AND 512 MiB) */
+ #define WATGC_V2_WINDOW_HOST_PAGES 131072ULL /* v3: 512 MiB, 2x v1 */
+ /* No timeout may turn an empty or undersized interval into a reward. */
+ #define WATGC_V2_MAX_WINDOW_GC 8192ULL   /* v3: 2x v1, same cap/window ratio */

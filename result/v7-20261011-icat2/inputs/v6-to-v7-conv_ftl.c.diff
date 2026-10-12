@@ -1,0 +1,20 @@
+--- online-v6-src/conv_ftl.c
++++ online-v7-src/conv_ftl.c
+@@ -682,12 +682,13 @@
+ 	host = ftl->stats.total_host_page_writes - t->phase_host_start;
+ 	gc_pages = ftl->stats.total_gc_page_writes - t->phase_gcpage_start;
+ 	gc_count = ftl->stats.total_gc_count - t->phase_gc_start;
++	/* v7: windows are counted in GC cycles only, so a slow writer gets as
++	 * many decisions per GC as a fast one (v6 needed 512 MiB per window:
++	 * FIO-Slow got 35 windows per 30 min for 45 arms). */
+ 	if (t->phase == WATGC_V2_BURNIN)
+-		ready = host >= WATGC_V2_BURNIN_HOST_PAGES &&
+-			gc_count >= WATGC_V2_BURNIN_GC;
++		ready = gc_count >= WATGC_V2_BURNIN_GC;
+ 	else
+-		ready = host >= WATGC_V2_WINDOW_HOST_PAGES &&
+-			gc_count >= WATGC_V2_WINDOW_GC;
++		ready = gc_count >= WATGC_V2_WINDOW_GC;
+ 	if (!ready) {
+ 		if (gc_count < WATGC_V2_MAX_WINDOW_GC &&
+ 		    (now_ns < t->phase_start_ns ||

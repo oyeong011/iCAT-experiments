@@ -1,0 +1,89 @@
+--- /home/oy/iCAT/result/v7-20261011-icat2/inputs/cat60-execution-mix.sh
++++ execution-v7.sh
+@@ -8,13 +8,15 @@
+ # Usage: mix-inherit-20261006.sh mixV <policy> [rep]
+ set -Eeuo pipefail
+ root=/home/oy/iCAT
+-[[ "${BASH_ENV:-}" == /home/oy/iCAT/result/mixX-cat60-90min-20261009/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
++[[ "${BASH_ENV:-}" == /home/oy/iCAT/result/v7-20261011-icat2/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+ base="${MIX_BASE:-$root/result/mixX-cat60-90min-20261009}"   # second PC writes to its own dir
+ journal="${MIX_JOURNAL:-$root/EXPERIMENT_LOG.md}"
+ control=/proc/nvmevirt_measurement
+ label=${1:?Use smoke, main, long, t4, or mixA/B/C/D/F/G/H/J/K/L/M/O/P/Q}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
+-[[ "$label" == mixX && "$policy" =~ ^arm[0-5][0-9]$ ]] || exit 2
++[[ ( "$label" == mixX || "$label" == mixY ) && "$policy" == onlinev7 && "${PH_SECS:-}" == 1800 && "$rep" == 1 ]] || exit 2
++[[ "$label" != mixY || "${MIXY_SEQ:-}" == "F S V F V S F S V F V S F S V F V S F S" ]] || exit 2
+ case "$policy" in
++    onlinev7) module="$root/buildoutput/nvmev-online-v7.ko";;
+     fixed47) module="$root/buildoutput/nvmev-varmail-20260908-fixed47.ko";;
+     online)  module="$root/buildoutput/nvmev-online-mix-20260907.ko";;
+     onlinev2) module="$root/buildoutput/nvmev-online-v2.ko";;   # v1 + 6x reward window
+@@ -44,7 +46,7 @@
+     long)  scale=1;  RECORDS=4000000; OPS=10000000;;
+     t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
+     mixA|mixB|mixG|mixH|mixJ|mixT) scale=1; RECORDS=600000; OPS=4000000;;
+-    mixX)  scale=1;  RECORDS=0; OPS=0;;
++    mixX|mixY)  scale=1;  RECORDS=0; OPS=0;;
+     mixV)  scale=1;  RECORDS=${MIXV_RECORDS:-600000}; OPS=1000000000;;   # 20:50: 600k + kept FIO file = SQLITE_FULL; size chosen by fit check
+     mixW1|mixW2) scale=1; RECORDS=600000; OPS=1000000000;;   # 10-06 calibration: YCSB-A 600k only, after Table-3 prep   # no permanent FIO file, so the original 600k DB fits again
+     mixP)  scale=1;  RECORDS=250000; OPS=4000000;;   # sqlite then oltp: 600k records + WAL left no room for the oltp fileset (ENOSPC on rep1)
+@@ -72,6 +74,8 @@
+ printf '\n### mix-20260911 %s %s — started %s\n\n- mixU: FIO-Fast and Varmail alternate, 8 time-based phases of %s s (F V F V F V F V). FIO payload x %s/600; Varmail one run per phase. FIO file kept. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-20260911.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4500}" "${PH_SECS:-4500}" "$(basename "$module")" "${PH_SECS:-4500}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
+ elif [[ "$label" == mixV ]]; then
+ printf '\n### inherit-20261006 %s %s — started %s\n\n- mixV (inheritance): 9 time-based phases of %s s — YCSB-A (load %s records) -> OLTP (DB deleted) -> Varmail -> YCSB-A (DB reloaded) -> YCSB-B (same DB) -> FIO-Fast (DB deleted; Table-3 FIO file overwritten, payload x %s/600) -> Varmail -> YCSB-A (DB reloaded) -> OLTP (DB deleted). Switches follow the Table-3 two-phase mixes; prep identical to Table 3 (6 GiB file kept all run). Extents recorded per switch. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-inherit-20261006.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-4000}" "$RECORDS" "${PH_SECS:-4000}" "$(basename "$module")" "${PH_SECS:-4000}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
++elif [[ "$label" == mixY ]]; then
++printf '\n### v7 mixY onlinev7 — started %s\n- Sequence: %s; PH_SECS=%s; Table-3 prep; evidence `%s`; module `%s`.\n' "$(date -Is)" "$MIXY_SEQ" "$PH_SECS" "$dir" "$module" >> "$journal"
+ elif [[ "$label" == mixX ]]; then
+ printf '\n### cycle-20261007 %s %s — started %s\n\n- mixX: (FIO-Fast, Varmail, OLTP) = 3 time-based phases of %s s. Table-3 prep, 6 GiB FIO file kept; FIO payload x %s/600; Filebench files deleted after each Filebench phase; no YCSB. Module `%s`.\n- Command: `env PH_SECS=%s bash script/mix-cycle-20261007.sh %s %s %s`; evidence `%s/`.\n' "$label" "$policy" "$(date -Is)" "${PH_SECS:-1800}" "${PH_SECS:-1800}" "$(basename "$module")" "${PH_SECS:-1800}" "$label" "$policy" "$rep" "${dir#$root/}" >> "$journal"
+ elif [[ "$label" == mixW* ]]; then   # 10-06 calibration
+@@ -117,7 +121,7 @@
+ trap 'printf "FAIL line=%s command=%s\n" "$LINENO" "$BASH_COMMAND" >&2' ERR
+ if [[ -e /sys/module/nvmev ]] || mountpoint -q "$root/mnt"; then echo 'Device already in use'; exit 1; fi
+ # Existing-controller compatibility requires all NVMeVirt model/serial/PCI/mount guards.
+-[[ "${BASH_ENV:-}" == /home/oy/iCAT/result/mixX-cat60-90min-20261009/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
++[[ "${BASH_ENV:-}" == /home/oy/iCAT/result/v7-20261011-icat2/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+ declare -F sudo assert_virtual_dev assert_virtual_mount >/dev/null || exit 1
+ { date -Is; uname -a; cat /proc/cmdline; fio --version; java -version 2>&1; sqlite3 --version; sha256sum "$module" "$0" "$root/workloads/mix-test4.fio" "$root/workloads/sqlite/workloada"; lscpu; free -h; } > "$dir/environment.txt"
+ kmsg BEGIN
+@@ -128,7 +132,7 @@
+ for _ in {1..50}; do for c in /sys/class/nvme/nvme*; do grep -qi CSL_Virt "$c/model" 2>/dev/null && nv=$(basename "$c"); done; [[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]] && break; sleep 0.2; done
+ [[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]]
+ assert_virtual_dev /dev/${nv}n1 || exit 1
+-expected_arm=$((10#${policy#arm}))
++expected_arm=37   # v7 initial arm, verified before preparation
+ [[ $(awk -v arm="$expected_arm" '/^part=/{n++;for(i=1;i<=NF;i++)if($i=="arm="arm)ok++} END{print (n==4 && ok==4)?1:0}' "$control") == 1 ]] || { echo 'Loaded arm mismatch'; exit 1; }
+ # counter time series every 30 s (all policies): lets fixed arms be compared with the learner over time, not just per phase
+ ( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; printf '%s memavail_mb=%s\n' "$(cat "$control" 2>/dev/null | head -1)" "$(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo)"; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
+@@ -299,6 +303,20 @@
+                    F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
+                esac
+            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
++    mixY)  # 10-10 (user): GC-heavy workloads only; sequence chosen after the webproxy/fileserver screening (MIXY_SEQ, 20 letters)
++           ps_=${PH_SECS:-1800}; i=0; (( $(wc -w <<<"$MIXY_SEQ") >= 1 && $(wc -w <<<"$MIXY_SEQ") <= 20 )) || { echo 'MIXY_SEQ: 1..20 letters'; exit 2; }
++           for w in $MIXY_SEQ; do i=$((i + 1)); sl=$(printf 'S%02d' $i)
++               case $w in
++                   F) PN[$sl]=test4; HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio $sl mix-test4.fio;;
++                   S) PN[$sl]=test3; HOT_IO=$((HOT_IO * ps_ / 2400)) WARM_IO=$((WARM_IO * ps_ / 2400)) COLD_IO=$((COLD_IO * ps_ / 2400)) phase_fio $sl mix-test3.fio;;   # 1/4 rate, 1/4 payload
++                   V) PN[$sl]=varmail; VM_RUN=$ps_ VM_CHUNKS=1 phase_varmail $sl;;
++                   P) PN[$sl]=webproxy; VM_RUN=$ps_ VM_CHUNKS=1 phase_filebench $sl webproxy 50000;;   # 10k files ran out after ~12 min
++                   W) PN[$sl]=fileserver; VM_RUN=$ps_ VM_CHUNKS=1 phase_filebench $sl fileserver 6000;;
++                   O) PN[$sl]=oltp; VM_RUN=$((ps_ / 2)) VM_CHUNKS=2 phase_filebench $sl oltp "" 32m;;
++                   *) echo "bad letter $w"; exit 2;;
++               esac
++           done; A_NAME=${PN[S01]}; B_NAME=${PN[S02]}
++           for f in start end; do cp "$dir/phase-S01-$f.txt" "$dir/phase-A-$f.txt"; cp "$dir/phase-S02-$f.txt" "$dir/phase-B-$f.txt"; done;;
+     mixX)  # 10-07 (user): GC-heavy workloads only, 30-min phases, 3 phases
+            ps_=${PH_SECS:-1800}; i=0
+            for w in F V O; do i=$((i + 1)); sl=$(printf 'S%02d' $i)   # 10-07 (user): 30-min phases, 3 phases
+@@ -373,8 +391,8 @@
+     awk -v h="$host" -v g="$gc" -v b="$bytes" 'BEGIN{printf "total host_bytes=%.0f host_pages=%.0f gc_pages=%.0f WAF=%.6f\n",b,h,g,1+g/h}'
+     printf 'phaseA(%s) %s\n' "$A_NAME" "$(phase_waf "$dir/phase-A-start.txt" "$dir/phase-A-end.txt")"
+     printf 'phaseB(%s) %s\n' "$B_NAME" "$(phase_waf "$dir/phase-B-start.txt" "$dir/phase-B-end.txt")"
+-    [[ $label != mixX ]] || for i in $(seq 1 3); do sl=$(printf 'S%02d' $i); [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
+-    [[ $label == mixX ]] || for sl in C D E F G H I J; do [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]:-${C_NAME:-}}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
++    [[ $label != mixX && $label != mixY ]] || for i in $(seq 1 20); do sl=$(printf 'S%02d' $i); [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
++    [[ $label == mixX || $label == mixY ]] || for sl in C D E F G H I J; do [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]:-${C_NAME:-}}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
+     for sl in A B C; do [[ -f "$dir/phase-$sl-loaded.txt" ]] && printf 'phase%s-load %s\nphase%s-run %s\n' "$sl" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-loaded.txt")" "$sl" "$(phase_waf "$dir/phase-$sl-loaded.txt" "$dir/phase-$sl-end.txt")"; done
+     printf 'ycsb-load %s\nycsb-run %s\n' "$(grep -m1 'Throughput' "$dir/ycsb-load.txt")" "$(grep -m1 'Throughput' "$dir/ycsb-run.txt")"
+ } > "$dir/summary.txt"
+
