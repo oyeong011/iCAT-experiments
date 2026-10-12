@@ -21,3 +21,22 @@
 - v7 icat-2 {"event": "offline_automation_validation_and_queue_registration", "time": "2026-10-12T13:56:23.758485+09:00", "checks": "/home/oy/iCAT/result/v7-20261011-icat2/automation-check.json", "no_device_operation": true, "unit": "icat-v7-after-cat60-20261012.service", "current_cat_status": "running_arm27_S01", "module_sha256": "eca51601893326439f79854dedf7a2cfa75296812b8f08d3fff7ad4bdb00e5ac"}
 
 - v7 icat-2 {"event": "queue_started_after_CAT60", "time": "2026-10-12T18:30:24.693297+09:00", "runner_sha256": {"execution-v7.sh": "53f4a660db322e54e870f830768f5c172b3b4d2fa061d17601aea3ae93ec7a58", "safety-env.sh": "1dd7658591a10a092e72b206c542bf85aebf1be17848cc3037413775f449a4b2"}}
+
+- v7 icat-2 {"event": "experiment_started", "time": "2026-10-12T18:30:27.595031+09:00", "stage": "fvo90", "command": ["bash", "/home/oy/iCAT/result/v7-20261011-icat2/execution-v7.sh", "mixX", "onlinev7", "1"], "sequence": "F V O", "module_sha256": "eca51601893326439f79854dedf7a2cfa75296812b8f08d3fff7ad4bdb00e5ac", "raw_path": "/home/oy/iCAT/result/v7-20261011-icat2/fvo90/mixX-onlinev7-rep1"}
+
+### cycle-20261007 mixX onlinev7 — started 2026-10-12T18:30:27+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP) = 3 time-based phases of 1800 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 1800/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-online-v7.ko`.
+- Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX onlinev7 1`; evidence `result/v7-20261011-icat2/fvo90/mixX-onlinev7-rep1/`.
+
+- Finished 2026-10-12T20:02:05+09:00; mixX onlinev7 exit=0; evidence `/home/oy/iCAT/result/v7-20261011-icat2/fvo90/mixX-onlinev7-rep1`; cleanup attempted.
+- total host_bytes=1598181707776 host_pages=390181081 gc_pages=468645980 WAF=2.201099
+- phaseA(test4) host_pages=72026582 gc_pages=65843087 WAF=1.914150
+- phaseB(varmail) host_pages=245154967 gc_pages=379412136 WAF=2.547642
+- phaseS01(test4) host_pages=72026582 gc_pages=65843087 WAF=1.914150
+- phaseS02(varmail) host_pages=245154967 gc_pages=379412136 WAF=2.547642
+- phaseS03(oltp) host_pages=72999531 gc_pages=23390757 WAF=1.320423
+- ycsb-load 
+- ycsb-run 
+
+- v7 icat-2 {"event": "experiment_finished", "time": "2026-10-12T20:02:07.174128+09:00", "stage": "fvo90", "status": "validated_saved_evidence", "runner_exit": 0, "waf": 2.201098676539881, "issues": [], "raw_path": "/home/oy/iCAT/result/v7-20261011-icat2/fvo90/mixX-onlinev7-rep1"}

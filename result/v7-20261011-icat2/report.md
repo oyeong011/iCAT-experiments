@@ -1,6 +1,6 @@
 # 두 번째 PC iCAT-v7 실행 보고
 
-상태: waiting_for_CAT60_arm29_and_final_push
+상태: publishing_fvo90
 
 - 호스트: oy-B550M-DS3H / f4f3e77cb5bf4a08ab288227cf288de0
 - 커널: 7.0.0-31-generic
@@ -8,8 +8,21 @@
 - 소스: d6698f591185eca302fbfe38798b899978f50a7d
 - 각 조건 1회, 명시 start/stop 계측, 초기 학습 비용 포함. 실패 값은 진단용이며 순위에서 제외.
 
-fvo90: 아직 결과 없음
+## fvo90
+- 상태 validated_saved_evidence; runner exit=0; 전체 WAF=2.201098676539881
+- 원본: `/home/oy/iCAT/result/v7-20261011-icat2/fvo90/mixX-onlinev7-rep1`
+- host_bytes − block-stat bytes: 0
+
+| 구간 | workload | 실제 초 | 구간 WAF | sample p0 / p1 / p2 / p3 |
+|---|---|---:|---:|---|
+| S01 | FIO-Fast | 1801 | 1.914150 | 441 / 439 / 442 / 446 |
+| S02 | Varmail | 1804 | 2.547642 | 2400 / 2110 / 2126 / 2137 |
+| S03 | OLTP | 1810 | 1.320423 | 293 / 306 / 294 / 357 |
 
 mixY: 아직 결과 없음
+
+## CAT60 비교
+동일 호스트·동일 90분 조건에서 검증된 고정 CAT 30개와 비교: v7 WAF=2.201099, 삽입 순위 1(1+count[CAT WAF < v7 WAF]).
+전체 60개 중 30개는 이 보고서의 동일 호스트 검증 풀에 없어 전체 순위는 1–31 범위. 다른 PC 결과를 자동 합산하지 않음. 각 arm과 v7이 단일 실행이므로 이 순위는 관측 순위이며 통계적 우열이 아님.
 
 실패 목록: failures.tsv. 원본은 덮어쓰지 않음. 30초 시계열은 독립 반복이 아님. sample CSV는 kernel.log 구간 marker 사이 실제 로그 수이며 구간 밖 로그는 따로 표시.

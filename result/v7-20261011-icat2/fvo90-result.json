@@ -1,0 +1,134 @@
+{
+  "stage": "fvo90",
+  "status": "validated_saved_evidence",
+  "runner_exit": 0,
+  "raw_path": "/home/oy/iCAT/result/v7-20261011-icat2/fvo90/mixX-onlinev7-rep1",
+  "finished_at": "2026-10-12T20:02:07.170903+09:00",
+  "issues": [],
+  "warnings": [],
+  "waf": 2.201098676539881,
+  "host_bytes": 1598181707776,
+  "gc_pages": 468645980,
+  "host_bytes_minus_block_stat": 0,
+  "phases": [
+    {
+      "slot": "S01",
+      "workload": "FIO-Fast",
+      "actual_seconds": 1801.0,
+      "waf": 1.9141498204093594,
+      "host_bytes": 295020879872,
+      "host_pages": 72026582,
+      "gc_pages": 65843087,
+      "source": "/home/oy/iCAT/result/v7-20261011-icat2/fvo90/mixX-onlinev7-rep1/phase-S01-end.txt"
+    },
+    {
+      "slot": "S02",
+      "workload": "Varmail",
+      "actual_seconds": 1804.0,
+      "waf": 2.547642051241817,
+      "host_bytes": 1004154744832,
+      "host_pages": 245154967,
+      "gc_pages": 379412136,
+      "source": "/home/oy/iCAT/result/v7-20261011-icat2/fvo90/mixX-onlinev7-rep1/phase-S02-end.txt"
+    },
+    {
+      "slot": "S03",
+      "workload": "OLTP",
+      "actual_seconds": 1810.0,
+      "waf": 1.3204233873776532,
+      "host_bytes": 299006078976,
+      "host_pages": 72999531,
+      "gc_pages": 23390757,
+      "source": "/home/oy/iCAT/result/v7-20261011-icat2/fvo90/mixX-onlinev7-rep1/phase-S03-end.txt"
+    }
+  ],
+  "sample_counts": [
+    {
+      "slot": "S01",
+      "workload": "FIO-Fast",
+      "namespace": 0,
+      "partition": 0,
+      "sample_lines": 441
+    },
+    {
+      "slot": "S01",
+      "workload": "FIO-Fast",
+      "namespace": 0,
+      "partition": 1,
+      "sample_lines": 439
+    },
+    {
+      "slot": "S01",
+      "workload": "FIO-Fast",
+      "namespace": 0,
+      "partition": 2,
+      "sample_lines": 442
+    },
+    {
+      "slot": "S01",
+      "workload": "FIO-Fast",
+      "namespace": 0,
+      "partition": 3,
+      "sample_lines": 446
+    },
+    {
+      "slot": "S02",
+      "workload": "Varmail",
+      "namespace": 0,
+      "partition": 0,
+      "sample_lines": 2400
+    },
+    {
+      "slot": "S02",
+      "workload": "Varmail",
+      "namespace": 0,
+      "partition": 1,
+      "sample_lines": 2110
+    },
+    {
+      "slot": "S02",
+      "workload": "Varmail",
+      "namespace": 0,
+      "partition": 2,
+      "sample_lines": 2126
+    },
+    {
+      "slot": "S02",
+      "workload": "Varmail",
+      "namespace": 0,
+      "partition": 3,
+      "sample_lines": 2137
+    },
+    {
+      "slot": "S03",
+      "workload": "OLTP",
+      "namespace": 0,
+      "partition": 0,
+      "sample_lines": 293
+    },
+    {
+      "slot": "S03",
+      "workload": "OLTP",
+      "namespace": 0,
+      "partition": 1,
+      "sample_lines": 306
+    },
+    {
+      "slot": "S03",
+      "workload": "OLTP",
+      "namespace": 0,
+      "partition": 2,
+      "sample_lines": 294
+    },
+    {
+      "slot": "S03",
+      "workload": "OLTP",
+      "namespace": 0,
+      "partition": 3,
+      "sample_lines": 357
+    }
+  ],
+  "duplicate_kernel_lines_ignored": 0,
+  "series_rows": 184,
+  "interpretation": "WAF from manual FTL page counters; includes learning. Failed-run WAF is diagnostic only. Samples are observed log lines, not independent repetitions."
+}
