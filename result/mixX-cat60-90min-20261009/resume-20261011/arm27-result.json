@@ -1,0 +1,53 @@
+{
+  "policy": "arm27",
+  "runner_exit": 0,
+  "finished_at": "2026-10-12T15:26:15.467455+09:00",
+  "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009/resume-20261011/mixX-arm27-rep1",
+  "status": "validated_saved_evidence",
+  "validation_exit": 0,
+  "stage": "screen90",
+  "waf": 3.3917766812703487,
+  "host_bytes": 1236399636480,
+  "host_pages": 301855380,
+  "gc_pages": 721970659,
+  "actual_measured_seconds": 5415.0,
+  "phases": [
+    {
+      "slot": "S01",
+      "workload": "FIO-Fast",
+      "actual_seconds": 1801.0,
+      "waf": 2.2541069357844585,
+      "host_bytes": 294920101888,
+      "host_pages": 72001978,
+      "gc_pages": 90298180
+    },
+    {
+      "slot": "S02",
+      "workload": "Varmail",
+      "actual_seconds": 1803.0,
+      "waf": 4.291530884341348,
+      "host_bytes": 668383977472,
+      "host_pages": 163179682,
+      "gc_pages": 537110963,
+      "process_runtimes_seconds": [
+        1800.1200000000001
+      ]
+    },
+    {
+      "slot": "S03",
+      "workload": "OLTP",
+      "actual_seconds": 1811.0,
+      "waf": 2.418272708021582,
+      "host_bytes": 273095553024,
+      "host_pages": 66673719,
+      "gc_pages": 94561516,
+      "process_runtimes_seconds": [
+        901.464,
+        901.358
+      ]
+    }
+  ],
+  "sample_rows": 184,
+  "transition_count": 2,
+  "measurement": "manual FTLpageWAF, hostbytes verified againstblockstat, no independentNANDmeasurement"
+}

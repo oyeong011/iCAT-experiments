@@ -462,3 +462,22 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - ycsb-run 
 
 - CAT60 continuation {"event": "finished", "policy": "arm26", "runner_exit": 0, "finished_at": "2026-10-12T13:54:27.928498+09:00", "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009/resume-20261011/mixX-arm26-rep1", "status": "validated_saved_evidence", "validation_exit": 0, "stage": "screen90", "waf": 3.0607773047119324, "host_bytes": 1296275230720, "host_pages": 316473445, "gc_pages": 652181293, "actual_measured_seconds": 5415.0, "phases": [{"slot": "S01", "workload": "FIO-Fast", "actual_seconds": 1801.0, "waf": 2.200009876559938, "host_bytes": 295031308288, "host_pages": 72029128, "gc_pages": 86435665}, {"slot": "S02", "workload": "Varmail", "actual_seconds": 1803.0, "waf": 3.954904141575338, "host_bytes": 721920540672, "host_pages": 176250132, "gc_pages": 520802245, "process_runtimes_seconds": [1800.118]}, {"slot": "S03", "workload": "OLTP", "actual_seconds": 1811.0, "waf": 1.6590500884943502, "host_bytes": 279323377664, "host_pages": 68194184, "gc_pages": 44943383, "process_runtimes_seconds": [901.024, 901.884]}], "sample_rows": 184, "transition_count": 2, "measurement": "manual FTLpageWAF, hostbytes verified againstblockstat, no independentNANDmeasurement"}
+
+- CAT60 continuation {"event": "started", "time": "2026-10-12T13:54:36.335483+09:00", "policy": "arm27", "attempt": "first", "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009/resume-20261011/mixX-arm27-rep1", "module": {"path": "/home/oy/iCAT/buildoutput/nvmev-arm27.ko", "sha256": "41aa9d1b50409253d8a75a0a7fe7d2ad843d0fa992c6740fdc1ccc00dfa167e7", "vermagic": "7.0.0-31-generic SMP preempt mod_unload modversions", "k": 4, "scale_pct": 400, "age_ratio": 4, "provenance": "existingcurrentkernelmodule;source griddecode snapshotted;runtimeparamcheckmandatory"}, "phase_order": ["FIO-Fast", "Varmail", "OLTP"], "phase_seconds": 1800}
+
+### cycle-20261007 mixX arm27 — started 2026-10-12T13:54:36+09:00
+
+- mixX: (FIO-Fast, Varmail, OLTP) = 3 time-based phases of 1800 s. Table-3 prep, 6 GiB FIO file kept; FIO payload x 1800/600; Filebench files deleted after each Filebench phase; no YCSB. Module `nvmev-arm27.ko`.
+- Command: `env PH_SECS=1800 bash script/mix-cycle-20261007.sh mixX arm27 1`; evidence `result/mixX-cat60-90min-20261009/resume-20261011/mixX-arm27-rep1/`.
+
+- Finished 2026-10-12T15:26:13+09:00; mixX arm27 exit=0; evidence `/home/oy/iCAT/result/mixX-cat60-90min-20261009/resume-20261011/mixX-arm27-rep1`; cleanup attempted.
+- total host_bytes=1236399636480 host_pages=301855380 gc_pages=721970659 WAF=3.391777
+- phaseA(test4) host_pages=72001978 gc_pages=90298180 WAF=2.254107
+- phaseB(varmail) host_pages=163179682 gc_pages=537110963 WAF=4.291531
+- phaseS01(test4) host_pages=72001978 gc_pages=90298180 WAF=2.254107
+- phaseS02(varmail) host_pages=163179682 gc_pages=537110963 WAF=4.291531
+- phaseS03(oltp) host_pages=66673719 gc_pages=94561516 WAF=2.418273
+- ycsb-load 
+- ycsb-run 
+
+- CAT60 continuation {"event": "finished", "policy": "arm27", "runner_exit": 0, "finished_at": "2026-10-12T15:26:15.467455+09:00", "raw_path": "/home/oy/iCAT/result/mixX-cat60-90min-20261009/resume-20261011/mixX-arm27-rep1", "status": "validated_saved_evidence", "validation_exit": 0, "stage": "screen90", "waf": 3.3917766812703487, "host_bytes": 1236399636480, "host_pages": 301855380, "gc_pages": 721970659, "actual_measured_seconds": 5415.0, "phases": [{"slot": "S01", "workload": "FIO-Fast", "actual_seconds": 1801.0, "waf": 2.2541069357844585, "host_bytes": 294920101888, "host_pages": 72001978, "gc_pages": 90298180}, {"slot": "S02", "workload": "Varmail", "actual_seconds": 1803.0, "waf": 4.291530884341348, "host_bytes": 668383977472, "host_pages": 163179682, "gc_pages": 537110963, "process_runtimes_seconds": [1800.1200000000001]}, {"slot": "S03", "workload": "OLTP", "actual_seconds": 1811.0, "waf": 2.418272708021582, "host_bytes": 273095553024, "host_pages": 66673719, "gc_pages": 94561516, "process_runtimes_seconds": [901.464, 901.358]}], "sample_rows": 184, "transition_count": 2, "measurement": "manual FTLpageWAF, hostbytes verified againstblockstat, no independentNANDmeasurement"}
