@@ -74,3 +74,5 @@
 - ycsb-run 
 
 - v7 icat-2 {"event": "experiment_finished", "time": "2026-10-13T06:04:05.385911+09:00", "stage": "mixY", "status": "validated_saved_evidence", "runner_exit": 0, "waf": 3.3188652796510025, "issues": [], "raw_path": "/home/oy/iCAT/result/v7-20261011-icat2/mixY/mixY-onlinev7-rep1"}
+
+- v7 icat-2 {"event": "queue_finished", "time": "2026-10-13T06:04:29.421247+09:00", "status": "completed", "push_failures": []}

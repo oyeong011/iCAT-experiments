@@ -1,6 +1,6 @@
 # 두 번째 PC iCAT-v7 실행 보고
 
-상태: publishing_mixY
+상태: completed
 
 - 호스트: oy-B550M-DS3H / f4f3e77cb5bf4a08ab288227cf288de0
 - 커널: 7.0.0-31-generic
