@@ -13125,3 +13125,75 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 이유: mixY에는 고정 기준선이 CAT-47 하나뿐이라 그림 6(나)가 6(가)와 달리 기본값(CAT-37)과 견고(CAT-50)를 보여 주지 못함.
 - 실행: queue56 끝난 뒤 `script/gh-queue57-mixy-37-50.sh`가 mixY(20구간 x 30분, 순서 `result/gc-20261010/mixy-seq.txt`)를 arm37, arm50 순서로 1회씩 실행. 결과는 `result/gc-20261010/mixY-arm{37,50}-rep1/`.
 - 보고 규칙: 전체 WAF와 구간별 WAF를 v7(3.252)·v6(3.265)·CAT-47(2.864)과 같은 표에 그대로 넣음. v7이 어느 쪽에 지든 그대로 기록. 1회씩이라 1% 안쪽 차이는 동률로 보고.
+
+- Finished 2026-10-13T15:58:11+09:00; mixY arm47 exit=0; evidence `/home/oy/iCAT/result/cat60-90min-thispc-20261011/mixY-arm47-rep2`; cleanup attempted.
+- total host_bytes=1630546018304 host_pages=398082524 gc_pages=479620492 WAF=2.204827
+- phaseA(test4) host_pages=72001990 gc_pages=55761845 WAF=1.774449
+- phaseB(varmail) host_pages=273676717 gc_pages=407381169 WAF=2.488549
+- phaseS01(test4) host_pages=72001990 gc_pages=55761845 WAF=1.774449
+- phaseS02(varmail) host_pages=273676717 gc_pages=407381169 WAF=2.488549
+- phaseS03(oltp) host_pages=52403816 gc_pages=16477478 WAF=1.314433
+- ycsb-load 
+- ycsb-run 
+
+### gc-20261010 mixY onlinev7 — started 2026-10-13T15:58:23+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F V O (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-online-v7.ko`.
+- Command: `env MIXY_SEQ="F V O" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY onlinev7 3`; evidence `result/v7-20261011/fvo90-rep/mixY-onlinev7-rep3/`.
+
+- Finished 2026-10-13T17:30:24+09:00; mixY onlinev7 exit=0; evidence `/home/oy/iCAT/result/v7-20261011/fvo90-rep/mixY-onlinev7-rep3`; cleanup attempted.
+- total host_bytes=1568016474112 host_pages=382816522 gc_pages=466386483 WAF=2.218303
+- phaseA(test4) host_pages=72001978 gc_pages=67557397 WAF=1.938271
+- phaseB(varmail) host_pages=257288910 gc_pages=384456902 WAF=2.494261
+- phaseS01(test4) host_pages=72001978 gc_pages=67557397 WAF=1.938271
+- phaseS02(varmail) host_pages=257288910 gc_pages=384456902 WAF=2.494261
+- phaseS03(oltp) host_pages=53525633 gc_pages=14372184 WAF=1.268510
+- ycsb-load 
+- ycsb-run 
+
+### gc-20261010 mixY arm47 — started 2026-10-13T17:30:45+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F V O (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-arm47.ko`.
+- Command: `env MIXY_SEQ="F V O" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY arm47 3`; evidence `result/cat60-90min-thispc-20261011/mixY-arm47-rep3/`.
+
+- Finished 2026-10-13T19:02:57+09:00; mixY arm47 exit=0; evidence `/home/oy/iCAT/result/cat60-90min-thispc-20261011/mixY-arm47-rep3`; cleanup attempted.
+- total host_bytes=1639318200320 host_pages=400224170 gc_pages=481777796 WAF=2.203770
+- phaseA(test4) host_pages=72001981 gc_pages=55732847 WAF=1.774046
+- phaseB(varmail) host_pages=275871893 gc_pages=410717735 WAF=2.488799
+- phaseS01(test4) host_pages=72001981 gc_pages=55732847 WAF=1.774046
+- phaseS02(varmail) host_pages=275871893 gc_pages=410717735 WAF=2.488799
+- phaseS03(oltp) host_pages=52350295 gc_pages=15327214 WAF=1.292782
+- ycsb-load 
+- ycsb-run 
+
+### gc-20261010 mixY arm37 — started 2026-10-13T19:03:38+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F S V F V S F S V F V S F S V F V S F S (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-arm37.ko`.
+- Command: `env MIXY_SEQ="F S V F V S F S V F V S F S V F V S F S" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY arm37 1`; evidence `result/gc-20261010/mixY-arm37-rep1/`.
+
+- Finished 2026-10-14T05:05:33+09:00; mixY arm37 exit=0; evidence `/home/oy/iCAT/result/gc-20261010/mixY-arm37-rep1`; cleanup attempted.
+- total host_bytes=7005085315072 host_pages=1710225907 gc_pages=5694921632 WAF=4.329924
+- phaseA(test4) host_pages=72001990 gc_pages=70441047 WAF=1.978321
+- phaseB(test3) host_pages=18001245 gc_pages=14600349 WAF=1.811074
+- phaseS01(test4) host_pages=72001990 gc_pages=70441047 WAF=1.978321
+- phaseS02(test3) host_pages=18001245 gc_pages=14600349 WAF=1.811074
+- phaseS03(varmail) host_pages=197747353 gc_pages=443624415 WAF=3.243390
+- phaseS04(test4) host_pages=72002002 gc_pages=394149547 WAF=6.474147
+- phaseS05(varmail) host_pages=175369728 gc_pages=455926740 WAF=3.599803
+- phaseS06(test3) host_pages=18001249 gc_pages=82659795 WAF=5.591892
+- phaseS07(test4) host_pages=72001987 gc_pages=395261001 WAF=6.489585
+- phaseS08(test3) host_pages=18001252 gc_pages=83704586 WAF=5.649931
+- phaseS09(varmail) host_pages=176306251 gc_pages=459827624 WAF=3.608119
+- phaseS10(test4) host_pages=72002006 gc_pages=395211775 WAF=6.488900
+- phaseS11(varmail) host_pages=177161715 gc_pages=461243216 WAF=3.603515
+- phaseS12(test3) host_pages=18001255 gc_pages=82719765 WAF=5.595222
+- phaseS13(test4) host_pages=72002053 gc_pages=395078014 WAF=6.487038
+- phaseS14(test3) host_pages=18001246 gc_pages=83631509 WAF=5.645873
+- phaseS15(varmail) host_pages=176374096 gc_pages=458827695 WAF=3.601446
+- phaseS16(test4) host_pages=72002002 gc_pages=395342584 WAF=6.490717
+- phaseS17(varmail) host_pages=177243965 gc_pages=461383287 WAF=3.603097
+- phaseS18(test3) host_pages=18001255 gc_pages=82690278 WAF=5.593584
+- phaseS19(test4) host_pages=72001999 gc_pages=394940210 WAF=6.485128
+- phaseS20(test3) host_pages=18001258 gc_pages=83658195 WAF=5.647353
+- ycsb-load 
+- ycsb-run 
