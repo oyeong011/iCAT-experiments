@@ -13059,3 +13059,15 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS03(oltp) host_pages=50628277 gc_pages=32708996 WAF=1.646062
 - ycsb-load 
 - ycsb-run 
+
+### gc-20261010 mixY onlinev7 — started 2026-10-13T02:51:32+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F S V F V S F S V F V S F S V F V S F S (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-online-v7.ko`.
+- Command: `env MIXY_SEQ="F S V F V S F S V F V S F S V F V S F S" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY onlinev7 1`; evidence `result/v7-20261011/mixY/mixY-onlinev7-rep1/`.
+
+## 고정 CAT 60조합 나머지 + v7·arm47 반복 — 사전 등록 2026-10-13 (사용자: 공정하게, 60개 다 모으기, 두 번째 PC에 나눠 주기)
+- 이유: 90분 혼합에서 v7 2.220 vs arm47 2.198(1.0% 차이)인데 arm00 호스트 간 차이도 1%(3.300 vs 3.269), 각 1회 실행뿐 → "2위" 판정 불가. arm01~29 미측정(두 번째 PC가 10-09 arm03에서 멈춤). Varmail 구간 v7 2.4840 vs arm47 2.4846은 동점이며 쓰기 양이 7% 적었음(255M vs 275M pages).
+- 이 PC(queue56 `script/gh-queue56-cat60-rest.sh`, queue55 끝난 뒤): arm29→arm16 각 1회 → v7 rep2·rep3(`result/v7-20261011/fvo90-rep/`), arm47 rep2·rep3. 조건은 10-11 baseline과 동일(MIXY_SEQ="F V O", PH_SECS=1800, 표 3 준비).
+- 두 번째 PC(`script/icat2-cat60.sh`): arm03→arm15 각 1회, `result/cat60-90min-pc2-20261013/`. 호스트 차이는 arm00(3.300 vs 3.269)으로 표시하고 따로 보고.
+- 판정: ① 60개 + v7 순위, ② v7·arm47 각 3회 평균±범위가 겹치면 "구분 불가(비김)"로 보고. 결과가 불리해도 기록 유지.
+- 10-13 11:40 이 PC의 예전 큐 31·32·38(10-02~05에 만듦, 대기 중)을 중지: free()가 mix-gc 실행기를 보지 못해 v7 끝난 뒤 장치를 가로챌 수 있었음.
