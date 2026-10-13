@@ -13072,3 +13072,30 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 판정: ① 60개 + v7 순위, ② v7·arm47 각 3회 평균±범위가 겹치면 "구분 불가(비김)"로 보고. 결과가 불리해도 기록 유지.
 - 10-13 11:40 이 PC의 예전 큐 31·32·38(10-02~05에 만듦, 대기 중)을 중지: free()가 mix-gc 실행기를 보지 못해 v7 끝난 뒤 장치를 가로챌 수 있었음.
 - **정정 10-13 12:00:** 두 번째 PC는 멈춰 있지 않았음. 결과를 `origin/icat-2` 브랜치에 올리고 있었고 arm00~29 전부(`result/mixX-cat60-90min-20261009/`, `resume-20261011/`)와 v7 fvo90·mixY(`result/v7-20261011-icat2/`)를 이미 완료. 이 PC는 main만 보고 있어서 놓침. → queue56에서 arm29~16 실행을 빼고 v7·arm47 rep2·rep3만 남김. `script/icat2-cat60.sh`는 쓰지 않음.
+
+- Finished 2026-10-13T12:53:29+09:00; mixY onlinev7 exit=0; evidence `/home/oy/iCAT/result/v7-20261011/mixY/mixY-onlinev7-rep1`; cleanup attempted.
+- total host_bytes=8609975328768 host_pages=2102044758 gc_pages=4734010770 WAF=3.252098
+- phaseA(test4) host_pages=72001990 gc_pages=66620575 WAF=1.925260
+- phaseB(test3) host_pages=18001257 gc_pages=14430641 WAF=1.801646
+- phaseS01(test4) host_pages=72001990 gc_pages=66620575 WAF=1.925260
+- phaseS02(test3) host_pages=18001257 gc_pages=14430641 WAF=1.801646
+- phaseS03(varmail) host_pages=269739994 gc_pages=383484858 WAF=2.421683
+- phaseS04(test4) host_pages=72001993 gc_pages=312772184 WAF=5.343938
+- phaseS05(varmail) host_pages=244308152 gc_pages=390970685 WAF=2.600318
+- phaseS06(test3) host_pages=18001252 gc_pages=72449940 WAF=5.024717
+- phaseS07(test4) host_pages=72001990 gc_pages=319918857 WAF=5.443195
+- phaseS08(test3) host_pages=18001252 gc_pages=67260294 WAF=4.736423
+- phaseS09(varmail) host_pages=238351451 gc_pages=378821923 WAF=2.589342
+- phaseS10(test4) host_pages=72001984 gc_pages=338256138 WAF=5.697872
+- phaseS11(varmail) host_pages=243837284 gc_pages=388717238 WAF=2.594167
+- phaseS12(test3) host_pages=18001246 gc_pages=71844291 WAF=4.991073
+- phaseS13(test4) host_pages=72001990 gc_pages=323227461 WAF=5.489146
+- phaseS14(test3) host_pages=18001252 gc_pages=69020053 WAF=4.834181
+- phaseS15(varmail) host_pages=238452649 gc_pages=382224331 WAF=2.602936
+- phaseS16(test4) host_pages=72002002 gc_pages=320579717 WAF=5.452372
+- phaseS17(varmail) host_pages=237332541 gc_pages=375609175 WAF=2.582628
+- phaseS18(test3) host_pages=18001249 gc_pages=71463816 WAF=4.969937
+- phaseS19(test4) host_pages=72001987 gc_pages=318572926 WAF=5.424502
+- phaseS20(test3) host_pages=18001243 gc_pages=67765667 WAF=4.764499
+- ycsb-load 
+- ycsb-run 
