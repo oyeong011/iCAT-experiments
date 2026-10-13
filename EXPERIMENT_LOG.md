@@ -13099,3 +13099,29 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS20(test3) host_pages=18001243 gc_pages=67765667 WAF=4.764499
 - ycsb-load 
 - ycsb-run 
+
+### gc-20261010 mixY onlinev7 — started 2026-10-13T12:54:06+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F V O (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-online-v7.ko`.
+- Command: `env MIXY_SEQ="F V O" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY onlinev7 2`; evidence `result/v7-20261011/fvo90-rep/mixY-onlinev7-rep2/`.
+
+- Finished 2026-10-13T14:26:00+09:00; mixY onlinev7 exit=0; evidence `/home/oy/iCAT/result/v7-20261011/fvo90-rep/mixY-onlinev7-rep2`; cleanup attempted.
+- total host_bytes=1547889184768 host_pages=377902633 gc_pages=459103733 WAF=2.214873
+- phaseA(test4) host_pages=72001987 gc_pages=66599298 WAF=1.924965
+- phaseB(varmail) host_pages=251996650 gc_pages=377241760 WAF=2.497011
+- phaseS01(test4) host_pages=72001987 gc_pages=66599298 WAF=1.924965
+- phaseS02(varmail) host_pages=251996650 gc_pages=377241760 WAF=2.497011
+- phaseS03(oltp) host_pages=53903995 gc_pages=15262675 WAF=1.283146
+- ycsb-load 
+- ycsb-run 
+
+### gc-20261010 mixY arm47 — started 2026-10-13T14:26:11+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F V O (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-arm47.ko`.
+- Command: `env MIXY_SEQ="F V O" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY arm47 2`; evidence `result/cat60-90min-thispc-20261011/mixY-arm47-rep2/`.
+
+### mixY 기본값·견고 기준선 (CAT-37, CAT-50) — 사전 등록 2026-10-13
+
+- 이유: mixY에는 고정 기준선이 CAT-47 하나뿐이라 그림 6(나)가 6(가)와 달리 기본값(CAT-37)과 견고(CAT-50)를 보여 주지 못함.
+- 실행: queue56 끝난 뒤 `script/gh-queue57-mixy-37-50.sh`가 mixY(20구간 x 30분, 순서 `result/gc-20261010/mixy-seq.txt`)를 arm37, arm50 순서로 1회씩 실행. 결과는 `result/gc-20261010/mixY-arm{37,50}-rep1/`.
+- 보고 규칙: 전체 WAF와 구간별 WAF를 v7(3.252)·v6(3.265)·CAT-47(2.864)과 같은 표에 그대로 넣음. v7이 어느 쪽에 지든 그대로 기록. 1회씩이라 1% 안쪽 차이는 동률로 보고.
