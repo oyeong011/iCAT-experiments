@@ -136,6 +136,13 @@ f7.text(0.06, 0.89, '불규칙 순서 응용 혼합 10시간. 칸 하나 = 학�
 for e in ('png', 'pdf'): f7.savefig(FIG / f'fig7_v6_mixT.{e}', dpi=200, bbox_inches='tight')
 # ---------------- xlsx
 HDR = PatternFill('solid', fgColor='EEF2FB')
+# 10-13 (user): xlsx charts in dark paper colors, every line / border 2 pt
+from openpyxl.chart.shapes import GraphicalProperties
+from openpyxl.drawing.line import LineProperties
+W2 = 25400   # 2 pt in EMU
+PAPER = {'CAT-37 (기본)': '8B2E16', 'CAT-50 (견고)': '5A5A5A', 'CAT-47 (최적)': '1A1A1A', 'iCAT-v6 (제안)': '0B3C8C'}
+NAVY, DPUR, DGRAY = '0B3C8C', '4B1C7A', '404040'
+def frame(ch): ch.graphical_properties = GraphicalProperties(ln=LineProperties(solidFill='1A1A1A', w=W2))
 def put(ws, r, c, v, bold=False, fmt=None):
     x = ws.cell(row=r, column=c, value=v)
     if bold: x.font = Font(bold=True); x.fill = HDR; x.alignment = Alignment(wrap_text=True, vertical='center')
@@ -168,13 +175,13 @@ def add(ch, ws, xc, n, color, width, marker, msize=4, r0=2):
     s.marker.symbol = marker
     if marker != 'none': s.marker.size = msize; s.marker.graphicalProperties.solidFill = color; s.marker.graphicalProperties.line.solidFill = color
     ch.series.append(s)
-def decorate(ch, ws, c0, lc, nlines, lcolor='8A8984'):   # vertical lines + phase names above, hidden from the legend
+def decorate(ch, ws, c0, lc, nlines, lcolor=DGRAY):   # vertical lines + phase names above, hidden from the legend
     hidden = []
     for i in range(nlines):
         c = c0 + 2 * i
         s = Series(Reference(ws, min_col=c + 1, min_row=1, max_row=3), Reference(ws, min_col=c, min_row=2, max_row=3), title_from_data=True)
-        s.smooth = False; s.marker.symbol = 'none'; s.graphicalProperties.line.solidFill = lcolor; s.graphicalProperties.line.width = 12700
-        if lcolor == '8A8984': s.graphicalProperties.line.dashStyle = 'dash'
+        s.smooth = False; s.marker.symbol = 'none'; s.graphicalProperties.line.solidFill = lcolor; s.graphicalProperties.line.width = W2
+        if lcolor == DGRAY: s.graphicalProperties.line.dashStyle = 'dash'
         hidden.append(len(ch.series)); ch.series.append(s)
     # 10-07: no data-label series / hidden legend entries (Excel showed these charts broken); lines are named in the legend
 
@@ -187,8 +194,8 @@ allw = [v for lab in D for _, v in D[lab][0]]; ymax = round(max(allw) + 0.5, 0)
 c0 = len(cols) + 2; lc, nl = helpers(ws, c0, ymax - 0.15, 0.9)
 ch = scatter('그림 6. 불규칙 순서 응용 혼합 10시간: 20분 구간 WAF 추이 (낮을수록 좋음)', '측정 시작 후 시간 (시간)', 'WAF', 13, 34, 0, 10, 1, 0.9, ymax)
 for i, (lab, d, c, lw) in enumerate(POL):
-    v6 = 'v6' in lab; add(ch, ws, 2 * i + 1, len(D[lab][0]), c[1:].upper(), 34925 if v6 else 19050, 'circle', 6 if v6 else 4)
-decorate(ch, ws, c0, lc, nl)
+    v6 = 'v6' in lab; add(ch, ws, 2 * i + 1, len(D[lab][0]), PAPER[lab], W2, 'circle', 6 if v6 else 4)
+decorate(ch, ws, c0, lc, nl); frame(ch)
 ws.add_chart(ch, f'{ws.cell(row=1, column=lc + 2 * len(NAMES) + 1).column_letter}2')
 put(ws, 33, c0, '점 = 20분 구간 1개. 점선 = 워크로드 전환, 위 글자 = 그 구간의 워크로드. ' + NOTE)
 
@@ -204,9 +211,9 @@ for j, v in enumerate(row, 1): put(ws2, 11, j, v, bold=True)
 for j, wdt in enumerate([12, 10, 22, 13, 13, 13, 14, 13, 13], 1): ws2.column_dimensions[ws2.cell(row=1, column=j).column_letter].width = wdt
 bc = BarChart(); bc.type = 'col'; bc.grouping = 'clustered'; bc.title = '구간별 평균 WAF (낮을수록 좋음)'; bc.y_axis.title = 'WAF'
 bc.add_data(Reference(ws2, min_col=4, max_col=7, min_row=1, max_row=11), titles_from_data=True); bc.set_categories(Reference(ws2, min_col=1, min_row=2, max_row=11))
-for s, (lab, d, c, lw) in zip(bc.series, POL): s.graphicalProperties.solidFill = c[1:].upper(); s.graphicalProperties.line.noFill = True
+for s, (lab, d, c, lw) in zip(bc.series, POL): s.graphicalProperties.solidFill = PAPER[lab]; s.graphicalProperties.line.solidFill = '000000'; s.graphicalProperties.line.width = W2
 bc.height, bc.width = 11, 30; bc.legend.position = 'b'; bc.x_axis.delete = False; bc.y_axis.delete = False; bc.y_axis.scaling.min = 0.8
-ws2.add_chart(bc, 'A14')
+frame(bc); ws2.add_chart(bc, 'A14')
 put(ws2, 13, 1, '음수(%) = v6의 WAF가 더 낮음(좋음). ' + NOTE)
 wb.save(FIG / 'data' / 'fig6_v6_mixT.xlsx')
 
@@ -223,20 +230,20 @@ for i, r in enumerate(rounds):    # round names written at the top of each slot
     put(ws, 1, lc + 2 * i, f'라벨{i + 1} x', True); put(ws, 1, lc + 2 * i + 1, RW[i].replace('\n', ' / '), True)
     put(ws, 2, lc + 2 * i, i + 0.5); put(ws, 2, lc + 2 * i + 1, 1)
 ch = scatter('그림 7. v6 학습: 45개 → 줄이기 → 초기화(보라) → 다시 45개 → 다시 줄이기', '학습 회차 (칸 하나 = 1회차, 아래 글자 = 그 회차의 워크로드·시간)', '남은 후보 수', 14, 36, 0, len(rounds), 1, 0, 50)
-add(ch, ws, 1, len(xs), '2A78D6', 25400, 'none')
+add(ch, ws, 1, len(xs), NAVY, W2, 'none')
 put(ws, 1, 3, '점: 회차 시작·후보 버린 순간 x', True)
 for k, (x, y) in enumerate(CH, 2): put(ws, k, 3, round(x, 4)); put(ws, k, c0 + 4 * len(rounds) + 2, y)
 put(ws, 1, c0 + 4 * len(rounds) + 2, '회차 시작·후보 버린 순간', True)
 s = Series(Reference(ws, min_col=c0 + 4 * len(rounds) + 2, min_row=1, max_row=len(CH) + 1), Reference(ws, min_col=3, min_row=2, max_row=len(CH) + 1), title_from_data=True)
-s.marker.symbol = 'circle'; s.marker.size = 6; s.marker.graphicalProperties.solidFill = '2A78D6'; s.marker.graphicalProperties.line.solidFill = 'FFFFFF'; s.graphicalProperties.line.noFill = True
+s.marker.symbol = 'circle'; s.marker.size = 6; s.marker.graphicalProperties.solidFill = NAVY; s.marker.graphicalProperties.line.solidFill = NAVY; s.graphicalProperties.line.noFill = True
 ch.series.append(s)
 hidden = []
 for i in range(1, len(rounds)):
     c = c0 + 2 * (i - 1)
     s = Series(Reference(ws, min_col=c + 1, min_row=1, max_row=3), Reference(ws, min_col=c, min_row=2, max_row=3), title_from_data=True)
-    s.smooth = False; s.marker.symbol = 'none'; s.graphicalProperties.line.solidFill = '7D3CFF'; s.graphicalProperties.line.width = 22225
+    s.smooth = False; s.marker.symbol = 'none'; s.graphicalProperties.line.solidFill = DPUR; s.graphicalProperties.line.width = W2
     hidden.append(len(ch.series)); ch.series.append(s)
-ch.x_axis.majorGridlines = None
+ch.x_axis.majorGridlines = None; frame(ch)
 ws.add_chart(ch, f'{ws.cell(row=1, column=lc + 2 * len(rounds) + 1).column_letter}2')
 put(ws, 32, lc + 2 * len(rounds) + 1, '보라 선 = 워크로드 변화 감지 → 초기화(다시 45개). 각 칸: 먼저 45개를 한 번씩 시험(평평) → 나쁜 후보 버림(하락). ' + NOTE)
 ws2 = wb.create_sheet('판단별 원자료')
