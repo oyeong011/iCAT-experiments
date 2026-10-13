@@ -11,8 +11,7 @@ run() {  # run <policy> <rep> <base dir> <totals label>
   env MIXY_SEQ="F V O" PH_SECS=1800 MIX_BASE=$PWD/$3 bash script/mix-gc-20261010.sh mixY $1 $2 > $3/$1-rep$2.console.txt 2>&1 || echo "FAIL $1 rep$2"
   echo "$4 $(grep '^total' $3/mixY-$1-rep$2/summary.txt 2>/dev/null | sed 's/.*WAF=//')" >> $3/totals.txt; push "cat60 this PC: $4"
 }
-for a in $(seq 29 -1 16); do run arm$(printf %02d $a) 1 $B arm$(printf %02d $a); done
-echo "SWEEP DONE $(date -Is)"
+# 10-13 12:00: arm01-29 already done by the second PC (branch origin/icat-2, result/mixX-cat60-90min-20261009/) -> sweep removed, repeats only
 mkdir -p $R/fvo90-rep
 for r in 2 3; do run onlinev7 $r $R/fvo90-rep v7-rep$r; run arm47 $r $B arm47-rep$r; done
 echo QUEUE56DONE $(date -Is)
