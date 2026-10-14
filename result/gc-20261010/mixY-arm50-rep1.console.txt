@@ -1,0 +1,28 @@
+FAIL line=391 command=grep -m1 'Throughput' "$dir/ycsb-load.txt"
+FAIL line=391 command=grep -m1 'Throughput' "$dir/ycsb-run.txt"
+total host_bytes=7842927026176 host_pages=1914777106 gc_pages=5109067724 WAF=3.668231
+phaseA(test4) host_pages=72002143 gc_pages=58671141 WAF=1.814853
+phaseB(test3) host_pages=18001251 gc_pages=13840498 WAF=1.768863
+phaseS01(test4) host_pages=72002143 gc_pages=58671141 WAF=1.814853
+phaseS02(test3) host_pages=18001251 gc_pages=13840498 WAF=1.768863
+phaseS03(varmail) host_pages=257994378 gc_pages=448539322 WAF=2.738562
+phaseS04(test4) host_pages=72002008 gc_pages=341615788 WAF=5.744531
+phaseS05(varmail) host_pages=206058396 gc_pages=432239763 WAF=3.097657
+phaseS06(test3) host_pages=18001249 gc_pages=63491500 WAF=4.527061
+phaseS07(test4) host_pages=72001981 gc_pages=342740546 WAF=5.760154
+phaseS08(test3) host_pages=18001249 gc_pages=64241879 WAF=4.568746
+phaseS09(varmail) host_pages=207457360 gc_pages=432016306 WAF=3.082434
+phaseS10(test4) host_pages=72001996 gc_pages=343252732 WAF=5.767267
+phaseS11(varmail) host_pages=200752718 gc_pages=420466770 WAF=3.094451
+phaseS12(test3) host_pages=18001243 gc_pages=63467715 WAF=4.525741
+phaseS13(test4) host_pages=72001984 gc_pages=342625988 WAF=5.758563
+phaseS14(test3) host_pages=18001252 gc_pages=64207333 WAF=4.566826
+phaseS15(varmail) host_pages=206741163 gc_pages=430896445 WAF=3.084232
+phaseS16(test4) host_pages=72002005 gc_pages=343357379 WAF=5.768720
+phaseS17(varmail) host_pages=205750256 gc_pages=432641814 WAF=3.102752
+phaseS18(test3) host_pages=18001240 gc_pages=63508261 WAF=4.527994
+phaseS19(test4) host_pages=72001993 gc_pages=342982695 WAF=5.763517
+phaseS20(test3) host_pages=18001241 gc_pages=64263849 WAF=4.569968
+ycsb-load 
+ycsb-run 
+MIX mixY arm50 exit=0
