@@ -25,7 +25,7 @@ one() { # one <policy> <rep>
   done
   snap $M after
   if ! wait $run; then echo "FAIL $p rep$rep $(date -Is) - stopping (rule 6)"; exit 1; fi
-  grep -h 'RESOURCE' $D/kernel-final.log 2>/dev/null | sed 's/^\[[^]]*\] //' | sort -u > $B/$p-rep$rep.resource.txt
+  grep -h 'RESOURCE' $D/kernel.log 2>/dev/null | sed 's/^\[[^]]*\] //' | sort -u > $B/$p-rep$rep.resource.txt
   git add $B script/resource-v124-20261114.sh script/mix-gc-20261010.sh EXPERIMENT_LOG.md >/dev/null 2>&1
   git commit -qm "resource-v124: $p rep$rep" >/dev/null 2>&1; git push -q -u origin resource-overhead-20261114 2>/dev/null; echo "[push] $p rep$rep $(date -Is)"
 }

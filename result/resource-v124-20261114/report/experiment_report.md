@@ -9,20 +9,22 @@
 | | Fixed CAT-47 | iCAT v1 | iCAT v2 | iCAT v4 |
 |---|---|---|---|---|
 | 학습 전용 메모리 (sizeof, 4 파티션) | 0 B | 10,048 B | 10,048 B | 10,112 B |
-| 모듈 text+data (계측 없는 빌드) | 76,469 B | 87,203 B (+10,734) | 87,203 B (+10,734) | 88,655 B (+12,186) |
+| 모듈 text+data (계측 없는 빌드; 빌드 플래그 차이 포함) | 76,469 B | 87,203 B (+10,734) | 87,203 B (+10,734) | 88,655 B (+12,186) |
 | 정책 결정 수 / 30분 | 0 | 732 | 312 | 440.3 ± 2.5 |
 | 결정 1회 평균 (보상 갱신 + 선택) | 미측정(결정 없음) | 4.28 ± 0.04 µs | 6.34 ± 0.04 µs | 6.18 ± 0.06 µs |
 | 결정 1회 최대 | 미측정 | 23.6 ± 5.3 µs | 28.6 ± 6.8 µs | 26.5 ± 3.3 µs |
 | 알고리즘 CPU / 30분 (observe + set_arm) | 0 | 3.20 ± 0.03 ms | 2.01 ± 0.01 ms | 2.78 ± 0.04 ms |
 | 판단 기록 printk / 30분 | 0 | 4.44 ± 0.06 ms | 1.94 ± 0.06 ms | 2.85 ± 0.11 ms |
-| GC당 학습 훅 비용 (iCAT − Fixed, 시계 비용 제외) | 0 | 13.4 ns | 11.6 ns | 9.4 ns |
-| 학습 훅 전체 순비용 / 30분 (추정) | 0 | 30.6 ms | 26.2 ms | 20.2 ms |
+| GC당 학습 훅 비용 (추정, iCAT − Fixed, 시계 비용 제외) | 0 | 13.4 ± 0.3 ns | 11.6 ± 1.6 ns | 9.4 ± 0.1 ns |
+| 학습 훅 전체 순비용 / 30분 (추정, printk 포함) | 0 | 30.6 ± 0.7 ms | 26.1 ± 3.7 ms | 20.2 ± 0.3 ms |
 | 위 순비용 / dispatcher CPU | 0 | 0.0017 % | 0.0015 % | 0.0011 % |
+| GC 시간 (`dogc` − `ongc`) / 30분 | 256.0 ± 1.5 s | 196.9 ± 0.8 s | 200.3 ± 1.6 s | 206.8 ± 1.1 s |
 | WAF (계측 3회) | 1.770 ± 0.008 | 2.026 ± 0.001 | 2.005 ± 0.003 | 1.903 ± 0.001 |
 | WAF (계측 없음 1회) | 1.775 | 2.024 | 2.007 | 1.902 |
 | GC 복사 페이지 (호스트 18.0 M 페이지 기준) | 13.86 M | 18.48 M | 18.03 M | 16.25 M |
 
 - "학습 훅 전체 순비용"은 (iCAT `on_gc` 합) − (GC 횟수 × Fixed의 GC당 `on_gc` 18.00 ± 0.13 ns)로 계산했다. Fixed의 `on_gc`는 빈 함수이므로 그 값이 시계 2회 읽기 비용이다. 이 순비용에는 결정 경로(알고리즘 + printk)와 모든 GC마다 실행되는 단계/창 검사가 들어간다.
+- 순비용은 실행마다 따로 계산한 뒤 평균을 냈다.
 - 계측 시계를 포함한 상한값(`on_gc` 합)은 v1 71.6 ms, v2 66.8 ms, v4 58.7 ms이고, Fixed는 35.8 ms다(전부 시계 비용). dispatcher CPU 대비 0.004 % 이하다.
 
 ## 2. 지시서 질문에 대한 답
@@ -42,12 +44,13 @@
 
 **3) 추가 CPU는 얼마인가.** 30분 동안 결정 경로가 쓴 시간은 알고리즘 2.0–3.2 ms에 printk 1.9–4.4 ms를 더한 값이다. 모든 GC에 붙는 훅까지 포함한 순비용은 20–31 ms로, dispatcher CPU(1,794 s)의 0.0011–0.0017 %다.
 - 지시서 8절의 (iCAT − Fixed)/Fixed %는 계산하지 않았다. Fixed의 학습 CPU가 0이라 정의되지 않는다.
-- 간접 비용도 있다. iCAT은 같은 호스트 쓰기에서 GC 복사 페이지가 Fixed CAT-47보다 많다(v4 +17 %, v2 +30 %, v1 +33 %). 이 추가 복사에 든 CPU 시간은 분리하지 못했다(4절).
+- GC 본체 시간도 쟀다. iCAT이 오히려 짧았다(Fixed 256.0 s, v1 196.9 s, v2 200.3 s, v4 206.8 s). GC 횟수와 복사 페이지는 iCAT이 더 많았다(복사 페이지 v4 +17 %, v2 +30 %, v1 +33 %).
+- 이 GC 시간 차이는 CPU 이득이나 손해로 해석하지 않는다. 이 에뮬레이터의 GC 복사(`gc_write_page`)는 데이터를 실제로 복사하지 않고 매핑 갱신(`set_maptbl_ent`)과 NAND 시간 진행(`ssd_advance_nand`)만 한다. 따라서 복사가 늘어난 만큼의 실제 CPU·대역폭 비용이 GC 시간에 반영되지 않는다. 늘어난 복사는 CPU 비용이 아니라 WAF와 수명 비용으로 보고한다.
 
 **4) 결정 1회당 평균 CPU는.** v1 4.28 µs, v2 6.34 µs, v4 6.18 µs이고, 최대는 24–29 µs다. 결정마다 printk 6.1–6.5 µs가 따로 더 든다. 결정은 GC 수천 번에 한 번꼴로 일어난다(v4는 30분 동안 440회).
 
-**5) Fixed 대비 메모리 증가는.** 실측 가능한 차이는 코드 크기뿐이다: v1/v2 +10,734 B, v4 +12,186 B(text+data, 계측 없는 빌드).
-- 런타임 데이터의 할당 차이는 v4 0 B, v1/v2 −64 B다. 고정 CAT 빌드도 같은 튜너 구조체(2,656 B × 4)를 할당하기 때문이다.
+**5) Fixed 대비 메모리 증가는.** 실측 가능한 차이는 코드 크기뿐이다: v1/v2 +10,734 B, v4 +12,186 B(text+data, 계측 없는 빌드). 이 값은 빌드 플래그(CAT_FIG7 대 WATGC_V2) 차이 전체를 포함하므로 학습 코드만의 크기가 아니라 상한이다.
+- 런타임 데이터의 할당 차이는 0 B다. 고정 CAT 빌드도 같은 튜너 구조체를 할당하기 때문이다. (고정 CAT은 v4 소스로 빌드해 2,656 B × 4이고, v1/v2와 비교하면 v1/v2 쪽이 64 B 작게 나온다. 이 64 B는 v4에 추가된 필드 때문이다.)
 - 학습이 실제로 쓰는 상태는 10.1 kB다.
 - insmod 후 VmallocUsed 증가는 정책 4개 모두 34.75–34.88 MB였다. 정책 간 차이(≤ 125 kB)는 실행 중 흔들림(σ ≈ 130–190 kB)보다 작아 측정 해상도 아래다.
 - kthread에는 mm이 없어 VmRSS, VmHWM, PSS는 존재하지 않는다(N/A).
@@ -68,8 +71,8 @@
 
 **9) 결과가 논문 주장을 뒷받침하는가.**
 - 직접 비용이 작다는 주장(메모리 10 kB 상수, CPU 0.002 % 미만)은 뒷받침된다. 3회 반복의 표준편차가 1–2 % 이내로 작다.
-- 이 실험에서 iCAT의 WAF는 Fixed CAT-47보다 나빴다(v4 +7.5 %, v2 +13.3 %, v1 +14.5 %). Fixed CAT-47은 이 부하에서 오프라인으로 고른 최적 arm이라 사실상 상한(oracle) 기준이다.
-- 따라서 "iCAT은 자원을 거의 쓰지 않는다"는 직접 비용에 한해서만 맞다. 학습 중 덜 좋은 arm을 쓴 대가로 GC 복사가 17–33 % 늘었다. 이 간접 비용을 논문에서 빼면 과장이 된다.
+- 이 실험에서 iCAT의 WAF는 Fixed CAT-47보다 나빴다(v4 +7.5 %, v2 +13.3 %, v1 +14.5 %). arm 47은 이 부하(test4)의 60-arm sweep에서 2위였다(1위 arm 31과 0.1 % 차, `result/sweep-20260915/rank-test4.txt`). 즉 사후에 고른 거의 최적의 고정 설정과 비교한 결과다. oracle로 검증된 값은 아니다.
+- 따라서 "iCAT은 자원을 거의 쓰지 않는다"는 CPU와 메모리 직접 비용에 한해서만 맞다. GC 복사가 17–33 % 늘었는데, 이는 탐색 비용과 들어맞는 결과다. 다만 arm별 체류 시간은 재지 않았으므로 원인을 탐색으로 확정하지는 않는다. 이 WAF 차이를 논문에서 빼면 과장이 된다.
 
 ## 3. 논문 삽입용 표와 해석 문단
 
@@ -78,21 +81,23 @@
 | Metric | Fixed CAT-47 | iCAT v1 | iCAT v2 | iCAT v4 |
 |---|---|---|---|---|
 | Learner state (bytes) | 0 | 10,048 | 10,048 | 10,112 |
-| Module code + data, delta vs. Fixed (bytes) | — | +10,734 | +10,734 | +12,186 |
+| Module code + data, delta vs. Fixed (bytes)ᶜ | — | +10,734 | +10,734 | +12,186 |
 | Decisions per 30 min | 0 | 732 | 312 | 440 ± 3 |
 | CPU per decision, mean / max (µs) | — | 4.28 / 23.6 | 6.34 / 28.6 | 6.18 / 26.5 |
-| Learner hook CPU per GC (ns) | 0 | 13.4 | 11.6 | 9.4 |
-| Learner CPU per 30 min (ms) | 0 | 30.6 | 26.2 | 20.2 |
+| Learner hook CPU per GC, est.ᵃ (ns) | 0 | 13.4 ± 0.3 | 11.6 ± 1.6 | 9.4 ± 0.1 |
+| Learner CPU per 30 min, est.ᵃ ᵇ (ms) | 0 | 30.6 ± 0.7 | 26.1 ± 3.7 | 20.2 ± 0.3 |
 | Share of FTL dispatcher CPU (%) | 0 | 0.0017 | 0.0015 | 0.0011 |
 | WAF | 1.770 ± 0.008 | 2.026 ± 0.001 | 2.005 ± 0.003 | 1.903 ± 0.001 |
 
-해석 문단(국문). iCAT 학습기는 파티션당 2.5 kB, 4 파티션 합 약 10 kB의 고정 크기 상태만 쓴다. 이 크기는 후보 수에만 비례하고 SSD 용량과는 무관하다. 학습은 GC 경로 안에서 동기적으로 실행되며, 30분 FIO-Fast 부하에서 GC당 9–13 ns, 결정 1회당 평균 4–6 µs가 들었다. 이는 FTL dispatcher CPU 시간의 0.002 % 미만이다. 계측이 GC 동작을 바꾸지 않았음은 계측 빌드와 비계측 빌드의 WAF 차이가 0.3 % 이내인 것으로 확인했다. 다만 학습 과정에서 최적이 아닌 파라미터를 거치므로, 오프라인 최적 고정 설정(CAT-47)보다 GC 복사가 17 %(v4) 늘었다. iCAT의 실질적 비용은 연산이나 메모리가 아니라 이 탐색 비용이다.
+ᵃ Net of measurement-timer cost (Fixed CAT-47's empty hook, 18.00 ± 0.13 ns per GC), computed per run. ᵇ Includes per-decision logging (printk). ᶜ Whole-build difference, an upper bound on learner code.
 
-Interpretation (English). The iCAT learner keeps a fixed-size state of about 2.5 kB per partition (≈10 kB for four partitions). The size depends only on the number of candidate configurations, not on SSD capacity. Learning runs synchronously inside the GC path. Under a 30-minute FIO-Fast workload it costs 9–13 ns per GC and 4–6 µs per decision on average, which is below 0.002 % of the FTL dispatcher's CPU time. Instrumented and uninstrumented builds differ in WAF by under 0.3 %, so the measurement did not perturb GC behaviour. The learner does visit sub-optimal configurations, and this raises GC page copies by 17 % (v4) over the offline-best fixed configuration (CAT-47). The practical cost of iCAT is therefore exploration, not computation or memory.
+해석 문단(국문). iCAT 학습기는 파티션당 2.5 kB, 4 파티션 합 약 10 kB의 고정 크기 상태만 쓴다. 이 크기는 후보 수에만 비례하고 SSD 용량과는 무관하다. 학습은 GC 경로 안에서 동기적으로 실행되며, 30분 FIO-Fast 부하에서 GC당 9–13 ns, 결정 1회당 평균 4–6 µs가 들었다. 이는 FTL dispatcher CPU 시간의 0.002 % 미만이다. 계측이 GC 동작을 바꾸지 않았음은 계측 빌드와 비계측 빌드의 WAF 차이가 0.3 % 이내인 것으로 확인했다. 다만 sweep으로 사후에 고른 거의 최적의 고정 설정(CAT-47)과 비교하면 GC 복사가 17 %(v4) 많았다. 이는 학습 중 탐색 비용과 들어맞는다. iCAT의 실질적 비용은 연산이나 메모리가 아니라 이 WAF 손실이다.
+
+Interpretation (English). The iCAT learner keeps a fixed-size state of about 2.5 kB per partition (≈10 kB for four partitions). The size depends only on the number of candidate configurations, not on SSD capacity. Learning runs synchronously inside the GC path. Under a 30-minute FIO-Fast workload it costs 9–13 ns per GC and 4–6 µs per decision on average, which is below 0.002 % of the FTL dispatcher's CPU time. Instrumented and uninstrumented builds differ in WAF by under 0.3 %, so the measurement did not perturb GC behaviour. Compared with a near-optimal fixed configuration chosen after the fact by a sweep (CAT-47, 2nd of 60, 0.1 % from the best), iCAT v4 performs 17 % more GC page copies, which is consistent with the cost of exploration. The practical cost of iCAT is therefore this WAF loss, not computation or memory.
 
 ## 4. 한계
 
-- **간접 비용의 CPU는 미측정이다.** `do_gc` 시간(`dogc` − `ongc`)은 측정했다: Fixed 256.0 s, v1 196.9 s, v2 200.3 s, v4 206.8 s. GC 1회당으로는 128.5 µs, 86.4 µs, 88.8 µs, 96.6 µs다. iCAT은 복사 페이지가 많은데도 GC 시간이 더 짧았다. 이 시간은 선택된 arm(k, scale)에 따라 달라지는 victim 탐색 비용을 포함하므로, 학습 비용의 증거로도 반증으로도 쓰지 않는다. dispatcher 전체 CPU는 바쁜 대기로 99.86–99.90 %에 포화되어 정책 간 차이를 보여 주지 못한다.
+- **늘어난 GC 복사의 CPU 비용은 미측정이다.** GC 시간은 측정했다(Fixed 256.0 s, v1 196.9 s, v2 200.3 s, v4 206.8 s; GC 1회당 128.5, 86.4, 88.8, 96.6 µs). 하지만 이 에뮬레이터의 GC 복사는 데이터 복사 없이 매핑만 갱신하므로 실제 장치의 복사 비용을 반영하지 않는다. iCAT의 GC 시간이 더 짧은 이유는 확인하지 않았다. dispatcher 전체 CPU는 바쁜 대기로 99.86–99.90 %에 포화되어 정책 간 차이를 보여 주지 못한다.
 - 부하는 FIO-Fast 1종, 장치는 8 GiB 에뮬레이터 1종이다. 용량 독립성은 코드 근거이고 실측이 아니다.
 - 계측 없는 확인 실행은 정책당 1회다.
 - 시계 비용을 Fixed의 GC당 값(18.00 ns)으로 빼는 방식은 iCAT 빌드의 시계 비용도 같다고 가정한다. 같은 `ktime_get_ns`, 같은 CPU 고정이므로 타당하다고 보지만 직접 검증하지는 않았다.

@@ -13470,3 +13470,8 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS01(test4) host_pages=72002005 gc_pages=64956570 WAF=1.902149
 - ycsb-load 
 - ycsb-run 
+
+### resource-v124-20261114 — completed 2026-11-15T05:43:21+09:00
+- 16 runs exit=0 (12 instrumented F/v1/v2/v4 × 3, 4 uninstrumented WAF checks). Report: `result/resource-v124-20261114/report/experiment_report.md`.
+- Analysis-stage finding: the runner's `*.resource.txt` were cut from the whole dmesg buffer and include earlier runs' RESOURCE blocks (even uninstrumented runs had them). The first analysis summed them (GC counts varied 2–5× per rep). Fixed: analyze.py reads each run's `kernel.log` (one block per run, sizeof_tuner matches build). Runner line 28 changed to grep `kernel.log` for future reuse. Contaminated files kept as evidence.
+- Results (mean of 3): learner state 10,048 B (v1/v2) / 10,112 B (v4); learner hook net 13.4 / 11.6 / 9.4 ns per GC; 4.3 / 6.3 / 6.2 µs per decision; ≤0.0017 % of dispatcher CPU. WAF instr vs uninstr within 0.3 %. WAF vs Fixed CAT-47: v1 +14.5 %, v2 +13.3 %, v4 +7.5 %.

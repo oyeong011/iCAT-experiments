@@ -136,6 +136,8 @@ algo = lambda r: ms(r, 'observe') + ms(r, 'setarm')            # decision path: 
 learn = lambda r: algo(r) + ms(r, 'log')                         # + the per-decision printk
 gross = lambda r: ms(r, 'ongc')                                  # whole on_gc incl. 2 ktime reads/GC; Fixed = empty stub → timer cost only
 icat = lambda r: r['policy'] != 'resfixed47'
+FIX_NS = st.mean([gross(r) / r['res']['ongc'][0] for r in by('resfixed47')])   # Fixed on_gc is an empty stub → per-GC timer cost
+net = lambda r: gross(r) - r['res']['ongc'][0] * FIX_NS if icat(r) else 0       # learner hook net of timer cost (estimate)
 cpu_sum = []
 for p, name in POL:
     rows = [('알고리즘 CPU (observe + set_arm, 4파티션) [ms]', lambda r: algo(r) / 1e6 if icat(r) else 0),
@@ -145,12 +147,15 @@ for p, name in POL:
             ('판단 기록 printk [ms]', lambda r: ms(r, 'log') / 1e6 if icat(r) else 0),
             ('on_gc 전체 (타이머 비용 포함, 상한) [ms]', lambda r: gross(r) / 1e6),
             ('GC당 on_gc (타이머 포함) [ns]', lambda r: gross(r) / r['res']['ongc'][0] if r['res'].get('ongc', [0])[0] else None),
+            ('GC당 학습 훅 순비용 (추정, 시계 비용 제외) [ns]', lambda r: net(r) / r['res']['ongc'][0] if icat(r) else 0),
+            ('학습 훅 순비용 (추정, 시계 비용 제외, printk 포함) [ms]', lambda r: net(r) / 1e6),
+            ('학습 훅 순비용 / dispatcher CPU [%]', lambda r: 100 * net(r) / r['disp_cpu_ns']),
             ('정책 결정 횟수 (observe 호출)', lambda r: r['res'].get('observe', [0])[0] if icat(r) else 0),
             ('결정당 평균 CPU (observe) [us]', lambda r: ms(r, 'observe') / r['res']['observe'][0] / 1e3 if icat(r) and r['res'].get('observe', [0])[0] else None),
             ('결정당 최대 CPU (observe, 파티션 최대) [us]', lambda r: r['res']['observe'][2] / 1e3 if icat(r) and r['res'].get('observe', [0])[0] else None),
             ('결정당 printk [us]', lambda r: ms(r, 'log') / r['res']['observe'][0] / 1e3 if icat(r) and r['res'].get('observe', [0])[0] else None),
             ('GC 횟수 (do_gc 호출)', lambda r: r['res']['dogc'][0]),
-            ('GC 시간 (do_gc - on_gc) [ms] — GC 호출 수에 비례, 정책 간 비교 불가', lambda r: (r['res']['dogc'][1] - gross(r)) / 1e6),
+            ('GC 시간 (do_gc - on_gc) [ms] — 에뮬레이터 GC는 데이터 복사 없이 매핑만 갱신', lambda r: (r['res']['dogc'][1] - gross(r)) / 1e6),
             ('dispatcher kthread CPU (schedstat) [s]', lambda r: r['disp_cpu_ns'] / 1e9),
             ('dispatcher CPU / 경과 시간 [%]', lambda r: 100 * r['disp_cpu_ns'] / r['disp_wall_ns']),
             ('알고리즘 / dispatcher CPU [%]', lambda r: 100 * algo(r) / r['disp_cpu_ns']),
@@ -171,8 +176,8 @@ for p, name in POL:
     lc = [algo(r) / 1e6 for r in by(p)]
     cpu_time.append([name, '알고리즘 CPU [ms]', *agg(lc), NA if p != 'resfixed47' else '', '기준(Fixed) 알고리즘 CPU = 0 → 백분율 정의 불가 (지시서 8절)'])
     g = [gross(r) / 1e6 for r in by(p)]
-    pct = (st.mean(g) - st.mean([gross(r) / 1e6 for r in by('resfixed47')])) / st.mean([gross(r) / 1e6 for r in by('resfixed47')]) * 100 if p != 'resfixed47' else ''
-    cpu_time.append([name, 'on_gc 전체 (타이머 포함) [ms]', *agg(g), pct, 'Fixed는 빈 함수 + 타이머 비용. GC 호출 수가 회마다 2.7배까지 달라 차이는 노이즈 범위'])
+    cpu_time.append([name, 'on_gc 전체 (타이머 포함) [ms]', *agg(g), '', 'Fixed 값은 빈 함수의 계측 시계 비용뿐이라 백분율 기준으로 쓸 수 없음(계산 안 함)'])
+    cpu_time.append([name, '학습 훅 순비용 (추정) [ms]', *agg([net(r) / 1e6 for r in by(p)]), NA if p != 'resfixed47' else '', f'on_gc − GC 횟수 × Fixed GC당 시계 비용 {FIX_NS:.2f} ns. 기준 0 → 백분율 정의 불가'])
 
 mem_sum = []
 for p, name in POL:
