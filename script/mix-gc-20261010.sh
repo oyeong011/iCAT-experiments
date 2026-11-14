@@ -40,6 +40,8 @@ case "$policy" in
     fixed37) module="$root/buildoutput/nvmev-fixed37.ko";;
     greedy)  module="$root/buildoutput/nvmev-greedy-m.ko";;
     fixed50) module="$root/buildoutput/nvmev-fixed50.ko";;
+    resv1|resv2|resv4|resfixed47) module="$root/buildoutput/nvmev-res-${policy#res}.ko";;   # 11-14 resource run: res-v*-src with -DRES_INSTR (counters only; .text without it == original)
+    resfixed47n) module="$root/buildoutput/nvmev-res-fixed47-noinstr.ko";;   # 11-14 WAF check: same fixed build without RES_INSTR
     *) exit 2;;
 esac
 # test4 payload: 24M writes = 600 s at 40k IOPS (hot:warm:cold = 6:3:1). smoke = 1/10.

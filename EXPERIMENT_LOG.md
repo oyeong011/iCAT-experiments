@@ -13229,3 +13229,28 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS20(test3) host_pages=18001241 gc_pages=64263849 WAF=4.569968
 - ycsb-load 
 - ycsb-run 
+
+### resource-20261114 — pre-registered 2026-11-14 (computer B brief: CPU/memory overhead)
+
+- Question: extra kernel memory and CPU time of the iCAT-v7 learner versus fixed CAT-47 on this PC (i7-7700, 4C/8T, 7.6 GiB RAM, Ubuntu 24.04, kernel 7.0.0-31).
+- Modules: `resource-src` = `online-v7-src` + ktime counters around `watgc_v2_on_gc` (per GC), `watgc_v2_observe` (score update + selection, per decision) and `watgc_v2_choose_search` (selection only); printed at rmmod as `RESOURCE` lines. Fixed = same source, `NVMEVIRT_GC_POLICY=CAT_FIG7 KCFLAGS=-DCONV_FIXED_ARM=47` (learner compiled out). Same insmod args (memmap 8 GiB, cpus=1,2).
+- Workload: mixY prep + FIO-Fast 1800 s, 3 reps each, order alternates per rep. Kernel memory (/proc/meminfo, nvmev vmalloc sum) and CPU (/proc/stat, nvmev kthread times) every 10 s; perf 99 Hz all CPUs for 120 s at minute 15.
+- SmartGC: no implementation in this repo, icat-2, or the vault; HPCC 2025 paper full text not available here. SmartGC columns are theoretical only and marked unmeasured.
+- Command: `nohup setsid bash script/resource-20261114.sh > result/resource-20261114.out 2>&1 &`
+
+### gc-20261010 mixY resfixed47 — started 2026-11-14T20:23:13+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-resource-fixed47.ko`.
+- Command: `env MIXY_SEQ="F" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY resfixed47 1`; evidence `result/resource-20261114/mixY-resfixed47-rep1/`.
+
+- Finished 2026-11-14T20:23:56+09:00; mixY resfixed47 exit=143; evidence `/home/oy/iCAT/result/resource-20261114/mixY-resfixed47-rep1`; cleanup attempted.
+
+- 2026-11-14 20:25: aborted after 2 min (prep only, no data). User meant iCAT v1/v2/v4 (paper policies), not v7. Superseded.
+
+### resource-v124-20261114 — pre-registered 2026-11-14 (branch `resource-overhead-20261114`)
+
+- Question: extra CPU time and memory of the iCAT learner (v1, v2, v4 as implemented) versus Fixed CAT-47 (arm 47 = k 10, scale 25%, ratio 16).
+- Code check: v1 = `online-mix-src`, v2 = `online-v2-src`, v4 = `online-v4-src`; rebuilt .text equals the shipped .ko for all three. Note: v1 already has drift detection/reset and settling; v2 = v1 + windows x3 + MIN_VISITS 1; only v4 has candidate elimination. The brief's V1/V2 descriptions do not match the code; the real versions are measured.
+- Instrumented copies `res-v{1,2,4}-src` from `analysis/resource/instrument.py`: ktime_get_ns counters (n, sum, max per partition) for do_gc, on_gc, observe, reward update, selection, sample printk, set_arm, all under `#ifdef RES_INSTR`. Without RES_INSTR each copy builds to the original .text (checked). Fixed CAT-47 = `res-v4-src` with CAT_FIG7 + `-DCONV_FIXED_ARM=47` (learner compiled out).
+- Workload: mixY prep + FIO-Fast 1800 s; order rep1 F/v1/v2/v4, rep2 v4/v2/v1/F, rep3 v2/F/v4/v1; then one uninstrumented run each (fixed47-noinstr, v1, v2, v4) for the WAF check. Samples every 10 s: /proc/meminfo, module coresize, nvmev kthreads schedstat/stat/status.
+- Command: `nohup setsid bash script/resource-v124-20261114.sh > result/resource-v124-20261114.out 2>&1 &`
