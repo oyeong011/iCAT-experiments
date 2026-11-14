@@ -14,8 +14,12 @@
 - 학습은 별도 스레드가 아니라 `nvmev_dispatcher` 커널 스레드가 GC 안에서 동기적으로 실행한다(`do_gc` → `watgc_v2_on_gc`). 지시서의 `clock_gettime()`/`CLOCK_THREAD_CPUTIME_ID`는 사용자 공간 API라 커널 모듈에 쓸 수 없다. 대신 커널의 `ktime_get_ns()`(CLOCK_MONOTONIC과 같은 시계)로 구간 시간을 잰다.
 - 이 구간 시간을 CPU 시간으로 봐도 되는 근거: dispatcher는 CPU 1에 고정된 바쁜 대기 스레드이고, `/proc/PID/schedstat`의 실행 시간(스레드 CPU 시간과 같은 값)이 측정 구간 경과 시간의 약 99.9%였다(=거의 선점되지 않음). 이 비율은 매 실행 `cpu_overhead_summary.csv`에 기록한다.
 - 카운터(파티션별 호출 수·합·최대): `dogc`(GC 1회 전체, 학습 포함), `ongc`(학습 진입 1회 전체), `observe`(정책 결정 1회 = 보상 갱신 + 정책 선택), `update`(보상 갱신: drift 검사, 할인, 표본 추가, 최선 갱신, v4 후보 제거), `select`(정책 선택), `log`(결정마다 남기는 printk), `setarm`(새 조합 적용).
-- 학습 CPU = `ongc` 합. 공통 GC 비용 = `dogc` − `ongc`. Fixed CAT의 `ongc`는 빈 함수 호출과 시계 2회 읽기의 비용이므로 계측 자체의 비용으로 따로 보고하고 학습 CPU는 0으로 둔다.
-- 지시서 8절의 CPU 추가 비용(%)은 기준(Fixed) 학습 CPU가 0이라 정의할 수 없어 계산하지 않는다. 대신 학습/dispatcher CPU(%)와 학습/공통 GC 비용(%)을 보고한다. dispatcher 전체 CPU 기준 백분율은 계산은 하되, 바쁜 대기 때문에 ~100%로 포화되어 학습 비용을 반영하지 못함을 명시한다.
+- CPU 비용은 세 층으로 나눠 보고한다.
+  1. **알고리즘** = `observe`(보상 갱신 + 정책 선택) + `set_arm`. 결정이 일어날 때만 실행된다.
+  2. **판단 기록 printk** = `log`. 학습이 아니라 로그 출력이므로 따로 둔다.
+  3. **on_gc 전체(상한)** = `ongc` 합. 모든 GC마다 실행되는 단계/창 검사와 계측 시계 2회 읽기 비용을 포함한다. Fixed CAT의 `on_gc`는 빈 함수이므로 Fixed의 `ongc`는 시계 비용만 잰다. GC당 순수 학습 훅 비용은 (iCAT GC당 `ongc`) − (Fixed GC당 `ongc`)로 추정한다.
+- GC 시간 = `dogc` − `ongc`. 이 값은 선택된 GC 파라미터(arm: k, scale, ratio)에 따라 victim 탐색 비용이 달라지므로 학습 비용이 아니라 GC 동작 차이를 반영한다. 백분율의 분모로 쓰지 않는다.
+- 지시서 8절의 CPU 추가 비용(%)은 기준(Fixed) 알고리즘 CPU가 0이라 정의할 수 없어 계산하지 않는다. 대신 dispatcher CPU(schedstat, 회차 간 σ < 1 s) 대비 %를 보고한다. dispatcher 전체 CPU 자체는 바쁜 대기 때문에 ~100%로 포화되어 정책 간 차이를 보여 주지 못한다.
 - perf는 sudo가 필요해 쓰지 않았다(지시서 5절).
 
 ## 메모리
@@ -28,6 +32,7 @@
 - `RES_INSTR` 없이 빌드한 복사본의 `.text`는 원본 모듈과 sha256이 같다(계측 외 변경 없음).
 - 계측 빌드 3회 WAF와 비계측 1회 WAF를 비교한다(`resource_summary.csv`).
 - 시계 비용은 Fixed CAT의 `ongc`(빈 호출 + `ktime_get_ns` 2회)로 GC 1회당 값을 보고한다.
+- **카운터 출처**: 각 실행 디렉터리의 `kernel.log`(그 실행의 marker부터 잘라낸 dmesg)에서 RESOURCE 줄을 읽는다. 러너가 만든 `*.resource.txt`는 dmesg 버퍼 전체에서 잘라 앞선 실행들의 블록까지 섞여 있으므로 쓰지 않는다(기록 보존용으로만 남김). `kernel.log`에는 실행마다 정확히 한 블록(파티션 4개)이 있고, `sizeof_tuner`가 빌드와 일치함을 확인했다(v1/v2 2,640, v4·Fixed 2,656).
 
 ## Smart GC
 원문 구현 없음(이 PC, 저장소 main/icat-2, Obsidian vault 확인). 논문(Zhao et al., IEEE HPCC 2025, DOI 10.1109/HPCC67675.2025.00022)은 비공개이고, 공개 초록(OpenAlex)에는 "강화학습 에이전트가 SSD 내부 상태를 보고 GC 희생 블록을 고른다"는 내용만 있다. 블록별 Q-table, 상태 수, 항목 크기는 초록에 없다. 따라서 Smart GC는 실행 측정과 Q-table 크기 모두 미측정이며, `smartgc_theoretical_estimate.csv`에는 장치 기하(블록 수)와 초안 숫자의 역산만 적는다.

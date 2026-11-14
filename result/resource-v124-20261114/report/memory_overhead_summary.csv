@@ -3,23 +3,27 @@ Fixed CAT-47,"학습 자료구조, 4파티션, 할당됨 [B]",10624,"sizeof (gdb
 Fixed CAT-47,"학습 전용 바이트, 4파티션 (param 제외) [B]",0,sizeof,고정 CAT은 학습 상태를 쓰지 않음 → 0
 Fixed CAT-47,VmallocUsed 증가 (insmod 후 - 전) [kB],34876,99.9,실행 중 표준편차 평균 128.4 kB
 Fixed CAT-47,Slab 증가 (insmod 후 - 전) [kB],104717.3,76.4,실행 중 표준편차 평균 73.4 kB
-Fixed CAT-47,모듈 코드+정적 데이터 (coresize) [B],94208,/sys/module/nvmev/coresize,
+Fixed CAT-47,"모듈 코드+정적 데이터 (coresize, 계측 빌드, 페이지 단위) [B]",94208,/sys/module/nvmev/coresize,
+Fixed CAT-47,모듈 text+data (계측 없는 빌드) [B],76469,size nvmev-res-fixed47-noinstr.ko,text 67689 + data 8780
 Fixed CAT-47,kthread VmRSS / VmHWM / PSS,N/A,/proc/PID/status,커널 스레드는 mm이 없어 해당 항목이 없음
 iCAT v1,"학습 자료구조, 4파티션, 할당됨 [B]",10560,"sizeof (gdb, 빌드된 .ko)","struct watgc_v2_tuner × 4, conv_ftls vmalloc 안"
 iCAT v1,"학습 전용 바이트, 4파티션 (param 제외) [B]",10048,sizeof,고정 CAT은 학습 상태를 쓰지 않음 → 0
 iCAT v1,VmallocUsed 증가 (insmod 후 - 전) [kB],34868,104.9,실행 중 표준편차 평균 144.7 kB
 iCAT v1,Slab 증가 (insmod 후 - 전) [kB],104716,88.3,실행 중 표준편차 평균 644.2 kB
-iCAT v1,모듈 코드+정적 데이터 (coresize) [B],110592,/sys/module/nvmev/coresize,
+iCAT v1,"모듈 코드+정적 데이터 (coresize, 계측 빌드, 페이지 단위) [B]",110592,/sys/module/nvmev/coresize,
+iCAT v1,모듈 text+data (계측 없는 빌드) [B],87203,size nvmev-online-mix-20260907.ko,text 76663 + data 10540
 iCAT v1,kthread VmRSS / VmHWM / PSS,N/A,/proc/PID/status,커널 스레드는 mm이 없어 해당 항목이 없음
 iCAT v2,"학습 자료구조, 4파티션, 할당됨 [B]",10560,"sizeof (gdb, 빌드된 .ko)","struct watgc_v2_tuner × 4, conv_ftls vmalloc 안"
 iCAT v2,"학습 전용 바이트, 4파티션 (param 제외) [B]",10048,sizeof,고정 CAT은 학습 상태를 쓰지 않음 → 0
 iCAT v2,VmallocUsed 증가 (insmod 후 - 전) [kB],34750.7,73.9,실행 중 표준편차 평균 185.7 kB
 iCAT v2,Slab 증가 (insmod 후 - 전) [kB],104712,50.0,실행 중 표준편차 평균 110.3 kB
-iCAT v2,모듈 코드+정적 데이터 (coresize) [B],110592,/sys/module/nvmev/coresize,
+iCAT v2,"모듈 코드+정적 데이터 (coresize, 계측 빌드, 페이지 단위) [B]",110592,/sys/module/nvmev/coresize,
+iCAT v2,모듈 text+data (계측 없는 빌드) [B],87203,size nvmev-online-v2.ko,text 76663 + data 10540
 iCAT v2,kthread VmRSS / VmHWM / PSS,N/A,/proc/PID/status,커널 스레드는 mm이 없어 해당 항목이 없음
 iCAT v4,"학습 자료구조, 4파티션, 할당됨 [B]",10624,"sizeof (gdb, 빌드된 .ko)","struct watgc_v2_tuner × 4, conv_ftls vmalloc 안"
 iCAT v4,"학습 전용 바이트, 4파티션 (param 제외) [B]",10112,sizeof,고정 CAT은 학습 상태를 쓰지 않음 → 0
 iCAT v4,VmallocUsed 증가 (insmod 후 - 전) [kB],34756,48.0,실행 중 표준편차 평균 142.7 kB
 iCAT v4,Slab 증가 (insmod 후 - 전) [kB],104700,62.4,실행 중 표준편차 평균 102.7 kB
-iCAT v4,모듈 코드+정적 데이터 (coresize) [B],110592,/sys/module/nvmev/coresize,
+iCAT v4,"모듈 코드+정적 데이터 (coresize, 계측 빌드, 페이지 단위) [B]",110592,/sys/module/nvmev/coresize,
+iCAT v4,모듈 text+data (계측 없는 빌드) [B],88655,size nvmev-online-v4.ko,text 77947 + data 10708
 iCAT v4,kthread VmRSS / VmHWM / PSS,N/A,/proc/PID/status,커널 스레드는 mm이 없어 해당 항목이 없음

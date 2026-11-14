@@ -36,8 +36,11 @@ def run(policy, rep):
     ctl = dict(re.findall(r'(\w+)=(\d+)', (D / 'stopped.txt').read_text())); r['host_pages'], r['gc_pages'] = int(ctl['host_pages']), int(ctl['gc_pages'])
     # counters (sum over 4 partitions; max over partitions)
     res = {}
-    f = B / f'{policy}-rep{rep}.resource.txt'
-    for ln in (f.read_text().splitlines() if f.exists() else []):
+    # ponytail: kernel.log starts at this run's marker, so it holds only this run's rmmod block.
+    # The *.resource.txt files were cut from the whole dmesg buffer and also contain earlier runs' blocks — do not use them.
+    f = D / 'kernel.log'
+    for ln in (f.read_text(errors='replace').splitlines() if f.exists() else []):
+        if 'RESOURCE' not in ln: continue
         m = re.search(r'part=(\d+) slot=(\w+) n=(\d+) sum_ns=(\d+) max_ns=(\d+)', ln)
         if m:
             a = res.setdefault(m[2], [0, 0, 0]); a[0] += int(m[3]); a[1] += int(m[4]); a[2] = max(a[2], int(m[5]))
@@ -128,26 +131,33 @@ write('memory_measurements.csv', mem_rows, ['policy', 'rep', 'metric', 'unit', '
 
 # ---------- summaries
 def per(p, f): return [f(r) for r in by(p)]
-learn = lambda r: r['res'].get('ongc', [0, 0])[1] if r['policy'] != 'resfixed47' else 0
+ms = lambda r, k: r['res'].get(k, [0, 0])[1]
+algo = lambda r: ms(r, 'observe') + ms(r, 'setarm')            # decision path: reward update + selection + arm install
+learn = lambda r: algo(r) + ms(r, 'log')                         # + the per-decision printk
+gross = lambda r: ms(r, 'ongc')                                  # whole on_gc incl. 2 ktime reads/GC; Fixed = empty stub → timer cost only
+icat = lambda r: r['policy'] != 'resfixed47'
 cpu_sum = []
 for p, name in POL:
-    rows = [('학습 CPU 시간 (on_gc 합, 4파티션) [ms]', lambda r: learn(r) / 1e6),
-            ('계측/빈 호출 비용 (Fixed의 on_gc) [ms]', lambda r: r['res'].get('ongc', [0, 0])[1] / 1e6 if r['policy'] == 'resfixed47' else None),
-            ('알고리즘 (observe = 보상 갱신 + 정책 선택) [ms]', lambda r: r['res'].get('observe', [0, 0])[1] / 1e6 if r['policy'] != 'resfixed47' else 0),
-            ('보상 갱신 [ms]', lambda r: r['res'].get('update', [0, 0])[1] / 1e6 if r['policy'] != 'resfixed47' else 0),
-            ('정책 선택 [ms]', lambda r: r['res'].get('select', [0, 0])[1] / 1e6 if r['policy'] != 'resfixed47' else 0),
-            ('판단 기록 printk [ms]', lambda r: r['res'].get('log', [0, 0])[1] / 1e6 if r['policy'] != 'resfixed47' else 0),
-            ('set_arm [ms]', lambda r: r['res'].get('setarm', [0, 0])[1] / 1e6 if r['policy'] != 'resfixed47' else 0),
-            ('공통 GC 비용 (do_gc - on_gc) [ms]', lambda r: (r['res']['dogc'][1] - r['res']['ongc'][1]) / 1e6),
-            ('정책 결정 횟수 (observe 호출)', lambda r: r['res'].get('observe', [0])[0] if r['policy'] != 'resfixed47' else 0),
-            ('GC 횟수', lambda r: r['res']['dogc'][0]),
-            ('결정당 평균 CPU (observe) [us]', lambda r: r['res']['observe'][1] / r['res']['observe'][0] / 1e3 if r['policy'] != 'resfixed47' and r['res'].get('observe', [0])[0] else None),
-            ('결정당 최대 CPU (observe, 파티션 최대) [us]', lambda r: r['res']['observe'][2] / 1e3 if r['policy'] != 'resfixed47' and r['res'].get('observe') else None),
-            ('GC당 평균 학습 CPU (on_gc) [ns]', lambda r: r['res']['ongc'][1] / r['res']['ongc'][0] if r['res'].get('ongc', [0])[0] else None),
+    rows = [('알고리즘 CPU (observe + set_arm, 4파티션) [ms]', lambda r: algo(r) / 1e6 if icat(r) else 0),
+            ('보상 갱신 [ms]', lambda r: ms(r, 'update') / 1e6 if icat(r) else 0),
+            ('정책 선택 [ms]', lambda r: ms(r, 'select') / 1e6 if icat(r) else 0),
+            ('set_arm [ms]', lambda r: ms(r, 'setarm') / 1e6 if icat(r) else 0),
+            ('판단 기록 printk [ms]', lambda r: ms(r, 'log') / 1e6 if icat(r) else 0),
+            ('on_gc 전체 (타이머 비용 포함, 상한) [ms]', lambda r: gross(r) / 1e6),
+            ('GC당 on_gc (타이머 포함) [ns]', lambda r: gross(r) / r['res']['ongc'][0] if r['res'].get('ongc', [0])[0] else None),
+            ('정책 결정 횟수 (observe 호출)', lambda r: r['res'].get('observe', [0])[0] if icat(r) else 0),
+            ('결정당 평균 CPU (observe) [us]', lambda r: ms(r, 'observe') / r['res']['observe'][0] / 1e3 if icat(r) and r['res'].get('observe', [0])[0] else None),
+            ('결정당 최대 CPU (observe, 파티션 최대) [us]', lambda r: r['res']['observe'][2] / 1e3 if icat(r) and r['res'].get('observe', [0])[0] else None),
+            ('결정당 printk [us]', lambda r: ms(r, 'log') / r['res']['observe'][0] / 1e3 if icat(r) and r['res'].get('observe', [0])[0] else None),
+            ('GC 횟수 (do_gc 호출)', lambda r: r['res']['dogc'][0]),
+            ('GC 시간 (do_gc - on_gc) [ms] — GC 호출 수에 비례, 정책 간 비교 불가', lambda r: (r['res']['dogc'][1] - gross(r)) / 1e6),
             ('dispatcher kthread CPU (schedstat) [s]', lambda r: r['disp_cpu_ns'] / 1e9),
             ('dispatcher CPU / 경과 시간 [%]', lambda r: 100 * r['disp_cpu_ns'] / r['disp_wall_ns']),
-            ('학습 / dispatcher CPU [%]', lambda r: 100 * learn(r) / r['disp_cpu_ns']),
-            ('학습 / 공통 GC 비용 [%]', lambda r: 100 * learn(r) / (r['res']['dogc'][1] - r['res']['ongc'][1])),
+            ('알고리즘 / dispatcher CPU [%]', lambda r: 100 * algo(r) / r['disp_cpu_ns']),
+            ('알고리즘+printk / dispatcher CPU [%]', lambda r: 100 * learn(r) / r['disp_cpu_ns']),
+            ('on_gc 전체(상한) / dispatcher CPU [%]', lambda r: 100 * gross(r) / r['disp_cpu_ns']),
+            ('호스트 쓰기 페이지', lambda r: r['host_pages']),
+            ('GC 복사 페이지', lambda r: r['gc_pages']),
             ('측정 구간 경과 시간 [s]', lambda r: r['wall_s']),
             ('WAF (FIO-Fast, 계측 빌드)', lambda r: r['waf'])]
     for k, f in rows: cpu_sum.append([name, k] + agg(per(p, f)))
@@ -158,8 +168,11 @@ for p, name in POL:
     d = [r['disp_cpu_ns'] for r in by(p)]
     pct = (st.mean(d) - st.mean(fixed_disp)) / st.mean(fixed_disp) * 100 if d and fixed_disp and p != 'resfixed47' else NA
     cpu_time.append([name, 'dispatcher kthread CPU', *agg([x / 1e9 for x in d]), pct, '지시서 식. 단 dispatcher는 바쁜 대기(busy-poll)라 ~100%로 고정되어 학습 비용을 반영하지 못함'])
-    lc = [learn(r) / 1e6 for r in by(p)]
-    cpu_time.append([name, '학습 CPU [ms]', *agg(lc), NA if p != 'resfixed47' else '', '기준(Fixed) 학습 CPU = 0 → 백분율 정의 불가 (지시서 8절)'])
+    lc = [algo(r) / 1e6 for r in by(p)]
+    cpu_time.append([name, '알고리즘 CPU [ms]', *agg(lc), NA if p != 'resfixed47' else '', '기준(Fixed) 알고리즘 CPU = 0 → 백분율 정의 불가 (지시서 8절)'])
+    g = [gross(r) / 1e6 for r in by(p)]
+    pct = (st.mean(g) - st.mean([gross(r) / 1e6 for r in by('resfixed47')])) / st.mean([gross(r) / 1e6 for r in by('resfixed47')]) * 100 if p != 'resfixed47' else ''
+    cpu_time.append([name, 'on_gc 전체 (타이머 포함) [ms]', *agg(g), pct, 'Fixed는 빈 함수 + 타이머 비용. GC 호출 수가 회마다 2.7배까지 달라 차이는 노이즈 범위'])
 
 mem_sum = []
 for p, name in POL:
@@ -169,7 +182,9 @@ for p, name in POL:
         dl = [r['mem'][k]['loaded'] - r['mem'][k]['before'] for r in by(p)]; sd = [r['mem'][k]['run_std'] for r in by(p)]
         mem_sum.append([name, f'{k} 증가 (insmod 후 - 전) [kB]', *[f'{x:.1f}' if isinstance(x, float) else x for x in agg(dl)[1:3]], f"실행 중 표준편차 평균 {st.mean(sd):.1f} kB" if sd else NA])
     cs = [r['coresize'] for r in by(p)]
-    mem_sum.append([name, '모듈 코드+정적 데이터 (coresize) [B]', cs[0] if cs else NA, '/sys/module/nvmev/coresize', ''])
+    mem_sum.append([name, '모듈 코드+정적 데이터 (coresize, 계측 빌드, 페이지 단위) [B]', cs[0] if cs else NA, '/sys/module/nvmev/coresize', ''])
+    t, d_ = map(int, sh(f"size {ROOT}/buildoutput/{MOD[NOINSTR[p]]} | awk 'NR==2{{print $1, $2}}'").split())
+    mem_sum.append([name, '모듈 text+data (계측 없는 빌드) [B]', t + d_, f'size {MOD[NOINSTR[p]]}', f'text {t} + data {d_}'])
     mem_sum.append([name, 'kthread VmRSS / VmHWM / PSS', 'N/A', '/proc/PID/status', '커널 스레드는 mm이 없어 해당 항목이 없음'])
 write('memory_overhead_summary.csv', mem_sum, ['policy', 'metric', 'value_or_mean', 'source_or_std', 'note'])
 write('cpu_time.csv', cpu_time, ['policy', 'metric', 'n_runs', 'mean', 'std', 'min', 'max', 'overhead_vs_fixed_pct', 'note'])
@@ -177,10 +192,10 @@ write('cpu_time.csv', cpu_time, ['policy', 'metric', 'n_runs', 'mean', 'std', 'm
 summ = []
 for p, name in POL:
     rs = by(p); ck = checks.get(p)
-    summ.append([name, len(rs), SZ.get(name, 0), *[f'{x:.3f}' if isinstance(x, float) else x for x in agg([learn(r) / 1e6 for r in rs])[1:3]],
-                 *[f'{x:.2f}' if isinstance(x, float) else x for x in agg([r['res']['observe'][1] / r['res']['observe'][0] / 1e3 for r in rs if r['res'].get('observe', [0])[0]])[1:3]],
+    summ.append([name, len(rs), SZ.get(name, 0), *[f'{x:.3f}' if isinstance(x, float) else x for x in agg([algo(r) / 1e6 if icat(r) else 0 for r in rs])[1:3]],
+                 *[f'{x:.2f}' if isinstance(x, float) else x for x in agg([r['res']['observe'][1] / r['res']['observe'][0] / 1e3 for r in rs if icat(r) and r['res'].get('observe', [0])[0]])[1:3]],
                  *([f'{x:.4f}' for x in agg([r['waf'] for r in rs])[1:3]] if rs else [NA, NA]), f"{ck['waf']:.4f}" if ck else NA])
-write('resource_summary.csv', summ, ['policy', 'n_runs', 'learner_bytes_4part', 'learner_cpu_ms_mean', 'learner_cpu_ms_std', 'decision_us_mean', 'decision_us_std',
+write('resource_summary.csv', summ, ['policy', 'n_runs', 'learner_bytes_4part', 'algo_cpu_ms_mean', 'algo_cpu_ms_std', 'decision_us_mean', 'decision_us_std',
                                      'waf_instr_mean', 'waf_instr_std', 'waf_uninstrumented_1run'])
 
 # ---------- SmartGC theoretical (geometry only; SmartGC-specific terms unverified)
@@ -210,15 +225,19 @@ ax[1].axhline(learner[-1] / 1024, color='k', ls=':', lw=1); ax[1].text(3.4, lear
 ax[1].set_ylabel('kB'); ax[1].set_title(f'(나) insmod 후 VmallocUsed 증가 (평균±표준편차, n=3)\n실행 중 변동 σ≈{noise:.0f} kB')
 fig.suptitle('그림 10. 메모리 오버헤드 — Fixed CAT-47 vs iCAT v1/v2/v4, FIO-Fast 30분, 3회'); fig.tight_layout(); fig.savefig(OUT / 'figure10_memory_overhead.png', dpi=150)
 
-fig, ax = plt.subplots(1, 2, figsize=(11, 4))
+fig, ax = plt.subplots(1, 2, figsize=(11, 4.2))
 for i, (p, n) in enumerate(POL):
-    v = [learn(r) / 1e6 for r in by(p)]; ax[0].bar(i, st.mean(v) if v else 0, yerr=st.stdev(v) if len(v) > 1 else 0, capsize=4, color=COL[p])
-    ax[0].scatter([i] * len(v), v, color='k', s=10, zorder=3)
-    w = [100 * learn(r) / r['disp_cpu_ns'] for r in by(p)]; ax[1].bar(i, st.mean(w) if w else 0, yerr=st.stdev(w) if len(w) > 1 else 0, capsize=4, color=COL[p])
+    rs = by(p); a1 = [algo(r) / 1e6 if icat(r) else 0 for r in rs]; l1 = [ms(r, 'log') / 1e6 if icat(r) else 0 for r in rs]
+    ax[0].bar(i, st.mean(a1), color=COL[p], label='알고리즘 (보상 갱신+선택+set_arm)' if i == 1 else None)
+    ax[0].bar(i, st.mean(l1), bottom=st.mean(a1), color=COL[p], alpha=.35, hatch='//', label='판단 기록 printk' if i == 1 else None)
+    tot = [x + y for x, y in zip(a1, l1)]; ax[0].scatter([i] * len(tot), tot, color='k', s=10, zorder=3)
+    pc = st.mean([100 * learn(r) / r['disp_cpu_ns'] for r in rs]); ax[0].text(i, max(tot) + .4, f'{pc:.5f}%' if icat(rs[0]) else '0', ha='center', fontsize=8)
+    g = [gross(r) / 1e6 for r in rs]; ax[1].bar(i, st.mean(g), yerr=st.stdev(g), capsize=4, color=COL[p]); ax[1].scatter([i] * len(g), g, color='k', s=10, zorder=3)
 for a in ax: a.set_xticks(range(4)); a.set_xticklabels(pn)
-ax[0].set_ylabel('ms (30분 측정 구간, 4 파티션 합)'); ax[0].set_title('(가) 학습 CPU 시간 (막대 = 평균, 오차 = 표준편차, 점 = 각 회)')
-ax[1].set_ylabel('%'); ax[1].set_title('(나) 학습 시간 / dispatcher 스레드 CPU 시간')
-fig.suptitle('그림 11. CPU 오버헤드 — FIO-Fast 30분, 정책당 3회 (Fixed CAT-47은 학습 없음 = 0)'); fig.tight_layout(); fig.savefig(OUT / 'figure11_cpu_overhead.png', dpi=150)
+ax[0].set_ylabel('ms / 30분 (4 파티션 합)'); ax[0].set_ylim(0, 11); ax[0].legend(fontsize=8, loc='upper right')
+ax[0].set_title('(가) 학습 결정 경로 CPU (숫자 = dispatcher CPU 대비 %)')
+ax[1].set_ylabel('ms / 30분'); ax[1].set_title('(나) on_gc 훅 전체 (타이머 비용 포함, 상한)\nFixed = 빈 함수 → 계측 타이머 비용만')
+fig.suptitle('그림 11. CPU 오버헤드 — FIO-Fast 30분, 정책당 3회 (막대 = 평균, 점 = 각 회)'); fig.tight_layout(); fig.savefig(OUT / 'figure11_cpu_overhead.png', dpi=150)
 
 fig, ax = plt.subplots(1, 2, figsize=(11, 4))
 parts = [('update', '보상 갱신'), ('select', '정책 선택'), ('log', '판단 기록 printk'), ('setarm', 'set_arm')]
