@@ -1,6 +1,6 @@
 {
  "experiment": "resource-v124-20261114",
- "git_commit_at_analysis": "82f7096a1e4ba0ffea3d4178e0a2d61daa79f05a",
+ "git_commit_at_analysis": "c761b5e17114db47769ee1c4b3b151c101a6a3a9",
  "git_commit_at_start": "fb73280084545810227a03c97a1538d09a94eb67",
  "branch": "resource-overhead-20261114",
  "environment": {
@@ -10,7 +10,7 @@
   "os": "Ubuntu 24.04.4 LTS",
   "kernel": "7.0.0-31-generic",
   "gcc": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
-  "host_storage": "sda     WDC WDS250G1B0A-00H9H0 232.9G    0\nsdb     WDC WD10EZEX-22MFCA0   931.5G    1\nnvme0n1 CSL_Virt_MN_01           7.5G    0",
+  "host_storage": "sda    WDC WDS250G1B0A-00H9H0 232.9G    0\nsdb    WDC WD10EZEX-22MFCA0   931.5G    1",
   "emulated_device": "NVMeVirt conventional SSD, RAM-backed, memmap_start=4G memmap_size=8192M, 4 FTL partitions",
   "nvmevirt_base": "oyeong011/nvmevirt fork (see repo), conv FTL; iCAT sources online-mix-src / online-v2-src / online-v4-src",
   "insmod_args": "memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1",
@@ -46,12 +46,105 @@
    "dir": "result/resource-v124-20261114/mixY-resfixed47-rep1",
    "waf": 1.774336,
    "wall_s": 1800.3861265182495
+  },
+  {
+   "policy": "resfixed47",
+   "rep": 2,
+   "dir": "result/resource-v124-20261114/mixY-resfixed47-rep2",
+   "waf": 1.761032,
+   "wall_s": 1800.4152143001556
+  },
+  {
+   "policy": "resfixed47",
+   "rep": 3,
+   "dir": "result/resource-v124-20261114/mixY-resfixed47-rep3",
+   "waf": 1.774105,
+   "wall_s": 1800.419897556305
+  },
+  {
+   "policy": "resv1",
+   "rep": 1,
+   "dir": "result/resource-v124-20261114/mixY-resv1-rep1",
+   "waf": 2.025083,
+   "wall_s": 1800.4929525852203
+  },
+  {
+   "policy": "resv1",
+   "rep": 2,
+   "dir": "result/resource-v124-20261114/mixY-resv1-rep2",
+   "waf": 2.026461,
+   "wall_s": 1800.4330689907074
+  },
+  {
+   "policy": "resv1",
+   "rep": 3,
+   "dir": "result/resource-v124-20261114/mixY-resv1-rep3",
+   "waf": 2.026684,
+   "wall_s": 1800.3920159339905
+  },
+  {
+   "policy": "resv2",
+   "rep": 1,
+   "dir": "result/resource-v124-20261114/mixY-resv2-rep1",
+   "waf": 2.001475,
+   "wall_s": 1800.3549466133118
+  },
+  {
+   "policy": "resv2",
+   "rep": 2,
+   "dir": "result/resource-v124-20261114/mixY-resv2-rep2",
+   "waf": 2.006616,
+   "wall_s": 1800.3825764656067
+  },
+  {
+   "policy": "resv2",
+   "rep": 3,
+   "dir": "result/resource-v124-20261114/mixY-resv2-rep3",
+   "waf": 2.007864,
+   "wall_s": 1800.4061436653137
+  },
+  {
+   "policy": "resv4",
+   "rep": 1,
+   "dir": "result/resource-v124-20261114/mixY-resv4-rep1",
+   "waf": 1.904201,
+   "wall_s": 1800.3342208862305
+  },
+  {
+   "policy": "resv4",
+   "rep": 2,
+   "dir": "result/resource-v124-20261114/mixY-resv4-rep2",
+   "waf": 1.902179,
+   "wall_s": 1800.430773973465
+  },
+  {
+   "policy": "resv4",
+   "rep": 3,
+   "dir": "result/resource-v124-20261114/mixY-resv4-rep3",
+   "waf": 1.903655,
+   "wall_s": 1800.4053390026093
   }
  ],
  "waf_check_runs": {
-  "resfixed47": null,
-  "resv1": null,
-  "resv2": null,
-  "resv4": null
+  "resfixed47": {
+   "policy": "resfixed47n",
+   "dir": "result/resource-v124-20261114/mixY-resfixed47n-rep1",
+   "waf": 1.774522
+  },
+  "resv1": {
+   "policy": "online",
+   "dir": "result/resource-v124-20261114/mixY-online-rep1",
+   "waf": 2.024279
+  },
+  "resv2": {
+   "policy": "onlinev2",
+   "dir": "result/resource-v124-20261114/mixY-onlinev2-rep1",
+   "waf": 2.006956
+  },
+  "resv4": {
+   "policy": "onlinev4",
+   "dir": "result/resource-v124-20261114/mixY-onlinev4-rep1",
+   "waf": 1.902149
+  }
  }
 }

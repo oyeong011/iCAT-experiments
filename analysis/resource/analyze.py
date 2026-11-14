@@ -163,7 +163,7 @@ for p, name in POL:
 
 mem_sum = []
 for p, name in POL:
-    mem_sum.append([name, '학습 자료구조, 4파티션, 할당됨 [B]', ALLOC.get(name, ALLOC.get('iCAT v4')), 'sizeof (gdb, 빌드된 .ko)', '고정 CAT 빌드도 같은 struct를 conv_ftl 안에 할당(2,656 B×4)'])
+    mem_sum.append([name, '학습 자료구조, 4파티션, 할당됨 [B]', ALLOC.get(name, ALLOC.get('iCAT v4')), 'sizeof (gdb, 빌드된 .ko)', '고정 CAT 빌드도 같은 struct를 conv_ftl 안에 할당(2,656 B×4), 사용은 param 128 B뿐' if p == 'resfixed47' else 'struct watgc_v2_tuner × 4, conv_ftls vmalloc 안'])
     mem_sum.append([name, '학습 전용 바이트, 4파티션 (param 제외) [B]', SZ.get(name, 0), 'sizeof', '고정 CAT은 학습 상태를 쓰지 않음 → 0'])
     for k in ['VmallocUsed', 'Slab']:
         dl = [r['mem'][k]['loaded'] - r['mem'][k]['before'] for r in by(p)]; sd = [r['mem'][k]['run_std'] for r in by(p)]
