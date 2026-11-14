@@ -21,6 +21,10 @@ b online-v3           online-v3-src       NVMEVIRT_GC_POLICY=WATGC_V2
 b online-v4           online-v4-src       NVMEVIRT_GC_POLICY=WATGC_V2
 b online-v5           online-v5-src       NVMEVIRT_GC_POLICY=WATGC_V2   # v4 + use GC-capped windows
 b online-v6           online-v6-src       NVMEVIRT_GC_POLICY=WATGC_V2   # v5 + change detection in any state
+b smartgc             smartgc-src         NVMEVIRT_GC_POLICY=SMARTGC    # SmartGC (HPCC 2025), Q-table starts at zero as in the paper
+b smartgcq            smartgc-src         NVMEVIRT_GC_POLICY=SMARTGC SMARTGC_Q_INIT=2000   # same, Q(s, erase) starts at 2000
+b sg-greedy           smartgc-src         NVMEVIRT_GC_POLICY=GREEDY     # Greedy with the wear (erase count) report
+b sg-arm47            smartgc-src         NVMEVIRT_GC_POLICY=CAT_FIG7 FIXED_ARM=47   # fixed CAT with the wear report
 b gh-greedy           gh-src-7236149      NVMEVIRT_GC_POLICY=GREEDY     # original-author scripts
 b gh-online           gh-src-7236149      NVMEVIRT_GC_POLICY=WATGC_V2
 echo "manifest: $man"

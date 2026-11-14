@@ -13229,3 +13229,43 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS20(test3) host_pages=18001241 gc_pages=64263849 WAF=4.569968
 - ycsb-load 
 - ycsb-run 
+
+### smartgc-dev-20261114 — SmartGC 구현 검증 (컴파일 + 사용자 공간 FTL 구동) — 등록 2026-11-14T20:25+09:00
+
+- **성격**: SSD 측정이 아니다. NVMeVirt 모듈을 올리지 않으며 WAF/마모 수치는 논문·결과표에 쓰지 않는다. 새 정책 SmartGC(Zhao et al., HPCC 2025, 사용자 제공 PDF)를 `smartgc-src/`(= `varmail-compare-src` 복사 + 정책 3)로 구현한 뒤, 실제 장비에서 돌리기 전에 코드가 깨지지 않는지 확인한다.
+- **목적**: (1) 커널 7.0.0-31 헤더로 모듈이 빌드되는가. (2) FTL 코드(`conv_ftl.c`, `ssd.c`, `channel_model.c`, `pqueue.c`)를 수정 없이 사용자 공간에서 구동(`smartgc-src/test/sim.c`, 커널 API는 `test/kshim.h`로 대체)했을 때 불변식이 유지되는가. (3) `smartgc-src`의 Greedy/고정 CAT 동작이 `varmail-compare-src`와 같은가. (4) 논문이 값을 주지 않은 w·γ에 따라 SmartGC가 어떻게 달라지는가(관찰).
+- **판정 기준(사전)**: P1 모든 구동이 exit 0이고 `invariants=ok`(BUG/INVARIANT FAILED 없음). P2 `s1-greedy-new` vs `s1-greedy-old`, `s1-arm47-new` vs `s1-arm47-old`의 host_pages·gc_pages가 완전히 같다. P3 SMARTGC/GREEDY/CAT_FIG7(arm47) 빌드에서 프로젝트 소스의 경고·오류 0. SmartGC의 WAF·마모 표준편차·파라미터 민감도는 합격/불합격 없이 기록만 한다.
+- **명령**: 빌드 `make -C <headers> M=<smartgc-src 복사본> NVMEVIRT_GC_POLICY={SMARTGC|GREEDY|CAT_FIG7 FIXED_ARM=47} modules`. 구동 `bash result/smartgc-dev-20261114/run-sims.sh stage1`, 이어서 `stage2`(각 구동의 정확한 옵션은 로그 첫 줄).
+- **변경 변수**: stage1 — 정책(smartgc/greedy/arm47), 소스(smartgc-src/varmail-compare-src), SmartGC의 gcbuf(0/10/50‰)·batch(1/8/64), 워크로드(zones/uniform). stage2 — w(1/10/100)·γ(0.9/0.5/0), gcbuf=0.
+- **고정 조건**: 용량 8192 MiB, 파티션 4, OP 7%, GC 문턱 2라인(`ssd_config.h`/`conv_init_params` 그대로), 라인 8192개/파티션 × 64페이지. 순차로 전 논리 페이지 1회 기록 → `start` → 논리 페이지 수 × 6회 4KiB 임의 덮어쓰기(zones: 쓰기의 60/30/10%가 공간의 10/30/60%에; 16쓰기마다 읽기 1회) → `stop`. 가짜 시계 25 µs/쓰기. sim_seed 기본값, smartgc_seed=1, SmartGC 기본값 α=0.5 γ=0.9 ε 0.3→0.01(반감 2048스텝) w=1 batch=8 gcbuf=10‰.
+- **환경**: 호스트 DESKTOP-ECC47MA(Windows 11, 원래 실험 컴퓨터 아님) 안의 WSL2 Ubuntu 26.04, 커널 6.18.58.1-microsoft-standard-WSL2, i7-14700HX 28스레드, 메모리 15 GiB, gcc 15.2.0, make 4.4.1. 헤더 `linux-headers-7.0.0-31(-generic) 7.0.0-31.31`을 `apt download` 후 홈 디렉터리에 풀어 사용(설치 안 함). 소스: HEAD 026cae1c5 + 커밋 안 된 `smartgc-src/`. CPU 고정 없음. 장치·FTL 커널 실행·dmesg 없음(해당 없음). 상세 `result/smartgc-dev-20261114/environment.txt`.
+- **증거 경로**: `result/smartgc-dev-20261114/`.
+- **사후 기록(등록 전에 이미 실행한 것)**: ① 빌드 4건(기준 `varmail-compare-src` arm37, `smartgc-src` SMARTGC/GREEDY/arm47) — 20:11~20:18, 모두 성공, 경고는 "compiler differs"/"pahole version differs" 2종뿐. 로그 `kbuild-*.log`, 해시 `kbuild-modules.sha256`(다른 컴파일러로 빌드한 것이라 실험 모듈 해시와 비교 불가, 로드한 적 없음). ② 구동 예비 1건 `smartgc capacity_mib=8192 overwrite_x=1` — exit 0, invariants=ok, waf=7.635(스크립트 식), 콘솔 `prelim-smoke-smartgc-x1.log`. 그 전의 구동 시도 3건은 kshim 누락(kvmalloc, pr_info_once, NS_PER_SEC)으로 컴파일 실패, 콘솔 미보존.
+- **실행 중 변경 1 (20:24~20:35)**: stage1 첫 시도 11건 중단. 원인 2가지, 둘 다 구동기(test/) 결함이고 FTL 코드와 무관: ① 가짜 시계가 NAND 점유 시간을 따라가지 않아 `channel_model.c`가 "Need to increase array size"를 구동당 약 17만 줄 출력(구동이 10분 넘게 끝나지 않음) → `channel_model.c`를 포함하지 않고 지연 0 스텁으로 대체. ② `varmail-compare-src`에는 SmartGC 옵션 변수가 없어 `s1-greedy-old` 컴파일 실패 → 옵션 처리를 smartgc 빌드로 한정. 중단분 로그는 `aborted-2024-s1-*.log.gz`(무손실 압축), 같은 메시지로 22 MB였던 예비 로그도 `prelim-smoke-smartgc-x1.log.gz`로 압축. 수정 후 예비 4건 `prelim2-*.log`(모두 exit 0). 따라서 위 "목적 (2)"의 대상에서 `channel_model.c`는 빠진다.
+- **실행 중 변경 2 (20:50 등록)**: stage1·2 결과(SmartGC WAF가 Greedy의 1.6~1.8배, w·γ와 거의 무관)를 보고 stage3 추가. 가설: 논문대로 Q를 0으로 시작하면 보상이 항상 양수라 "한 번도 지운 적 없는 상태"가 지운 적 있는 모든 상태보다 순위가 낮아 탐색(ε)으로만 도달한다. 이를 확인하려고 모듈 파라미터 `smartgc_q_init`(Q(s, erase) 초기값, 기본 0 = 논문 그대로)을 추가하고 q_init=2000(최대 보상/(1−γ)보다 큼)과 ε 상수 0.3을 구동한다. 명령 `run-sims.sh stage3`. 판정 기준은 P1만 적용, 나머지는 관찰.
+- **실행 중 변경 3 (21:00 등록)**: stage3에서 q_init=2000이어도 γ=0.9·batch=8이면 WAF 12.8, γ=0 또는 batch=1이면 7.2~7.3(Greedy 7.22 수준)이었다. 원인 추정: 지운 라인의 "다음 상태"를 스텝 끝에서 읽었는데, 지운 라인은 스텝 안에서 곧바로 다시 쓰이므로 그 상태가 행동과 무관한 값(쓰기 포인터 진행 정도)이 된다. 코드 수정: 지운 라인의 다음 상태 = 지운 직후의 빈 라인(이용률 0, 새 erase count). 수정 후 stage1~3의 주요 경우를 `run-sims.sh stage4`로 다시 구동(이전 로그는 그대로 둠, stage1~3 수치는 수정 전 코드의 것). 판정 P1, 나머지 관찰.
+- **정정 (시각)**: 위 "실행 중 변경 2·3"의 등록 시각 20:50, 21:00은 어림으로 적은 틀린 값이다. 로그 파일 기준 실제 시각은 변경 2 등록 직후 stage3 시작 20:42:43, 변경 3 등록 직후 stage4 시작 20:45:59이다. 등록 시각 20:25도 어림이며 stage1 첫 시도 시작은 20:24:02다.
+- **종료 2026-11-14T20:53:48+09:00**. 실행 상태: 계획한 구동 전부 완료. stage1 11건(20:36:00~20:40:58), stage2 8건(~20:41:39), stage3 8건(20:42:43~20:45:03), stage4 18건(20:45:59~20:51:37), 최종 코드 확인 s5 3건(20:53:06~20:53:48) — 48건 모두 exit 0, `invariants=ok`. 중단 11건(변경 1)과 예비 5건은 위에 기록. 각 구동의 실제 수행량: 호스트 4KiB 쓰기 11,759,730페이지(계측 구간), 그 전에 순차 채우기 1회.
+- **판정**: P1 통과(48/48, BUG·INVARIANT FAILED 0). P2 통과 — Greedy: 새 소스·옛 소스 모두 host_pages=11759730 gc_pages=73154240; arm47: 모두 gc_pages=67213759. P3 통과 — 최종 소스로 다시 빌드한 4개(smartgc, smartgcq, sg-greedy, sg-arm47) 모두 rc=0, 경고는 컴파일러/pahole 버전 불일치 2종뿐(`kbuild-final-*.log`, 해시 `kbuild-final-modules.sha256`; 등록 전 빌드의 해시는 코드 수정 전 것).
+- **관찰 (사용자 공간 구동, zones 워크로드, WAF = 1 + gc/host; 측정값 아님)**:
+
+| 구동 | 코드 | WAF | part0 erase std |
+|---|---|---:|---:|
+| Greedy (`s4-greedy-new`) | 최종 | 7.221 | 7.19 |
+| 고정 CAT arm47 (`s4-arm47-new`) | 최종 | 6.716 | 3.70 |
+| SmartGC 기본(q_init=0) (`s1-smartgc-default`) | 수정 전 | 11.853 | – |
+| SmartGC 기본(q_init=0) (`s4-smartgc-default`, `s5-final-smartgc-default`) | 최종 | 12.827 | 15.64 |
+| SmartGC q_init=0, w 1~100 × γ 0~0.9, gcbuf=0 (stage2 8건) | 수정 전 | 12.64~13.58 | – |
+| SmartGC q_init=0, batch=64 (`s4-smartgc-batch64`) | 최종 | 7.669 | – |
+| SmartGC q_init=0, ε 상수 0.3, gcbuf=0 (`s4-smartgc-eps300const-gcbuf0`) | 최종 | 7.911 | – |
+| SmartGC q_init=2000, γ=0.9, gcbuf=0 (`s3-smartgc-qinit2000-gcbuf0`) | 수정 전 | 12.816 | – |
+| SmartGC q_init=2000, gcbuf=0 (`s4-smartgc-qinit2000-gcbuf0`) | 최종 | 7.303 | 9.13 |
+| SmartGC q_init=2000, gcbuf=10‰ (`s4-smartgc-qinit2000`, `s5-final-smartgc-qinit2000`) | 최종 | 7.168 (NAND 기준 7.164) | 7.07 |
+| SmartGC q_init=2000, gcbuf=50‰ (`s4-smartgc-qinit2000-gcbuf50`) | 최종 | 6.682 (NAND 기준 6.657) | 5.80 |
+| uniform: Greedy / SmartGC q_init=0 / q_init=2000 | 최종(Greedy는 s1) | 6.975 / 13.161 / 7.099 | – |
+
+- **해석**: ① 논문대로 Q를 0에서 시작하면 이 구동에서는 Greedy보다 WAF가 약 1.8배이고 w·γ를 바꿔도 거의 같다. Q(s, 지움)을 2000에서 시작하면 Greedy와 1% 안쪽이다(가설 지지). ② 지운 라인의 다음 상태를 "빈 라인"으로 고치기 전에는 q_init=2000이어도 12.8이었고 고친 뒤 7.30이다(q_init=0에는 효과 없음). ③ GC 버퍼가 클수록 erase 표준편차가 작다(9.13 → 7.07 → 5.80, 파티션 0). 방향은 논문 Fig. 7a와 같다.
+- **한계**: 가짜 시계·지연 0 채널 모델·단일 시드(sim_seed 기본, smartgc_seed=1)·반복 없음·이 구동 전용 워크로드. 고정 CAT은 가짜 시계의 나이에 좌우되므로 arm47 수치는 의미가 약하다. 절대 WAF(Greedy 7.2)는 실험 워크로드와 무관하다. 커널에서 모듈을 로드·실행한 적은 없다(빌드만 확인) — proc 출력, 모듈 파라미터, 락 경로는 실제 장비에서 처음 실행된다. 계산식 확인이지 독립 계측 검증이 아니다.
+- **오류/경고**: 사용자 공간 컴파일 경고는 기존 `ssd.c`의 `-Wmaybe-uninitialized` 2건(로그마다 첫 부분). 그 외 없음.
+- **정리 상태**: WSL 홈 `~/sgbuild/`(헤더, 빌드 사본, 구동 바이너리)는 저장소 밖이며 남겨 두었다. 저장소에는 `smartgc-src/`, `result/smartgc-dev-20261114/`, `script/build-all-modules.sh`(4줄), `script/mix-gc-20261010.sh`(1줄)가 커밋되지 않은 채 추가·수정되어 있다. 최종 소스 해시 `source.sha256`.
+- **다음 조치**: 원래 실험 컴퓨터에서 `bash script/build-all-modules.sh` → 짧은 실행(예 `SMOKE=1` 또는 t4)으로 로드·계측 줄 확인 → 본 실험은 별도 사전 등록. `smartgc`(Q 0 시작)와 `smartgcq`(2000 시작) 중 무엇을 비교 대상으로 삼을지 사용자 결정 필요.

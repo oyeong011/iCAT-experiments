@@ -1,0 +1,65 @@
+# smartgc-src — SmartGC 정책
+
+`varmail-compare-src`(고정 CAT·Greedy)를 복사하고 GC 정책 3번 **SmartGC**를 더한 NVMeVirt 소스다.
+출처: Zhao et al., "SmartGC: Enhancing SSD Performance and Lifespan through Intelligent Garbage Collection", IEEE HPCC 2025 (DOI 10.1109/HPCC67675.2025.00022). 원저자 코드는 공개되어 있지 않아 논문 본문만으로 구현했다.
+
+## 무엇을 구현했나
+
+| 논문 | 구현 (`conv_ftl.c`의 `SMARTGC_CORE_BEGIN` ~ `SMARTGC_CORE_END`) |
+|---|---|
+| 상태 = (이용률, 정규화 erase count), 각 100구간 (Table I) | `smartgc_state()` — 라인(슈퍼블록) 단위. 이 FTL은 라인을 통째로 지운다 |
+| 행동 = 블록마다 지움/둠, 희생 블록 목록을 GC에 전달 | `smartgc_step()`이 목록(`smartgc_batch`개)을 만들고 GC는 목록에서만 지운다 |
+| 보상 R = w/U + 1/std (Alg. 1) | 지움: `smartgc_on_erase()`, 둠: 1/std |
+| Q-learning 갱신 (식 7), ε-greedy (식 8, Alg. 2) | `smartgc_learn()`, `smartgc_step()`, ε는 스텝 수에 따라 반감 |
+| GC 버퍼: 예상 erase count 상위 k개 블록을 얼리고 그 블록으로 가는 쓰기를 DRAM에 둠 (III-C) | `smartgc_refreeze()`, `smartgc_absorb()`, `smartgc_drain()`, 읽기는 `smartgc_buffered()` |
+
+스텝 하나 = 희생 목록 하나. 목록을 다 쓰면 새 상태를 관측해 Q를 갱신하고, 얼릴 라인을 다시 정하고, 다음 목록을 고른다.
+
+## 논문이 정하지 않아 직접 정한 것
+
+1. **Q-table은 파티션당 하나**(상태 10,000 × 행동 2). 논문은 블록마다 20 KB라고 적었는데, 여기서는 파티션당 160 MB가 되고 거의 모든 칸이 방문되지 않는다.
+2. **"둠" 행동의 보상**은 논문에 없다. 1/std만 준다. 지운 라인의 다음 상태는 "빈 라인", 둔 라인의 다음 상태는 스텝 끝의 상태다.
+3. **후보는 무효 페이지가 1개 이상인 닫힌 라인**만. 꽉 찬 라인을 지우면 공간이 생기지 않아 FTL이 멈춘다.
+4. **얼린 라인은 목록에 넣지 않는다.** 그래서 III-B의 "금지 블록 벌점"은 적용할 곳이 없고, 정의가 없는 "선호 블록" 규칙은 구현하지 않았다.
+5. **얼릴 수 있는 것은 닫힌 라인뿐**(빈 라인·쓰는 중인 라인 제외). 예상 erase count는 E + (직전 스텝 증가분).
+6. **GC 버퍼는 모델이다.** NVMeVirt의 FTL은 데이터를 갖고 있지 않으므로 "DRAM에 있다"는 표시만 한다: NAND 기록·무효화 없음, 읽기는 NAND 지연 없음. 얼림이 풀리면 호스트 페이지 쓰기 1회마다 1페이지씩 플래시에 쓴다(GC 안에서 쓰면 빈 라인이 바닥날 수 있어서). NVMe flush로 비우지 않으며 전원 손실은 고려하지 않는다.
+7. **w, α, γ, ε, 목록 길이**는 논문에 값이 없다. 기본값 α=0.5, γ=0.9(논문 Fig. 1 예시 값), w=1, ε 0.3→0.01(2048스텝마다 초과분 반감), 목록 8개, GC 버퍼 = 라인의 1%.
+8. **Q 초기값** — 아래 참고.
+
+## Q 초기값 (`smartgc_q_init`)
+
+논문은 Q를 0으로 시작한다. 보상이 항상 양수라서, 한 번도 지워 본 적 없는 상태는 지워 본 모든 상태보다 순위가 낮고 ε 탐색으로만 도달한다. 사용자 공간 구동(`test/`, 측정 아님)에서 이 설정은 Greedy보다 WAF가 약 1.8배였고, Q(s, 지움)을 큰 값(2000)으로 시작하면 Greedy와 비슷했다(`EXPERIMENT_LOG.md`의 smartgc-dev-20261114).
+
+- `nvmev-smartgc.ko` — 0에서 시작 (논문 그대로)
+- `nvmev-smartgcq.ko` — 2000에서 시작 (빌드 시 `SMARTGC_Q_INIT=2000`)
+
+어느 쪽을 비교 대상으로 쓸지는 정해야 한다. 논문에 실을 때는 어느 쪽인지 밝혀야 한다.
+
+## 빌드와 실행
+
+```bash
+bash script/build-all-modules.sh        # nvmev-smartgc.ko, nvmev-smartgcq.ko, nvmev-sg-greedy.ko, nvmev-sg-arm47.ko 포함
+bash script/mix-gc-20261010.sh mixY smartgc 1
+```
+
+모듈 파라미터(모두 읽기 전용, insmod 때 지정, 단위 ‰): `smartgc_alpha_permille`, `smartgc_gamma_permille`, `smartgc_eps_start_permille`, `smartgc_eps_min_permille`, `smartgc_eps_halflife`(스텝), `smartgc_w_permille`, `smartgc_batch`(1~64), `smartgc_gcbuf_permille`(0 = 버퍼 없음), `smartgc_q_init`, `smartgc_seed`. 실제 값은 로드할 때 `SmartGC init ...` 줄로 커널 로그에 남는다.
+
+## 계측
+
+`/proc/nvmevirt_measurement`의 기존 줄(첫 줄, `part=` 줄)은 그대로이고 뒤에 줄이 추가된다.
+
+- `wear part=N erase_min= erase_max= erase_mean_milli= erase_std_milli=` — 라인별 erase count. **모든 정책**에서 나오므로 Greedy·CAT의 마모를 보려면 `smartgc-src`로 빌드한 `sg-greedy`, `sg-arm47`을 쓴다(GC 동작은 `varmail-compare-src`와 같음: 사용자 공간 구동에서 host/GC 페이지 수 일치).
+- `smartgc part=N steps= explored= eps_permille= absorbed= evicted= gc_flushed= frozen= buf_pages= freezes= thaws=` — `start` 때 0으로 돌아간다(frozen, buf_pages 제외). Q-table도 `start` 때 초기화된다(온라인 학습기와 같은 cold start).
+
+**WAF 주의**: `host_pages`는 호스트가 쓴 페이지 수(버퍼가 흡수한 것 포함)다. 기존 스크립트의 `1 + gc_pages/host_pages`는 버퍼가 줄여 준 NAND 쓰기를 반영하지 않는다. NAND 기준 WAF는 `(host_pages − absorbed + evicted + gc_pages) / host_pages`이고, 스크립트 값보다 작거나 같다.
+
+모듈을 내릴 때 `Wear: ...`, `SmartGC summary ...` 줄이 커널 로그에 남는다.
+
+## 사용자 공간 구동 (`test/`)
+
+실제 장비에 올리기 전에 FTL 논리를 확인하는 도구다. `conv_ftl.c`, `ssd.c`, `pqueue.c`를 그대로 컴파일하고(커널 API는 `kshim.h`, 채널 모델은 지연 0 스텁) NVMe 쓰기/읽기 명령을 직접 넣으며 매핑·라인·GC 버퍼 불변식을 검사한다. 시간은 가짜 시계이므로 **수치는 측정값이 아니다.**
+
+```bash
+bash smartgc-src/test/run.sh smartgc capacity_mib=8192 overwrite_x=6 q_init=2000
+SIM_SRC=varmail-compare-src bash smartgc-src/test/run.sh greedy    # 다른 소스 사본을 같은 구동기로
+```

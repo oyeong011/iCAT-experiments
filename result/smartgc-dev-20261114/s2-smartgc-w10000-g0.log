@@ -1,0 +1,34 @@
+# started 2026-11-14T20:40:59+09:00 SIM_SRC=smartgc-src policy=smartgc options: capacity_mib=8192 overwrite_x=6 gcbuf=0 w=10000 gamma=0
+In file included from /mnt/c/Users/oyeon/orca/iCAT-experiments/smartgc-src/test/sim.c:19:
+/mnt/c/Users/oyeon/orca/iCAT-experiments/smartgc-src/ssd.c: In function ‘ssd_advance_nand’:
+/mnt/c/Users/oyeon/orca/iCAT-experiments/smartgc-src/ssd.c:418:42: warning: ‘chnl_etime’ may be used uninitialized [-Wmaybe-uninitialized]
+  418 |                 lun->next_lun_avail_time = chnl_etime;
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+/mnt/c/Users/oyeon/orca/iCAT-experiments/smartgc-src/ssd.c:368:30: note: ‘chnl_etime’ was declared here
+  368 |         uint64_t chnl_stime, chnl_etime;
+      |                              ^~~~~~~~~~
+epoch=1 active=0 host_bytes=48167854080 host_pages=11759730 gc_pages=144865220
+part=0 host_pages=2938913 gc_pages=36024475 gc_count=608270 arm=37 windows=0 phase=0
+part=1 host_pages=2937011 gc_pages=35355083 gc_count=597781 arm=37 windows=0 phase=0
+part=2 host_pages=2941844 gc_pages=35528236 gc_count=600562 arm=37 windows=0 phase=0
+part=3 host_pages=2941962 gc_pages=37957426 gc_count=638520 arm=37 windows=0 phase=0
+wear part=0 erase_min=5 erase_max=101 erase_mean_milli=74251 erase_std_milli=18812
+wear part=1 erase_min=1 erase_max=89 erase_mean_milli=72971 erase_std_milli=15652
+wear part=2 erase_min=5 erase_max=89 erase_mean_milli=73310 erase_std_milli=14937
+wear part=3 erase_min=3 erase_max=92 erase_mean_milli=77944 erase_std_milli=15484
+smartgc part=0 steps=76034 explored=15791 eps_permille=10 absorbed=0 evicted=0 gc_flushed=0 frozen=0 buf_pages=0 freezes=0 thaws=0
+smartgc part=1 steps=74723 explored=15290 eps_permille=10 absorbed=0 evicted=0 gc_flushed=0 frozen=0 buf_pages=0 freezes=0 thaws=0
+smartgc part=2 steps=75071 explored=15454 eps_permille=10 absorbed=0 evicted=0 gc_flushed=0 frozen=0 buf_pages=0 freezes=0 thaws=0
+smartgc part=3 steps=79815 explored=15927 eps_permille=10 absorbed=0 evicted=0 gc_flushed=0 frozen=0 buf_pages=0 freezes=0 thaws=0
+sim policy=smartgc workload=zones capacity_mib=8192 host_pages=11759730 gc_pages=144865220 waf=13.318754 waf_nand=13.318754 invariants=ok
+NVMeVirt: Wear: ns=0 part=0 erases=608270 erase_min=5 erase_max=101 erase_mean_milli=74251 erase_std_milli=18812
+NVMeVirt: Wear: ns=0 part=1 erases=597781 erase_min=1 erase_max=89 erase_mean_milli=72971 erase_std_milli=15652
+NVMeVirt: Wear: ns=0 part=2 erases=600562 erase_min=5 erase_max=89 erase_mean_milli=73310 erase_std_milli=14937
+NVMeVirt: Wear: ns=0 part=3 erases=638520 erase_min=3 erase_max=92 erase_mean_milli=77944 erase_std_milli=15484
+NVMeVirt: GC stats: ns=0 policy=smartgc host_pages=11759730 gc_pages=144865220 gc_count=2445133 WAF=13.318 warmup_gc=100-per-part
+NVMeVirt: SmartGC summary ns=0 part=0 steps=76034 explored=15791 eps_permille=10 absorbed=0 evicted=0 gc_flushed=0 frozen=0 buf_pages=0 freezes=0 thaws=0
+NVMeVirt: SmartGC summary ns=0 part=1 steps=74723 explored=15290 eps_permille=10 absorbed=0 evicted=0 gc_flushed=0 frozen=0 buf_pages=0 freezes=0 thaws=0
+NVMeVirt: SmartGC summary ns=0 part=2 steps=75071 explored=15454 eps_permille=10 absorbed=0 evicted=0 gc_flushed=0 frozen=0 buf_pages=0 freezes=0 thaws=0
+NVMeVirt: SmartGC summary ns=0 part=3 steps=79815 explored=15927 eps_permille=10 absorbed=0 evicted=0 gc_flushed=0 frozen=0 buf_pages=0 freezes=0 thaws=0
+exit=0
+# finished 2026-11-14T20:41:38+09:00
