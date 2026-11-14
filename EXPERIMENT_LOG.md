@@ -13288,3 +13288,16 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS01(test4) host_pages=72001987 gc_pages=73807988 WAF=2.025083
 - ycsb-load 
 - ycsb-run 
+
+### gc-20261010 mixY resv2 — started 2026-11-14T22:17:18+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-res-v2.ko`.
+- Command: `env MIXY_SEQ="F" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY resv2 1`; evidence `result/resource-v124-20261114/mixY-resv2-rep1/`.
+
+- Finished 2026-11-14T22:48:48+09:00; mixY resv2 exit=0; evidence `/home/oy/iCAT/result/resource-v124-20261114/mixY-resv2-rep1`; cleanup attempted.
+- total host_bytes=294920187904 host_pages=72001999 gc_pages=72108183 WAF=2.001475
+- phaseA(test4) host_pages=72001999 gc_pages=72108183 WAF=2.001475
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseS01(test4) host_pages=72001999 gc_pages=72108183 WAF=2.001475
+- ycsb-load 
+- ycsb-run 
