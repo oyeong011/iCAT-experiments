@@ -13254,3 +13254,11 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - Instrumented copies `res-v{1,2,4}-src` from `analysis/resource/instrument.py`: ktime_get_ns counters (n, sum, max per partition) for do_gc, on_gc, observe, reward update, selection, sample printk, set_arm, all under `#ifdef RES_INSTR`. Without RES_INSTR each copy builds to the original .text (checked). Fixed CAT-47 = `res-v4-src` with CAT_FIG7 + `-DCONV_FIXED_ARM=47` (learner compiled out).
 - Workload: mixY prep + FIO-Fast 1800 s; order rep1 F/v1/v2/v4, rep2 v4/v2/v1/F, rep3 v2/F/v4/v1; then one uninstrumented run each (fixed47-noinstr, v1, v2, v4) for the WAF check. Samples every 10 s: /proc/meminfo, module coresize, nvmev kthreads schedstat/stat/status.
 - Command: `nohup setsid bash script/resource-v124-20261114.sh > result/resource-v124-20261114.out 2>&1 &`
+
+### gc-20261010 mixY resfixed47 — started 2026-11-14T20:40:46+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-res-fixed47.ko`.
+- Command: `env MIXY_SEQ="F" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY resfixed47 1`; evidence `result/resource-v124-20261114/mixY-resfixed47-rep1/`.
+
+- Finished 2026-11-14T21:12:13+09:00; mixY resfixed47 exit=1; evidence `/home/oy/iCAT/result/resource-v124-20261114/mixY-resfixed47-rep1`; cleanup attempted.
+- 2026-11-14 21:12: run 1 (resfixed47 rep1) measured fully but failed in the summary step: `PN[S02]: unbound variable` (mix-gc-20261010.sh mixY assumed >= 2 phases). Fixed: one-letter MIXY_SEQ -> phase B empty (as scrWP); runs with >= 2 letters unchanged. Failed evidence kept as `failed-21h12-*`; queue restarted.

@@ -311,8 +311,8 @@ case "$label" in
                    O) PN[$sl]=oltp; VM_RUN=$((ps_ / 2)) VM_CHUNKS=2 phase_filebench $sl oltp "" 32m;;
                    *) echo "bad letter $w"; exit 2;;
                esac
-           done; A_NAME=${PN[S01]}; B_NAME=${PN[S02]}
-           for f in start end; do cp "$dir/phase-S01-$f.txt" "$dir/phase-A-$f.txt"; cp "$dir/phase-S02-$f.txt" "$dir/phase-B-$f.txt"; done;;
+           done; A_NAME=${PN[S01]}; B_NAME=${PN[S02]:-none}   # 11-14: one-letter MIXY_SEQ (resource run) -> empty phase B, as scrWP
+           for f in start end; do cp "$dir/phase-S01-$f.txt" "$dir/phase-A-$f.txt"; if [[ -f "$dir/phase-S02-$f.txt" ]]; then cp "$dir/phase-S02-$f.txt" "$dir/phase-B-$f.txt"; else cp "$dir/phase-S01-end.txt" "$dir/phase-B-$f.txt"; fi; done;;
     scrWP) A_NAME=webproxy; B_NAME=none; VM_RUN=${PH_SECS:-1800} VM_CHUNKS=1 phase_filebench A webproxy; for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;
     scrFS) A_NAME=fileserver; B_NAME=none; VM_RUN=${PH_SECS:-1800} VM_CHUNKS=1 phase_filebench A fileserver 6000; for f in start loaded end; do cp "$dir/phase-A-end.txt" "$dir/phase-B-$f.txt"; done;;
     mixX)  # 10-07 (user): GC-heavy workloads only, 30-min phases, 20 phases

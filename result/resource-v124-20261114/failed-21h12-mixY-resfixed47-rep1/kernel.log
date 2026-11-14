@@ -1,0 +1,86 @@
+[5532988.501960] mix-mixY-resfixed47-2426821 BEGIN
+[5532988.647919] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[5532988.647925] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[5532988.658730] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[5532988.669544] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[5532988.680460] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[5532988.680474] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[5532988.681713] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[5532988.681750] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[5532988.681751] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=0 initial_k=10 initial_scale_pct=25 initial_age_ratio=16 warmup_gc=100
+[5532988.692693] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[5532988.703128] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[5532988.703142] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[5532988.704543] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[5532988.704549] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=1 initial_k=10 initial_scale_pct=25 initial_age_ratio=16 warmup_gc=100
+[5532988.715056] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[5532988.725817] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[5532988.725832] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[5532988.727238] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[5532988.727243] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=2 initial_k=10 initial_scale_pct=25 initial_age_ratio=16 warmup_gc=100
+[5532988.737913] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[5532988.748335] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[5532988.748352] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[5532988.749817] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[5532988.749820] NVMeVirt: GC victim policy: cat-fig7-fixed ns=0 part=3 initial_k=10 initial_scale_pct=25 initial_age_ratio=16 warmup_gc=100
+[5532988.749827] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[5532988.749829] NVMeVirt: ns 0/1: size 7655 MiB
+[5532988.749885] PCI host bridge to bus 0001:10
+[5532988.749887] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[5532988.749890] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[5532988.749893] pci_bus 0001:10: root bus resource [bus 00-ff]
+[5532988.749900] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[5532988.749904] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[5532988.749907] pci 0001:10:00.0: enabling Extended Tags
+[5532988.750058] NVMeVirt: Virtual PCI bus created (node 0)
+[5532988.750428] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[5532988.750469] NVMeVirt: Virtual NVMe device created
+[5532988.750665] nvme nvme0: pci function 0001:10:00.0
+[5532988.751140] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[5532988.752831] nvme nvme0: 8/0/0 default/read/poll queues
+[5532989.410403] EXT4-fs (nvme0n1): mounted filesystem 1c6bba2d-38c4-4680-b74d-2443d91bfa9e r/w with ordered data mode. Quota mode: none.
+[5533071.581840] NVMeVirt: Measurement: command=start epoch=1 host_bytes=0 learner_active=1
+[5533071.610407] mix-mixY-resfixed47-2426821 phase=S01 START
+[5534190.942914] audit: type=1400 audit(1794657651.906:8650): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=2431436 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[5534192.002073] audit: type=1400 audit(1794657652.965:8651): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=2431728 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[5534192.751354] audit: type=1400 audit(1794657653.714:8652): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=2431806 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[5534193.454553] audit: type=1400 audit(1794657654.417:8653): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=2431878 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[5534194.214512] audit: type=1400 audit(1794657655.177:8654): apparmor="DENIED" operation="open" class="file" profile="snap.firmware-updater.firmware-notifier" name="/proc/sys/vm/max_map_count" pid=2431950 comm="firmware-notifi" requested_mask="r" denied_mask="r" fsuid=1000 ouid=0
+[5534872.076446] mix-mixY-resfixed47-2426821 phase=S01 END
+[5534872.079786] NVMeVirt: Measurement: command=stop epoch=1 host_bytes=294920126464 learner_active=0
+[5534872.109280] EXT4-fs (nvme0n1): unmounting filesystem 1c6bba2d-38c4-4680-b74d-2443d91bfa9e.
+[5534872.174084] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[5534872.174224] NVMeVirt: RESOURCE part=0 slot=dogc n=499146 sum_ns=66328884965 max_ns=4322308
+[5534872.174229] NVMeVirt: RESOURCE part=0 slot=ongc n=499146 sum_ns=9051516 max_ns=15053
+[5534872.174232] NVMeVirt: RESOURCE part=0 slot=observe n=0 sum_ns=0 max_ns=0
+[5534872.174234] NVMeVirt: RESOURCE part=0 slot=update n=0 sum_ns=0 max_ns=0
+[5534872.174236] NVMeVirt: RESOURCE part=0 slot=select n=0 sum_ns=0 max_ns=0
+[5534872.174238] NVMeVirt: RESOURCE part=0 slot=log n=0 sum_ns=0 max_ns=0
+[5534872.174240] NVMeVirt: RESOURCE part=0 slot=setarm n=0 sum_ns=0 max_ns=0
+[5534872.174242] NVMeVirt: RESOURCE part=0 arm=47 sizeof_tuner=2656 sizeof_arm=40 arm_slots=60 sizeof_param=128 sizeof_conv_ftl=2904 sizeof_line=48 tt_lines=8192
+[5534872.174245] NVMeVirt: RESOURCE part=1 slot=dogc n=499118 sum_ns=66310395154 max_ns=4238209
+[5534872.174248] NVMeVirt: RESOURCE part=1 slot=ongc n=499118 sum_ns=9200711 max_ns=14881
+[5534872.174250] NVMeVirt: RESOURCE part=1 slot=observe n=0 sum_ns=0 max_ns=0
+[5534872.174252] NVMeVirt: RESOURCE part=1 slot=update n=0 sum_ns=0 max_ns=0
+[5534872.174254] NVMeVirt: RESOURCE part=1 slot=select n=0 sum_ns=0 max_ns=0
+[5534872.174255] NVMeVirt: RESOURCE part=1 slot=log n=0 sum_ns=0 max_ns=0
+[5534872.174257] NVMeVirt: RESOURCE part=1 slot=setarm n=0 sum_ns=0 max_ns=0
+[5534872.174259] NVMeVirt: RESOURCE part=1 arm=47 sizeof_tuner=2656 sizeof_arm=40 arm_slots=60 sizeof_param=128 sizeof_conv_ftl=2904 sizeof_line=48 tt_lines=8192
+[5534872.174263] NVMeVirt: RESOURCE part=2 slot=dogc n=498960 sum_ns=66375487650 max_ns=10135625
+[5534872.174265] NVMeVirt: RESOURCE part=2 slot=ongc n=498960 sum_ns=9122784 max_ns=22406
+[5534872.174267] NVMeVirt: RESOURCE part=2 slot=observe n=0 sum_ns=0 max_ns=0
+[5534872.174269] NVMeVirt: RESOURCE part=2 slot=update n=0 sum_ns=0 max_ns=0
+[5534872.174271] NVMeVirt: RESOURCE part=2 slot=select n=0 sum_ns=0 max_ns=0
+[5534872.174273] NVMeVirt: RESOURCE part=2 slot=log n=0 sum_ns=0 max_ns=0
+[5534872.174274] NVMeVirt: RESOURCE part=2 slot=setarm n=0 sum_ns=0 max_ns=0
+[5534872.174277] NVMeVirt: RESOURCE part=2 arm=47 sizeof_tuner=2656 sizeof_arm=40 arm_slots=60 sizeof_param=128 sizeof_conv_ftl=2904 sizeof_line=48 tt_lines=8192
+[5534872.174280] NVMeVirt: RESOURCE part=3 slot=dogc n=499143 sum_ns=66305817421 max_ns=10158393
+[5534872.174282] NVMeVirt: RESOURCE part=3 slot=ongc n=499143 sum_ns=9383970 max_ns=282238
+[5534872.174284] NVMeVirt: RESOURCE part=3 slot=observe n=0 sum_ns=0 max_ns=0
+[5534872.174286] NVMeVirt: RESOURCE part=3 slot=update n=0 sum_ns=0 max_ns=0
+[5534872.174288] NVMeVirt: RESOURCE part=3 slot=select n=0 sum_ns=0 max_ns=0
+[5534872.174291] NVMeVirt: RESOURCE part=3 slot=log n=0 sum_ns=0 max_ns=0
+[5534872.174293] NVMeVirt: RESOURCE part=3 slot=setarm n=0 sum_ns=0 max_ns=0
+[5534872.174295] NVMeVirt: RESOURCE part=3 arm=47 sizeof_tuner=2656 sizeof_arm=40 arm_slots=60 sizeof_param=128 sizeof_conv_ftl=2904 sizeof_line=48 tt_lines=8192
+[5534872.174298] NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=72001984 gc_pages=55765497 gc_count=1996367 WAF=1.774 warmup_gc=100-per-part
+[5534872.245169] NVMeVirt: Virtual NVMe device closed
