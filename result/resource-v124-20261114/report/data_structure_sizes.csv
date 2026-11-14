@@ -1,0 +1,93 @@
+policy,struct,member,bytes_each,count,bytes_total,category
+iCAT v1,struct watgc_v2_arm × 60,host_pages,8,60,480,후보별 보상 통계 (Q16 누적 host 페이지)
+iCAT v1,struct watgc_v2_arm × 60,gc_pages,8,60,480,후보별 보상 통계 (Q16 누적 GC 페이지)
+iCAT v1,struct watgc_v2_arm × 60,count_q16,8,60,480,후보별 가중치 (할인된 관측 수)
+iCAT v1,struct watgc_v2_arm × 60,visits,8,60,480,탐색 (후보별 방문 수)
+iCAT v1,struct watgc_v2_arm × 60,last_window,8,60,480,탐색 (후보별 마지막 관측 구간)
+iCAT v1,struct watgc_v2_tuner,phase,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,current_arm,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,best_arm,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,ns_id,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,part_id,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,epoch,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,windows,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,epoch_windows,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,discarded_windows,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,phase_host_start,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,phase_gcpage_start,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,phase_gc_start,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,phase_start_ns,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v1,struct watgc_v2_tuner,stable_windows,4,1,4,정착·변화 감지
+iCAT v1,struct watgc_v2_tuner,best_confirmations,4,1,4,정착·변화 감지
+iCAT v1,struct watgc_v2_tuner,exploit_windows,4,1,4,탐색 (정착 후 이웃 탐색 주기)
+iCAT v1,struct watgc_v2_tuner,drift_windows,4,1,4,정착·변화 감지
+iCAT v1,struct watgc_v2_tuner,reference_waf_q16,4,1,4,정착·변화 감지
+iCAT v1,struct watgc_v2_tuner,settled,1,1,1,정착·변화 감지
+iCAT v1,struct watgc_v2_tuner,param,128,1,128,공통: 현재 CAT 파라미터 (고정 CAT도 사용)
+iCAT v1,struct watgc_v2_tuner,(padding/holes),7,1,7,정렬 패딩
+iCAT v1,struct watgc_v2_tuner,TOTAL per partition,2640,1,2640,sizeof(struct watgc_v2_tuner)
+iCAT v1,struct watgc_v2_tuner,TOTAL learner-only per partition,2512,1,2512,sizeof - param (고정 CAT도 쓰는 부분 제외)
+iCAT v1,4 partitions,TOTAL,10560,4,10560,SSD_PARTITIONS=4
+iCAT v1,4 partitions,TOTAL learner-only,10048,4,10048,
+iCAT v2,struct watgc_v2_arm × 60,host_pages,8,60,480,후보별 보상 통계 (Q16 누적 host 페이지)
+iCAT v2,struct watgc_v2_arm × 60,gc_pages,8,60,480,후보별 보상 통계 (Q16 누적 GC 페이지)
+iCAT v2,struct watgc_v2_arm × 60,count_q16,8,60,480,후보별 가중치 (할인된 관측 수)
+iCAT v2,struct watgc_v2_arm × 60,visits,8,60,480,탐색 (후보별 방문 수)
+iCAT v2,struct watgc_v2_arm × 60,last_window,8,60,480,탐색 (후보별 마지막 관측 구간)
+iCAT v2,struct watgc_v2_tuner,phase,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,current_arm,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,best_arm,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,ns_id,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,part_id,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,epoch,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,windows,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,epoch_windows,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,discarded_windows,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,phase_host_start,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,phase_gcpage_start,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,phase_gc_start,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,phase_start_ns,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v2,struct watgc_v2_tuner,stable_windows,4,1,4,정착·변화 감지
+iCAT v2,struct watgc_v2_tuner,best_confirmations,4,1,4,정착·변화 감지
+iCAT v2,struct watgc_v2_tuner,exploit_windows,4,1,4,탐색 (정착 후 이웃 탐색 주기)
+iCAT v2,struct watgc_v2_tuner,drift_windows,4,1,4,정착·변화 감지
+iCAT v2,struct watgc_v2_tuner,reference_waf_q16,4,1,4,정착·변화 감지
+iCAT v2,struct watgc_v2_tuner,settled,1,1,1,정착·변화 감지
+iCAT v2,struct watgc_v2_tuner,param,128,1,128,공통: 현재 CAT 파라미터 (고정 CAT도 사용)
+iCAT v2,struct watgc_v2_tuner,(padding/holes),7,1,7,정렬 패딩
+iCAT v2,struct watgc_v2_tuner,TOTAL per partition,2640,1,2640,sizeof(struct watgc_v2_tuner)
+iCAT v2,struct watgc_v2_tuner,TOTAL learner-only per partition,2512,1,2512,sizeof - param (고정 CAT도 쓰는 부분 제외)
+iCAT v2,4 partitions,TOTAL,10560,4,10560,SSD_PARTITIONS=4
+iCAT v2,4 partitions,TOTAL learner-only,10048,4,10048,
+iCAT v4,struct watgc_v2_arm × 60,host_pages,8,60,480,후보별 보상 통계 (Q16 누적 host 페이지)
+iCAT v4,struct watgc_v2_arm × 60,gc_pages,8,60,480,후보별 보상 통계 (Q16 누적 GC 페이지)
+iCAT v4,struct watgc_v2_arm × 60,count_q16,8,60,480,후보별 가중치 (할인된 관측 수)
+iCAT v4,struct watgc_v2_arm × 60,visits,8,60,480,탐색 (후보별 방문 수)
+iCAT v4,struct watgc_v2_arm × 60,last_window,8,60,480,탐색 (후보별 마지막 관측 구간)
+iCAT v4,struct watgc_v2_tuner,phase,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,current_arm,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,best_arm,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,ns_id,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,part_id,4,1,4,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,epoch,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,windows,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,epoch_windows,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,discarded_windows,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,phase_host_start,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,phase_gcpage_start,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,phase_gc_start,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,phase_start_ns,8,1,8,구간·단계 관리 (bookkeeping)
+iCAT v4,struct watgc_v2_tuner,stable_windows,4,1,4,정착·변화 감지
+iCAT v4,struct watgc_v2_tuner,best_confirmations,4,1,4,정착·변화 감지
+iCAT v4,struct watgc_v2_tuner,exploit_windows,4,1,4,탐색 (정착 후 이웃 탐색 주기)
+iCAT v4,struct watgc_v2_tuner,drift_windows,4,1,4,정착·변화 감지
+iCAT v4,struct watgc_v2_tuner,reference_waf_q16,4,1,4,정착·변화 감지
+iCAT v4,struct watgc_v2_tuner,active,8,1,8,후보 제거 (활성 후보 비트맵)
+iCAT v4,struct watgc_v2_tuner,probe_idx,4,1,4,탐색 (정착 후 이웃 탐색 위치)
+iCAT v4,struct watgc_v2_tuner,settled,1,1,1,정착·변화 감지
+iCAT v4,struct watgc_v2_tuner,param,128,1,128,공통: 현재 CAT 파라미터 (고정 CAT도 사용)
+iCAT v4,struct watgc_v2_tuner,(padding/holes),11,1,11,정렬 패딩
+iCAT v4,struct watgc_v2_tuner,TOTAL per partition,2656,1,2656,sizeof(struct watgc_v2_tuner)
+iCAT v4,struct watgc_v2_tuner,TOTAL learner-only per partition,2528,1,2528,sizeof - param (고정 CAT도 쓰는 부분 제외)
+iCAT v4,4 partitions,TOTAL,10624,4,10624,SSD_PARTITIONS=4
+iCAT v4,4 partitions,TOTAL learner-only,10112,4,10112,

@@ -1,0 +1,57 @@
+{
+ "experiment": "resource-v124-20261114",
+ "git_commit_at_analysis": "82f7096a1e4ba0ffea3d4178e0a2d61daa79f05a",
+ "git_commit_at_start": "fb73280084545810227a03c97a1538d09a94eb67",
+ "branch": "resource-overhead-20261114",
+ "environment": {
+  "cpu": "Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz",
+  "cpus": 8,
+  "mem_total_kB": "7989720",
+  "os": "Ubuntu 24.04.4 LTS",
+  "kernel": "7.0.0-31-generic",
+  "gcc": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "host_storage": "sda     WDC WDS250G1B0A-00H9H0 232.9G    0\nsdb     WDC WD10EZEX-22MFCA0   931.5G    1\nnvme0n1 CSL_Virt_MN_01           7.5G    0",
+  "emulated_device": "NVMeVirt conventional SSD, RAM-backed, memmap_start=4G memmap_size=8192M, 4 FTL partitions",
+  "nvmevirt_base": "oyeong011/nvmevirt fork (see repo), conv FTL; iCAT sources online-mix-src / online-v2-src / online-v4-src",
+  "insmod_args": "memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1",
+  "make_flags": {
+   "resv1/resv2/resv4": "NVMEVIRT_GC_POLICY=WATGC_V2 KCFLAGS=-DRES_INSTR",
+   "resfixed47": "NVMEVIRT_GC_POLICY=CAT_FIG7 KCFLAGS=\"-DRES_INSTR -DCONV_FIXED_ARM=47\"",
+   "resfixed47n": "NVMEVIRT_GC_POLICY=CAT_FIG7 KCFLAGS=-DCONV_FIXED_ARM=47",
+   "kbuild_ccflags": "ccflags-y += -Wno-unused-variable -Wno-unused-function ccflags-$(CONFIG_NVMEVIRT_NVM) += -DBASE_SSD=INTEL_OPTANE ccflags-$(CONFIG_NVMEVIRT_SSD) += -DBASE_SSD=SAMSUNG_970PRO ccflags-y += -DCONV_GC_POLICY=0 ccflags-y += -DCONV_GC_POLICY=1 ccflags-y += -DCONV_GC_POLICY=2 ccflags-$(CONFIG_NVMEVIRT_ZNS) += -DBASE_SSD=WD_ZN540 ccflags-$(CONFIG_NVMEVIRT_ZNS) += -Wno-implicit-fallthrough ccflags-$(CONFIG_NVMEVIRT_KV) += -DBASE_SSD=KV_PROTOTYPE"
+  }
+ },
+ "modules_sha256": {
+  "nvmev-res-fixed47.ko": "b10b7a50e8d8fbcf8527a4379fd3e4f02e75756a20a105401825fc5d95ca21ba",
+  "nvmev-res-v1.ko": "fc015caf115a253a10b77a88ca76753ba5c04baf1e9ade2932e6e49c8949ea24",
+  "nvmev-res-v2.ko": "05fbfabbc9f5465d98ca056ee2fa6284ab6de909fbe58ae2e2f8b5c32048da39",
+  "nvmev-res-v4.ko": "7fddc3a309ca24910e6f8c53018b6ee7fda28933fd28ee026ee2cf16ea63f1f7",
+  "nvmev-res-fixed47-noinstr.ko": "1d63660144970cb5479d08721ce12f729b12386c12790483a6dab4f894069ee9",
+  "nvmev-online-mix-20260907.ko": "44675657fa6d50cb2bf33d8dbcb877e9ad7d80c9702d214e046a060d2529a9e5",
+  "nvmev-online-v2.ko": "74734ee6a53a4b174a26002e2644851874b3c8f872de53b831893abdf88c3ffe",
+  "nvmev-online-v4.ko": "db93f822a2e79f1e9ae492ac733e783df175604814d6985641fae913f8f8eda4"
+ },
+ "workload": "mixY prep (6 GiB FIO file: 128k seq write + 3 GiB 4k randwrite) then FIO-Fast test4 for 1800 s; workloads/mix-test4.fio",
+ "order": {
+  "rep1": "F v1 v2 v4",
+  "rep2": "v4 v2 v1 F",
+  "rep3": "v2 F v4 v1",
+  "waf_check": "F-noinstr v1 v2 v4 (uninstrumented, 1 run each)"
+ },
+ "measurement_window": "from `start` written to /proc/nvmevirt_measurement (started.txt mtime) to `stop` (stopped.txt mtime); counters accumulate only while active",
+ "runs": [
+  {
+   "policy": "resfixed47",
+   "rep": 1,
+   "dir": "result/resource-v124-20261114/mixY-resfixed47-rep1",
+   "waf": 1.774336,
+   "wall_s": 1800.3861265182495
+  }
+ ],
+ "waf_check_runs": {
+  "resfixed47": null,
+  "resv1": null,
+  "resv2": null,
+  "resv4": null
+ }
+}
