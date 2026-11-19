@@ -1,0 +1,9 @@
+item,source,bytes_each,count_per_partition,bytes_per_partition,bytes_4_partitions,scales_with,category,note
+q (Q-table int64 [state*2+action]),conv_ftl.c:1966 vzalloc,8,20000,160000,640000,fixed (100x100 states x 2 actions),learning,SMARTGC_STATES=SMARTGC_BINS^2=10000; independent of capacity
+cand (struct smartgc_cand),conv_ftl.c:1970 vmalloc,32,8192,262144,1048576,lines (blocks),learning (victim list),sizeof via gdb = 32; max(n; 64)
+sort_key (uint64),conv_ftl.c:1967 vmalloc,8,8192,65536,262144,lines (blocks),learning (top-k scratch),
+drain (uint32),conv_ftl.c:1968 vmalloc,4,8192,32768,131072,lines (blocks),GC buffer,
+buffered (bitmap; 1 bit per LPN),conv_ftl.c:1969 vzalloc,0.125,524288,65536,262144,pages,GC buffer,BITS_TO_LONGS(tt_pgs)*8
+struct smartgc (embedded in conv_ftl),gdb ptype /o,232,1,232,928,fixed,learning state + stats,
+TOTAL vmalloc arrays (SmartGC builds only),sum,,,585984,2343936,,,code+sizeof calculation (not measured); sg-greedy/sg-arm47 use the empty smartgc_init stub (conv_ftl.c:2016) and allocate none of these
+struct line per-line fields,gdb ptype /o,72,8192,589824,2359296,lines,all smartgc-src builds,same size (72 B) in smartgc / sg-greedy / sg-arm47 builds; iCAT build line = 48 B

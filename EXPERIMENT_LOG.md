@@ -13445,3 +13445,14 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
   - sg-arm47 138024d04de8c47b484c2d2d0e3cebe7c55b5237efec4b2458d733438a4bf65e
 - Smoke `t4 smartgc` and `t4 smartgc-eq8` (SMOKE=1): exit 0; host_pages 2,400,067 >0, gc_pages >0 (4,091,830 / 4,527,199); 4 `smartgc part=` lines with steps>0 and 4 `wear part=` lines; `SmartGC init` ×4 (eq8 build: eq8=1 ×4); no BUG/Oops/Call Trace/soft lockup; module unloaded afterwards.
 - Main run started: `env MIXY_SEQ="F S V F V S F S V F V S F S V F V S F S" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY smartgc-eq8 1` (≈10 h). Other five policies pending user decision.
+
+### gc-20261010 mixY smartgc-eq8 — started 2026-11-19T15:03:01+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F S V F V S F S V F V S F S V F V S F S (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-smartgc-eq8.ko`.
+- Command: `env MIXY_SEQ="F S V F V S F S V F V S F S V F V S F S" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY smartgc-eq8 1`; evidence `result/gc-20261010/mixY-smartgc-eq8-rep1/`.
+
+### smartgc-20261119 — queue (computer-B brief §6), registered 2026-11-19 15:20
+- Running: smartgc-eq8 (measurement started 15:04:24; expected end ≈ 2026-11-20 01:05). Not restarted; builds/smoke not repeated.
+- Queue `script/smartgc-queue-20261119.sh` (waits for eq8 exit 0 and module unload; skips any existing result dir; stops on first failure): sg-arm47 (≈01:10–11:15) → smartgc (≈11:15–21:20) → smartgcq-eq8 (≈21:20 – 11-21 07:25). smartgcq, sg-greedy not queued (only if needed).
+- Same SEQ="F S V F V S F S V F V S F S V F V S F S", PH_SECS=1800. Results in `result/gc-20261010/mixY-<policy>-rep1/`; samples (30 s: meminfo, nvmev kthread schedstat, VmRSS field), commit and module sha256 in `result/smartgc-20261119/`. eq8 sampling attached at 15:18 (first ≈14 min not sampled; schedstat is cumulative from thread start).
+- No RES_INSTR-style timers in smartgc-src: GC/learning function time and call counts → N/A except `steps`/`listed` counters printed by the module. Learning memory from code + gdb sizeof in `result/smartgc-20261119/smartgc_memory_sizes.csv` (calculated, not measured): SmartGC arrays 585,984 B/partition, 2,343,936 B for 4 (Q-table 640,000 B fixed; rest scales with lines/pages).
