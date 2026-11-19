@@ -13269,3 +13269,28 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **오류/경고**: 사용자 공간 컴파일 경고는 기존 `ssd.c`의 `-Wmaybe-uninitialized` 2건(로그마다 첫 부분). 그 외 없음.
 - **정리 상태**: WSL 홈 `~/sgbuild/`(헤더, 빌드 사본, 구동 바이너리)는 저장소 밖이며 남겨 두었다. 저장소에는 `smartgc-src/`, `result/smartgc-dev-20261114/`, `script/build-all-modules.sh`(4줄), `script/mix-gc-20261010.sh`(1줄)가 커밋되지 않은 채 추가·수정되어 있다. 최종 소스 해시 `source.sha256`.
 - **다음 조치**: 원래 실험 컴퓨터에서 `bash script/build-all-modules.sh` → 짧은 실행(예 `SMOKE=1` 또는 t4)으로 로드·계측 줄 확인 → 본 실험은 별도 사전 등록. `smartgc`(Q 0 시작)와 `smartgcq`(2000 시작) 중 무엇을 비교 대상으로 삼을지 사용자 결정 필요.
+
+### verify-skill-20261119 — 검증 스킬(`.claude/skills/verify-nvmevirt-gc`) 자체 시험 — 등록 2026-11-19T11:06:01+09:00
+
+- **목적**: 새로 만든 검증 스킬의 도우미 `verify.sh`가 적힌 대로 동작하는지 한 번 끝까지 돌려 본다(doctor → 구동 → 증거 → 정리). SmartGC 성능 실험이 아니다.
+- **판정 기준**: V1 — `sim` 구동이 PASS(exit=0, `invariants=ok`, BUG/INVARIANT FAILED 없음)이고, 같은 소스·같은 옵션인 `result/smartgc-dev-20261114/s5-final-smartgc-qinit2000.log`와 host_pages·gc_pages가 같다(`same`). V2 — 없는 정책 이름으로 돌리면 FAIL로 판정한다(검사기가 무조건 통과시키지 않는지). V3 — `kbuild`가 rc=0이고 `smartgc_` 모듈 파라미터 10개가 보인다. V4 — 끝난 뒤 임시 디렉터리는 없고 증거 파일은 남아 있다.
+- **명령** (WSL, 저장소 루트 기준 `V=.claude/skills/verify-nvmevirt-gc/verify.sh`):
+  - `bash $V doctor`
+  - `bash $V sim verify-skill-20261119 drive-smartgc-qinit2000 smartgc capacity_mib=8192 overwrite_x=6 q_init=2000`
+  - `bash $V same result/verify-skill-20261119/drive-smartgc-qinit2000.log result/smartgc-dev-20261114/s5-final-smartgc-qinit2000.log`
+  - `bash $V sim verify-skill-20261119 neg-unknown-policy nosuch`
+  - `env KDIR=/home/oy/sgbuild/hdr/root/usr/src/linux-headers-7.0.0-31-generic bash $V kbuild verify-skill-20261119 smartgc smartgc-src NVMEVIRT_GC_POLICY=SMARTGC`
+- **변경 변수**: 없음(도우미 스크립트만 새것). **고정 조건**: 소스 `smartgc-src` 커밋 ec113bb2989d0db175d8849202ab95e364be09ef(`source.sha256`과 일치 확인), 사용자 공간 구동기 `smartgc-src/test`, zones 워크로드, sim_seed 기본, smartgc_seed=1.
+- **환경**: 호스트 DESKTOP-ECC47MA(원래 실험 컴퓨터 아님), WSL2 Ubuntu-26.04, 커널 6.18.58.1-microsoft-standard-WSL2, gcc 15.2.0, 커널 헤더 linux-headers-7.0.0-31-generic 7.0.0-31.31(홈에 풀어 둔 것). 커널 모듈 로드 없음 — 장치, FTL 실측, CPU 배치는 해당 없음. 각 증거 파일 머리에 호스트·git·소스 SHA256이 찍힌다.
+- **증거**: `result/verify-skill-20261119/`.
+- **실행 중 변경 1 (2026-11-19T11:06:56+09:00)**: 첫 시도 3건(11:06:10~11:06:12, `drive-smartgc-qinit2000.log`, `neg-unknown-policy.log`, `kbuild-smartgc.log`)은 도우미 스크립트 오류로 구동 전에 끝났다(모두 rc=1, 구동·빌드는 시작되지 않음). 원인: 증거 머리의 SHA256 목록에 없는 경로 `smartgc-src/pqueue.c`를 넣었다(실제는 `pqueue/pqueue.c`). 또 WSL의 git이 줄바꿈·파일 모드 차이로 변경 파일 41개라고 잘못 찍었다. 두 가지를 고쳤다. 세 로그는 그대로 두고, 다시 돌리는 구동은 이름에 `-r2`를 붙인다(옵션은 등록한 것과 같음).
+- **종료 2026-11-19T11:09:36+09:00**. 실행 상태: 등록한 구동을 `-r2` 이름으로 모두 수행.
+  - `drive-smartgc-qinit2000-r2` (11:06:56~11:07:22): exit=0, PASS. `sim policy=smartgc workload=zones capacity_mib=8192 host_pages=11759730 gc_pages=72537784 waf=7.168321 waf_nand=7.163685 invariants=ok`. 호스트 4KiB 쓰기 11,759,730페이지(계측 구간).
+  - `same` (위 로그 대 `smartgc-dev-20261114/s5-final-smartgc-qinit2000.log`): `SAME host_pages=11759730 gc_pages=72537784`, rc=0.
+  - `neg-unknown-policy-r2`: 구동기 exit=2, 도우미 판정 FAIL(`no-exit=0 no-invariants=ok`), rc=1 — 의도한 실패.
+  - `kbuild-smartgc-r2` (~11:07:27): exit=0, PASS, 경고 2건(컴파일러·pahole 버전 불일치), `parm=smartgc_` 10개, 모듈 SHA256 b80a4fc369c5dc313795f7310534c2c47cb180f7de1930228eb3257f77fa875e(임시 사본 빌드, 모듈은 보관하지 않음).
+- **판정**: V1 통과, V2 통과, V3 통과, V4 통과(/tmp에 이 실행이 만든 임시 디렉터리 없음, 증거 파일 6개 남음).
+- **한계**: 도우미와 문서의 동작 확인일 뿐이다. 사용자 공간 구동 수치는 측정값이 아니다(가짜 시계, 지연 0 채널 모델, 단일 시드). 같은 페이지 수가 나온 것은 구동기가 결정적이라는 뜻이며 독립 계측 검증이 아니다. 스킬의 "커널 실행" 항목은 이 호스트에서 돌릴 수 없어 검증하지 못했다(insmod, proc 처리기, 락, rmmod, 실제 시간).
+- **오류/경고**: 첫 시도 3건 실패(변경 1). 사용자 공간 컴파일 경고는 기존 `ssd.c`의 `-Wmaybe-uninitialized` 2건.
+- **정리 상태**: 임시 디렉터리 제거됨. 저장소에 `.claude/skills/verify-nvmevirt-gc/`(새 파일 7개), `result/verify-skill-20261119/`(로그 6개), 이 일지 항목이 커밋되지 않은 채 있다.
+- **다음 조치**: 실험 컴퓨터에서 스킬의 `features/kernel-run.md`대로 `SMOKE=1` 실행을 한 번 돌려 커널 실행 항목을 검증한다(별도 등록).
