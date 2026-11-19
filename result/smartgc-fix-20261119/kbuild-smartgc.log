@@ -1,0 +1,63 @@
+# started 2026-11-19T11:22:36+09:00 src=smartgc-src KDIR=/home/oy/sgbuild/hdr/root/usr/src/linux-headers-7.0.0-31-generic make vars: NVMEVIRT_GC_POLICY=SMARTGC
+# host DESKTOP-ECC47MA Linux 6.18.58.1-microsoft-standard-WSL2 gcc 15.2.0
+# git 020b54351b78b07aadaffe344f6e1bf8c93e944b changed-files-under-smartgc-src: 2
+# sha256 942c8504ac6dbe1302de30145778b924dd5ad5e806e9158afe835ade1462b602  smartgc-src/conv_ftl.c
+# sha256 f683f721ca2bbfb6e7e00afbcebafaca03e1bed42c12c27aba28c52d14cb36d7  smartgc-src/conv_ftl.h
+# sha256 b328fa41129b5fc15375dc1852fd16e1bdb2ae3aff3d3b268530cd8f84f1a848  smartgc-src/ssd.c
+# sha256 928de742574a4fb588cb41f5bbc85ffac2e6092a2340c0b9d6455f4214e54e15  smartgc-src/pqueue/pqueue.c
+# sha256 bf0f09a3c84aeb912262944575f0003c96fbff921602619b5e5d703b83cfab17  smartgc-src/Kbuild
+# sha256 ee4600ee594121f6e4dbad310e6fc59816fa35056fdfa536cbb5e93cc87298e2  smartgc-src/test/sim.c
+# sha256 9373db83850ad21b971f63ce9ff7707795b7f42c66241c7040917aefce739faf  smartgc-src/test/kshim.h
+make: Entering directory '/home/oy/sgbuild/hdr/root/usr/src/linux-headers-7.0.0-31-generic'
+make[1]: Entering directory '/tmp/tmp.WFvyU0s6Qj/src'
+warning: the compiler differs from the one used to build the kernel
+  The kernel was built by: x86_64-linux-gnu-gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+  You are using:           gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+warning: pahole version differs from the one used to build the kernel
+  The kernel was built with: 131
+  You are using:             0
+  CC [M]  main.o
+  CC [M]  pci.o
+  CC [M]  ssd.o
+  CC [M]  admin.o
+  CC [M]  io.o
+  CC [M]  dma.o
+  CC [M]  conv_ftl.o
+  CC [M]  pqueue/pqueue.o
+  CC [M]  channel_model.o
+  LD [M]  nvmev.o
+  MODPOST Module.symvers
+WARNING: modpost: missing MODULE_DESCRIPTION() in nvmev.o
+  CC [M]  nvmev.mod.o
+  CC [M]  .module-common.o
+  LD [M]  nvmev.ko
+  BTF [M] nvmev.ko
+Skipping BTF generation for nvmev.ko due to unavailability of vmlinux
+make[1]: Leaving directory '/tmp/tmp.WFvyU0s6Qj/src'
+make: Leaving directory '/home/oy/sgbuild/hdr/root/usr/src/linux-headers-7.0.0-31-generic'
+exit=0
+module sha256 283e6965b445292d258f916940b8e921e3b467b2b2135b6b56a19205149d4500
+module parm=cpus:CPU list for process, completion(int.) threads, Seperated by Comma(,)
+module parm=io_unit_shift:Size of each I/O unit (2^)
+module parm=measurement_manual:Explicit measurement and cold-start learning gate
+module parm=measurement_uid:Owner UID for measurement control
+module parm=memmap_size:Reserved memory size
+module parm=memmap_start:Reserved memory address
+module parm=nr_io_units:Number of I/O units that operate in parallel
+module parm=read_delay:Read delay in nanoseconds
+module parm=read_time:Read time in nanoseconds
+module parm=read_trailing:Read trailing in nanoseconds
+module parm=smartgc_alpha_permille:SmartGC learning rate, 1/1000
+module parm=smartgc_batch:SmartGC victim lines chosen per time step (1-64)
+module parm=smartgc_eps_halflife:SmartGC steps per halving of the exploration excess
+module parm=smartgc_eps_min_permille:SmartGC final exploration probability, 1/1000
+module parm=smartgc_eps_start_permille:SmartGC initial exploration probability, 1/1000
+module parm=smartgc_gamma_permille:SmartGC discount factor, 1/1000
+module parm=smartgc_gcbuf_permille:SmartGC GC buffer size, 1/1000 of the lines (0 = no buffer)
+module parm=smartgc_q_init:SmartGC initial Q(s, erase); 0 as in the paper, large = try every state once
+module parm=smartgc_seed:SmartGC exploration seed
+module parm=smartgc_w_permille:SmartGC reward weight w of the utilization term, 1/1000
+module parm=write_delay:Write delay in nanoseconds
+module parm=write_time:Write time in nanoseconds
+module parm=write_trailing:Write trailing in nanoseconds
+# finished 2026-11-19T11:22:38+09:00

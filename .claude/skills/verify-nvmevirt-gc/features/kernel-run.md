@@ -38,7 +38,7 @@ Preconditions:
 ## Gotchas
 
 - Not yet verified for `smartgc-src` modules on any host. The first run is itself the test of `insmod`, the proc handlers, locking and `rmmod`. Start with `SMOKE=1` and watch `dmesg` before a long run.
-- The script computes WAF as `1 + gc_pages/host_pages` from the first line. With the GC buffer on, `host_pages` includes writes the buffer absorbed. The NAND-side WAF is `(host_pages - absorbed + evicted + gc_pages) / host_pages`, summed over the `smartgc part=` lines.
+- The script computes WAF as `1 + gc_pages/host_pages` from the first line. With the GC buffer on, `host_pages` includes writes the buffer absorbed. The NAND-side WAF is the sum of `nand_pages=` over the `smartgc part=` lines divided by `host_pages` of the first line.
 - `start` resets the SmartGC Q-table and counters, so learning begins cold at the measured interval.
 - `smartgc` starts the Q-table at zero as in the paper. `smartgcq` starts Q(s, erase) at 2000. State which one a result used.
 - Only one kernel run can exist at a time. A second start exits at once because `device.lock` is held.

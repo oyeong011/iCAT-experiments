@@ -76,48 +76,58 @@ static ssize_t conv_measure_read(struct file *file, char __user *buf,
 {
 	struct nvmev_ns *ns = pde_data(file_inode(file));
 	struct conv_ftl *ftls = ns->ftls;
-	static char text[4096]; /* guarded by conv_measure_lock */
+	const size_t size = 4096;
 	struct conv_wear wear;
 	uint64_t host = 0, gc = 0;
 	ssize_t result;
 	size_t len;
 	uint32_t i;
+	char *text;
 
+	/* The dispatcher takes conv_measure_lock for every command: do not fault or scan under it. */
+	text = kmalloc(size, GFP_KERNEL);
+	if (!text)
+		return -ENOMEM;
 	mutex_lock(&conv_measure_lock);
 	for (i = 0; i < ns->nr_parts; i++) {
 		host += ftls[i].stats.host_page_writes;
 		gc += ftls[i].stats.gc_page_writes;
 	}
-	len = scnprintf(text, sizeof(text),
+	len = scnprintf(text, size,
 		"epoch=%llu active=%u host_bytes=%llu host_pages=%llu gc_pages=%llu\n",
 		conv_measure_epoch, conv_measure_active, conv_measure_host_bytes, host, gc);
 	for (i = 0; i < ns->nr_parts; i++)
-		len += scnprintf(text + len, sizeof(text) - len,
+		len += scnprintf(text + len, size - len,
 			"part=%u host_pages=%llu gc_pages=%llu gc_count=%llu arm=%u windows=%llu phase=%u\n",
 			i, ftls[i].stats.host_page_writes, ftls[i].stats.gc_page_writes,
 			ftls[i].stats.gc_count, ftls[i].tuner.current_arm,
 			ftls[i].tuner.windows, (uint32_t)ftls[i].tuner.phase);
 	/* Appended after the lines the run scripts parse. */
-	for (i = 0; i < ns->nr_parts; i++) {
-		conv_wear_stats(&ftls[i], &wear);
-		len += scnprintf(text + len, sizeof(text) - len,
-			"wear part=%u erase_min=%u erase_max=%u erase_mean_milli=%llu erase_std_milli=%llu\n",
-			i, wear.min, wear.max, wear.mean_milli, wear.std_milli);
-	}
 #if CONV_GC_POLICY == CONV_GC_POLICY_SMARTGC
 	for (i = 0; i < ns->nr_parts; i++) {
 		struct smartgc *sg = &ftls[i].smartgc;
 
-		len += scnprintf(text + len, sizeof(text) - len,
+		len += scnprintf(text + len, size - len,
 			"smartgc part=%u steps=%llu explored=%llu eps_permille=%u absorbed=%llu "
-			"evicted=%llu gc_flushed=%llu frozen=%u buf_pages=%llu freezes=%llu thaws=%llu\n",
+			"evicted=%llu gc_flushed=%llu frozen=%u buf_pages=%llu freezes=%llu thaws=%llu "
+			"nand_pages=%llu\n",
 			i, sg->stats.steps, sg->stats.explored, smartgc_epsilon(sg),
 			sg->stats.absorbed, sg->stats.evicted, sg->stats.gc_flushed,
-			sg->frozen_cnt, sg->buf_pages, sg->stats.freezes, sg->stats.thaws);
+			sg->frozen_cnt, sg->buf_pages, sg->stats.freezes, sg->stats.thaws,
+			ftls[i].stats.host_page_writes - sg->stats.absorbed + sg->stats.evicted +
+				ftls[i].stats.gc_page_writes);
 	}
 #endif
-	result = simple_read_from_buffer(buf, count, offset, text, len);
 	mutex_unlock(&conv_measure_lock);
+	/* Unlocked: erase counts only grow, so a concurrent erase shifts the figures by one count at most. */
+	for (i = 0; i < ns->nr_parts; i++) {
+		conv_wear_stats(&ftls[i], &wear);
+		len += scnprintf(text + len, size - len,
+			"wear part=%u erase_min=%u erase_max=%u erase_mean_milli=%llu erase_std_milli=%llu\n",
+			i, wear.min, wear.max, wear.mean_milli, wear.std_milli);
+	}
+	result = simple_read_from_buffer(buf, count, offset, text, len);
+	kfree(text);
 	return result;
 }
 
@@ -1792,7 +1802,9 @@ static bool smartgc_absorb(struct conv_ftl *ftl, uint64_t lpn, struct ppa *ppa)
 		line->buf_cnt++;
 		sg->buf_pages++;
 	}
-	sg->stats.absorbed++;
+	/* Counted like host_page_writes, so that nand_pages is exact for the measured interval. */
+	if (ftl->stats.measurement_started)
+		sg->stats.absorbed++;
 	return true;
 }
 
@@ -1832,7 +1844,8 @@ static void smartgc_drain(struct conv_ftl *ftl, uint32_t sqid, struct buffer *wb
 			if (buffer_allocate(wbuf, spp->pgsz) < spp->pgsz)
 				return;
 			smartgc_unbuffer(ftl, lpn, &old);
-			sg->stats.evicted++;
+			if (ftl->stats.measurement_started)
+				sg->stats.evicted++;
 			sg->drain_pos++;
 
 			mark_page_invalid(ftl, &old);
@@ -1889,7 +1902,14 @@ static void smartgc_init(struct conv_ftl *ftl, uint32_t ns_id, uint32_t part_id)
 	sg->buffered = vzalloc(sizeof(*sg->buffered) * BITS_TO_LONGS(spp->tt_pgs));
 	NVMEV_ASSERT(sg->q && sg->sort_key && sg->drain && sg->buffered);
 	sg->alpha_q16 = div_u64((uint64_t)min(smartgc_alpha_permille, 1000U) << SMARTGC_Q, 1000);
-	sg->gamma_q16 = div_u64((uint64_t)min(smartgc_gamma_permille, 1000U) << SMARTGC_Q, 1000);
+	/*
+	 * Limits that keep Q inside 64 bits: rewards are positive, so Q is
+	 * bounded by max(q_init, r_max / (1 - gamma)) with r_max about 144 w.
+	 */
+	smartgc_gamma_permille = min(smartgc_gamma_permille, 999U);
+	smartgc_w_permille = min(smartgc_w_permille, 1000000U);
+	smartgc_q_init = min(smartgc_q_init, 1000000U);
+	sg->gamma_q16 = div_u64((uint64_t)smartgc_gamma_permille << SMARTGC_Q, 1000);
 	sg->w_q16 = div_u64((uint64_t)smartgc_w_permille << SMARTGC_Q, 1000);
 	sg->batch = clamp(smartgc_batch, 1U, SMARTGC_MAX_BATCH);
 	sg->frozen_max = div_u64((uint64_t)n * min(smartgc_gcbuf_permille, 1000U), 1000);
@@ -2288,6 +2308,7 @@ static bool conv_read(struct nvmev_ns *ns, struct nvmev_request *req, struct nvm
 	uint64_t nsecs_start = req->nsecs_start;
 	uint64_t nsecs_completed, nsecs_latest = nsecs_start;
 	uint32_t xfer_size, i;
+	uint32_t buffered_size = 0;
 	uint32_t nr_parts = ns->nr_parts;
 
 	struct ppa prev_ppa;
@@ -2332,9 +2353,11 @@ static bool conv_read(struct nvmev_ns *ns, struct nvmev_request *req, struct nvm
 				continue;
 			}
 
-			/* Served from the DRAM GC buffer: no NAND read. */
-			if (smartgc_buffered(conv_ftl, local_lpn))
+			/* Served from the DRAM GC buffer: no NAND read, but still sent to the host. */
+			if (smartgc_buffered(conv_ftl, local_lpn)) {
+				buffered_size += spp->pgsz;
 				continue;
+			}
 
 			// aggregate read io in same flash page
 			if (mapped_ppa(&prev_ppa) &&
@@ -2361,6 +2384,12 @@ static bool conv_read(struct nvmev_ns *ns, struct nvmev_request *req, struct nvm
 			nsecs_completed = ssd_advance_nand(conv_ftl->ssd, &srd);
 			nsecs_latest = max(nsecs_completed, nsecs_latest);
 		}
+	}
+
+	if (buffered_size > 0) {
+		/* srd.stime already holds the firmware read latency. */
+		nsecs_completed = ssd_advance_pcie(conv_ftls[0].ssd, srd.stime, buffered_size);
+		nsecs_latest = max(nsecs_completed, nsecs_latest);
 	}
 
 	ret->nsecs_target = nsecs_latest;

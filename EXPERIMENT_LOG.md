@@ -13294,3 +13294,37 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **오류/경고**: 첫 시도 3건 실패(변경 1). 사용자 공간 컴파일 경고는 기존 `ssd.c`의 `-Wmaybe-uninitialized` 2건.
 - **정리 상태**: 임시 디렉터리 제거됨. 저장소에 `.claude/skills/verify-nvmevirt-gc/`(새 파일 7개), `result/verify-skill-20261119/`(로그 6개), 이 일지 항목이 커밋되지 않은 채 있다.
 - **다음 조치**: 실험 컴퓨터에서 스킬의 `features/kernel-run.md`대로 `SMOKE=1` 실행을 한 번 돌려 커널 실행 항목을 검증한다(별도 등록).
+
+### smartgc-fix-20261119 — SmartGC 검토 지적 수정 확인 (사용자 공간 FTL 구동 + 컴파일) — 등록 2026-11-19T11:21:00+09:00
+
+- **목적**: 독립 검토(논문 대조, 커널 안전성)에서 나온 지적 중 다음을 `smartgc-src/conv_ftl.c`에서 고친 뒤, GC 동작이 바뀌지 않았고 빌드가 되는지 확인한다. ① proc 읽기: 락을 쥔 채 사용자 버퍼로 복사하던 것을 kmalloc 버퍼 + 락 밖 복사로 바꾸고, 마모 통계 계산을 락 밖으로 옮김(출력에서 `smartgc` 줄이 `wear` 줄 앞으로 감). ② GC 버퍼에서 읽는 페이지에 펌웨어 읽기 지연 + PCIe 전송 시간 부과. ③ `absorbed`/`evicted`를 계측 구간에서만 세고 `smartgc` 줄에 `nand_pages` 추가. ④ `smartgc_gamma_permille` ≤ 999, `smartgc_w_permille`·`smartgc_q_init` ≤ 1,000,000으로 제한. `SMARTGC.md`의 틀린·빠진 설명도 고침. 선택 규칙·보상·동점 처리 등 학습 동작은 바꾸지 않았다.
+- **판정 기준**: F1 — 모든 구동 PASS(exit=0, `invariants=ok`). F2 — 수정 전 로그와 host_pages·gc_pages가 같다: SmartGC 기본(`s5-final-smartgc-default`), q_init=2000(`s5-final-smartgc-qinit2000`), q_init=2000 gcbuf=50(`s4-smartgc-qinit2000-gcbuf50`), Greedy(`s5-final-greedy`), arm47(`s4-arm47-new`) — 모두 `result/smartgc-dev-20261114/`. F3 — gamma=1000 구동이 gamma=999 구동과 페이지 수가 같다(제한 동작). F4 — `smartgc` 줄의 nand_pages 합 / host_pages가 구동기가 따로 계산한 waf_nand와 일치. F5 — 커널 빌드 4종(smartgc, smartgcq, sg-greedy, sg-arm47) rc=0, 경고는 컴파일러·pahole 버전 불일치 2건뿐, smartgc 빌드에 `parm=smartgc_` 10개.
+- **명령** (WSL, `V=.claude/skills/verify-nvmevirt-gc/verify.sh`, `X="capacity_mib=8192 overwrite_x=6"`, 실행 ID smartgc-fix-20261119):
+  - `bash $V sim <id> smartgc-default smartgc $X`
+  - `bash $V sim <id> smartgc-qinit2000 smartgc $X q_init=2000`
+  - `bash $V sim <id> smartgc-qinit2000-gcbuf50 smartgc $X q_init=2000 gcbuf=50`
+  - `bash $V sim <id> smartgc-qinit2000-gamma1000 smartgc $X q_init=2000 gamma=1000`, `... smartgc-qinit2000-gamma999 ... gamma=999`
+  - `bash $V sim <id> greedy greedy $X`, `bash $V sim <id> arm47 arm47 $X`
+  - `bash $V same <새 로그> <수정 전 로그>` 5회, gamma 쌍 1회
+  - `env KDIR=/home/oy/sgbuild/hdr/root/usr/src/linux-headers-7.0.0-31-generic bash $V kbuild <id> <tag> smartgc-src <make 변수>` 4회
+- **변경 변수**: `smartgc-src/conv_ftl.c`(위 ①~④). **고정 조건**: 구동기 `smartgc-src/test`(변경 없음), zones 워크로드, sim_seed 기본, smartgc_seed=1, 그 밖의 SmartGC 파라미터 기본값.
+- **환경**: 호스트 DESKTOP-ECC47MA(원래 실험 컴퓨터 아님), WSL2 Ubuntu-26.04, 커널 6.18.58.1-microsoft-standard-WSL2, gcc 15.2.0, 커널 헤더 linux-headers-7.0.0-31-generic 7.0.0-31.31. 소스는 커밋 020b54351 위의 커밋 전 변경이며 각 증거 파일 머리에 SHA256이 찍힌다. 커널 모듈 로드 없음 — 장치, 실측 FTL 설정, CPU 배치는 해당 없음.
+- **증거**: `result/smartgc-fix-20261119/`.
+- **종료 2026-11-19T11:23:06+09:00**. 실행 상태: 계획한 구동 전부 완료, 실행 중 조건 변경 없음. 사용자 공간 구동 7건(11:20~11:22:19) 모두 exit=0·PASS, 커널 빌드 4건(~11:22:46) 모두 exit=0. 각 구동의 수행량: 호스트 4KiB 쓰기 11,759,730페이지(계측 구간).
+- **결과** (사용자 공간 구동, 측정값 아님):
+
+| 구동 | gc_pages | waf | waf_nand | 수정 전 로그와 비교 |
+|---|---:|---:|---:|---|
+| `smartgc-default` | 139087054 | 12.827402 | 12.825543 | SAME (`s5-final-smartgc-default`) |
+| `smartgc-qinit2000` | 72537784 | 7.168321 | 7.163685 | SAME (`s5-final-smartgc-qinit2000`) |
+| `smartgc-qinit2000-gcbuf50` | 66812937 | 6.681503 | 6.656849 | SAME (`s4-smartgc-qinit2000-gcbuf50`) |
+| `greedy` | 73154240 | 7.220741 | 7.220741 | SAME (`s5-final-greedy`) |
+| `arm47` | 67213759 | 6.715587 | 6.715587 | SAME (`s4-arm47-new`) |
+| `smartgc-qinit2000-gamma1000` | 71887667 | 7.113037 | 7.108825 | gamma999와 SAME |
+| `smartgc-qinit2000-gamma999` | 71887667 | 7.113037 | 7.108825 | – |
+
+- **판정**: F1 통과(7/7). F2 통과(5쌍 모두 host_pages·gc_pages 일치). F3 통과(gamma=1000과 999의 페이지 수 일치, 기본 gamma=900의 72537784와는 다름). F4 통과 — nand_pages 합/host_pages: gcbuf50 78282749 → 6.656849, qinit2000 84243001 → 7.163685, default 150824924 → 12.825543, 모두 구동기의 waf_nand와 일치. F5 통과 — 4종 exit=0, 경고는 버전 불일치 2건씩, `parm=smartgc_`는 smartgc·smartgcq 10개, sg-greedy·sg-arm47 0개. 모듈 SHA256은 `kbuild-*.log`에 있음(임시 사본 빌드, 보관하지 않음).
+- **한계**: ① proc 락 범위와 ② 읽기 지연 수정은 이 구동으로 효과를 볼 수 없다 — 구동기는 스레드가 하나이고 채널 모델 지연이 0이라 코드가 실행되고 불변식이 유지된다는 것까지만 확인된다. 버퍼에 있는 페이지를 실제로 읽는 경우가 구동 중에 있었는지는 확인하지 않았다. 실제 커널에서의 락·시간 동작은 실험 컴퓨터에서 처음 실행된다. 단일 시드, 반복 없음. 페이지 수 일치는 구동기가 결정적이라는 뜻이며 독립 계측 검증이 아니다.
+- **오류/경고**: 없음(사용자 공간 컴파일 경고는 기존 `ssd.c`의 `-Wmaybe-uninitialized` 2건).
+- **정리 상태**: 임시 디렉터리는 도우미가 제거. 저장소에 `smartgc-src/conv_ftl.c`, `smartgc-src/SMARTGC.md`, `.claude/skills/verify-nvmevirt-gc/features/kernel-run.md`, `result/smartgc-fix-20261119/`(로그 11개), 이 일지 항목이 커밋되지 않은 채 있다.
+- **다음 조치**: 실험 컴퓨터에서 `git pull` → `bash script/build-all-modules.sh` → `SMOKE=1` 짧은 실행으로 로드·proc 출력 확인(별도 등록). `smartgc`와 `smartgcq` 중 비교 대상 결정은 여전히 사용자 몫.
