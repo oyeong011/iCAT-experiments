@@ -1409,24 +1409,33 @@ static void mark_block_free(struct conv_ftl *conv_ftl, struct ppa *ppa)
  * observes the new states, updates the Q-table for the finished step (Eq. 7),
  * re-evaluates the frozen set and chooses the next list (Alg. 2).
  *
- * Where the paper leaves a choice open, this implementation does the following:
+ * Where this implementation departs from the paper, or the paper leaves a
+ * choice open (SMARTGC.md has the full list):
  *  - One Q-table per partition, indexed by state only.  The paper sizes it per
  *    block (20 KB each); that is 160 MB per partition here and would leave
  *    almost every entry unvisited.
  *  - Reward (Alg. 1): erase = w / U + 1 / std, keep = 1 / std.  U is the
  *    utilization when the action was taken, std is taken right after the
- *    erase (erase) or at the end of the step (keep).  The paper gives no
- *    reward for the keep action.  The next state of an erased line is the
- *    empty line; that of a kept line is its state at the end of the step.
+ *    erase (erase) or at the end of the step (keep).  Alg. 1 gives every
+ *    block w / U + 1 / std whatever the action, which cannot tell the two
+ *    actions apart; dropping w / U for keep is a departure from the paper.
+ *    The next state of an erased line is the empty line; that of a kept
+ *    line is its state at the end of the step (the paper: S_t+1 for both).
  *  - The list holds smartgc_batch lines: each slot is a random eligible line
- *    with probability epsilon, otherwise the next best Q(s, erase).  Only
- *    lines with at least one invalid page are eligible, as GC must free space.
+ *    with probability epsilon, otherwise the next best Q(s, erase).  Eq. 8
+ *    instead takes the better of keep and erase per block; the list length
+ *    is not a parameter of the paper.  Q(s, keep) only feeds the bootstrap
+ *    max.  Alg. 2 states the epsilon test the other way round from Eq. 8;
+ *    this follows Eq. 8, with a uniform draw where the paper says normal.
+ *    Only lines with at least one invalid page are eligible, as GC must
+ *    free space.
  *  - Frozen lines are never put on the list, so the "prohibited block" penalty
  *    of Sec. III-B has nothing to act on; its "preferred block" rule is not
  *    defined in the paper and is not implemented.
  *  - GC buffer (Sec. III-C): only closed lines are frozen.  A write whose
  *    current copy is in a frozen line stays in DRAM (modelled: no NAND
- *    program, no invalidation); reads of it skip NAND.  After a line is
+ *    program, no invalidation); reads of it skip NAND and pay the firmware
+ *    read latency and the PCIe transfer only.  After a line is
  *    unfrozen its buffered pages are programmed one per host page write.
  *    Buffer contents are not flushed by an NVMe flush.
  */
