@@ -13461,3 +13461,30 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 ## 2026-11-19 SmartGC 대표 버전 선택 규칙 (결과 보기 전 사전 등록)
 - 논문 그대로인 두 해석(smartgc-eq8 = 식 8, smartgc = 알고리즘 2 순위 목록, 둘 다 Q 0 시작) 중 mixY WAF가 낮은 쪽을 논문 표의 "SmartGC"로 쓴다.
 - smartgcq-eq8(Q 2000 시작)은 논문에 없는 변형이므로 참고용으로만 보고한다.
+
+- Finished 2026-11-20T01:09:08+09:00; mixY smartgc-eq8 exit=0; evidence `/home/oy/iCAT/result/gc-20261010/mixY-smartgc-eq8-rep1`; cleanup attempted.
+- total host_bytes=6076988981248 host_pages=1483639888 gc_pages=5190371026 WAF=4.498404
+- phaseA(test4) host_pages=72029650 gc_pages=125387733 WAF=2.740779
+- phaseB(test3) host_pages=18001248 gc_pages=31316556 WAF=2.739688
+- phaseS01(test4) host_pages=72029650 gc_pages=125387733 WAF=2.740779
+- phaseS02(test3) host_pages=18001248 gc_pages=31316556 WAF=2.739688
+- phaseS03(varmail) host_pages=137063321 gc_pages=323388581 WAF=3.359410
+- phaseS04(test4) host_pages=72001969 gc_pages=454955178 WAF=7.318649
+- phaseS05(varmail) host_pages=111441483 gc_pages=339354867 WAF=4.045140
+- phaseS06(test3) host_pages=18001249 gc_pages=116991984 WAF=7.499104
+- phaseS07(test4) host_pages=72001861 gc_pages=416164092 WAF=6.779907
+- phaseS08(test3) host_pages=18001252 gc_pages=97868399 WAF=6.436755
+- phaseS09(varmail) host_pages=142541384 gc_pages=336093623 WAF=3.357867
+- phaseS10(test4) host_pages=72002074 gc_pages=395204761 WAF=6.488797
+- phaseS11(varmail) host_pages=147883237 gc_pages=346710995 WAF=3.344492
+- phaseS12(test3) host_pages=18001249 gc_pages=99174596 WAF=6.509317
+- phaseS13(test4) host_pages=72002107 gc_pages=394150091 WAF=6.474147
+- phaseS14(test3) host_pages=18001249 gc_pages=98297345 WAF=6.460585
+- phaseS15(varmail) host_pages=152101085 gc_pages=342163748 WAF=3.249581
+- phaseS16(test4) host_pages=72002023 gc_pages=369781694 WAF=6.135713
+- phaseS17(varmail) host_pages=162558941 gc_pages=347716264 WAF=3.139017
+- phaseS18(test3) host_pages=18001246 gc_pages=91522653 WAF=6.084240
+- phaseS19(test4) host_pages=72002005 gc_pages=370451327 WAF=6.145014
+- phaseS20(test3) host_pages=18001255 gc_pages=93676539 WAF=6.203889
+- ycsb-load 
+- ycsb-run 
