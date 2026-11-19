@@ -1,6 +1,6 @@
 # Kernel run on the experiment computer
 
-The mix script loads one module, prepares the emulated 8 GiB NVMe device, runs a workload mix while measuring through `/proc/nvmevirt_measurement`, then unloads the module. It is the only path that yields experiment numbers. For the `smartgc-src` modules (`smartgc`, `smartgcq`, `sg-greedy`, `sg-arm47`) this feature has not been driven yet.
+The mix script loads one module, prepares the emulated 8 GiB NVMe device, runs a workload mix while measuring through `/proc/nvmevirt_measurement`, then unloads the module. It is the only path that yields experiment numbers. For the `smartgc-src` modules (`smartgc`, `smartgcq`, `smartgc-eq8`, `smartgcq-eq8`, `sg-greedy`, `sg-arm47`) this feature has not been driven yet.
 
 ## Sub-features
 

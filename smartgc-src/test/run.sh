@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Build the userspace FTL driver (test/sim.c) for one GC policy and run it.
 # Usage: bash smartgc-src/test/run.sh <smartgc|greedy|arm00..arm59> [sim options, see sim.c]
+# SIM_CFLAGS=<flags> adds compiler flags (e.g. -DSMARTGC_EQ8_DEFAULT=1, as a module build variant does).
 # SIM_SRC=<dir> builds another copy of the module source (e.g. varmail-compare-src) with the same driver.
 # The binary and the generated <linux/...> stubs go to $SIM_OUT (default: a temp dir), not into the source tree.
 set -Eeuo pipefail
@@ -20,6 +21,6 @@ for h in types vmalloc slab ktime math64 sched/clock time64 string module mutex 
 done
 # shellcheck disable=SC2086
 gcc -O2 -g -std=gnu17 -Wall -Wno-unused-variable -Wno-unused-function -Wno-unused-but-set-variable -Wno-format \
-    -DBASE_SSD=SAMSUNG_970PRO $flags -I"$out/shim" -I"$here" -I"$src" \
+    -DBASE_SSD=SAMSUNG_970PRO $flags ${SIM_CFLAGS:-} -I"$out/shim" -I"$here" -I"$src" \
     -o "$out/sim-$policy" "$here/sim.c"
 "$out/sim-$policy" "$@"

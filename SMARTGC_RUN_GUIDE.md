@@ -13,7 +13,7 @@ bash .claude/skills/verify-nvmevirt-gc/verify.sh doctor
 
 `nvmev not loaded`가 나오고 `device.lock is HELD`가 없어야 한다. 다른 실험이 돌고 있으면 여기서 멈춘다.
 
-## 2. SmartGC 모듈 4개만 빌드
+## 2. SmartGC 모듈 6개만 빌드
 
 ```bash
 K=/lib/modules/$(uname -r)/build
@@ -25,16 +25,20 @@ b() { tag=$1; shift
     || echo "BUILD FAIL $tag (buildoutput/build-$tag.log)"; }
 b smartgc   NVMEVIRT_GC_POLICY=SMARTGC
 b smartgcq  NVMEVIRT_GC_POLICY=SMARTGC SMARTGC_Q_INIT=2000
+b smartgc-eq8  NVMEVIRT_GC_POLICY=SMARTGC SMARTGC_EQ8=1
+b smartgcq-eq8 NVMEVIRT_GC_POLICY=SMARTGC SMARTGC_EQ8=1 SMARTGC_Q_INIT=2000
 b sg-greedy NVMEVIRT_GC_POLICY=GREEDY
 b sg-arm47  NVMEVIRT_GC_POLICY=CAT_FIG7 FIXED_ARM=47
 ```
 
-`bash script/build-all-modules.sh`로도 되지만, 그쪽은 기존 모듈 70여 개를 전부 다시 빌드해 덮어쓰고 매니페스트를 새로 쓴다(약 15분). 출력된 SHA256 네 개는 `EXPERIMENT_LOG.md`에 적는다.
+`bash script/build-all-modules.sh`로도 되지만, 그쪽은 기존 모듈 70여 개를 전부 다시 빌드해 덮어쓰고 매니페스트를 새로 쓴다(약 15분). 출력된 SHA256은 `EXPERIMENT_LOG.md`에 적는다.
 
 | 모듈 | 내용 |
 |---|---|
 | `nvmev-smartgc.ko` | SmartGC, Q-table을 0에서 시작(논문 그대로) |
 | `nvmev-smartgcq.ko` | SmartGC, Q(s, 지움)을 2000에서 시작 |
+| `nvmev-smartgc-eq8.ko` | SmartGC, 식 8 블록별 선택 규칙, Q 0 시작 |
+| `nvmev-smartgcq-eq8.ko` | SmartGC, 식 8 블록별 선택 규칙, Q 2000 시작 |
 | `nvmev-sg-greedy.ko` | Greedy + 마모 통계 줄 |
 | `nvmev-sg-arm47.ko` | 고정 CAT arm47 + 마모 통계 줄 |
 
@@ -70,7 +74,8 @@ env MIXY_SEQ="$SEQ" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY sg-greedy 1
 env MIXY_SEQ="$SEQ" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY sg-arm47 1
 ```
 
-- `smartgc`와 `smartgcq` 중 어느 쪽을 비교 대상으로 쓸지는 아직 정해지지 않았다. 결과를 적을 때 어느 쪽인지 밝힌다.
+- 식 8 선택 규칙으로 돌리려면 정책 이름을 `smartgc-eq8`(Q 0) 또는 `smartgcq-eq8`(Q 2000)로 바꾼다. 결과 디렉터리 이름에 정책 이름이 들어가므로 설정이 섞이지 않는다.
+- `smartgc`, `smartgcq`, `smartgc-eq8`, `smartgcq-eq8` 중 어느 쪽을 비교 대상으로 쓸지는 아직 정해지지 않았다. 결과를 적을 때 어느 쪽인지 밝힌다.
 - `sg-greedy`와 `sg-arm47`은 마모 통계가 필요하거나 처리량·지연을 SmartGC와 같은 조건으로 비교할 때만 돌린다. WAF만 볼 거면 기존 Greedy·arm47 결과를 써도 된다.
 - 결과 디렉터리가 이미 있으면 스크립트가 덮어쓰지 않고 멈춘다.
 - 한 번에 하나만 돌 수 있다(`device.lock`).
@@ -82,7 +87,7 @@ env MIXY_SEQ="$SEQ" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY sg-arm47 1
 ```bash
 awk '/^smartgc part=/{for(i=1;i<=NF;i++){split($i,a,"=");if(a[1]=="nand_pages")n+=a[2]}}
      NR==1{for(i=1;i<=NF;i++){split($i,a,"=");if(a[1]=="host_pages")h=a[2]}}
-     END{printf "WAF_nand=%.6f\n", n/h}' result/gc-20261010/mixY-smartgc/final-control.txt
+     END{printf "WAF_nand=%.6f\n", n/h}' result/gc-20261010/mixY-smartgc-rep1/final-control.txt
 ```
 
-경로의 `mixY-smartgc`는 스크립트 규칙에서 읽은 디렉터리 이름이다. 실제로 생긴 이름을 확인하고 쓴다.
+경로의 `mixY-smartgc-rep1`은 스크립트 규칙에서 읽은 디렉터리 이름이다. 실제로 생긴 이름을 확인하고 쓴다.

@@ -33,5 +33,5 @@ Preconditions:
 - Under `eq8=1` a step is hundreds to thousands of erases, so the default epsilon half-life of 2048 steps is never reached and epsilon stays at its start value. On the standard workload 86% of the victims are then random picks. Compare rules only with the epsilon settings stated.
 - `batch` has no effect under `eq8=1`.
 - Ties between Q(s, keep) and Q(s, erase) go to keep, and the list is erased from the largest Q(s, erase) down. Neither is fixed by the paper.
-- `script/mix-gc-20261010.sh` passes a fixed `insmod` argument list, so a kernel run cannot switch on `smartgc_eq8` without a script change.
+- `script/mix-gc-20261010.sh` passes a fixed `insmod` argument list. For a kernel run use the build variants `smartgc-eq8` and `smartgcq-eq8` (built with `SMARTGC_EQ8=1`), whose `smartgc_eq8` default is 1. In the userspace driver `env SIM_CFLAGS=-DSMARTGC_EQ8_DEFAULT=1` gives the same default.
 - WAF differences between the rules come from the userspace driver and are checks of logic, not measurements. The recorded comparison is run `smartgc-eq8-20261119` in `EXPERIMENT_LOG.md`.

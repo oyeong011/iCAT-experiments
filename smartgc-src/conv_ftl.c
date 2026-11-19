@@ -1480,7 +1480,10 @@ MODULE_PARM_DESC(smartgc_seed, "SmartGC exploration seed");
  * from the largest Q(s, erase) down.  smartgc_batch is not used.  If no line
  * chose erase, one random eligible line is taken so that GC can proceed.
  */
-static unsigned int smartgc_eq8;
+#ifndef SMARTGC_EQ8_DEFAULT
+#define SMARTGC_EQ8_DEFAULT 0
+#endif
+static unsigned int smartgc_eq8 = SMARTGC_EQ8_DEFAULT;
 module_param(smartgc_eq8, uint, 0444);
 MODULE_PARM_DESC(smartgc_eq8, "SmartGC victim rule: 0 = ranked list of smartgc_batch lines, 1 = Eq. 8 per line");
 

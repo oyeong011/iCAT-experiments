@@ -6,6 +6,7 @@ Each experiment module is one source copy compiled with a GC policy chosen by ma
 
 - `build-smartgc` compiles SmartGC with the Q-table starting at zero (`NVMEVIRT_GC_POLICY=SMARTGC`).
 - `build-smartgcq` compiles SmartGC with `SMARTGC_Q_INIT=2000`.
+- `build-eq8` compiles the Eq. 8 variants `smartgc-eq8` and `smartgcq-eq8` with `SMARTGC_EQ8=1`.
 - `build-sg-greedy` compiles Greedy from `smartgc-src` (`NVMEVIRT_GC_POLICY=GREEDY`).
 - `build-sg-arm` compiles a fixed CAT arm from `smartgc-src` (`NVMEVIRT_GC_POLICY=CAT_FIG7 FIXED_ARM=47`).
 - `build-all` rebuilds every experiment module into `buildoutput/` on the experiment computer.
@@ -24,6 +25,7 @@ Preconditions:
 
 - **SmartGC.** Run `bash $V kbuild <run-id> smartgc smartgc-src NVMEVIRT_GC_POLICY=SMARTGC`. It prints `PASS ... exit=0`, and `grep -c '^module parm=smartgc_' result/<run-id>/kbuild-smartgc.log` prints `11`.
 - **SmartGC, Q at 2000.** Run `bash $V kbuild <run-id> smartgcq smartgc-src NVMEVIRT_GC_POLICY=SMARTGC SMARTGC_Q_INIT=2000`. It prints `PASS`.
+- **Eq. 8 variant.** Run `bash $V kbuild <run-id> smartgc-eq8 smartgc-src NVMEVIRT_GC_POLICY=SMARTGC SMARTGC_EQ8=1 V=1`. It prints `PASS`, and the `conv_ftl.o` compile line in the log holds `-DSMARTGC_EQ8_DEFAULT=1`. Add `V=1` to any build to see its defines.
 - **Greedy and fixed CAT.** Run `bash $V kbuild <run-id> sg-greedy smartgc-src NVMEVIRT_GC_POLICY=GREEDY` and `bash $V kbuild <run-id> sg-arm47 smartgc-src NVMEVIRT_GC_POLICY=CAT_FIG7 FIXED_ARM=47`. Both print `PASS`, and neither log has a `parm=smartgc_` line.
 - **Warnings.** Read the warning list the command prints. Off the experiment computer exactly two are expected: `the compiler differs from the one used to build the kernel` and `pahole version differs from the one used to build the kernel`. Any warning that names a file of the source copy is a finding.
 - **Proof.** The `kbuild-<tag>.log` files with `exit=0`, the module SHA256, and the `parm=` list.

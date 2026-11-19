@@ -7,6 +7,7 @@ CONFIG_NVMEVIRT_SSD := y
 NVMEVIRT_GC_POLICY ?= WATGC_V2
 FIXED_ARM ?= 37
 SMARTGC_Q_INIT ?= 0
+SMARTGC_EQ8 ?= 0
 # CAT Fig. 7 compile-time tuning parameters
 NVMEVIRT_CAT_K ?= 7
 NVMEVIRT_CAT_SCALE_PCT ?= 100
@@ -50,6 +51,8 @@ else ifeq ($(NVMEVIRT_GC_POLICY),SMARTGC)
 ccflags-y += -DCONV_GC_POLICY=3
 # Default of the smartgc_q_init module parameter: 0 = Q-table starts at zero, as in the paper
 ccflags-y += -DSMARTGC_Q_INIT_DEFAULT=$(SMARTGC_Q_INIT)
+# Default of the smartgc_eq8 module parameter: 0 = ranked victim list, 1 = Eq. 8 per line
+ccflags-y += -DSMARTGC_EQ8_DEFAULT=$(SMARTGC_EQ8)
 else
 $(error Invalid NVMEVIRT_GC_POLICY="$(NVMEVIRT_GC_POLICY)". Use GREEDY, CAT_FIG7, WATGC_V2 or SMARTGC)
 endif

@@ -34,6 +34,7 @@
 
 - `nvmev-smartgc.ko` — 0에서 시작 (논문 그대로)
 - `nvmev-smartgcq.ko` — 2000에서 시작 (빌드 시 `SMARTGC_Q_INIT=2000`)
+- `nvmev-smartgc-eq8.ko`, `nvmev-smartgcq-eq8.ko` — 위 둘과 같고 선택 규칙만 식 8 블록별 선택 (빌드 시 `SMARTGC_EQ8=1`, `smartgc_eq8` 기본값이 1)
 
 어느 쪽을 비교 대상으로 쓸지는 정해야 한다. 논문에 실을 때는 어느 쪽인지 밝혀야 한다.
 

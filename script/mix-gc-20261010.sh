@@ -39,7 +39,7 @@ case "$policy" in
     arm[0-5][0-9]) module="$root/buildoutput/nvmev-$policy.ko";;   # any of the 60 sweep modules
     fixed37) module="$root/buildoutput/nvmev-fixed37.ko";;
     greedy)  module="$root/buildoutput/nvmev-greedy-m.ko";;
-    smartgc|smartgcq|sg-greedy|sg-arm47) module="$root/buildoutput/nvmev-$policy.ko";;   # 11-14: smartgc-src builds (SmartGC, and Greedy / arm47 with the wear report)
+    smartgc|smartgcq|smartgc-eq8|smartgcq-eq8|sg-greedy|sg-arm47) module="$root/buildoutput/nvmev-$policy.ko";;   # 11-14: smartgc-src builds (SmartGC, and Greedy / arm47 with the wear report); 11-19: -eq8 = Eq. 8 per-line victim rule
     fixed50) module="$root/buildoutput/nvmev-fixed50.ko";;
     *) exit 2;;
 esac

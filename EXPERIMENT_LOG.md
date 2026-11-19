@@ -13391,3 +13391,18 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **한계**: 도우미와 문서의 동작 확인이다. 같은 페이지 수는 구동기가 결정적이라는 뜻이며 독립 계측 검증이 아니다. 커널에서 `smartgc_eq8=1`을 올려 본 적은 없다.
 - **오류/경고**: 없음. **정리 상태**: 임시 디렉터리 제거됨, `result/verify-skill-20261119b/`와 스킬 문서 변경은 커밋 전.
 - **다음 조치**: 없음(스킬 유지 보수는 `/pstack:maintain-verification-skill`).
+
+### smartgc-eq8-build-20261119 — 식 8 선택 규칙을 빌드 변형으로 (컴파일 + 사용자 공간 구동) — 등록 2026-11-19T14:43:59+09:00
+
+- **목적**: 실험 스크립트에서 식 8 규칙을 쓸 수 있게 한다. insmod 인자를 환경 변수로 넘기는 대신 `smartgcq`와 같은 방식의 빌드 변형으로 만들었다: Kbuild 변수 `SMARTGC_EQ8=1` → `-DSMARTGC_EQ8_DEFAULT=1` → `smartgc_eq8` 기본값 1. 이유: 정책 이름이 결과 디렉터리 이름이 되므로 설정이 다른 실행이 같은 이름(`mixY-smartgc-rep1`)으로 섞이지 않는다. 새 태그 `smartgc-eq8`(Q 0), `smartgcq-eq8`(Q 2000)를 `script/build-all-modules.sh`와 `script/mix-gc-20261010.sh`에 추가. 구동기 `test/run.sh`에 `SIM_CFLAGS` 추가(빌드 변형과 같은 정의를 구동기에 주기 위해).
+- **판정 기준**: B1 — `SIM_CFLAGS=-DSMARTGC_EQ8_DEFAULT=1`로 빌드하고 `eq8` 옵션 없이 돌린 구동이 `result/smartgc-eq8-20261119/eq8-default.log`와 SAME. B2 — 플래그 없는 구동이 `rank-default.log`와 SAME. B3 — 커널 빌드(`V=1`) 3종 exit=0이고 컴파일 명령에 smartgc-eq8: `-DSMARTGC_EQ8_DEFAULT=1 `·`-DSMARTGC_Q_INIT_DEFAULT=0`, smartgcq-eq8: `-DSMARTGC_EQ8_DEFAULT=1`·`-DSMARTGC_Q_INIT_DEFAULT=2000`, smartgc: `-DSMARTGC_EQ8_DEFAULT=0`이 있다. B4 — 두 스크립트 `bash -n` 통과.
+- **명령** (WSL, `V=.claude/skills/verify-nvmevirt-gc/verify.sh`, 실행 ID smartgc-eq8-build-20261119): `env SIM_CFLAGS=-DSMARTGC_EQ8_DEFAULT=1 bash $V sim <id> eq8-by-define smartgc capacity_mib=8192 overwrite_x=6`; `bash $V sim <id> rank-no-define smartgc capacity_mib=8192 overwrite_x=6`; `bash $V same` 2회; `env KDIR=<헤더> bash $V kbuild <id> {smartgc-eq8 smartgc-src NVMEVIRT_GC_POLICY=SMARTGC SMARTGC_EQ8=1 V=1 | smartgcq-eq8 ... SMARTGC_EQ8=1 SMARTGC_Q_INIT=2000 V=1 | smartgc ... NVMEVIRT_GC_POLICY=SMARTGC V=1}`; `bash -n script/build-all-modules.sh script/mix-gc-20261010.sh`.
+- **변경 변수**: `smartgc_eq8` 기본값(빌드 정의). **고정 조건**: zones 워크로드, sim_seed 기본, smartgc_seed=1, 나머지 기본값.
+- **환경**: 호스트 DESKTOP-ECC47MA(원래 실험 컴퓨터 아님), WSL2 Ubuntu-26.04, 커널 6.18.58.1-microsoft-standard-WSL2, gcc 15.2.0, 커널 헤더 linux-headers-7.0.0-31-generic 7.0.0-31.31. 소스는 커밋 918da8838 위의 커밋 전 변경(각 로그 머리에 SHA256). 커널 모듈 로드 없음.
+- **증거**: `result/smartgc-eq8-build-20261119/`.
+- **종료 2026-11-19T14:45:17+09:00**. 실행 상태: 계획한 것 전부 완료(~14:44:47), 조건 변경 없음. 사용자 공간 구동 2건 exit=0·PASS, 커널 빌드 3건 exit=0.
+- **결과**: `eq8-by-define`(옵션 없이 정의만) host_pages=11759730 gc_pages=96454024 — `smartgc-eq8-20261119/eq8-default.log`와 SAME. `rank-no-define` gc_pages=139087054 — `rank-default.log`와 SAME. 컴파일 명령의 정의: smartgc-eq8 `-DSMARTGC_EQ8_DEFAULT=1 -DSMARTGC_Q_INIT_DEFAULT=0`, smartgcq-eq8 `-DSMARTGC_EQ8_DEFAULT=1 -DSMARTGC_Q_INIT_DEFAULT=2000`, smartgc `-DSMARTGC_EQ8_DEFAULT=0 -DSMARTGC_Q_INIT_DEFAULT=0`. 빌드 경고는 버전 불일치 2건씩. `bash -n` 두 스크립트 rc=0.
+- **판정**: B1~B4 통과.
+- **한계**: `script/mix-gc-20261010.sh`의 새 정책 이름은 문법 검사만 했고 실행하지 않았다(이 호스트에서 실행 불가). `build-all-modules.sh`도 실행하지 않았다 — 같은 make 변수로 도우미가 빌드한 것까지만 확인. 커널 모듈 로드 없음. 사용자 공간 수치는 측정값 아님.
+- **오류/경고**: 없음. **정리 상태**: 임시 디렉터리 제거됨. 코드·스크립트·문서 변경과 `result/smartgc-eq8-build-20261119/`(로그 5개)는 커밋 전.
+- **다음 조치**: 실험 컴퓨터에서 `SMARTGC_RUN_GUIDE.md` 순서대로 빌드 후 `SMOKE=1` 실행.
