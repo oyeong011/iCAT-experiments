@@ -15,7 +15,7 @@ case "$policy" in
 esac
 out=${SIM_OUT:-$(mktemp -d)}
 mkdir -p "$out/shim/linux/sched" "$out/shim/asm"
-for h in types vmalloc slab ktime math64 sched/clock time64 string module mutex proc_fs uaccess user_namespace kthread highmem; do
+for h in types vmalloc slab ktime math64 sched/clock time64 string module mutex proc_fs uaccess user_namespace kthread highmem sort; do
     echo '#include "kshim.h"' > "$out/shim/linux/$h.h"
 done
 # shellcheck disable=SC2086

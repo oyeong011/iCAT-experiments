@@ -31,6 +31,7 @@ Each feature file starts with an H1 title and one paragraph on the user-visible 
 ## Features
 
 - [Userspace FTL run](./sim-ftl.md) covers Greedy, fixed CAT and SmartGC under the userspace driver, with SmartGC options.
+- [SmartGC victim selection rule](./sim-selection-rule.md) covers the ranked list and the Eq. 8 per-line rule (`eq8=1`), told apart by the list length.
 - [Unchanged baseline policies](./sim-baseline-equivalence.md) covers Greedy and fixed CAT behaving the same in `smartgc-src` as in `varmail-compare-src`.
 - [Kernel-module compile](./module-build.md) covers building each module variant against the experiment kernel's headers.
 - [Kernel run on the experiment computer](./kernel-run.md) covers loading a module and measuring WAF with the mix script. Not yet driven for `smartgc-src` modules.

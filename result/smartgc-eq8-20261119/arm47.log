@@ -1,0 +1,35 @@
+# started 2026-11-19T13:28:54+09:00 SIM_SRC=smartgc-src policy=arm47 options: capacity_mib=8192 overwrite_x=6
+# host DESKTOP-ECC47MA Linux 6.18.58.1-microsoft-standard-WSL2 gcc 15.2.0
+# git 060b42c05fb19dece092036aad8ab205f2ed22bd changed-files-under-smartgc-src: 5
+# sha256 6f84ab114860ee46e207be520ba208aaa53b8c438adf8620c48107f7925f51f6  smartgc-src/conv_ftl.c
+# sha256 051ea55fcf8b6cd76fb7c66c9493b41f421a2e80a35c2cbd05645b67a01e12bf  smartgc-src/conv_ftl.h
+# sha256 b328fa41129b5fc15375dc1852fd16e1bdb2ae3aff3d3b268530cd8f84f1a848  smartgc-src/ssd.c
+# sha256 928de742574a4fb588cb41f5bbc85ffac2e6092a2340c0b9d6455f4214e54e15  smartgc-src/pqueue/pqueue.c
+# sha256 bf0f09a3c84aeb912262944575f0003c96fbff921602619b5e5d703b83cfab17  smartgc-src/Kbuild
+# sha256 027a7be6458fb7427007a2c89c784183aa7dc92f1872046d949fd7140715db45  smartgc-src/test/sim.c
+# sha256 8404d063ccb01301d253ceaf23241b84249cd2540c7a754f37fcc70e336f5407  smartgc-src/test/kshim.h
+In file included from /mnt/c/Users/oyeon/orca/iCAT-experiments/smartgc-src/test/sim.c:19:
+/mnt/c/Users/oyeon/orca/iCAT-experiments/smartgc-src/ssd.c: In function ‘ssd_advance_nand’:
+/mnt/c/Users/oyeon/orca/iCAT-experiments/smartgc-src/ssd.c:418:42: warning: ‘chnl_etime’ may be used uninitialized [-Wmaybe-uninitialized]
+  418 |                 lun->next_lun_avail_time = chnl_etime;
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+/mnt/c/Users/oyeon/orca/iCAT-experiments/smartgc-src/ssd.c:368:30: note: ‘chnl_etime’ was declared here
+  368 |         uint64_t chnl_stime, chnl_etime;
+      |                              ^~~~~~~~~~
+epoch=1 active=0 host_bytes=48167854080 host_pages=11759730 gc_pages=67213759
+part=0 host_pages=2938913 gc_pages=16811735 gc_count=308071 arm=47 windows=0 phase=0
+part=1 host_pages=2937011 gc_pages=16776202 gc_count=307486 arm=47 windows=0 phase=0
+part=2 host_pages=2941844 gc_pages=16822953 gc_count=308292 arm=47 windows=0 phase=0
+part=3 host_pages=2941962 gc_pages=16802869 gc_count=307980 arm=47 windows=0 phase=0
+wear part=0 erase_min=25 erase_max=52 erase_mean_milli=37606 erase_std_milli=3695
+wear part=1 erase_min=25 erase_max=52 erase_mean_milli=37534 erase_std_milli=3730
+wear part=2 erase_min=21 erase_max=53 erase_mean_milli=37633 erase_std_milli=3753
+wear part=3 erase_min=24 erase_max=52 erase_mean_milli=37595 erase_std_milli=3773
+sim policy=cat-fig7-fixed workload=zones capacity_mib=8192 host_pages=11759730 gc_pages=67213759 waf=6.715587 waf_nand=6.715587 invariants=ok
+NVMeVirt: Wear: ns=0 part=0 erases=308071 erase_min=25 erase_max=52 erase_mean_milli=37606 erase_std_milli=3695
+NVMeVirt: Wear: ns=0 part=1 erases=307486 erase_min=25 erase_max=52 erase_mean_milli=37534 erase_std_milli=3730
+NVMeVirt: Wear: ns=0 part=2 erases=308292 erase_min=21 erase_max=53 erase_mean_milli=37633 erase_std_milli=3753
+NVMeVirt: Wear: ns=0 part=3 erases=307980 erase_min=24 erase_max=52 erase_mean_milli=37595 erase_std_milli=3773
+NVMeVirt: GC stats: ns=0 policy=cat-fig7-fixed host_pages=11759730 gc_pages=67213759 gc_count=1231829 WAF=6.715 warmup_gc=100-per-part
+exit=0
+# finished 2026-11-19T13:30:15+09:00

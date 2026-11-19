@@ -22,7 +22,7 @@ Preconditions:
 - `bash $V doctor` reports `kbuild: ready`. On the Windows development PC set `KDIR=/home/oy/sgbuild/hdr/root/usr/src/linux-headers-7.0.0-31-generic`.
 - No file `result/<run-id>/kbuild-<tag>.log` exists yet.
 
-- **SmartGC.** Run `bash $V kbuild <run-id> smartgc smartgc-src NVMEVIRT_GC_POLICY=SMARTGC`. It prints `PASS ... exit=0`, and `grep -c '^module parm=smartgc_' result/<run-id>/kbuild-smartgc.log` prints `10`.
+- **SmartGC.** Run `bash $V kbuild <run-id> smartgc smartgc-src NVMEVIRT_GC_POLICY=SMARTGC`. It prints `PASS ... exit=0`, and `grep -c '^module parm=smartgc_' result/<run-id>/kbuild-smartgc.log` prints `11`.
 - **SmartGC, Q at 2000.** Run `bash $V kbuild <run-id> smartgcq smartgc-src NVMEVIRT_GC_POLICY=SMARTGC SMARTGC_Q_INIT=2000`. It prints `PASS`.
 - **Greedy and fixed CAT.** Run `bash $V kbuild <run-id> sg-greedy smartgc-src NVMEVIRT_GC_POLICY=GREEDY` and `bash $V kbuild <run-id> sg-arm47 smartgc-src NVMEVIRT_GC_POLICY=CAT_FIG7 FIXED_ARM=47`. Both print `PASS`, and neither log has a `parm=smartgc_` line.
 - **Warnings.** Read the warning list the command prints. Off the experiment computer exactly two are expected: `the compiler differs from the one used to build the kernel` and `pahole version differs from the one used to build the kernel`. Any warning that names a file of the source copy is a finding.

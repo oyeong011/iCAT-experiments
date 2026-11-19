@@ -170,7 +170,7 @@ int main(int argc, char **argv)
 					"[verbose=1] [sim_seed=N]"
 #if IS_SMARTGC
 					" [alpha|gamma|eps_start|eps_min|w|gcbuf=permille] "
-					"[eps_halflife=N] [batch=N] [q_init=N] [seed=N]"
+					"[eps_halflife=N] [batch=N] [q_init=N] [seed=N] [eq8=0|1]"
 #endif
 					"\n");
 			return 2;
@@ -193,6 +193,7 @@ int main(int argc, char **argv)
 		else if (!strcmp(argv[i], "gcbuf")) smartgc_gcbuf_permille = n;
 		else if (!strcmp(argv[i], "q_init")) smartgc_q_init = n;
 		else if (!strcmp(argv[i], "seed")) smartgc_seed = n;
+		else if (!strcmp(argv[i], "eq8")) smartgc_eq8 = n;
 #endif
 		else {
 			fprintf(stderr, "unknown option %s\n", argv[i]);

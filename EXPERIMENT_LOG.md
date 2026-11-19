@@ -13328,3 +13328,66 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **오류/경고**: 없음(사용자 공간 컴파일 경고는 기존 `ssd.c`의 `-Wmaybe-uninitialized` 2건).
 - **정리 상태**: 임시 디렉터리는 도우미가 제거. 저장소에 `smartgc-src/conv_ftl.c`, `smartgc-src/SMARTGC.md`, `.claude/skills/verify-nvmevirt-gc/features/kernel-run.md`, `result/smartgc-fix-20261119/`(로그 11개), 이 일지 항목이 커밋되지 않은 채 있다.
 - **다음 조치**: 실험 컴퓨터에서 `git pull` → `bash script/build-all-modules.sh` → `SMOKE=1` 짧은 실행으로 로드·proc 출력 확인(별도 등록). `smartgc`와 `smartgcq` 중 비교 대상 결정은 여전히 사용자 몫.
+
+### smartgc-eq8-20261119 — SmartGC 선택 규칙 비교: 순위 목록 대 식 8 블록별 선택 (사용자 공간 FTL 구동) — 등록 2026-11-19T13:28:17+09:00
+
+- **성격**: SSD 측정이 아니다. 사용자 공간 구동(가짜 시계, 지연 0)이며 수치는 논문·결과표에 쓰지 않는다.
+- **목적**: Q를 0에서 시작한 SmartGC의 WAF가 Greedy의 약 1.8배인 것이 이 구현의 선택 규칙(Q(s, 지움) 순위 상위 `batch`개) 탓인지 가린다. 논문 식 8을 글자 그대로 읽은 규칙을 모듈 파라미터 `smartgc_eq8=1`로 추가했다: 후보 라인마다 확률 1−ε로 Q가 큰 행동(동점이면 둠 = 행동 0), 확률 ε로 무작위 행동(지움/둠 반반)을 고르고, 지움을 고른 라인 전부가 희생 목록이 되며 Q(s, 지움)이 큰 순서로 지운다. 지움을 고른 라인이 하나도 없으면 무작위 후보 1개를 넣는다(GC가 멈추지 않게 하려는 장치, 논문에 없음). 보상·다음 상태·GC 버퍼는 그대로다.
+- **코드 변경**: `smartgc-src/conv_ftl.c`·`conv_ftl.h` — 희생 목록을 고정 64칸 배열 4개에서 라인 수만큼의 `struct smartgc_cand` 배열로 바꿈(두 규칙이 같이 씀), `smartgc_eq8` 파라미터, `smartgc` 줄과 요약 줄에 `listed=`(목록에 올린 라인 수 누계) 추가. `test/sim.c`에 `eq8=` 옵션, `test/kshim.h`에 `sort` 대체, `test/run.sh`에 헤더 스텁 1개.
+- **사전 예상(실행 전에 적음)**: 식 8 규칙은 순위 규칙보다 나쁠 것으로 본다. 근거: 지움의 보상(w/U + 1/std)이 둠의 보상(1/std)보다 항상 크고 빈 라인 상태의 가치가 커서, 한 번이라도 지워 본 상태는 Q(지움) > Q(둠)이 되기 쉽다. 그러면 무효 페이지가 1개뿐인 라인까지 목록에 올라 WAF가 크게 오른다. q_init=2000이면 처음부터 모든 후보가 지움을 고른다. 이 예상이 틀려 식 8 규칙의 WAF가 Greedy 수준이면 1.8배는 내 선택 규칙 탓이라고 결론짓는다. 어느 쪽이든 `listed/steps`(평균 목록 길이)와 GC당 유효 페이지 수로 이유를 확인한다.
+- **판정 기준**: E1 — 모든 구동 PASS(exit=0, `invariants=ok`). E2 — `eq8=0`(기본) 구동의 host_pages·gc_pages가 리팩터링 전 로그(`result/smartgc-fix-20261119/`의 smartgc-default, smartgc-qinit2000, smartgc-qinit2000-gcbuf50, greedy, arm47)와 같다. E3 — 커널 빌드 smartgc rc=0, 경고는 버전 불일치 2건뿐, `parm=smartgc_` 11개. WAF 비교는 합격/불합격 없이 기록한다.
+- **명령** (WSL, `V=.claude/skills/verify-nvmevirt-gc/verify.sh`, `X="capacity_mib=8192 overwrite_x=6"`, 실행 ID smartgc-eq8-20261119):
+  - 회귀: `sim <id> rank-default smartgc $X`, `rank-qinit2000 ... q_init=2000`, `rank-qinit2000-gcbuf50 ... q_init=2000 gcbuf=50`, `greedy greedy $X`, `arm47 arm47 $X` + `same` 5회
+  - 식 8: `eq8-default smartgc $X eq8=1`, `eq8-gcbuf0 ... eq8=1 gcbuf=0`, `eq8-qinit2000 ... eq8=1 q_init=2000`, `eq8-eps300const ... eq8=1 eps_min=300`, `eq8-g0 ... eq8=1 gamma=0`, `eq8-uniform ... eq8=1 workload=uniform`
+  - 시드 반복(순위·식 8 각각): `rank-default-seed2/3 ... seed=2|3`, `eq8-default-seed2/3 ... eq8=1 seed=2|3`
+  - 빌드: `env KDIR=<헤더> bash $V kbuild <id> smartgc smartgc-src NVMEVIRT_GC_POLICY=SMARTGC`
+- **변경 변수**: 선택 규칙(eq8 0/1), q_init(0/2000), gcbuf(10/0‰), ε 하한(10/300‰), γ(0.9/0), 워크로드(zones/uniform), smartgc_seed(1/2/3). **고정 조건**: 용량 8192 MiB, 파티션 4, 덮어쓰기 6배, sim_seed 기본, 나머지 SmartGC 파라미터 기본값(α=0.5, w=1, batch=8, ε 0.3→0.01 반감 2048스텝).
+- **환경**: 호스트 DESKTOP-ECC47MA(원래 실험 컴퓨터 아님), WSL2 Ubuntu-26.04, 커널 6.18.58.1-microsoft-standard-WSL2, gcc 15.2.0, 커널 헤더 linux-headers-7.0.0-31-generic 7.0.0-31.31. 소스는 커밋 060b42c05 위의 커밋 전 변경이며 각 증거 파일 머리에 SHA256이 찍힌다. 커널 모듈 로드 없음.
+- **증거**: `result/smartgc-eq8-20261119/`.
+- **실행 중 변경 1 (2026-11-19T13:30:52+09:00)**: 1차 구동 15건(회귀 5, 식 8 6, 시드 반복 4; ~13:30:15 종료, 모두 PASS) 결과를 보고 구동 4건을 추가한다. 이유: 식 8 구동에서 스텝 수가 파티션당 383개뿐이고(평균 목록 길이 약 1,100라인) ε가 반감 주기 2048스텝에 못 미쳐 끝까지 0.3이었다. 그 결과 희생 라인의 86%(360,969/421,927, 파티션 0)가 무작위 탐색으로 뽑혔고, `eps_min=300` 구동은 기본 구동과 페이지 수가 완전히 같았다. 즉 1차 식 8 수치는 학습된 선택이 아니라 거의 무작위 선택을 잰 것이다. ε 일정은 순위 규칙(스텝 = 지움 8회)에 맞춰 정한 값이라 두 규칙의 비교가 공정하지 않다. 추가 구동: `eq8-eps10const`(eq8=1 eps_start=10 eps_min=10), `eq8-eps0`(eq8=1 eps_start=0 eps_min=0), `eq8-halflife15`(eq8=1 eps_halflife=15 — 순위 규칙의 반감 2048스텝×8회 ≈ 16,384회 지움을 목록 길이 약 1,100으로 환산), `rank-eps10const`(eps_start=10 eps_min=10, 짝). 판정은 E1만 적용, 나머지 관찰.
+- **종료 2026-11-19T13:32:48+09:00**. 실행 상태: 계획 15건 + 추가 4건 사용자 공간 구동 모두 exit=0·PASS(13:2x~13:31), 커널 빌드 1건 exit=0. 각 구동의 수행량: 호스트 4KiB 쓰기 11,759,730페이지(계측 구간).
+- **판정**: E1 통과(19/19). E2 통과 — rank-default, rank-qinit2000, rank-qinit2000-gcbuf50, greedy, arm47 모두 `smartgc-fix-20261119` 로그와 host_pages·gc_pages 일치(SAME 5회). E3 통과 — smartgc 빌드 exit=0, 경고는 버전 불일치 2건, `parm=smartgc_` 11개.
+- **관찰** (사용자 공간 구동, WAF = 1 + gc/host, 측정값 아님; 스텝·목록 길이·무작위 비율은 4개 파티션 합, erase std는 파티션 0):
+
+| 구동 | gc_pages | WAF | 스텝 | 평균 목록 길이 | 무작위로 뽑힌 비율 | erase std |
+|---|---:|---:|---:|---:|---:|---:|
+| `greedy` | 73154240 | 7.221 | – | – | – | 7.19 |
+| `arm47` | 67213759 | 6.716 | – | – | – | 3.69 |
+| `rank-default` (순위, Q 0) | 139087054 | 12.827 | 294315 | 8.0 | 3% | 15.64 |
+| `rank-default-seed2` | 135761598 | 12.545 | 287820 | 8.0 | 3% | 11.82 |
+| `rank-default-seed3` | 135049923 | 12.484 | 286431 | 8.0 | 3% | 13.50 |
+| `rank-eps10const` (ε 0.01 고정) | 185542127 | 16.778 | 385051 | 8.0 | 1% | 22.83 |
+| `eq8-default` (식 8, Q 0) | 96454024 | 9.202 | 1543 | 1096.2 | 86% | 5.46 |
+| `eq8-default-seed2` | 96661479 | 9.220 | 1552 | 1092.3 | 86% | 5.52 |
+| `eq8-default-seed3` | 96622486 | 9.216 | 1547 | 1094.9 | 86% | 5.65 |
+| `eq8-eps300const` | 96454024 | 9.202 | 1543 | 1096.2 | 86% | 5.46 |
+| `eq8-halflife15` | 90617059 | 8.706 | 9251 | 172.8 | 25% | 7.85 |
+| `eq8-eps10const` (ε 0.01 고정) | 98249877 | 9.355 | 20102 | 85.4 | 37% | 6.11 |
+| `eq8-eps0` (ε 0) | 130178449 | 12.070 | 470547 | 4.7 | 15% | 4.48 |
+| `eq8-g0` (γ 0) | 85965163 | 8.310 | 354 | 4346.1 | 20% | 6.44 |
+| `eq8-gcbuf0` | 100188047 | 9.520 | 1664 | 1051.1 | 90% | 6.25 |
+| `eq8-uniform` | 113152198 | 10.622 | 1753 | 1113.6 | 90% | 4.93 |
+| `rank-qinit2000` (순위, Q 2000) | 72537784 | 7.168 | 164272 | 8.0 | 4% | 7.07 |
+| `eq8-qinit2000` (식 8, Q 2000) | 74000151 | 7.293 | 268 | 5045.5 | 18% | 5.02 |
+| `rank-qinit2000-gcbuf50` | 66812937 | 6.682 | 152630 | 8.0 | 4% | 5.80 |
+
+- **해석**: ① 사전 예상은 틀렸다. Q를 0에서 시작하면 식 8 규칙의 WAF(8.7~9.4)가 순위 규칙(12.5~16.8)보다 낮다. 시드 3개의 폭은 식 8 0.02, 순위 0.34로 차이(약 3.3)보다 훨씬 작다. 따라서 "Greedy의 1.8배"의 일부는 이 구현의 순위 규칙 탓이다. ② 그래도 식 8 규칙은 Greedy(7.22)보다 20~30% 높다. ③ 식 8 규칙의 수치는 학습된 선택보다 무작위 선택에 크게 기댄다: 기본 설정에서 희생 라인의 86%가 무작위로 뽑혔고(ε가 끝까지 0.3), ε=0이면 12.07로 순위 규칙 수준이 된다(이때 15%는 목록이 비어 넣은 무작위 1개). 즉 Q 0 시작에서는 두 규칙 모두 학습된 선택 자체가 Greedy보다 나쁘고, 무작위가 섞일수록 나아진다. ④ Q(s, 지움)을 2000에서 시작하면 두 규칙 모두 Greedy 수준이다(7.17, 7.29). ⑤ 식 8 규칙은 erase 표준편차가 더 작다(5.5 대 15.6).
+- **한계**: 가짜 시계·지연 0·이 구동 전용 워크로드. 시드 반복은 기본 설정 두 가지에만 3회, 나머지는 1회. 식 8 규칙의 동점 처리(둠), 빈 목록일 때의 무작위 1개, Q 큰 순서로 지우기는 논문에 없거나 모호해서 직접 정한 것이라 "식 8 그대로"도 하나의 해석이다. ε 일정이 규칙마다 뜻이 달라 완전히 공정한 비교는 아니다(추가 4건으로 범위만 확인). 보상("둠" = 1/std)은 그대로 두었으므로 논문 Alg. 1 그대로의 보상과 식 8의 조합은 시험하지 않았다. 커널에서 돌린 적 없음.
+- **오류/경고**: 없음(사용자 공간 컴파일 경고는 기존 `ssd.c`의 `-Wmaybe-uninitialized` 2건).
+- **정리 상태**: 임시 디렉터리는 도우미가 제거. 저장소에 `smartgc-src/`(conv_ftl.c, conv_ftl.h, SMARTGC.md, test/sim.c, test/kshim.h, test/run.sh), 스킬 문서 2개, `result/smartgc-eq8-20261119/`(로그 20개), 이 일지 항목이 커밋되지 않은 채 있다.
+- **다음 조치**: 비교 대상으로 쓸 SmartGC 설정(선택 규칙, Q 초기값) 결정은 사용자 몫. 실험 컴퓨터에서 돌리려면 모듈을 다시 빌드해야 하고 `smartgc_eq8=1`은 insmod 인자라서 실행 스크립트에 전달 경로가 없다(현재 스크립트는 insmod 인자를 고정으로 준다).
+
+### verify-skill-20261119b — 검증 스킬 갱신 뒤 자체 시험: 선택 규칙 기능 — 등록 2026-11-19T13:35:40+09:00
+
+- **목적**: `.claude/skills/verify-nvmevirt-gc`에 새 기능 문서 `features/sim-selection-rule.md`를 더한 뒤, 적힌 절차가 그대로 동작하는지 한 번 돌려 본다. 성능 실험이 아니다.
+- **판정 기준**: W1 — doctor rc=0. W2 — `eq8-default` 구동 PASS, `listed/steps`가 8보다 훨씬 크다. W3 — `rank-default` 구동 PASS, `listed/steps` = 8.0. W4 — `eq8-eps0` 구동 PASS, `eps_permille=0`이고 `explored` > 0. W5 — `same` 2회가 문서에 적은 값(식 8 gc_pages=96454024, 순위 gc_pages=139087054)으로 SAME. W6 — 끝난 뒤 증거 파일이 남아 있다.
+- **명령** (WSL, `V=.claude/skills/verify-nvmevirt-gc/verify.sh`): `bash $V doctor`; `bash $V sim verify-skill-20261119b {rank-default smartgc | eq8-default smartgc ... eq8=1 | eq8-eps0 smartgc ... eq8=1 eps_start=0 eps_min=0}` (공통 `capacity_mib=8192 overwrite_x=6`); `bash $V same` 2회(상대는 `result/smartgc-eq8-20261119/`의 같은 이름 로그).
+- **변경 변수**: 없음(문서만 새것). **고정 조건**: 소스는 smartgc-eq8-20261119 때와 같은 커밋 전 작업본(각 로그 머리의 SHA256으로 확인), zones 워크로드, sim_seed 기본, smartgc_seed=1.
+- **환경**: 호스트 DESKTOP-ECC47MA(원래 실험 컴퓨터 아님), WSL2 Ubuntu-26.04, 커널 6.18.58.1-microsoft-standard-WSL2, gcc 15.2.0. 커널 모듈 로드 없음.
+- **증거**: `result/verify-skill-20261119b/`.
+- **종료 2026-11-19T13:36:51+09:00**. 실행 상태: 계획한 구동 전부 완료, 조건 변경 없음. 구동 3건 모두 exit=0·PASS.
+- **결과** (사용자 공간 구동, 측정값 아님; 파티션 0): `rank-default` gc_pages=139087054, steps=74909, listed=599272, listed/steps=8.0. `eq8-default` gc_pages=96454024, steps=383, listed=421927, listed/steps=1101.6, eps_permille=300. `eq8-eps0` gc_pages=130178449, steps=140236, listed=576160, eps_permille=0, explored=95225.
+- **판정**: W1 통과(doctor rc=0; kbuild는 KDIR을 주지 않아 NOT ready로 표시, 이번 시험 대상 아님). W2 통과(1101.6). W3 통과(8.0). W4 통과. W5 통과(SAME 2회, 문서에 적은 값과 일치; 소스 SHA256도 smartgc-eq8-20261119 로그와 같음). W6 통과(로그 3개 남음).
+- **한계**: 도우미와 문서의 동작 확인이다. 같은 페이지 수는 구동기가 결정적이라는 뜻이며 독립 계측 검증이 아니다. 커널에서 `smartgc_eq8=1`을 올려 본 적은 없다.
+- **오류/경고**: 없음. **정리 상태**: 임시 디렉터리 제거됨, `result/verify-skill-20261119b/`와 스킬 문서 변경은 커밋 전.
+- **다음 조치**: 없음(스킬 유지 보수는 `/pstack:maintain-verification-skill`).

@@ -59,6 +59,7 @@ Run `bash $V doctor` first, and again whenever something looks off. It prints on
 Use the feature map in [`features/`](features/README.md). Each file gives the exact commands and the end state that proves the feature.
 
 - [Userspace FTL run](features/sim-ftl.md)
+- [SmartGC victim selection rule](features/sim-selection-rule.md)
 - [Unchanged baseline policies](features/sim-baseline-equivalence.md)
 - [Kernel-module compile](features/module-build.md)
 - [Kernel run on the experiment computer](features/kernel-run.md)
@@ -80,7 +81,9 @@ Use the feature map in [`features/`](features/README.md). Each file gives the ex
 
 ## What has and has not been proven
 
-Proven on the Windows development PC in WSL on 2026-11-19 (run `verify-skill-20261119` in `EXPERIMENT_LOG.md`): doctor, one userspace SmartGC run, the baseline comparison against an earlier log, a deliberate failure, and one kernel-module compile.
+Proven on the Windows development PC in WSL on 2026-11-19 (run `verify-skill-20261119` in `EXPERIMENT_LOG.md`): doctor, one userspace SmartGC run, the baseline comparison against an earlier log, a deliberate failure, and one kernel-module compile. The selection-rule feature was driven the same day (run `verify-skill-20261119b`).
+
+Not covered by this skill: the analysis and figure scripts in `analysis/` and the dashboard built by `analysis/dashboard-build.sh`. They read result files and never drive the module.
 
 Not proven anywhere yet: the kernel run with a `smartgc-src` module. The stand-in skipped these steps: `insmod` with the memmap arguments, I/O worker threads and locking, the `/proc/nvmevirt_measurement` read and write handlers in a real kernel, module parameters at load time, `rmmod` teardown, and real timing. They stay unverified until [the kernel run](features/kernel-run.md) is driven on the experiment computer.
 

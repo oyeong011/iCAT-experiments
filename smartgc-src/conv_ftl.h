@@ -197,11 +197,22 @@ enum smartgc_action {
 struct smartgc_stats {
 	uint64_t steps; /* agent time steps (candidate lists built) */
 	uint64_t explored; /* candidates chosen at random (epsilon) */
+	uint64_t listed; /* lines put on a victim list; listed / steps = mean list length */
 	uint64_t absorbed; /* host page writes kept in the GC buffer, no NAND program */
 	uint64_t evicted; /* GC-buffer pages programmed after their line was unfrozen */
 	uint64_t gc_flushed; /* GC-buffer pages programmed by a GC copy instead */
 	uint64_t freezes;
 	uint64_t thaws; /* every line unfrozen because no other victim existed */
+};
+
+/* One line on the victim list. */
+struct smartgc_cand {
+	int64_t q; /* Q(s, erase) when chosen: erase order of the per-block rule */
+	int64_t reward; /* < 0 until the line is erased */
+	uint32_t id;
+	uint32_t vpc; /* valid pages when the action was taken */
+	uint32_t seq; /* order of choice */
+	uint16_t next_state; /* the erased, empty line */
 };
 
 struct smartgc {
@@ -212,10 +223,7 @@ struct smartgc {
 	uint32_t drain_head;
 	uint32_t drain_cnt;
 	uint32_t drain_pos; /* next page of the head line to examine */
-	uint32_t cand[SMARTGC_MAX_BATCH]; /* victim list of the current step */
-	uint32_t cand_vpc[SMARTGC_MAX_BATCH]; /* valid pages when the action was taken */
-	int64_t cand_reward[SMARTGC_MAX_BATCH]; /* < 0 until the line is erased */
-	uint16_t cand_next_state[SMARTGC_MAX_BATCH]; /* the erased, empty line */
+	struct smartgc_cand *cand; /* victim list of the current step, up to one entry per line */
 	uint32_t cand_n;
 	uint32_t cand_next;
 	uint32_t cur_slot;
@@ -233,6 +241,7 @@ struct smartgc {
 	int64_t gamma_q16;
 	int64_t w_q16;
 	uint32_t batch;
+	bool per_block; /* Eq. 8 per line instead of the ranked list of batch lines */
 	struct smartgc_stats stats;
 };
 

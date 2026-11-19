@@ -121,6 +121,7 @@ static inline void *kshim_alloc(size_t size, bool zero)
 #define vfree(p) free(p)
 #define kvfree(p) free(p)
 #define kfree(p) free(p)
+#define sort(base, num, size, cmp, swap) qsort(base, num, size, cmp)
 
 typedef int spinlock_t;
 #define spin_lock_init(l) (*(l) = 0)

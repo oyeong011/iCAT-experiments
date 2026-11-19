@@ -12,6 +12,7 @@
 #include <linux/proc_fs.h>
 #include <linux/uaccess.h>
 #include <linux/user_namespace.h>
+#include <linux/sort.h>
 
 #include "nvmev.h"
 #include "conv_ftl.h"
@@ -110,12 +111,12 @@ static ssize_t conv_measure_read(struct file *file, char __user *buf,
 		len += scnprintf(text + len, size - len,
 			"smartgc part=%u steps=%llu explored=%llu eps_permille=%u absorbed=%llu "
 			"evicted=%llu gc_flushed=%llu frozen=%u buf_pages=%llu freezes=%llu thaws=%llu "
-			"nand_pages=%llu\n",
+			"nand_pages=%llu listed=%llu\n",
 			i, sg->stats.steps, sg->stats.explored, smartgc_epsilon(sg),
 			sg->stats.absorbed, sg->stats.evicted, sg->stats.gc_flushed,
 			sg->frozen_cnt, sg->buf_pages, sg->stats.freezes, sg->stats.thaws,
 			ftls[i].stats.host_page_writes - sg->stats.absorbed + sg->stats.evicted +
-				ftls[i].stats.gc_page_writes);
+				ftls[i].stats.gc_page_writes, sg->stats.listed);
 	}
 #endif
 	mutex_unlock(&conv_measure_lock);
@@ -1472,6 +1473,16 @@ MODULE_PARM_DESC(smartgc_q_init, "SmartGC initial Q(s, erase); 0 as in the paper
 static unsigned int smartgc_seed = 1;
 module_param(smartgc_seed, uint, 0444);
 MODULE_PARM_DESC(smartgc_seed, "SmartGC exploration seed");
+/*
+ * 1: Eq. 8 read literally.  Every eligible line takes the action with the
+ * larger Q (keep on a tie, as action 0 comes first), or a random action with
+ * probability epsilon, and all lines that chose erase form the list, erased
+ * from the largest Q(s, erase) down.  smartgc_batch is not used.  If no line
+ * chose erase, one random eligible line is taken so that GC can proceed.
+ */
+static unsigned int smartgc_eq8;
+module_param(smartgc_eq8, uint, 0444);
+MODULE_PARM_DESC(smartgc_eq8, "SmartGC victim rule: 0 = ranked list of smartgc_batch lines, 1 = Eq. 8 per line");
 
 static uint32_t smartgc_rand(struct smartgc *sg)
 {
@@ -1620,6 +1631,29 @@ static struct line *smartgc_random_eligible(struct conv_ftl *ftl)
 	return NULL;
 }
 
+static void smartgc_add_cand(struct smartgc *sg, struct line *line, int64_t q)
+{
+	struct smartgc_cand *cand = &sg->cand[sg->cand_n];
+
+	line->sg_action = SMARTGC_ERASE;
+	cand->id = line->id;
+	cand->vpc = line->vpc;
+	cand->reward = -1;
+	cand->q = q;
+	cand->seq = sg->cand_n++;
+	sg->stats.listed++;
+}
+
+/* Largest Q(s, erase) first; equal values keep the order of choice. */
+static int smartgc_cand_cmp(const void *a, const void *b)
+{
+	const struct smartgc_cand *x = a, *y = b;
+
+	if (x->q != y->q)
+		return x->q > y->q ? -1 : 1;
+	return x->seq < y->seq ? -1 : 1;
+}
+
 /* End one time step and choose the next victim list.  False if no line can be erased. */
 static bool smartgc_step(struct conv_ftl *ftl, bool thaw)
 {
@@ -1652,10 +1686,10 @@ static bool smartgc_step(struct conv_ftl *ftl, bool thaw)
 
 	/* Erased lines of the finished step: their reward was fixed at the erase. */
 	for (j = 0; j < sg->cand_n; j++) {
-		line = &lm->lines[sg->cand[j]];
-		if (sg->cand_reward[j] >= 0)
-			smartgc_learn(sg, line->sg_state, 1, sg->cand_reward[j],
-				      sg->cand_next_state[j]);
+		line = &lm->lines[sg->cand[j].id];
+		if (sg->cand[j].reward >= 0)
+			smartgc_learn(sg, line->sg_state, 1, sg->cand[j].reward,
+				      sg->cand[j].next_state);
 		line->sg_action = SMARTGC_NONE;
 	}
 	sg->cand_n = 0;
@@ -1675,6 +1709,7 @@ static bool smartgc_step(struct conv_ftl *ftl, bool thaw)
 	 * gets its new state.  The scan starts at a random line so that equal
 	 * Q values are not always resolved towards the same lines.
 	 */
+	epsilon = smartgc_epsilon(sg);
 	id = smartgc_rand(sg) % lm->tt_lines;
 	for (i = 0; i < lm->tt_lines; i++, id = (id + 1 == lm->tt_lines) ? 0 : id + 1) {
 		line = &lm->lines[id];
@@ -1687,8 +1722,20 @@ static bool smartgc_step(struct conv_ftl *ftl, bool thaw)
 		line->sg_state = state;
 		line->sg_action = SMARTGC_KEEP;
 		eligible++;
-		/* Keep the lines with the largest Q(s, erase), in descending order. */
 		q = sg->q[2 * state + 1];
+		if (sg->per_block) {
+			/* Eq. 8 for this line. */
+			if (smartgc_rand(sg) % 1000 < epsilon) {
+				if (smartgc_rand(sg) & 1) {
+					smartgc_add_cand(sg, line, q);
+					sg->stats.explored++;
+				}
+			} else if (q > sg->q[2 * state]) {
+				smartgc_add_cand(sg, line, q);
+			}
+			continue;
+		}
+		/* Keep the lines with the largest Q(s, erase), in descending order. */
 		if (top_n == sg->batch && q <= top_q[top_n - 1])
 			continue;
 		j = top_n < sg->batch ? top_n++ : top_n - 1;
@@ -1702,8 +1749,20 @@ static bool smartgc_step(struct conv_ftl *ftl, bool thaw)
 	if (!eligible)
 		return false;
 
+	if (sg->per_block) {
+		if (!sg->cand_n) {
+			line = smartgc_random_eligible(ftl);
+			NVMEV_ASSERT(line);
+			smartgc_add_cand(sg, line, sg->q[2 * line->sg_state + 1]);
+			sg->stats.explored++;
+		}
+		sort(sg->cand, sg->cand_n, sizeof(*sg->cand), smartgc_cand_cmp, NULL);
+		sg->stats.steps++;
+		sg->learn_steps++;
+		return true;
+	}
+
 	/* Alg. 2, choose_action(): epsilon-greedy for each slot of the list. */
-	epsilon = smartgc_epsilon(sg);
 	want = min(sg->batch, eligible);
 	while (sg->cand_n < want) {
 		line = NULL;
@@ -1720,11 +1779,7 @@ static bool smartgc_step(struct conv_ftl *ftl, bool thaw)
 		if (!line)
 			line = smartgc_random_eligible(ftl);
 		NVMEV_ASSERT(line);
-		line->sg_action = SMARTGC_ERASE;
-		sg->cand[sg->cand_n] = line->id;
-		sg->cand_vpc[sg->cand_n] = line->vpc;
-		sg->cand_reward[sg->cand_n] = -1;
-		sg->cand_n++;
+		smartgc_add_cand(sg, line, 0);
 	}
 	sg->stats.steps++;
 	sg->learn_steps++;
@@ -1740,7 +1795,7 @@ static struct line *smartgc_select(struct conv_ftl *ftl)
 	for (;;) {
 		while (sg->cand_next < sg->cand_n) {
 			sg->cur_slot = sg->cand_next++;
-			line = &lm->lines[sg->cand[sg->cur_slot]];
+			line = &lm->lines[sg->cand[sg->cur_slot].id];
 			if (line->pos && !line->frozen)
 				return line;
 		}
@@ -1763,17 +1818,17 @@ static void smartgc_on_erase(struct conv_ftl *ftl, struct line *line)
 	NVMEV_ASSERT(!line->frozen && !line->buf_cnt);
 	sg->dev_sum += 1;
 	sg->dev_sumsq += 2 * d + 1;
-	if (slot >= sg->cand_n || sg->cand[slot] != line->id)
+	if (slot >= sg->cand_n || sg->cand[slot].id != line->id)
 		return;
 	/*
 	 * The erase leads to the empty line.  The line is reused within the
 	 * step, so its state at the end of the step would depend on the host
 	 * writes that happened to follow, not on the action.
 	 */
-	sg->cand_next_state[slot] = smartgc_state(spp, line, sg->erase_base, sg->erase_span);
+	sg->cand[slot].next_state = smartgc_state(spp, line, sg->erase_base, sg->erase_span);
 	/* w / U with U = vpc / pages; an empty line counts as half a valid page. */
-	vpc = sg->cand_vpc[slot];
-	sg->cand_reward[slot] =
+	vpc = sg->cand[slot].vpc;
+	sg->cand[slot].reward =
 		div64_u64((uint64_t)sg->w_q16 * 2 * spp->pgs_per_line, vpc ? 2 * vpc : 1) +
 		smartgc_inv_std(sg, ftl->lm.tt_lines);
 }
@@ -1909,7 +1964,8 @@ static void smartgc_init(struct conv_ftl *ftl, uint32_t ns_id, uint32_t part_id)
 	sg->sort_key = vmalloc(sizeof(*sg->sort_key) * n);
 	sg->drain = vmalloc(sizeof(*sg->drain) * n);
 	sg->buffered = vzalloc(sizeof(*sg->buffered) * BITS_TO_LONGS(spp->tt_pgs));
-	NVMEV_ASSERT(sg->q && sg->sort_key && sg->drain && sg->buffered);
+	sg->cand = vmalloc(sizeof(*sg->cand) * max(n, SMARTGC_MAX_BATCH));
+	NVMEV_ASSERT(sg->q && sg->sort_key && sg->drain && sg->buffered && sg->cand);
 	sg->alpha_q16 = div_u64((uint64_t)min(smartgc_alpha_permille, 1000U) << SMARTGC_Q, 1000);
 	/*
 	 * Limits that keep Q inside 64 bits: rewards are positive, so Q is
@@ -1921,17 +1977,19 @@ static void smartgc_init(struct conv_ftl *ftl, uint32_t ns_id, uint32_t part_id)
 	sg->gamma_q16 = div_u64((uint64_t)smartgc_gamma_permille << SMARTGC_Q, 1000);
 	sg->w_q16 = div_u64((uint64_t)smartgc_w_permille << SMARTGC_Q, 1000);
 	sg->batch = clamp(smartgc_batch, 1U, SMARTGC_MAX_BATCH);
+	sg->per_block = smartgc_eq8;
 	sg->frozen_max = div_u64((uint64_t)n * min(smartgc_gcbuf_permille, 1000U), 1000);
 	sg->buf_capacity = (uint64_t)sg->frozen_max * spp->pgs_per_line;
 	sg->rng = ((uint64_t)smartgc_seed + 1) * 0x9E3779B97F4A7C15ULL + part_id;
 	smartgc_reset_learning(ftl);
 	NVMEV_INFO("SmartGC init ns=%u part=%u states=%u alpha_permille=%u gamma_permille=%u "
 		   "eps_start_permille=%u eps_min_permille=%u eps_halflife=%u w_permille=%u "
-		   "batch=%u gcbuf_permille=%u frozen_max=%u buf_capacity_pages=%llu q_init=%u seed=%u\n",
+		   "batch=%u gcbuf_permille=%u frozen_max=%u buf_capacity_pages=%llu q_init=%u seed=%u "
+		   "eq8=%u\n",
 		   ns_id, part_id, SMARTGC_STATES, smartgc_alpha_permille, smartgc_gamma_permille,
 		   smartgc_eps_start_permille, smartgc_eps_min_permille, smartgc_eps_halflife,
 		   smartgc_w_permille, sg->batch, smartgc_gcbuf_permille, sg->frozen_max,
-		   sg->buf_capacity, smartgc_q_init, smartgc_seed);
+		   sg->buf_capacity, smartgc_q_init, smartgc_seed, sg->per_block);
 }
 
 static void smartgc_remove(struct conv_ftl *ftl)
@@ -1940,11 +1998,12 @@ static void smartgc_remove(struct conv_ftl *ftl)
 
 	NVMEV_INFO("SmartGC summary ns=%u part=%u steps=%llu explored=%llu eps_permille=%u "
 		   "absorbed=%llu evicted=%llu gc_flushed=%llu frozen=%u buf_pages=%llu "
-		   "freezes=%llu thaws=%llu\n",
+		   "freezes=%llu thaws=%llu listed=%llu\n",
 		   ftl->tuner.ns_id, ftl->tuner.part_id, sg->stats.steps, sg->stats.explored,
 		   smartgc_epsilon(sg), sg->stats.absorbed, sg->stats.evicted,
 		   sg->stats.gc_flushed, sg->frozen_cnt, sg->buf_pages, sg->stats.freezes,
-		   sg->stats.thaws);
+		   sg->stats.thaws, sg->stats.listed);
+	vfree(sg->cand);
 	vfree(sg->buffered);
 	vfree(sg->drain);
 	vfree(sg->sort_key);
