@@ -13475,3 +13475,16 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 16 runs exit=0 (12 instrumented F/v1/v2/v4 × 3, 4 uninstrumented WAF checks). Report: `result/resource-v124-20261114/report/experiment_report.md`.
 - Analysis-stage finding: the runner's `*.resource.txt` were cut from the whole dmesg buffer and include earlier runs' RESOURCE blocks (even uninstrumented runs had them). The first analysis summed them (GC counts varied 2–5× per rep). Fixed: analyze.py reads each run's `kernel.log` (one block per run, sizeof_tuner matches build). Runner line 28 changed to grep `kernel.log` for future reuse. Contaminated files kept as evidence.
 - Results (mean of 3): learner state 10,048 B (v1/v2) / 10,112 B (v4); learner hook net 13.4 / 11.6 / 9.4 ns per GC; 4.3 / 6.3 / 6.2 µs per decision; ≤0.0017 % of dispatcher CPU. WAF instr vs uninstr within 0.3 %. WAF vs Fixed CAT-47: v1 +14.5 %, v2 +13.3 %, v4 +7.5 %.
+
+### gc-20261010 mixY onlinev4 — started 2026-11-19T10:40:51+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-online-v4.ko`.
+- Command: `env MIXY_SEQ="F" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY onlinev4 1`; evidence `result/perf-20261119/mixY-onlinev4-rep1/`.
+
+- Finished 2026-11-19T11:12:15+09:00; mixY onlinev4 exit=0; evidence `result/perf-20261119/mixY-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=294920101888 host_pages=72001978 gc_pages=65066672 WAF=1.903679
+- phaseA(test4) host_pages=72001978 gc_pages=65066672 WAF=1.903679
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseS01(test4) host_pages=72001978 gc_pages=65066672 WAF=1.903679
+- ycsb-load 
+- ycsb-run 
