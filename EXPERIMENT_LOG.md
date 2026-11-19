@@ -13406,3 +13406,42 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - **한계**: `script/mix-gc-20261010.sh`의 새 정책 이름은 문법 검사만 했고 실행하지 않았다(이 호스트에서 실행 불가). `build-all-modules.sh`도 실행하지 않았다 — 같은 make 변수로 도우미가 빌드한 것까지만 확인. 커널 모듈 로드 없음. 사용자 공간 수치는 측정값 아님.
 - **오류/경고**: 없음. **정리 상태**: 임시 디렉터리 제거됨. 코드·스크립트·문서 변경과 `result/smartgc-eq8-build-20261119/`(로그 5개)는 커밋 전.
 - **다음 조치**: 실험 컴퓨터에서 `SMARTGC_RUN_GUIDE.md` 순서대로 빌드 후 `SMOKE=1` 실행.
+
+### mix-20260911 t4 smartgc — started 2026-11-19T14:57:46+09:00
+
+- Phase A fio test4 fixed payload (5898240000/2949120000/983040000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (20000 records, 20000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-smartgc.ko`.
+- Command: `bash script/mix-20260911.sh t4 smartgc`; evidence `result/mix-20260911/t4-smartgc/`.
+
+- Finished 2026-11-19T15:00:09+09:00; t4 smartgc exit=0; evidence `/home/oy/iCAT/result/gc-20261010/t4-smartgc-rep1-smoke`; cleanup attempted.
+- total host_bytes=9830674432 host_pages=2400067 gc_pages=4091830 WAF=2.704882
+- phaseA(test4) host_pages=2400067 gc_pages=4091830 WAF=2.704882
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 t4 smartgc-eq8 — started 2026-11-19T15:00:16+09:00
+
+- Phase A fio test4 fixed payload (5898240000/2949120000/983040000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (20000 records, 20000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-smartgc-eq8.ko`.
+- Command: `bash script/mix-20260911.sh t4 smartgc-eq8`; evidence `result/mix-20260911/t4-smartgc-eq8/`.
+
+- Finished 2026-11-19T15:02:40+09:00; t4 smartgc-eq8 exit=0; evidence `/home/oy/iCAT/result/gc-20261010/t4-smartgc-eq8-rep1-smoke`; cleanup attempted.
+- total host_bytes=9830674432 host_pages=2400067 gc_pages=4527199 WAF=2.886280
+- phaseA(test4) host_pages=2400067 gc_pages=4527199 WAF=2.886280
+- phaseB(none) host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-load host_pages=0 gc_pages=0 WAF=N/A
+- phaseB-run host_pages=0 gc_pages=0 WAF=N/A
+- ycsb-load 
+- ycsb-run 
+
+### smartgc-20261119 — build + smoke (2026-11-19), main 60174df07
+- Built per SMARTGC_RUN_GUIDE.md §2 (kernel 7.0.0-31, gcc 13.3.0; only the usual compiler/pahole version warnings). sha256:
+  - smartgc 33eac9444344b3a533d51c16a7f046a2228096ad39de46ff936892060af23099
+  - smartgcq 8af1f1c4be7f423163f585712f98376f6197d65447c34bb506f013d4b90e5826
+  - smartgc-eq8 cd5432f9abd578cc24dafc858fd60fc3ced56ff657fc5ff8bec2f04ab4bce23a
+  - smartgcq-eq8 fa6ceffbfe8e01c6b6c14985a3dfc4c80c1c00b55023afd53f6277d71485b80e
+  - sg-greedy cb729270181fad9b4d0b4e5c2bc37b642dbbeec078e99e95d9e389026fa6a7d9
+  - sg-arm47 138024d04de8c47b484c2d2d0e3cebe7c55b5237efec4b2458d733438a4bf65e
+- Smoke `t4 smartgc` and `t4 smartgc-eq8` (SMOKE=1): exit 0; host_pages 2,400,067 >0, gc_pages >0 (4,091,830 / 4,527,199); 4 `smartgc part=` lines with steps>0 and 4 `wear part=` lines; `SmartGC init` ×4 (eq8 build: eq8=1 ×4); no BUG/Oops/Call Trace/soft lockup; module unloaded afterwards.
+- Main run started: `env MIXY_SEQ="F S V F V S F S V F V S F S V F V S F S" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY smartgc-eq8 1` (≈10 h). Other five policies pending user decision.
