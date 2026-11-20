@@ -13520,3 +13520,17 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseS20(test3) host_pages=18001246 gc_pages=63146154 WAF=4.507877
 - ycsb-load 
 - ycsb-run 
+
+### gc-20261010 mixY smartgc — started 2026-11-20T11:12:38+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F S V F V S F S V F V S F S V F V S F S (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-smartgc.ko`.
+- Command: `env MIXY_SEQ="F S V F V S F S V F V S F S V F V S F S" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY smartgc 1`; evidence `result/gc-20261010/mixY-smartgc-rep1/`.
+
+- Finished 2026-11-20T20:13:13+09:00; mixY smartgc exit=1; evidence `/home/oy/iCAT/result/gc-20261010/mixY-smartgc-rep1`; cleanup attempted.
+
+## 2026-11-20 20:13 smartgc mixY rep1 FAIL: 루트 디스크 100 %
+- smartgc(순위 목록 해석)가 11:12 시작, S13 도중 20:13에 실패. 원인: /var/log/kern.log 11.5 GB + syslog 12.5 GB로 / 가 0 B 남음.
+- 로그를 채운 것: NVMeVirt `[chmodel_request] Need to increase array size` 70,890,014줄 (channel_model.c:74, 요청이 채널 모델 창 96K×4 µs = 0.39 s보다 멀리 밀림 = 장치 대기열이 0.39 s 넘게 밀림). 시간대별 수: kern.flood-per-hour.txt. eq8 실행 중에는 47,647줄뿐, smartgc 실행 중 7천만 줄.
+- 이 경고는 지연 모델만 건드림(채널 지연을 빼고 요청 시간 반환). 페이지 카운터(WAF)는 영향 없음. 다만 이 구간 지연·처리량 값은 신뢰 못 함.
+- 조치: 경고 줄을 뺀 kern.log를 kern.log.nonflood.zst로 보존한 뒤 /var/log/kern.log, syslog를 비움(sudo). 디스크 23 GB 확보.
+- 큐는 규칙대로 멈춤: smartgcq-eq8, onlinev4 미실행. mixY-smartgc-rep1 디렉터리(실패, S01–S12 데이터)는 그대로 둠.
