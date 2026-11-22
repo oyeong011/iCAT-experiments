@@ -13534,3 +13534,7 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 이 경고는 지연 모델만 건드림(채널 지연을 빼고 요청 시간 반환). 페이지 카운터(WAF)는 영향 없음. 다만 이 구간 지연·처리량 값은 신뢰 못 함.
 - 조치: 경고 줄을 뺀 kern.log를 kern.log.nonflood.zst로 보존한 뒤 /var/log/kern.log, syslog를 비움(sudo). 디스크 23 GB 확보.
 - 큐는 규칙대로 멈춤: smartgcq-eq8, onlinev4 미실행. mixY-smartgc-rep1 디렉터리(실패, S01–S12 데이터)는 그대로 둠.
+
+## 2026-11-22 18:55 재개: smartgc → smartgcq-eq8 → onlinev4 (script/smartgc-resume-20261122.sh)
+- /etc/rsyslog.d/10-nvmev-chmodel-flood.conf 추가: `Need to increase array size` 줄만 syslog/kern.log에 쓰지 않음 (logger로 확인). 모듈·코드 변경 없음.
+- 결과는 result/smartgc-20261119/resume/ (MIX_BASE), rep 1 = 다른 실행과 같은 시드. 실패해도 다음 실행으로 넘어감.
