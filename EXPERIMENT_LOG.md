@@ -13613,6 +13613,7 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 기존 자료: 11월 V4 mixY는 Varmail 구간 창의 70–90 %를 arm 47로 썼고 단계 WAF가 sg-arm47과 거의 같음(S10 4.918/4.927, S20 4.506/4.508) → 빌드보다 시기(환경) 차이를 의심. mix 스크립트는 10-10 이후 부하 정의 변경 없음.
 - 확인 실행: 10월과 같은 모듈 fixed47(9fde0ea4)로 MIXY_SEQ="F S V F", PH_SECS=1800, rep 1(같은 시드), MIX_BASE=result/revision-20261123/check-fixed47-nov. 약 2.3시간, 디스크 약 1 GB.
 - 판정: S03/S04가 10월 값(2.143/4.277)에 가까우면 빌드 차이, 11월 값(2.481/4.897)에 가까우면 시기(환경) 차이.
+- **결과 (11-24 00:28 끝, exit 0):** S01 1.774, S02 1.761, S03 2.489, S04 4.900 → 11월 값과 같음. **판정: 시기(환경) 차이** (n = 1). 부하 스크립트 차이는 모듈 목록과 단계 수 검사뿐. environment.txt 차이(CPU 클럭 79→99 %, 페이지 캐시 0.7→5.6 GiB, OpenJDK)는 후보일 뿐 원인 미확인. 다른 달 실행끼리 비교 금지, 같은 달 비교만 사용.
 
 ### gc-20261010 mixY fixed47 — started 2026-11-23T22:27:10+09:00
 
@@ -13630,3 +13631,19 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 수정 후: E0 → smoke v4nodrift → rep1..3 × [v4, v4nodrift, v4fullreset] → fixed47 rep1 (~30 h). 설정(MIX_BASE=result/revision-20261123/mixR, MULT=3, rep별 시드, 모듈 해시) 동일.
 - 방법: 큐는 E0 종료 대기 중(실험 미시작)이었음. 대기 프로세스 3297880만 종료하고 random45를 뺀 스크립트를 새로 실행(3301391). E0(mix-gc mixY fixed47, 3295403)은 계속 실행 중, 건드리지 않음. 기존 결과 변경 없음.
 - Random 비교는 고컴 revA-Random(origin/report/final-20261123, result/revA-20261114, n=3, mixFYF, Ryzen 3600XT)을 인용. 부하·호스트·시간이 달라 같은 조건의 반복으로 보지 않음.
+
+- Finished 2026-11-24T00:28:41+09:00; mixY fixed47 exit=0; evidence `/home/oy/iCAT/result/revision-20261123/check-fixed47-nov/mixY-fixed47-rep1`; cleanup attempted.
+- total host_bytes=1784641536000 host_pages=435703500 gc_pages=757867002 WAF=2.739410
+- phaseA(test4) host_pages=72001981 gc_pages=55761865 WAF=1.774449
+- phaseB(test3) host_pages=18001245 gc_pages=13694268 WAF=1.760740
+- phaseS01(test4) host_pages=72001981 gc_pages=55761865 WAF=1.774449
+- phaseS02(test3) host_pages=18001245 gc_pages=13694268 WAF=1.760740
+- phaseS03(varmail) host_pages=273698272 gc_pages=407573374 WAF=2.489134
+- phaseS04(test4) host_pages=72002002 gc_pages=280837495 WAF=4.900412
+- ycsb-load 
+- ycsb-run 
+
+### mix-20260911 mixR onlinev4nodrift — started 2026-11-24T00:28:53+09:00
+
+- Phase A fio test4 fixed payload (17694720000/8847360000/2949120000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (20000 records, 60000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4nodrift.ko`.
+- Command: `bash script/mix-20260911.sh mixR onlinev4nodrift`; evidence `result/mix-20260911/mixR-onlinev4nodrift/`.
