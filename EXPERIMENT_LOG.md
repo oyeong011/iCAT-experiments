@@ -13607,3 +13607,9 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 ## 2026-11-23 SmartGC 비교 보고서 (result/smartgc-20261119/report/report.md)
 - WAF: iCAT V4 3.211, CAT-47 3.233, SmartGC-EQ8 4.498 (nand 4.492, 대표), SmartGC 11.072. host 쓰기 10 h: 8.41 / 7.93 / 6.08 / 4.27 TB.
 - 메모리 측정(VmallocUsed, n=1)과 계산(sizeof) 분리. SmartGC 학습 CPU 미측정, V4 학습 CPU는 추정 0.97 s.
+
+## 2026-11-23 revision 점검 1: CAT-47 mixY 10월 2.864 대 11월 3.233 원인 확인 (2시간)
+- 문제: 같은 arm 47인데 mixY 전체 WAF가 fixed47(varmail-compare-src, 9fde0ea4, 10-10) 2.864, sg-arm47(smartgc-src, 138024d0, 11-20) 3.233. 단계별로 S01–S02는 같고(1.771/1.774) S03(첫 Varmail)부터 갈림(2.143 대 2.481, S04 4.277 대 4.897).
+- 기존 자료: 11월 V4 mixY는 Varmail 구간 창의 70–90 %를 arm 47로 썼고 단계 WAF가 sg-arm47과 거의 같음(S10 4.918/4.927, S20 4.506/4.508) → 빌드보다 시기(환경) 차이를 의심. mix 스크립트는 10-10 이후 부하 정의 변경 없음.
+- 확인 실행: 10월과 같은 모듈 fixed47(9fde0ea4)로 MIXY_SEQ="F S V F", PH_SECS=1800, rep 1(같은 시드), MIX_BASE=result/revision-20261123/check-fixed47-nov. 약 2.3시간, 디스크 약 1 GB.
+- 판정: S03/S04가 10월 값(2.143/4.277)에 가까우면 빌드 차이, 11월 값(2.481/4.897)에 가까우면 시기(환경) 차이.
