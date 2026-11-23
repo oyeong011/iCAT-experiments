@@ -13544,3 +13544,66 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - mixY (GC-heavy): 20 phases of 1800 s, order F S V F V S F S V F V S F S V F V S F S (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-smartgc.ko`.
 - Command: `env MIXY_SEQ="F S V F V S F S V F V S F S V F V S F S" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY smartgc 1`; evidence `result/smartgc-20261119/resume/mixY-smartgc-rep1/`.
 - 11-22: 사용자 지시로 smartgcq-eq8 제외 (시간 부족). resume/mixY-smartgcq-eq8-rep1/SKIPPED.txt 로 큐가 건너뜀. 미측정.
+
+- Finished 2026-11-23T07:36:04+09:00; mixY smartgc exit=0; evidence `/home/oy/iCAT/result/smartgc-20261119/resume/mixY-smartgc-rep1`; cleanup attempted.
+- total host_bytes=4274349137920 host_pages=1043542270 gc_pages=10510898874 WAF=11.072327
+- phaseA(test4) host_pages=72001990 gc_pages=108332603 WAF=2.504578
+- phaseB(test3) host_pages=18001254 gc_pages=23134904 WAF=2.285183
+- phaseS01(test4) host_pages=72001990 gc_pages=108332603 WAF=2.504578
+- phaseS02(test3) host_pages=18001254 gc_pages=23134904 WAF=2.285183
+- phaseS03(varmail) host_pages=153908163 gc_pages=316030737 WAF=3.053372
+- phaseS04(test4) host_pages=72002707 gc_pages=843300480 WAF=12.712066
+- phaseS05(varmail) host_pages=41313974 gc_pages=595430871 WAF=15.412336
+- phaseS06(test3) host_pages=18001249 gc_pages=427729086 WAF=24.761078
+- phaseS07(test4) host_pages=72002727 gc_pages=886770581 WAF=13.315792
+- phaseS08(test3) host_pages=18001262 gc_pages=632627386 WAF=36.143502
+- phaseS09(varmail) host_pages=49077690 gc_pages=495875453 WAF=11.103887
+- phaseS10(test4) host_pages=72003103 gc_pages=1159136401 WAF=17.098423
+- phaseS11(varmail) host_pages=43617367 gc_pages=547315457 WAF=13.548109
+- phaseS12(test3) host_pages=18001244 gc_pages=424343467 WAF=24.573008
+- phaseS13(test4) host_pages=72002706 gc_pages=813978985 WAF=12.304839
+- phaseS14(test3) host_pages=18001249 gc_pages=369253051 WAF=21.512635
+- phaseS15(varmail) host_pages=59804659 gc_pages=431791429 WAF=8.220030
+- phaseS16(test4) host_pages=72002539 gc_pages=783638417 WAF=11.883483
+- phaseS17(varmail) host_pages=65793380 gc_pages=371424114 WAF=6.645311
+- phaseS18(test3) host_pages=18001249 gc_pages=348714059 WAF=20.371659
+- phaseS19(test4) host_pages=72002505 gc_pages=637816158 WAF=9.858250
+- phaseS20(test3) host_pages=18001253 gc_pages=294255235 WAF=17.346375
+- ycsb-load 
+- ycsb-run 
+
+### gc-20261010 mixY onlinev4 — started 2026-11-23T07:37:12+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F S V F V S F S V F V S F S V F V S F S (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-online-v4.ko`.
+- Command: `env MIXY_SEQ="F S V F V S F S V F V S F S V F V S F S" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY onlinev4 1`; evidence `result/smartgc-20261119/resume/mixY-onlinev4-rep1/`.
+
+- Finished 2026-11-23T17:39:08+09:00; mixY onlinev4 exit=0; evidence `/home/oy/iCAT/result/smartgc-20261119/resume/mixY-onlinev4-rep1`; cleanup attempted.
+- total host_bytes=8414254055424 host_pages=2054261244 gc_pages=4541322875 WAF=3.210684
+- phaseA(test4) host_pages=72001993 gc_pages=65103157 WAF=1.904185
+- phaseB(test3) host_pages=18001248 gc_pages=14040099 WAF=1.779951
+- phaseS01(test4) host_pages=72001993 gc_pages=65103157 WAF=1.904185
+- phaseS02(test3) host_pages=18001248 gc_pages=14040099 WAF=1.779951
+- phaseS03(varmail) host_pages=277630379 gc_pages=397903126 WAF=2.433212
+- phaseS04(test4) host_pages=72002002 gc_pages=294929479 WAF=5.096129
+- phaseS05(varmail) host_pages=236337927 gc_pages=392044901 WAF=2.658832
+- phaseS06(test3) host_pages=18001246 gc_pages=64276999 WAF=4.570697
+- phaseS07(test4) host_pages=72001990 gc_pages=310146636 WAF=5.307473
+- phaseS08(test3) host_pages=18001255 gc_pages=65145089 WAF=4.618919
+- phaseS09(varmail) host_pages=230695875 gc_pages=396769062 WAF=2.719879
+- phaseS10(test4) host_pages=72001990 gc_pages=282097175 WAF=4.917908
+- phaseS11(varmail) host_pages=224616673 gc_pages=384925970 WAF=2.713702
+- phaseS12(test3) host_pages=18001249 gc_pages=62420160 WAF=4.467546
+- phaseS13(test4) host_pages=72001990 gc_pages=282189538 WAF=4.919191
+- phaseS14(test3) host_pages=18001249 gc_pages=63121004 WAF=4.506479
+- phaseS15(varmail) host_pages=226663669 gc_pages=383753385 WAF=2.693052
+- phaseS16(test4) host_pages=72001984 gc_pages=289118045 WAF=5.015418
+- phaseS17(varmail) host_pages=228294031 gc_pages=385685846 WAF=2.689426
+- phaseS18(test3) host_pages=18001252 gc_pages=62381943 WAF=4.465422
+- phaseS19(test4) host_pages=72001999 gc_pages=282151219 WAF=4.918658
+- phaseS20(test3) host_pages=18001243 gc_pages=63120042 WAF=4.506427
+- ycsb-load 
+- ycsb-run 
+
+## 2026-11-23 SmartGC 비교 보고서 (result/smartgc-20261119/report/report.md)
+- WAF: iCAT V4 3.211, CAT-47 3.233, SmartGC-EQ8 4.498 (nand 4.492, 대표), SmartGC 11.072. host 쓰기 10 h: 8.41 / 7.93 / 6.08 / 4.27 TB.
+- 메모리 측정(VmallocUsed, n=1)과 계산(sizeof) 분리. SmartGC 학습 CPU 미측정, V4 학습 CPU는 추정 0.97 s.
