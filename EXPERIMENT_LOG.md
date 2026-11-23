@@ -14501,3 +14501,12 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 추가 발견: 10월 8, 11, 13(×2)일 같은 모듈 run의 FIO 직후 첫 Varmail WAF가 2.4846–2.4888로 11월 값(2.4809, 2.4891)과 같다. 2.14대는 10월 10일 run(2.1427) 하나뿐이다. → "10월 대 11월 시기(환경) 차이"는 지지되지 않는다. 10월 10일 run 하나의 이상치이며 원인은 미확인이다. 그 run은 S03 첫 5분부터 낮았고(2.21 대 2.55), Varmail 처리량은 정상이었다.
 - 한계: 비교한 10월 run은 앞 단계가 F 하나뿐이다(mixY는 F S). 커널 GC 통계는 비교하지 않았다.
 - 문서: `report/revision-20261123-gocom/cat47_baseline_audit.md` §5(원문 유지, 갱신 추가), `revision_claim_evidence_matrix.md`, `revision_independent_audit.md`.
+
+### 2026-11-24 02:50–03:10 고컴: 승컴 E1 첫 run (mixR×3 online-v4 rep1) 독립 검증 — 새 실험 없음
+
+- 대상: 승컴 1e56a45a6 `result/revision-20261123/mixR/mixR-onlinev4-rep1-x3`. 비교: 9월 `mix-20260911/mixR-onlinev4-rep{1,2}-x3`.
+- 방법: `analysis/revision_gocom/verify_e1.py`(새 파일). 출력은 `result/revision-gocom-20261123/e1_*.csv`(새 파일)다.
+- 결과: exit 0, 모듈 db93f822, seed 20260911로 9월 rep1과 같다. 실행 겹침은 없다. WAF 두 경로가 일치한다(단계 불일치 0/9). 전체 WAF는 2.0654로 9월 2.0574/2.1007 범위 안이다.
+- reset: FIO→YCSB 전환에서 0회, YCSB→FIO 뒤 37.8–61.3 s에 4회(모두 waf-drift). 9월 두 run과 같은 패턴이다.
+- 회복: B는 440 s, C는 402 s로 두 정의가 같다. 첫 창이 기준의 1.06–1.11배라서 단측 정의의 즉시 통과 문제는 없다.
+- n=1이라 정책 비교는 하지 않았다. 문서: `report/revision-20261123-gocom/e1_independent_check.md`.
