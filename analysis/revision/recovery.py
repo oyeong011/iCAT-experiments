@@ -27,6 +27,12 @@ RUNS = {  # group: [(label, dir)], each group = one workload in one period
     ('arm 47', 'result/gc-20261010/mixY-fixed47-rep1'), ('arm 50', 'result/gc-20261010/mixY-arm50-rep1'), ('arm 37', 'result/gc-20261010/mixY-arm37-rep1')],
  'mixY-Nov (20 x 1800 s)': [('iCAT v4', 'result/smartgc-20261119/resume/mixY-onlinev4-rep1'), ('arm 47 (sg)', 'result/gc-20261010/mixY-sg-arm47-rep1')],
 }
+# 11-23 E1 (revision queue): every finished mixR x3 run under result/revision-20261123/mixR, labelled by policy and rep
+NAMES = {'onlinev4': 'iCAT v4', 'onlinev4nodrift': 'v4 nodrift', 'onlinev4fullreset': 'v4 fullreset', 'fixed47': 'arm 47'}
+for d in sorted((ROOT/'result/revision-20261123/mixR').glob('mixR-*-rep*-x3')):
+    m = re.match(r'mixR-(\w+)-rep(\d)-x3$', d.name)
+    if m and (d/'exit-code.txt').exists():
+        RUNS.setdefault('mixR-Nov E1 (x3)', []).append((f"{NAMES.get(m[1], m[1])} #{m[2]}", str(d.relative_to(ROOT))))
 iso = lambda s: datetime.fromisoformat(s.strip()).timestamp()
 
 def phases(d):
@@ -90,7 +96,7 @@ for grp, runs in RUNS.items():
     for label, rel in runs:
         d = ROOT/rel
         if not (d/'control-series.txt').exists(): print('missing', rel, file=sys.stderr); continue
-        s, ev = series(d), events(d) if label.startswith('iCAT') else {}
+        s, ev = series(d), events(d) if not label.startswith(('arm', 'Greedy')) else {}
         for p, t0, t1 in phases(d):
             ref, rec, pw = recovery(s, t0, t1)
             e = ev.get(p, {})
