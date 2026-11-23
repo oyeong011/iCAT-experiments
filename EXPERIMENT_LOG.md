@@ -14424,3 +14424,10 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
   - 승컴 회복 정의(단측)에서는 170개 구간 중 106개가 첫 창에서 바로 통과한다.
   - v7 drift_resets 104에는 shift 65가 포함되어 있다(drift는 39).
   - 10,112 B는 학습 전용 크기다(gdb 2,656 B − 128 B, × 4). 9.4 ns/GC는 계측 빌드에서 V4 − CAT-47의 차분이다.
+
+### 2026-11-23 23시대 고컴: 승컴 E1/E2 중복 판정 (분석만)
+- 브랜치 report/final-20261123(40b0f60d7)을 origin에 push했다(main 병합 없음).
+- 판정 근거: report/revision-20261123-gocom/duplication_check_E1_E2.md.
+  - E2 random45는 revA-Random과 정책 동작이 같아 실질적 중복이다. 생략을 권한다(random45 seed가 rep와 무관한 약점도 기재).
+  - E1 v4nodrift는 revA-V1과 동작이 같지만, revA 결과가 구분 불가였고 mixR×3이 다른 전환을 시험하므로 유지를 권한다.
+- 승컴 큐는 변경하지 않았다. 전달은 이 문서와 사용자를 통해서 한다.
