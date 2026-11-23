@@ -5,7 +5,9 @@ Definitions (fixed before computing, see report/revision-20261123/workload_recov
   interval WAF   1 + dGC/dHost over a rolling 10-sample (5 min) window of control-series.txt (30 s samples)
   reference      the run's own host-weighted WAF over the second half of the phase (own steady state)
   recovered at   end of the first rolling window, after the phase start, whose WAF <= 1.05 x reference and
-                 every rolling window in the next 10 min (20 samples) also is <= 1.05 x reference
+                 every rolling window in the next 10 min (20 samples) also is <= 1.05 x reference  (one-sided, recovery_s)
+  two-sided      same, but |WAF/reference - 1| <= 0.05 (recovery2_s); first_window = recovered at the first window
+                 (11-23: GoCom showed the one-sided rule passes 106/170 phases at the first window)
   recovery time  recovered_at - phase start (s); 'none' if never within the phase
 Learner events come from kernel.log: phase START markers and WATGC reset/settled/sample lines share one clock.
 """
@@ -25,6 +27,12 @@ RUNS = {  # group: [(label, dir)], each group = one workload in one period
     ('arm 47', 'result/gc-20261010/mixY-fixed47-rep1'), ('arm 50', 'result/gc-20261010/mixY-arm50-rep1'), ('arm 37', 'result/gc-20261010/mixY-arm37-rep1')],
  'mixY-Nov (20 x 1800 s)': [('iCAT v4', 'result/smartgc-20261119/resume/mixY-onlinev4-rep1'), ('arm 47 (sg)', 'result/gc-20261010/mixY-sg-arm47-rep1')],
 }
+# 11-23 E1 (revision queue): every finished mixR x3 run under result/revision-20261123/mixR, labelled by policy and rep
+NAMES = {'onlinev4': 'iCAT v4', 'onlinev4nodrift': 'v4 nodrift', 'onlinev4fullreset': 'v4 fullreset', 'fixed47': 'arm 47'}
+for d in sorted((ROOT/'result/revision-20261123/mixR').glob('mixR-*-rep*-x3')):
+    m = re.match(r'mixR-(\w+)-rep(\d)-x3$', d.name)
+    if m and (d/'exit-code.txt').exists():
+        RUNS.setdefault('mixR-Nov E1 (x3)', []).append((f"{NAMES.get(m[1], m[1])} #{m[2]}", str(d.relative_to(ROOT))))
 iso = lambda s: datetime.fromisoformat(s.strip()).timestamp()
 
 def phases(d):
@@ -44,15 +52,19 @@ def series(d):
 
 def recovery(s, t0, t1):
     pts = [x for x in s if t0 <= x[0] <= t1]
-    if len(pts) < ROLL + HOLD + 2: return None, None, None
+    if len(pts) < ROLL + HOLD + 2: return None, (None, False, None, False), None
     waf = lambda a, b: 1 + (b[2] - a[2]) / max(b[1] - a[1], 1)
     half = [x for x in pts if x[0] >= (t0 + t1) / 2]
     ref = waf(half[0], half[-1])
     roll = [(pts[i][0], waf(pts[i - ROLL], pts[i])) for i in range(ROLL, len(pts))]
-    for i, (t, w) in enumerate(roll):
-        if i + HOLD < len(roll) and all(x[1] <= ref * TOL for x in roll[i:i + HOLD + 1]):
-            return ref, t - t0, waf(pts[0], pts[-1])
-    return ref, None, waf(pts[0], pts[-1])
+    def first(ok):
+        for i, (t, w) in enumerate(roll):
+            if i + HOLD < len(roll) and all(ok(x[1]) for x in roll[i:i + HOLD + 1]):
+                return t - t0, i == 0
+        return None, False
+    one, f1 = first(lambda w: w <= ref * TOL)
+    two, f2 = first(lambda w: abs(w / ref - 1) <= TOL - 1)
+    return ref, (one, f1, two, f2), waf(pts[0], pts[-1])
 
 def events(d):
     """per phase: first reset (detection), settled after it, windows between, all relative to phase START."""
@@ -84,12 +96,13 @@ for grp, runs in RUNS.items():
     for label, rel in runs:
         d = ROOT/rel
         if not (d/'control-series.txt').exists(): print('missing', rel, file=sys.stderr); continue
-        s, ev = series(d), events(d) if label.startswith('iCAT') else {}
+        s, ev = series(d), events(d) if not label.startswith(('arm', 'Greedy')) else {}
         for p, t0, t1 in phases(d):
             ref, rec, pw = recovery(s, t0, t1)
             e = ev.get(p, {})
             rows.append({'group': grp, 'policy': label, 'phase': p, 'phase_s': round(t1 - t0), 'phase_waf': pw and round(pw, 4),
-                         'ref_waf_2nd_half': ref and round(ref, 4), 'recovery_s': rec,
+                         'ref_waf_2nd_half': ref and round(ref, 4), 'recovery_s': rec[0], 'first_window': rec[1],
+                         'recovery2_s': rec[2], 'first_window2': rec[3],
                          'resets': e.get('resets'), 'detect_s': e.get('detect_s') and round(e['detect_s']),
                          'resettle_s': e.get('resettle_s') and round(e['resettle_s']), 'explore_windows': e.get('explore_windows'),
                          'windows': e.get('windows'), 'dir': rel})

@@ -32,7 +32,11 @@
 | 확보 지표 | 단계별 WAF, 감지 지연, 재정착 시간, 재탐색 구간 수, 회복 시간 (`analysis/revision/recovery.py`의 정의 그대로), 리셋과 정착 횟수, 남은 후보 수 |
 | 선택 항목 | v4noelim, v4noprobe를 n = 2씩 추가하면 12시간이 더 든다 |
 
-## E2. 판단 구간마다 무작위로 고르는 정책 대비 학습 효과
+## E2. 판단 구간마다 무작위로 고르는 정책 대비 학습 효과: **생략 (11-23 23:40 사용자 지시)**
+
+- 이유: 고컴 revA-Random(n = 3, mixFYF)이 같은 정책으로 이미 답을 냈다 (Random − v4 = +0.196 [0.184, 0.208]). 근거와 조건 차이는 `random_selection_audit.md` §1.2–1.3에 적었다.
+- 빌드 `nvmev-online-random45.ko`(c9bea4d5…)와 소스 `online-random45-src/`는 남겨 두되 실행하지 않는다.
+- 아래 원래 계획은 기록으로 남긴다.
 
 | 항목 | 내용 |
 |---|---|
@@ -64,8 +68,14 @@
 ## 실행 순서와 총 시간
 
 ```
-E0 (진행 중, ~2.3 h) → E1 ①②③④ 섞어서 (~30 h) → E2 (~9 h) → [E3 ~3 h] → [E4 ~36 h]
+수정 전 (11-23 23:05, 커밋 2f6ae2dec):
+  E0 → smoke v4nodrift, random45 → rep1..3 × [v4, v4nodrift, v4fullreset, random45] → fixed47 rep1   (~39 h)
+수정 후 (11-23 23:40, 사용자 지시, 고컴 중복 판정 반영):
+  E0 → smoke v4nodrift → rep1..3 × [v4, v4nodrift, v4fullreset] → fixed47 rep1   (~30 h)
+  [선택] E3 ~3 h, E4 ~36 h
 ```
+- 수정 방법: 큐 스크립트가 E0 종료를 기다리는 대기 상태(실험 미시작, queue.out 비어 있음)일 때 대기 프로세스만 멈추고, random45 두 줄을 뺀 스크립트로 다시 띄웠다. E0(실행 중)은 건드리지 않았다. 바뀐 내용은 `script/revision-queue-20261123.sh`의 git diff로 남는다.
+- 설정(MIX_BASE, MULT=3, rep별 시드, 모듈)은 그대로다.
 
 - 필수인 E0–E2만 약 41시간이고, 모두 하면 약 80시간이다.
 - E1과 E2는 정책을 번갈아 넣는다. 예: v4 r1 → nodrift r1 → fullreset r1 → random r1 → v4 r2 … 이렇게 하면 시기 차이가 한쪽 정책에만 몰리지 않는다.

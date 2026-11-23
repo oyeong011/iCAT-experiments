@@ -13625,6 +13625,12 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
   - online-random45-src: v4 observe()에서 판단 구간마다 45개 중 균등 무작위(splitmix64(파티션, 구간 번호)), 학습·제거·정착 없음. nvmev-online-random45.ko sha256 c9bea4d505055d5acf0068474e370686b8b9750891a7cd06584b69f161ae4b38
 - 순서: 두 빌드 SMOKE(mixR ×3 1/10) → mixR ×3을 rep 1..3마다 v4 / v4nodrift / v4fullreset / random45 교대 → fixed47 rep1. 결과 result/revision-20261123/mixR/. 약 39시간. 실패해도 다음으로 넘어감(스모크 실패만 중단).
 
+## 2026-11-23 23:40 revision 큐 수정: random45 제외 (사용자 지시, 고컴 중복 판정 578530e6a 반영)
+- 수정 전: E0 → smoke v4nodrift, random45 → rep1..3 × [v4, v4nodrift, v4fullreset, random45] → fixed47 rep1 (~39 h).
+- 수정 후: E0 → smoke v4nodrift → rep1..3 × [v4, v4nodrift, v4fullreset] → fixed47 rep1 (~30 h). 설정(MIX_BASE=result/revision-20261123/mixR, MULT=3, rep별 시드, 모듈 해시) 동일.
+- 방법: 큐는 E0 종료 대기 중(실험 미시작)이었음. 대기 프로세스 3297880만 종료하고 random45를 뺀 스크립트를 새로 실행(3301391). E0(mix-gc mixY fixed47, 3295403)은 계속 실행 중, 건드리지 않음. 기존 결과 변경 없음.
+- Random 비교는 고컴 revA-Random(origin/report/final-20261123, result/revA-20261114, n=3, mixFYF, Ryzen 3600XT)을 인용. 부하·호스트·시간이 달라 같은 조건의 반복으로 보지 않음.
+
 # 고컴(oy-B550M-DS3H) 로컬 일지 병합 — 2026-11-23
 
 > 아래 내용은 고컴 작업 트리(HEAD c06a372a5)의 EXPERIMENT_LOG.md 중 main에 없던 부분(원본 10612행 이후 776행)을 수정 없이 옮긴 것이다. 작성 시점의 원문이며 사후 수정하지 않았다.

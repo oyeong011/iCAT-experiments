@@ -36,8 +36,9 @@
 | mixR 3배 | v4 #1 | 1,474 | 695 | 4 | 10 | 1 | `mixR-onlinev4-rep1-x3` |
 | mixR 3배 | v4 #2 | 1,468 | 714 | 4 | 13 | 1 | `mixR-onlinev4-rep2-x3` |
 | mixY 10 h (11월) | v4 | 10,564 | 3,198 | 11 | 31 | 3 | `smartgc-20261119/resume/mixY-onlinev4-rep1` |
-| mixY 10 h (10월) | v7 | 97,359 | 27,793 | 104 (+ v6식 65) | 481 | 1 | `v7-20261011/mixY/mixY-onlinev7-rep1` |
+| mixY 10 h (10월) | v7 | 97,359 | 27,793 | 39 (+ v6식 shift-reset 65)ᵈ | 481 | 1 | `v7-20261011/mixY/mixY-onlinev7-rep1` |
 
+- ᵈ 11-23 정정: 처음에는 104로 적었다. v6/v7의 shift-reset은 `WATGC_V2 reset` 줄도 함께 찍으므로 drift reset만 세면 104 − 65 = 39다 (고컴 교차검증 `revision_evidence_check.md`).
 - **v4 mixY 학습 CPU 추정값: 0.97초.** GC 103,056,001회 × GC 1회당 9.4 ns로 계산했다. 10시간 dispatcher CPU의 0.003 %다. 9.4 ns는 FIO-Fast에서 잰 단가라서 이 값은 **추정**이다.
 - **v7은 판단 구간이 1,024 GC로 짧아서 평가 횟수가 v4의 9배다.** 판단 1회 단가가 같다고 보면 학습 CPU도 그만큼 늘어난다. 이것도 추정이다.
 - **"최소 남은 후보 1"은 후보 제거가 지나쳤던 순간을 뜻한다.** 9월에 기록한 문제와 같은 현상이다: mixT YCSB-A에서 43 → 1 (`EXPERIMENT_LOG.md:11796`).

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # 11-23 revision E1+E2 (report/revision-20261123/additional_experiment_plan.md): after E0 (fixed47 mixY F S V F) ends,
-# smoke the two new builds, then mixR x3 interleaved v4 / v4nodrift / v4fullreset / random45 for rep 1..3, then fixed47 rep 1.
+# smoke v4nodrift, then mixR x3 interleaved v4 / v4nodrift / v4fullreset for rep 1..3, then fixed47 rep 1.
+# 11-23 23:40 (user, after GoCom duplication check): random45 dropped; revA-Random (GoCom, mixFYF n=3) is used instead.
 # All output under result/revision-20261123/mixR (MIX_BASE); a failed run is logged and the queue goes on.
 cd /home/oy/iCAT; B=$PWD/result/revision-20261123/mixR; mkdir -p $B
 E0=result/revision-20261123/check-fixed47-nov/mixY-fixed47-rep1
@@ -14,10 +15,10 @@ run() { # run <policy> <rep> [SMOKE]
     && echo "[done] $1 rep$2 $(date -Is)" || echo "FAIL $1 rep$2 $(date -Is) - continuing"
   until [[ ! -e /sys/module/nvmev ]]; do sleep 5; done
   git add $B EXPERIMENT_LOG.md >/dev/null 2>&1; git commit -qm "revision-20261123: mixR $1 rep$2${3:+ smoke}" >/dev/null 2>&1; git push -q 2>/dev/null; }
-run onlinev4nodrift 1 smoke; run onlinerandom45 1 smoke
-for p in onlinev4nodrift onlinerandom45; do  # smoke check: tuner lines present, random45 uses many arms
+run onlinev4nodrift 1 smoke
+for p in onlinev4nodrift; do  # smoke check: tuner lines present
   k=$B/mixR-$p-rep1-x3-smoke/kernel.log; n=$(grep -c 'WATGC_V2 sample' $k 2>/dev/null); a=$(grep -o 'evaluated=[0-9]*' $k 2>/dev/null | sort -u | wc -l)
   echo "smoke $p samples=$n distinct_arms=$a"; (( n > 0 )) || { echo "FAIL smoke $p - stopping"; exit 1; }; done
-for r in 1 2 3; do for p in onlinev4 onlinev4nodrift onlinev4fullreset onlinerandom45; do run $p $r; done; done
+for r in 1 2 3; do for p in onlinev4 onlinev4nodrift onlinev4fullreset; do run $p $r; done; done
 run fixed47 1
 echo REVISIONQUEUEDONE $(date -Is)
