@@ -14477,3 +14477,12 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 승컴 양측 정의(recovery2_s)와 고컴 양측 정의를 비교했다: 170개 중 125개 일치, 45개 불일치. 기준 구간과 유지 시간이 달라서이고 계산 오류가 아니다.
 
 - 시각 표기 정정: 바로 위 두 고컴 항목("Revision 독립 감사", "정정: 106 → 98")의 제목에 적은 "2026-11-24 00시대"는 잘못이다. 실제 작성 시각은 2026-11-23 23:20–23:40이다.
+
+### 2026-11-24 00:40–01:10 고컴: 승컴 E0 (fixed47 11월 재실행) 독립 검증 — 새 실험 없음
+
+- 대상: `result/revision-20261123/check-fixed47-nov/mixY-fixed47-rep1` (승컴 e8365b143, 모듈 9fde0ea4 = 10월 run과 같은 .ko).
+- 방법: `analysis/revision_gocom/e0_check.py`로 단계 시작/끝 카운터를 차분했다. 출력은 `result/revision-gocom-20261123/e0_{phase_recalc,environment,first_varmail_arm47}.csv`(새 파일)다. 기존 파일은 바꾸지 않았다.
+- 재계산: E0의 S01–S04는 1.7744, 1.7607, 2.4891, 4.9004로 summary.txt, 파티션 합과 모두 일치한다(불일치 0). 11월 sg-arm47과 S03은 +0.33 %, S04는 +0.07 % 차이다. → 빌드 차이 배제. 승컴 판정과 같다.
+- 추가 발견: 10월 8, 11, 13(×2)일 같은 모듈 run의 FIO 직후 첫 Varmail WAF가 2.4846–2.4888로 11월 값(2.4809, 2.4891)과 같다. 2.14대는 10월 10일 run(2.1427) 하나뿐이다. → "10월 대 11월 시기(환경) 차이"는 지지되지 않는다. 10월 10일 run 하나의 이상치이며 원인은 미확인이다. 그 run은 S03 첫 5분부터 낮았고(2.21 대 2.55), Varmail 처리량은 정상이었다.
+- 한계: 비교한 10월 run은 앞 단계가 F 하나뿐이다(mixY는 F S). 커널 GC 통계는 비교하지 않았다.
+- 문서: `report/revision-20261123-gocom/cat47_baseline_audit.md` §5(원문 유지, 갱신 추가), `revision_claim_evidence_matrix.md`, `revision_independent_audit.md`.

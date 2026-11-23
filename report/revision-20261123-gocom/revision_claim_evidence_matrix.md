@@ -34,7 +34,7 @@
 | Random 선택보다 낫다 | `revA-src/conv_ftl.c:611–613` | `…/mixFYF-revA-random-rep{1,2,3}` | Random − V4 = +0.196 [0.184, 0.208]. 같은 rep끼리 +0.196 [0.174, 0.218]. 8.43 % 개선 | **입증** (mixFYF, n=3) | 불필요 (E2 생략 타당) |
 | V1(논문)보다 낫다 | online-mix 대 online-v4, 6가지 차이 | 승컴 resource-v124 FIO-Fast 30분 n=3 | V1 2.026 ± 0.001, V4 1.903 ± 0.001 | 입증 (전체 개선만. 기능별 기여는 분리 안 됨) | — |
 | SmartGC보다 WAF가 낮다 (mixY) | — | `result/smartgc-20261119/resume/mixY-onlinev4-rep1`, `result/gc-20261010/mixY-smartgc-eq8-rep1` | WAF_nand 3.211 대 4.492 (−28.5 %). 각 n=1. 원시 카운터 재계산 일치 | 일부 입증 (n=1이지만 차이 크기가 큼) | 반복 (회당 10–12 h) |
-| CAT-47(고정 최적)과 비슷하거나 낫다 | — | 같은 배치 `result/gc-20261010/mixY-sg-arm47-rep1` | 3.211 대 3.233 (−0.7 %), n=1 | **미입증** | 반복 |
+| CAT-47(고정 최적)과 비슷하거나 낫다 | — | 같은 배치 `result/gc-20261010/mixY-sg-arm47-rep1` | 3.211 대 3.233 (−0.7 %), n=1. 10월 기준선 2.864는 10-10 run 하나만 다른 이상치다(E0와 10월 다른 run 5개, `cat47_baseline_audit.md` §5) | **미입증** | 반복 |
 | SmartGC보다 지연과 처리량이 좋다 | channel_model.c:74 경고 | `result/final-20261123/tables/chmodel_warning_impact.csv` | FIO p99 0.24 ms 대 21.6 ms. FIO 구간이 최대 4,167 s로 늘어남 | 일부 입증 (n=1. 경고 구간에서는 SmartGC 지연이 과소 계산됨) | — |
 
 ## 3. 요약
