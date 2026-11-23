@@ -23,6 +23,8 @@ case "$policy" in
     onlinev4noelim) module="$root/buildoutput/nvmev-online-v4noelim.ko";;   # ablation
     onlinev4noprobe) module="$root/buildoutput/nvmev-online-v4noprobe.ko";;   # ablation
     onlinev4fullreset) module="$root/buildoutput/nvmev-online-v4fullreset.ko";;   # ablation
+    onlinev4nodrift) module="$root/buildoutput/nvmev-online-v4nodrift.ko";;   # 11-23 revision ablation: v4 with change detection off (DRIFT_WINDOWS max)
+    onlinerandom45) module="$root/buildoutput/nvmev-online-random45.ko";;   # 11-23 revision baseline: uniform random arm of 45 every window, no learning
     fixed10) module="$root/buildoutput/nvmev-fixed10.ko";;
     arm[0-5][0-9]) module="$root/buildoutput/nvmev-$policy.ko";;   # any of the 60 sweep modules
     fixed37) module="$root/buildoutput/nvmev-fixed37.ko";;

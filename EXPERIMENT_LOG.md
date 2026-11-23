@@ -13613,3 +13613,14 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - 기존 자료: 11월 V4 mixY는 Varmail 구간 창의 70–90 %를 arm 47로 썼고 단계 WAF가 sg-arm47과 거의 같음(S10 4.918/4.927, S20 4.506/4.508) → 빌드보다 시기(환경) 차이를 의심. mix 스크립트는 10-10 이후 부하 정의 변경 없음.
 - 확인 실행: 10월과 같은 모듈 fixed47(9fde0ea4)로 MIXY_SEQ="F S V F", PH_SECS=1800, rep 1(같은 시드), MIX_BASE=result/revision-20261123/check-fixed47-nov. 약 2.3시간, 디스크 약 1 GB.
 - 판정: S03/S04가 10월 값(2.143/4.277)에 가까우면 빌드 차이, 11월 값(2.481/4.897)에 가까우면 시기(환경) 차이.
+
+### gc-20261010 mixY fixed47 — started 2026-11-23T22:27:10+09:00
+
+- mixY (GC-heavy): 20 phases of 1800 s, order F S V F (F=FIO-Fast, S=FIO-Slow, V=Varmail, P=webproxy, W=fileserver, O=OLTP). Table-3 prep, 6 GiB FIO file kept, no YCSB. Module `nvmev-varmail-20260908-fixed47.ko`.
+- Command: `env MIXY_SEQ="F S V F" PH_SECS=1800 bash script/mix-gc-20261010.sh mixY fixed47 1`; evidence `result/revision-20261123/check-fixed47-nov/mixY-fixed47-rep1/`.
+
+## 2026-11-23 revision E1+E2 큐 등록 (script/revision-queue-20261123.sh, E0 뒤 자동 시작)
+- 계획: report/revision-20261123/additional_experiment_plan.md. 새 빌드 2개(기존 소스 무변경, 복사본만 수정):
+  - online-v4nodrift-src: v4에서 WATGC_V2_DRIFT_WINDOWS 3 → 0xFFFFFFFF (변화 감지 끔). nvmev-online-v4nodrift.ko sha256 094b7a38095ef176da9132f4840fbd4dae6783598e026b299c04628210a19ad3
+  - online-random45-src: v4 observe()에서 판단 구간마다 45개 중 균등 무작위(splitmix64(파티션, 구간 번호)), 학습·제거·정착 없음. nvmev-online-random45.ko sha256 c9bea4d505055d5acf0068474e370686b8b9750891a7cd06584b69f161ae4b38
+- 순서: 두 빌드 SMOKE(mixR ×3 1/10) → mixR ×3을 rep 1..3마다 v4 / v4nodrift / v4fullreset / random45 교대 → fixed47 rep1. 결과 result/revision-20261123/mixR/. 약 39시간. 실패해도 다음으로 넘어감(스모크 실패만 중단).
