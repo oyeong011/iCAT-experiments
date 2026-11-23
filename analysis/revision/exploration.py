@@ -33,7 +33,8 @@ for pol, wl, src in RUNS:
     rows.append({'policy': pol, 'workload': wl, 'candidates': CAND[pol], 'windows_evaluated': win,
         'arm_switches': sum(sum(a != b for a, b in zip(p['arms'], p['arms'][1:])) for p in per.values()),
         'distinct_arms_used': len({a for p in per.values() for a in p['arms']}),
-        'drift_resets': sum(' reset ' in l and 'WATGC_V2' in l for l in L),
+        # v6/v7 shift-reset also prints a 'WATGC_V2 reset' line (GoCom check 11-23), so drift-only = V2 resets - V6 shift-resets
+        'drift_resets': sum(' reset ' in l and 'WATGC_V2' in l for l in L) - sum('WATGC_V6 shift-reset' in l for l in L),
         'shift_resets_v6': sum('WATGC_V6 shift-reset' in l for l in L),
         'settled_events': sum('WATGC_V2 settled' in l for l in L),
         'min_active_per_part': min((min(p['active']) for p in per.values() if p['active']), default='미측정'),
