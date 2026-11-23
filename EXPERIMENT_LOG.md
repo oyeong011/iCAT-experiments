@@ -14525,3 +14525,12 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - reset: FIO→YCSB 전환에서 0회, YCSB→FIO 뒤 37.8–61.3 s에 4회(모두 waf-drift). 9월 두 run과 같은 패턴이다.
 - 회복: B는 440 s, C는 402 s로 두 정의가 같다. 첫 창이 기준의 1.06–1.11배라서 단측 정의의 즉시 통과 문제는 없다.
 - n=1이라 정책 비교는 하지 않았다. 문서: `report/revision-20261123-gocom/e1_independent_check.md`.
+
+### 2026-11-24 05:05–05:30 고컴: 승컴 E1 v4nodrift rep1 독립 검증 + 고컴 스크립트 정정 — 새 실험 없음
+
+- 대상: 승컴 0d80f2169 `result/revision-20261123/mixR/mixR-onlinev4nodrift-rep1-x3`. 모듈 094b7a38은 저장소 buildoutput 파일과 sha256이 같다. seed는 20260911, exit 0이다. 실행 겹침은 없다.
+- **정정:** `verify_e1.py` 첫 버전이 커널 스냅숏에 남은 앞 run의 dmesg 줄까지 읽어서 nodrift reset을 4회로 셌다. 이 run의 BEGIN 마커 이후 줄만 읽도록 고쳤고, 이제 nodrift reset은 0회다. 앞 커밋 ef2298596의 v4 rep1 값은 바뀌지 않는다. 출력 CSV는 다시 만들었다(고컴 분석 산출물이고 원시 결과가 아님).
+- 결과 (n=1): 전체 2.1547 (v4 rep1은 2.0654), C 단계 3.058 (v4 세 run은 2.844–2.900).
+- B 단계 차이(1.502 대 1.416)는 drift와 무관하다. v4도 C 전에는 reset이 0회였다. B 단계 WAF는 YCSB 속도(8.9k 대 12.9k ops/s)와 같이 움직이고, 그 원인은 미확인이다.
+- nodrift의 C 회복 시간이 더 짧게 나온 것(309 s 대 402 s)은 자기 기준 회복 지표의 한계다. 비교는 단계 WAF로 한다.
+- 문서: `report/revision-20261123-gocom/e1_independent_check.md` §6.

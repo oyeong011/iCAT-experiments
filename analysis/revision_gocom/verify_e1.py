@@ -37,8 +37,14 @@ for d in E1 + REF:
     seeds = re.findall(r'"randseed" : "(\d+)"', (d / 'phase-A.json').read_text())[:1] + re.findall(r'"randseed" : "(\d+)"', (d / 'phase-C.json').read_text())[:1]
     ko = env(d, r'\.ko$').split()[0][:12]
     lines = klog(d)
+    # dmesg buffer can still hold earlier runs' lines: keep only this run's (latest BEGIN marker of this policy)
+    tag = f'mix-mixR-{pol}-'
+    begins = [float(m[1]) for l in lines for m in [re.match(r'\[\s*([\d.]+)\] (\S+) BEGIN', l)] if m and m[2].startswith(tag)]
+    t_begin = max(begins)
+    lines = [l for l in lines if (m := re.match(r'\[\s*([\d.]+)\]', l)) and float(m[1]) >= t_begin]
     mark = {m[2]: float(m[1]) for l in lines for m in [re.match(r'\[\s*([\d.]+)\] mix-\S+ phase=(\w) START', l)] if m}
     mark.update({m[2] + '_end': float(m[1]) for l in lines for m in [re.match(r'\[\s*([\d.]+)\] mix-\S+ phase=(\w) END', l)] if m})
+    assert set('ABC') <= set(mark), (d, mark)
     rs = [(float(m[1]), int(m[2]), int(m[3]), m[4], m[5]) for l in lines
           for m in [re.match(r'\[\s*([\d.]+)\] NVMeVirt: WATGC_V2 reset .*part=(\d) .*window=(\d+) arm=(\d+) reason=(\S+)', l)] if m]
     for t, part, win, arm, why in rs:
