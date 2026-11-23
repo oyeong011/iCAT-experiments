@@ -14431,3 +14431,10 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
   - E2 random45는 revA-Random과 정책 동작이 같아 실질적 중복이다. 생략을 권한다(random45 seed가 rep와 무관한 약점도 기재).
   - E1 v4nodrift는 revA-V1과 동작이 같지만, revA 결과가 구분 불가였고 mixR×3이 다른 전환을 시험하므로 유지를 권한다.
 - 승컴 큐는 변경하지 않았다. 전달은 이 문서와 사용자를 통해서 한다.
+
+### 2026-11-24 00시대 고컴: Revision 독립 감사 (모듈 로드·부하 실험 없음)
+- 지시: "[고컴 지시] Revision 독립 검증 및 논문 근거 감사".
+- 산출: report/revision-20261123-gocom/{revision_independent_audit, cat47_baseline_audit, random_v4_statistical_audit, waf_recalculation_audit, revision_claim_evidence_matrix}.md. 스크립트 analysis/revision_gocom/waf_recalc.py, 결과 result/revision-gocom-20261123/waf_recalc_*.csv.
+- 컴파일만 했다(로드하지 않음): online-v4, v4nodrift, v4fullreset 소스를 /tmp/claude-1000/e1b에서 빌드하고 objdump로 함수 단위 비교했다. nodrift는 do_gc 안 명령 2개만 다르다(drift_windows ≥ 3 → == 0xFFFFFFFF). fullreset은 do_gc만 다르고 watgc_v2_neighbour가 inline으로 흡수됐다. 저장소의 .ko(db93f822 대 9b4ac457)로도 같은 결과를 얻었다.
+- WAF 재계산: 35 run과 371 단계에서 summary와 카운터가 정확히 일치했다. SmartGC nand 식도 일치했고, 보고서 표 38행도 일치했다.
+- CAT-47 10월/11월: 부하·seed·커널·준비 단계·GC 버퍼·NAND 식·CAT 정책 코드는 배제했다. 빌드 간접 효과, 시기·환경, Varmail seed 없음은 미확인이다. 승컴 E0 결과를 기다린다.
