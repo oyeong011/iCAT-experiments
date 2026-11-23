@@ -13672,3 +13672,18 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=71020027 gc_pages=29485640 WAF=1.415174
 - ycsb-load [OVERALL], Throughput(ops/sec), 24027.87233190501
 - ycsb-run [OVERALL], Throughput(ops/sec), 12910.34136786911
+
+### mix-20260911 mixR onlinev4nodrift — started 2026-11-24T02:34:47+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 42000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4nodrift.ko`.
+- Command: `bash script/mix-20260911.sh mixR onlinev4nodrift`; evidence `result/mix-20260911/mixR-onlinev4nodrift/`.
+
+- Finished 2026-11-24T04:55:43+09:00; mixR onlinev4nodrift exit=0; evidence `/home/oy/iCAT/result/revision-20261123/mixR/mixR-onlinev4nodrift-rep1-x3`; cleanup attempted.
+- total host_bytes=884665217024 host_pages=215982719 gc_pages=249397923 WAF=2.154712
+- phaseA(test4) host_pages=72004536 gc_pages=65093330 WAF=1.904017
+- phaseB(sqlite-a) host_pages=71976188 gc_pages=36144757 WAF=1.502177
+- phaseC(test4) host_pages=72001995 gc_pages=148159836 WAF=3.057718
+- phaseB-load host_pages=1398349 gc_pages=739206 WAF=1.528628
+- phaseB-run host_pages=70577839 gc_pages=35405551 WAF=1.501653
+- ycsb-load [OVERALL], Throughput(ops/sec), 22058.823529411766
+- ycsb-run [OVERALL], Throughput(ops/sec), 8885.252047098606
