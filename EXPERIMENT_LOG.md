@@ -14414,3 +14414,13 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 브리지 불합격(revB-v4 +1.11 %, 4.8 SD)에 따라 V4는 revA n=3을 주 분석으로 썼다. n=4 합산은 민감도 분석으로만 보인다.
 - 경고 집계: kernel.log에 남은 "Need to increase array size" 줄 수로 셌다(링 버퍼 손실이 있을 수 있어 하한). 구간 경계는 S01 START 표식과 phase-*.time의 시각 차이로 정했다. 경고 폭주로 이후 구간 표식이 빠진 run(승컴 SmartGC 13/20, 고컴 SmartGC 10/20, SmartGCQ 13/20)이 있어 이렇게 처리했다.
 - 확인 필요: resource-v124-20261114(9.4 ns/GC, 10,112 B)가 저장소에 없음. SG-Greedy의 FIO p99 0.03 ms가 비정상적으로 낮음. 45개 제한 근거인 sweep 9회 데이터의 위치.
+
+## revision-gocom-20261123 — 고컴 Revision 검증 (분석만, NVMeVirt 미구동) 2026-11-23 23시대
+- 지시: "[고컴 긴급 지시] Revision 실험 및 독립 검증" (마감 11-24). 승컴과 동시 구동 금지 조건과 승컴 큐(E0→E1→E2, 약 41 h) 때문에 신규 실험은 하지 않았다.
+- 산출: report/revision-20261123-gocom/{ablation_validation,parameter_sensitivity,resource_overhead_final,revision_evidence_check}.md, result/revision-gocom-20261123/*.csv, 스크립트 analysis/revision_gocom/{sensitivity,verify_seungcom}.py.
+- 크기 확인용 빌드 1회: 승컴 smartgc-src(29b5f116b)를 임시 워크트리 /home/oy/iCAT-29b5f에서 `NVMEVIRT_GC_POLICY=SMARTGC`로 빌드하고 gdb sizeof만 읽었다(nvmev.ko sha256 앞 16자리 b4724ec79ce0f245, 로드하지 않음). 그 뒤 워크트리를 삭제했다.
+- 주요 발견:
+  - 승컴 E2 random45와 E1 v4nodrift는 고컴 revA-Random과 revA-V1(mixFYF n=3)과 설계가 같다.
+  - 승컴 회복 정의(단측)에서는 170개 구간 중 106개가 첫 창에서 바로 통과한다.
+  - v7 drift_resets 104에는 shift 65가 포함되어 있다(drift는 39).
+  - 10,112 B는 학습 전용 크기다(gdb 2,656 B − 128 B, × 4). 9.4 ns/GC는 계측 빌드에서 V4 − CAT-47의 차분이다.
