@@ -14444,3 +14444,7 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 컴파일만 했다(로드하지 않음): online-v4, v4nodrift, v4fullreset 소스를 /tmp/claude-1000/e1b에서 빌드하고 objdump로 함수 단위 비교했다. nodrift는 do_gc 안 명령 2개만 다르다(drift_windows ≥ 3 → == 0xFFFFFFFF). fullreset은 do_gc만 다르고 watgc_v2_neighbour가 inline으로 흡수됐다. 저장소의 .ko(db93f822 대 9b4ac457)로도 같은 결과를 얻었다.
 - WAF 재계산: 35 run과 371 단계에서 summary와 카운터가 정확히 일치했다. SmartGC nand 식도 일치했고, 보고서 표 38행도 일치했다.
 - CAT-47 10월/11월: 부하·seed·커널·준비 단계·GC 버퍼·NAND 식·CAT 정책 코드는 배제했다. 빌드 간접 효과, 시기·환경, Varmail seed 없음은 미확인이다. 승컴 E0 결과를 기다린다.
+
+### 2026-11-24 00시대 고컴 정정: 단측 회복 "첫 창 통과" 수 106 → 98
+- 앞선 고컴 기록(revision-gocom-20261123, 2026-11-23 23시대)과 revision_evidence_check.md에는 "106/170 구간이 첫 창에서 바로 통과"라고 적었다. 106은 첫 이동창 WAF가 이미 기준 이하인 구간 수다. 10분 유지 조건까지 만족해 첫 창에서 회복으로 판정되는 구간은 98개다(승컴 490ff4021 first_window 98과 고컴 재계산이 같다). 원래 기록은 그대로 두고 이 정정을 덧붙인다.
+- 승컴 양측 정의(recovery2_s)와 고컴 양측 정의를 비교했다: 170개 중 125개 일치, 45개 불일치. 기준 구간과 유지 시간이 달라서이고 계산 오류가 아니다.
