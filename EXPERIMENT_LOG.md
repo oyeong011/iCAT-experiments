@@ -14549,3 +14549,16 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - B 단계 차이(1.502 대 1.416)는 drift와 무관하다. v4도 C 전에는 reset이 0회였다. B 단계 WAF는 YCSB 속도(8.9k 대 12.9k ops/s)와 같이 움직이고, 그 원인은 미확인이다.
 - nodrift의 C 회복 시간이 더 짧게 나온 것(309 s 대 402 s)은 자기 기준 회복 지표의 한계다. 비교는 단계 WAF로 한다.
 - 문서: `report/revision-20261123-gocom/e1_independent_check.md` §6.
+
+### 2026-11-24 07:06–07:25 고컴: 승컴 E1 v4fullreset rep1 독립 검증 — 새 실험 없음
+
+- 대상: 승컴 408297997 `result/revision-20261123/mixR/mixR-onlinev4fullreset-rep1-x3`. 모듈 9b4ac457은 buildoutput 파일과 sha256이 같다. seed는 20260911, exit 0이다. 실행 겹침은 없다. WAF 두 경로가 일치한다(불일치 0/15).
+- rep1 결과 (n=1, 같은 seed, 같은 배치):
+  - 전체: v4 2.0654, nodrift 2.1547, fullreset 2.1307
+  - C 단계: 2.881, 3.058, 3.107
+- C 단계 시계열:
+  - v4는 5–10분 안에 2.85로 내려간다.
+  - nodrift는 3.05–3.08에 머문다.
+  - fullreset은 첫 15분 3.28–3.50이고, 그 뒤 2.81–2.83이다.
+- 해석: 방향은 "drift 감지 필요"와 "부분 재탐색이 전체 재탐색보다 빠르다"와 맞는다. n=1이라 유의성은 주장하지 않는다. 1차 지표로 C 단계 WAF와 시계열을 권한다.
+- 문서: `report/revision-20261123-gocom/e1_independent_check.md` §7.
