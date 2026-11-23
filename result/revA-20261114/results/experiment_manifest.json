@@ -1,0 +1,174 @@
+{
+ "campaign": "revA-20261114",
+ "generated": "2026-11-16T15:58:48.093101+09:00",
+ "environment": {
+  "host": "oy-B550M-DS3H",
+  "cpu": "AMD Ryzen 5 3600XT 6-Core Processor",
+  "kernel": "7.0.0-31-generic",
+  "git_commit": "c06a372a5e940f911734946f1ffd574d2bdd7ca8",
+  "cpu_cores": "8",
+  "ram_bytes": "25134739456",
+  "os": "Ubuntu 24.04.5 LTS",
+  "cmdline": "BOOT_IMAGE=/boot/vmlinuz-7.0.0-31-generic root=UUID=2a66e830-8280-4bf1-b239-68732ae9e380 ro memmap=8G$4G quiet splash vt.handoff=7",
+  "physical_ssd": "Samsung SSD 970 EVO Plus 1TB 931.5G",
+  "virtual_ssd": "NVMeVirt CSL_Virt 7.5 GiB, memmap 8G@4G, SAMSUNG_970PRO base, 4 FTL partitions, cpus=1,2",
+  "nvmevirt_upstream": "61c90f7758cbd9545b4a4727e89377bf88eab060",
+  "nvmevirt_fork_source": "revA-src (online-v4-src + revA instrumentation)",
+  "git_worktree_dirty": true,
+  "tools": {
+   "fio": "fio-3.36",
+   "java": "openjdk version \"21.0.12.1\" 2026-08-18",
+   "sqlite": "3.45.1"
+  }
+ },
+ "config": {
+  "workload": "FIO-Fast(test4) 1800 s -> YCSB-A sqlite 250k records (load+run) 1800 s -> FIO-Fast 1800 s",
+  "prep": "ext4 nodiscard, 6 GiB sequential preset + 3 GiB randwrite seed 20260907, explicit start/stop",
+  "fio_seeds": "hot/warm/cold = 20260910+rep / 20261010+rep / 20261110+rep",
+  "icat_seed": "2026111400+rep (used only by revA-random; xorshift64* per partition seeded by splitmix(seed ^ (part+1)*phi))",
+  "variants": {
+   "revA-v4": "full iCAT-v4",
+   "revA-v1": "no drift detection / re-exploration",
+   "revA-v2": "no elimination, no settling (UCB throughout; drift check inactive because it requires settling)",
+   "revA-random": "uniform random over 45 arms each window",
+   "arm47": "fixed CAT k10/25%/r16 reference"
+  },
+  "name_warning": "revA-v1/revA-v2 are NOT the paper iCAT-v1 (original) / iCAT-v2 (3x window)"
+ },
+ "files": {
+  "runner": "0a265959182250be15b0162f23bcde88ed41849042e983afb58e1051f76f7b5c",
+  "safety_env": "5cc14c993749ac986d4ffaca549456862ee1927f17e65cdeb2dcf639e11d9aeb",
+  "source_diff": "81658239bafa07e481211fed13a8d6c7f09c54731ec14835cde266f4276d9583",
+  "modules": {
+   "buildoutput/nvmev-revA-random.ko": "7d88c9a869f18651164eaf1f278656951b796f0d9777d157e6058839d916076a",
+   "buildoutput/nvmev-revA-v1.ko": "50ee1c5910562b9f524a87b5fb46d6fff03c0fd85363730d624ba0b191c207e9",
+   "buildoutput/nvmev-revA-v2.ko": "c74e07148c2dfd5b4668653fdb9be542f4144a9d1963577e05262cd75694b41f",
+   "buildoutput/nvmev-revA-v4.ko": "987d62042df380e4cd809261bf2b1be8db3f4bfabc9ef00dd4dceb2f04822de9",
+   "buildoutput/nvmev-arm47.ko": "9fde0ea49892b1c8fa31c5bfa453ca55f5f2525806964c427d3f640266b8ce7d"
+  }
+ },
+ "run_order": [
+  "2026-11-14T20:27:12+09:00\tmixFYF-revA-random-rep1-smoke120\t3\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-random-rep1-smoke120",
+  "2026-11-14T20:35:37+09:00\tmixFYF-revA-random-rep2-smoke120\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-random-rep2-smoke120",
+  "2026-11-14T22:07:35+09:00\tmixFYF-arm47-rep1\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-arm47-rep1",
+  "2026-11-14T23:39:02+09:00\tmixFYF-revA-v4-rep1\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-v4-rep1",
+  "2026-11-15T01:10:28+09:00\tmixFYF-revA-v1-rep1\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-v1-rep1",
+  "2026-11-15T02:41:55+09:00\tmixFYF-revA-random-rep1\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-random-rep1",
+  "2026-11-15T04:13:21+09:00\tmixFYF-revA-v2-rep1\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-v2-rep1",
+  "2026-11-15T05:44:48+09:00\tmixFYF-revA-v2-rep2\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-v2-rep2",
+  "2026-11-15T07:16:14+09:00\tmixFYF-revA-v4-rep2\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-v4-rep2",
+  "2026-11-15T08:47:41+09:00\tmixFYF-revA-random-rep2\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-random-rep2",
+  "2026-11-15T10:19:08+09:00\tmixFYF-revA-v1-rep2\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-v1-rep2",
+  "2026-11-15T11:50:35+09:00\tmixFYF-revA-v4-rep3\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-v4-rep3",
+  "2026-11-15T13:22:02+09:00\tmixFYF-revA-v2-rep3\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-v2-rep3",
+  "2026-11-15T14:53:29+09:00\tmixFYF-revA-random-rep3\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-random-rep3",
+  "2026-11-15T16:24:57+09:00\tmixFYF-revA-v1-rep3\t0\t/home/oy/iCAT/result/revA-20261114/raw/mixFYF-revA-v1-rep3"
+ ],
+ "runs": [
+  {
+   "run": "mixFYF-arm47-rep1",
+   "policy": "arm47",
+   "rep": 1,
+   "exit": 0,
+   "waf": 1.987355
+  },
+  {
+   "run": "mixFYF-revA-random-rep1",
+   "policy": "revA-random",
+   "rep": 1,
+   "exit": 0,
+   "waf": 2.326463
+  },
+  {
+   "run": "mixFYF-revA-random-rep2",
+   "policy": "revA-random",
+   "rep": 2,
+   "exit": 0,
+   "waf": 2.32845
+  },
+  {
+   "run": "mixFYF-revA-random-rep3",
+   "policy": "revA-random",
+   "rep": 3,
+   "exit": 0,
+   "waf": 2.31803
+  },
+  {
+   "run": "mixFYF-revA-v1-rep1",
+   "policy": "revA-v1",
+   "rep": 1,
+   "exit": 0,
+   "waf": 2.164302
+  },
+  {
+   "run": "mixFYF-revA-v1-rep2",
+   "policy": "revA-v1",
+   "rep": 2,
+   "exit": 0,
+   "waf": 2.265625
+  },
+  {
+   "run": "mixFYF-revA-v1-rep3",
+   "policy": "revA-v1",
+   "rep": 3,
+   "exit": 0,
+   "waf": 2.191281
+  },
+  {
+   "run": "mixFYF-revA-v2-rep1",
+   "policy": "revA-v2",
+   "rep": 1,
+   "exit": 0,
+   "waf": 2.254164
+  },
+  {
+   "run": "mixFYF-revA-v2-rep2",
+   "policy": "revA-v2",
+   "rep": 2,
+   "exit": 0,
+   "waf": 2.265275
+  },
+  {
+   "run": "mixFYF-revA-v2-rep3",
+   "policy": "revA-v2",
+   "rep": 3,
+   "exit": 0,
+   "waf": 2.272239
+  },
+  {
+   "run": "mixFYF-revA-v4-rep1",
+   "policy": "revA-v4",
+   "rep": 1,
+   "exit": 0,
+   "waf": 2.122714
+  },
+  {
+   "run": "mixFYF-revA-v4-rep2",
+   "policy": "revA-v4",
+   "rep": 2,
+   "exit": 0,
+   "waf": 2.130984
+  },
+  {
+   "run": "mixFYF-revA-v4-rep3",
+   "policy": "revA-v4",
+   "rep": 3,
+   "exit": 0,
+   "waf": 2.131526
+  }
+ ],
+ "outputs": [
+  "ablation_v1_v2_v4.csv",
+  "experiment_manifest.json",
+  "exploration_cost.csv",
+  "figure7_random_comparison.png",
+  "figure8_ablation.png",
+  "figure9_adaptation.png",
+  "random_vs_icat.csv",
+  "random_vs_icat_runs.csv",
+  "resource",
+  "runs_status.csv",
+  "waf_recovery.csv",
+  "workload_transition.csv"
+ ]
+}

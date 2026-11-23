@@ -1,0 +1,51 @@
+diff -ru -x '*.o' -x '*.ko' -x '*.mod*' -x '.*' -x Module.symvers -x modules.order revA-src/conv_ftl.c revB-src/conv_ftl.c
+--- revA-src/conv_ftl.c	2026-11-14 20:19:39.314859763 +0900
++++ revB-src/conv_ftl.c	2026-11-22 19:07:39.827645180 +0900
+@@ -533,7 +533,7 @@
+ 	}
+ 	if (t->current_arm == t->best_arm && t->best_confirmations != ~0U)
+ 		t->best_confirmations++;
+-	if (ICAT_VARIANT != 2 && ICAT_VARIANT != 9 && /* revA: V2/random never settle */
++	if (ICAT_VARIANT != 2 && ICAT_VARIANT != 9 && ICAT_VARIANT != 5 && /* revA: V2/random never settle; revB: 5 never settles */
+ 	    !t->settled && watgc_v2_covered(t) &&
+ 	    t->stable_windows >= WATGC_V2_STABLE_WINDOWS &&
+ 	    t->best_confirmations >= WATGC_V2_BEST_CONFIRMATIONS) {
+@@ -613,7 +613,7 @@
+ 	return watgc_v2_random_arm(t);
+ #endif
+ 	/* v4: successive elimination once every candidate has been seen. */
+-	if (ICAT_VARIANT != 2 && watgc_v2_covered(t)) { /* revA: V2 has no elimination */
++	if (ICAT_VARIANT != 2 && ICAT_VARIANT != 3 && watgc_v2_covered(t)) { /* revA: V2 has no elimination; revB: 3 neither */
+ 		uint32_t bm, m;
+ 
+ 		if (watgc_v2_waf_q16(t->arm[t->best_arm].host_pages,
+diff -ru -x '*.o' -x '*.ko' -x '*.mod*' -x '.*' -x Module.symvers -x modules.order revA-src/conv_ftl.h revB-src/conv_ftl.h
+--- revA-src/conv_ftl.h	2026-11-14 20:19:01.591144450 +0900
++++ revB-src/conv_ftl.h	2026-11-22 19:07:39.827453363 +0900
+@@ -30,7 +30,11 @@
+ #define WATGC_V2_SCALE_N 5U
+ #define WATGC_V2_RATIO_N 3U
+ #define WATGC_V2_ARM_N (WATGC_V2_K_N * WATGC_V2_SCALE_N * WATGC_V2_RATIO_N)
++#if defined(ICAT_VARIANT) && ICAT_VARIANT == 6
++#define WATGC_V2_ARM_LO 0U /* revB variant 6: search space not restricted -> all 60 arms (k=2 back) */
++#else
+ #define WATGC_V2_ARM_LO 15U /* v3: skip k=2 arms 0-14 (worst in all 9 sweeps: 6 GitHub + 3 local) -> 45 arms */
++#endif
+ #define WATGC_V2_ELIM_Q16 9830ULL /* v4: 15%; after coverage, drop arms whose mean exceeds best by more than this */
+ #define WATGC_V2_INITIAL_ARM 37U /* (7, 100, 7); no reward prior */
+ #define WATGC_V2_Q 16U
+@@ -176,8 +180,12 @@
+ #ifndef ICAT_VARIANT
+ #define ICAT_VARIANT 4
+ #endif
+-#if ICAT_VARIANT != 4 && ICAT_VARIANT != 1 && ICAT_VARIANT != 2 && ICAT_VARIANT != 9
+-#error "ICAT_VARIANT must be 4, 1, 2 or 9"
++/* revB-20261122: 3 = V4 without online elimination (settling, drift, probe kept),
++ * 5 = V4 without settling (elimination kept; drift detection and probing need settling, so they never run),
++ * 6 = V4 with the unrestricted 60-arm search space. */
++#if ICAT_VARIANT != 4 && ICAT_VARIANT != 1 && ICAT_VARIANT != 2 && ICAT_VARIANT != 9 && \
++    ICAT_VARIANT != 3 && ICAT_VARIANT != 5 && ICAT_VARIANT != 6
++#error "ICAT_VARIANT must be 4, 1, 2, 9, 3, 5 or 6"
+ #endif
+ 
+ struct conv_ftl {

@@ -1,0 +1,22 @@
+host,policy,kind,metric,value,source
+GoCom (Ryzen 5 3600XT),arm47,computed (sizeof x partitions),learner_state_in_use_B,0,result/revA-20261114/results/resource/data_structure_sizes.csv
+GoCom (Ryzen 5 3600XT),revA-v1,computed (sizeof x partitions),learner_state_in_use_B,10848,result/revA-20261114/results/resource/data_structure_sizes.csv
+GoCom (Ryzen 5 3600XT),revA-v2,computed (sizeof x partitions),learner_state_in_use_B,10848,result/revA-20261114/results/resource/data_structure_sizes.csv
+GoCom (Ryzen 5 3600XT),revA-random,computed (sizeof x partitions),learner_state_in_use_B,10848,result/revA-20261114/results/resource/data_structure_sizes.csv
+GoCom (Ryzen 5 3600XT),revA-v4,computed (sizeof x partitions),learner_state_in_use_B,10848,result/revA-20261114/results/resource/data_structure_sizes.csv
+GoCom (Ryzen 5 3600XT),arm47,measured (module size),module_static_total_B,81038,size(1) of .ko sections
+GoCom (Ryzen 5 3600XT),revA-v1,measured (module size),module_static_total_B,93211,size(1) of .ko sections
+GoCom (Ryzen 5 3600XT),revA-v2,measured (module size),module_static_total_B,92170,size(1) of .ko sections
+GoCom (Ryzen 5 3600XT),revA-random,measured (module size),module_static_total_B,89914,size(1) of .ko sections
+GoCom (Ryzen 5 3600XT),revA-v4,measured (module size),module_static_total_B,94079,size(1) of .ko sections
+SeungCom (i7-7700),SmartGC / SmartGC-EQ8,computed (code + sizeof),learner_or_policy_state_B,2343936,"Q-table 640,000 + victim list/sort/drain/GC-buffer bitmap arrays 1,703,936 B (smartgc_memory_sizes.csv)"
+SeungCom (i7-7700),CAT-47,computed (code + sizeof),learner_or_policy_state_B,0,no learner state
+SeungCom (i7-7700),iCAT V4,computed (code + sizeof),learner_or_policy_state_B,10112,"sizeof learner state, resource-v124-20261114 report"
+SeungCom (i7-7700),SmartGC-EQ8,"measured (/proc/meminfo, run mean - before load, n=1)",VmallocUsed_delta_kB,미측정,result/gc-20261010/mixY-smartgc-eq8-rep1
+SeungCom (i7-7700),SmartGC-EQ8,measured (/proc/modules),coresize_B,102400,result/gc-20261010/mixY-smartgc-eq8-rep1
+SeungCom (i7-7700),SmartGC,"measured (/proc/meminfo, run mean - before load, n=1)",VmallocUsed_delta_kB,37605.6,result/smartgc-20261119/resume/mixY-smartgc-rep1
+SeungCom (i7-7700),SmartGC,measured (/proc/modules),coresize_B,102400,result/smartgc-20261119/resume/mixY-smartgc-rep1
+SeungCom (i7-7700),CAT-47,"measured (/proc/meminfo, run mean - before load, n=1)",VmallocUsed_delta_kB,35595.4,result/gc-20261010/mixY-sg-arm47-rep1
+SeungCom (i7-7700),CAT-47,measured (/proc/modules),coresize_B,94208,result/gc-20261010/mixY-sg-arm47-rep1
+SeungCom (i7-7700),iCAT V4,"measured (/proc/meminfo, run mean - before load, n=1)",VmallocUsed_delta_kB,34741.4,result/smartgc-20261119/resume/mixY-onlinev4-rep1
+SeungCom (i7-7700),iCAT V4,measured (/proc/modules),coresize_B,106496,result/smartgc-20261119/resume/mixY-onlinev4-rep1

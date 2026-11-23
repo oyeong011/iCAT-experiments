@@ -1,0 +1,225 @@
+diff -ru -x '*.o' -x '*.ko' -x '*.mod*' -x '.*' -x Module.symvers -x modules.order online-v4-src/Kbuild revA-src/Kbuild
+--- online-v4-src/Kbuild	2026-10-01 15:27:24.504312798 +0900
++++ revA-src/Kbuild	2026-11-14 20:19:43.410516251 +0900
+@@ -43,6 +43,8 @@
+ endif
+ else ifeq ($(NVMEVIRT_GC_POLICY),WATGC_V2)
+ ccflags-y += -DCONV_GC_POLICY=2
++ICAT_VARIANT ?= 4
++ccflags-y += -DICAT_VARIANT=$(ICAT_VARIANT)
+ else
+ $(error Invalid NVMEVIRT_GC_POLICY="$(NVMEVIRT_GC_POLICY)". Use GREEDY, CAT_FIG7 or WATGC_V2)
+ endif
+diff -ru -x '*.o' -x '*.ko' -x '*.mod*' -x '.*' -x Module.symvers -x modules.order online-v4-src/conv_ftl.c revA-src/conv_ftl.c
+--- online-v4-src/conv_ftl.c	2026-10-01 15:27:24.504312798 +0900
++++ revA-src/conv_ftl.c	2026-11-14 20:19:39.314859763 +0900
+@@ -445,6 +445,32 @@
+ 	return choice;
+ }
+ 
++/* revA-20261114: reproducible per-partition PRNG for the random-selection baseline. */
++static ulong icat_seed = 20261114;
++module_param(icat_seed, ulong, 0444);
++MODULE_PARM_DESC(icat_seed, "revA random-selection seed (per partition: seed mixed with part id)");
++
++static uint64_t watgc_v2_splitmix(uint64_t x)
++{
++	x += 0x9E3779B97F4A7C15ULL;
++	x = (x ^ (x >> 30)) * 0xBF58476D1CE4E5B9ULL;
++	x = (x ^ (x >> 27)) * 0x94D049BB133111EBULL;
++	return x ^ (x >> 31);
++}
++
++static __maybe_unused uint32_t watgc_v2_random_arm(struct watgc_v2_tuner *t)
++{
++	uint64_t x = t->rng;	/* xorshift64* */
++
++	x ^= x >> 12;
++	x ^= x << 25;
++	x ^= x >> 27;
++	t->rng = x;
++	return WATGC_V2_ARM_LO +
++	       (uint32_t)((x * 0x2545F4914F6CDD1DULL) >> 32) %
++	       (WATGC_V2_ARM_N - WATGC_V2_ARM_LO);
++}
++
+ static void watgc_v2_reset_epoch(struct conv_ftl *ftl, uint32_t sample_waf)
+ {
+ 	struct watgc_v2_tuner *t = &ftl->tuner;
+@@ -454,6 +480,7 @@
+ 		   "arm=%u reason=waf-drift reference_q16=%u sample_q16=%u\n",
+ 		   t->ns_id, t->part_id, t->epoch, t->windows,
+ 		   t->current_arm, t->reference_waf_q16, sample_waf);
++	t->n_reset++;
+ 	for (i = 0; i < WATGC_V2_ARM_N; i++)
+ 		t->arm[i] = (struct watgc_v2_arm){ 0 };
+ 	t->active = watgc_v2_grow(t->active);   /* v4: survivors + 1-step neighbours, not all arms */
+@@ -493,6 +520,7 @@
+ 	     (uint64_t)incumbent * WATGC_V2_TOLERANCE_Q16))
+ 		candidate = t->best_arm;
+ 	if (candidate != t->best_arm) {
++		t->n_best_change++;
+ 		t->best_arm = candidate;
+ 		t->stable_windows = 0;
+ 		t->best_confirmations = 0;
+@@ -505,7 +533,8 @@
+ 	}
+ 	if (t->current_arm == t->best_arm && t->best_confirmations != ~0U)
+ 		t->best_confirmations++;
+-	if (!t->settled && watgc_v2_covered(t) &&
++	if (ICAT_VARIANT != 2 && ICAT_VARIANT != 9 && /* revA: V2/random never settle */
++	    !t->settled && watgc_v2_covered(t) &&
+ 	    t->stable_windows >= WATGC_V2_STABLE_WINDOWS &&
+ 	    t->best_confirmations >= WATGC_V2_BEST_CONFIRMATIONS) {
+ 		t->settled = true;
+@@ -531,7 +560,8 @@
+ 	bool had_coverage, first_coverage;
+ 
+ 	t->windows++;
+-	if (t->settled && t->current_arm == t->best_arm) {
++	if (ICAT_VARIANT != 1 && /* revA: V1 has no drift detection / re-exploration */
++	    t->settled && t->current_arm == t->best_arm) {
+ 		delta = sample_waf > t->reference_waf_q16 ?
+ 			sample_waf - t->reference_waf_q16 :
+ 			t->reference_waf_q16 - sample_waf;
+@@ -578,8 +608,12 @@
+ 		t->stable_windows = 0;
+ 		t->best_confirmations = 0;
+ 	}
++#if ICAT_VARIANT == 9
++	/* revA random selection: uniform over the 45 allowed arms (k != 2); no elimination, settling or drift. */
++	return watgc_v2_random_arm(t);
++#endif
+ 	/* v4: successive elimination once every candidate has been seen. */
+-	if (watgc_v2_covered(t)) {
++	if (ICAT_VARIANT != 2 && watgc_v2_covered(t)) { /* revA: V2 has no elimination */
+ 		uint32_t bm, m;
+ 
+ 		if (watgc_v2_waf_q16(t->arm[t->best_arm].host_pages,
+@@ -591,8 +625,10 @@
+ 						     t->arm[i].gc_pages, &m))
+ 					continue;
+ 				if ((uint64_t)(m > bm ? m - bm : 0) * WATGC_V2_ONE >
+-				    (uint64_t)bm * WATGC_V2_ELIM_Q16)
++				    (uint64_t)bm * WATGC_V2_ELIM_Q16) {
+ 					t->active &= ~(1ULL << i);
++					t->n_elim++;
++				}
+ 			}
+ 		}
+ 	}
+@@ -629,19 +665,26 @@
+ 	t->epoch = 1;
+ 	t->best_arm = WATGC_V2_INITIAL_ARM;
+ 	t->active = WATGC_V2_ALLOWED;
++	t->rng = watgc_v2_splitmix((uint64_t)icat_seed ^
++				   ((uint64_t)(part_id + 1) * 0x9E3779B97F4A7C15ULL));
++	if (!t->rng)
++		t->rng = 1;
+ 	watgc_v2_set_arm(ftl, WATGC_V2_INITIAL_ARM);
+ 	t->phase = WATGC_V2_WARMUP;
+ 	t->phase_gc_start = ftl->stats.total_gc_count;
+ 	NVMEV_INFO("WATGC_V2 init ns=%u part=%u arms=%u initial=%u "
+-		   "prior=none gamma_q16=%llu exploration_q16=%llu\n",
++		   "prior=none gamma_q16=%llu exploration_q16=%llu "
++		   "revA_variant=%u icat_seed=%lu candidates=%u\n",
+ 		   ns_id, part_id, WATGC_V2_ARM_N, t->current_arm,
+-		   WATGC_V2_GAMMA_Q16, WATGC_V2_UCB_C_Q16);
++		   WATGC_V2_GAMMA_Q16, WATGC_V2_UCB_C_Q16,
++		   (uint32_t)ICAT_VARIANT, icat_seed,
++		   (uint32_t)hweight64(WATGC_V2_ALLOWED));
+ }
+ 
+ static void watgc_v2_on_gc(struct conv_ftl *ftl, uint64_t now_ns)
+ {
+ 	struct watgc_v2_tuner *t = &ftl->tuner;
+-	uint64_t host, gc_pages, gc_count;
++	uint64_t host, gc_pages, gc_count, t0;
+ 	uint32_t sample, evaluated, next, k, scale, ratio;
+ 	bool ready;
+ 
+@@ -691,20 +734,30 @@
+ 	}
+ 	evaluated = t->current_arm;
+ 	watgc_v2_decode(evaluated, &k, &scale, &ratio);
++	t0 = ktime_get_ns();
++	if (evaluated != t->best_arm)
++		t->n_eval_explore++;
+ 	next = watgc_v2_observe(ftl, host, gc_pages, sample);
++	if (next != evaluated) {
++		watgc_v2_set_arm(ftl, next);
++		t->n_select++;
++	}
++	t->learner_ns += ktime_get_ns() - t0;
+ 	NVMEV_INFO("WATGC_V2 sample ns=%u part=%u epoch=%llu window=%llu "
+ 		   "phase=measure evaluated=%u k=%u scale_pct=%u age_ratio=%u "
+ 		   "host=%llu gc_pages=%llu gc_count=%llu waf_q16=%u "
+-		   "best=%u next=%u settled=%u active=%u\n",
++		   "best=%u next=%u settled=%u active=%u "
++		   "revA select=%llu eval_explore=%llu elim=%llu best_change=%llu "
++		   "reset=%llu discarded=%llu learner_ns=%llu\n",
+ 		   t->ns_id, t->part_id, t->epoch, t->windows,
+ 		   evaluated, k, scale, ratio, host, gc_pages, gc_count, sample,
+-		   t->best_arm, next, (uint32_t)t->settled, (uint32_t)hweight64(t->active));
+-	if (next != evaluated) {
+-		watgc_v2_set_arm(ftl, next);
++		   t->best_arm, next, (uint32_t)t->settled, (uint32_t)hweight64(t->active),
++		   t->n_select, t->n_eval_explore, t->n_elim, t->n_best_change,
++		   t->n_reset, t->discarded_windows, t->learner_ns);
++	if (next != evaluated)
+ 		watgc_v2_begin_phase(ftl, WATGC_V2_BURNIN, now_ns);
+-	} else {
++	else
+ 		watgc_v2_begin_phase(ftl, WATGC_V2_MEASURE, now_ns);
+-	}
+ }
+ 
+ static void watgc_v2_report(struct conv_ftl *ftl)
+@@ -723,12 +776,16 @@
+ 	NVMEV_INFO("WATGC_V2 summary ns=%u part=%u epoch=%llu windows=%llu "
+ 		   "epoch_windows=%llu discarded=%llu visited=%u covered=%u "
+ 		   "settled=%u phase=%u current=%u best=%u k=%u scale_pct=%u "
+-		   "age_ratio=%u best_waf_valid=%u best_waf_q16=%u\n",
++		   "age_ratio=%u best_waf_valid=%u best_waf_q16=%u "
++		   "revA_variant=%u select=%llu eval_explore=%llu elim=%llu "
++		   "best_change=%llu reset=%llu learner_ns=%llu active=%u\n",
+ 		   t->ns_id, t->part_id, t->epoch, t->windows,
+ 		   t->epoch_windows, t->discarded_windows, visited,
+ 		   (uint32_t)watgc_v2_covered(t), (uint32_t)t->settled,
+ 		   (uint32_t)t->phase, t->current_arm, t->best_arm, k, scale, ratio,
+-		   (uint32_t)valid, mean);
++		   (uint32_t)valid, mean, (uint32_t)ICAT_VARIANT, t->n_select,
++		   t->n_eval_explore, t->n_elim, t->n_best_change, t->n_reset,
++		   t->learner_ns, (uint32_t)hweight64(t->active));
+ }
+ #else
+ static void watgc_v2_init(struct conv_ftl *ftl, uint32_t ns_id, uint32_t part_id)
+diff -ru -x '*.o' -x '*.ko' -x '*.mod*' -x '.*' -x Module.symvers -x modules.order online-v4-src/conv_ftl.h revA-src/conv_ftl.h
+--- online-v4-src/conv_ftl.h	2026-10-01 15:27:24.504312798 +0900
++++ revA-src/conv_ftl.h	2026-11-14 20:19:01.591144450 +0900
+@@ -161,8 +161,25 @@
+ 	uint64_t active;      /* v4: bit i = arm i still a candidate */
+ 	uint32_t probe_idx;   /* v4: next neighbour slot to probe */
+ 	bool settled; /* empirical stability, NOT a proof of a global optimum */
++	/* revA-20261114 instrumentation (observation only, no policy effect) */
++	uint64_t n_select;     /* arm changes applied after a decision */
++	uint64_t n_eval_explore; /* accepted windows that evaluated a non-incumbent arm */
++	uint64_t n_elim;       /* candidate bits cleared by online elimination */
++	uint64_t n_best_change; /* incumbent (best arm) updates */
++	uint64_t n_reset;      /* drift resets (re-exploration starts) */
++	uint64_t learner_ns;   /* cumulative wall ns inside observe+set_arm on the dispatcher thread */
++	uint64_t rng;          /* revA random-selection state (ICAT_VARIANT 9 only) */
+ };
+ 
++/* revA-20261114: 4 = full iCAT-v4 (unchanged logic), 1 = no drift detection / re-exploration,
++ * 2 = no online elimination and no settling, 9 = uniform random over the 45 candidate arms. */
++#ifndef ICAT_VARIANT
++#define ICAT_VARIANT 4
++#endif
++#if ICAT_VARIANT != 4 && ICAT_VARIANT != 1 && ICAT_VARIANT != 2 && ICAT_VARIANT != 9
++#error "ICAT_VARIANT must be 4, 1, 2 or 9"
++#endif
++
+ struct conv_ftl {
+ 	struct ssd *ssd;
+ 	struct convparams cp;

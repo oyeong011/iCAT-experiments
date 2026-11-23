@@ -1,0 +1,23 @@
+host,policy,kind,metric,value,sd,n
+GoCom (Ryzen 5 3600XT),arm47,"measured: ktime_get_ns() around learner path, summed",learner_total_ms (mixFYF 90 min),0.0000,,1
+GoCom (Ryzen 5 3600XT),arm47,computed: learner_total / measured wall,learner_share_of_wall_pct,0.0000,,1
+GoCom (Ryzen 5 3600XT),revA-v1,"measured: ktime_get_ns() around learner path, summed",learner_total_ms (mixFYF 90 min),3.6790,0.1574,3
+GoCom (Ryzen 5 3600XT),revA-v1,computed: learner_total / measured wall,learner_share_of_wall_pct,0.0001,,3
+GoCom (Ryzen 5 3600XT),revA-v2,"measured: ktime_get_ns() around learner path, summed",learner_total_ms (mixFYF 90 min),9.0359,0.0563,3
+GoCom (Ryzen 5 3600XT),revA-v2,computed: learner_total / measured wall,learner_share_of_wall_pct,0.0002,,3
+GoCom (Ryzen 5 3600XT),revA-random,"measured: ktime_get_ns() around learner path, summed",learner_total_ms (mixFYF 90 min),2.7717,0.0239,3
+GoCom (Ryzen 5 3600XT),revA-random,computed: learner_total / measured wall,learner_share_of_wall_pct,0.0001,,3
+GoCom (Ryzen 5 3600XT),revA-v4,"measured: ktime_get_ns() around learner path, summed",learner_total_ms (mixFYF 90 min),3.8797,0.1064,3
+GoCom (Ryzen 5 3600XT),revA-v4,computed: learner_total / measured wall,learner_share_of_wall_pct,0.0001,,3
+GoCom (Ryzen 5 3600XT),revB-v4,"measured: ktime_get_ns() around learner path, summed",learner_total_ms (mixFYF 90 min),4.1224,,1
+GoCom (Ryzen 5 3600XT),revB-noelim,"measured: ktime_get_ns() around learner path, summed",learner_total_ms (mixFYF 90 min),6.99234,0.437326,3
+GoCom (Ryzen 5 3600XT),revB-nosettle,"measured: ktime_get_ns() around learner path, summed",learner_total_ms (mixFYF 90 min),3.32641,0.163011,3
+GoCom (Ryzen 5 3600XT),revB-arm60,"measured: ktime_get_ns() around learner path, summed",learner_total_ms (mixFYF 90 min),3.67523,,1
+SeungCom (i7-7700),SmartGC-EQ8,measured: schedstat run time of nvmev_dispatcher / wall,dispatcher_util,0.998928,,1
+SeungCom (i7-7700),SmartGC-EQ8,not measured (no learner timer in smartgc-src / no learner),learner_cpu_s (mixY 10 h),미측정,,1
+SeungCom (i7-7700),SmartGC,measured: schedstat run time of nvmev_dispatcher / wall,dispatcher_util,0.998501,,1
+SeungCom (i7-7700),SmartGC,not measured (no learner timer in smartgc-src / no learner),learner_cpu_s (mixY 10 h),미측정,,1
+SeungCom (i7-7700),CAT-47,measured: schedstat run time of nvmev_dispatcher / wall,dispatcher_util,0.999143,,1
+SeungCom (i7-7700),CAT-47,not measured (no learner timer in smartgc-src / no learner),learner_cpu_s (mixY 10 h),미측정,,1
+SeungCom (i7-7700),iCAT V4,measured: schedstat run time of nvmev_dispatcher / wall,dispatcher_util,0.999092,,1
+SeungCom (i7-7700),iCAT V4,estimated (iCAT V4 only): gc_count x 9.4 ns/GC from resource-v124 (source not in repo),learner_cpu_s (mixY 10 h),0.968726,,1

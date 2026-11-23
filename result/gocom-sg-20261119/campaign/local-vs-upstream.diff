@@ -1,0 +1,8 @@
+71c71
+< mkdir -p "$root/result/mix-20260911"; exec 9>"$root/result/mix-20260911/device.lock"   # same lock as the original runner; flock -n 9 || exit 1
+---
+> mkdir -p "$root/result/mix-20260911"; exec 9>"$root/result/mix-20260911/device.lock"; flock -n 9 || { echo "device.lock held"; exit 1; }   # local: lock enabled
+130c130
+< if compgen -G '/sys/class/nvme/nvme*' >/dev/null; then echo 'Existing NVMe device: refusing initialization'; exit 1; fi
+---
+> if grep -qi CSL_Virt /sys/class/nvme/nvme*/model 2>/dev/null; then echo 'Existing NVMeVirt device: refusing initialization'; exit 1; fi   # local (this PC): physical Samsung nvme0 is always present; refuse only a leftover virtual controller
