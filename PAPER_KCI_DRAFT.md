@@ -3,7 +3,7 @@
 투고용 초안 v3 (2026-10-01). 처음 보는 리뷰어 심사(수정 후 재심) 반영본.
 - 【결과 대기】: queue31(전환 워크로드 고정 조합 선별, 10/2) · queue32(iCAT-v4 n=3 반복, 구성 요소 제거, 10/4) 결과가 들어갈 자리.
 - 【그림 N 자리】: 아직 만들지 않은 그림.
-- 그림은 figs/ (python3 analysis/figures.py 로 원본에서 재생성). 그림 내부 제목은 검토용이며, 투고 시 제거하고 본문 캡션을 쓴다.
+- 그림은 report/final-e1-validation/figs/paper/ (python3 analysis/figures.py 로 원본에서 재생성, 유효성 검사 적용, 파일명과 제목 번호가 원고 번호와 같다). 원본 figs/는 덮어쓰지 않았다. 그림 내부 제목은 검토용이며, 투고 시 제거하고 본문 캡션을 쓴다.
 - 참고문헌 서지 정보는 투고 전 최종 확인. 부록 B는 투고본에서 삭제.
 -->
 
@@ -145,7 +145,7 @@ WAF는 두 방식으로 측정하였다. **워밍업 제외 계측**(원 저장�
 
 워밍업 제외 계측으로 측정한 Greedy의 WAF는 FIO-Fast에서 3회 평균 2.186으로 원 저장소 기록(2.223)과 1.7% 차이였다. 60개 조합의 순위는 원 저장소 기록과 Spearman 상관계수 0.959(FIO-Fast), 0.979(YCSB-A)로 일치하였다. OLTP는 0.164로 낮았는데, 같은 방식(5분, 1회)으로 상위 조합 4개를 3회 반복 측정한 결과 조합 간 평균 차이(1.6% 이내)가 같은 조합의 반복 간 차이(최대 8%)보다 작았다. OLTP에서는 파라미터의 영향이 짧은 실행의 측정 편차보다 작다.
 
-![그림 1](figs/fig1_sensitivity.png)
+![그림 1](report/final-e1-validation/figs/paper/paper_fig01_fig1_sensitivity.png)
 
 **그림 1.** FIO-Fast에서 CAT 파라미터 조합 60개의 WAF (오름차순, 워밍업 제외 계측, 조합당 1회 10분). 연한 회색은 $k=2$ 조합, 진한 회색은 표 1의 비교 기준 조합이며 점선은 Greedy(3회 평균)이다.
 
@@ -161,7 +161,7 @@ WAF는 두 방식으로 측정하였다. **워밍업 제외 계측**(원 저장�
 
 동일 조합을 판단 구간 단위로 반복 측정한 WAF의 범위는 0.385로, 조합 간 실제 차이(0.098)보다 컸다. 이 변동이 직전 구간에 적용된 조합의 영향인지 확인하기 위해, 같은 조합의 구간 WAF를 직전 구간이 같은 조합인 경우와 다른 조합인 경우로 나누었다. 표준편차는 각각 0.120과 0.139로, 변동의 대부분은 직전 조합과 무관한 구간 자체의 변동이었다. 판단 구간을 3배로 늘려 변동을 줄인 iCAT-v2는 FIO-Fast 3시간 실행에서 iCAT과 차이가 없었다(1.878~1.902 대 1.884).
 
-![그림 2](figs/fig3_time_use.png)
+![그림 2](report/final-e1-validation/figs/paper/paper_fig02_fig3_time_use.png)
 
 **그림 2.** FIO-Fast 초기 3시간 동안 학습기가 적용한 조합의 분포 (구간 지정 계측, 정책별 1회 실행). 조합 등급은 그림 1의 값으로 정하며, **상위 조합**은 그림 1의 최상위(1.744) 대비 WAF 3% 이내, **저성능 조합**은 15% 초과, 그 사이를 **중위 조합**으로 한다.
 
@@ -217,19 +217,19 @@ iCAT-v4는 iCAT-v3의 변경을 모두 포함하고 다음을 추가한다.
 
 고정 조합의 WAF는 실행 시간과 거의 무관하였다(arm 47: 10분 1.774, 3시간 1.772). "–"는 해당 길이로 측정하지 않은 칸이다.
 
-![그림 4](figs/fig9_rank_over_time.png)
+![그림 4](report/final-e1-validation/figs/paper/paper_fig04_fig9_rank_over_time.png)
 
 **그림 4.** FIO-Fast에서 학습기의 누적 WAF를 고정 조합 대비 순위로 나타낸 변화 (정책별 1회 실행). 순위 기준은 그림 1의 상위 14개 조합과 CAT-Default를 구간 지정 계측으로 재측정한 15개이다. CAT-Default는 이 15개 중 15위이며 60개 전체에서는 약 21위이다.
 
 모든 시점에서 iCAT-v4 < iCAT-v3 < iCAT 순이었다. 누적 WAF가 실행이 길어질수록 낮아지는 것은 초기 순회 비용이 긴 실행에 분산되기 때문이다. iCAT-v4의 구간 WAF(해당 시간 구간만의 WAF)는 3시간 이후 약 1.80에서 안정되었다. 재측정한 15개와 비교하면 iCAT-v4의 10시간 누적 WAF(1.807)는 5위로 CAT-Robust(1.812, 6위)보다 낮았으나 차이는 0.3%였다. 같은 3시간 시점에서는 iCAT-v4가 8위, iCAT-v3가 11위, iCAT이 14위였다.
 
-![그림 5](figs/fig10_v4_choices.png)
+![그림 5](report/final-e1-validation/figs/paper/paper_fig05_fig10_v4_choices.png)
 
 **그림 5.** iCAT-v4가 판단 구간마다 적용한 조합의 순위 (FIO-Fast, 초기 3시간, 1회 실행; 순위는 그림 1 기준). 점은 판단 구간 하나, 선은 6분 구간의 중앙값이다. 약 1.5시간 이후 상위 3위 이내 조합(arm 31, 47, 46)을 주로 적용하며, 간헐적인 10위 부근 적용은 이웃 탐색이다. 순회(약 15분) 이후 1.5시간까지 20~30위 조합을 적용한 것은 후보 제거 이전의 UCB 탐색이다.
 
 **구성 요소 제거.** iCAT-v3의 변경 중 두 가지를 하나씩 되돌린 결과(그림 6), $k=2$ 조합을 복원하면 3시간 WAF가 1.848에서 1.905로(+3.1%), 수렴 후 탐색을 복원하면 1.875로(+1.5%) 높아졌다. $k=2$만 복원한 경우가 iCAT(1.884)보다도 높은 것은, iCAT-v3의 다른 변경(1회 순회)이 $k=2$ 조합까지 포함한 상태에서는 오히려 불리할 수 있음을 시사한다. 두 효과의 합(4.6%)이 iCAT 대비 iCAT-v3의 개선(1.9%)보다 커서 요소 간 상호작용이 있다. 각 1회 실행이므로 크기는 잠정적이며, 나머지 변경(판단 구간, 순회 횟수, 초기화 임계값)과 iCAT-v4의 세 메커니즘에 대한 제거 실험을 진행 중이다【결과 대기】.
 
-![그림 6](figs/fig6_ablation.png)
+![그림 6](report/final-e1-validation/figs/paper/paper_fig06_fig6_ablation.png)
 
 **그림 6.** iCAT-v3 구성 요소 제거 실험 (FIO-Fast, 3시간 누적 WAF, 정책별 1회 실행). 막대 이름의 "v3 − X"는 iCAT-v3에서 변경 X를 되돌린 것이다. 점선은 CAT-Best이다.
 
@@ -237,7 +237,7 @@ iCAT-v4는 iCAT-v3의 변경을 모두 포함하고 다음을 추가한다.
 
 **CAT-Default, CAT-Robust와의 비교.** 3배 길이 전환 워크로드 중 데이터 유효성 검사를 통과한 8종에서 iCAT-v4를 CAT-Robust와 비교하였다(그림 7). iCAT-v4는 3종에서 1.1~5.3% 낮은 WAF를 보였고, 5종에서 3.2~4.9% 높았다. 우수한 3종에는 CAT-Robust가 부적합한 단계(Varmail에서 arm 50은 측정한 상위 조합보다 16% 높음)가 포함되었고, 열세인 5종은 CAT-Robust가 상위권인 fio 단계로만 구성되었다. CAT-Default를 같은 길이로 측정한 유효 3종에서는 iCAT-v4가 모두 낮았다(4.3~18.3%). **현재 iCAT-v4는 우수했던 3종만 2~3회, 나머지 5종은 1회 실행하였다.** 모든 전환 워크로드를 3회로 맞춘 결과로 그림 7을 갱신할 예정이다【결과 대기】.
 
-![그림 7](report/final-e1-validation/figs/fig4_mixes_v4_vs_robust.png)
+![그림 7](report/final-e1-validation/figs/paper/paper_fig07_fig4_mixes_v4_vs_robust.png)
 
 **그림 7.** 3배 길이 전환 워크로드 8종(데이터 유효성 검사 통과)에서 CAT-Robust 대비 iCAT-v4의 WAF 증가율 (음수가 iCAT-v4 우수, n은 iCAT-v4 반복 횟수; CAT-Robust 1회).
 
@@ -253,13 +253,13 @@ iCAT-v4는 iCAT-v3의 변경을 모두 포함하고 다음을 추가한다.
 
 iCAT-v4는 3종 모두에서 1~2위였으며, OLTP → Varmail에서는 측정한 고정 조합 6개보다 모두 낮았다(arm 47 대비 −2.7%). 그러나 이 차이는 iCAT-v4의 반복 간 차이(약 2%)와 비슷하고 고정 조합은 1회 측정이므로, 고정 조합 반복 측정 결과가 나오기 전에는 "동등 이상"으로 해석한다【결과 대기: arm 47·17·50 각 3회】. 나머지 2종에서는 전 단계에 적합한 단일 조합(arm 47 또는 arm 17)이 존재하였고, FIO-Fast → Varmail에서 iCAT-v4는 arm 47보다 15.2% 높았다.
 
-![그림 8](report/final-e1-validation/figs/fig7_mix_loss_by_workload.png)
+![그림 8](report/final-e1-validation/figs/paper/paper_fig08_fig7_mix_loss_by_workload.png)
 
 **그림 8.** 전환 워크로드별(데이터 유효성 검사 통과 6종), 측정한 고정 조합 중 최상위 대비 WAF 증가율 (3배 길이; 괄호는 측정한 고정 조합 수, *는 2개만 측정). 【선별 실험 결과로 갱신 예정】
 
 **견고성.** 데이터 유효성 검사를 통과하고 iCAT-v4, CAT-Best, CAT-Robust를 모두 같은 길이로 측정한 전환 워크로드 6종에서 측정 고정 조합 중 최상위 대비 WAF 증가율의 평균은 CAT-Best 0.2%, iCAT-v4 5.0%, CAT-Robust 5.0%였고, 최댓값은 CAT-Best 1.3%(YCSB-A → OLTP), iCAT-v4 15.2%(FIO-Fast → Varmail), CAT-Robust 20.2%(FIO-Fast → Varmail)였다(그림 9). 원 저장소 워크로드로 선정된 CAT-Robust는 전환 워크로드에서 견고하지 않았다. 이 6종에서는 CAT-Best가 평균과 최댓값 모두 가장 작았으며, 기준 조합 수가 워크로드마다 2~7개로 달라 해석에 주의가 필요하다.
 
-![그림 9](report/final-e1-validation/figs/fig8_robustness.png)
+![그림 9](report/final-e1-validation/figs/paper/paper_fig09_fig8_robustness.png)
 
 **그림 9.** 전환 워크로드 6종(데이터 유효성 검사 통과)에서 정책별 최상위 고정 조합 대비 WAF 증가율의 평균과 최댓값 (3배 길이).
 
@@ -323,19 +323,51 @@ iCAT-v4는 3종 모두에서 1~2위였으며, OLTP → Varmail에서는 측정�
 
 실행 스크립트, 모듈 해시, 원본 로그, 실행 전 기록과 결과는 공개 저장소에 있다. 표와 그림은 원본 결과에서 스크립트로 재생성할 수 있다. 【익명 심사 규정에 맞게 저장소 위치 표기 조정】
 
-**표 A1.** 1배 길이 결과 요약 (각 3회 평균) 【`report/final-e1-validation/tables/RESULTS_ALL.gated.md` 1·4장 표를 옮겨 실음. YCSB 오류 5종은 "–"】
+**표 A1.** 1배 길이 결과 요약 (평균, 괄호는 반복 횟수; 원저자 계측 방식). 생성: `analysis/all-tables.py`(유효성 검사 적용) → `report/final-e1-validation/tables/RESULTS_ALL.gated.md` §1·§4
+
+(a) 단일 워크로드
+
+| 워크로드 | Greedy | 최악 CAT (arm 10) | CAT-Default | CAT-Best | CAT-Robust | iCAT |
+|---|---:|---:|---:|---:|---:|---:|
+| OLTP | 1.634 (1) | 1.671 (1) | 1.522 (3) | 1.465 (1) | 1.427 (1) | 1.592 (3) |
+| Varmail | 4.762 (1) | 4.970 (1) | 4.623 (3) | 3.537 (1) | 3.954 (1) | 4.927 (3) |
+| FIO-HotCold | 1.594 (1) | 1.593 (1) | 1.446 (1) | 1.420 (1) | 1.415 (1) | 1.591 (1) |
+| FIO-Slow | 2.034 (3) | 2.038 (3) | 1.729 (5) | 1.714 (3) | 1.716 (3) | 2.015 (5) |
+| FIO-Fast | 2.186 (3) | 2.231 (3) | 1.938 (4) | 1.739 (3) | 1.787 (3) | 1.950 (4) |
+| FIO-Shift | 1.633 (3) | 1.629 (3) | 1.595 (5) | 1.591 (3) | 1.585 (3) | 1.612 (5) |
+| YCSB-A | 1.503 (1) | 1.509 (1) | 1.272 (3) | 1.159 (1) | 1.164 (1) | 1.342 (3) |
+| YCSB-B | 1.281 (1) | 1.282 (1) | 1.113 (3) | 1.070 (1) | 1.071 (1) | 1.104 (3) |
+
+(b) 전환 워크로드 (iCAT-v4는 1회, 첫 순회가 실행 대부분을 차지해 참고값)
+
+| 전환 워크로드 | Greedy | 최악 CAT (arm 10) | CAT-Default | CAT-Best | CAT-Robust | iCAT | iCAT-v4 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| FIO-Fast → YCSB-A | 무효 (YCSB 오류, 한계 7) | | | | | | |
+| YCSB-A → FIO-Fast | 무효 (YCSB 오류, 한계 7) | | | | | | |
+| FIO-Slow → FIO-Fast | 2.244 (3) | 2.260 (3) | 1.892 (3) | 1.750 (3) | 1.780 (3) | 1.999 (3) | 1.906 |
+| FIO-Fast → FIO-Slow | 2.252 (3) | 2.264 (3) | 1.943 (3) | 1.777 (3) | 1.812 (3) | 2.051 (3) | 1.953 |
+| FIO-Fast → Varmail | 3.719 (3) | 3.730 (3) | 3.066 (3) | 2.377 (3) | 2.582 (3) | 3.457 (3) | – |
+| FIO-Fast ∥ YCSB-A | 검증 불가 (YCSB 출력 없음, 한계 7) | | | | | | |
+| FIO-Slow → FIO-Fast → YCSB-A | 무효 (YCSB 오류, 한계 7) | | | | | | |
+| YCSB-A → YCSB-B | 무효 (YCSB 오류, 한계 7) | | | | | | |
+| FIO-Fast (hot 512 → 128 MB) | 2.337 (3) | 2.349 (3) | 1.956 (3) | 1.777 (3) | 1.802 (3) | 2.020 (3) | – |
+| FIO-Fast ↔ FIO-Slow (60 s × 5) | 2.024 (3) | 2.043 (3) | 1.667 (3) | 1.543 (3) | 1.569 (3) | 1.767 (3) | – |
+| 점진적 부하 증가 | 2.187 (3) | 2.199 (3) | 1.808 (3) | 1.702 (3) | 1.725 (3) | 1.901 (3) | – |
+| OLTP → Varmail | 3.116 (3) | 3.122 (3) | 2.325 (3) | 1.851 (3) | 2.004 (3) | 1.946 (3) | – |
+| YCSB-A → OLTP | 2.018 (3) | 2.031 (3) | 1.231 (3) | 1.168 (3) | 1.157 (3) | 1.171 (3) | – |
+| FIO-Fast → 유휴 → FIO-Fast | 2.245 (3) | 2.258 (3) | 1.880 (3) | 1.736 (3) | 1.770 (3) | 1.936 (3) | – |
 
 ### 부록 B. 그림 번호 대응 (투고본에서 삭제)
 
 | 본문 | 파일 | 상태 |
 |---|---|---|
-| 그림 1 | figs/fig1_sensitivity | 완성 |
-| 그림 2 | figs/fig3_time_use | 완성 |
+| 그림 1 | report/final-e1-validation/figs/paper/paper_fig01_fig1_sensitivity (원본 figs/fig1_sensitivity) | 완성 |
+| 그림 2 | report/final-e1-validation/figs/paper/paper_fig02_fig3_time_use (원본 figs/fig3_time_use) | 완성 |
 | 그림 3 | (iCAT-v4 동작 개요) | **작성 필요** |
-| 그림 4 | figs/fig9_rank_over_time | 완성 |
-| 그림 5 | figs/fig10_v4_choices | 완성 |
-| 그림 6 | figs/fig6_ablation | queue32 결과로 확장 |
-| 그림 7 | report/final-e1-validation/figs/fig4_mixes_v4_vs_robust | 유효 8종으로 재생성(11-24). queue32 결과(n=3)로 갱신 |
-| 그림 8 | report/final-e1-validation/figs/fig7_mix_loss_by_workload | 유효 6종으로 재생성(11-24) |
-| 그림 9 | report/final-e1-validation/figs/fig8_robustness | 유효 6종으로 재생성(11-24) |
+| 그림 4 | report/final-e1-validation/figs/paper/paper_fig04_fig9_rank_over_time (원본 figs/fig9_rank_over_time) | 완성 |
+| 그림 5 | report/final-e1-validation/figs/paper/paper_fig05_fig10_v4_choices (원본 figs/fig10_v4_choices) | 완성 |
+| 그림 6 | report/final-e1-validation/figs/paper/paper_fig06_fig6_ablation (원본 figs/fig6_ablation) | queue32 결과로 확장 |
+| 그림 7 | report/final-e1-validation/figs/paper/paper_fig07_fig4_mixes_v4_vs_robust | 유효 8종으로 재생성(11-24). queue32 결과(n=3)로 갱신 |
+| 그림 8 | report/final-e1-validation/figs/paper/paper_fig08_fig7_mix_loss_by_workload | 유효 6종으로 재생성(11-24) |
+| 그림 9 | report/final-e1-validation/figs/paper/paper_fig09_fig8_robustness | 유효 6종으로 재생성(11-24) |
 | 그림 10 | (사용 금지) | 단계 2·3 무효. E1 재실험 대기 |

@@ -14676,3 +14676,14 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 작업 중 사고: 셸 명령의 잘못된 `cat` 한 줄이 표준 입력을 기다려 약 20분 멈췄다. 빈 임시 파일(EXPERIMENTS_LOG_TMP)은 지웠다. 데이터 영향은 없다.
 - 최종 검사 결과는 아래 줄에 덧붙인다.
 - 최종 검사 (16:40): `check_outputs.py --paper` PASS(HIT 0). 전체는 FAIL(HIT 1,376, 모두 논문 밖의 과거 산출물). 최종본 판정은 보류한다(`report/final-e1-validation/residual_check.md` §3).
+
+### 2026-11-24 17:00–18:30 고컴: 저자 판단 사항 정리 — 새 실험 없음
+
+- 표 A1을 원고에 넣었다(`tables/tableA1.md`, 유효성 검사 적용). 캡션의 "각 3회"는 실제 반복 수(1~5회)와 맞지 않아 "괄호는 반복 횟수"로 고쳤다.
+- 그림 번호: `analysis/figures.py`가 원고 번호를 제목과 파일 이름에 붙인 사본(`figs/paper/paper_figNN_*`)을 따로 저장한다. 원고 링크 9개와 부록 B를 바꿨다. 원본 figs/는 그대로다.
+- 표 8·그림 10 재설계: `analysis/final_e1/table8_e1.py`. 300k 배치에서 세 정책이 모두 유효 3회일 때만 수치와 그림을 만든다. 현재는 "대기"(0/0/0)다. 준비된 경우의 경로는 scratchpad에서 가짜 입력으로만 시험했고, 저장소에는 넣지 않았다.
+- 4.1 예외 4종의 원시 근거: `sec41_exceptions.py`가 summary.py 집계를 다시 실행한다. 결과는 `tables/sec41_exceptions.csv`다.
+  - OLTP → Varmail은 단계별로 방향이 반대다(OLTP 단계 iCAT > Default, Varmail 단계 iCAT < Default).
+  - YCSB-B 차이는 −0.8 %이고 3회 범위가 겹치지 않는다.
+- 표 7 유효 후보: 11종 중 7종. arm 47의 1배 평균·최대 손실이 0.2 / 1.1 %로 가장 작다. 1배 값은 RESULTS_ALL §10과 같다(처음에는 rep1만 써서 달랐고, 반복 평균으로 고쳤다).
+- 검사: `check_outputs.py --paper` PASS(HIT 0).

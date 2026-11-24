@@ -147,3 +147,19 @@
 | 5. 유효 / 사용 불가 주장 | `claims_and_pending.md` §1·§2 |
 | 6. E1 미완료 실험 | `claims_and_pending.md` §3 |
 | 생성 스크립트 | `analysis/final_e1/paper_tables.py`, `check_outputs.py`(`--paper`), `classify_hits.py`. 그림은 `analysis/figures.py`(검사 적용, 제목을 데이터에서 계산) |
+
+## 9. 저자 판단 사항 정리 (11-24 저녁)
+
+- 정리 문서: `author_decisions.md`
+  - 표 8·그림 10 재설계
+  - 6개 정책 대비 가능한 주장
+  - 표 A1과 그림 번호 통일
+  - 4.1 예외 근거
+  - 표 7 유효 후보
+  - 자동 수정과 저자 결정의 분리
+- 새 생성 파일:
+  - `tables/tableA1.md`, `tables/table7_valid.md`, `tables/sec41_exceptions.csv`
+  - `tables/table8_e1.md` (현재 "대기")
+  - `figs/paper/paper_figNN_*` (원고 번호)
+- 새 스크립트: `analysis/final_e1/table8_e1.py`, `sec41_exceptions.py`. `paper_tables.py`에 표 A1과 표 7 생성을 추가했다.
+- `check_outputs.py --paper`: PASS(HIT 0).

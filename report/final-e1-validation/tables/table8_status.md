@@ -7,14 +7,14 @@
 
 | run | 유효 단계 | 판정 |
 |---|---|---|
-| mixR-arm17-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
-| mixR-arm32-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.98% |
-| mixR-fixed37-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
-| mixR-fixed47-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.98% |
-| mixR-fixed50-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.84% |
-| mixR-fixed50-rep2-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
-| mixR-greedy-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
-| mixR-online-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
-| mixR-onlinev3-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.99% |
-| mixR-onlinev4-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
-| mixR-onlinev4-rep2-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.98% |
+| mixR-arm17-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83%; SQLITE_FULL in ycsb-run-B.txt.gz |
+| mixR-arm32-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.98%; SQLITE_FULL in ycsb-run-B.txt.gz |
+| mixR-fixed37-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83%; SQLITE_FULL in ycsb-run-B.txt.gz |
+| mixR-fixed47-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.98%; SQLITE_FULL in ycsb-run-B.txt.gz |
+| mixR-fixed50-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.84%; SQLITE_FULL in ycsb-run-B.txt.gz |
+| mixR-fixed50-rep2-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83%; SQLITE_FULL in ycsb-run-B.txt.gz |
+| mixR-greedy-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83%; SQLITE_FULL in ycsb-run-B.txt.gz |
+| mixR-online-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83%; SQLITE_FULL in ycsb-run-B.txt.gz |
+| mixR-onlinev3-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.99%; SQLITE_FULL in ycsb-run-B.txt.gz |
+| mixR-onlinev4-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83%; SQLITE_FULL in ycsb-run-B.txt.gz |
+| mixR-onlinev4-rep2-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.98%; SQLITE_FULL in ycsb-run-B.txt.gz |

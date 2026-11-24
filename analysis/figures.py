@@ -41,8 +41,18 @@ def curve(d):  # cumulative WAF vs hours from the 30 s counter series
             if h > 0: rows.append((int(s[0]), h, g))
     t0 = rows[0][0]
     return [(r[0] - t0) / 3600 for r in rows], [1 + r[2] / r[1] for r in rows]
+# 11-24: manuscript figure numbers (PAPER_KCI_DRAFT.md). Figures not in the manuscript, or withheld, are absent.
+PAPER_NO = {'fig1_sensitivity': 1, 'fig3_time_use': 2, 'fig9_rank_over_time': 4, 'fig10_v4_choices': 5, 'fig6_ablation': 6,
+            'fig4_mixes_v4_vs_robust': 7, 'fig7_mix_loss_by_workload': 8, 'fig8_robustness': 9}   # fig5_three_phase_mix (그림 10) withheld
 def save(fig, name):
-    fig.savefig(OUT / f'{name}.png', dpi=200, bbox_inches='tight'); fig.savefig(OUT / f'{name}.pdf', bbox_inches='tight'); fig.savefig(OUT / f'{name}.svg', bbox_inches='tight'); plt.close(fig)
+    fig.savefig(OUT / f'{name}.png', dpi=200, bbox_inches='tight'); fig.savefig(OUT / f'{name}.pdf', bbox_inches='tight'); fig.savefig(OUT / f'{name}.svg', bbox_inches='tight')
+    if name in PAPER_NO:   # extra copy whose title number and file name match the manuscript (the files above keep their names)
+        n = PAPER_NO[name]; (OUT / 'paper').mkdir(exist_ok=True)
+        for ax in fig.axes:
+            t = ax._left_title
+            if re.match(r'그림 \d+\.', t.get_text()): t.set_text(re.sub(r'^그림 \d+\.', f'그림 {n}.', t.get_text()))
+        for e in ('png', 'pdf', 'svg'): fig.savefig(OUT / 'paper' / f'paper_fig{n:02d}_{name}.{e}', dpi=200, bbox_inches='tight')
+    plt.close(fig)
     print('wrote', name)
 
 # Fig 1 — parameter sensitivity: 60 fixed arms on fast 3-region writes (original-author method)
