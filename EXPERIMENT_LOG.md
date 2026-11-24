@@ -14700,3 +14700,14 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 표 7: 유효 7종, † 표시 2종. 캡션의 반복 수를 실제(1배 1~3회 평균)에 맞췄다.
 - 원고 점검(`manuscript_audit.py`): 번호, 캡션, 링크 문제는 0건이다. 본문 참조 누락과 MB/MiB 혼용은 저자 판단으로 남겼다.
 - `check_outputs.py --paper`: PASS(HIT 0).
+
+### 2026-11-24 21:10–22:30 고컴: 제출 전 최종 점검 (원고 미수정, 제안만) — 새 실험 없음
+
+- 문서: `report/final-e1-validation/submission_precheck.md`
+- 본문 참조가 없는 표·그림 9개: 모두 논리상 필요하다. 삭제 대상은 없고 참조 추가를 제안했다.
+- 단위: fio와 filebench 크기가 모두 2진 단위임을 확인했다(`workloads/*.fio`, `filebench/*.f`). KiB/MiB/GiB 통일안을 냈다. YCSB 레코드(1,000 B)만 10진이다.
+- 배치: 표 7(1배 선별)을 표 6 앞으로 옮길 것을 제안했다.
+- 주장 ↔ 결과 ↔ 원시 경로 표를 만들었다. 출처를 확인해야 하는 수치 3개를 찾았다: 0.385/0.098, 표 4의 13.3 %p 분해, "Varmail arm 50 +16 %"(원시 후보값 11.8 / 13.0 / 30.5 %와 다름).
+- **원시 로그와 모순되는 원고 문장:** 3.2절 "60만 레코드가 6 GiB 파일과 공존"은 SQLITE_FULL 오염과 모순된다. 수정 제안만 했다.
+- E1 반영 절차: `analysis/final_e1/e1_integrate.sh`, `e1_insert_proposal.py`(원고 위치 7곳 제안서, 현재 "대기"). 준비된 경우의 경로는 scratchpad 가짜 입력으로만 시험했다. `table8_e1.py`의 음수 기호를 U+2212로 바꿨다.
+- 원고 수정 없음. 제출 가능 판정 보류(E1, 120행 모순, 출처 확인 3건).

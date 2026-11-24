@@ -67,6 +67,7 @@ for p, lab in POL[1:]:
         d, lo, hi = welch([float(r[k]) for r in valid[p]], [float(r[k]) for r in base]); out.append((d, lo, hi))
     L.append(f'| {lab.split(" ")[0]} − iCAT-v4 | {out[0][0]:+.3f} [{out[0][1]:+.3f}, {out[0][2]:+.3f}] | {out[1][0]:+.3f} [{out[1][1]:+.3f}, {out[1][2]:+.3f}] | '
              + ', '.join(n for n, o in (('단계 3', out[0]), ('전체', out[1])) if o[1] > 0 or o[2] < 0) + ' |')
+L = [re.sub(r'(?<=[\[ ])-(?=\d)', '−', l) for l in L]   # manuscript uses U+2212 for negatives
 (T / 'table8_e1.md').write_text('\n'.join(L) + '\n')
 
 # Figure 10 (redesigned): (a) per-phase WAF mean with 95 % CI, (b) phase-3 5-minute WAF, mean of valid runs with min-max band
