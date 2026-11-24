@@ -1,0 +1,51 @@
+[6363564.015698] mix-mixR-onlinev4-3373780 BEGIN
+[6363564.127650] NVMeVirt: Version 1.10 for >> Samsung 970 Pro SSD <<
+[6363564.127656] NVMeVirt: Storage: 0x100100000-0x300000000 (8191 MiB)
+[6363564.138481] NVMeVirt: Total Capacity(GiB,MiB)=2,2048 chs=2 luns=4 lines=8192 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256
+[6363564.149159] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[6363564.159326] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[6363564.159339] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[6363564.159342] NVMeVirt: WATGC_V2 init ns=0 part=0 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[6363564.160275] NVMeVirt: pqueue: Copyright (c) 2014, Volkan Yazıcı <volkan.yazici@gmail.com>. All rights reserved.
+[6363564.160310] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[6363564.160312] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=0 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[6363564.170658] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[6363564.180913] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[6363564.180928] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[6363564.180930] NVMeVirt: WATGC_V2 init ns=0 part=1 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[6363564.181878] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[6363564.181882] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=1 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[6363564.192077] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[6363564.202222] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[6363564.202236] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[6363564.202238] NVMeVirt: WATGC_V2 init ns=0 part=2 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[6363564.203283] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[6363564.203287] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=2 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[6363564.213583] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[6363564.223727] NVMeVirt: [chmodel_init] bandwidth 800 max_credits 26 tx_time 152
+[6363564.223743] NVMeVirt: [chmodel_init] bandwidth 3360 max_credits 110 tx_time 36
+[6363564.223745] NVMeVirt: WATGC_V2 init ns=0 part=3 arms=60 initial=37 prior=none gamma_q16=65503 exploration_q16=16384
+[6363564.224753] NVMeVirt: Init FTL instance with 2 channels (524288 pages)
+[6363564.224756] NVMeVirt: GC victim policy: watgc-v2 ns=0 part=3 initial_k=7 initial_scale_pct=100 initial_age_ratio=7 warmup_gc=100
+[6363564.224762] NVMeVirt: FTL physical space: 8588886016, logical space: 8026996276 (physical/logical * 100 = 107)
+[6363564.224764] NVMeVirt: ns 0/1: size 7655 MiB
+[6363564.224852] PCI host bridge to bus 0001:10
+[6363564.224855] pci_bus 0001:10: root bus resource [io  0x0000-0xffff]
+[6363564.224859] pci_bus 0001:10: root bus resource [mem 0x00000000-0x7fffffffff]
+[6363564.224862] pci_bus 0001:10: root bus resource [bus 00-ff]
+[6363564.224872] pci 0001:10:00.0: [0c51:0110] type 00 class 0x010802 PCIe Endpoint
+[6363564.224890] pci 0001:10:00.0: BAR 0 [mem 0x100000000-0x100003fff 64bit]
+[6363564.224893] pci 0001:10:00.0: enabling Extended Tags
+[6363564.225067] NVMeVirt: Virtual PCI bus created (node 0)
+[6363564.225343] NVMeVirt: nvmev_io_worker_0 started on cpu 2 (node 0)
+[6363564.225482] NVMeVirt: Virtual NVMe device created
+[6363564.225485] NVMeVirt: nvmev_dispatcher started on cpu 1 (node 0)
+[6363564.225621] nvme nvme0: pci function 0001:10:00.0
+[6363564.229363] nvme nvme0: 8/0/0 default/read/poll queues
+[6363564.540890] pci_bus 0001:10: busn_res: [bus 10-ff] is released
+[6363564.540939] NVMeVirt: WATGC_V2 summary ns=0 part=0 epoch=1 windows=0 epoch_windows=0 discarded=0 visited=0 covered=0 settled=0 phase=0 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0
+[6363564.540943] NVMeVirt: WATGC_V2 summary ns=0 part=1 epoch=1 windows=0 epoch_windows=0 discarded=0 visited=0 covered=0 settled=0 phase=0 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0
+[6363564.540946] NVMeVirt: WATGC_V2 summary ns=0 part=2 epoch=1 windows=0 epoch_windows=0 discarded=0 visited=0 covered=0 settled=0 phase=0 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0
+[6363564.540949] NVMeVirt: WATGC_V2 summary ns=0 part=3 epoch=1 windows=0 epoch_windows=0 discarded=0 visited=0 covered=0 settled=0 phase=0 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0
+[6363564.540951] NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=0 gc_pages=0 gc_count=0 WAF=N/A warmup_gc=100-per-part
+[6363564.612626] NVMeVirt: Virtual NVMe device closed
