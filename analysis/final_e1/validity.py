@@ -146,3 +146,47 @@ def run_ok(run_dir):
 if __name__ == '__main__':
     for a in sys.argv[1:]:
         print(a, 'run_ok' if run_ok(a) else 'NOT-ok', 'usable=' + ','.join(sorted(usable_phases(a))) or '-', '|', '; '.join(reasons(a)))
+
+
+# ---- workload labels of the contaminated legacy data (Sept 2026 mix-20260911, 11-23 revision mixR) ----
+# Committed derived files (figs/data/fig14_30s.csv etc.) carry labels, not run paths. Every label below was produced
+# only from runs that validity.py rejects (YCSB SQLITE_FULL, or YCSB output missing for mixG).
+CONTAMINATED_LABELS = {
+    'A': ['FIO-Fast → YCSB-A', '빠른 3영역 → SQLite'],
+    'B': ['YCSB-A → FIO-Fast', 'SQLite → 빠른 3영역'],
+    'G': ['FIO-Fast ∥ YCSB-A (동시)', '빠른 3영역 + SQLite 동시'],
+    'H': ['FIO-Slow → FIO-Fast → YCSB-A', '느린 → 빠른 → SQLite'],
+    'J': ['YCSB-A → YCSB-B', 'SQLite 수정 많음 → 읽기 위주'],
+    'R': ['FIO-Fast → YCSB-A → FIO-Fast', '빠른 3영역 → SQLite → 빠른 3영역'],
+}
+RERUN_TAGS = ('재실험', 'rerun', '300k', 'revision-20261124')
+_NORM = lambda s: re.sub(r'\s+', '', s)
+_BAD = {_NORM(l): k for k, ls in CONTAMINATED_LABELS.items() for l in ls}
+
+
+def label_contaminated(label):
+    """True if a workload label comes from contaminated legacy data. Labels of the 11-24 rerun must carry a RERUN_TAGS
+    marker (e.g. 'FIO-Fast → YCSB-A → FIO-Fast (재실험 300k)') to pass."""
+    if any(t in label for t in RERUN_TAGS):
+        return False
+    n = _NORM(label)
+    return any(n.startswith(b) for b in _BAD)
+
+
+def gate_mix(letter, mixdir, pattern):
+    """For scripts that read mix{letter}-...: True only if every matching run is fully valid (run_ok)."""
+    runs = [p for p in Path(mixdir).glob(pattern.format(m=letter)) if p.is_dir()]
+    return bool(runs) and all(run_ok(p) for p in runs)
+
+
+# phases that stay valid before the failed YCSB phase, per contaminated workload (from validity.usable_phases on the raw runs)
+VALID_PREFIX = {'A': 'A', 'B': '', 'G': '', 'H': 'AB', 'J': '', 'R': 'A'}
+
+
+def label_phase_ok(label, phase):
+    """For committed per-phase rows (e.g. fig7_v4_trace.csv '구간' = 'A(FIO-Fast)'): True if the row may be used."""
+    if not label_contaminated(label):
+        return True
+    n = _NORM(label)
+    k = next(v for b, v in _BAD.items() if n.startswith(b))
+    return bool(phase) and phase[0] in VALID_PREFIX[k]

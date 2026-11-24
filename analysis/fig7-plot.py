@@ -2,6 +2,10 @@
 """그림 7. 워크로드 전환에 따른 학습 상태와 활성 후보 수 (iCAT-v4, 파티션 0, 3배 길이 1회차)
 원천: figs/data/fig7_v4_trace.csv (analysis/fig7-data.py), 고정 비교선 figs/data/fig14_30s.csv"""
 import csv
+from pathlib import Path
+import sys as _sys; _sys.path.insert(0, str(Path(__file__).resolve().parent / 'final_e1'))
+from validity import usable_phases, run_ok, reasons, label_contaminated, label_phase_ok   # 2026-11-24 validity gate (YCSB SQLITE_FULL etc.)
+
 import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
@@ -12,7 +16,9 @@ plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 10.5, 'axes
                      'axes.grid': True, 'axes.grid.axis': 'y', 'grid.color': '#ededf0', 'grid.linewidth': 0.8, 'axes.axisbelow': True,
                      'xtick.color': INK2, 'ytick.color': INK2, 'ytick.left': False, 'axes.labelcolor': INK2, 'svg.fonttype': 'path'})
 T = list(csv.DictReader(open('/home/oy/iCAT/figs/data/fig7_v4_trace.csv', encoding='utf-8-sig')))
+T = [x for x in T if label_phase_ok(x['워크로드'], x.get('구간', ''))]   # validity gate: only valid phases of contaminated runs (mixR phase A)
 F = list(csv.DictReader(open('/home/oy/iCAT/figs/data/fig14_30s.csv', encoding='utf-8-sig')))
+F = [x for x in F if not label_contaminated(x['워크로드'])]   # validity gate: contaminated legacy workloads (e.g. YCSB-A → YCSB-B) dropped
 def note(ax, x, y, s, dx=0, dy=0, ha='left'):
     ax.annotate(s, (x, y), (x + dx, y + dy), fontsize=9.5, color=INK, ha=ha, va='center',
                 arrowprops=dict(arrowstyle='-', color=INK2, lw=0.8, shrinkA=2, shrinkB=3), bbox=dict(boxstyle='round,pad=0.3', fc='white', ec='#d2d2d7', lw=0.8))

@@ -14637,3 +14637,19 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 정정: 고컴 `e1_independent_check.md` §2–§8의 B·C·전체 WAF 해석은 무효다. §6.3의 "YCSB 속도 무리, 원인 미확인"은 오염 때문이었다. 원문은 두고 §9에 고지를 덧붙였다. `revision_evidence_check.md`(mixA), `duplication_check_E1_E2.md`(mixR 수치), 주장 매트릭스에도 고지를 덧붙였다.
 - 재실험: `result/revision-20261124/mixR`, YCSB 300k records다(이전 600k). B·C 단계는 이전 run과 부하가 다르므로 배치 안에서만 비교한다.
 - 문서: `report/final-e1-validation/README.md`, `e1_status.md`(자동 생성).
+
+### 2026-11-24 12:50–14:30 고컴: 논문 전체 데이터 유효성 점검, 산출물 차단 검사 — 새 실험 없음
+
+- 지시: 고컴 추가 지시(11-24). 새 실험 금지, 별도 브랜치(`report/data-validity-20261124`), 기존 결과 덮어쓰기 금지.
+- 검색: analysis 스크립트 가운데 오염 워크로드(mixA·B·G·H·J·R)를 참조하는 스크립트 26개를 확인했다. 논문 산출물 스크립트 10개에 `analysis/final_e1/validity.py` 검사를 넣었다.
+  - figures.py, v4-vs-cat.py, fig7-data.py, all-tables.py, fig6-workloads.py, fig-four.py
+  - fig14-excel.py, fig6-workloads-excel.py, fig7-plot.py, fig7-excel.py
+- 시험: 경로를 바꾼 사본을 scratchpad에서 실행했다. 엑셀 스크립트 2개는 openpyxl이 없어 필터만 시험했다. 재생성한 RESULTS_ALL은 check_outputs에서 HIT 0이다.
+- 차단: `check_outputs.py`를 추가했다. 현재 원고와 옛 산출물은 FAIL(HIT 1,434)이다. 수정할 위치는 `result/final-e1-validation/output_check.csv`에 있다.
+- 원시 재확인 (`recheck_valid_sets.py`):
+  - 고컴 mixFYF 25 run: exit 0, YCSB 실패 0 %, 적재 250k. Random − V4 +0.1959 [0.1840, 0.2078], noelim − V4 +0.0942 [0.0714, 0.1169]로 기존 값과 같다.
+  - SmartGC 비교 16 run: YCSB 없음, exit 0, 모든 단계 완료, WAF 두 경로 일치, NAND 식 일치.
+  - 원래 `gc-20261010/mixY-smartgc-rep1`은 호스트 디스크가 가득 차서 실패했다(exit-code 빈 파일). 비교에는 resume run을 쓴다.
+- 계산값 (그림 7, 검사 적용): v4 대 CAT-Robust는 유효 8종 중 3종 우수(−1.1 ~ −5.3 %), 5종 열세(+3.2 ~ +4.9 %)다. 원고의 "13종 중 4종 우수"는 무효 5종을 포함한 값이다.
+- SQLite 단독 스윕(`sweep-20260915/rank-sqlite-a.txt`)은 원시 YCSB 로그가 저장소에 없어 검증할 수 없다.
+- 문서: `report/final-e1-validation/paper_data_validity_matrix.md`, README §7.

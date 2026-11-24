@@ -121,3 +121,17 @@
 - 고컴 revA·revB(mixFYF), mixY(v7, SmartGC, CAT-47), E0 결과는 유효하다.
   - mixFYF의 YCSB는 실패 0 %다.
   - mixY에는 YCSB가 없다.
+
+## 7. 추가 점검 (11-24 오후, 브랜치 `report/data-validity-20261124`)
+
+- 논문 전체 매트릭스: `paper_data_validity_matrix.md`
+- 추가로 검사를 넣은 스크립트:
+  - `all-tables.py`
+  - `fig6-workloads.py`, `fig-four.py`
+  - `fig14-excel.py`, `fig6-workloads-excel.py`
+  - `fig7-plot.py`, `fig7-excel.py`
+- 산출물 차단 검사: `analysis/final_e1/check_outputs.py`. 현재 FAIL이며, 원고와 커밋된 옛 산출물에 오염 값이 있다.
+- 원시 재확인: `analysis/final_e1/recheck_valid_sets.py`
+  - 고컴 mixFYF 25 run: YCSB 실패 0 %, 효과 수치 재현.
+  - SmartGC 비교 16 run: YCSB 없음, 모두 완료. 원래 SmartGC 실행은 호스트 디스크가 가득 차서 실패했다.
+- E1 재실험의 300k와 600k 분리: 배치 라벨에 실제 적재 레코드 수를 넣었다. 한 배치에 다른 레코드 수가 섞이면 통계를 내지 않고 중단한다.

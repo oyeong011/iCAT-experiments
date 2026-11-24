@@ -2,19 +2,22 @@
 """Every result table from the raw result files -> RESULTS_ALL.md.  python3 analysis/all-tables.py"""
 import re, statistics as st, subprocess, datetime
 from pathlib import Path
+import sys as _sys; _sys.path.insert(0, str(Path(__file__).resolve().parent / 'final_e1'))
+from validity import usable_phases, run_ok, reasons, label_contaminated   # 2026-11-24 validity gate (YCSB SQLITE_FULL etc.)
 R = Path('/home/oy/iCAT/result'); M = R / 'mix-20260911'
 out = []
 p = out.append
 
 def tot(d):
     f = M / d / 'summary.txt'
-    if not f.exists(): return None
+    if not f.exists() or not run_ok(M / d): return None   # validity gate: whole-run total only if every phase is valid
     m = re.search(r'^total .*WAF=([\d.]+)', f.read_text(), re.M)
     return float(m[1]) if m else None
 def phases(d):
     f = M / d / 'summary.txt'
     if not f.exists(): return {}
-    return {k: float(w) for k, w in re.findall(r'^phase([ABC])\(\S*\) host_pages=\d+ gc_pages=\d+ WAF=([\d.]+)', f.read_text(), re.M)}
+    ok = usable_phases(M / d)   # validity gate: contaminated phases dropped
+    return {k: float(w) for k, w in re.findall(r'^phase([ABC])\(\S*\) host_pages=\d+ gc_pages=\d+ WAF=([\d.]+)', f.read_text(), re.M) if k in ok}
 def mean3(pat):
     xs = [x for r in (1, 2, 3) if (x := tot(pat.format(r=r))) is not None]
     return (st.mean(xs), len(xs)) if xs else (None, 0)
@@ -72,10 +75,10 @@ p('\n\\* v4 1시간·3시간 값은 10시간 실행의 해당 시점 누적 WAF(
 # 3. rank among 60 arms
 p('## 3. 60개 고정 조합 중 순위 (61자리 중)\n')
 T = sweep(R / 'sweep-20260915/rank-test4.txt'); SQ = sweep(R / 'sweep-20260915/rank-sqlite-a.txt')
-MA = {a: tot(f'mixA-arm{a:02d}-rep1') for a in range(60)}; MC = {a: tot(f'mixC-arm{a:02d}-rep1') for a in range(60)}
+MA = {a: v for a in range(60) if (v := tot(f'mixA-arm{a:02d}-rep1'))}; MC = {a: v for a in range(60) if (v := tot(f'mixC-arm{a:02d}-rep1'))}   # validity gate: invalid runs (mixA, SQLITE_FULL) drop out
 g = lambda k: mean3(k)[0]
-rows = [('최적 CAT (47)', T[47], MA[47], MC[47], SQ[47]), ('견고 CAT (50)', T[50], MA[50], MC[50], SQ[50]),
-        ('기본 CAT (37)', T[37], MA[37], MC[37], SQ[37]), ('Greedy', 2.186, g('mixA-greedy-rep{r}'), g('mixC-greedy-rep{r}'), 1.503),
+rows = [('최적 CAT (47)', T[47], MA.get(47), MC.get(47), SQ[47]), ('견고 CAT (50)', T[50], MA.get(50), MC.get(50), SQ[50]),
+        ('기본 CAT (37)', T[37], MA.get(37), MC.get(37), SQ[37]), ('Greedy', 2.186, g('mixA-greedy-rep{r}'), g('mixC-greedy-rep{r}'), 1.503),
         ('v1 (1배)', 2.001, g('mixA-online-rep{r}'), g('mixC-online-rep{r}'), 1.342),
         ('v1 (3시간 / 3배 / 3배)', 1.884, tot('mixA-online-rep1-x3'), tot('mixC-online-rep1-x3'), None),
         ('v1 (– / 6배 / 6배)', None, tot('mixA-online-rep1-x6'), tot('mixC-online-rep1-x6'), None),
@@ -85,8 +88,9 @@ rows = [('최적 CAT (47)', T[47], MA[47], MC[47], SQ[47]), ('견고 CAT (50)', 
 p('| 정책 | 빠른 3영역 단일 | 빠른 3영역 → SQLite | 느린 → 빠른 3영역 | SQLite 단일 |\n|---|---|---|---|---|')
 for lab, *vs in rows:
     p(f'| {lab} | ' + ' | '.join(f'{rank(W, v)}등 ({v:.3f})' if v else '–' for W, v in zip((T, MA, MC, SQ), vs)) + ' |')
-p(f'\n각 실험의 1등: 빠른 3영역 {nm(min(T, key=T.get))} {min(T.values()):.3f} / 빠른→SQLite {nm(min(MA, key=MA.get))} {min(MA.values()):.3f} / '
-  f'느린→빠른 {nm(min(MC, key=MC.get))} {min(MC.values()):.3f} / SQLite {nm(min(SQ, key=SQ.get))} {min(SQ.values()):.3f}. 고정 조합 값은 1배 길이(길이에 거의 무관: 47번 빠른 3영역 10분 1.774, 3시간 1.772).\n')
+best = lambda D: f'{nm(min(D, key=D.get))} {min(D.values()):.3f}' if D else '무효(데이터 제외)'
+p(f'\n각 실험의 1등: 빠른 3영역 {best(T)} / 빠른→SQLite {best(MA)} / '
+  f'느린→빠른 {best(MC)} / SQLite {best(SQ)}. 고정 조합 값은 1배 길이(길이에 거의 무관: 47번 빠른 3영역 10분 1.774, 3시간 1.772).\n')
 
 # 4. mixes x1
 p('## 4. 믹스 14종, 1배 길이 (10~30분, 3회 평균)\n')

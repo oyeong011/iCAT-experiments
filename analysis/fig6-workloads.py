@@ -3,6 +3,8 @@
 원천: result/mix-20260911/mix{O,F,J,P}-<정책>-rep1-x3/control-series.txt, phase-B-start.time, summary.txt"""
 import re, glob, statistics as st, datetime as dt
 from pathlib import Path
+import sys as _sys; _sys.path.insert(0, str(Path(__file__).resolve().parent / 'final_e1'))
+from validity import usable_phases, run_ok, reasons, label_contaminated   # 2026-11-24 validity gate (YCSB SQLITE_FULL etc.)
 import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
@@ -14,6 +16,10 @@ plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 10, 'axes.f
 M = Path('/home/oy/iCAT/result/mix-20260911')
 POL = [('fixed37', 'CAT-37 (기본)', '#e3a33b', 1.3), ('fixed50', 'CAT-50 (견고)', '#a3a29d', 1.3), ('onlinev4', 'iCAT-v4 (제안)', '#2a78d6', 2.4)]
 MIX = [('O', 'OLTP', 'Varmail'), ('F', 'FIO-Fast', 'Varmail'), ('J', 'YCSB-A', 'YCSB-B'), ('P', 'YCSB-A', 'OLTP')]
+_ALL = [(m, a, b) for m, a, b in MIX]
+MIX = [(m, a, b) for m, a, b in MIX if all(run_ok(d) for p_, *_ in POL for d in M.glob(f'mix{m}-{p_}-rep[0-9]-x3'))]
+DROPPED_MIX = [f'{a} → {b}' for m, a, b in _ALL if (m, a, b) not in MIX]
+if DROPPED_MIX: print('validity gate: dropped (contaminated YCSB phase):', DROPPED_MIX)
 def series(d):
     s = [tuple(map(int, m.groups())) for l in open(d / 'control-series.txt') if (m := re.match(r'(\d+) .*active=1 .*host_pages=(\d+) gc_pages=(\d+)', l))]
     t0 = s[0][0]; b = (dt.datetime.fromisoformat((d / 'phase-B-start.time').read_text().strip()).timestamp() - t0) / 60
@@ -21,9 +27,10 @@ def series(d):
     # 30 s intervals with <10% of the usual host writes (app restart gap at a switch) have no meaningful ratio -> dropped
     return [((t - t0) / 60, 1 + (g1 - g0) / (h1 - h0) if h1 - h0 > 0.1 * med else float('nan')) for (_, h0, g0), (t, h1, g1) in zip(s, s[1:])], b   # nan = gap in the line, not a bridge
 def final(m, p):
-    xs = [float(re.search(r'^total .*WAF=([\d.]+)', open(f).read(), re.M)[1]) for f in glob.glob(str(M / f'mix{m}-{p}-rep[0-9]-x3/summary.txt'))]
+    xs = [float(re.search(r'^total .*WAF=([\d.]+)', open(f).read(), re.M)[1]) for f in glob.glob(str(M / f'mix{m}-{p}-rep[0-9]-x3/summary.txt')) if run_ok(Path(f).parent)]
     return st.mean(xs)
 fig, axs = plt.subplots(2, 2, figsize=(14, 9.5)); axs = axs.ravel()
+for ax in axs[len(MIX):]: ax.axis('off'); ax.text(0.5, 0.5, '무효 데이터로 제외:\n' + '\n'.join(DROPPED_MIX) + '\n(YCSB SQLITE_FULL, report/final-e1-validation)', ha='center', va='center', fontsize=11, color='#e5484d', transform=ax.transAxes)
 for ax, (m, a, b) in zip(axs, MIX):
     fin = {p: final(m, p) for p, *_ in POL}; best = min(fin, key=fin.get); sw = []
     for p, lab, col, lw in POL:

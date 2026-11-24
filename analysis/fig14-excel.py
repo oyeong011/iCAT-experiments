@@ -3,10 +3,13 @@
 원천: figs/data/fig14_30s.csv. 정책마다 실제 기록 시각을 그대로 둠(분산형 차트)."""
 import csv, collections
 from pathlib import Path
+import sys as _sys; _sys.path.insert(0, str(Path(__file__).resolve().parent / 'final_e1'))
+from validity import usable_phases, run_ok, reasons, label_contaminated   # 2026-11-24 validity gate (YCSB SQLITE_FULL etc.)
 from openpyxl import Workbook
 from openpyxl.chart import ScatterChart, Reference, Series
 D = Path('/home/oy/iCAT/figs/data')
 r = list(csv.DictReader(open(D / 'fig14_30s.csv', encoding='utf-8-sig')))
+r = [x for x in r if not label_contaminated(x['워크로드'])]   # validity gate: contaminated legacy workloads (e.g. YCSB-A → YCSB-B) dropped
 POL = ['iCAT-v4', 'CAT-47 (최적)', 'CAT-50 (견고)', 'CAT-37 (기본)']; COL = ['2A78D6', '2B2A28', 'A3A29D', 'E3A33B']
 wb = Workbook(); wb.remove(wb.active)
 for wl in dict.fromkeys(x['워크로드'] for x in r):

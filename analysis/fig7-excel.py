@@ -2,11 +2,17 @@
 """그림 7을 엑셀에서 직접 고칠 수 있게: 워크로드마다 시트 1개 = 데이터 + 엑셀 차트 3개((가) WAF, (나) 조합, (다) 후보 수) -> figs/data/fig7.xlsx
 원천: figs/data/fig7_v4_trace.csv (파티션 0), figs/data/fig14_30s.csv (CAT-47 비교선)"""
 import csv
+from pathlib import Path
+import sys as _sys; _sys.path.insert(0, str(Path(__file__).resolve().parent / 'final_e1'))
+from validity import usable_phases, run_ok, reasons, label_contaminated, label_phase_ok   # 2026-11-24 validity gate (YCSB SQLITE_FULL etc.)
+
 from openpyxl import Workbook
 from openpyxl.chart import ScatterChart, Reference, Series
 from openpyxl.styles import Font, PatternFill
 T = list(csv.DictReader(open('/home/oy/iCAT/figs/data/fig7_v4_trace.csv', encoding='utf-8-sig')))
+T = [x for x in T if label_phase_ok(x['워크로드'], x.get('구간', ''))]   # validity gate: only valid phases of contaminated runs (mixR phase A)
 F = list(csv.DictReader(open('/home/oy/iCAT/figs/data/fig14_30s.csv', encoding='utf-8-sig')))
+F = [x for x in F if not label_contaminated(x['워크로드'])]   # validity gate: contaminated legacy workloads (e.g. YCSB-A → YCSB-B) dropped
 wb = Workbook(); wb.remove(wb.active)
 def chart(ws, title, ytitle, series, ymin, ymax, xmax, anchor):
     ch = ScatterChart(); ch.title = title; ch.style = 13; ch.scatterStyle = 'lineMarker'; ch.display_blanks = 'span'

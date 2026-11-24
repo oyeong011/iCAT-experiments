@@ -32,11 +32,19 @@ def dirs(globs):
     return sorted(p for p in out if 'smoke' not in p.name and re.search(r'mixR-(onlinev4|onlinev4nodrift|onlinev4fullreset)-rep\d+-x3$', p.name))
 
 
+def ycsb_records(d):
+    """records actually loaded (YCSB load INSERT Return=OK). 300k (11-24 rerun) and 600k (Sept, 11-23) must never pool."""
+    f = next(iter(sorted(d.glob('ycsb-load.txt*'))), None)
+    if not f: return None
+    det = V.ycsb_status(str(f))[1]
+    return det.get('INSERT', (None, None))[0]
+
+
 def batch(d):
-    """Batch label = result group + first date of the run; runs from different groups/dates are never pooled."""
+    """Batch label = result directory + loaded YCSB records. Different labels are never pooled."""
     e = (d / 'environment.txt').read_text().splitlines()[0][:10] if (d / 'environment.txt').exists() else '?'
-    rec = re.search(r'recordcount=(\d+)', (d / 'environment.txt').read_text()) if (d / 'environment.txt').exists() else None
-    return f'{d.parent.relative_to(ROOT)}@{e}' + (f'/rec{rec[1]}' if rec else '')
+    rec = ycsb_records(d)
+    return f'{d.parent.relative_to(ROOT)}/rec{rec // 1000 if rec else "?"}k'   # date not used: a queue crossing midnight is still one batch
 
 
 def cnt(p):
@@ -132,6 +140,10 @@ def main(globs):
             cw = csv.DictWriter(f, fieldnames=keys); cw.writeheader(); cw.writerows(rows)
     w('e1_runs.csv', runs); w('e1_phaseA.csv', pa); w('e1_resets.csv', resets); w('e1_timeseries.csv', series)
 
+    # guard: one batch = one record count; 300k and 600k are never mixed (labels already differ; this asserts it)
+    for b in {r['batch'] for r in runs}:
+        recs = {r.get('ycsb_load_records_ok') for r in runs if r['batch'] == b}
+        if len(recs) > 1: raise SystemExit(f'batch {b} mixes YCSB record counts {recs}: refusing to compute statistics')
     # statistics: per batch, per policy, per metric; only usable values
     stats = []
     metrics = ['waf_total', 'waf_A', 'waf_B', 'waf_C', 'ycsb_throughput']
