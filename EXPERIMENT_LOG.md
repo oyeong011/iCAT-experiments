@@ -14577,3 +14577,9 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
   - fullreset은 첫 15분 3.28–3.50이고, 그 뒤 2.81–2.83이다.
 - 해석: 방향은 "drift 감지 필요"와 "부분 재탐색이 전체 재탐색보다 빠르다"와 맞는다. n=1이라 유의성은 주장하지 않는다. 1차 지표로 C 단계 WAF와 시계열을 권한다.
 - 문서: `report/revision-20261123-gocom/e1_independent_check.md` §7.
+
+### 2026-11-24 09:50 고컴: 승컴 E1 v4 rep2 독립 검증 — 새 실험 없음
+
+- 대상: a2a273e0d `mixR-onlinev4-rep2-x3`. exit 0, db93f822, seed 20260912. 두 경로가 일치한다(0/18).
+- 결과: 전체 2.0567, C 단계 2.8470. C 단계 reset은 45.5–62.7 s에 4회다. YCSB는 13.1k ops/s다. 11월 v4 n=2는 2.0611 ± 0.0062다.
+- 문서: `e1_independent_check.md` §8.
