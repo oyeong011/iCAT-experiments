@@ -27,11 +27,13 @@ RUNS = {  # group: [(label, dir)], each group = one workload in one period
     ('arm 47', 'result/gc-20261010/mixY-fixed47-rep1'), ('arm 50', 'result/gc-20261010/mixY-arm50-rep1'), ('arm 37', 'result/gc-20261010/mixY-arm37-rep1')],
  'mixY-Nov (20 x 1800 s)': [('iCAT v4', 'result/smartgc-20261119/resume/mixY-onlinev4-rep1'), ('arm 47 (sg)', 'result/gc-20261010/mixY-sg-arm47-rep1')],
 }
-# 11-23 E1 (revision queue): every finished mixR x3 run under result/revision-20261123/mixR, labelled by policy and rep
+# E1 (revision queue): every passing mixR x3 run, labelled by policy and rep.
+# 11-24: result/revision-20261123/mixR is excluded (600k records -> SQLITE_FULL, YCSB failed 10-100% while exit=0).
+# Reruns live in result/revision-20261124/mixR; a run counts only with exit 0 AND the runner's YCSB check file.
 NAMES = {'onlinev4': 'iCAT v4', 'onlinev4nodrift': 'v4 nodrift', 'onlinev4fullreset': 'v4 fullreset', 'fixed47': 'arm 47'}
-for d in sorted((ROOT/'result/revision-20261123/mixR').glob('mixR-*-rep*-x3')):
+for d in sorted((ROOT/'result/revision-20261124/mixR').glob('mixR-*-rep*-x3')):
     m = re.match(r'mixR-(\w+)-rep(\d)-x3$', d.name)
-    if m and (d/'exit-code.txt').exists():
+    if m and (d/'ycsb-check.txt').exists() and (d/'exit-code.txt').exists() and (d/'exit-code.txt').read_text().strip() == '0':
         RUNS.setdefault('mixR-Nov E1 (x3)', []).append((f"{NAMES.get(m[1], m[1])} #{m[2]}", str(d.relative_to(ROOT))))
 iso = lambda s: datetime.fromisoformat(s.strip()).timestamp()
 

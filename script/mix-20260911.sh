@@ -40,7 +40,7 @@ case "$label" in
     t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
     mixA|mixB|mixG|mixH|mixJ|mixT) scale=1; RECORDS=600000; OPS=4000000;;
     mixP)  scale=1;  RECORDS=250000; OPS=4000000;;   # sqlite then oltp: 600k records + WAL left no room for the oltp fileset (ENOSPC on rep1)
-    mixR)  scale=1;  RECORDS=600000; OPS=14000000;;   # test4 -> sqlite-a -> test4, each phase ~24M host pages (sqlite-a run ~1.7 pages/op)
+    mixR)  scale=1;  RECORDS=300000; OPS=14000000;;   # 11-24: 600k -> 300k (600k DB+WAL ~0.94 GB > ~0.9 GB free beside the kept 6 GiB test.dat: SQLITE_FULL); test4 -> sqlite-a -> test4, each phase ~24M host pages (sqlite-a run ~1.7 pages/op)
     mixC|mixD|mixF|mixK|mixL|mixM|mixO|mixQ|mixS|mixU)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
     *) exit 2;;
 esac
@@ -95,6 +95,7 @@ finish() {
     fi
     printf '\n- Finished %s; %s %s exit=%s; evidence `%s`; cleanup attempted.\n' "$(date -Is)" "$label" "$policy" "$rc" "$dir" >> "$journal"
     [[ ! -f "$dir/summary.txt" ]] || sed 's/^/- /' "$dir/summary.txt" >> "$journal"
+    gzip -f "$dir"/ycsb-run*.txt "$dir"/ycsb-load.txt 2>/dev/null   # 11-24: also on failure (a failed run wrote 1.1 GB of errors)
     printf '%s\n' "$rc" > "$dir/exit-code.txt"
     echo "MIX $label $policy exit=$rc"
     exit "$rc"
@@ -112,10 +113,11 @@ loaded=1
 for _ in {1..50}; do for c in /sys/class/nvme/nvme*; do grep -qi CSL_Virt "$c/model" 2>/dev/null && nv=$(basename "$c"); done; [[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]] && break; sleep 0.2; done
 [[ -n "$nv" && -b /dev/${nv}n1 && -w "$control" ]]
 # counter time series every 30 s (all policies): lets fixed arms be compared with the learner over time, not just per phase
-( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; printf '%s memavail_mb=%s\n' "$(cat "$control" 2>/dev/null | head -1)" "$(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo)"; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
+( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; printf '%s memavail_mb=%s mnt_avail_mb=%s\n' "$(cat "$control" 2>/dev/null | head -1)" "$(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo)" "$(df --output=avail -BM "$root/mnt" 2>/dev/null | tail -1 | tr -dc 0-9)"; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
 grep -q CSL_Virt /sys/class/nvme/$nv/model
 cat /sys/class/nvme/$nv/model /sys/class/block/${nv}n1/size > "$dir/device.txt"
-sudo -n mkfs.ext4 /dev/${nv}n1 > "$dir/mkfs.txt" 2>&1
+mkfs_opts=(); [[ "$label" != mixR ]] || mkfs_opts=(-m 0)   # 11-24: 5% root reserve (383 MiB) was unusable by the oy-owned DB
+sudo -n mkfs.ext4 "${mkfs_opts[@]}" /dev/${nv}n1 > "$dir/mkfs.txt" 2>&1
 sudo -n mount -o nodiscard /dev/${nv}n1 "$root/mnt"
 sudo -n chown -R oy:oy "$root/mnt"
 # preparation (identical to measured-cat / online-mix)
@@ -129,9 +131,28 @@ before=$(sectors)
 printf 'start\n' > "$control"
 cat "$control" > "$dir/started.txt"
 # ---- phases. Slot A runs first, slot B second; which workload fills each slot depends on the label.
+space() { printf '%s %s mnt_avail_mb=%s\n' "$(date -Is)" "$1" "$(df --output=avail -BM "$root/mnt" | tail -1 | tr -dc 0-9)" >> "$dir/space.txt"; }
+ycsb_ok() { # ycsb_ok <log> <expected ops, 0 = time-based>: 11-24, YCSB exits 0 even when every request fails
+    local f=$1 want=$2 bad ok tot
+    bad=$(grep -cE 'SQLITE_|Error in processing|Return=(ERROR|NOT_FOUND|UNEXPECTED_STATE)|-FAILED\]' "$f" || true)
+    ok=$(awk -F', ' '/^\[(READ|UPDATE|INSERT|SCAN|READ-MODIFY-WRITE|DELETE)\], Return=OK, /{s+=$3} END{print s+0}' "$f")
+    tot=$(awk -F', ' '/^\[(READ|UPDATE|INSERT|SCAN|READ-MODIFY-WRITE|DELETE)\], Operations, /{s+=$3} END{print s+0}' "$f")
+    printf '%s bad_lines=%s ops=%s ok=%s expected=%s\n' "${f##*/}" "$bad" "$tot" "$ok" "$want" >> "$dir/ycsb-check.txt"
+    [[ "$bad" == 0 && "$ok" == "$tot" && "$tot" -gt 0 ]] && { [[ "$want" == 0 ]] || [[ "$tot" == "$want" ]]; }
+}
+ycsb_guard() { # ycsb_guard <log>: drop caches every 4 s (as before) + kill YCSB at the first SQLite error instead of logging errors for hours
+    local f=$1 off=0 n=0 sz c
+    while [[ -e "$dir/dc.flag" ]]; do
+        sleep 4; echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; n=$((n+1)); ((n % 4 == 0)) || continue
+        sz=$(stat -c %s "$f" 2>/dev/null || echo 0); ((sz > off)) || continue
+        c=$(tail -c +$((off+1)) "$f" | head -c $((sz-off)) | grep -cE 'SQLITE_|Error in processing' || true)
+        if ((c > 0)); then printf '%s %s errors seen; YCSB killed\n' "$(date -Is)" "${f##*/}" >> "$dir/ycsb-abort.txt"; pkill -f "db.url=jdbc:sqlite:$db" || true; return 0; fi
+        off=$sz
+    done
+}
 phase_fio() { # phase_fio <slot> <fio job file>
     local slot=$1 job=$2
-    kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    space "phase=$slot start"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
     cat "$control" > "$dir/phase-$slot-start.txt"
     fio "$root/workloads/$job" --output-format=json --output="$dir/phase-$slot.json"
     sync -f "$FIO_TARGET"
@@ -141,6 +162,9 @@ phase_fio() { # phase_fio <slot> <fio job file>
 }
 phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHub sqlite.sh: WAL, batch 1000, drop_caches 4s during run)
     local slot=$1 wl=${2:-a} load=${3:-1}
+    space "phase=$slot start"
+    # 11-24: need ~2x the measured DB size (600k records -> 843 MB DB + 95 MB WAL, i.e. ~1.6 KB/record) before loading
+    ((load == 0)) || (( $(df --output=avail -BK "$root/mnt" | tail -1 | tr -dc 0-9) >= RECORDS * 3 )) || { echo "phase $slot: not enough space for $RECORDS records" >&2; false; }
     cat "$control" > "$dir/phase-$slot-start.txt"
     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
     ((load)) && sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
@@ -149,15 +173,15 @@ phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHu
             -p db.driver=org.sqlite.JDBC -p db.url="jdbc:sqlite:$db" -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false); }
     if ((load)); then
         kmsg phase=$slot LOAD; yc load > "$dir/ycsb-load.txt" 2>&1
-        grep -q '^\[INSERT\], Return=OK, ' "$dir/ycsb-load.txt"
-        sync; cat "$control" > "$dir/phase-$slot-loaded.txt"
+        ycsb_ok "$dir/ycsb-load.txt" "$RECORDS"
+        sync; cat "$control" > "$dir/phase-$slot-loaded.txt"; space "phase=$slot loaded"
     fi
     touch "$dir/dc.flag"
-    ( exec 9>&-; while [[ -e "$dir/dc.flag" ]]; do sleep 4; echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; done ) & dc=$!
+    : > "$dir/ycsb-run-$slot.txt"; ( exec 9>&-; ycsb_guard "$dir/ycsb-run-$slot.txt" ) & dc=$!
     kmsg phase=$slot RUN; yc run > "$dir/ycsb-run-$slot.txt" 2>&1; cp "$dir/ycsb-run-$slot.txt" "$dir/ycsb-run.txt"
     rm -f "$dir/dc.flag"; wait "$dc"; dc=
-    grep -q '^\[\(UPDATE\|READ\)\], Return=OK, ' "$dir/ycsb-run-$slot.txt"
-    sync; cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
+    ycsb_ok "$dir/ycsb-run-$slot.txt" "$([[ -n "${YCSB_SECS:-}" ]] && echo 0 || echo "$OPS")"
+    space "phase=$slot end"; sync; cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
     kmsg phase=$slot END
 }
 phase_filebench() { # phase_filebench <slot> <profile> [nfiles] [filesize]: Filebench profile from workloads/filebench, own subdir, 300 s
@@ -222,10 +246,10 @@ phase_concurrent() { # phase_concurrent <slot>: fio test4 (half payload) in back
      CREATE TABLE usertable (YCSB_KEY VARCHAR(255) PRIMARY KEY, FIELD0 TEXT, FIELD1 TEXT, FIELD2 TEXT, FIELD3 TEXT, FIELD4 TEXT, FIELD5 TEXT, FIELD6 TEXT, FIELD7 TEXT, FIELD8 TEXT, FIELD9 TEXT);"
     yc() { (cd "$ycsb" && JAVA_TOOL_OPTIONS="-Xshare:off" bash bin/ycsb.sh "$1" jdbc -s -P "$root/workloads/sqlite/workloada" -p recordcount="$RECORDS" -p operationcount="$OPS" -threads 1 \
             -p db.driver=org.sqlite.JDBC -p db.url="jdbc:sqlite:$db" -p db.user= -p db.passwd= -p db.batchsize=1000 -p jdbc.autocommit=false); }
-    yc load > "$dir/ycsb-load.txt" 2>&1; grep -q '^\[INSERT\], Return=OK, ' "$dir/ycsb-load.txt"
-    touch "$dir/dc.flag"; ( exec 9>&-; while [[ -e "$dir/dc.flag" ]]; do sleep 4; echo 3 | sudo -n tee /proc/sys/vm/drop_caches >/dev/null; done ) & dc=$!
+    yc load > "$dir/ycsb-load.txt" 2>&1; ycsb_ok "$dir/ycsb-load.txt" "$RECORDS"
+    touch "$dir/dc.flag"; : > "$dir/ycsb-run.txt"; ( exec 9>&-; ycsb_guard "$dir/ycsb-run.txt" ) & dc=$!
     yc run > "$dir/ycsb-run.txt" 2>&1; rm -f "$dir/dc.flag"; wait "$dc"; dc=
-    grep -q '^\[UPDATE\], Return=OK, ' "$dir/ycsb-run.txt"
+    ycsb_ok "$dir/ycsb-run.txt" "$OPS"
     wait "$fpid"; sync -f "$FIO_TARGET"
     jq -e 'all(.jobs[]; .error == 0 and .write.io_bytes > 0)' "$dir/phase-$slot.json" >/dev/null
     cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"
@@ -288,6 +312,7 @@ esac
 stop_before=$(sectors); printf 'stop\n' > "$control"; after=$(sectors)
 [[ "$stop_before" == "$after" ]]
 cat "$control" > "$dir/stopped.txt"
+if [[ -f "$db" ]]; then space "stopped"; sqlite3 "$db" 'PRAGMA integrity_check;' > "$dir/sqlite-integrity.txt" 2>&1; [[ "$(cat "$dir/sqlite-integrity.txt")" == ok ]]; fi   # 11-24
 host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pages); bytes=$(field "$dir/stopped.txt" host_bytes)
 [[ "$bytes" == "$(((after-before)*512))" && "$gc" -gt 0 ]]   # buffered sqlite writes: host_pages*4096 == bytes is NOT enforced
 {
@@ -299,4 +324,4 @@ host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pa
     printf 'ycsb-load %s\nycsb-run %s\n' "$(grep -m1 'Throughput' "$dir/ycsb-load.txt")" "$(grep -m1 'Throughput' "$dir/ycsb-run.txt")"
 } > "$dir/summary.txt"
 cat "$dir/summary.txt"
-gzip -f "$dir"/ycsb-run*.txt "$dir"/ycsb-load.txt 2>/dev/null || true   # YCSB per-second status is ~180 MB per 4M ops; GitHub caps files at 100 MB
+# YCSB per-second status is ~180 MB per 4M ops; GitHub caps files at 100 MB
