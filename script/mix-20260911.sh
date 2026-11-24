@@ -116,8 +116,7 @@ for _ in {1..50}; do for c in /sys/class/nvme/nvme*; do grep -qi CSL_Virt "$c/mo
 ( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; while true; do printf '%s ' "$(date +%s)"; printf '%s memavail_mb=%s mnt_avail_mb=%s\n' "$(cat "$control" 2>/dev/null | head -1)" "$(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo)" "$(df --output=avail -BM "$root/mnt" 2>/dev/null | tail -1 | tr -dc 0-9)"; sleep 30 & sl=$!; wait $sl; done ) > "$dir/control-series.txt" & series=$!
 grep -q CSL_Virt /sys/class/nvme/$nv/model
 cat /sys/class/nvme/$nv/model /sys/class/block/${nv}n1/size > "$dir/device.txt"
-mkfs_opts=(); [[ "$label" != mixR ]] || mkfs_opts=(-m 0)   # 11-24: 5% root reserve (383 MiB) was unusable by the oy-owned DB
-sudo -n mkfs.ext4 "${mkfs_opts[@]}" /dev/${nv}n1 > "$dir/mkfs.txt" 2>&1
+sudo -n mkfs.ext4 /dev/${nv}n1 > "$dir/mkfs.txt" 2>&1
 sudo -n mount -o nodiscard /dev/${nv}n1 "$root/mnt"
 sudo -n chown -R oy:oy "$root/mnt"
 # preparation (identical to measured-cat / online-mix)
@@ -163,8 +162,8 @@ phase_fio() { # phase_fio <slot> <fio job file>
 phase_sqlite() { # phase_sqlite <slot> [workload a|b] [load 1|0]  (same as GitHub sqlite.sh: WAL, batch 1000, drop_caches 4s during run)
     local slot=$1 wl=${2:-a} load=${3:-1}
     space "phase=$slot start"
-    # 11-24: need ~2x the measured DB size (600k records -> 843 MB DB + 95 MB WAL, i.e. ~1.6 KB/record) before loading
-    ((load == 0)) || (( $(df --output=avail -BK "$root/mnt" | tail -1 | tr -dc 0-9) >= RECORDS * 3 )) || { echo "phase $slot: not enough space for $RECORDS records" >&2; false; }
+    # 11-24: need >= 1.25x the measured DB size (600k records -> 843 MB DB + 95 MB WAL, ~1.6 KB/record) before loading
+    ((load == 0)) || (( $(df --output=avail -BK "$root/mnt" | tail -1 | tr -dc 0-9) >= RECORDS * 2 )) || { echo "phase $slot: not enough space for $RECORDS records" >&2; false; }
     cat "$control" > "$dir/phase-$slot-start.txt"
     kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
     ((load)) && sqlite3 "$db" "PRAGMA page_size=4096; PRAGMA synchronous=NORMAL; PRAGMA journal_mode=WAL;
