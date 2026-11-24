@@ -65,7 +65,7 @@
    - 오염 라벨이나 무효 run 이름이 값과 함께 있으면 **HIT**이고, 종료 코드는 1이다.
    - 무효 표시가 있는 줄, 값 없는 라벨 줄, 유효 단계 행, 검토를 마친 허용 줄(`output_check_allow.txt`)은 통과시킨다.
    - **PDF를 만들기 전에 이 검사가 PASS여야 한다.**
-3. **현재 상태 (11-24):** FAIL, HIT 1,434건.
+3. **현재 상태 (11-24 14:30):** FAIL, HIT 1,382건 (값 없는 라벨 줄을 label-only로 분류한 뒤 기준).
    - 논문 초안 8건과 같은 내용의 `PAPER_EXPERIMENTS_ONLY.md` 8건
    - RESULTS_ALL 22건, V4_VS_CAT 7건 등
    - 커밋된 fig14와 fig7 데이터 CSV

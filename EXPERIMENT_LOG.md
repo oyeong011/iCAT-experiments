@@ -14653,3 +14653,5 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 계산값 (그림 7, 검사 적용): v4 대 CAT-Robust는 유효 8종 중 3종 우수(−1.1 ~ −5.3 %), 5종 열세(+3.2 ~ +4.9 %)다. 원고의 "13종 중 4종 우수"는 무효 5종을 포함한 값이다.
 - SQLite 단독 스윕(`sweep-20260915/rank-sqlite-a.txt`)은 원시 YCSB 로그가 저장소에 없어 검증할 수 없다.
 - 문서: `report/final-e1-validation/paper_data_validity_matrix.md`, README §7.
+
+- 정정 (11-24 14:35): 위 항목의 "FAIL(HIT 1,434)"는 label-only(값 없는 라벨 줄) 분류를 넣기 전 값이다. 최종 검사기 기준은 HIT 1,382다. 원문은 그대로 둔다.
