@@ -1,0 +1,12 @@
+exit=0
+ycsb-load.txt bad_lines=0 ops=300000 ok=300000 expected=300000
+ycsb-run-B.txt bad_lines=0 ops=42000000 ok=42000000 expected=42000000
+ok
+sqlite_full=0
+min_mnt_avail_mb=99
+2026-11-24T11:26:43+09:00 phase=A start mnt_avail_mb=895
+2026-11-24T11:56:44+09:00 phase=B start mnt_avail_mb=895
+2026-11-24T11:56:56+09:00 phase=B loaded mnt_avail_mb=493
+2026-11-24T12:10:10+09:00 phase=B end mnt_avail_mb=493
+2026-11-24T12:10:13+09:00 phase=C start mnt_avail_mb=493
+2026-11-24T12:40:16+09:00 stopped mnt_avail_mb=493

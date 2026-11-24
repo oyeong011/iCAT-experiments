@@ -1,0 +1,36 @@
+exit                         0
+module_unloaded              yes
+umounted                     yes
+ycsb-load.txt bad_lines=0 ops=600000 ok=600000 expected=600000
+ycsb-run-B.txt bad_lines=0 ops=42000000 ok=42000000 expected=42000000
+sqlite_full                  0
+ycsb_abort                   none
+integrity                    ok
+phase_A                      done
+phase_B                      done
+phase_R                      done
+phase_C                      done
+fio_errors                   0
+kernel_errors                0
+ycsb_log_bytes               12919
+min_mnt_avail_mb             895
+2026-11-24T12:45:05+09:00 phase=A start mnt_avail_mb=895 discards=0
+2026-11-24T13:15:06+09:00 test.dat removed mnt_avail_mb=7039 discards=0
+2026-11-24T13:15:06+09:00 phase=B start mnt_avail_mb=7039 discards=0
+2026-11-24T13:15:32+09:00 phase=B loaded mnt_avail_mb=6235 discards=0
+2026-11-24T13:47:07+09:00 phase=B end mnt_avail_mb=6235 discards=0
+2026-11-24T13:47:26+09:00 db removed mnt_avail_mb=7039 discards=0
+2026-11-24T13:47:26+09:00 phase=R start mnt_avail_mb=7039 discards=0
+2026-11-24T13:47:37+09:00 phase=R end mnt_avail_mb=895 discards=0
+2026-11-24T13:47:37+09:00 phase=C start mnt_avail_mb=895 discards=0
+size=6442450944 blocks512=12582920
+size=6442450944 blocks512=12582920
+total host_bytes=655788126208 host_pages=160104523 gc_pages=338329029 WAF=3.113176
+phaseA(test4) host_pages=72001984 gc_pages=65180336 WAF=1.905257
+phaseB(sqlite-a) host_pages=14527415 gc_pages=2914877 WAF=1.200647
+phaseR(recreate) host_pages=1572984 gc_pages=2283974 WAF=2.452001
+phaseC(test4) host_pages=72001990 gc_pages=267949766 WAF=4.721422
+phaseB-load host_pages=1398391 gc_pages=564319 WAF=1.403549
+phaseB-run host_pages=13129024 gc_pages=2350558 WAF=1.179035
+ycsb-load [OVERALL], Throughput(ops/sec), 23535.872592476368
+ycsb-run [OVERALL], Throughput(ops/sec), 22204.25909409795
