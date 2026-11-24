@@ -1,0 +1,5 @@
+11-24: every mixR x3 run in this directory is INVALID for phase B, phase C and total WAF.
+Cause: 600k-record SQLite DB + WAL (~0.94 GB) did not fit next to the kept 6 GiB test.dat (~0.9 GB free for user oy,
+ext4 5% root reserve) -> SQLITE_FULL early in phase B; READ failed ~99.8% (v4, fullreset) or UPDATE ~10% (nodrift),
+runner still wrote exit=0. Phase A (before YCSB) is unaffected. fullreset rep2 was stopped by hand (exit=143).
+Reruns with the fixed runner: result/revision-20261124/mixR. Files here are kept unmodified as evidence.
