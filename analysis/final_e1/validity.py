@@ -68,6 +68,13 @@ def _summary_lines(p):
 
 
 @lru_cache(maxsize=None)
+def sqlite_full(path):
+    p = Path(path)
+    cmd = ['zgrep', '-a', '-q', 'SQLITE_FULL', str(p)] if p.suffix == '.gz' else ['grep', '-a', '-q', 'SQLITE_FULL', str(p)]
+    return subprocess.run(cmd).returncode == 0
+
+
+@lru_cache(maxsize=None)
 def ycsb_status(path):
     """(fail_fraction_worst_op, detail dict, throughput, complete) for one YCSB output file."""
     txt = _summary_lines(Path(path))
@@ -120,9 +127,11 @@ def _assess(run_dir):
             fs = _ycsb_files_for_phase(d, ph) or [f for f in d.glob('ycsb-*.txt*')]
             bad = [(f.name, ycsb_status(str(f))) for f in fs]
             bad = [(n, s) for n, s in bad if s[0] > FAIL_LIMIT or not s[3]]
-            if bad:
+            full = [f.name for f in fs + list(d.glob('*.console.txt')) if sqlite_full(str(f))]   # 11-24: any SQLITE_FULL invalidates
+            if bad or full:
                 poisoned = True
                 reasons += [f'YCSB {n}: worst op failed {100 * s[0]:.2f}%' + ('' if s[3] else ' (no summary)') for n, s in bad]
+                reasons += [f'SQLITE_FULL in {n}' for n in full]
         if not poisoned and ph not in blocked:
             usable.add(ph)
         if ph in blocked:

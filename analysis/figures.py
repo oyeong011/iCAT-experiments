@@ -109,7 +109,7 @@ for i, (n, v) in enumerate(items[::-1]):
     ax.text(v + (0.25 if v >= 0 else -0.25), i, f'{v:+.1f}%  (n={NREP[n]})', va='center', ha='left' if v >= 0 else 'right', fontsize=8, color=INK)
 ax.axvline(0, color=INK2, lw=1); ax.set_yticks(range(len(items))); ax.set_yticklabels([n for n, _ in items[::-1]], fontsize=9)
 ax.set_xlim(-10, 17); ax.grid(axis='y', visible=False); ax.set_xlabel('CAT-Robust 대비 iCAT-v4의 WAF 변화율 (%; 음수 = iCAT-v4 우수)')
-ax.set_title('그림 4. 전환 워크로드별 CAT-Robust 대비 iCAT-v4의 WAF 변화율: 13종 중 4종에서 우수\n3배 길이(30~90분) · 명시 계측 · n = iCAT-v4 반복 횟수, CAT-Robust 1회', loc='left', fontsize=11, color=INK)
+ax.set_title(f'그림 4. 전환 워크로드별 CAT-Robust 대비 iCAT-v4의 WAF 변화율: 유효 {len(d4)}종 중 {sum(v < 0 for v in d4.values())}종에서 우수\n3배 길이(30~90분) · 명시 계측 · n = iCAT-v4 반복 횟수, CAT-Robust 1회', loc='left', fontsize=11, color=INK)
 save(fig, 'fig4_mixes_v4_vs_robust')
 
 # Fig 5 — 3-phase mix (fast -> SQLite -> fast), per phase
@@ -182,8 +182,14 @@ for j, (vals, col, name) in enumerate([(mean_, '#52514e', '평균 WAF 증가율'
     for x_, v_ in zip(xs, vals): ax.text(x_, v_ + 0.4, f'{v_:.1f}', ha='center', fontsize=7, color=INK)
 ax.set_xticks(range(len(pols))); ax.set_xticklabels([lab[p_] for p_ in pols], fontsize=9); ax.grid(axis='x', visible=False)
 ax.set_ylabel('최상위 고정 조합 대비 WAF 증가율 (%, 낮을수록 우수)'); ax.legend(frameon=False, fontsize=8, loc='upper left')
-ax.set_title(f'그림 8. 전환 워크로드에서의 견고성: 평균은 CAT-Best, 최댓값은 iCAT-v4가 최소\n전환 워크로드 {len(common)}종 · 3배 길이 · 최상위는 측정한 고정 조합(2~6개) 기준', loc='left', fontsize=10.5, color=INK)
+_mn = lab[pols[mean_.index(min(mean_))]].split(chr(10))[0]; _mx = lab[pols[worst.index(min(worst))]].split(chr(10))[0]   # titles computed from data (11-24)
+ax.set_title(f'그림 8. 전환 워크로드에서의 견고성: 평균 최소 {_mn}, 최댓값 최소 {_mx}\n전환 워크로드 {len(common)}종 · 3배 길이 · 최상위는 측정한 고정 조합({min(len(LOSS[k]) - 1 for k in common)}~{max(len(LOSS[k]) - 1 for k in common)}개) 기준', loc='left', fontsize=10.5, color=INK)
 save(fig, 'fig8_robustness')
+import json as _json   # 11-24: numbers behind Fig 4/7/8 for the manuscript text (same run, same validity gate)
+(OUT / 'paper_fig_numbers.json').write_text(_json.dumps({'fig4_v4_vs_robust_pct': d4, 'fig4_n_v4': NREP,
+    'fig7_loss_pct': {NAME[k]: v for k, v in LOSS.items()},
+    'fig8_common': [NAME[k] for k in common], 'fig8_mean_pct': dict(zip(pols, mean_)), 'fig8_max_pct': dict(zip(pols, worst))},
+    ensure_ascii=False, indent=1))
 
 # ---------------- 2026-10-01: learning shown as rank among the 60 fixed arms ----------------
 # Fig 9 — cumulative WAF over time expressed as a rank among fixed arms measured with the SAME (explicit) method.

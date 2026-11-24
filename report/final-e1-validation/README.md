@@ -135,3 +135,15 @@
   - 고컴 mixFYF 25 run: YCSB 실패 0 %, 효과 수치 재현.
   - SmartGC 비교 16 run: YCSB 없음, 모두 완료. 원래 SmartGC 실행은 호스트 디스크가 가득 차서 실패했다.
 - E1 재실험의 300k와 600k 분리: 배치 라벨에 실제 적재 레코드 수를 넣었다. 한 배치에 다른 레코드 수가 섞이면 통계를 내지 않고 중단한다.
+
+## 8. 최종 산출물 색인 (11-24 오후 2차)
+
+| 요구 | 파일 |
+|---|---|
+| 1. 수정된 논문용 그림 | `figs/fig4_mixes_v4_vs_robust.*`(그림 7), `figs/fig7_mix_loss_by_workload.*`(그림 8), `figs/fig8_robustness.*`(그림 9), 수치는 `figs/paper_fig_numbers.json`. 나머지 그림은 같은 실행에서 재생성했고 값은 원래와 같다. `fig5_three_phase_mix`는 "[논문 사용 불가]" |
+| 2. 수정된 논문용 표 | `tables/table6_valid.{md,csv}`, `tables/table8_status.md`(사용 금지), `tables/RESULTS_ALL.gated.md`(표 A1 원천), `tables/V4_VS_CAT.gated.md`, `tables/sec41_order_check.csv` |
+| 3. 원고 수정 목록 | `manuscript_revision_list.md` (적용 21건, 남은 저자 판단 6건) |
+| 4. 오염 데이터 잔존 검사 | `residual_check.md`. 논문 범위 PASS(0), 저장소 전체 FAIL(1,376, 모두 논문 밖) |
+| 5. 유효 / 사용 불가 주장 | `claims_and_pending.md` §1·§2 |
+| 6. E1 미완료 실험 | `claims_and_pending.md` §3 |
+| 생성 스크립트 | `analysis/final_e1/paper_tables.py`, `check_outputs.py`(`--paper`), `classify_hits.py`. 그림은 `analysis/figures.py`(검사 적용, 제목을 데이터에서 계산) |

@@ -1,20 +1,18 @@
 file,where,status,match,text
-PAPER_KCI_DRAFT.md,125,label-only,label:FIO-Fast → YCSB-A,"| FIO-Fast → YCSB-A | FIO-Fast 10분 분량 → YCSB-A(적재 + 400만 연산) | 약 16분 | 1, 3, 6배 |"
-PAPER_KCI_DRAFT.md,126,label-only,label:YCSB-A → FIO-Fast,"| YCSB-A → FIO-Fast | 역순 | 약 25분 | 1, 3배 |"
-PAPER_KCI_DRAFT.md,133,HIT,label:YCSB-A → YCSB-B,"| YCSB-A → YCSB-B | 같은 데이터베이스에서 갱신 50% → 5% | 약 10분 | 1, 3배 |"
-PAPER_KCI_DRAFT.md,134,label-only,label:FIO-Slow → FIO-Fast → YCSB-A,"| FIO-Slow → FIO-Fast → YCSB-A | 3단계 | 약 25분 | 1, 3배 |"
-PAPER_KCI_DRAFT.md,139,label-only,label:FIO-Fast → YCSB-A → FIO-Fast,"| 3단계 균등 전환 | FIO-Fast → YCSB-A → FIO-Fast, 단계별 호스트 쓰기량 동일(각 약 7,200만 페이지) | – | 3배 (약 2.3시간) |"
-PAPER_KCI_DRAFT.md,251,HIT,label:YCSB-A → YCSB-B,| YCSB-A → YCSB-B | 1.366 (2) | 1.414 | **1.208** | 1.390 | 1.515 | 1.524 | 1.470 | 2/7 |
-PAPER_KCI_DRAFT.md,260,HIT,label:YCSB-A → YCSB-B,"**견고성.** iCAT-v4, CAT-Best, CAT-Robust를 모두 같은 길이로 측정한 전환 워크로드 6종에서 측정 고정 조합 중 최상위 대비 WAF 증가율의 평균은 CAT-Best 3.0%, iCAT-v4 6.5%, CAT-Robust 7.2%였고, 최댓값은 iCAT-v4 15.2%(FIO-Fast → Varmail), CAT-Best 17.0%(YCSB-A → YCSB-B), C"
-PAPER_KCI_DRAFT.md,268,label-only,label:FIO-Fast → YCSB-A → FIO-Fast,**3단계 균등 전환.** 단계별 최상위 조합이 다른 워크로드에서 학습기의 적응을 보기 위해 FIO-Fast → YCSB-A → FIO-Fast를 단계별 호스트 쓰기량이 같도록 구성하였다.
-PAPER_EXPERIMENTS_ONLY.md,38,label-only,label:FIO-Fast → YCSB-A,"| FIO-Fast → YCSB-A | FIO-Fast 10분 분량 → YCSB-A(적재 + 400만 연산) | 약 16분 | 1, 3, 6배 |"
-PAPER_EXPERIMENTS_ONLY.md,39,label-only,label:YCSB-A → FIO-Fast,"| YCSB-A → FIO-Fast | 역순 | 약 25분 | 1, 3배 |"
-PAPER_EXPERIMENTS_ONLY.md,46,HIT,label:YCSB-A → YCSB-B,"| YCSB-A → YCSB-B | 같은 데이터베이스에서 갱신 50% → 5% | 약 10분 | 1, 3배 |"
-PAPER_EXPERIMENTS_ONLY.md,47,label-only,label:FIO-Slow → FIO-Fast → YCSB-A,"| FIO-Slow → FIO-Fast → YCSB-A | 3단계 | 약 25분 | 1, 3배 |"
-PAPER_EXPERIMENTS_ONLY.md,52,label-only,label:FIO-Fast → YCSB-A → FIO-Fast,"| 3단계 균등 전환 | FIO-Fast → YCSB-A → FIO-Fast, 단계별 호스트 쓰기량 동일(각 약 7,200만 페이지) | – | 3배 (약 2.3시간) |"
-PAPER_EXPERIMENTS_ONLY.md,141,HIT,label:YCSB-A → YCSB-B,| YCSB-A → YCSB-B | 1.366 (2) | 1.414 | **1.208** | 1.390 | 1.515 | 1.524 | 1.470 | 2/7 |
-PAPER_EXPERIMENTS_ONLY.md,150,HIT,label:YCSB-A → YCSB-B,"**견고성.** iCAT-v4, CAT-Best, CAT-Robust를 모두 같은 길이로 측정한 전환 워크로드 6종에서 측정 고정 조합 중 최상위 대비 WAF 증가율의 평균은 CAT-Best 3.0%, iCAT-v4 6.5%, CAT-Robust 7.2%였고, 최댓값은 iCAT-v4 15.2%(FIO-Fast → Varmail), CAT-Best 17.0%(YCSB-A → YCSB-B), C"
-PAPER_EXPERIMENTS_ONLY.md,158,label-only,label:FIO-Fast → YCSB-A → FIO-Fast,**3단계 균등 전환.** 단계별 최상위 조합이 다른 워크로드에서 학습기의 적응을 보기 위해 FIO-Fast → YCSB-A → FIO-Fast를 단계별 호스트 쓰기량이 같도록 구성하였다.
+PAPER_KCI_DRAFT.md,126,flagged-ok,label:FIO-Fast → YCSB-A,"| FIO-Fast → YCSB-A | FIO-Fast 10분 분량 → YCSB-A(적재 + 400만 연산) | 약 16분 | 1, 3, 6배 (결과 무효: YCSB 오류, 제외) |"
+PAPER_KCI_DRAFT.md,127,flagged-ok,label:YCSB-A → FIO-Fast,"| YCSB-A → FIO-Fast | 역순 | 약 25분 | 1, 3배 (결과 무효: YCSB 오류, 제외) |"
+PAPER_KCI_DRAFT.md,134,flagged-ok,label:YCSB-A → YCSB-B,"| YCSB-A → YCSB-B | 같은 데이터베이스에서 갱신 50% → 5% | 약 10분 | 1, 3배 (결과 무효: YCSB 오류, 제외) |"
+PAPER_KCI_DRAFT.md,135,flagged-ok,label:FIO-Slow → FIO-Fast → YCSB-A,"| FIO-Slow → FIO-Fast → YCSB-A | 3단계 | 약 25분 | 1, 3배 (결과 무효: YCSB 오류, 제외) |"
+PAPER_KCI_DRAFT.md,140,flagged-ok,label:FIO-Fast → YCSB-A → FIO-Fast,"| 3단계 균등 전환 | FIO-Fast → YCSB-A → FIO-Fast, 단계별 호스트 쓰기량 동일(각 약 7,200만 페이지) | – | 3배 (약 2.3시간; 단계 2·3 결과 무효, 재측정 중) |"
+PAPER_KCI_DRAFT.md,268,flagged-ok,label:FIO-Fast → YCSB-A → FIO-Fast,**3단계 균등 전환.** 【사용 금지 (2026-11-24)】 FIO-Fast → YCSB-A → FIO-Fast를 단계별 호스트 쓰기량이 같도록 구성한 실험은 YCSB 단계에서 데이터베이스 공간 부족(SQLITE_FULL)으로 연산이 실패하여 단계 2·3과 전체 WAF가 무효로 판정되었다(8장 한계 7). 표 8과 그림 10은 YCSB 레코드 수를 줄인 재측정에서 정책별 유효 3회가 확보
+PAPER_KCI_DRAFT.md,288,flagged-ok,label:FIO-Fast → YCSB-A,"7. YCSB를 포함한 전환 워크로드 일부(FIO-Fast → YCSB-A, YCSB-A → FIO-Fast, YCSB-A → YCSB-B, FIO-Slow → FIO-Fast → YCSB-A, 3단계 균등 전환)에서는 앞 단계 파일이 남아 데이터베이스 공간이 부족해(SQLITE_FULL) YCSB 연산의 약 10% 또는 99.8%가 실패했는데도 실행이 정상 종료로 기록되었다. 원시 로그에서"
+PAPER_EXPERIMENTS_ONLY.md,39,flagged-ok,label:FIO-Fast → YCSB-A,"| FIO-Fast → YCSB-A | FIO-Fast 10분 분량 → YCSB-A(적재 + 400만 연산) | 약 16분 | 1, 3, 6배 (결과 무효: YCSB 오류, 제외) |"
+PAPER_EXPERIMENTS_ONLY.md,40,flagged-ok,label:YCSB-A → FIO-Fast,"| YCSB-A → FIO-Fast | 역순 | 약 25분 | 1, 3배 (결과 무효: YCSB 오류, 제외) |"
+PAPER_EXPERIMENTS_ONLY.md,47,flagged-ok,label:YCSB-A → YCSB-B,"| YCSB-A → YCSB-B | 같은 데이터베이스에서 갱신 50% → 5% | 약 10분 | 1, 3배 (결과 무효: YCSB 오류, 제외) |"
+PAPER_EXPERIMENTS_ONLY.md,48,flagged-ok,label:FIO-Slow → FIO-Fast → YCSB-A,"| FIO-Slow → FIO-Fast → YCSB-A | 3단계 | 약 25분 | 1, 3배 (결과 무효: YCSB 오류, 제외) |"
+PAPER_EXPERIMENTS_ONLY.md,53,flagged-ok,label:FIO-Fast → YCSB-A → FIO-Fast,"| 3단계 균등 전환 | FIO-Fast → YCSB-A → FIO-Fast, 단계별 호스트 쓰기량 동일(각 약 7,200만 페이지) | – | 3배 (약 2.3시간; 단계 2·3 결과 무효, 재측정 중) |"
+PAPER_EXPERIMENTS_ONLY.md,158,flagged-ok,label:FIO-Fast → YCSB-A → FIO-Fast,**3단계 균등 전환.** 【사용 금지 (2026-11-24)】 FIO-Fast → YCSB-A → FIO-Fast를 단계별 호스트 쓰기량이 같도록 구성한 실험은 YCSB 단계에서 데이터베이스 공간 부족(SQLITE_FULL)으로 연산이 실패하여 단계 2·3과 전체 WAF가 무효로 판정되었다(8장 한계 7). 표 8과 그림 10은 YCSB 레코드 수를 줄인 재측정에서 정책별 유효 3회가 확보
+PAPER_EXPERIMENTS_ONLY.md,168,flagged-ok,label:FIO-Fast → YCSB-A,"7. YCSB를 포함한 전환 워크로드 일부(FIO-Fast → YCSB-A, YCSB-A → FIO-Fast, YCSB-A → YCSB-B, FIO-Slow → FIO-Fast → YCSB-A, 3단계 균등 전환)에서는 앞 단계 파일이 남아 데이터베이스 공간이 부족해(SQLITE_FULL) YCSB 연산의 약 10% 또는 99.8%가 실패했는데도 실행이 정상 종료로 기록되었다. 원시 로그에서"
 RESULTS_ALL.md,34,label-only,label:빠른 3영역 → SQLite,| 정책 | 빠른 3영역 단일 | 빠른 3영역 → SQLite | 느린 → 빠른 3영역 | SQLite 단일 |
 RESULTS_ALL.md,53,HIT,label:빠른 3영역 → SQLite,| 빠른 3영역 → SQLite | 2.413 (3) | 2.427 (3) | 1.905 (3) | 1.710 (3) | 1.730 (3) | 2.119 (3) | 1.899 |
 RESULTS_ALL.md,54,HIT,label:SQLite → 빠른 3영역,| SQLite → 빠른 3영역 | 3.614 (3) | 3.630 (3) | 3.199 (3) | 2.454 (3) | 2.616 (3) | 3.166 (3) | 3.016 |
@@ -2138,3 +2136,35 @@ figs/data/fig6_workload_waf.xlsx,xl/charts/chart3.xml#12,label-only,label:YCSB-A
 figs/data/fig6_workload_waf.xlsx,xl/charts/chart3.xml#13,label-only,label:YCSB-A→YCSB-B,'YCSB-A→YCSB-B'!$L$2:$L$3
 result/final-20261123/report.md,287,allowed,label:YCSB-A → FIO-Fast,- YCSB-A → FIO-Fast 전환에서 V4의 자기 기준 회복 시간은 636 / 996 / 786 s였다.
 result/final-20261123/report.md,290,allowed,label:YCSB-A → FIO-Fast,"- V4는 YCSB-A → FIO-Fast 전환 뒤 3회 모두 drift reset을 했다. 첫 reset은 전환 후 61.7–65.5 s였다. FIO-Fast → YCSB-A 전환에서는 첫 reset이 850–1,868 s로 늦었다 (`workload_transition.csv`)."
+report/final-e1-validation/tables/RESULTS_ALL.gated.md,34,label-only,label:빠른 3영역 → SQLite,| 정책 | 빠른 3영역 단일 | 빠른 3영역 → SQLite | 느린 → 빠른 3영역 | SQLite 단일 |
+report/final-e1-validation/tables/RESULTS_ALL.gated.md,53,label-only,label:빠른 3영역 → SQLite,| 빠른 3영역 → SQLite | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/RESULTS_ALL.gated.md,54,label-only,label:SQLite → 빠른 3영역,| SQLite → 빠른 3영역 | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/RESULTS_ALL.gated.md,58,label-only,label:빠른 3영역 + SQLite 동시,| 빠른 3영역 + SQLite 동시 | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/RESULTS_ALL.gated.md,59,label-only,label:느린 → 빠른 → SQLite,| 느린 → 빠른 → SQLite | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/RESULTS_ALL.gated.md,60,label-only,label:SQLite 수정 많음 → 읽기 위주,| SQLite 수정 많음 → 읽기 위주 | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/RESULTS_ALL.gated.md,89,label-only,label:빠른 3영역 → SQLite,| 빠른 3영역 → SQLite | – | – | – | – | – | – |
+report/final-e1-validation/tables/RESULTS_ALL.gated.md,94,label-only,label:빠른 3영역 → SQLite → 빠른 3영역,"## 7. 새 믹스: 빠른 3영역 → SQLite → 빠른 3영역 (구간별 쓰기량 같게, 3배 길이 약 2.3시간)"
+report/final-e1-validation/tables/V4_VS_CAT.gated.md,23,label-only,label:SQLite 수정 많음 → 읽기 위주,| SQLite 수정 많음 → 읽기 위주 | – | – | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/V4_VS_CAT.gated.md,27,label-only,label:느린 → 빠른 → SQLite,| 느린 → 빠른 → SQLite | – | – | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/V4_VS_CAT.gated.md,31,label-only,label:빠른 3영역 → SQLite,| 빠른 3영역 → SQLite | – | – | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/V4_VS_CAT.gated.md,32,label-only,label:SQLite → 빠른 3영역,| SQLite → 빠른 3영역 | – | – | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/V4_VS_CAT.gated.md,33,label-only,label:빠른 3영역 + SQLite 동시,| 빠른 3영역 + SQLite 동시 | – | – | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/V4_VS_CAT.gated.md,43,label-only,label:빠른 3영역 → SQLite,| 빠른 3영역 → SQLite | – | – | – | – | – | – | – | – |
+report/final-e1-validation/tables/V4_VS_CAT.gated.md,48,label-only,label:빠른 3영역 → SQLite → 빠른 3영역,"## 4. 3구간 전환: 빠른 3영역 → SQLite → 빠른 3영역 (구간별 쓰기량 동일, 약 2.3시간)"
+report/final-e1-validation/tables/table6_valid.md,9,flagged-ok,label:YCSB-A → YCSB-B,"제외: YCSB-A → YCSB-B (YCSB SQLITE_FULL 오염, `analysis/final_e1/validity.py`)."
+report/final-e1-validation/tables/table8_status.md,10,flagged-ok,run:mixR-arm17-rep1-x3,| mixR-arm17-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
+report/final-e1-validation/tables/table8_status.md,11,flagged-ok,run:mixR-arm32-rep1-x3,| mixR-arm32-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.98% |
+report/final-e1-validation/tables/table8_status.md,12,flagged-ok,run:mixR-fixed37-rep1-x3,| mixR-fixed37-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
+report/final-e1-validation/tables/table8_status.md,13,flagged-ok,run:mixR-fixed47-rep1-x3,| mixR-fixed47-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.98% |
+report/final-e1-validation/tables/table8_status.md,14,flagged-ok,run:mixR-fixed50-rep1-x3,| mixR-fixed50-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.84% |
+report/final-e1-validation/tables/table8_status.md,15,flagged-ok,run:mixR-fixed50-rep2-x3,| mixR-fixed50-rep2-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
+report/final-e1-validation/tables/table8_status.md,16,flagged-ok,run:mixR-greedy-rep1-x3,| mixR-greedy-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
+report/final-e1-validation/tables/table8_status.md,17,flagged-ok,run:mixR-online-rep1-x3,| mixR-online-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
+report/final-e1-validation/tables/table8_status.md,18,flagged-ok,run:mixR-onlinev3-rep1-x3,| mixR-onlinev3-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.99% |
+report/final-e1-validation/tables/table8_status.md,19,flagged-ok,run:mixR-onlinev4-rep1-x3,| mixR-onlinev4-rep1-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 99.83% |
+report/final-e1-validation/tables/table8_status.md,20,flagged-ok,run:mixR-onlinev4-rep2-x3,| mixR-onlinev4-rep2-x3 | A | 무효(단계 2·3·전체): YCSB ycsb-run-B.txt.gz: worst op failed 9.98% |
+report/final-e1-validation/tables/sec41_order_check.csv,10,flagged-ok,label:빠른 3영역 → SQLite,"mix-1x,빠른 3영역 → SQLite,EXCLUDED (invalid data),,,,,"
+report/final-e1-validation/tables/sec41_order_check.csv,11,flagged-ok,label:SQLite → 빠른 3영역,"mix-1x,SQLite → 빠른 3영역,EXCLUDED (invalid data),,,,,"
+report/final-e1-validation/tables/sec41_order_check.csv,15,flagged-ok,label:빠른 3영역 + SQLite 동시,"mix-1x,빠른 3영역 + SQLite 동시,EXCLUDED (invalid data),,,,,"
+report/final-e1-validation/tables/sec41_order_check.csv,16,flagged-ok,label:느린 → 빠른 → SQLite,"mix-1x,느린 → 빠른 → SQLite,EXCLUDED (invalid data),,,,,"
+report/final-e1-validation/tables/sec41_order_check.csv,17,flagged-ok,label:SQLite 수정 많음 → 읽기 위주,"mix-1x,SQLite 수정 많음 → 읽기 위주,EXCLUDED (invalid data),,,,,"

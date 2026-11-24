@@ -1,151 +1,151 @@
 group,run,workload,policy,rep,variant,phases,usable,run_ok,first_valid_phase_A,reasons
-result/inherit-20261006/fitcheck,mixV-onlinev4-rep1,mixV,onlinev4,1,,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 91.72%
+result/inherit-20261006/fitcheck,mixV-onlinev4-rep1,mixV,onlinev4,1,,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 91.72% | SQLITE_FULL in ycsb-run-A.txt.gz
 result/inherit-20261006/fitcheck-fio5g-600000,mixV-onlinev4-rep1,mixV,onlinev4,1,,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,ABCDEFGHI,True,True,
 result/inherit-20261006,mixV-fixed37-rep1,mixV,fixed37,1,,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,ABCDEFGHI,True,True,
 result/inherit-20261006,mixV-fixed47-rep1,mixV,fixed47,1,,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,ABCDEFGHI,True,True,
 result/inherit-20261006,mixV-fixed47-rep1-smoke-fillprep,mixV,fixed47,1,-smoke-fillprep,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,ABCDEFGHI,True,True,
 result/inherit-20261006,mixV-onlinev4-rep1,mixV,onlinev4,1,,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,ABCDEFGHI,True,True,
 result/inherit-20261006,mixV-onlinev4-rep1-smoke-fillprep,mixV,onlinev4,1,-smoke-fillprep,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,ABCDEFGHI,True,True,
-result/inherit-20261006,mixW2-fixed47,,,,,A:sqlite-a B:none,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.94%
-result/mix-20260911,long-fixed47,,,,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run.txt.gz: worst op failed 8.18%
-result/mix-20260911,long-online,,,,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run.txt.gz: worst op failed 81.76%
+result/inherit-20261006,mixW2-fixed47,,,,,A:sqlite-a B:none,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.94% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,long-fixed47,,,,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run.txt.gz: worst op failed 8.18% | SQLITE_FULL in ycsb-run.txt.gz
+result/mix-20260911,long-online,,,,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run.txt.gz: worst op failed 81.76% | SQLITE_FULL in ycsb-run.txt.gz
 result/mix-20260911,main-fixed10,,,,,A:test4 B:sqlite-a,AB,True,True,
 result/mix-20260911,main-fixed37,,,,,A:test4 B:sqlite-a,AB,True,True,
 result/mix-20260911,main-fixed47,,,,,A:test4 B:sqlite-a,AB,True,True,
 result/mix-20260911,main-fixed50,,,,,A:test4 B:sqlite-a,AB,True,True,
 result/mix-20260911,main-greedy,,,,,A:test4 B:sqlite-a,AB,True,True,
 result/mix-20260911,main-online,,,,,A:test4 B:sqlite-a,AB,True,True,
-result/mix-20260911,mixA-arm00-rep1,mixA,arm00,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-arm01-rep1,mixA,arm01,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.22%
-result/mix-20260911,mixA-arm02-rep1,mixA,arm02,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixA-arm03-rep1,mixA,arm03,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixA-arm04-rep1,mixA,arm04,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixA-arm05-rep1,mixA,arm05,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.80%
-result/mix-20260911,mixA-arm06-rep1,mixA,arm06,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixA-arm07-rep1,mixA,arm07,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixA-arm08-rep1,mixA,arm08,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.81%
-result/mix-20260911,mixA-arm09-rep1,mixA,arm09,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixA-arm10-rep1,mixA,arm10,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.81%
-result/mix-20260911,mixA-arm11-rep1,mixA,arm11,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.80%
-result/mix-20260911,mixA-arm12-rep1,mixA,arm12,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixA-arm13-rep1,mixA,arm13,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixA-arm14-rep1,mixA,arm14,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixA-arm15-rep1,mixA,arm15,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixA-arm16-rep1,mixA,arm16,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.22%
-result/mix-20260911,mixA-arm17-rep1,mixA,arm17,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.81%
-result/mix-20260911,mixA-arm18-rep1,mixA,arm18,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.87%
-result/mix-20260911,mixA-arm19-rep1,mixA,arm19,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-arm20-rep1,mixA,arm20,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixA-arm21-rep1,mixA,arm21,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixA-arm22-rep1,mixA,arm22,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixA-arm23-rep1,mixA,arm23,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.79%
-result/mix-20260911,mixA-arm24-rep1,mixA,arm24,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixA-arm25-rep1,mixA,arm25,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.27%
-result/mix-20260911,mixA-arm26-rep1,mixA,arm26,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixA-arm27-rep1,mixA,arm27,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.85%
-result/mix-20260911,mixA-arm28-rep1,mixA,arm28,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixA-arm29-rep1,mixA,arm29,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.87%
-result/mix-20260911,mixA-arm30-rep1,mixA,arm30,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-arm31-rep1,mixA,arm31,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-arm32-rep1,mixA,arm32,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-arm33-rep1,mixA,arm33,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.85%
-result/mix-20260911,mixA-arm34-rep1,mixA,arm34,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-arm35-rep1,mixA,arm35,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.27%
-result/mix-20260911,mixA-arm36-rep1,mixA,arm36,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.78%
-result/mix-20260911,mixA-arm37-rep1,mixA,arm37,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-arm38-rep1,mixA,arm38,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixA-arm39-rep1,mixA,arm39,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.86%
-result/mix-20260911,mixA-arm40-rep1,mixA,arm40,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.21%
-result/mix-20260911,mixA-arm41-rep1,mixA,arm41,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixA-arm42-rep1,mixA,arm42,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.81%
-result/mix-20260911,mixA-arm43-rep1,mixA,arm43,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixA-arm44-rep1,mixA,arm44,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixA-arm45-rep1,mixA,arm45,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixA-arm46-rep1,mixA,arm46,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixA-arm47-rep1,mixA,arm47,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.81%
-result/mix-20260911,mixA-arm48-rep1,mixA,arm48,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixA-arm49-rep1,mixA,arm49,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-arm50-rep1,mixA,arm50,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixA-arm51-rep1,mixA,arm51,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixA-arm52-rep1,mixA,arm52,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixA-arm53-rep1,mixA,arm53,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-arm54-rep1,mixA,arm54,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.22%
-result/mix-20260911,mixA-arm55-rep1,mixA,arm55,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.86%
-result/mix-20260911,mixA-arm56-rep1,mixA,arm56,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.28%
-result/mix-20260911,mixA-arm57-rep1,mixA,arm57,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixA-arm58-rep1,mixA,arm58,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixA-arm59-rep1,mixA,arm59,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixA-fixed10-rep1,mixA,fixed10,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixA-fixed10-rep2,mixA,fixed10,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixA-fixed10-rep3,mixA,fixed10,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.79%
-result/mix-20260911,mixA-fixed37-rep1,mixA,fixed37,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixA-fixed37-rep2,mixA,fixed37,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixA-fixed37-rep3,mixA,fixed37,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixA-fixed47-rep1,mixA,fixed47,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-fixed47-rep1-x3,mixA,fixed47,1,-x3,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.41%
-result/mix-20260911,mixA-fixed47-rep1-x6,mixA,fixed47,1,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.97%
-result/mix-20260911,mixA-fixed47-rep2,mixA,fixed47,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixA-fixed47-rep3,mixA,fixed47,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixA-fixed50-rep1,mixA,fixed50,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixA-fixed50-rep1-x3,mixA,fixed50,1,-x3,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.42%
-result/mix-20260911,mixA-fixed50-rep1-x6,mixA,fixed50,1,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.71%
-result/mix-20260911,mixA-fixed50-rep2,mixA,fixed50,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixA-fixed50-rep3,mixA,fixed50,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixA-greedy-rep1,mixA,greedy,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixA-greedy-rep2,mixA,greedy,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixA-greedy-rep3,mixA,greedy,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixA-online-rep1,mixA,online,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixA-online-rep1-x3,mixA,online,1,-x3,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.94%
-result/mix-20260911,mixA-online-rep1-x6,mixA,online,1,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.97%
-result/mix-20260911,mixA-online-rep2,mixA,online,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixA-online-rep3,mixA,online,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixA-onlinev2-rep1-x3,mixA,onlinev2,1,-x3,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.42%
+result/mix-20260911,mixA-arm00-rep1,mixA,arm00,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm01-rep1,mixA,arm01,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.22% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm02-rep1,mixA,arm02,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm03-rep1,mixA,arm03,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm04-rep1,mixA,arm04,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm05-rep1,mixA,arm05,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.80% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm06-rep1,mixA,arm06,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm07-rep1,mixA,arm07,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm08-rep1,mixA,arm08,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.81% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm09-rep1,mixA,arm09,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm10-rep1,mixA,arm10,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.81% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm11-rep1,mixA,arm11,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.80% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm12-rep1,mixA,arm12,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm13-rep1,mixA,arm13,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm14-rep1,mixA,arm14,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm15-rep1,mixA,arm15,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm16-rep1,mixA,arm16,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.22% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm17-rep1,mixA,arm17,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.81% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm18-rep1,mixA,arm18,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.87% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm19-rep1,mixA,arm19,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm20-rep1,mixA,arm20,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm21-rep1,mixA,arm21,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm22-rep1,mixA,arm22,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm23-rep1,mixA,arm23,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.79% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm24-rep1,mixA,arm24,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm25-rep1,mixA,arm25,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.27% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm26-rep1,mixA,arm26,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm27-rep1,mixA,arm27,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.85% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm28-rep1,mixA,arm28,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm29-rep1,mixA,arm29,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.87% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm30-rep1,mixA,arm30,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm31-rep1,mixA,arm31,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm32-rep1,mixA,arm32,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm33-rep1,mixA,arm33,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.85% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm34-rep1,mixA,arm34,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm35-rep1,mixA,arm35,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.27% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm36-rep1,mixA,arm36,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.78% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm37-rep1,mixA,arm37,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm38-rep1,mixA,arm38,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm39-rep1,mixA,arm39,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.86% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm40-rep1,mixA,arm40,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.21% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm41-rep1,mixA,arm41,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm42-rep1,mixA,arm42,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.81% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm43-rep1,mixA,arm43,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm44-rep1,mixA,arm44,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm45-rep1,mixA,arm45,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm46-rep1,mixA,arm46,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm47-rep1,mixA,arm47,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.81% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm48-rep1,mixA,arm48,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm49-rep1,mixA,arm49,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm50-rep1,mixA,arm50,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm51-rep1,mixA,arm51,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm52-rep1,mixA,arm52,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm53-rep1,mixA,arm53,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm54-rep1,mixA,arm54,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.22% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm55-rep1,mixA,arm55,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.86% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm56-rep1,mixA,arm56,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.28% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm57-rep1,mixA,arm57,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm58-rep1,mixA,arm58,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-arm59-rep1,mixA,arm59,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed10-rep1,mixA,fixed10,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed10-rep2,mixA,fixed10,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed10-rep3,mixA,fixed10,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.79% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed37-rep1,mixA,fixed37,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed37-rep2,mixA,fixed37,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed37-rep3,mixA,fixed37,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed47-rep1,mixA,fixed47,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed47-rep1-x3,mixA,fixed47,1,-x3,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.41% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed47-rep1-x6,mixA,fixed47,1,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.97% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed47-rep2,mixA,fixed47,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed47-rep3,mixA,fixed47,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed50-rep1,mixA,fixed50,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed50-rep1-x3,mixA,fixed50,1,-x3,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.42% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed50-rep1-x6,mixA,fixed50,1,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.71% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed50-rep2,mixA,fixed50,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-fixed50-rep3,mixA,fixed50,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-greedy-rep1,mixA,greedy,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-greedy-rep2,mixA,greedy,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-greedy-rep3,mixA,greedy,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-online-rep1,mixA,online,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-online-rep1-x3,mixA,online,1,-x3,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.94% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-online-rep1-x6,mixA,online,1,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.97% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-online-rep2,mixA,online,2,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-online-rep3,mixA,online,3,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-onlinev2-rep1-x3,mixA,onlinev2,1,-x3,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.42% | SQLITE_FULL in ycsb-run-B.txt.gz
 result/mix-20260911,mixA-onlinev2-rep1-x3-v2broken,mixA,onlinev2,1,-x3-v2broken,A:test4 B:sqlite-a,-,False,False,exit-code missing or non-zero
-result/mix-20260911,mixA-onlinev2-rep1-x6,mixA,onlinev2,1,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.71%
+result/mix-20260911,mixA-onlinev2-rep1-x6,mixA,onlinev2,1,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.71% | SQLITE_FULL in ycsb-run-B.txt.gz
 result/mix-20260911,mixA-onlinev2-rep1-x6-v2broken,mixA,onlinev2,1,-x6-v2broken,A:test4 B:sqlite-a,-,False,False,exit-code missing or non-zero
-result/mix-20260911,mixA-onlinev2-rep2-x6,mixA,onlinev2,2,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.71%
-result/mix-20260911,mixA-onlinev2-rep3-x6,mixA,onlinev2,3,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.71%
-result/mix-20260911,mixA-onlinev4-rep1,mixA,onlinev4,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixA-onlinev4-rep1-x3,mixA,onlinev4,1,-x3,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.42%
-result/mix-20260911,mixA-onlinev4-rep1-x6,mixA,onlinev4,1,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.71%
-result/mix-20260911,mixB-arm15-rep1,mixB,arm15,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixB-arm16-rep1,mixB,arm16,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixB-arm17-rep1,mixB,arm17,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixB-arm30-rep1,mixB,arm30,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixB-arm31-rep1,mixB,arm31,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixB-arm31-rep1-x3,mixB,arm31,1,-x3,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.95%
-result/mix-20260911,mixB-arm32-rep1,mixB,arm32,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.86%
-result/mix-20260911,mixB-arm32-rep1-x3,mixB,arm32,1,-x3,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.96%
-result/mix-20260911,mixB-arm34-rep1,mixB,arm34,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixB-arm35-rep1,mixB,arm35,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixB-arm45-rep1,mixB,arm45,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixB-arm46-rep1,mixB,arm46,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixB-arm49-rep1,mixB,arm49,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.78%
-result/mix-20260911,mixB-arm53-rep1,mixB,arm53,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.27%
-result/mix-20260911,mixB-arm56-rep1,mixB,arm56,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixB-fixed10-rep1,mixB,fixed10,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixB-fixed10-rep2,mixB,fixed10,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixB-fixed10-rep3,mixB,fixed10,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixB-fixed37-rep1,mixB,fixed37,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixB-fixed37-rep2,mixB,fixed37,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixB-fixed37-rep3,mixB,fixed37,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.85%
-result/mix-20260911,mixB-fixed47-rep1,mixB,fixed47,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.27%
-result/mix-20260911,mixB-fixed47-rep1-x3,mixB,fixed47,1,-x3,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.93%
-result/mix-20260911,mixB-fixed47-rep2,mixB,fixed47,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixB-fixed47-rep3,mixB,fixed47,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixB-fixed50-rep1,mixB,fixed50,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.81%
-result/mix-20260911,mixB-fixed50-rep1-x3,mixB,fixed50,1,-x3,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.41%
-result/mix-20260911,mixB-fixed50-rep2,mixB,fixed50,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixB-fixed50-rep3,mixB,fixed50,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.86%
-result/mix-20260911,mixB-greedy-rep1,mixB,greedy,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixB-greedy-rep2,mixB,greedy,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.81%
-result/mix-20260911,mixB-greedy-rep3,mixB,greedy,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixB-online-rep1,mixB,online,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25%
+result/mix-20260911,mixA-onlinev2-rep2-x6,mixA,onlinev2,2,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.71% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-onlinev2-rep3-x6,mixA,onlinev2,3,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.71% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-onlinev4-rep1,mixA,onlinev4,1,,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-onlinev4-rep1-x3,mixA,onlinev4,1,-x3,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.42% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixA-onlinev4-rep1-x6,mixA,onlinev4,1,-x6,A:test4 B:sqlite-a,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.71% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixB-arm15-rep1,mixB,arm15,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm16-rep1,mixB,arm16,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm17-rep1,mixB,arm17,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm30-rep1,mixB,arm30,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm31-rep1,mixB,arm31,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm31-rep1-x3,mixB,arm31,1,-x3,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.95% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm32-rep1,mixB,arm32,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.86% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm32-rep1-x3,mixB,arm32,1,-x3,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.96% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm34-rep1,mixB,arm34,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm35-rep1,mixB,arm35,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm45-rep1,mixB,arm45,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm46-rep1,mixB,arm46,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm49-rep1,mixB,arm49,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.78% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm53-rep1,mixB,arm53,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.27% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-arm56-rep1,mixB,arm56,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed10-rep1,mixB,fixed10,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed10-rep2,mixB,fixed10,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed10-rep3,mixB,fixed10,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed37-rep1,mixB,fixed37,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed37-rep2,mixB,fixed37,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed37-rep3,mixB,fixed37,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.85% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed47-rep1,mixB,fixed47,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.27% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed47-rep1-x3,mixB,fixed47,1,-x3,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.93% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed47-rep2,mixB,fixed47,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed47-rep3,mixB,fixed47,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed50-rep1,mixB,fixed50,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.81% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed50-rep1-x3,mixB,fixed50,1,-x3,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.41% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed50-rep2,mixB,fixed50,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-fixed50-rep3,mixB,fixed50,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.86% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-greedy-rep1,mixB,greedy,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-greedy-rep2,mixB,greedy,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.81% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-greedy-rep3,mixB,greedy,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-online-rep1,mixB,online,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-A.txt.gz
 result/mix-20260911,mixB-online-rep1-smoke,mixB,online,1,-smoke,A:sqlite-a B:test4,AB,True,True,
-result/mix-20260911,mixB-online-rep2,mixB,online,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.80%
-result/mix-20260911,mixB-online-rep3,mixB,online,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixB-onlinev4-rep1,mixB,onlinev4,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixB-onlinev4-rep1-x3,mixB,onlinev4,1,-x3,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.41%
+result/mix-20260911,mixB-online-rep2,mixB,online,2,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.80% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-online-rep3,mixB,online,3,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-onlinev4-rep1,mixB,onlinev4,1,,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixB-onlinev4-rep1-x3,mixB,onlinev4,1,-x3,A:sqlite-a B:test4,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.41% | SQLITE_FULL in ycsb-run-A.txt.gz
 result/mix-20260911,mixG-arm15-rep1,mixG,arm15,1,,A:concurrent-test4+sqlite-a B:none,-,False,False,YCSB ycsb-run.txt.gz: worst op failed 0.00% (no summary) | YCSB ycsb-load.txt.gz: worst op failed 0.00% (no summary)
 result/mix-20260911,mixG-arm16-rep1,mixG,arm16,1,,A:concurrent-test4+sqlite-a B:none,-,False,False,YCSB ycsb-run.txt.gz: worst op failed 0.00% (no summary) | YCSB ycsb-load.txt.gz: worst op failed 0.00% (no summary)
 result/mix-20260911,mixG-arm17-rep1,mixG,arm17,1,,A:concurrent-test4+sqlite-a B:none,-,False,False,YCSB ycsb-run.txt.gz: worst op failed 0.00% (no summary) | YCSB ycsb-load.txt.gz: worst op failed 0.00% (no summary)
@@ -181,84 +181,84 @@ result/mix-20260911,mixG-online-rep1-smoke,mixG,online,1,-smoke,A:concurrent-tes
 result/mix-20260911,mixG-online-rep2,mixG,online,2,,A:concurrent-test4+sqlite-a B:none,-,False,False,YCSB ycsb-run.txt.gz: worst op failed 0.00% (no summary) | YCSB ycsb-load.txt.gz: worst op failed 0.00% (no summary)
 result/mix-20260911,mixG-online-rep3,mixG,online,3,,A:concurrent-test4+sqlite-a B:none,-,False,False,YCSB ycsb-run.txt.gz: worst op failed 0.00% (no summary) | YCSB ycsb-load.txt.gz: worst op failed 0.00% (no summary)
 result/mix-20260911,mixG-onlinev4-rep1-x3,mixG,onlinev4,1,-x3,A:concurrent-test4+sqlite-a B:none,-,False,False,YCSB ycsb-run.txt.gz: worst op failed 0.00% (no summary) | YCSB ycsb-load.txt.gz: worst op failed 0.00% (no summary)
-result/mix-20260911,mixH-arm15-rep1,mixH,arm15,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.80%
-result/mix-20260911,mixH-arm16-rep1,mixH,arm16,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixH-arm17-rep1,mixH,arm17,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixH-arm30-rep1,mixH,arm30,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixH-arm31-rep1,mixH,arm31,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixH-arm32-rep1,mixH,arm32,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixH-arm34-rep1,mixH,arm34,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixH-arm35-rep1,mixH,arm35,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.85%
-result/mix-20260911,mixH-arm45-rep1,mixH,arm45,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.27%
-result/mix-20260911,mixH-arm46-rep1,mixH,arm46,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixH-arm46-rep1-x3,mixH,arm46,1,-x3,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 99.41%
-result/mix-20260911,mixH-arm49-rep1,mixH,arm49,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixH-arm53-rep1,mixH,arm53,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixH-arm56-rep1,mixH,arm56,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.22%
-result/mix-20260911,mixH-fixed10-rep1,mixH,fixed10,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.85%
-result/mix-20260911,mixH-fixed10-rep2,mixH,fixed10,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixH-fixed10-rep3,mixH,fixed10,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixH-fixed37-rep1,mixH,fixed37,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixH-fixed37-rep2,mixH,fixed37,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixH-fixed37-rep3,mixH,fixed37,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixH-fixed47-rep1,mixH,fixed47,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixH-fixed47-rep1-x3,mixH,fixed47,1,-x3,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.92%
-result/mix-20260911,mixH-fixed47-rep2,mixH,fixed47,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixH-fixed47-rep3,mixH,fixed47,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.87%
-result/mix-20260911,mixH-fixed50-rep1,mixH,fixed50,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixH-fixed50-rep1-x3,mixH,fixed50,1,-x3,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 99.43%
-result/mix-20260911,mixH-fixed50-rep2,mixH,fixed50,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixH-fixed50-rep3,mixH,fixed50,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.85%
-result/mix-20260911,mixH-greedy-rep1,mixH,greedy,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixH-greedy-rep2,mixH,greedy,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixH-greedy-rep3,mixH,greedy,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixH-online-rep1,mixH,online,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23%
+result/mix-20260911,mixH-arm15-rep1,mixH,arm15,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.80% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm16-rep1,mixH,arm16,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm17-rep1,mixH,arm17,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm30-rep1,mixH,arm30,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm31-rep1,mixH,arm31,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm32-rep1,mixH,arm32,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm34-rep1,mixH,arm34,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm35-rep1,mixH,arm35,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.85% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm45-rep1,mixH,arm45,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.27% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm46-rep1,mixH,arm46,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm46-rep1-x3,mixH,arm46,1,-x3,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 99.41% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm49-rep1,mixH,arm49,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm53-rep1,mixH,arm53,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-arm56-rep1,mixH,arm56,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.22% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed10-rep1,mixH,fixed10,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.85% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed10-rep2,mixH,fixed10,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed10-rep3,mixH,fixed10,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed37-rep1,mixH,fixed37,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed37-rep2,mixH,fixed37,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed37-rep3,mixH,fixed37,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed47-rep1,mixH,fixed47,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed47-rep1-x3,mixH,fixed47,1,-x3,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.92% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed47-rep2,mixH,fixed47,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed47-rep3,mixH,fixed47,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.87% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed50-rep1,mixH,fixed50,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed50-rep1-x3,mixH,fixed50,1,-x3,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 99.43% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed50-rep2,mixH,fixed50,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-fixed50-rep3,mixH,fixed50,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.85% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-greedy-rep1,mixH,greedy,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-greedy-rep2,mixH,greedy,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-greedy-rep3,mixH,greedy,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-online-rep1,mixH,online,1,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-C.txt.gz
 result/mix-20260911,mixH-online-rep1-smoke,mixH,online,1,-smoke,A:test3 B:test4 C:sqlite-a,ABC,True,True,
-result/mix-20260911,mixH-online-rep2,mixH,online,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixH-online-rep3,mixH,online,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixH-onlinev4-rep1-x3,mixH,onlinev4,1,-x3,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 99.42%
-result/mix-20260911,mixJ-arm15-rep1,mixJ,arm15,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixJ-arm16-rep1,mixJ,arm16,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixJ-arm17-rep1,mixJ,arm17,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.80%
-result/mix-20260911,mixJ-arm17-rep1-x3,mixJ,arm17,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.94%
-result/mix-20260911,mixJ-arm30-rep1,mixJ,arm30,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixJ-arm31-rep1,mixJ,arm31,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.28%
-result/mix-20260911,mixJ-arm31-rep1-x3,mixJ,arm31,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.94%
-result/mix-20260911,mixJ-arm32-rep1,mixJ,arm32,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixJ-arm34-rep1,mixJ,arm34,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixJ-arm35-rep1,mixJ,arm35,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixJ-arm35-rep1-x3,mixJ,arm35,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.41%
-result/mix-20260911,mixJ-arm45-rep1,mixJ,arm45,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixJ-arm46-rep1,mixJ,arm46,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixJ-arm46-rep1-x3,mixJ,arm46,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.93%
-result/mix-20260911,mixJ-arm49-rep1,mixJ,arm49,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.27%
-result/mix-20260911,mixJ-arm53-rep1,mixJ,arm53,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixJ-arm53-rep1-x3,mixJ,arm53,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.42%
-result/mix-20260911,mixJ-arm56-rep1,mixJ,arm56,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixJ-fixed10-rep1,mixJ,fixed10,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.81%
-result/mix-20260911,mixJ-fixed10-rep2,mixJ,fixed10,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.79%
-result/mix-20260911,mixJ-fixed10-rep3,mixJ,fixed10,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixJ-fixed37-rep1,mixJ,fixed37,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.22%
-result/mix-20260911,mixJ-fixed37-rep1-x3,mixJ,fixed37,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.41%
-result/mix-20260911,mixJ-fixed37-rep2,mixJ,fixed37,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23%
-result/mix-20260911,mixJ-fixed37-rep3,mixJ,fixed37,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixJ-fixed47-rep1,mixJ,fixed47,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.84%
-result/mix-20260911,mixJ-fixed47-rep1-x3,mixJ,fixed47,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.42%
-result/mix-20260911,mixJ-fixed47-rep2,mixJ,fixed47,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixJ-fixed47-rep3,mixJ,fixed47,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.80%
-result/mix-20260911,mixJ-fixed50-rep1,mixJ,fixed50,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.26%
-result/mix-20260911,mixJ-fixed50-rep1-x3,mixJ,fixed50,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.41%
-result/mix-20260911,mixJ-fixed50-rep2,mixJ,fixed50,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82%
-result/mix-20260911,mixJ-fixed50-rep3,mixJ,fixed50,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.78%
-result/mix-20260911,mixJ-greedy-rep1,mixJ,greedy,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.85%
-result/mix-20260911,mixJ-greedy-rep2,mixJ,greedy,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.85%
-result/mix-20260911,mixJ-greedy-rep3,mixJ,greedy,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25%
-result/mix-20260911,mixJ-online-rep1,mixJ,online,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82%
+result/mix-20260911,mixH-online-rep2,mixH,online,2,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-online-rep3,mixH,online,3,,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixH-onlinev4-rep1-x3,mixH,onlinev4,1,-x3,A:test3 B:test4 C:sqlite-a,AB,False,True,YCSB ycsb-run-C.txt.gz: worst op failed 99.42% | SQLITE_FULL in ycsb-run-C.txt.gz
+result/mix-20260911,mixJ-arm15-rep1,mixJ,arm15,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm16-rep1,mixJ,arm16,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm17-rep1,mixJ,arm17,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.80% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm17-rep1-x3,mixJ,arm17,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.94% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm30-rep1,mixJ,arm30,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm31-rep1,mixJ,arm31,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.28% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm31-rep1-x3,mixJ,arm31,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.94% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm32-rep1,mixJ,arm32,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm34-rep1,mixJ,arm34,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm35-rep1,mixJ,arm35,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm35-rep1-x3,mixJ,arm35,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.41% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm45-rep1,mixJ,arm45,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm46-rep1,mixJ,arm46,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm46-rep1-x3,mixJ,arm46,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.93% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm49-rep1,mixJ,arm49,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.27% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm53-rep1,mixJ,arm53,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm53-rep1-x3,mixJ,arm53,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.42% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-arm56-rep1,mixJ,arm56,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed10-rep1,mixJ,fixed10,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.81% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed10-rep2,mixJ,fixed10,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.79% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed10-rep3,mixJ,fixed10,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed37-rep1,mixJ,fixed37,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.22% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed37-rep1-x3,mixJ,fixed37,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.41% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed37-rep2,mixJ,fixed37,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.23% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed37-rep3,mixJ,fixed37,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed47-rep1,mixJ,fixed47,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.84% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed47-rep1-x3,mixJ,fixed47,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.42% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed47-rep2,mixJ,fixed47,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed47-rep3,mixJ,fixed47,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.80% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed50-rep1,mixJ,fixed50,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.26% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed50-rep1-x3,mixJ,fixed50,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.41% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed50-rep2,mixJ,fixed50,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-fixed50-rep3,mixJ,fixed50,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.78% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-greedy-rep1,mixJ,greedy,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.85% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-greedy-rep2,mixJ,greedy,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.85% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-greedy-rep3,mixJ,greedy,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.25% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-online-rep1,mixJ,online,1,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.82% | SQLITE_FULL in ycsb-run-A.txt.gz
 result/mix-20260911,mixJ-online-rep1-smoke,mixJ,online,1,-smoke,A:sqlite-a B:sqlite-b,-,False,False,exit-code missing or non-zero
-result/mix-20260911,mixJ-online-rep2,mixJ,online,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83%
-result/mix-20260911,mixJ-online-rep3,mixJ,online,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24%
-result/mix-20260911,mixJ-onlinev4-rep1-x3,mixJ,onlinev4,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.42%
-result/mix-20260911,mixJ-onlinev4-rep2-x3,mixJ,onlinev4,2,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.93%
+result/mix-20260911,mixJ-online-rep2,mixJ,online,2,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.83% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-online-rep3,mixJ,online,3,,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 98.24% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-onlinev4-rep1-x3,mixJ,onlinev4,1,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 99.42% | SQLITE_FULL in ycsb-run-A.txt.gz
+result/mix-20260911,mixJ-onlinev4-rep2-x3,mixJ,onlinev4,2,-x3,A:sqlite-a B:sqlite-b,-,False,False,YCSB ycsb-run-A.txt.gz: worst op failed 9.93% | SQLITE_FULL in ycsb-run-A.txt.gz
 result/mix-20260911,mixP-arm15-rep1,mixP,arm15,1,,A:sqlite-a B:oltp,AB,True,True,
 result/mix-20260911,mixP-arm16-rep1,mixP,arm16,1,,A:sqlite-a B:oltp,AB,True,True,
 result/mix-20260911,mixP-arm17-rep1,mixP,arm17,1,,A:sqlite-a B:oltp,AB,True,True,
@@ -300,18 +300,18 @@ result/mix-20260911,mixP-online-rep2,mixP,online,2,,A:sqlite-a B:oltp,AB,True,Tr
 result/mix-20260911,mixP-online-rep3,mixP,online,3,,A:sqlite-a B:oltp,AB,True,True,
 result/mix-20260911,mixP-onlinev4-rep1-x3,mixP,onlinev4,1,-x3,A:sqlite-a B:oltp,AB,True,True,
 result/mix-20260911,mixP-onlinev4-rep2-x3,mixP,onlinev4,2,-x3,A:sqlite-a B:oltp,AB,True,True,
-result/mix-20260911,mixR-arm17-rep1-x3,mixR,arm17,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83%
-result/mix-20260911,mixR-arm32-rep1-x3,mixR,arm32,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.98%
-result/mix-20260911,mixR-fixed37-rep1-x3,mixR,fixed37,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83%
+result/mix-20260911,mixR-arm17-rep1-x3,mixR,arm17,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixR-arm32-rep1-x3,mixR,arm32,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.98% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixR-fixed37-rep1-x3,mixR,fixed37,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83% | SQLITE_FULL in ycsb-run-B.txt.gz
 result/mix-20260911,mixR-fixed47-rep1-smoke,mixR,fixed47,1,-smoke,A:test4 B:sqlite-a C:test4,ABC,True,True,
-result/mix-20260911,mixR-fixed47-rep1-x3,mixR,fixed47,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.98%
-result/mix-20260911,mixR-fixed50-rep1-x3,mixR,fixed50,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.84%
-result/mix-20260911,mixR-fixed50-rep2-x3,mixR,fixed50,2,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83%
-result/mix-20260911,mixR-greedy-rep1-x3,mixR,greedy,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83%
-result/mix-20260911,mixR-online-rep1-x3,mixR,online,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83%
-result/mix-20260911,mixR-onlinev3-rep1-x3,mixR,onlinev3,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.99%
-result/mix-20260911,mixR-onlinev4-rep1-x3,mixR,onlinev4,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83%
-result/mix-20260911,mixR-onlinev4-rep2-x3,mixR,onlinev4,2,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.98%
+result/mix-20260911,mixR-fixed47-rep1-x3,mixR,fixed47,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.98% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixR-fixed50-rep1-x3,mixR,fixed50,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.84% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixR-fixed50-rep2-x3,mixR,fixed50,2,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixR-greedy-rep1-x3,mixR,greedy,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixR-online-rep1-x3,mixR,online,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixR-onlinev3-rep1-x3,mixR,onlinev3,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.99% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixR-onlinev4-rep1-x3,mixR,onlinev4,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 99.83% | SQLITE_FULL in ycsb-run-B.txt.gz
+result/mix-20260911,mixR-onlinev4-rep2-x3,mixR,onlinev4,2,-x3,A:test4 B:sqlite-a C:test4,A,False,True,YCSB ycsb-run-B.txt.gz: worst op failed 9.98% | SQLITE_FULL in ycsb-run-B.txt.gz
 result/mix-20260911,mixT-fixed47-rep1,mixT,fixed47,1,,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,ABCDEFGHI,True,True,
 result/mix-20260911,mixT-onlinev4-rep1,mixT,onlinev4,1,,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,ABCDEFGHI,True,True,
 result/mix-20260911,mixT-onlinev4-rep1-smoke,mixT,onlinev4,1,-smoke,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,ABCDEFGHI,True,True,
@@ -353,12 +353,12 @@ result/revB-20261122/raw,mixFYF-revB-nosettle-rep1-smoke120,,,,,A:test4 B:sqlite
 result/revB-20261122/raw,mixFYF-revB-nosettle-rep2,,,,,A:test4 B:sqlite-a C:test4,ABC,True,True,
 result/revB-20261122/raw,mixFYF-revB-nosettle-rep3,,,,,A:test4 B:sqlite-a C:test4,ABC,True,True,
 result/revB-20261122/raw,mixFYF-revB-v4-rep1,,,,,A:test4 B:sqlite-a C:test4,ABC,True,True,
-result/revision-20261123/mixR,mixR-onlinev4-rep1-x3,mixR,onlinev4,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C | YCSB ycsb-run-B.txt.gz: worst op failed 99.83%"
-result/revision-20261123/mixR,mixR-onlinev4-rep2-x3,mixR,onlinev4,2,-x3,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C | YCSB ycsb-run-B.txt.gz: worst op failed 99.83%"
-result/revision-20261123/mixR,mixR-onlinev4fullreset-rep1-x3,mixR,onlinev4fullreset,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C | YCSB ycsb-run-B.txt.gz: worst op failed 99.83%"
-result/revision-20261123/mixR,mixR-onlinev4nodrift-rep1-x3,mixR,onlinev4nodrift,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C | YCSB ycsb-run-B.txt.gz: worst op failed 9.98%"
+result/revision-20261123/mixR,mixR-onlinev4-rep1-x3,mixR,onlinev4,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C | YCSB ycsb-run-B.txt.gz: worst op failed 99.83% | SQLITE_FULL in ycsb-run-B.txt.gz"
+result/revision-20261123/mixR,mixR-onlinev4-rep2-x3,mixR,onlinev4,2,-x3,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C | YCSB ycsb-run-B.txt.gz: worst op failed 99.83% | SQLITE_FULL in ycsb-run-B.txt.gz"
+result/revision-20261123/mixR,mixR-onlinev4fullreset-rep1-x3,mixR,onlinev4fullreset,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C | YCSB ycsb-run-B.txt.gz: worst op failed 99.83% | SQLITE_FULL in ycsb-run-B.txt.gz"
+result/revision-20261123/mixR,mixR-onlinev4nodrift-rep1-x3,mixR,onlinev4nodrift,1,-x3,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C | YCSB ycsb-run-B.txt.gz: worst op failed 9.98% | SQLITE_FULL in ycsb-run-B.txt.gz"
 result/revision-20261123/mixR,mixR-onlinev4nodrift-rep1-x3-smoke,mixR,onlinev4nodrift,1,-x3-smoke,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C"
-result/revision-20261123/mixR,mixR-onlinev4nodrift-rep2-x3,mixR,onlinev4nodrift,2,-x3,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C | YCSB ycsb-run-B.txt.gz: worst op failed 99.83%"
+result/revision-20261123/mixR,mixR-onlinev4nodrift-rep2-x3,mixR,onlinev4nodrift,2,-x3,A:test4 B:sqlite-a C:test4,A,False,True,"INVALID-20261124 lists phases B,C | YCSB ycsb-run-B.txt.gz: worst op failed 99.83% | SQLITE_FULL in ycsb-run-B.txt.gz"
 result/screen-20261008,scrYU-fixed37,,,,,A:sqlite-uniform B:none,AB,True,True,
 result/screen-20261008,scrYU-fixed47,,,,,A:sqlite-uniform B:none,AB,True,True,
 result/v6-mixT-20261005,mixT-onlinev6-rep1,mixT,onlinev6,1,,A:sqlite-a B:oltp C:varmail D:sqlite-a E:sqlite-b F:test4 G:varmail H:sqlite-a I:oltp,ABCDEFGHI,True,True,

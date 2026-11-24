@@ -15,7 +15,8 @@ import validity as V
 ROOT = V.ROOT
 TARGETS = ['PAPER_KCI_DRAFT.md', 'PAPER_EXPERIMENTS_ONLY.md', 'RESULTS_ALL.md', 'RESULTS_TABLE.md', 'MIX_TABLES.md', 'V4_VS_CAT.md',
            'WRITEUP_DRAFT.md', 'TECHNICAL_SUMMARY.md', 'EXPERIMENTS_OVERVIEW.md', 'INTERVIEW_ONEPAGER.md', 'FIGURE_REVIEW.md', 'ALL_RUNS.csv',
-           'figs/data/*.csv', 'figs/data/*.xlsx', 'result/final-20261123/tables/*.csv', 'result/final-20261123/report.md']
+           'figs/data/*.csv', 'figs/data/*.xlsx', 'result/final-20261123/tables/*.csv', 'result/final-20261123/report.md',
+           'report/final-e1-validation/tables/*.md', 'report/final-e1-validation/tables/*.csv', 'report/final-e1-validation/figs/*.json']
 INVENTORY = {'ALL_RUNS.csv'}
 ALLOW_FILE = ROOT / 'result/final-e1-validation/output_check_allow.txt'
 ALLOW = [tuple(l.split('#', 1)[0].strip().split('|', 1)) for l in (ALLOW_FILE.read_text().splitlines() if ALLOW_FILE.exists() else [])
@@ -54,10 +55,17 @@ def lines_of(p):
             yield str(i), l, None
 
 
+PAPER_SCOPE = ['PAPER_KCI_DRAFT.md', 'PAPER_EXPERIMENTS_ONLY.md', 'report/final-e1-validation/tables/table6_valid.*',
+               'report/final-e1-validation/tables/RESULTS_ALL.gated.md', 'report/final-e1-validation/figs/*.json']
+
+
 def main(extra):
+    """--paper: only the manuscript and the files it now cites (final-paper gate). --only: only the given paths."""
     global TARGETS
     if extra and extra[0] == '--only':
         TARGETS, extra = [], extra[1:]
+    elif extra and extra[0] == '--paper':
+        TARGETS, extra = PAPER_SCOPE, extra[1:]
     runs = invalid_run_names()
     run_re = re.compile(r'\b(' + '|'.join(sorted(map(re.escape, runs), key=len, reverse=True)) + r')\b') if runs else None
     labels = sorted({l for ls in V.CONTAMINATED_LABELS.values() for l in ls}, key=len, reverse=True)
@@ -96,7 +104,7 @@ def main(extra):
                 status = 'HIT'
             hits += status == 'HIT'
             out.append(dict(file=(str(p.relative_to(ROOT)) if p.is_relative_to(ROOT) else str(p)), where=loc, status=status, match='; '.join(what), text=l.strip()[:220]))
-    o = ROOT / 'result/final-e1-validation/output_check.csv'
+    o = ROOT / 'result/final-e1-validation' / ('output_check_paper.csv' if TARGETS is PAPER_SCOPE else 'output_check.csv')
     with open(o, 'w', newline='') as f:
         w = csv.DictWriter(f, fieldnames=['file', 'where', 'status', 'match', 'text']); w.writeheader(); w.writerows(out)
     by = {}

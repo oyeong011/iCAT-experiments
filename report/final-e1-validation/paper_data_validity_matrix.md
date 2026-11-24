@@ -31,7 +31,7 @@
 | 그림 6 (fig6_workload_waf) / fig14 (4개 응용 전환, 30초 WAF) | `mix{O,F,J,P}-*-rep1-x3` | J, P | J 실패 | **YCSB-A → YCSB-B 패널 무효.** 나머지 3개 유효 | `fig6-workloads.py`, `fig-four.py` (J 패널 자동 제외), `fig14-excel.py`, `fig6-workloads-excel.py` (J 행 제외) | 재생성. `figs/data/fig14_*.csv`, `fig6_lines_YCSB-A-to-YCSB-B.csv`는 오염 데이터 그대로 커밋돼 있다(덮어쓰지 않음) |
 | 그림 7 trace (`fig7_v4_trace.csv`, v4 선택 과정) | O, F, J, P, mixR, 10 h | mixR, J | — | mixR은 A 단계만 유효, J는 무효 | `fig7-data.py`, `fig7-plot.py`, `fig7-excel.py` (검사 적용) | 재생성 |
 | 표 A1 (1배 14종) | `mix*-rep{1,2,3}` 1배 | 6종 | — | A, B, G, H, J 무효(G는 검증 불가). 나머지 유효 | `all-tables.py` §4 (검사 적용, "–") | 표 A1 재생성 |
-| 순위 표 "빠른 3영역 → SQLite", "SQLite 단일" (RESULTS_ALL §3) | `mixA-arm*-rep1`, `sweep-20260915/rank-sqlite-a.txt` | 예 | mixA 실패 | mixA **무효.** SQLite 단독 스윕은 **검증 불가**(원시 YCSB 로그가 저장소에 없고 순위 파일만 있다) | `all-tables.py` §3 (mixA 열 "무효") | 논문에 쓰지 않는다 |
+| 순위 표 "빠른 3영역 → SQLite", "SQLite 단일" (RESULTS_ALL §3) | `mixA-arm*-rep1`, `sweep-20260915/rank-sqlite-a.txt` | 예 | mixA 실패 | mixA **무효.** SQLite 단독 스윕은 ~~검증 불가~~ → **유효** (11-24 정정: YCSB 출력이 `result/sqlite/*.console.txt` 안에 있었고 87개 run 모두 실패 0 %, `recheck_sqlite_single.csv`) | `all-tables.py` §3 (mixA 열 "무효") | 논문에 쓰지 않는다 |
 
 ## 2. Revision 대응 실험
 
@@ -83,3 +83,12 @@
 7. 그림 6/fig14: YCSB-A → YCSB-B 패널 제거 후 재생성.
 8. V4_VS_CAT §5 고정 요약 문장 재작성.
 9. 재생성 후 `check_outputs.py`가 PASS인지 확인.
+
+## 5. 갱신 (11-24 오후 2차)
+
+- 원고 수정을 반영했다(`manuscript_revision_list.md`).
+  - 그림 7·8·9는 `report/final-e1-validation/figs/`에서 재생성했다.
+  - 표 6은 3행으로 줄였다.
+  - 표 8·그림 10은 "사용 금지" 문단으로 바꿨다.
+- 논문 범위 검사(`check_outputs.py --paper`): **PASS**(HIT 0).
+- 저장소 전체 검사: FAIL(HIT 1,376). 모두 논문에 들어가지 않는 과거 산출물이다(`residual_check.md`).

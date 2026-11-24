@@ -14655,3 +14655,24 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 문서: `report/final-e1-validation/paper_data_validity_matrix.md`, README §7.
 
 - 정정 (11-24 14:35): 위 항목의 "FAIL(HIT 1,434)"는 label-only(값 없는 라벨 줄) 분류를 넣기 전 값이다. 최종 검사기 기준은 HIT 1,382다. 원문은 그대로 둔다.
+
+### 2026-11-24 14:40–16:40 고컴: 원고 데이터 정합성 수정 — 새 실험 없음
+
+- 지시: 고컴 다음 작업 지시(논문 데이터 정합성 및 원고 정리). 브랜치는 `report/data-validity-20261124`다. NVMeVirt 실행, 승컴 개입, 기존 결과 덮어쓰기는 하지 않았다.
+- HIT 1,382건 분류(`output_check_classified.csv`): 원고 6건(본문 2, 표 4), 나머지 1,376건은 논문 밖의 과거 그림 데이터와 보고서다.
+- 그림 재생성: `analysis/figures.py`에 검사를 적용해 `report/final-e1-validation/figs/`로 출력했다. 기존 `figs/`는 덮어쓰지 않았다.
+  - 하드코딩된 제목 3개(그림 4 "13종 중 4종", 그림 8 "최댓값은 iCAT-v4가 최소", "(2~6개)")를 데이터에서 계산하도록 바꿨다. 수치는 `paper_fig_numbers.json`에 남긴다.
+- 계산값:
+  - 그림 7: 유효 8종 중 3종 우수(−1.1 ~ −5.3 %), 5종 열세(+3.2 ~ +4.9 %)
+  - 견고성 6종: 평균 CAT-Best 0.2 / v4 5.0 / Robust 5.0 %, 최댓값 1.3 / 15.2 / 20.2 %
+  - 표 6: O, F, P 행이며 값은 원래와 같다
+  - v4 대 CAT-Default: 유효 3종 모두 낮다(−4.3 ~ −18.3 %)
+  - 4.1절 순서: 유효 17종 중 13종에서 성립
+- 원고(`PAPER_KCI_DRAFT.md`, `PAPER_EXPERIMENTS_ONLY.md`): 수정 21건. 표 8·그림 10은 "사용 금지" 문단으로 바꿨다. 목록은 `report/final-e1-validation/manuscript_revision_list.md`에 있다.
+- 정정: 앞선 매트릭스의 "SQLite 단독 스윕 검증 불가"는 틀렸다. YCSB 출력이 `result/sqlite/*.console.txt` 안에 있었고, 87개 run 모두 실패 0 %다. 유효로 정정했다(원문은 취소선으로 남김).
+- 검사 보강:
+  - `validity.py`: SQLITE_FULL이 한 번이라도 나오면 무효다. 기존 판정이 바뀐 run은 0개다.
+  - `e1_analyze.py`: n<3이면 통계를 내지 않는다.
+- 작업 중 사고: 셸 명령의 잘못된 `cat` 한 줄이 표준 입력을 기다려 약 20분 멈췄다. 빈 임시 파일(EXPERIMENTS_LOG_TMP)은 지웠다. 데이터 영향은 없다.
+- 최종 검사 결과는 아래 줄에 덧붙인다.
+- 최종 검사 (16:40): `check_outputs.py --paper` PASS(HIT 0). 전체는 FAIL(HIT 1,376, 모두 논문 밖의 과거 산출물). 최종본 판정은 보류한다(`report/final-e1-validation/residual_check.md` §3).

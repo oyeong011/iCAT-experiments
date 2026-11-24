@@ -1,0 +1,23 @@
+kind,workload,status,greedy,default,best,robust,icat
+single,거래 DB 흉내,holds,1.634,1.522,1.465,1.427,1.592
+single,메일 서버 (15만 파일),VIOLATED: iCAT<Greedy,4.762,4.623,3.537,3.954,4.927
+single,hot/cold 2영역,holds,1.594,1.446,1.420,1.415,1.591
+single,느린 3영역,holds,2.034,1.729,1.714,1.716,2.015
+single,빠른 3영역,holds,2.186,1.938,1.739,1.787,1.950
+single,hot 위치 이동,holds,1.633,1.595,1.591,1.585,1.612
+single,SQLite 읽기50/수정50,holds,1.503,1.272,1.159,1.164,1.342
+single,SQLite 읽기95/수정5,VIOLATED: Default<iCAT,1.281,1.113,1.070,1.071,1.104
+mix-1x,빠른 3영역 → SQLite,EXCLUDED (invalid data),,,,,
+mix-1x,SQLite → 빠른 3영역,EXCLUDED (invalid data),,,,,
+mix-1x,느린 → 빠른 3영역,holds,2.244,1.892,1.750,1.780,1.999
+mix-1x,빠른 → 느린 3영역,holds,2.252,1.943,1.777,1.812,2.051
+mix-1x,빠른 3영역 → 메일 서버,holds,3.719,3.066,2.377,2.582,3.457
+mix-1x,빠른 3영역 + SQLite 동시,EXCLUDED (invalid data),,,,,
+mix-1x,느린 → 빠른 → SQLite,EXCLUDED (invalid data),,,,,
+mix-1x,SQLite 수정 많음 → 읽기 위주,EXCLUDED (invalid data),,,,,
+mix-1x,뜨거운 구역 512 → 128 MB,holds,2.337,1.956,1.777,1.802,2.020
+mix-1x,빠른 ↔ 느린 60초 × 5,holds,2.024,1.667,1.543,1.569,1.767
+mix-1x,초당 1만 → 5만 서서히,holds,2.187,1.808,1.702,1.725,1.901
+mix-1x,거래 DB 흉내 → 메일 서버,VIOLATED: Default<iCAT,3.116,2.325,1.851,2.004,1.946
+mix-1x,SQLite → 거래 DB 흉내,VIOLATED: Default<iCAT,2.018,1.231,1.168,1.157,1.171
+mix-1x,빠른 → 5분 쉼 → 빠른,holds,2.245,1.880,1.736,1.770,1.936

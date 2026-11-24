@@ -158,7 +158,9 @@ def main(globs):
                            ci95=f'[{m - tq(n - 1) * sd / math.sqrt(n):.4f}, {m + tq(n - 1) * sd / math.sqrt(n):.4f}]' if n > 1 else '',
                            welch_minus_v4='', welch_ci95='', welch_df='', claim_allowed='')
                 base = vals['onlinev4']
-                if p != 'onlinev4' and n >= 2 and len(base) >= 2:
+                if n < 3:   # 11-24 instruction: statistics only for policies with 3 valid repetitions
+                    row.update(ci95='', sd='', claim_allowed='n<3: 통계 없음'); stats.append(row); continue
+                if p != 'onlinev4' and len(base) >= 3:
                     va, vb = st.variance(v) / n, st.variance(base) / len(base); diff = m - st.mean(base); se = math.sqrt(va + vb)
                     df = (va + vb) ** 2 / (va ** 2 / (n - 1) + vb ** 2 / (len(base) - 1)) if se > 0 else float('nan')
                     q = tq(df) if df == df else float('nan')

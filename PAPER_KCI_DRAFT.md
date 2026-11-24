@@ -1,3 +1,4 @@
+<!-- 2026-11-24 데이터 유효성 수정(고컴): report/final-e1-validation/manuscript_revision_list.md -->
 <!--
 투고용 초안 v3 (2026-10-01). 처음 보는 리뷰어 심사(수정 후 재심) 반영본.
 - 【결과 대기】: queue31(전환 워크로드 고정 조합 선별, 10/2) · queue32(iCAT-v4 n=3 반복, 구성 요소 제거, 10/4) 결과가 들어갈 자리.
@@ -17,13 +18,13 @@
 
 ## 요 약
 
-SSD의 가비지 컬렉션(GC)은 희생 블록의 선택에 따라 쓰기 증폭(WAF)이 크게 달라진다. 블록 나이를 고려하는 CAT 정책은 세 파라미터의 조합에 따라 동일 워크로드에서도 WAF가 최대 약 28% 차이 나며, 최적 조합은 워크로드마다 다르다. 이 파라미터를 실행 중에 선택하도록 공개된 iCAT 구현은 60개 조합 중 하나를 discounted UCB로 고른다. 본 논문은 NVMeVirt 가상 SSD에서 iCAT을 재현하고 Greedy, 고정 파라미터 CAT과 비교하였다. iCAT은 기본 길이(10~30분) 실행에서 단일 워크로드와 전환 워크로드 전체에서 원저자 코드의 기본 파라미터보다 WAF가 높았다. 학습 기록을 분석한 결과, 초기 순회 이후에도 실행 시간의 13%를 저성능 조합에 사용하는 탐색 구조가 주된 원인이었으며, 판단 구간을 늘려 측정 변동을 줄이는 것만으로는 개선되지 않았다. 이에 모든 평가 워크로드에서 최하위였던 조합의 제외, 수렴 후 탐색 중단, 실행 중 후보 제거와 이웃 조합 탐색을 적용한 iCAT-v4를 설계하였다. iCAT-v4는 순회 이후 저성능 조합 사용을 1.6%로 낮추었고, 단일 워크로드 10시간 실행에서 같은 방식으로 재측정한 상위 고정 조합 15개 중 5위에 해당하는 WAF를 보였다. 전환 워크로드에서는 같은 길이로 비교한 기본 파라미터보다 모든 경우에 WAF가 낮았으나, 사전에 잘 선정한 고정 조합과는 워크로드에 따라 우열이 갈렸다. 단일 워크로드가 지속되는 경우 학습기가 그 워크로드의 최상위 고정 조합에 근접할 수는 있으나 넘기 어려운 이유를 논의한다.
+SSD의 가비지 컬렉션(GC)은 희생 블록의 선택에 따라 쓰기 증폭(WAF)이 크게 달라진다. 블록 나이를 고려하는 CAT 정책은 세 파라미터의 조합에 따라 동일 워크로드에서도 WAF가 최대 약 28% 차이 나며, 최적 조합은 워크로드마다 다르다. 이 파라미터를 실행 중에 선택하도록 공개된 iCAT 구현은 60개 조합 중 하나를 discounted UCB로 고른다. 본 논문은 NVMeVirt 가상 SSD에서 iCAT을 재현하고 Greedy, 고정 파라미터 CAT과 비교하였다. iCAT은 기본 길이(10~30분) 실행에서 데이터 유효성 검사를 통과한 단일·전환 워크로드 17종 중 14종에서 원저자 코드의 기본 파라미터보다 WAF가 높았다. 학습 기록을 분석한 결과, 초기 순회 이후에도 실행 시간의 13%를 저성능 조합에 사용하는 탐색 구조가 주된 원인이었으며, 판단 구간을 늘려 측정 변동을 줄이는 것만으로는 개선되지 않았다. 이에 모든 평가 워크로드에서 최하위였던 조합의 제외, 수렴 후 탐색 중단, 실행 중 후보 제거와 이웃 조합 탐색을 적용한 iCAT-v4를 설계하였다. iCAT-v4는 순회 이후 저성능 조합 사용을 1.6%로 낮추었고, 단일 워크로드 10시간 실행에서 같은 방식으로 재측정한 상위 고정 조합 15개 중 5위에 해당하는 WAF를 보였다. 전환 워크로드에서는 같은 길이로 비교한 기본 파라미터보다 비교한 3종 모두에서 WAF가 낮았으나, 사전에 잘 선정한 고정 조합과는 워크로드에 따라 우열이 갈렸다. 단일 워크로드가 지속되는 경우 학습기가 그 워크로드의 최상위 고정 조합에 근접할 수는 있으나 넘기 어려운 이유를 논의한다.
 
 **키워드**: SSD, 가비지 컬렉션, 쓰기 증폭, 온라인 학습, 멀티암드 밴딧, 재현 연구
 
 ## Abstract
 
-Write amplification (WAF) of an SSD depends heavily on how garbage collection (GC) selects its victim block. The age-aware CAT policy varies WAF by up to about 28% on the same workload depending on three parameters, and the best setting differs across workloads. The publicly available iCAT implementation selects one of 60 settings at run time with a discounted UCB learner. We reproduce iCAT on the NVMeVirt virtual SSD and compare it with Greedy and fixed-parameter CAT. In base-length runs (10–30 minutes), iCAT showed higher WAF than the authors' default parameters on every steady and phase-changing workload. Log analysis shows that the main cause is an exploration structure that keeps spending 13% of the run on poor settings after the initial sweep; reducing measurement variance with a longer decision window alone did not help. We design iCAT-v4, which excludes the settings that were worst on every evaluated workload, stops exploration after convergence, eliminates candidates online, and probes only neighboring settings. After the initial sweep, iCAT-v4 spends 1.6% of the run on poor settings, and over a 10-hour steady run it reaches the WAF of the 5th of 15 top fixed settings re-measured with the same method. On phase-changing workloads it outperforms the default parameters in every same-length comparison, while against well-chosen fixed settings the outcome depends on the workload. We discuss why a learner can approach but hardly exceed the best fixed setting of a single steady workload.
+Write amplification (WAF) of an SSD depends heavily on how garbage collection (GC) selects its victim block. The age-aware CAT policy varies WAF by up to about 28% on the same workload depending on three parameters, and the best setting differs across workloads. The publicly available iCAT implementation selects one of 60 settings at run time with a discounted UCB learner. We reproduce iCAT on the NVMeVirt virtual SSD and compare it with Greedy and fixed-parameter CAT. In base-length runs (10–30 minutes), iCAT showed higher WAF than the authors' default parameters on 14 of the 17 steady and phase-changing workloads that passed the data-validity check. Log analysis shows that the main cause is an exploration structure that keeps spending 13% of the run on poor settings after the initial sweep; reducing measurement variance with a longer decision window alone did not help. We design iCAT-v4, which excludes the settings that were worst on every evaluated workload, stops exploration after convergence, eliminates candidates online, and probes only neighboring settings. After the initial sweep, iCAT-v4 spends 1.6% of the run on poor settings, and over a 10-hour steady run it reaches the WAF of the 5th of 15 top fixed settings re-measured with the same method. On phase-changing workloads it outperforms the default parameters in all three valid same-length comparisons, while against well-chosen fixed settings the outcome depends on the workload. We discuss why a learner can approach but hardly exceed the best fixed setting of a single steady workload.
 
 **Keywords**: SSD, Garbage Collection, Write Amplification, Online Learning, Multi-armed Bandit, Reproducibility
 
@@ -122,23 +123,23 @@ WAF는 두 방식으로 측정하였다. **워밍업 제외 계측**(원 저장�
 
 | 이름 | 구성 | 1배 길이 | 측정한 길이 |
 |---|---|---|---|
-| FIO-Fast → YCSB-A | FIO-Fast 10분 분량 → YCSB-A(적재 + 400만 연산) | 약 16분 | 1, 3, 6배 |
-| YCSB-A → FIO-Fast | 역순 | 약 25분 | 1, 3배 |
+| FIO-Fast → YCSB-A | FIO-Fast 10분 분량 → YCSB-A(적재 + 400만 연산) | 약 16분 | 1, 3, 6배 (결과 무효: YCSB 오류, 제외) |
+| YCSB-A → FIO-Fast | 역순 | 약 25분 | 1, 3배 (결과 무효: YCSB 오류, 제외) |
 | FIO-Slow → FIO-Fast | FIO-Slow 10분 → FIO-Fast 10분 분량 | 20분 | 1, 3, 6배 |
 | FIO-Fast → FIO-Slow | 역순 | 20분 | 1, 3, 6배 |
 | FIO-Fast (hot 512 → 128 MB) | FIO-Fast → 핫 영역만 128 MB로 줄인 FIO-Fast(속도 동일) | 20분 | 1, 3, 6배 |
 | FIO-Fast → Varmail | FIO-Fast 10분 분량 → Varmail 5분 | 약 15분 | 1, 3배 |
 | OLTP → Varmail | OLTP(파일 64 MB) 5분 → Varmail 5분 | 10분 | 1, 3배 |
 | YCSB-A → OLTP | YCSB-A(25만 레코드) → OLTP(파일 32 MB) 5분 | 약 10분 | 1, 3배 |
-| YCSB-A → YCSB-B | 같은 데이터베이스에서 갱신 50% → 5% | 약 10분 | 1, 3배 |
-| FIO-Slow → FIO-Fast → YCSB-A | 3단계 | 약 25분 | 1, 3배 |
-| FIO-Fast ∥ YCSB-A | FIO-Fast(쓰기량 1/2)와 YCSB-A를 동시에 실행 | 약 12분 | 1, 3배 |
+| YCSB-A → YCSB-B | 같은 데이터베이스에서 갱신 50% → 5% | 약 10분 | 1, 3배 (결과 무효: YCSB 오류, 제외) |
+| FIO-Slow → FIO-Fast → YCSB-A | 3단계 | 약 25분 | 1, 3배 (결과 무효: YCSB 오류, 제외) |
+| FIO-Fast ∥ YCSB-A | FIO-Fast(쓰기량 1/2)와 YCSB-A를 동시에 실행 | 약 12분 | 1, 3배 (YCSB 출력 미기록으로 검증 불가, 제외) |
 | FIO-Fast ↔ FIO-Slow (60 s × 5) | FIO-Fast 60초 분량과 FIO-Slow 60초를 5회 번갈아 실행 | 10분 | 1, 3배 |
 | FIO-Fast → 유휴 → FIO-Fast | FIO-Fast 5분 분량 → I/O 없이 5분 → FIO-Fast 5분 분량 | 15분 | 1, 3배 |
 | 점진적 부하 증가 | FIO-Slow 배치에서 초당 쓰기를 2분마다 10K → 50K로 증가 | 10분 | 1배 (단계 길이가 고정되어 길이 확장 불가) |
-| 3단계 균등 전환 | FIO-Fast → YCSB-A → FIO-Fast, 단계별 호스트 쓰기량 동일(각 약 7,200만 페이지) | – | 3배 (약 2.3시간) |
+| 3단계 균등 전환 | FIO-Fast → YCSB-A → FIO-Fast, 단계별 호스트 쓰기량 동일(각 약 7,200만 페이지) | – | 3배 (약 2.3시간; 단계 2·3 결과 무효, 재측정 중) |
 
-전환 워크로드의 1배 길이 실행은 학습기의 초기 순회(iCAT 약 30분, iCAT-v3·v4 약 15분)보다 짧거나 비슷하므로, 학습기 평가는 3배 이상 길이에서 수행하였다. 3배 길이 비교 대상은 길이 확장이 불가한 점진적 부하 증가와 별도 설계한 3단계 균등 전환을 제외한 13종이다.
+전환 워크로드의 1배 길이 실행은 학습기의 초기 순회(iCAT 약 30분, iCAT-v3·v4 약 15분)보다 짧거나 비슷하므로, 학습기 평가는 3배 이상 길이에서 수행하였다. 3배 길이 비교 대상은 길이 확장이 불가한 점진적 부하 증가와 별도 설계한 3단계 균등 전환을 제외한 13종이며, 이 중 YCSB 단계에서 데이터베이스 공간 부족(SQLITE_FULL)으로 연산이 실패한 5종을 제외한 8종을 결과에 사용한다(8장 한계 7).
 
 ### 3.3 재현 검증과 파라미터 민감도 (Q1)
 
@@ -154,7 +155,7 @@ WAF는 두 방식으로 측정하였다. **워밍업 제외 계측**(원 저장�
 
 ### 4.1 결과
 
-1배 길이(10~30분)로 단일 워크로드 9종과 전환 워크로드 14종을 각 3회 실행한 결과, 모든 경우에 WAF 순서는 CAT-Best, CAT-Robust < CAT-Default < iCAT < Greedy였다(전체 결과는 부록 표 A1). FIO-Fast 10분 실행에서 iCAT의 WAF(2.001)는 같은 방식으로 재측정한 상위 고정 조합 15개(6.1절) 모두와 CAT-Default(1.974)보다 높았다. 실행이 길어지면 iCAT도 개선되어, FIO-Fast 3시간 실행(1.884)과 3단계 균등 전환(2.288)에서는 CAT-Default(1.974, 2.410)보다 낮아졌다. 그러나 CAT-Best와 CAT-Robust보다는 모든 길이에서 높았다.
+1배 길이(10~30분)로 단일 워크로드와 전환 워크로드를 각 3회 실행하였다. 데이터 유효성 검사를 통과한 단일 워크로드 8종과 전환 워크로드 9종(전환 5종은 YCSB 단계 오류로 제외) 중 13종에서 WAF 순서는 CAT-Best, CAT-Robust < CAT-Default < iCAT < Greedy였다(부록 표 A1). 예외는 SQLite 읽기95/수정5 단독, OLTP → Varmail, YCSB-A → OLTP에서 iCAT이 CAT-Default보다 낮았던 3종과, Varmail 단독에서 iCAT이 Greedy보다 높았던 1종이다. FIO-Fast 10분 실행에서 iCAT의 WAF(2.001)는 같은 방식으로 재측정한 상위 고정 조합 15개(6.1절) 모두와 CAT-Default(1.974)보다 높았다. 실행이 길어지면 iCAT도 개선되어, FIO-Fast 3시간 실행(1.884)에서는 CAT-Default(1.974)보다 낮아졌다. 그러나 CAT-Best와 CAT-Robust보다는 모든 길이에서 높았다.
 
 ### 4.2 원인: 측정 변동보다 탐색 비용
 
@@ -234,65 +235,43 @@ iCAT-v4는 iCAT-v3의 변경을 모두 포함하고 다음을 추가한다.
 
 ### 6.2 전환 워크로드
 
-**CAT-Default, CAT-Robust와의 비교.** 3배 길이 전환 워크로드 13종에서 iCAT-v4를 CAT-Robust와 비교하였다(그림 7). iCAT-v4는 4종에서 1.1~5.3% 낮은 WAF를 보였고, 9종에서 3.2~11.5% 높았다. 우수한 4종에는 CAT-Robust가 부적합한 단계(Varmail에서 arm 50은 측정한 상위 조합보다 16% 높음)가 포함되었고, 열세인 9종은 CAT-Robust가 상위권인 fio 단계와 YCSB-A 단계로 구성되었다. CAT-Default를 같은 길이로 측정한 5종(3단계 균등 전환 포함)에서는 iCAT-v4가 모두 낮았다(4.3~18.3%). **현재 iCAT-v4는 우수했던 4종만 2~3회, 나머지 9종은 1회 실행하였다.** 모든 전환 워크로드를 3회로 맞춘 결과로 그림 7을 갱신할 예정이다【결과 대기】.
+**CAT-Default, CAT-Robust와의 비교.** 3배 길이 전환 워크로드 중 데이터 유효성 검사를 통과한 8종에서 iCAT-v4를 CAT-Robust와 비교하였다(그림 7). iCAT-v4는 3종에서 1.1~5.3% 낮은 WAF를 보였고, 5종에서 3.2~4.9% 높았다. 우수한 3종에는 CAT-Robust가 부적합한 단계(Varmail에서 arm 50은 측정한 상위 조합보다 16% 높음)가 포함되었고, 열세인 5종은 CAT-Robust가 상위권인 fio 단계로만 구성되었다. CAT-Default를 같은 길이로 측정한 유효 3종에서는 iCAT-v4가 모두 낮았다(4.3~18.3%). **현재 iCAT-v4는 우수했던 3종만 2~3회, 나머지 5종은 1회 실행하였다.** 모든 전환 워크로드를 3회로 맞춘 결과로 그림 7을 갱신할 예정이다【결과 대기】.
 
-![그림 7](figs/fig4_mixes_v4_vs_robust.png)
+![그림 7](report/final-e1-validation/figs/fig4_mixes_v4_vs_robust.png)
 
-**그림 7.** 3배 길이 전환 워크로드 13종에서 CAT-Robust 대비 iCAT-v4의 WAF 증가율 (음수가 iCAT-v4 우수, n은 iCAT-v4 반복 횟수; CAT-Robust 1회).
+**그림 7.** 3배 길이 전환 워크로드 8종(데이터 유효성 검사 통과)에서 CAT-Robust 대비 iCAT-v4의 WAF 증가율 (음수가 iCAT-v4 우수, n은 iCAT-v4 반복 횟수; CAT-Robust 1회).
 
-**상위 고정 조합과의 비교.** iCAT-v4가 CAT-Robust보다 우수했던 4종에서 고정 조합 6개(arm 47, 46, 31, 17, 37, 50)를 같은 길이로 측정하였다(표 6).
+**상위 고정 조합과의 비교.** iCAT-v4가 CAT-Robust보다 우수했던 3종에서 고정 조합 6개(arm 47, 46, 31, 17, 37, 50)를 같은 길이로 측정하였다(표 6).
 
-**표 6.** 전환 워크로드 4종에서 iCAT-v4와 고정 조합 6개의 WAF (3배 길이; iCAT-v4는 2~3회 평균, 고정 조합 1회)
+**표 6.** 전환 워크로드 3종에서 iCAT-v4와 고정 조합 6개의 WAF (3배 길이; iCAT-v4는 2~3회 평균, 고정 조합 1회)
 
 | 전환 워크로드 | iCAT-v4 (n) | arm 47 (Best) | arm 17 | arm 50 (Robust) | arm 46 | arm 31 | arm 37 (Default) | iCAT-v4 순위 |
 |---|---:|---:|---:|---:|---:|---:|---:|---|
 | OLTP → Varmail | **1.859** (3) | 1.910 | 1.935 | 1.963 | 2.167 | 2.177 | 2.226 | 1/7 |
 | FIO-Fast → Varmail | 2.352 (2) | **2.042** | 2.503 | 2.454 | 2.367 | 2.468 | 2.879 | 2/7 |
-| YCSB-A → YCSB-B | 1.366 (2) | 1.414 | **1.208** | 1.390 | 1.515 | 1.524 | 1.470 | 2/7 |
 | YCSB-A → OLTP | 1.127 (2) | 1.136 | **1.123** | 1.140 | 1.174 | 1.190 | 1.178 | 2/7 |
 
-iCAT-v4는 4종 모두에서 1~2위였으며, OLTP → Varmail에서는 측정한 고정 조합 6개보다 모두 낮았다(arm 47 대비 −2.7%). 그러나 이 차이는 iCAT-v4의 반복 간 차이(약 2%)와 비슷하고 고정 조합은 1회 측정이므로, 고정 조합 반복 측정 결과가 나오기 전에는 "동등 이상"으로 해석한다【결과 대기: arm 47·17·50 각 3회】. 나머지 3종에서는 전 단계에 적합한 단일 조합(arm 47 또는 arm 17)이 존재하였고, FIO-Fast → Varmail에서 iCAT-v4는 arm 47보다 15.2% 높았다.
+iCAT-v4는 3종 모두에서 1~2위였으며, OLTP → Varmail에서는 측정한 고정 조합 6개보다 모두 낮았다(arm 47 대비 −2.7%). 그러나 이 차이는 iCAT-v4의 반복 간 차이(약 2%)와 비슷하고 고정 조합은 1회 측정이므로, 고정 조합 반복 측정 결과가 나오기 전에는 "동등 이상"으로 해석한다【결과 대기: arm 47·17·50 각 3회】. 나머지 2종에서는 전 단계에 적합한 단일 조합(arm 47 또는 arm 17)이 존재하였고, FIO-Fast → Varmail에서 iCAT-v4는 arm 47보다 15.2% 높았다.
 
-![그림 8](figs/fig7_mix_loss_by_workload.png)
+![그림 8](report/final-e1-validation/figs/fig7_mix_loss_by_workload.png)
 
-**그림 8.** 전환 워크로드별, 측정한 고정 조합 중 최상위 대비 WAF 증가율 (3배 길이; 괄호는 측정한 고정 조합 수, *는 2개만 측정). 【선별 실험 결과로 갱신 예정】
+**그림 8.** 전환 워크로드별(데이터 유효성 검사 통과 6종), 측정한 고정 조합 중 최상위 대비 WAF 증가율 (3배 길이; 괄호는 측정한 고정 조합 수, *는 2개만 측정). 【선별 실험 결과로 갱신 예정】
 
-**견고성.** iCAT-v4, CAT-Best, CAT-Robust를 모두 같은 길이로 측정한 전환 워크로드 6종에서 측정 고정 조합 중 최상위 대비 WAF 증가율의 평균은 CAT-Best 3.0%, iCAT-v4 6.5%, CAT-Robust 7.2%였고, 최댓값은 iCAT-v4 15.2%(FIO-Fast → Varmail), CAT-Best 17.0%(YCSB-A → YCSB-B), CAT-Robust 20.2%였다(그림 9). 원 저장소 워크로드로 선정된 CAT-Robust는 전환 워크로드에서 견고하지 않았다. iCAT-v4의 최댓값이 CAT-Best보다 작으나, 차이(1.8%p)가 작고 기준 조합 수가 워크로드마다 2~6개로 달라 견고성의 우위를 주장하기에는 근거가 부족하다.
+**견고성.** 데이터 유효성 검사를 통과하고 iCAT-v4, CAT-Best, CAT-Robust를 모두 같은 길이로 측정한 전환 워크로드 6종에서 측정 고정 조합 중 최상위 대비 WAF 증가율의 평균은 CAT-Best 0.2%, iCAT-v4 5.0%, CAT-Robust 5.0%였고, 최댓값은 CAT-Best 1.3%(YCSB-A → OLTP), iCAT-v4 15.2%(FIO-Fast → Varmail), CAT-Robust 20.2%(FIO-Fast → Varmail)였다(그림 9). 원 저장소 워크로드로 선정된 CAT-Robust는 전환 워크로드에서 견고하지 않았다. 이 6종에서는 CAT-Best가 평균과 최댓값 모두 가장 작았으며, 기준 조합 수가 워크로드마다 2~7개로 달라 해석에 주의가 필요하다.
 
-![그림 9](figs/fig8_robustness.png)
+![그림 9](report/final-e1-validation/figs/fig8_robustness.png)
 
-**그림 9.** 전환 워크로드 6종에서 정책별 최상위 고정 조합 대비 WAF 증가율의 평균과 최댓값 (3배 길이).
+**그림 9.** 전환 워크로드 6종(데이터 유효성 검사 통과)에서 정책별 최상위 고정 조합 대비 WAF 증가율의 평균과 최댓값 (3배 길이).
 
 【결과 대기 · 표 7 자리: 전환 워크로드 11종에서 고정 조합 16개를 1배 길이로 선별한 뒤 상위 3개를 3배 길이로 확인한 결과. 워크로드별 최상위 고정 조합, 전체에서 평균·최대 WAF 증가율이 가장 작은 고정 조합, iCAT-v4(n=3)의 평균·최대 WAF 증가율.】
 
-**3단계 균등 전환.** 단계별 최상위 조합이 다른 워크로드에서 학습기의 적응을 보기 위해 FIO-Fast → YCSB-A → FIO-Fast를 단계별 호스트 쓰기량이 같도록 구성하였다.
-
-**표 8.** 3단계 균등 전환의 단계별 WAF (CAT-Robust, iCAT-v4는 2회 평균, 그 외 1회)
-
-| 정책 | FIO-Fast (단계 1) | YCSB-A (단계 2) | FIO-Fast (단계 3) | 전체 |
-|---|---:|---:|---:|---:|
-| CAT-Best | 1.773 | 1.512 | 2.788 | 2.024 |
-| CAT-Robust | 1.814 | 1.405 | 3.009 | 2.074 |
-| iCAT-v4 | 1.901 | 1.468 | 2.872 | 2.079 |
-| arm 17 (단계 2 최상위) | 1.872 | 1.371 | 3.293 | 2.176 |
-| iCAT-v3 | 1.935 | 1.425 | 3.168 | 2.177 |
-| iCAT | 2.026 | 1.382 | 3.463 | 2.288 |
-| CAT-Default | 1.977 | 1.499 | 3.760 | 2.410 |
-| 단계별 측정 최상위의 합성 | 1.773 | 1.371 | 2.788 | 1.977 |
-
-단계별 호스트 쓰기량이 같으므로 전체 WAF는 단계 WAF의 평균과 같다. 마지막 행은 각 단계에서 측정한 정책 중 최저값을 골라 평균한 값으로, 측정한 정책 범위 안에서 단계마다 최적 조합을 바꿔 쓸 수 있을 때의 하한 추정이다.
-
-![그림 10](figs/fig5_three_phase_mix.png)
-
-**그림 10.** 3단계 균등 전환의 단계별 WAF (구간 지정 계측, 3배 길이 약 2.3시간).
-
-학습기는 모두 단계 2(YCSB-A)에서 CAT-Best보다 낮은 WAF를 보였다. 차이는 FIO-Fast로 복귀하는 단계 3에서 발생하였다. iCAT-v3는 초기화 후 45개 조합을 재순회하여 단계 3의 16%를 저성능 조합에 사용하였으나, iCAT-v4는 잔존 후보 3개(arm 47, 32, 46)와 그 이웃만 복원하여 arm 47로 복귀하였다(1회차 기준 저성능 조합 0%, 단계 3 WAF 2.844; 2회 평균 2.872). 다만 단계별 최적화로 얻을 수 있는 여지가 2.4%(1.977 대 2.024)로 작고 iCAT-v4의 반복 간 차이가 약 2%여서, 전체 WAF는 CAT-Robust와 비슷하고 CAT-Best보다 2.7% 높았다. 단계 3의 WAF가 모든 정책에서 단계 1보다 높은 것은 단계 2의 데이터베이스가 가용 공간을 점유한 영향으로 추정되나 확인하지 않았다.
+**3단계 균등 전환.** 【사용 금지 (2026-11-24)】 FIO-Fast → YCSB-A → FIO-Fast를 단계별 호스트 쓰기량이 같도록 구성한 실험은 YCSB 단계에서 데이터베이스 공간 부족(SQLITE_FULL)으로 연산이 실패하여 단계 2·3과 전체 WAF가 무효로 판정되었다(8장 한계 7). 표 8과 그림 10은 YCSB 레코드 수를 줄인 재측정에서 정책별 유효 3회가 확보될 때까지 싣지 않는다. 단계 1(FIO-Fast)의 결과만 유효하다. 근거: `report/final-e1-validation/tables/table8_status.md`.
 
 ## 7. 논의
 
 **학습기와 최상위 고정 조합의 격차 (Q4).** 상태가 없는 밴딧 모형에서는 처음부터 최적 조합만 쓰는 정책이 탐색이 필요한 학습기보다 누적 보상이 높다. GC는 블록 배치라는 상태를 가지므로 이 논리가 엄밀히 성립하지는 않으나, 4.2절에서 직전 조합의 영향이 작게 나타났고 단일 워크로드의 모든 실험에서 학습기는 최상위 고정 조합에 근접할 뿐 넘지 못하였다(FIO-Fast 10시간에서 +2.0%). 따라서 학습기가 이득을 낼 수 있는 경우는 (1) 워크로드를 모르는 상태에서 고른 고정 조합이 그 워크로드에 부적합한 경우, (2) 단계마다 최상위 조합이 달라 어떤 단일 조합도 모든 단계에 적합하지 않은 경우이다. iCAT-v4는 (1)의 예로 Varmail이 포함된 전환 워크로드에서 CAT-Robust보다 낮은 WAF를 보였고, (2)의 예로 OLTP → Varmail에서 측정한 고정 조합보다 낮은 WAF를 보였다(반복 확인 진행 중).
 
-**개선의 핵심.** 측정 변동을 줄인 iCAT-v2는 효과가 없었고, 저성능 조합 사용을 줄인 iCAT-v3와 iCAT-v4가 효과적이었다(표 4). 이웃 탐색과 부분 초기화는 워크로드가 전환되었다가 복귀하는 경우에 특히 효과적이었다(6.2절).
+**개선의 핵심.** 측정 변동을 줄인 iCAT-v2는 효과가 없었고, 저성능 조합 사용을 줄인 iCAT-v3와 iCAT-v4가 효과적이었다(표 4). 이웃 탐색과 부분 초기화가 워크로드 복귀 시에 효과적인지는 근거였던 3단계 균등 전환 결과가 무효로 판정되어 재측정 중이다(6.2절).
 
 **사전 정보의 범위.** iCAT-v3의 $k=2$ 제외는 평가 워크로드에서 얻은 사전 정보이며 개선 기여가 가장 컸다(그림 6). 따라서 "사전 지식이 필요 없다"는 성질은 iCAT-v4의 실행 중 제거와 이웃 탐색에만 해당한다.
 
@@ -300,16 +279,17 @@ iCAT-v4는 4종 모두에서 1~2위였으며, OLTP → Varmail에서는 측정�
 
 ## 8. 한계
 
-1. 학습기 결과의 반복 횟수가 1~3회이다. iCAT-v4의 반복 간 차이는 약 2%였다. 고정 조합은 구간 지정 계측에서 반복 간 차이가 0.1% 이내였으나(3단계 균등 전환 arm 50: 2.074, 2.073), 워밍업 제외 계측의 5분 OLTP 실행에서는 최대 8%였다.
-2. iCAT-v3와 iCAT-v4는 FIO-Fast와 3단계 균등 전환의 결과를 참고하여 설계하였다. 단일 워크로드에서 iCAT-v3·v4를 평가한 것은 FIO-Fast뿐이다.
-3. 전환 워크로드의 고정 조합 비교는 일부 조합(2~6개)에 한정된다.
+1. 학습기 결과의 반복 횟수가 1~3회이다. iCAT-v4의 반복 간 차이는 약 2%였다. 고정 조합의 반복 간 차이는 워밍업 제외 계측의 5분 OLTP 실행에서 최대 8%였다. 구간 지정 계측에서의 반복 간 차이는 기존 근거(3단계 균등 전환의 arm 50 반복)가 무효로 판정되어 다시 확인해야 한다.
+2. iCAT-v3와 iCAT-v4는 FIO-Fast와 3단계 균등 전환의 결과를 참고하여 설계하였다(3단계 균등 전환의 측정 결과는 이후 무효로 판정되었다; 한계 7). 단일 워크로드에서 iCAT-v3·v4를 평가한 것은 FIO-Fast뿐이다.
+3. 전환 워크로드의 고정 조합 비교는 일부 조합(유효 6종 기준 2~7개)에 한정된다.
 4. iCAT-v4의 실행 중 제거는 고정 임계값(15%)을 사용하며, 판단 구간 변동(표준편차 약 0.12, WAF 1.8의 약 7%)을 고려하면 상위 조합이 잘못 제거될 수 있다. 잘못 제거된 빈도는 측정하지 않았다.
 5. 단일 가상 SSD(8 GiB, 오버프로비저닝 7%)에서만 실험하였다. 실제 SSD, 다른 오버프로비저닝 비율, 실제 서버 트레이스는 다루지 않았다.
 6. 실험 기간 중 두 차례, 메모리에 캐시된 실행 파일이 손상되어 일부 실행이 시작 직후 실패하였다. 해당 실행은 재수행하였다. 정상 종료한 실행은 호스트 쓰기량이 블록 계층 통계와 일치함을 확인하였으나, 원인(가상 SSD의 메모리 접근 또는 하드웨어 결함)은 확인하지 못하였다.
+7. YCSB를 포함한 전환 워크로드 일부(FIO-Fast → YCSB-A, YCSB-A → FIO-Fast, YCSB-A → YCSB-B, FIO-Slow → FIO-Fast → YCSB-A, 3단계 균등 전환)에서는 앞 단계 파일이 남아 데이터베이스 공간이 부족해(SQLITE_FULL) YCSB 연산의 약 10% 또는 99.8%가 실패했는데도 실행이 정상 종료로 기록되었다. 원시 로그에서 이를 확인하고 해당 결과(YCSB 단계와 그 이후 단계)를 모두 제외하였다. FIO-Fast ∥ YCSB-A는 YCSB 출력이 기록되지 않아 검증할 수 없어 제외하였다. 3단계 균등 전환은 레코드 수를 줄여 재측정 중이다.
 
 ## 9. 결론
 
-본 논문은 SSD GC 파라미터를 실행 중에 선택하는 iCAT 구현을 재현하여, 기본 길이 실행에서 원 저장소의 기본 파라미터보다도 WAF가 높았으며 그 주원인이 초기 순회 이후에도 지속되는 탐색 비용임을 보였다. 최하위 조합의 제외, 수렴 후 탐색 중단, 실행 중 후보 제거와 이웃 탐색을 적용한 iCAT-v4는 순회 이후 저성능 조합 사용을 13.3%에서 1.6%로 낮추었고, 단일 워크로드 장시간 실행에서 재측정한 상위 고정 조합 15개 중 5위 수준에 이르렀다. 전환 워크로드에서는 같은 길이의 기본 파라미터보다 모두 낮은 WAF를 보였으나, 사전에 잘 선정한 고정 조합과는 워크로드에 따라 우열이 갈렸다. 향후 반복 실험과 구성 요소 제거 실험의 완료, 초기 순회를 대신하는 이웃 기반 탐색, 다수 장비를 이용한 전체 조합 비교, 실제 서버 트레이스와 실제 SSD에서의 검증을 수행한다.
+본 논문은 SSD GC 파라미터를 실행 중에 선택하는 iCAT 구현을 재현하여, 기본 길이 실행에서 원 저장소의 기본 파라미터보다도 WAF가 높았으며 그 주원인이 초기 순회 이후에도 지속되는 탐색 비용임을 보였다. 최하위 조합의 제외, 수렴 후 탐색 중단, 실행 중 후보 제거와 이웃 탐색을 적용한 iCAT-v4는 순회 이후 저성능 조합 사용을 13.3%에서 1.6%로 낮추었고, 단일 워크로드 장시간 실행에서 재측정한 상위 고정 조합 15개 중 5위 수준에 이르렀다. 전환 워크로드에서는 같은 길이로 비교한 기본 파라미터보다 비교한 3종 모두에서 낮은 WAF를 보였으나, 사전에 잘 선정한 고정 조합과는 워크로드에 따라 우열이 갈렸다. 향후 반복 실험과 구성 요소 제거 실험의 완료, 초기 순회를 대신하는 이웃 기반 탐색, 다수 장비를 이용한 전체 조합 비교, 실제 서버 트레이스와 실제 SSD에서의 검증을 수행한다.
 
 ## 참고문헌
 
@@ -343,7 +323,7 @@ iCAT-v4는 4종 모두에서 1~2위였으며, OLTP → Varmail에서는 측정�
 
 실행 스크립트, 모듈 해시, 원본 로그, 실행 전 기록과 결과는 공개 저장소에 있다. 표와 그림은 원본 결과에서 스크립트로 재생성할 수 있다. 【익명 심사 규정에 맞게 저장소 위치 표기 조정】
 
-**표 A1.** 1배 길이 결과 요약 (각 3회 평균) 【RESULTS_ALL.md 4장 표를 옮겨 실음】
+**표 A1.** 1배 길이 결과 요약 (각 3회 평균) 【`report/final-e1-validation/tables/RESULTS_ALL.gated.md` 1·4장 표를 옮겨 실음. YCSB 오류 5종은 "–"】
 
 ### 부록 B. 그림 번호 대응 (투고본에서 삭제)
 
@@ -355,7 +335,7 @@ iCAT-v4는 4종 모두에서 1~2위였으며, OLTP → Varmail에서는 측정�
 | 그림 4 | figs/fig9_rank_over_time | 완성 |
 | 그림 5 | figs/fig10_v4_choices | 완성 |
 | 그림 6 | figs/fig6_ablation | queue32 결과로 확장 |
-| 그림 7 | figs/fig4_mixes_v4_vs_robust | queue32 결과(n=3)로 갱신 |
-| 그림 8 | figs/fig7_mix_loss_by_workload | queue31 결과로 갱신 |
-| 그림 9 | figs/fig8_robustness | queue31 결과로 갱신 |
-| 그림 10 | figs/fig5_three_phase_mix | 완성 |
+| 그림 7 | report/final-e1-validation/figs/fig4_mixes_v4_vs_robust | 유효 8종으로 재생성(11-24). queue32 결과(n=3)로 갱신 |
+| 그림 8 | report/final-e1-validation/figs/fig7_mix_loss_by_workload | 유효 6종으로 재생성(11-24) |
+| 그림 9 | report/final-e1-validation/figs/fig8_robustness | 유효 6종으로 재생성(11-24) |
+| 그림 10 | (사용 금지) | 단계 2·3 무효. E1 재실험 대기 |

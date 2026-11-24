@@ -134,3 +134,24 @@ for e in eff: print('  ', e)
 print('== SmartGC-comparison runs')
 for r in sg: print('  ', r['run'], 'exit', r['exit'], 'phases', r['n_phases'], 'ycsb', r['uses_ycsb'], r['ycsb_summary_bytes'], 'ok', r['run_ok'],
                    'incomplete', r['incomplete_phases'] or '-', 'WAF', r['waf_summary'], '2path', r['two_paths_equal'], 'nand', r['smartgc_nand_formula_ok'])
+
+# ---------------- (7) single-workload SQLite (YCSB) runs: YCSB output is inline in result/sqlite/*.console.txt ----------------
+sq = []
+for f in sorted((ROOT / 'result/sqlite').glob('*.console.txt')):
+    t = f.read_text(errors='replace')
+    ops, ok, bad = {}, {}, {}
+    for op, n in re.findall(r'^\[([A-Z\-]+)\], Operations, (\d+)', t, re.M): ops[op] = ops.get(op, 0) + int(n)
+    for op, n in re.findall(r'^\[([A-Z]+)\], Return=OK, (\d+)', t, re.M): ok[op] = ok.get(op, 0) + int(n)
+    for op, n in re.findall(r'^\[([A-Z]+)\], Return=(?!OK)\w+, (\d+)', t, re.M): bad[op] = bad.get(op, 0) + int(n)
+    worst = 0.0
+    for op in ops:
+        if op.endswith('-FAILED') or op == 'CLEANUP': continue
+        fl = max(ops.get(op + '-FAILED', 0), bad.get(op, 0)); tot = ok.get(op, ops[op]) + fl
+        worst = max(worst, fl / tot if tot else 0.0)
+    w = re.search(r'^\[WAF\] module=\S+ WAF=([\d.]+)', t, re.M)
+    sq.append(dict(run=f.name, ycsb_summary=bool(ops), worst_fail_pct=f'{100 * worst:.4f}', sqlite_full='SQLITE_FULL' in t,
+                   waf=w[1] if w else '', status='no-ycsb-summary' if not ops else ('INVALID' if worst > V.FAIL_LIMIT or 'SQLITE_FULL' in t else 'OK')))
+with open(OUT / 'recheck_sqlite_single.csv', 'w', newline='') as f:
+    w = csv.DictWriter(f, fieldnames=list(sq[0])); w.writeheader(); w.writerows(sq)
+import collections as _c
+print('== SQLite single-workload consoles', dict(_c.Counter(r['status'] for r in sq)), 'max fail %', max(float(r['worst_fail_pct']) for r in sq if r['ycsb_summary']))
