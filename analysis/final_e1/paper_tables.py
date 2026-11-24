@@ -112,15 +112,15 @@ for k, name in SCREEN:
     v4 = [x for r in (1, 2, 3) if (x := tot(f'mix{k}-onlinev4-rep{r}-x3'))]
     b3 = min(x3, key=x3.get) if x3 else None
     rows7.append(f"| {name} | {', '.join(f'arm {anum(a)} {w[a]:.3f}' for a in top)} | {rk['fixed47']} / {rk['fixed50']} / {rk['fixed37']} | "
-                 + (f"{len(x3)}개: arm {anum(b3)} {x3[b3]:.3f}" if len(x3) >= 2 else (f'3배 확인 없음 (arm {anum(b3)}만 측정)' if x3 else '3배 확인 없음')) + ' | '
-                 + (f"{st.mean(v4):.3f} ({len(v4)})" + (f", 측정 최상위 대비 {(st.mean(v4) / x3[b3] - 1) * 100:+.1f} %" if len(x3) >= 2 else '') if v4 else '–') + ' |')
+                 + (f"{len(x3)}개: arm {anum(b3)} {x3[b3]:.3f}" if len(x3) >= 2 else (f'† 3배 확인 없음 (arm {anum(b3)}만 측정)' if x3 else '† 3배 확인 없음')) + ' | '
+                 + (f"{st.mean(v4):.3f} ({len(v4)})" + (f", 측정 최상위 대비 {(st.mean(v4) / x3[b3] - 1) * 100:+.1f}%".replace("-", "−") if len(x3) >= 2 else '') if v4 else '–') + ' |')
 agg = {a: (st.mean(loss[n][a] for n in loss), max(loss[n][a] for n in loss)) for a in ARMS16}
 order = sorted(agg, key=lambda a: agg[a][0])
-T7 = ['**표 7 후보 (유효 데이터만).** 전환 워크로드에서 고정 조합 16개를 1배 길이로 선별한 결과와 3배 길이 확인 (고정 조합 각 1회, iCAT-v4 1~3회)', '',
+T7 = ['**표 7.** 전환 워크로드 7종에서 고정 조합 16개의 1배 길이 선별과 3배 길이 확인 (1배 값은 유효 반복 1~3회 평균, 3배 고정 조합은 1회, iCAT-v4는 1~3회; † 3배 확인 없음)', '',
       '| 전환 워크로드 | 1배 선별 상위 3 (16개 중) | arm 47 / 50 / 37의 1배 순위 | 3배 확인 (측정 조합 수: 최상위) | iCAT-v4 3배 (n) |', '|---|---|---|---|---|'] + rows7 + [
       '', f'제외 (YCSB 오류 또는 검증 불가): {", ".join(excl7)}.', '',
       f'**유효 {len(loss)}종 전체에서 1배 손실(워크로드별 16개 중 최상위 대비 WAF 증가율)의 평균이 작은 순:**', '',
-      '| 고정 조합 | 평균 손실 % | 최대 손실 % |', '|---|---:|---:|'] + [f'| arm {anum(a)} | {agg[a][0]:.1f} | {agg[a][1]:.1f} |' for a in order[:6]] + [
-      '', f'최대 손실이 가장 작은 조합: arm {anum(min(agg, key=lambda a: agg[a][1]))} ({min(v[1] for v in agg.values()):.1f} %).']
+      '| 고정 조합 | 평균 손실 (%) | 최대 손실 (%) |', '|---|---:|---:|'] + [f'| arm {anum(a)} | {agg[a][0]:.1f} | {agg[a][1]:.1f} |' for a in order[:6]] + [
+      '', f'최대 손실이 가장 작은 조합: arm {anum(min(agg, key=lambda a: agg[a][1]))} ({min(v[1] for v in agg.values()):.1f}%).']
 (T / 'table7_valid.md').write_text('\n'.join(T7) + '\n')
 print('\n'.join(T7))
