@@ -41,6 +41,7 @@ def check(path):
 if __name__ == '__main__':
     out = []
     files = sorted(set(ROOT.glob('result/**/ycsb-*.txt.gz')) | set(ROOT.glob('result/**/ycsb-*.txt')))
+    files = [f for f in files if not f.name.startswith('ycsb-check')]
     for f in files:
         name = f.name.replace('.gz', '').replace('.txt', '')
         try:

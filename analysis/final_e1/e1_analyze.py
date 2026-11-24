@@ -29,7 +29,7 @@ def dirs(globs):
     out = set()
     for g in globs:
         out |= {p for p in ROOT.glob(g) if p.is_dir()}
-    return sorted(p for p in out if 'smoke' not in p.name and re.search(r'mixR-(onlinev4|onlinev4nodrift|onlinev4fullreset)-rep\d+-x3$', p.name))
+    return sorted(p for p in out if 'smoke' not in p.name and re.search(r'mixR6?-(onlinev4|onlinev4nodrift|onlinev4fullreset)-rep\d+-x3$', p.name))
 
 
 def ycsb_records(d):
@@ -52,14 +52,14 @@ def cnt(p):
 def ts(p): return dt.datetime.fromisoformat(p.read_text().strip()).timestamp()
 
 
-def klines(d, pol):
+def klines(d, pol, label='mixR'):
     txt = []
     for f in [d / 'kernel.log', d / 'kernel-final.log', *sorted((d / 'kernel-snapshots').glob('*.log'))]:
         if f.exists(): txt += f.read_text(errors='replace').splitlines()
     z = d / 'kernel.log.zst'
     if z.exists(): txt += subprocess.run(['zstdcat', str(z)], capture_output=True, text=True).stdout.splitlines()
     txt = sorted(set(txt))
-    tag = f'mix-mixR-{pol}-'
+    tag = f'mix-{label}-{pol}-'
     b = [float(m[1]) for l in txt for m in [re.match(r'\[\s*([\d.]+)\] (\S+) BEGIN', l)] if m and m[2].startswith(tag)]
     if not b: return [], {}
     t0 = max(b)   # dmesg may still hold earlier runs: keep this run only
@@ -86,7 +86,7 @@ def ycsb(d):
 def main(globs):
     runs, pa, resets, series = [], [], [], []
     for d in dirs(globs):
-        pol = re.search(r'mixR-(\w+?)-rep', d.name)[1]; rep = int(re.search(r'rep(\d+)', d.name)[1])
+        pol = re.search(r'mixR6?-(\w+?)-rep', d.name)[1]; rep = int(re.search(r'rep(\d+)', d.name)[1])
         use = V.usable_phases(d); why = V.reasons(d)
         summ = (d / 'summary.txt').read_text() if (d / 'summary.txt').exists() else ''
         env = (d / 'environment.txt').read_text() if (d / 'environment.txt').exists() else ''
@@ -105,7 +105,7 @@ def main(globs):
         m = re.search(r'^total .*host_pages=(\d+) gc_pages=(\d+)', summ, re.M)
         r['waf_total'] = f'{1 + int(m[2]) / int(m[1]):.6f}' if m and r['run_ok'] else ''
         r.update(ycsb(d))
-        lines, mark = klines(d, pol)
+        lines, mark = klines(d, pol, d.name.split('-')[0])
         n = {p: 0 for p in 'ABC'}
         for l in lines:
             mm = re.match(r'\[\s*([\d.]+)\] NVMeVirt: WATGC_V2 reset .*part=(\d) .*window=(\d+) arm=(\d+) reason=(\S+)', l)
@@ -187,4 +187,4 @@ def main(globs):
 if __name__ == '__main__':
     # default: the 11-24 rerun (result/revision-20261124/mixR, 300k records) plus every older mixR E1-policy run for reference;
     # older runs enter only with their valid phases (phase A), and batches are never pooled.
-    main(sys.argv[1:] or ['result/**/mixR-onlinev4-rep*-x3', 'result/**/mixR-onlinev4nodrift-rep*-x3', 'result/**/mixR-onlinev4fullreset-rep*-x3'])
+    main(sys.argv[1:] or [f'result/**/{m}-{p}-rep*-x3' for m in ('mixR', 'mixR6') for p in ('onlinev4', 'onlinev4nodrift', 'onlinev4fullreset')])

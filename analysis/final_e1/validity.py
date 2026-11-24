@@ -124,7 +124,7 @@ def _assess(run_dir):
         reasons.append(f'INVALID-20261124 lists phases {",".join(sorted(blocked))}')
     for ph, kind in phases:
         if not poisoned and ('sqlite' in kind or 'ycsb' in kind):
-            fs = _ycsb_files_for_phase(d, ph) or [f for f in d.glob('ycsb-*.txt*')]
+            fs = _ycsb_files_for_phase(d, ph) or [f for f in d.glob('ycsb-*.txt*') if not f.name.startswith('ycsb-check')]   # ycsb-check.txt: runner's own verdict, not YCSB output
             bad = [(f.name, ycsb_status(str(f))) for f in fs]
             bad = [(n, s) for n, s in bad if s[0] > FAIL_LIMIT or not s[3]]
             full = [f.name for f in fs + list(d.glob('*.console.txt')) if sqlite_full(str(f))]   # 11-24: any SQLITE_FULL invalidates

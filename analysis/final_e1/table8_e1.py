@@ -11,7 +11,7 @@ import csv, math, re, statistics as st, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 D = ROOT / 'result/final-e1-validation'; T = ROOT / 'report/final-e1-validation/tables'; FIG = ROOT / 'report/final-e1-validation/figs/paper'
-BATCH = 'result/revision-20261124/mixR/rec300k'
+BATCH = None   # chosen below: the single E1 batch under result/revision-20261124 (validation runs excluded), or argv[1]
 POL = [('onlinev4', 'iCAT-v4'), ('onlinev4nodrift', 'NoDrift (변화 감지 끔)'), ('onlinev4fullreset', 'FullReset (45개 전체 재탐색)')]
 T95 = {2: 4.303, 3: 3.182, 4: 2.776, 5: 2.571, 6: 2.447, 8: 2.306, 10: 2.228}
 tq = lambda df: T95[min(T95, key=lambda k: abs(k - df))]
@@ -22,7 +22,16 @@ def read(name):
     return list(csv.DictReader(open(f))) if f.exists() and f.stat().st_size else []
 
 
-runs = [r for r in read('e1_runs.csv') if r['batch'] == BATCH]
+allruns = read('e1_runs.csv')
+cands = sorted({r['batch'] for r in allruns if r['batch'].startswith('result/revision-20261124/') and '/validation' not in r['batch']})
+if len(sys.argv) > 1: BATCH = sys.argv[1]
+elif len(cands) == 1: BATCH = cands[0]
+elif len(cands) > 1:
+    (T / 'table8_e1.md').write_text('# 표 8 · 그림 10: **대기 — E1 배치가 여러 개**\n\n' + '\n'.join(f'- `{c}`' for c in cands) + '\n\n어느 배치를 쓸지 정해 `python3 -I analysis/final_e1/table8_e1.py <batch>`로 실행한다. 배치를 섞지 않는다.\n')
+    print('WAIT: multiple batches', cands); sys.exit(0)
+else: BATCH = 'result/revision-20261124/mixR/rec300k (아직 없음)'
+REC = re.search(r'rec(\d+)k', BATCH)[1] + 'k' if re.search(r'rec(\d+)k', BATCH) else '?'
+runs = [r for r in allruns if r['batch'] == BATCH]
 valid = {p: [r for r in runs if r['policy'] == p and r['run_ok'] == 'True'] for p, _ in POL}
 ready = all(len(valid[p]) >= 3 for p, _ in POL)
 status = ' / '.join(f'{lab.split(" ")[0]} 유효 {len(valid[p])}회 (전체 {sum(r["policy"] == p for r in runs)}회)' for p, lab in POL)
@@ -46,7 +55,7 @@ def welch(a, b):
     return d, d - tq(df) * se, d + tq(df) * se
 
 
-L = ['**표 8 (재설계).** 3단계 균등 전환(FIO-Fast → YCSB-A(300k 레코드) → FIO-Fast, 3배 길이)에서 변화 감지와 재탐색 범위를 바꾼 iCAT-v4 변형의 단계별 WAF '
+L = [f'**표 8 (재설계).** 3단계 전환(FIO-Fast → YCSB-A({REC} 레코드) → FIO-Fast, 3배 길이)에서 변화 감지와 재탐색 범위를 바꾼 iCAT-v4 변형의 단계별 WAF '
      f'(각 정책 유효 {min(len(valid[p]) for p, _ in POL)}회 이상, 평균 ± 표준편차 [95 % CI]). 원자료 `{BATCH}`', '',
      '| 정책 | n | 단계 1 FIO-Fast | 단계 2 YCSB-A | 단계 3 FIO-Fast | 전체 | 단계 3 재탐색 (파티션 4개, 횟수 · 중앙 시점 s) | YCSB READ/UPDATE 최저 성공 % |',
      '|---|---:|---|---|---|---|---|---|']
@@ -93,7 +102,7 @@ for p, lab in POL:
     a2.plot(mins, [st.mean(by[k]) for k in mins], color=COL[p], lw=2, label=lab)
     a2.fill_between(mins, [min(by[k]) for k in mins], [max(by[k]) for k in mins], color=COL[p], alpha=0.15, lw=0)
 a2.set_xlabel('단계 3 시작 후 시간 (분)'); a2.set_ylabel('5분 구간 WAF (선 = 평균, 띠 = 최소~최대)')
-fig.suptitle('그림 10. 3단계 균등 전환(재측정, YCSB 300k): 변화 감지와 재탐색 범위에 따른 단계별 WAF', x=0.01, ha='left', fontsize=11)
+fig.suptitle(f'그림 10. 3단계 전환(재측정, YCSB {REC}): 변화 감지와 재탐색 범위에 따른 단계별 WAF', x=0.01, ha='left', fontsize=11)
 fig.tight_layout(); FIG.mkdir(parents=True, exist_ok=True)
 for e in ('png', 'pdf', 'svg'): fig.savefig(FIG / f'paper_fig10_e1_three_phase.{e}', dpi=200, bbox_inches='tight')
 print('\n'.join(L))

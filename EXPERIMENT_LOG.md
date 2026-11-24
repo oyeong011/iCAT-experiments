@@ -14737,3 +14737,11 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - **원시 로그와 모순되는 원고 문장:** 3.2절 "60만 레코드가 6 GiB 파일과 공존"은 SQLITE_FULL 오염과 모순된다. 수정 제안만 했다.
 - E1 반영 절차: `analysis/final_e1/e1_integrate.sh`, `e1_insert_proposal.py`(원고 위치 7곳 제안서, 현재 "대기"). 준비된 경우의 경로는 scratchpad 가짜 입력으로만 시험했다. `table8_e1.py`의 음수 기호를 U+2212로 바꿨다.
 - 원고 수정 없음. 제출 가능 판정 보류(E1, 120행 모순, 출처 확인 3건).
+
+### 2026-11-24 22:40–23:10 고컴: 승컴 E1 재실험 사전 검증 run 독립 확인 — 새 실험 없음
+
+- 대상: `result/revision-20261124/{validation, validation-600k, validation-failed-sudo-mkfs}` (승컴 529cdb8af, e97868236). 감시 작업은 14:26에 반응했지만 알림이 22:40에 도착했다.
+- 결과: 300k mixR 검증과 600k mixR6 검증 모두 유효다(YCSB 적재와 실행 실패 0, SQLITE_FULL 없음, exit 0). sudo-mkfs 실패 run은 무효다. 승컴 verdict와 일치한다.
+- 발견: 새 설계에서는 단계 B의 호스트 쓰기가 338만(300k)과 1,453만(600k) 페이지로, A·C(각 7,200만)와 같지 않다. 원고의 "단계별 호스트 쓰기량 동일"은 수정 제안으로 남겼다(원고 미수정).
+- 파이프라인: mixR6 인식, 표 8 배치 자동 선택(여러 개면 중단), ycsb-check.txt 제외.
+- 문서: `report/final-e1-validation/e1_validation_runs_check.md`
