@@ -40,6 +40,7 @@ case "$label" in
     t4|t4long) scale=1;  RECORDS=0; OPS=0;;   # single workload test4 only, no phase B; rep selects seed; t4long = 6x payload (3600 s)
     mixA|mixB|mixG|mixH|mixJ|mixT) scale=1; RECORDS=600000; OPS=4000000;;
     mixP)  scale=1;  RECORDS=250000; OPS=4000000;;   # sqlite then oltp: 600k records + WAL left no room for the oltp fileset (ENOSPC on rep1)
+    mixR6) scale=1;  RECORDS=600000; OPS=14000000;;   # 11-24 plan A: mixR with 600k records; test.dat removed before B and recreated (measured slot R) before C
     mixR)  scale=1;  RECORDS=300000; OPS=14000000;;   # 11-24: 600k -> 300k (600k DB+WAL ~0.94 GB > ~0.9 GB free beside the kept 6 GiB test.dat: SQLITE_FULL); test4 -> sqlite-a -> test4, each phase ~24M host pages (sqlite-a run ~1.7 pages/op)
     mixC|mixD|mixF|mixK|mixL|mixM|mixO|mixQ|mixS|mixU)  scale=1;  RECORDS=0; OPS=0;;   # plan A: keep phase-A file (no zombie data); 600k records (~0.8 GiB) fits the remaining ~1.5 GiB
     *) exit 2;;
@@ -48,7 +49,7 @@ mult=${MULT:-1}; [[ "$label" != long && "$label" != t4long ]] || mult=6   # MULT
 [[ -z "${SMOKE:-}" ]] || { scale=$((scale*10)); RECORDS=20000; OPS=20000; export VM_FILES=2000 VM_RUN=20; }   # SMOKE=1: 1/10 payload, tiny DB
 export HOT_IO=$((58982400000*mult/scale)) WARM_IO=$((29491200000*mult/scale)) COLD_IO=$((9830400000*mult/scale))
 export SEED_HOT=$((20260910+rep)) SEED_WARM=$((20261010+rep)) SEED_COLD=$((20261110+rep))
-dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != t4long && "$label" != mix[A-Z] ]] || dir="$base/$label-$policy-rep$rep"
+dir="$base/$label-$policy"; [[ "$label" != t4 && "$label" != t4long && "$label" != mix[A-Z] && "$label" != mixR6 ]] || dir="$base/$label-$policy-rep$rep"
 [[ -z "${MULT:-}" || "$MULT" == 1 ]] || { dir="$dir-x$MULT"; OPS=$((OPS*MULT)); }
 [[ -z "${SMOKE:-}" ]] || dir="$dir-smoke"
 [[ ! -e "$dir" ]] || { echo "Refusing to overwrite $dir" >&2; exit 1; }
@@ -130,7 +131,20 @@ before=$(sectors)
 printf 'start\n' > "$control"
 cat "$control" > "$dir/started.txt"
 # ---- phases. Slot A runs first, slot B second; which workload fills each slot depends on the label.
-space() { printf '%s %s mnt_avail_mb=%s\n' "$(date -Is)" "$1" "$(df --output=avail -BM "$root/mnt" | tail -1 | tr -dc 0-9)" >> "$dir/space.txt"; }
+space() { printf '%s %s mnt_avail_mb=%s discards=%s\n' "$(date -Is)" "$1" "$(df --output=avail -BM "$root/mnt" | tail -1 | tr -dc 0-9)" "$(awk '{print $12}' /sys/class/block/${nv}n1/stat)" >> "$dir/space.txt"; }
+phase_recreate() { # phase_recreate <slot>: 11-24 mixR6 — rewrite test.dat with the exact preset command used at preparation (same size, 128k sequential, direct)
+    local slot=$1
+    space "phase=$slot start"
+    (( $(df --output=avail -BK "$root/mnt" | tail -1 | tr -dc 0-9) >= 6 * 1024 * 1024 + 65536 )) || { echo "phase $slot: no room for 6 GiB test.dat" >&2; false; }
+    cat "$control" > "$dir/phase-$slot-start.txt"; kmsg phase=$slot START; date -Is > "$dir/phase-$slot-start.time"
+    fio --name=preset --filename="$FIO_TARGET" --size=6G --rw=write --bs=128k --direct=1 --ioengine=libaio --iodepth=32 --end_fsync=1 --output-format=json --output="$dir/phase-$slot-preset.json"
+    sync -f "$FIO_TARGET"
+    jq -e 'all(.jobs[]; .error == 0 and .write.io_bytes == 6442450944)' "$dir/phase-$slot-preset.json" >/dev/null
+    stat -c 'size=%s blocks512=%b' "$FIO_TARGET" > "$dir/testdat-stat-$slot.txt"; filefrag -v "$FIO_TARGET" > "$dir/testdat-extents-$slot.txt"
+    [[ "$(stat -c %s "$FIO_TARGET")" == 6442450944 && $(( $(stat -c %b "$FIO_TARGET") * 512 )) -ge 6442450944 ]]   # full size, fully allocated
+    cat "$control" > "$dir/phase-$slot-end.txt"; date -Is > "$dir/phase-$slot-end.time"; kmsg phase=$slot END
+    space "phase=$slot end"
+}
 ycsb_ok() { # ycsb_ok <log> <expected ops, 0 = time-based>: 11-24, YCSB exits 0 even when every request fails
     local f=$1 want=$2 bad ok tot
     bad=$(grep -cE 'SQLITE_|Error in processing|Return=(ERROR|NOT_FOUND|UNEXPECTED_STATE)|-FAILED\]' "$f" || true)
@@ -301,6 +315,16 @@ case "$label" in
            i=0; for w in F V O F V O F V O F; do sl=$(printf "\\x$(printf %x $((65 + i)))"); i=$((i + 1))
                case $w in F) PN[$sl]=test4; phase_fio $sl mix-test4.fio;; V) PN[$sl]=varmail; phase_varmail $sl;; O) PN[$sl]=oltp; phase_filebench $sl oltp "" 64m;; esac
            done; A_NAME=${PN[A]}; B_NAME=${PN[B]};;
+    mixR6) A_NAME=test4; B_NAME=sqlite-a; C_NAME=test4; PN[R]=recreate; PN[C]=test4
+           phase_fio A mix-test4.fio
+           filefrag -v "$FIO_TARGET" > "$dir/testdat-extents-A.txt"; stat -c 'size=%s blocks512=%b' "$FIO_TARGET" > "$dir/testdat-stat-A.txt"
+           rm -f "$FIO_TARGET"; sync; space "test.dat removed"            # nodiscard mount: no TRIM, the FTL keeps those pages valid
+           phase_sqlite B
+           sqlite3 "$db" 'PRAGMA integrity_check;' > "$dir/sqlite-integrity.txt" 2>&1; [[ "$(cat "$dir/sqlite-integrity.txt")" == ok ]]
+           ls -la "$root/mnt" > "$dir/mnt-before-cleanup.txt"           # phase B evidence (logs, counters) is already in $dir; DB/WAL are not used by C
+           rm -f "$db" "$db-wal" "$db-shm"; sync; space "db removed"
+           phase_recreate R
+           phase_fio C mix-test4.fio;;
     mixR)  A_NAME=test4; B_NAME=sqlite-a; C_NAME=test4; phase_fio A mix-test4.fio; phase_sqlite B; phase_fio C mix-test4.fio;;   # equal writes per phase so the phase-B optimum (arm17) matters in the total
     mixQ)  A_NAME=test4; B_NAME=idle-300s; C_NAME=test4; HOT_IO=$((HOT_IO/2)) WARM_IO=$((WARM_IO/2)) COLD_IO=$((COLD_IO/2)) phase_fio A mix-test4.fio; phase_idle B $(( ${SMOKE:+30} + ${SMOKE:-300} )); HOT_IO=$((HOT_IO/2)) WARM_IO=$((WARM_IO/2)) COLD_IO=$((COLD_IO/2)) phase_fio C mix-test4.fio;;  # idle gap between two identical phases
     *)     A_NAME=test4; B_NAME=sqlite-a; phase_fio A mix-test4.fio
@@ -318,7 +342,7 @@ host=$(field "$dir/stopped.txt" host_pages); gc=$(field "$dir/stopped.txt" gc_pa
     awk -v h="$host" -v g="$gc" -v b="$bytes" 'BEGIN{printf "total host_bytes=%.0f host_pages=%.0f gc_pages=%.0f WAF=%.6f\n",b,h,g,1+g/h}'
     printf 'phaseA(%s) %s\n' "$A_NAME" "$(phase_waf "$dir/phase-A-start.txt" "$dir/phase-A-end.txt")"
     printf 'phaseB(%s) %s\n' "$B_NAME" "$(phase_waf "$dir/phase-B-start.txt" "$dir/phase-B-end.txt")"
-    for sl in C D E F G H I J; do [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]:-${C_NAME:-}}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
+    for sl in R C D E F G H I J; do [[ ! -f "$dir/phase-$sl-end.txt" ]] || printf 'phase%s(%s) %s\n' "$sl" "${PN[$sl]:-${C_NAME:-}}" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-end.txt")"; done
     for sl in A B C; do [[ -f "$dir/phase-$sl-loaded.txt" ]] && printf 'phase%s-load %s\nphase%s-run %s\n' "$sl" "$(phase_waf "$dir/phase-$sl-start.txt" "$dir/phase-$sl-loaded.txt")" "$sl" "$(phase_waf "$dir/phase-$sl-loaded.txt" "$dir/phase-$sl-end.txt")"; done
     printf 'ycsb-load %s\nycsb-run %s\n' "$(grep -m1 'Throughput' "$dir/ycsb-load.txt")" "$(grep -m1 'Throughput' "$dir/ycsb-run.txt")"
 } > "$dir/summary.txt"
