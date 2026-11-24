@@ -131,7 +131,7 @@ declare -F sudo assert_virtual_dev assert_virtual_mount >/dev/null || exit 1
 kmsg BEGIN
 mkdir -p "$dir/kernel-snapshots"
 ( exec 9>&-; trap 'kill $sl 2>/dev/null; exit 0' TERM; i=0; while true; do printf -v s '%s/kernel-snapshots/%06d.log' "$dir" "$i"; sudo -n dmesg --color=never > "$s" || exit 1; i=$((i+1)); sleep 30 & sl=$!; wait $sl; done ) & collector=$!
-if [[ "$policy" == rev[ABC]-* ]]; then
+if [[ "$policy" == rev[ABCD]-* ]]; then   # revD 11-24: pass icat_seed to revD too (port fix)
     sudo -n insmod "$module" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid="$(id -u)" icat_seed="${ICAT_SEED:?}"
 else
     sudo -n insmod "$module" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid="$(id -u)"

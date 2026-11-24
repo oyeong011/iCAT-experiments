@@ -41,6 +41,10 @@
 < [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revC-20261124/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
 ---
 > [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revD-20261124/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+134c134
+< if [[ "$policy" == rev[ABC]-* ]]; then
+---
+> if [[ "$policy" == rev[ABCD]-* ]]; then   # revD 11-24: pass icat_seed to revD too (port fix)
 == check-run.py
 2c2
 < """revC-20261124 post-run check (runs between measurements only). usage: check-run.py <run dir>
