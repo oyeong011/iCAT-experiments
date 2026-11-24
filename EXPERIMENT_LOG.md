@@ -13732,3 +13732,22 @@ NVMeVirt 실행 가능 여부, GC 계측 출력, 기록된 host/GC 페이지 수
 - phaseB-run host_pages=69802732 gc_pages=27270246 WAF=1.390676
 - ycsb-load [OVERALL], Throughput(ops/sec), 27134.587554269176
 - ycsb-run [OVERALL], Throughput(ops/sec), 14662.6132686875
+
+### mix-20260911 mixR onlinev4fullreset — started 2026-11-24T10:43:37+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (600000 records, 42000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4fullreset.ko`.
+- Command: `bash script/mix-20260911.sh mixR onlinev4fullreset`; evidence `result/mix-20260911/mixR-onlinev4fullreset/`.
+
+- Finished 2026-11-24T11:19:45+09:00; mixR onlinev4fullreset exit=143; evidence `/home/oy/iCAT/result/revision-20261123/mixR/mixR-onlinev4fullreset-rep2-x3`; cleanup attempted.
+
+### mix-20260911 mixR onlinev4 — started 2026-11-24T11:23:30+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (300000 records, 42000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixR onlinev4`; evidence `result/mix-20260911/mixR-onlinev4/`.
+
+- Finished 2026-11-24T11:23:33+09:00; mixR onlinev4 exit=1; evidence `/home/oy/iCAT/result/revision-20261124/validation/mixR-onlinev4-rep1-x3`; cleanup attempted.
+
+### mix-20260911 mixR onlinev4 — started 2026-11-24T11:25:20+09:00
+
+- Phase A fio test4 fixed payload (176947200000/88473600000/29491200000 bytes hot/warm/cold, 24k/12k/4k IOPS) → rm test.dat (no discard) → Phase B YCSB sqlite workloada (300000 records, 42000000 ops, drop_caches 4s during run). Age=LAST_INVALIDATION. Module `nvmev-online-v4.ko`.
+- Command: `bash script/mix-20260911.sh mixR onlinev4`; evidence `result/mix-20260911/mixR-onlinev4/`.
