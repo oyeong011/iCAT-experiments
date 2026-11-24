@@ -1,0 +1,56 @@
+== inputs/env-seungcom.sh
+13c13
+<     [[ "$dev" =~ ^/dev/(nvme[0-9]+)n1$ && "$dev" != /dev/nvme0n1 && -b "$dev" ]] || return 1
+---
+>     [[ "$dev" =~ ^/dev/(nvme[0-9]+)n1$ && -b "$dev" ]] || return 1
+== safety-env.sh
+4c4
+< source /home/oy/iCAT/result/revC-20261124/inputs/cat60-env-snapshot.sh
+---
+> source /home/oy/iCAT/result/revD-20261124/inputs/env-seungcom.sh
+13c13
+<    grep -qxF "$(sha256sum "$1" | cut -d' ' -f1)  $1" <(sed 's#  buildoutput/#  /home/oy/iCAT/buildoutput/#' /home/oy/iCAT/result/revC-20261124/modules.sha256) || return 1
+---
+>    grep -qxF "$(sha256sum "$1" | cut -d' ' -f1)  $1" <(sed 's#  buildoutput/#  /home/oy/iCAT/buildoutput/#' /home/oy/iCAT/result/revD-20261124/modules.sha256) || return 1
+17c17
+<    [[ -n "$target" && "$target" == /dev/nvme1n1 ]] || return 1
+---
+>    [[ -n "$target" && "$target" == /dev/nvme0n1 ]] || return 1
+21c21
+<    assert_virtual_mount /dev/nvme1n1 || return 1
+---
+>    assert_virtual_mount /dev/nvme0n1 || return 1
+== runner-revD.sh
+11c11
+< [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revC-20261124/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+---
+> [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revD-20261124/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+17c17
+< [[ "$label" == mixFYF && "$policy" =~ ^(revC-v4|revC-elim10|revC-elim25|revB-arm60|online)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+---
+> [[ "$label" == mixFYF && "$policy" =~ ^(revD-v4|revD-nodrift|revD-fullreset)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+20c20
+<     revC-v4|revC-elim10|revC-elim25|revB-arm60) module="$root/buildoutput/nvmev-$policy.ko";;
+---
+>     revD-v4|revD-nodrift|revD-fullreset) module="$root/buildoutput/nvmev-$policy.ko";;
+80c80
+< printf '\n### revC-20261124 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
+---
+> printf '\n### revD-20261124 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
+128c128
+< [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revC-20261124/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+---
+> [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revD-20261124/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+== check-run.py
+2c2
+< """revC-20261124 post-run check (runs between measurements only). usage: check-run.py <run dir>
+---
+> """revD-20261124 post-run check (runs between measurements only). usage: check-run.py <run dir>
+7c7
+< sys.path.insert(0, '/home/oy/iCAT-final/analysis/final_e1')
+---
+> sys.path.insert(0, '/home/oy/iCAT/analysis/final_e1')
+9c9
+< d = Path(sys.argv[1]).resolve(); C = Path('/home/oy/iCAT/result/revC-20261124')
+---
+> d = Path(sys.argv[1]).resolve(); C = Path('/home/oy/iCAT/result/revD-20261124')
