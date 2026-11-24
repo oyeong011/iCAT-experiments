@@ -14617,3 +14617,23 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 대상: a2a273e0d `mixR-onlinev4-rep2-x3`. exit 0, db93f822, seed 20260912. 두 경로가 일치한다(0/18).
 - 결과: 전체 2.0567, C 단계 2.8470. C 단계 reset은 45.5–62.7 s에 4회다. YCSB는 13.1k ops/s다. 11월 v4 n=2는 2.0611 ± 0.0062다.
 - 문서: `e1_independent_check.md` §8.
+
+### 2026-11-24 11:30–12:40 고컴: YCSB 오염(SQLITE_FULL) 독립 확인, 유효성 검사 추가, E1 재실험 분석 준비 — 새 실험 없음
+
+- 지시: 고컴 전용 지시(11-24). 오염 데이터 식별, 그림 스크립트 유효성 검사 추가, 유효 Phase A 분류, 재실험 자동 검증 준비.
+- 방법: YCSB 원시 출력 2,012개 파일(`result/**/ycsb-*.txt[.gz]`)의 요약 줄을 다시 집계했다. 판정 규칙은 연산별 실패가 1 %를 넘으면 무효이고, 그 뒤 단계도 무효다.
+  - 스크립트: `analysis/final_e1/{validity,ycsb_validity,invalid_runs,e1_analyze}.py` (새 파일)
+  - 출력: `result/final-e1-validation/*` (새 파일, 파생 자료)
+- 결과 (측정값, YCSB 출력 기준):
+  - YCSB 단계가 있는 run 364개 중 무효 262개다.
+    - SQLITE_FULL 226개
+    - mixG 34개: YCSB 출력이 0바이트라 검증할 수 없다.
+    - exit≠0 1개
+    - INVALID 파일만으로 무효 1개
+  - 9월 mixA·B·H·J·R 전부, 11-23 mixR 전부가 무효다. mixP·mixT, 고컴 revA·revB(mixFYF)는 유효하다.
+  - 실패 형태는 두 가지다: READ 99.83 % 실패 또는 UPDATE 9.98 % 실패. 러너는 exit=0을 기록했다.
+- 그림 스크립트: `analysis/figures.py`, `analysis/v4-vs-cat.py`, `analysis/fig7-data.py`에 `validity.py` 검사를 넣었다. 경로를 scratchpad로 바꾼 사본으로 실행해 확인했다. 기존 figs와 V4_VS_CAT.md는 덮어쓰지 않았다.
+- 승컴 INVALID-20261124.txt(64c5459ed): 서술형이다("every mixR x3 run in this directory ... phase B, phase C"). validity.py가 이 문장을 읽어 해당 디렉터리 mixR run의 B·C를 막는다.
+- 정정: 고컴 `e1_independent_check.md` §2–§8의 B·C·전체 WAF 해석은 무효다. §6.3의 "YCSB 속도 무리, 원인 미확인"은 오염 때문이었다. 원문은 두고 §9에 고지를 덧붙였다. `revision_evidence_check.md`(mixA), `duplication_check_E1_E2.md`(mixR 수치), 주장 매트릭스에도 고지를 덧붙였다.
+- 재실험: `result/revision-20261124/mixR`, YCSB 300k records다(이전 600k). B·C 단계는 이전 run과 부하가 다르므로 배치 안에서만 비교한다.
+- 문서: `report/final-e1-validation/README.md`, `e1_status.md`(자동 생성).

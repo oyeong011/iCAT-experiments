@@ -6,6 +6,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
+import sys as _sys; _sys.path.insert(0, str(Path(__file__).resolve().parent / 'final_e1'))
+from validity import usable_phases, run_ok, reasons   # 2026-11-24 validity gate (YCSB SQLITE_FULL contamination etc.)
 
 font_manager.fontManager.addfont('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc')
 R = Path('/home/oy/iCAT/result'); M = R / 'mix-20260911'; OUT = Path('/home/oy/iCAT/figs'); OUT.mkdir(exist_ok=True)
@@ -20,13 +22,17 @@ plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 10, 'axes.e
 
 def tot(d):
     f = M / d / 'summary.txt'
-    m = re.search(r'^total .*WAF=([\d.]+)', f.read_text(), re.M) if f.exists() else None
+    if not f.exists() or not run_ok(M / d): return None   # whole-run total only if every phase is valid
+    m = re.search(r'^total .*WAF=([\d.]+)', f.read_text(), re.M)
     return float(m[1]) if m else None
 def phases(d):
     f = M / d / 'summary.txt'
-    return {k: float(w) for k, w in re.findall(r'^phase([ABC])\(\S*\) host_pages=\d+ gc_pages=\d+ WAF=([\d.]+)', f.read_text(), re.M)} if f.exists() else {}
+    if not f.exists(): return {}
+    ok = usable_phases(M / d)                                 # contaminated phases are dropped, earlier valid phases kept
+    return {k: float(w) for k, w in re.findall(r'^phase([ABC])\(\S*\) host_pages=\d+ gc_pages=\d+ WAF=([\d.]+)', f.read_text(), re.M) if k in ok}
 def sweep(p): return {int(a): float(w) for a, w in re.findall(r'^\s*\d+\s+arm(\d\d)\s+\S+\s+([\d.]+)', Path(p).read_text(), re.M)}
 def curve(d):  # cumulative WAF vs hours from the 30 s counter series
+    if not run_ok(M / d): raise SystemExit(f'invalid run used in a curve: {d}: {reasons(M / d)}')
     rows = []
     for l in (M / d / 'control-series.txt').read_text().splitlines():
         s = l.split()
@@ -109,13 +115,20 @@ save(fig, 'fig4_mixes_v4_vs_robust')
 # Fig 5 — 3-phase mix (fast -> SQLite -> fast), per phase
 pol = [('CAT-Best', ['mixR-fixed47-rep1-x3'], '#6b6a66'), ('CAT-Robust', ['mixR-fixed50-rep1-x3', 'mixR-fixed50-rep2-x3'], '#b3b2ac'),
        ('iCAT', ['mixR-online-rep1-x3'], C['v1']), ('iCAT-v3', ['mixR-onlinev3-rep1-x3'], C['v3']), ('iCAT-v4', ['mixR-onlinev4-rep1-x3', 'mixR-onlinev4-rep2-x3'], C['v4'])]
-fig, ax = plt.subplots(figsize=(8, 3.6)); W = 0.15
+fig, ax = plt.subplots(figsize=(8, 3.6)); W = 0.15; DROPPED = False
 for j, (lab, ds, col) in enumerate(pol):
-    ph = [phases(d) for d in ds]; ys = [st.mean(p[k] for p in ph) for k in 'ABC']
-    ax.bar([i + (j - 2) * (W + 0.02) for i in range(3)], ys, width=W, color=col, label=f'{lab} (전체 {st.mean(tot(d) for d in ds):.3f}' + (f', n={len(ds)})' if len(ds) > 1 else ')'))
+    ph = [phases(d) for d in ds]
+    xs = [i for i, k in enumerate('ABC') if any(k in p for p in ph)]
+    ys = [st.mean(p[k] for p in ph if k in p) for k in 'ABC' if any(k in p for p in ph)]
+    tv = [t for d in ds if (t := tot(d))]
+    if not xs: print('Fig 5: no valid phase for', lab); continue
+    DROPPED |= len(xs) < 3 or any(len(p) < 3 for p in ph)
+    ax.bar([i + (j - 2) * (W + 0.02) for i in xs], ys, width=W, color=col,
+           label=f'{lab} (' + (f'전체 {st.mean(tv):.3f}' if tv else '전체 제외: 무효 구간 포함') + f', 유효 n={sum(1 for p in ph if p)})')
 ax.set_xticks(range(3)); ax.set_xticklabels(['FIO-Fast (1구간)', 'YCSB-A (2구간)', 'FIO-Fast (3구간)']); ax.set_ylim(1.0, 4.0); ax.set_ylabel('구간 WAF (낮을수록 우수)')
 ax.grid(axis='x', visible=False); ax.legend(ncol=3, frameon=False, loc='upper left', fontsize=8)
 ax.set_title('그림 5. 3구간 전환 워크로드의 구간별 WAF: 학습기는 YCSB-A 구간에서 우수, iCAT-v4는 3구간 복귀가 빠름\nFIO-Fast → YCSB-A → FIO-Fast · 구간별 호스트 쓰기량 동일 · 3배 길이(약 2.3시간)', loc='left', fontsize=11, color=INK)
+if DROPPED: ax.set_title('그림 5 [논문 사용 불가] 2·3구간 무효(YCSB SQLITE_FULL 오염, analysis/final_e1/validity.py) — 유효한 1구간만 표시', loc='left', fontsize=11, color=NEG)
 save(fig, 'fig5_three_phase_mix')
 
 # Fig 6 — v3 ablation (fast 3-region, 3 h)

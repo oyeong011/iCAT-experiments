@@ -48,3 +48,10 @@
   - CAT-47 대비 우위
   - 파라미터 민감도
 - 제출 전 필수 조치와 데이터 부족 항목은 `revision_independent_audit.md` §3에 정리했다.
+
+## 4. 갱신 (2026-11-24, 고컴): YCSB 오염
+
+- 9월과 11-23의 mixR, 9월 mixA·B·G·H·J run은 YCSB `SQLITE_FULL` 오염으로 YCSB 단계 뒤가 무효다(`report/final-e1-validation/README.md`).
+- 이 매트릭스의 판정 근거는 대부분 고컴 mixFYF(YCSB 실패 0 %)와 mixY(YCSB 없음)다. 그래서 판정은 바뀌지 않는다.
+- 예외: "변화 감지 효과"와 "재탐색 범위" 행이 기다리던 E1(11-23)은 무효다. 재실험(`result/revision-20261124/mixR`, YCSB 300k records)을 기다린다.
+- 승컴 쪽 근거 가운데 mixA Random 기댓값, mixR 회복·탐색 횟수 표는 다시 검토해야 한다.

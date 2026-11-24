@@ -4,6 +4,8 @@
 경과(분)은 측정 시작(Measurement: command=start) 기준 = fig14_30s.csv와 같은 시간축."""
 import re, csv, importlib.util
 from pathlib import Path
+import sys as _sys; _sys.path.insert(0, str(Path(__file__).resolve().parent / 'final_e1'))
+from validity import usable_phases, run_ok, reasons   # 2026-11-24 validity gate (YCSB SQLITE_FULL contamination etc.)
 spec = importlib.util.spec_from_file_location('v4log', '/home/oy/iCAT/analysis/v4-log.py'); v4log = importlib.util.module_from_spec(spec); spec.loader.exec_module(v4log)
 M = Path('/home/oy/iCAT/result/mix-20260911')
 K, S, R = [2, 4, 7, 10], [25, 50, 100, 200, 400], [4, 7, 16]
@@ -20,10 +22,14 @@ with open('/home/oy/iCAT/figs/data/fig7_v4_trace.csv', 'w', newline='', encoding
     w.writerow(['워크로드', '파티션', '세대(재설정마다 +1)', '판단구간 번호', '경과(분)', '구간', '이번 구간에 쓴 조합', 'k', '임계배율(%)', '나이비율', '구간 WAF',
                 '추정 최선 조합', '다음 조합', '정착(1=예)', '남은 후보 수', '사건'])
     for d, wl, a, b in RUNS:
+        OK = usable_phases(M / d)                     # validity gate: rows only for valid phases
+        if not OK: print('fig7: skipped (no valid phase)', d, reasons(M / d)); continue
         L = v4log.lines(str(M / d)); t0 = next(ts(l) for l in L if 'Measurement: command=start' in l)
         PH = [(ts(l), l.split('phase=')[1][0]) for l in L if 'phase=' in l and ' START' in l]; prev = {}
         NAME = {'A': a, 'B': b, 'C': a}   # 3-phase run: C repeats A's workload
         for l in L:
+            _ph = ([x for t_, x in PH if t_ <= ts(l)][-1:] or ['A'])[0]
+            if _ph not in OK: continue               # contaminated phase (e.g. mixR B/C after YCSB SQLITE_FULL)
             if 'WATGC_V2 reset' in l:
                 w.writerow([wl, re.search(r'part=(\d)', l)[1], '', re.search(r'window=(\d+)', l)[1], round((ts(l) - t0) / 60, 2)] + [''] * 10 + ['재설정(변화 감지)']); continue
             m = re.search(r'part=(\d) epoch=(\d+) window=(\d+) .*?evaluated=(\d+) .*?waf_q16=(\d+) best=(\d+) next=(\d+) settled=(\d) active=(\d+)', l)

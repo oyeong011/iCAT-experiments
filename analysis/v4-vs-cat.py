@@ -2,14 +2,17 @@
 """How much better is iCAT v4 than CAT? Every comparison at the same length and measurement method -> V4_VS_CAT.md"""
 import re, statistics as st, datetime
 from pathlib import Path
+import sys as _sys; _sys.path.insert(0, str(Path(__file__).resolve().parent / 'final_e1'))
+from validity import usable_phases, run_ok, reasons   # 2026-11-24 validity gate (YCSB SQLITE_FULL contamination etc.)
 M = Path('/home/oy/iCAT/result/mix-20260911')
 def tot(d):
     f = M / d / 'summary.txt'
-    if not f.exists() or (M / d / 'SUSPECT.txt').exists(): return None
+    if not f.exists() or (M / d / 'SUSPECT.txt').exists() or not run_ok(M / d): return None   # validity gate
     m = re.search(r'^total .*WAF=([\d.]+)', f.read_text(), re.M); return float(m[1]) if m else None
 def avg(ds):
     xs = [x for d in ds if (x := tot(d))]; return (st.mean(xs), len(xs)) if xs else (None, 0)
 def curve(d, hrs):
+    if not run_ok(M / d): raise SystemExit(f'invalid run used in a curve: {d}: {reasons(M / d)}')
     rows = []
     for l in (M / d / 'control-series.txt').read_text().splitlines():
         s = l.split()
@@ -73,6 +76,7 @@ for lab, (b, n) in rows: p(f'| {lab} | {w(b, n)} | {pct(v4, b)} |')
 
 # ---- 5. summary
 p('\n## 5. 요약 (2026-10-01 기준, 위 표가 갱신되면 다시 확인)\n')
+p('> **[2026-11-24 경고] 아래 요약 문장은 10-01에 고정된 문장이다.** YCSB SQLITE_FULL 오염 run(mixA·B·G·H·J·R)의 수치가 들어 있다. 위 표(유효성 검사 적용)로 다시 써야 하며, 그 전에는 논문에 쓰지 않는다. 근거: `report/final-e1-validation/README.md`.\n')
 p('| 비교 대상 | 결과 |\n|---|---|')
 p('| 기본 CAT (원저자 기본값) | **v4가 모든 경우에 좋음.** 단일 워크로드 1시간 −5.2%, 10시간 −8.4%. 전환 워크로드 4/4 (−4.3 ~ −18.3%), 3구간 전환 −13.7% |')
 p('| 견고 CAT (원저자 워크로드 기준) | 전환 워크로드 4/13에서 v4가 좋음(−1.1 ~ −5.3%, 견고 CAT이 맞지 않는 구간이 있는 경우), 9/13에서 나쁨(+3.2 ~ +11.5%). 단일 워크로드 10시간 −0.2%, 3구간 전환 +0.3%로 비슷 |')

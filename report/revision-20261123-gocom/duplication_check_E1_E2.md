@@ -76,3 +76,9 @@
   4. reset·settled 시각에서 구한 감지 시각, 재정착 시간, 재탐색 구간 수 (shift와 drift 경로 구분)
   5. 회복 시간을 단측(승컴)과 양측(고컴) 두 정의로 모두 계산하고, 첫 창에서 바로 통과한 구간은 따로 표시
 - 스크립트: `analysis/revision_gocom/verify_seungcom.py`를 확장하고, 결과는 `result/revision-gocom-20261123/`에 새 파일로 쓴다. 기존 파일은 덮어쓰지 않는다.
+
+## 무효 고지 (2026-11-24, 고컴)
+
+> **[2026-11-24 무효 고지, 고컴]** 이 문서가 인용한 YCSB 포함 run(9월·11-23 mixR, 9월 mixA)은 YCSB `SQLITE_FULL` 오염으로 YCSB 단계와 그 뒤 단계, 전체 WAF가 무효다. 근거: `report/final-e1-validation/README.md`, 승컴 `result/revision-20261123/mixR/INVALID-20261124.txt`. 아래 원문은 기록으로 남겨 두고 수정하지 않는다.
+
+- 이 문서에서 영향받는 부분: mixR×3의 YCSB-A 수치(약 72 M 페이지, WAF 약 1.43)와 9월 mixR 측정 시간. 중복 판정(E1 유지, E2 생략)의 논리는 코드와 설계 비교라서 그대로 유효하다.
