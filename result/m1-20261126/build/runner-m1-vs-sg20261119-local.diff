@@ -1,0 +1,17 @@
+42c42,43
+<     smartgc|smartgcq|sg-greedy|sg-arm47) module="$root/buildoutput/nvmev-$policy.ko";;   # 11-14: smartgc-src builds (SmartGC, and Greedy / arm47 with the wear report)
+---
+>     smartgc|smartgcq|sg-greedy|sg-arm47) module="$root/buildoutput/nvmev-$policy.ko";;
+>     m1-icat-v4|m1-smartgc-eq8) module="$root/buildoutput/nvmev-$policy.ko";;   # m1-20261126: region-timer builds (result/m1-20261126/tools/m1prof_patch.py)   # 11-14: smartgc-src builds (SmartGC, and Greedy / arm47 with the wear report)
+66a68
+> [[ "$label" != mixY || -z "${M1_REP_DIR:-}" ]] || dir="$base/$label-$policy-rep$rep"   # m1-20261126: one dir per rep
+118c120
+<     if [[ "$rc" == 0 && "$policy" == online* ]]; then
+---
+>     if [[ "$rc" == 0 && ( "$policy" == online* || "$policy" == m1-icat* ) ]]; then
+135c137,139
+< sudo -n insmod "$module" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid="$(id -u)"
+---
+> grep -qxF "$(sha256sum "$module" | cut -d' ' -f1)  $module" <(sed "s#  buildoutput/#  $root/buildoutput/#" "${M1_SHA:-/dev/null}") || { echo "module sha256 not registered: $module"; exit 1; }   # m1-20261126
+> # shellcheck disable=SC2086
+> sudo -n insmod "$module" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid="$(id -u)" ${MOD_ARGS:-}

@@ -1,0 +1,60 @@
+In file included from /home/oy/iCAT/result/m1-20261126/sim/sim.c:19:
+/home/oy/iCAT/result/m1-20261126/m1-smartgc-src/ssd.c: In function ‘ssd_advance_nand’:
+/home/oy/iCAT/result/m1-20261126/m1-smartgc-src/ssd.c:418:42: warning: ‘chnl_etime’ may be used uninitialized [-Wmaybe-uninitialized]
+  418 |                 lun->next_lun_avail_time = chnl_etime;
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+/home/oy/iCAT/result/m1-20261126/m1-smartgc-src/ssd.c:368:30: note: ‘chnl_etime’ was declared here
+  368 |         uint64_t chnl_stime, chnl_etime;
+      |                              ^~~~~~~~~~
+epoch=1 active=0 host_bytes=6020972544 host_pages=1469964 gc_pages=454393
+part=0 host_pages=367995 gc_pages=108745 gc_count=10372 arm=37 windows=0 phase=0
+part=1 host_pages=367636 gc_pages=141464 gc_count=11421 arm=37 windows=0 phase=0
+part=2 host_pages=367397 gc_pages=97968 gc_count=9940 arm=37 windows=0 phase=0
+part=3 host_pages=366936 gc_pages=106216 gc_count=10210 arm=37 windows=0 phase=0
+smartgc part=0 steps=5 explored=5925 eps_permille=300 absorbed=8003 evicted=2714 gc_flushed=0 frozen=81 buf_pages=594 freezes=400 thaws=0 nand_pages=471451 listed=11355
+smartgc part=1 steps=9 explored=10551 eps_permille=300 absorbed=8984 evicted=4914 gc_flushed=0 frozen=81 buf_pages=316 freezes=675 thaws=0 nand_pages=505030 listed=13155
+smartgc part=2 steps=6 explored=6939 eps_permille=300 absorbed=11656 evicted=3925 gc_flushed=0 frozen=81 buf_pages=258 freezes=485 thaws=0 nand_pages=457634 listed=11951
+smartgc part=3 steps=5 explored=5747 eps_permille=300 absorbed=9755 evicted=2881 gc_flushed=0 frozen=81 buf_pages=640 freezes=404 thaws=0 nand_pages=466278 listed=11096
+wear part=0 erase_min=0 erase_max=4 erase_mean_milli=1266 erase_std_milli=640
+wear part=1 erase_min=0 erase_max=5 erase_mean_milli=1394 erase_std_milli=1167
+wear part=2 erase_min=0 erase_max=4 erase_mean_milli=1213 erase_std_milli=871
+wear part=3 erase_min=0 erase_max=4 erase_mean_milli=1246 erase_std_milli=632
+sim policy=smartgc workload=zones capacity_mib=2048 host_pages=1469964 gc_pages=454393 waf=1.309118 waf_nand=1.292816 invariants=ok
+m1rusage user_s=1.131 sys_s=0.042 maxrss_kb=94304
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=0 region=GC calls=10372 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=0 region=SELECT calls=10372 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=0 region=LEARN calls=5 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=0 region=REWARD calls=10372 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=0 region=BUF_ABSORB calls=367994 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=0 region=BUF_UNBUF calls=471450 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=0 region=BUF_DRAIN calls=359992 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=1 region=GC calls=11421 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=1 region=SELECT calls=11421 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=1 region=LEARN calls=9 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=1 region=REWARD calls=11421 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=1 region=BUF_ABSORB calls=367635 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=1 region=BUF_UNBUF calls=505029 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=1 region=BUF_DRAIN calls=358652 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=2 region=GC calls=9940 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=2 region=SELECT calls=9940 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=2 region=LEARN calls=6 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=2 region=REWARD calls=9940 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=2 region=BUF_ABSORB calls=367397 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=2 region=BUF_UNBUF calls=457634 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=2 region=BUF_DRAIN calls=355741 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=3 region=GC calls=10210 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=3 region=SELECT calls=10210 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=3 region=LEARN calls=5 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=3 region=REWARD calls=10210 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=3 region=BUF_ABSORB calls=366936 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=3 region=BUF_UNBUF calls=466278 ns=0 max_ns=0
+NVMeVirt: M1PROF when=remove clock=ktime_elapsed part=3 region=BUF_DRAIN calls=357181 ns=0 max_ns=0
+NVMeVirt: Wear: ns=0 part=0 erases=10372 erase_min=0 erase_max=4 erase_mean_milli=1266 erase_std_milli=640
+NVMeVirt: Wear: ns=0 part=1 erases=11421 erase_min=0 erase_max=5 erase_mean_milli=1394 erase_std_milli=1167
+NVMeVirt: Wear: ns=0 part=2 erases=9940 erase_min=0 erase_max=4 erase_mean_milli=1213 erase_std_milli=871
+NVMeVirt: Wear: ns=0 part=3 erases=10210 erase_min=0 erase_max=4 erase_mean_milli=1246 erase_std_milli=632
+NVMeVirt: GC stats: ns=0 policy=smartgc host_pages=1469964 gc_pages=454393 gc_count=41943 WAF=1.309 warmup_gc=100-per-part
+NVMeVirt: SmartGC summary ns=0 part=0 steps=5 explored=5925 eps_permille=300 absorbed=8003 evicted=2714 gc_flushed=0 frozen=81 buf_pages=594 freezes=400 thaws=0 listed=11355
+NVMeVirt: SmartGC summary ns=0 part=1 steps=9 explored=10551 eps_permille=300 absorbed=8984 evicted=4914 gc_flushed=0 frozen=81 buf_pages=316 freezes=675 thaws=0 listed=13155
+NVMeVirt: SmartGC summary ns=0 part=2 steps=6 explored=6939 eps_permille=300 absorbed=11656 evicted=3925 gc_flushed=0 frozen=81 buf_pages=258 freezes=485 thaws=0 listed=11951
+NVMeVirt: SmartGC summary ns=0 part=3 steps=5 explored=5747 eps_permille=300 absorbed=9755 evicted=2881 gc_flushed=0 frozen=81 buf_pages=640 freezes=404 thaws=0 listed=11096

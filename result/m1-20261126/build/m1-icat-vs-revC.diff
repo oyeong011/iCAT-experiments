@@ -1,0 +1,95 @@
+20a21,68
+> 
+> /* ---- m1-20261126 region timers (see result/m1-20261126/tools/m1prof_patch.py) ---- */
+> #ifdef M1PROF_CPU
+> #include <time.h>
+> static inline uint64_t m1p_now(void)
+> {
+> 	struct timespec ts;
+> 
+> 	clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
+> 	return (uint64_t)ts.tv_sec * 1000000000ULL + ts.tv_nsec;
+> }
+> #define M1P_CLOCK "thread_cputime"
+> #else
+> #define m1p_now() ktime_get_ns()
+> #define M1P_CLOCK "ktime_elapsed"
+> #endif
+> enum { M1P_GC, M1P_SELECT, M1P_LEARN, M1P_REWARD, M1P_BUF_ABSORB, M1P_BUF_UNBUF, M1P_BUF_DRAIN, M1P_N };
+> static const char *const m1p_name[M1P_N] = { "GC", "SELECT", "LEARN", "REWARD", "BUF_ABSORB", "BUF_UNBUF", "BUF_DRAIN" };
+> struct m1p_ctr { uint64_t calls, ns, max_ns; };
+> static struct m1p_ctr m1p[4][M1P_N];
+> #define M1P_PART(ftl) ((ftl)->tuner.part_id & 3)
+> static inline void m1p_add(uint32_t part, int id, uint64_t t0)
+> {
+> 	uint64_t d = m1p_now() - t0;
+> 	struct m1p_ctr *c = &m1p[part][id];
+> 
+> 	c->calls++;
+> 	c->ns += d;
+> 	if (d > c->max_ns)
+> 		c->max_ns = d;
+> }
+> static void m1p_reset(void)
+> {
+> 	memset(m1p, 0, sizeof(m1p));
+> }
+> static void m1p_print(const char *when)
+> {
+> 	uint32_t p;
+> 	int i;
+> 
+> 	for (p = 0; p < 4; p++)
+> 		for (i = 0; i < M1P_N; i++)
+> 			if (m1p[p][i].calls)
+> 				NVMEV_INFO("M1PROF when=%s clock=%s part=%u region=%s calls=%llu ns=%llu max_ns=%llu\n",
+> 					   when, M1P_CLOCK, p, m1p_name[i], m1p[p][i].calls, m1p[p][i].ns,
+> 					   m1p[p][i].max_ns);
+> }
+> /* ---- end m1 region timers ---- */
+92a141
+> 		m1p_reset();
+102a152
+> 		m1p_print("stop");
+684c734
+< static void watgc_v2_on_gc(struct conv_ftl *ftl, uint64_t now_ns)
+---
+> static void watgc_v2_on_gc__m1raw(struct conv_ftl *ftl, uint64_t now_ns)
+762a813,820
+> static void watgc_v2_on_gc(struct conv_ftl *ftl, uint64_t now_ns)
+> {
+> 	uint64_t t0 = m1p_now();
+> 
+> 	watgc_v2_on_gc__m1raw(ftl, now_ns);
+> 	m1p_add(M1P_PART(ftl), M1P_LEARN, t0);
+> }
+> 
+1264a1323
+> 	m1p_print("remove");
+1513c1572
+< static struct line *select_victim_line(struct conv_ftl *conv_ftl, bool force)
+---
+> static struct line *select_victim_line__m1raw(struct conv_ftl *conv_ftl, bool force)
+1651c1710,1719
+< static int do_gc(struct conv_ftl *conv_ftl, bool force)
+---
+> static struct line *select_victim_line(struct conv_ftl *conv_ftl, bool force)
+> {
+> 	uint64_t t0 = m1p_now();
+> 	struct line *l = select_victim_line__m1raw(conv_ftl, force);
+> 
+> 	m1p_add(M1P_PART(conv_ftl), M1P_SELECT, t0);
+> 	return l;
+> }
+> 
+> static int do_gc__m1raw(struct conv_ftl *conv_ftl, bool force)
+1721a1790,1798
+> }
+> 
+> static int do_gc(struct conv_ftl *conv_ftl, bool force)
+> {
+> 	uint64_t t0 = m1p_now();
+> 	int r = do_gc__m1raw(conv_ftl, force);
+> 
+> 	m1p_add(M1P_PART(conv_ftl), M1P_GC, t0);
+> 	return r;

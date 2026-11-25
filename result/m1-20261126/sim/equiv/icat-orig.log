@@ -1,0 +1,20 @@
+In file included from /home/oy/iCAT/result/m1-20261126/sim/sim.c:19:
+/home/oy/iCAT/revC-src/ssd.c: In function ‘ssd_advance_nand’:
+/home/oy/iCAT/revC-src/ssd.c:418:42: warning: ‘chnl_etime’ may be used uninitialized [-Wmaybe-uninitialized]
+  418 |                 lun->next_lun_avail_time = chnl_etime;
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+/home/oy/iCAT/revC-src/ssd.c:368:30: note: ‘chnl_etime’ was declared here
+  368 |         uint64_t chnl_stime, chnl_etime;
+      |                              ^~~~~~~~~~
+epoch=1 active=0 host_bytes=6020972544 host_pages=1469964 gc_pages=152358
+part=0 host_pages=367995 gc_pages=38219 gc_count=8334 arm=15 windows=1 phase=2
+part=1 host_pages=367636 gc_pages=38236 gc_count=8323 arm=15 windows=1 phase=2
+part=2 host_pages=367397 gc_pages=38191 gc_count=8314 arm=15 windows=1 phase=2
+part=3 host_pages=366936 gc_pages=37712 gc_count=8285 arm=15 windows=1 phase=2
+sim policy=watgc-v2 workload=zones capacity_mib=2048 host_pages=1469964 gc_pages=152358 waf=1.103647 waf_nand=1.103647 invariants=ok
+m1rusage user_s=2.857 sys_s=0.039 maxrss_kb=91628
+NVMeVirt: WATGC_V2 summary ns=0 part=0 epoch=1 windows=1 epoch_windows=1 discarded=0 visited=1 covered=0 settled=0 phase=2 current=15 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=1 best_waf_q16=76928 revA_variant=4 select=1 eval_explore=0 elim=0 best_change=0 reset=0 learner_ns=0 active=45
+NVMeVirt: WATGC_V2 summary ns=0 part=1 epoch=1 windows=1 epoch_windows=1 discarded=0 visited=1 covered=0 settled=0 phase=2 current=15 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=1 best_waf_q16=76913 revA_variant=4 select=1 eval_explore=0 elim=0 best_change=0 reset=0 learner_ns=0 active=45
+NVMeVirt: WATGC_V2 summary ns=0 part=2 epoch=1 windows=1 epoch_windows=1 discarded=0 visited=1 covered=0 settled=0 phase=2 current=15 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=1 best_waf_q16=76984 revA_variant=4 select=1 eval_explore=0 elim=0 best_change=0 reset=0 learner_ns=0 active=45
+NVMeVirt: WATGC_V2 summary ns=0 part=3 epoch=1 windows=1 epoch_windows=1 discarded=0 visited=1 covered=0 settled=0 phase=2 current=15 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=1 best_waf_q16=76820 revA_variant=4 select=1 eval_explore=0 elim=0 best_change=0 reset=0 learner_ns=0 active=45
+NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=1469964 gc_pages=152358 gc_count=33256 WAF=1.103 warmup_gc=100-per-part
