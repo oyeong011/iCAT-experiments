@@ -3,7 +3,7 @@
 - 이 문서는 진행 중인 실험이 끝날 때마다 갱신한다. (11-26 04:40 revE 반영)
   - revE: 11-26 04:07 종료, 9/9 유효
   - M1 자원 측정 m1-20261126: 11-26 04:09 시작, 11-28 20:00경 종료 예정
-  - 승컴 abl: 9/9 유효, 고컴 검증 일치 (result/abl-20261125-verify/verify.md). greedy: 진행 중 (2/3)
+  - 승컴 abl: 9/9 유효, 고컴 검증 일치 (result/abl-20261125-verify/verify.md). greedy: 3/3 유효, 고컴 검증 일치 (result/greedy-20261125-verify/verify.md)
 - 모든 수치의 근거 경로는 이 브랜치(`report/data-validity-20261124`) 기준이다. 원시 데이터는 `result/<배치>/raw/`에 있고, 승컴 원시 데이터는 origin/main에 있다.
 - 유효성 판정 기준
   - exit 0
@@ -24,7 +24,7 @@
 | | 승컴 abl-20261125: NoDiscount, 제거+정착+감지+probe 묶음 끔 | `result/abl-20261125-verify/verify.md` | origin/main `result/revision-additional-ablation/raw/` | 3 | 9/9 유효, 고컴 재계산 일치. 묶음 끔 +0.124 (Holm 0.028), NoDiscount 구분 안 됨 | 반영: 표 10 배치 F |
 | **M3** 온라인 기준선 비교 | revA Random Selection. 고컴 | `report/online-greedy-audit.md`, `M4_statistics_final.md` | `result/revA-20261114/raw/` | 3 | 6/6 유효 | 반영: §6.4 표 10 |
 | | revC 원래 iCAT (온라인 학습 원 구현). 고컴 | `report/final-revision/revC_E2_E6_E7_final.md` | `result/revC-20261124/raw/mixFYF-online-*` | 3 | 3/3 유효 | 반영: §6.4 표 10·11 |
-| | 승컴 greedy-20261125 Online Greedy (대조군 revD-v4) | `report/online-greedy-audit.md` (설계 감사) | origin/main `result/greedy-20261125/` (아직 없음) | 3 (대기) | 설계 6/7 PASS, 항목 7은 실행 후 확인 | 표 10에 【결과 대기】 행 |
+| | 승컴 greedy-20261125 Online Greedy (대조군 revD-v4, 다른 배치) | `result/greedy-20261125-verify/verify.md`, `report/online-greedy-audit.md` | origin/main `result/greedy-20261125/raw/` | 3 | 3/3 유효, 고컴 재계산 일치, 규칙 재계산 2512/2513 일치 (1건 반올림 동률). V4와 구분되지 않음 | 반영: 표 10 D′ |
 | | Periodic Switching | — | — | 0 | **실행하지 않음** | 미반영. 논문에서 주장하지 않는다 |
 | **M4** 반복과 통계 검증 | revA·revB·revC·revD 전체 재계산 | `report/final-revision/M4_statistics_final.md`, `M4_validity_data.md`, `result/final-revision-analysis/m4/*.csv` | 위 원시 디렉터리 44개 | 정책당 3 (revB V4·Arm60은 1) | 44/44 유효, 제외 0 | 반영: §6.4 (Welch CI, Holm 각주). revB n=1은 쓰지 않음 |
 | **M5** 자원 효율 (메모리, CPU, 지연) | revA 지연·학습 경과 시간 (고컴), revC 추가, SmartGC 메모리 | `report/final-revision/M5_resource_comparison.md`, `result/final-revision-analysis/{cpu_overhead,latency_comparison,memory_overhead,m5_stats}.csv` | revA·revC 원시 로그, 모듈 DWARF | 3 | 유효 | 반영: §6.3, §7 "자원 비용". CPU 시간과 GC 수행 시간은 **미측정**이라고 명시 |
@@ -44,7 +44,7 @@
 |---|---|---|---|---|---|
 | M1 SmartGC | △ WAF n=1 완료. 자원 측정·3회 반복(m1-20261126) 진행 중 | ✔ (n=1분) | △ n=1분 | 초안 △ | m1-20261126 종료 후 표 9와 자원 비교 갱신 |
 | M2 구성 요소 | ✔ V1·V2·NoDrift·FullReset·NoElim·NoDiscount·묶음 끔 | ✔ | ✔ | 초안 ✔ | 정착·탐색(probe) 단독 효과는 분리 측정하지 않음 |
-| M3 온라인 기준선 | △ Random·원래 iCAT 완료. Greedy 대기. Periodic 안 함 | △ | △ | 초안 △ | 승컴 greedy 검증 후 표 10 갱신 |
+| M3 온라인 기준선 | ✔ Random·원래 iCAT·Greedy 완료. Periodic 안 함 | ✔ | ✔ | 초안 ✔ | Greedy 대비 이득은 확인되지 않음을 명시 |
 | M4 통계 | ✔ (진행 중 배치 제외) | ✔ 53/53 (revE 포함) | ✔ | 초안 ✔ | abl, greedy 추가 |
 | M5 자원 | ✔ (기존 로그) | ✔ | ✔ | 초안 ✔ | CPU 시간과 GC 시간은 측정 불가로 명시 (새 계측 빌드 없이는 불가) |
 | M6 적응·파라미터 | △ 제거 문턱, 후보 수, 리셋 범위, 감지 12.5 % 완료. 판단 구간은 미승인 | ✔ | ✔ | 초안 ✔ | 판단 구간 등 4개는 미측정으로 명시 |
@@ -62,7 +62,7 @@
   - 변화 감지를 끈 변형과는 두 배치 모두 구분되지 않았다. 이 결과를 그대로 보고한다.
   - 정착·감지를 켠 채 실행 중 제거만 끄면 WAF가 4.3 % 높아졌다 (Welch CI가 0 제외, Holm 보정 후 p=0.091).
 - **M3.** 매 판단 구간 무작위 선택보다 WAF가 8.4 % 낮았고, 원래 iCAT 구현보다 11.5 % 낮았다 (각 3회, CI가 0 제외).
-  - Online Greedy는 【승컴 결과 대기】.
+  - Online Greedy와는 WAF가 구분되지 않았다 (−0.009 [−0.051, +0.034], 다른 배치 대조군). 단순 탐욕 선택보다 낫다는 주장은 하지 않는다.
   - 주기적 전환 기준선은 측정하지 않았다.
 - **M4.** 44회 실행을 원시 카운터에서 다시 계산했다. 모든 판정은 같은 배치 안에서 Welch 95 % CI로 했다.
   - 다중 비교 보정(Holm)은 민감도 분석으로 함께 보고했다.

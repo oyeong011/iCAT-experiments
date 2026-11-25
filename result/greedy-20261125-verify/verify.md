@@ -1,0 +1,25 @@
+# 승컴 greedy-20261125 고컴 독립 검증 (2026-11-26 06:00)
+
+- 원시 자료: origin/main `result/greedy-20261125/` (84af5fac6), 대조군 `result/revD-20261124/`, 보조 대조군 `result/revision-additional-ablation/`. 읽기만 했다.
+- 도구
+  - `analysis/online_greedy/og_audit.py` (OG_OUT=result/greedy-20261125-verify)
+  - `analysis/online_greedy/greedy_rule_check_gocom.py`: 고컴이 따로 작성한 탐욕 규칙 재계산 (승컴 greedy-check와 코드 공유 없음)
+- 유효성: Greedy 3/3 유효.
+  - 확인 항목: exit 0, 모듈 해시 등록, 부하 해시, FIO·icat seed, YCSB 실패 0, SQLITE_FULL 0, 커널 오류 0, WAF 두 경로 일치.
+  - CPU 점검은 승컴 checks에서 unavailable이었다. abl과 같은 상황이다.
+- 수치: 승컴 conclusion.md와 일치한다.
+  - Greedy 2.130 ± 0.020
+  - Greedy − revD-v4: 전체 −0.009 [−0.051, +0.034], 단계 C +0.017 [−0.054, +0.087]
+  - Greedy − abl-v4: 전체 −0.009 [−0.058, +0.040]
+- **대조군은 다른 배치이다** (같은 호스트, 11-24와 11-25). 승컴 재현성 규칙이 exit 3으로 미달해 V4를 새로 돌리지 않았다 (control-decision.txt).
+  - og_audit은 이 대비를 "indirect (same host, different batch)"로 분류한다.
+  - 표 10에서는 판정을 "구분되지 않음 (배치 간 비교)"으로 적는다.
+- 탐욕 규칙 재계산 (커버 이후 구간에서 next가 arm별 구간 WAF 평균의 argmin과 같은가)
+  - rep2: 838/838, rep3: 837/837
+  - rep1: 837/838 일치. 불일치 1건은 rep1 part 2 window 167이다.
+    - 선택된 arm 46의 평균은 121395.3 (q16)이고, argmin arm 47의 평균은 121394.0 (1회 관측)이다.
+    - 상대 차이가 1e-5이다. 커널 정수 평균의 반올림 범위 안에 있는 동률로 판단한다. 규칙 위반으로 보지 않는다.
+  - 승컴 검사는 불일치 0이었다. 동률 처리 방식 차이로 보인다.
+- 설계 감사(online-greedy-audit.md) 항목 7("실행 후 구현 확인")은 위 결과로 **PASS**이다.
+- 판정 (M3): Online Greedy와 iCAT-v4의 WAF 차이를 확인하지 못했다. iCAT에 불리한 결과이며 그대로 보고한다.
+  - 평균은 Greedy가 전체 0.009 낮고, 단계 1에서 1.872 대 1.903으로 낮다. 단계 3에서는 0.017 높다.
