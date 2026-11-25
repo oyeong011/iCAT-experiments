@@ -1,0 +1,74 @@
+{
+ "id": "abl-20261125",
+ "host": "승컴",
+ "status": "prepared, NOT started (awaiting explicit approval)",
+ "source": "revD-src (unchanged)",
+ "git_commit_at_prep": "991fc07ad2f756dbf6b881f7a7c5b5b62dba1ea3",
+ "policies": {
+  "abl-v4": {
+   "flags": "ICAT_VARIANT=4",
+   "module_sha256": "b35775057f2e7dc6ea8070692baaff063681d89e65bfbb79533cfb4ef5ff32d6",
+   "note": "byte-identical to revD-v4"
+  },
+  "abl-nodiscount": {
+   "flags": "ICAT_VARIANT=4 ICAT_EXTRA=-DWATGC_V2_GAMMA_Q16=65536ULL",
+   "module_sha256": "b26b914ce2e13da7f163e992d4e27db7270301bc9b750608a30e8b9a65d82241"
+  },
+  "abl-noelim-nosettle": {
+   "flags": "ICAT_VARIANT=2",
+   "module_sha256": "b35924ab4ee32da5cace3497a37ee5bf7c786a4e69963ae6eb0fde99ca547140",
+   "note": "drift detection, re-exploration and probe are structurally disabled too (gated on settled)"
+  }
+ },
+ "workload": "mixFYF: FIO-Fast 1800s -> YCSB-A 250k (load+run 1800s) -> FIO-Fast 1800s",
+ "seeds": {
+  "fio_hot_warm_cold": "20260910/20261010/20261110 + rep",
+  "icat_seed": "2026111400 + rep",
+  "prep_randseed": 20260907,
+  "order_shuffle": "random.Random(20261125 + rep)"
+ },
+ "run_order": [
+  [
+   "abl-v4",
+   "1"
+  ],
+  [
+   "abl-noelim-nosettle",
+   "1"
+  ],
+  [
+   "abl-nodiscount",
+   "1"
+  ],
+  [
+   "abl-noelim-nosettle",
+   "2"
+  ],
+  [
+   "abl-nodiscount",
+   "2"
+  ],
+  [
+   "abl-v4",
+   "2"
+  ],
+  [
+   "abl-noelim-nosettle",
+   "3"
+  ],
+  [
+   "abl-v4",
+   "3"
+  ],
+  [
+   "abl-nodiscount",
+   "3"
+  ]
+ ],
+ "reps_per_policy": 3,
+ "smokes": "120 s x 3 (not pooled)",
+ "expected_hours": 14.1,
+ "reused": {
+  "revD-20261124 NoDrift, FullReset, V4": "result/revD-20261124/raw (not rerun)"
+ }
+}
