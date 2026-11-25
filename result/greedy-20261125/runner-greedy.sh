@@ -17,7 +17,7 @@ label=${1:?Use smoke, main, long, t4, or mixA/B/C/D/F/G/H/J/K/L/M/O/P/Q}; policy
 [[ "$label" == mixFYF && "$policy" =~ ^(greedy-online|greedy-v4)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
 [[ "$label" != mixY || "${MIXY_SEQ:-}" == "F S V F V S F S V F V S F S V F V S F S" ]] || exit 2
 case "$policy" in
-    greedy-online|greedy-v4) case "$policy" in greedy-online) module="$root/buildoutput/nvmev-greedy.ko";; greedy-v4) module="$root/buildoutput/nvmev-abl-v4.ko";; esac;;
+    greedy-online|greedy-v4) case "$policy" in greedy-online) module="$root/buildoutput/nvmev-greedy-online.ko";; greedy-v4) module="$root/buildoutput/nvmev-abl-v4.ko";; esac;;
     fixed47) module="$root/buildoutput/nvmev-varmail-20260908-fixed47.ko";;
     online)  module="$root/buildoutput/nvmev-online-mix-20260907.ko";;
     onlinev2) module="$root/buildoutput/nvmev-online-v2.ko";;   # v1 + 6x reward window

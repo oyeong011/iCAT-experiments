@@ -11,7 +11,7 @@
 
 | 정책 | 모듈 | SHA256 | 내용 |
 |---|---|---|---|
-| greedy-online | `buildoutput/nvmev-greedy.ko` (greedy-src, `ICAT_VARIANT=8`) | 4df03c90dad0efb4… | 45개 arm을 1회씩 평가한 뒤, 매 판단 구간마다 할인 없는 누적 평균 WAF가 가장 낮은 arm을 고른다 |
+| greedy-online | `buildoutput/nvmev-greedy-online.ko` (greedy-src, `ICAT_VARIANT=8`) | 4df03c90dad0efb4… | 45개 arm을 1회씩 평가한 뒤, 매 판단 구간마다 할인 없는 누적 평균 WAF가 가장 낮은 arm을 고른다 |
 | greedy-v4 (조건부) | `buildoutput/nvmev-abl-v4.ko` | b35775057f2e7dc6… | revD-v4, abl-v4와 같은 파일 |
 
 - 구현 상세는 `implementation_review.md`, 소스 차이는 `greedy-src.diff`에 있다.

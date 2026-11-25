@@ -49,3 +49,8 @@
 - Greedy와 V4 기계어 차이는 학습기가 인라인된 `do_gc` 하나뿐이다 (V4 972줄 → 536줄; UCB, 할인, 제거, 정착, 감지, probe 경로가 빠졌다).
 - **동작 검증 (실행 뒤):** `greedy_analysis.py`가 커널 로그의 창별 host, gc로 argmin을 다시 계산한다. 그 값과 로그의 `next`가 모든 창에서 같은지 확인한다 (`greedy_rule_check.csv`, 불일치 0이 기준).
   - 같은 함수를 revD-v4 rep1에 시험 적용했다. 파싱 결과: 첫 45창에 서로 다른 arm 45개, 커버 창 45.
+
+## 5. 정정 (11-25 11:15)
+- 처음에는 새 모듈을 `buildoutput/nvmev-greedy.ko`로 복사했다. 그런데 그 이름의 파일은 09-14 백업 커밋(f15d092ef)에 이미 있던 예전 greedy 모듈(sha256 20b211e5…)이었다.
+- git에서 원래 파일로 되돌렸다. 덮어쓴 내용은 커밋되지 않았다.
+- 새 모듈은 `buildoutput/nvmev-greedy-online.ko`(4df03c90…)로 옮겼다. 모든 문서와 러너의 경로를 고쳤다.

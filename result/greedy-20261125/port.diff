@@ -9,7 +9,7 @@
 20c20
 <     abl-v4|abl-nodiscount|abl-off-elim-settle-drift-probe) module="$root/buildoutput/nvmev-$policy.ko";;
 ---
->     greedy-online|greedy-v4) case "$policy" in greedy-online) module="$root/buildoutput/nvmev-greedy.ko";; greedy-v4) module="$root/buildoutput/nvmev-abl-v4.ko";; esac;;
+>     greedy-online|greedy-v4) case "$policy" in greedy-online) module="$root/buildoutput/nvmev-greedy-online.ko";; greedy-v4) module="$root/buildoutput/nvmev-abl-v4.ko";; esac;;
 80c80
 < printf '\n### abl-20261125 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
 ---
