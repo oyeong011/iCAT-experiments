@@ -51,3 +51,14 @@
 | 고컴 revC-v4 | rep1, rep2는 고컴 자동 검사 OK. **rep3은 실행 대기 중이다**(큐 마지막, 14:00경 종료). 큐가 끝난 뒤 검증한다 |
 | 승컴 revD-v4 n=3 | 원시 자료(약 450 MB)는 고컴 큐가 끝난 뒤 내려받아 검증한다. 실행 중인 고컴 run에 I/O 부하를 주지 않기 위해서다 |
 | 기존 Random vs V4 분석 | 승컴 `random_search.csv`의 [측정] 행이 위 고컴 재계산과 일치한다(2.3243, 2.1284). [추정] Random Search 행은 실측이 아니다 |
+
+## 4. 추가 기록 (11-25 14:20, 고컴)
+
+- **revC-v4 rep3 검증 완료.** revC 15회가 모두 유효하다. revC-v4 n=3은 2.1200 ± 0.0294다 (`report/final-revision/revC_E2_E6_E7_final.md` §1).
+- **승컴 revD-v4 n=3은 이미 독립 검증을 마쳤다.** 9/9 유효이고 값이 승컴 보고와 일치한다 (`result/revD-20261124-verify/verify.md`). 위 표의 "고컴 큐 끝난 뒤 검증" 항목은 이것으로 대체한다.
+- **승컴 설계 변경 2건** (commit b93d27060, ba507d385, 11-25 11:14·11:28). 둘 다 greedy 실행 전에 커밋되었다.
+  - V4 재사용 규칙이 엄격해졌다 (CI가 ±0.02 이내). 지적 b가 반영되었다.
+  - 주 대조군이 **revD-v4**(11-24, 승컴)로 고정되었다. abl-v4는 보조로 쓴다.
+  - 결과 해석: greedy와 revD-v4는 같은 호스트이지만 **다른 배치**다. 고컴 감사 스크립트는 이 대비를 "indirect (same host, different batch)"로 분류한다. greedy와 abl-v4 대비만 같은 배치에 가깝다 (같은 큐는 아니고 연속 큐다).
+- **항목 7은 여전히 미검증이다.** `nvmev-greedy-online.ko`(4df03c90…)는 해시만 등록되어 있고, 모듈 파일은 git에 없다. greedy run의 `kernel.log`에서 모듈 적재 해시와 VARIANT 8 동작(선택 로그)을 확인하면 PASS로 바꾼다.
+- 승컴 abl-20261125는 rep1 abl-v4까지 push되었다 (ba02c25dd). greedy 결과는 아직 없다.

@@ -6,14 +6,14 @@ Each group is one policy in one batch on one host. Statistics only for groups wi
 between groups of the same host AND the same batch ("direct"); same host / different batch is "indirect (batch)"; different host is
 never differenced (only each policy's own-host V4 delta is shown side by side).
 Outputs: result/online-greedy-analysis/{runs.csv, arms.csv, stats.csv, contrasts.csv} and report/online-greedy-audit-data.md."""
-import collections, csv, gzip, json, math, re, statistics as st, sys
+import collections, csv, gzip, json, math, os, re, statistics as st, sys
 from pathlib import Path
 from scipy import stats
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'analysis/final_e1'))
 import validity as V
-OUT = ROOT / 'result/online-greedy-analysis'; OUT.mkdir(parents=True, exist_ok=True)
+OUT = ROOT / os.environ.get('OG_OUT', 'result/online-greedy-analysis'); OUT.mkdir(parents=True, exist_ok=True)   # OG_OUT / OG_REPORT: alternate outputs (M4 table)
 WORK = {'b5edbcc77f269f500986eae375da8a94d4bf762d30f52a58d8ffd0d4901fa946': 'mix-test4.fio',
         'c0aff8a25402e3f8178b47db2cf0575ce9cacba4eeb4c4657e84cf748db8d92d': 'workloada'}
 SAMPLE = re.compile(r'WATGC_V2 sample ns=\d+ part=(\d) .*?window=(\d+) .*?evaluated=(\d+) .*?host=(\d+) gc_pages=(\d+) .*?best=(\d+) next=(\d+)')
@@ -145,4 +145,4 @@ L += ['', '| 대비 | 종류 | 지표 | Δ | Welch 95 % CI | df | Hedges g |', '
 for c in crows:
     L.append(f"| {c['contrast']} | {c['kind']} | {c['metric']} | " + (f"{c['diff']:+.4f} | [{c['ci_lo']:+.4f}, {c['ci_hi']:+.4f}] | {c['welch_df']:.2f} | {c['hedges_g']:+.2f} |" if c.get('welch_df') else f"{c['diff']} | | | |"))
 L += ['', '- 서로 다른 호스트 사이의 차이는 계산하지 않는다. Hedges g는 n=3 대 3에서 크기 참고용이다.']
-(ROOT / 'report').mkdir(exist_ok=True); (ROOT / 'report/online-greedy-audit-data.md').write_text('\n'.join(L).replace('[-', '[−').replace(' -0.', ' −0.') + '\n'); print('\n'.join(L))
+(ROOT / 'report').mkdir(exist_ok=True); (ROOT / os.environ.get('OG_REPORT', 'report/online-greedy-audit-data.md')).write_text('\n'.join(L).replace('[-', '[−').replace(' -0.', ' −0.') + '\n'); print('\n'.join(L))

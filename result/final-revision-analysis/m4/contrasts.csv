@@ -1,0 +1,163 @@
+contrast,kind,metric,diff,ci_lo,ci_hi,welch_df,hedges_g
+revA-v1 - revA-v4,"direct (same host, same batch)",waf,0.07866106609622348,-0.05010790708832949,0.20743003928077644,2.035424660809007,1.6885195221561844
+revA-v1 - revA-v4,"direct (same host, same batch)",waf_C,0.16257664107101544,-0.10038455285941922,0.4255378350014501,2.0531093622715506,1.6952192681570606
+revA-v2 - revA-v4,"direct (same host, same batch)",waf,0.13548437065388796,0.11671351645064217,0.15425522485713378,3.0807069332861374,14.784186609310602
+revA-v2 - revA-v4,"direct (same host, same batch)",waf_C,0.24915397556220586,0.22331068767797713,0.2749972634464346,2.9236010678134257,20.340840715568117
+revA-random - revA-v4,"direct (same host, same batch)",waf,0.19590612907111948,0.18395851998326,0.20785373815897898,3.949489508649504,29.887816994305958
+revA-random - revA-v4,"direct (same host, same batch)",waf_C,0.36610195255620814,0.3402053715611354,0.3919985335512809,2.8985507085242115,29.978202798476776
+revB-v4 - revA-v4,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revB-v4 - revA-v4,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revB-noelim - revA-v4,"indirect (same host, different batch)",waf,0.09415048316948615,0.07013419464134278,0.11816677169762953,2.7333737742656985,8.618028626248815
+revB-noelim - revA-v4,"indirect (same host, different batch)",waf_C,0.1607908598337131,0.1245734337036764,0.1970082859637498,3.5903106880242297,8.4271182532791
+revB-nosettle - revA-v4,"indirect (same host, different batch)",waf,0.08679641156240114,-0.10846140506192156,0.2820542281867239,2.0156173216895783,1.240090362374254
+revB-nosettle - revA-v4,"indirect (same host, different batch)",waf_C,0.18044952506317458,-0.22271964823417323,0.5836186983605224,2.023055916478231,1.2442700279896437
+revB-arm60 - revA-v4,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revB-arm60 - revA-v4,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-v4 - revA-v4,"indirect (same host, different batch)",waf,-0.008441422048632852,-0.07889185891677312,0.06200901481950742,2.112602244977234,-0.32012492961896477
+revC:revC-v4 - revA-v4,"indirect (same host, different batch)",waf_C,-0.019176476878049797,-0.16310279672818195,0.12474984297208236,2.1654045166041076,-0.3483452872111581
+revC:revC-elim10 - revA-v4,"indirect (same host, different batch)",waf,0.01535066925351769,-0.0011312418212396438,0.031832580328275024,3.3144888383037765,1.8362015144102792
+revC:revC-elim10 - revA-v4,"indirect (same host, different batch)",waf_C,0.04101500841697936,0.008660531350047712,0.073369485483911,3.8241654657864403,2.3413107530180293
+revC:revC-elim25 - revA-v4,"indirect (same host, different batch)",waf,0.04224369482786239,-0.007100227956677786,0.09158761761240256,2.216194133612732,2.1945683780587664
+revC:revC-elim25 - revA-v4,"indirect (same host, different batch)",waf_C,0.051758380548771576,-0.05549002329632706,0.15900678439387023,2.280000426740267,1.2085881326505028
+revC:revB-arm60 - revA-v4,"indirect (same host, different batch)",waf,0.019779385636142344,-0.030427742877032052,0.06998651414931674,2.2095792520517845,1.0124124736298474
+revC:revB-arm60 - revA-v4,"indirect (same host, different batch)",waf_C,-0.018587854159934913,-0.1232145768467687,0.08603886852689888,2.292382618939753,-0.4429800141521777
+revC:online - revA-v4,"indirect (same host, different batch)",waf,0.2666537550127406,0.2565442257731135,0.2767632842523677,3.222468821492365,52.750043033831815
+revC:online - revA-v4,"indirect (same host, different batch)",waf_C,0.4274393310812368,0.39952182166107,0.45535684050140357,2.364627131845273,37.257715265183485
+revA-v2 - revA-v1,"direct (same host, same batch)",waf,0.05682330455766449,-0.06852551599569037,0.18217212511101935,2.1206211585616592,1.2070642324879872
+revA-v2 - revA-v1,"direct (same host, same batch)",waf_C,0.08657733449119043,-0.17996608259059688,0.35312075157297773,2.012999580533144,0.9072605823178516
+revA-random - revA-v1,"direct (same host, same batch)",waf,0.11724506297489601,-0.011136170686455588,0.2456262966362476,2.044456569728763,2.5139417507240926
+revA-random - revA-v1,"direct (same host, same batch)",waf_C,0.2035253114851927,-0.0630547311265412,0.4701053540969266,2.012604194781352,2.132886062044127
+revB-v4 - revA-v1,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revB-v4 - revA-v1,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revB-noelim - revA-v1,"indirect (same host, different batch)",waf,0.015489417073262679,-0.10755812056395828,0.13853695471048363,2.1860955999362233,0.3264378791875552
+revB-noelim - revA-v1,"indirect (same host, different batch)",waf_C,-0.0017857812373023307,-0.26030371649055206,0.2567321540159474,2.107235473659242,-0.018497446089772576
+revB-nosettle - revA-v1,"indirect (same host, different batch)",waf,0.008135345466177668,-0.15340711414936908,0.16967780508172442,3.4764132213630963,0.09702128454821171
+revB-nosettle - revA-v1,"indirect (same host, different batch)",waf_C,0.01787288399215914,-0.31644850281305514,0.3521942707973734,3.46097821760231,0.10320911284442642
+revB-arm60 - revA-v1,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revB-arm60 - revA-v1,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-v4 - revA-v1,"indirect (same host, different batch)",waf,-0.08710248814485633,-0.19482169170386276,0.020616715414150125,3.144397651908199,-1.6380680222694854
+revC:revC-v4 - revA-v1,"indirect (same host, different batch)",waf_C,-0.18175311794906523,-0.40285739938519516,0.03935116348706466,3.1628578231530122,-1.6600820848683968
+revC:revC-elim10 - revA-v1,"indirect (same host, different batch)",waf,-0.06331039684270579,-0.18965432234970436,0.06303352866429279,2.094475699052722,-1.3491620545249308
+revC:revC-elim10 - revA-v1,"indirect (same host, different batch)",waf_C,-0.12156163265403608,-0.3820912823951589,0.13896801708708673,2.082082667484358,-1.2630373184536021
+revC:revC-elim25 - revA-v1,"indirect (same host, different batch)",waf,-0.03641737126836109,-0.14901038367115815,0.07617564113443596,2.6365606462065014,-0.7279595320971954
+revC:revC-elim25 - revA-v1,"indirect (same host, different batch)",waf_C,-0.11081826052224386,-0.3393994689966791,0.11776294795219139,2.7291181680549474,-1.0668266294381021
+revC:revB-arm60 - revA-v1,"indirect (same host, different batch)",waf,-0.05888168046008113,-0.1711850547295004,0.05342169380933813,2.655669174284057,-1.1743913725356927
+revC:revB-arm60 - revA-v1,"indirect (same host, different batch)",waf_C,-0.18116449523095035,-0.41054811793737633,0.04821912747547563,2.699943115402596,-1.749990960842052
+revC:online - revA-v1,"indirect (same host, different batch)",waf,0.1879926889165171,0.05819199268705075,0.31779338514598343,2.0120875698993137,4.047126520463929
+revC:online - revA-v1,"indirect (same host, different batch)",waf_C,0.26486269001022134,-0.0024379067042087366,0.5321632867246514,2.0048830439863377,2.778358367260541
+revA-random - revA-v2,"direct (same host, same batch)",waf,0.06042175841723152,0.041790431060948235,0.0790530857735148,3.29716586051837,6.410448697972685
+revA-random - revA-v2,"direct (same host, same batch)",waf_C,0.11694797699400228,0.10312294550478136,0.13077300848322318,3.9990463077832428,15.342667751122631
+revB-v4 - revA-v2,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revB-v4 - revA-v2,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revB-noelim - revA-v2,"indirect (same host, different batch)",waf,-0.04133388748440181,-0.06507306459699481,-0.017594710371808805,3.824727502604619,-3.215619297942565
+revB-noelim - revA-v2,"indirect (same host, different batch)",waf_C,-0.08836311572849276,-0.12719522402154182,-0.049531007435443704,2.4775470725750877,-5.347838316525472
+revB-nosettle - revA-v2,"indirect (same host, different batch)",waf,-0.04868795909148682,-0.24148999935732712,0.14411408117435348,2.0532127235044593,-0.6923873122171113
+revB-nosettle - revA-v2,"indirect (same host, different batch)",waf_C,-0.06870445049903129,-0.4743151752329197,0.33690627423485714,2.0056426383179433,-0.47477270333180094
+revB-arm60 - revA-v2,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revB-arm60 - revA-v2,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-v4 - revA-v2,"indirect (same host, different batch)",waf,-0.14392579270252082,-0.20983700267567915,-0.07801458272936249,2.38052742090814,-5.286504161076795
+revC:revC-v4 - revA-v2,"indirect (same host, different batch)",waf_C,-0.26833045244025566,-0.4178414677461562,-0.11881943713435511,2.0405446461604106,-4.949191841212439
+revC:revC-elim10 - revA-v2,"indirect (same host, different batch)",waf,-0.12013370140037027,-0.1397612370736121,-0.10050616572712845,3.9415969221031695,-11.165411102313435
+revC:revC-elim10 - revA-v2,"indirect (same host, different batch)",waf_C,-0.2081389671452265,-0.2413638479346208,-0.17491408635583222,2.617745707005596,-14.167289438784934
+revC:revC-elim25 - revA-v2,"indirect (same host, different batch)",waf,-0.09324067582602558,-0.13829886375120176,-0.048182487900849405,2.7145362470673664,-4.569260983112946
+revC:revC-elim25 - revA-v2,"indirect (same host, different batch)",waf_C,-0.1973955950134343,-0.31106722336281745,-0.08372396666405112,2.0688430519130354,-4.728144487869463
+revC:revB-arm60 - revA-v2,"indirect (same host, different batch)",waf,-0.11570498501774562,-0.16158819268050703,-0.06982177735498421,2.693938150952201,-5.595650391003677
+revC:revB-arm60 - revA-v2,"indirect (same host, different batch)",waf_C,-0.2677418297221408,-0.37884631131898283,-0.15663734812529873,2.0719178336624453,-6.552385560860873
+revC:online - revA-v2,"indirect (same host, different batch)",waf,0.13116938435885261,0.11081201322759392,0.1515267554901113,2.3965082572859697,15.520076471897992
+revC:online - revA-v2,"indirect (same host, different batch)",waf_C,0.1782853555190309,0.16573056100007047,0.19084015003799135,3.3167252517834434,27.987279387191307
+revB-v4 - revA-random,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revB-v4 - revA-random,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revB-noelim - revA-random,"indirect (same host, different batch)",waf,-0.10175564590163333,-0.12537084533526455,-0.0781404464680021,2.9023249197828442,-9.13017448181345
+revB-noelim - revA-random,"indirect (same host, different batch)",waf_C,-0.20531109272249504,-0.24424071348112247,-0.1663814719638676,2.463423562658141,-12.446134101890449
+revB-nosettle - revA-random,"indirect (same host, different batch)",waf,-0.10910971750871834,-0.3040993993517216,0.08587996433428491,2.019599842757683,-1.5581157939663663
+revB-nosettle - revA-random,"indirect (same host, different batch)",waf_C,-0.18565242749303357,-0.5912876043594832,0.2199827493734161,2.005471013140531,-1.2829531797003257
+revB-arm60 - revA-random,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revB-arm60 - revA-random,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-v4 - revA-random,"indirect (same host, different batch)",waf,-0.20434755111975234,-0.274207017050297,-0.13448808518920768,2.141253383871066,-7.722558930940412
+revC:revC-v4 - revA-random,"indirect (same host, different batch)",waf_C,-0.38527842943425794,-0.5348510077436502,-0.23570585112486564,2.039311686911814,-7.107310873865892
+revC:revC-elim10 - revA-random,"indirect (same host, different batch)",waf,-0.1805554598176018,-0.19707096036905122,-0.16403995926615236,3.5405923208752474,-20.88377756068103
+revC:revC-elim10 - revA-random,"indirect (same host, different batch)",waf_C,-0.3250869441392288,-0.35839716659688814,-0.29177672168156943,2.599834954254794,-22.173663595326147
+revC:revC-elim25 - revA-random,"indirect (same host, different batch)",waf,-0.1536624342432571,-0.20234121379365558,-0.10498365469285861,2.2708710781700288,-7.930964080294844
+revC:revC-elim25 - revA-random,"indirect (same host, different batch)",waf_C,-0.31434357200743657,-0.42809147108400447,-0.20059567293086866,2.066750314500593,-7.531295310814051
+revC:revB-arm60 - revA-random,"indirect (same host, different batch)",waf,-0.17612674343497714,-0.22567025522513748,-0.1265832316448168,2.262609939198998,-8.958250992909466
+revC:revB-arm60 - revA-random,"indirect (same host, different batch)",waf_C,-0.38468980671614306,-0.495871818507437,-0.2735077949248491,2.069731740038486,-9.416957640624023
+revC:online - revA-random,"indirect (same host, different batch)",waf,0.0707476259416211,0.05931090927558616,0.08218434260765603,3.0126170185571186,12.828845747372553
+revC:online - revA-random,"indirect (same host, different batch)",waf_C,0.06133737852502863,0.04897865388079709,0.07369610316926017,3.3474140666222016,9.737003875942165
+revB-noelim - revB-v4,"direct (same host, same batch)",waf,n<3: 통계 없음,,,,
+revB-noelim - revB-v4,"direct (same host, same batch)",waf_C,n<3: 통계 없음,,,,
+revB-nosettle - revB-v4,"direct (same host, same batch)",waf,n<3: 통계 없음,,,,
+revB-nosettle - revB-v4,"direct (same host, same batch)",waf_C,n<3: 통계 없음,,,,
+revB-arm60 - revB-v4,"direct (same host, same batch)",waf,n<3: 통계 없음,,,,
+revB-arm60 - revB-v4,"direct (same host, same batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-v4 - revB-v4,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revC:revC-v4 - revB-v4,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-elim10 - revB-v4,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revC:revC-elim10 - revB-v4,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-elim25 - revB-v4,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revC:revC-elim25 - revB-v4,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revB-arm60 - revB-v4,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revC:revB-arm60 - revB-v4,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:online - revB-v4,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revC:online - revB-v4,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revB-nosettle - revB-noelim,"direct (same host, same batch)",waf,-0.007354071607085011,-0.1983739096705014,0.18366576645633137,2.082180573308429,-0.10420957768977115
+revB-nosettle - revB-noelim,"direct (same host, same batch)",waf_C,0.01965866522946147,-0.38033314903925947,0.4196504794981824,2.046573750102662,0.1351596101895546
+revB-arm60 - revB-noelim,"direct (same host, same batch)",waf,n<3: 통계 없음,,,,
+revB-arm60 - revB-noelim,"direct (same host, same batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-v4 - revB-noelim,"indirect (same host, different batch)",waf,-0.102591905218119,-0.16623137552494652,-0.038952434911291495,2.580472806962492,-3.681463008184856
+revC:revC-v4 - revB-noelim,"indirect (same host, different batch)",waf_C,-0.1799673367117629,-0.31808218386218706,-0.041852489561338746,2.3324026618442044,-3.2047720769010413
+revC:revC-elim10 - revB-noelim,"indirect (same host, different batch)",waf,-0.07879981391596846,-0.10206942425548088,-0.05553020357645605,3.613028771047738,-6.409747931638262
+revC:revC-elim10 - revB-noelim,"indirect (same host, different batch)",waf_C,-0.11977585141673375,-0.15764029316285083,-0.08191140967061666,3.930467253769653,-5.777066643208111
+revC:revC-elim25 - revB-noelim,"indirect (same host, different batch)",waf,-0.051906788341623766,-0.09564052251605429,-0.008173054167193251,3.0555003422851215,-2.4420891123891004
+revC:revC-elim25 - revB-noelim,"indirect (same host, different batch)",waf_C,-0.10903247928494153,-0.21069136523058923,-0.007373593339293827,2.5572135860555862,-2.46467946369478
+revC:revB-arm60 - revB-noelim,"indirect (same host, different batch)",waf,-0.07437109753334381,-0.11886700579224721,-0.02987518927444041,3.0277125864366132,-3.4565560674531732
+revC:revB-arm60 - revB-noelim,"indirect (same host, different batch)",waf_C,-0.17937871399364802,-0.27847811048274695,-0.08027931750454911,2.581065327722711,-4.132999406957076
+revC:online - revB-noelim,"indirect (same host, different batch)",waf,0.17250327184325442,0.14641974628368207,0.19858679740282678,2.2581684819886454,16.692141147585264
+revC:online - revB-noelim,"indirect (same host, different batch)",waf_C,0.26664847124752367,0.22519879245172647,0.30809815004332086,2.1816360467355733,16.71142073262654
+revB-arm60 - revB-nosettle,"direct (same host, same batch)",waf,n<3: 통계 없음,,,,
+revB-arm60 - revB-nosettle,"direct (same host, same batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-v4 - revB-nosettle,"indirect (same host, different batch)",waf,-0.095237833611034,-0.26715351369927653,0.07667784647720852,2.5439005049496637,-1.2776861669189823
+revC:revC-v4 - revB-nosettle,"indirect (same host, different batch)",waf_C,-0.19962600194122437,-0.5553868156243804,0.15613481174193167,2.5460537004989345,-1.2933983466262435
+revC:revC-elim10 - revB-nosettle,"indirect (same host, different batch)",waf,-0.07144574230888345,-0.26498431701942327,0.12209283240165636,2.041666677159943,-1.0174746487857218
+revC:revC-elim10 - revB-nosettle,"indirect (same host, different batch)",waf_C,-0.13943451664619522,-0.5408866075843862,0.2620175742919958,2.035640938052603,-0.9599549583635577
+revC:revC-elim25 - revB-nosettle,"indirect (same host, different batch)",waf,-0.044552716734538755,-0.22526164088802456,0.13615620741894705,2.286620825894494,-0.6159835004224474
+revC:revC-elim25 - revB-nosettle,"indirect (same host, different batch)",waf_C,-0.128691144514403,-0.49948942986167044,0.24210714083286444,2.325572787881979,-0.8555671783870639
+revC:revB-arm60 - revB-nosettle,"indirect (same host, different batch)",waf,-0.0670170259262588,-0.2473497458818099,0.11331569402929231,2.295621433378141,-0.9255872695044783
+revC:revB-arm60 - revB-nosettle,"indirect (same host, different batch)",waf_C,-0.1990373792231095,-0.5709716383289369,0.17289687988271796,2.3118189071966344,-1.3253933133826972
+revC:online - revB-nosettle,"indirect (same host, different batch)",waf,0.17985734345033944,-0.01610226957347846,0.37581695647415736,2.0053286304633735,2.5729824895991804
+revC:online - revB-nosettle,"indirect (same host, different batch)",waf_C,0.2469898060180622,-0.15912441239812375,0.6531040244342481,2.002119533639891,1.7075403438163175
+revC:revC-v4 - revB-arm60,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revC:revC-v4 - revB-arm60,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-elim10 - revB-arm60,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revC:revC-elim10 - revB-arm60,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-elim25 - revB-arm60,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revC:revC-elim25 - revB-arm60,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revB-arm60 - revB-arm60,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revC:revB-arm60 - revB-arm60,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:online - revB-arm60,"indirect (same host, different batch)",waf,n<3: 통계 없음,,,,
+revC:online - revB-arm60,"indirect (same host, different batch)",waf_C,n<3: 통계 없음,,,,
+revC:revC-elim10 - revC:revC-v4,"direct (same host, same batch)",waf,0.023792091302150542,-0.043288812036049104,0.09087299464035019,2.2989972835428345,0.8823292196591489
+revC:revC-elim10 - revC:revC-v4,"direct (same host, same batch)",waf_C,0.06019148529502916,-0.08040945413809639,0.2007924247281547,2.255094730699998,1.081711816040603
+revC:revC-elim25 - revC:revC-v4,"direct (same host, same batch)",waf,0.05068511687649524,-0.009818641238754179,0.11118887499174465,3.6367817414471033,1.5810111642056048
+revC:revC-elim25 - revC:revC-v4,"direct (same host, same batch)",waf_C,0.07093485742682137,-0.05570693775736038,0.19757665261100313,3.7489285617052492,1.0432192793068582
+revC:revB-arm60 - revC:revC-v4,"direct (same host, same batch)",waf,0.028220807684775195,-0.03239672753396195,0.08883834290351234,3.665891642071403,0.8755463478238259
+revC:revB-arm60 - revC:revC-v4,"direct (same host, same batch)",waf_C,0.000588622718114884,-0.1255959056031912,0.12677315103942097,3.710992706613642,0.008726162019887821
+revC:online - revC:revC-v4,"direct (same host, same batch)",waf,0.27509517706137343,0.202968618661242,0.34722173546150487,2.03844631219383,10.527920172707699
+revC:online - revC:revC-v4,"direct (same host, same batch)",waf_C,0.44661580795928657,0.29581289405473543,0.5974187218638377,2.0152310275077054,8.263486345666596
+revC:revC-elim25 - revC:revC-elim10,"direct (same host, same batch)",waf,0.026893025574344698,-0.019081757885219285,0.07286780903390869,2.566694874780859,1.340775032153901
+revC:revC-elim25 - revC:revC-elim10,"direct (same host, same batch)",waf_C,0.010743372131792217,-0.09316150073417116,0.1146482449977556,2.429915663056678,0.2464811113508453
+revC:revB-arm60 - revC:revC-elim10,"direct (same host, same batch)",waf,0.004428716382624653,-0.042391671832146344,0.05124910459739565,2.5499410215388316,0.2177978918932059
+revC:revB-arm60 - revC:revC-elim10,"direct (same host, same batch)",waf_C,-0.05960286257691427,-0.16090708452157423,0.04170135936774569,2.4486502238883707,-1.3946154427075015
+revC:online - revC:revC-elim10,"direct (same host, same batch)",waf,0.2513030857592229,0.23363889365641616,0.2689672778620296,2.5032645999656555,33.18771634687947
+revC:online - revC:revC-elim10,"direct (same host, same batch)",waf_C,0.3864243226642574,0.3506856479598868,0.422162997368628,2.2370193789691064,27.502137171244513
+revC:revB-arm60 - revC:revC-elim25,"direct (same host, same batch)",waf,-0.022464309191720044,-0.07093282409834663,0.02600420571490654,3.999023687976454,-0.8406372299292362
+revC:revB-arm60 - revC:revC-elim25,"direct (same host, same batch)",waf_C,-0.07034623470870649,-0.17539120373715128,0.034698734319738314,3.9980899046378715,-1.2147331416239004
+revC:online - revC:revC-elim25,"direct (same host, same batch)",waf,0.2244100601848782,0.1730111705740892,0.27580894979566717,2.0739559026397325,11.860774478392106
+revC:online - revC:revC-elim25,"direct (same host, same batch)",waf_C,0.3756809505324652,0.2603840609594382,0.49097784010549217,2.025865924832512,9.046473239510979
+revC:online - revC:revB-arm60,"direct (same host, same batch)",waf,0.24687436937659823,0.1946282159192272,0.2991205228339693,2.071681835541595,12.849366979309657
+revC:online - revC:revB-arm60,"direct (same host, same batch)",waf_C,0.4460271852411717,0.33326785261157343,0.5587865178707699,2.0270218197309124,10.97623086170153
+revD-nodrift - revD-v4,"direct (same host, same batch)",waf,0.0681400087758246,-0.03989819627136444,0.17617821382301363,2.1314935965651736,1.6718030759308062
+revD-nodrift - revD-v4,"direct (same host, same batch)",waf_C,0.14107797699384328,-0.08654205030983181,0.36869800429751837,2.0898047377195006,1.672121727535199
+revD-fullreset - revD-v4,"direct (same host, same batch)",waf,0.059649437437701014,0.016025432884745734,0.1032734419906563,2.6381831515295056,3.076185734748402
+revD-fullreset - revD-v4,"direct (same host, same batch)",waf_C,0.1296446964255238,0.051646002282309256,0.20764339056873832,2.5984574204901927,3.7778043493234876
+revD-fullreset - revD-nodrift,"direct (same host, same batch)",waf,-0.008490571338123587,-0.10424160759913541,0.08726046492288823,2.772337079317889,-0.19319768008282023
+revD-fullreset - revD-nodrift,"direct (same host, same batch)",waf_C,-0.011433280568319493,-0.21580773799177366,0.19294117685513468,2.574424715386716,-0.12796139577233143
