@@ -3,7 +3,7 @@
 - 이 문서는 진행 중인 실험이 끝날 때마다 갱신한다. (11-26 04:40 revE 반영)
   - revE: 11-26 04:07 종료, 9/9 유효
   - M1 자원 측정 m1-20261126: 11-26 04:09 시작, 11-28 20:00경 종료 예정
-  - 승컴 abl과 greedy: abl은 11-26 00:50경 종료, greedy는 그 뒤에 시작
+  - 승컴 abl: 9/9 유효, 고컴 검증 일치 (result/abl-20261125-verify/verify.md). greedy: 진행 중 (2/3)
 - 모든 수치의 근거 경로는 이 브랜치(`report/data-validity-20261124`) 기준이다. 원시 데이터는 `result/<배치>/raw/`에 있고, 승컴 원시 데이터는 origin/main에 있다.
 - 유효성 판정 기준
   - exit 0
@@ -21,7 +21,7 @@
 | **M2** 구성 요소 제거 실험 | revA V1 (감지 끔), V2 (제거·정착 끔). 고컴 | `report/final-revision/M4_statistics_final.md` §3 | `result/revA-20261114/raw/` | 3 | 6/6 유효 | 반영: §6.4 표 10 |
 | | revD NoDrift, FullReset. 승컴 | `result/revD-20261124-verify/verify.md` | origin/main `result/revD-20261124/raw/` | 3 | 9/9 유효 (고컴 독립 검증, 승컴 값과 일치) | 반영: §6.4 표 10·11 |
 | | **revE NoElim 단독** (정착·감지 켬, 같은 배치 V4 3회). 고컴 | `report/final-revision/revE_final.md`, `result/revE-20261125-analysis/` | `result/revE-20261125/raw/` | 3 | 9/9 유효. +0.091 [+0.030, +0.153], Holm p=0.091 | 반영: 표 10·11 배치 E |
-| | 승컴 abl-20261125: NoDiscount, 제거+정착+감지+probe 묶음 끔 | 승컴 산출 예정 | origin/main `result/abl-20261125/` | 3 (진행 중) | 도착 후 고컴 검증 | 미반영 |
+| | 승컴 abl-20261125: NoDiscount, 제거+정착+감지+probe 묶음 끔 | `result/abl-20261125-verify/verify.md` | origin/main `result/revision-additional-ablation/raw/` | 3 | 9/9 유효, 고컴 재계산 일치. 묶음 끔 +0.124 (Holm 0.028), NoDiscount 구분 안 됨 | 반영: 표 10 배치 F |
 | **M3** 온라인 기준선 비교 | revA Random Selection. 고컴 | `report/online-greedy-audit.md`, `M4_statistics_final.md` | `result/revA-20261114/raw/` | 3 | 6/6 유효 | 반영: §6.4 표 10 |
 | | revC 원래 iCAT (온라인 학습 원 구현). 고컴 | `report/final-revision/revC_E2_E6_E7_final.md` | `result/revC-20261124/raw/mixFYF-online-*` | 3 | 3/3 유효 | 반영: §6.4 표 10·11 |
 | | 승컴 greedy-20261125 Online Greedy (대조군 revD-v4) | `report/online-greedy-audit.md` (설계 감사) | origin/main `result/greedy-20261125/` (아직 없음) | 3 (대기) | 설계 6/7 PASS, 항목 7은 실행 후 확인 | 표 10에 【결과 대기】 행 |
@@ -43,7 +43,7 @@
 | 요구사항 | 실험 완료 | 데이터 검증 완료 | 논문 반영 완료 | 심사 답변 완료 | 남은 일 |
 |---|---|---|---|---|---|
 | M1 SmartGC | △ WAF n=1 완료. 자원 측정·3회 반복(m1-20261126) 진행 중 | ✔ (n=1분) | △ n=1분 | 초안 △ | m1-20261126 종료 후 표 9와 자원 비교 갱신 |
-| M2 구성 요소 | △ V1·V2·NoDrift·FullReset·NoElim 완료. 승컴 abl 검증 대기 | △ 고컴분 완료 | △ abl 제외 반영 | 초안 △ | 승컴 abl 검증 후 반영 |
+| M2 구성 요소 | ✔ V1·V2·NoDrift·FullReset·NoElim·NoDiscount·묶음 끔 | ✔ | ✔ | 초안 ✔ | 정착·탐색(probe) 단독 효과는 분리 측정하지 않음 |
 | M3 온라인 기준선 | △ Random·원래 iCAT 완료. Greedy 대기. Periodic 안 함 | △ | △ | 초안 △ | 승컴 greedy 검증 후 표 10 갱신 |
 | M4 통계 | ✔ (진행 중 배치 제외) | ✔ 53/53 (revE 포함) | ✔ | 초안 ✔ | abl, greedy 추가 |
 | M5 자원 | ✔ (기존 로그) | ✔ | ✔ | 초안 ✔ | CPU 시간과 GC 시간은 측정 불가로 명시 (새 계측 빌드 없이는 불가) |
