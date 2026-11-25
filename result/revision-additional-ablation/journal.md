@@ -50,3 +50,16 @@
 - phaseB-run host_pages=5408227 gc_pages=128704 WAF=1.023798
 - ycsb-load [OVERALL], Throughput(ops/sec), 27703.90070921986
 - ycsb-run [OVERALL], Throughput(ops/sec), 63628.27727902095
+
+### abl-20261125 mixFYF abl-off-elim-settle-drift-probe rep1 — started 2026-11-25T12:35:44+09:00
+- FIO-Fast 1800s -> YCSB-A (load 250000 records + run, 1800s total) -> FIO-Fast 1800s; Table-3 prep; seeds hot/warm/cold=20260911/20261011/20261111; icat_seed=2026111401; module `/home/oy/iCAT/buildoutput/nvmev-abl-off-elim-settle-drift-probe.ko`; evidence `/home/oy/iCAT/result/revision-additional-ablation/raw/mixFYF-abl-off-elim-settle-drift-probe-rep1`.
+
+- Finished 2026-11-25T14:07:21+09:00; mixFYF abl-off-elim-settle-drift-probe exit=0; evidence `/home/oy/iCAT/result/revision-additional-ablation/raw/mixFYF-abl-off-elim-settle-drift-probe-rep1`; cleanup attempted.
+- total host_bytes=614255087616 host_pages=149964621 gc_pages=188685143 WAF=2.258198
+- phaseA(test4) host_pages=72017337 gc_pages=67567977 WAF=1.938218
+- phaseB(sqlite-a) host_pages=5945297 gc_pages=480948 WAF=1.080896
+- phaseC(test4) host_pages=72001987 gc_pages=120636218 WAF=2.675457
+- phaseB-load host_pages=452310 gc_pages=327347 WAF=1.723723
+- phaseB-run host_pages=5492987 gc_pages=153601 WAF=1.027963
+- ycsb-load [OVERALL], Throughput(ops/sec), 26106.934001670845
+- ycsb-run [OVERALL], Throughput(ops/sec), 61640.02092638373
