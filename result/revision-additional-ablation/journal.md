@@ -89,3 +89,16 @@
 - phaseB-run host_pages=5242026 gc_pages=124047 WAF=1.023664
 - ycsb-load [OVERALL], Throughput(ops/sec), 26491.46974674155
 - ycsb-run [OVERALL], Throughput(ops/sec), 58410.72800059432
+
+### abl-20261125 mixFYF abl-nodiscount rep2 — started 2026-11-25T17:11:16+09:00
+- FIO-Fast 1800s -> YCSB-A (load 250000 records + run, 1800s total) -> FIO-Fast 1800s; Table-3 prep; seeds hot/warm/cold=20260912/20261012/20261112; icat_seed=2026111402; module `/home/oy/iCAT/buildoutput/nvmev-abl-nodiscount.ko`; evidence `/home/oy/iCAT/result/revision-additional-ablation/raw/mixFYF-abl-nodiscount-rep2`.
+
+- Finished 2026-11-25T18:42:52+09:00; mixFYF abl-nodiscount exit=0; evidence `/home/oy/iCAT/result/revision-additional-ablation/raw/mixFYF-abl-nodiscount-rep2`; cleanup attempted.
+- total host_bytes=613430685696 host_pages=149763351 gc_pages=166332184 WAF=2.110633
+- phaseA(test4) host_pages=72001990 gc_pages=64796536 WAF=1.899927
+- phaseB(sqlite-a) host_pages=5759377 gc_pages=272436 WAF=1.047303
+- phaseC(test4) host_pages=72001984 gc_pages=101263212 WAF=2.406395
+- phaseB-load host_pages=452310 gc_pages=137549 WAF=1.304103
+- phaseB-run host_pages=5307067 gc_pages=134887 WAF=1.025416
+- ycsb-load [OVERALL], Throughput(ops/sec), 23848.135075837068
+- ycsb-run [OVERALL], Throughput(ops/sec), 59521.85140408036
