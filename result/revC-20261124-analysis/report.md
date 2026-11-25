@@ -1,6 +1,6 @@
 # revC-20261124 결과 (자동 생성, 사전 등록 §4 방식)
 
-- 원자료: `/home/oy/iCAT/result/revC-20261124/raw` (smoke 제외). 유효성: exit 0 + `validity.py`(YCSB 실패 ≤ 1 %, SQLITE_FULL 없음).
+- 원자료: `result/revC-20261124/raw` (smoke 제외). 유효성: exit 0 + `validity.py`(YCSB 실패 ≤ 1 %, SQLITE_FULL 없음).
 - 통계: 평균 ± SD, 95 % t-CI. 대조군과의 차이는 Welch 95 % CI와 같은 rep끼리의 짝 비교 95 % CI. CI가 0을 포함하지 않을 때만 "차이 확인". n<3이면 통계 없음.
 - Hedges g(합동 SD, 소표본 보정)는 11-25 사용자 요청으로 추가한 것으로 사전 등록 지표가 아니다. n=3 대 3에서는 크기 참고용이다.
 

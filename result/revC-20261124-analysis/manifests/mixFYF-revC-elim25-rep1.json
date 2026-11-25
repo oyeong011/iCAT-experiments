@@ -1,0 +1,101 @@
+{
+ "run": "mixFYF-revC-elim25-rep1",
+ "policy": "revC-elim25",
+ "rep": 1,
+ "raw_dir": {
+  "value": "/home/oy/iCAT/result/revC-20261124/raw/mixFYF-revC-elim25-rep1",
+  "source": "recorded"
+ },
+ "host": {
+  "value": "oy-B550M-DS3H",
+  "source": "recorded (environment.txt uname)"
+ },
+ "kernel": {
+  "value": "7.0.0-31-generic",
+  "source": "recorded"
+ },
+ "boot_cmdline": {
+  "value": "BOOT_IMAGE=/boot/vmlinuz-7.0.0-31-generic root=UUID=2a66e830-8280-4bf1-b239-68732ae9e380 ro memmap=8G$4G quiet splash vt.handoff=7",
+  "source": "recorded"
+ },
+ "cpu": {
+  "model": "AMD Ryzen 5 3600XT 6-Core Processor",
+  "sockets": "1",
+  "cores_per_socket": "6",
+  "threads_per_core": "2",
+  "logical_cpus": 12,
+  "source": "recorded (lscpu)",
+  "note": "revA experiment_manifest.json cpu_cores=8 is wrong for this host (6 physical cores, 12 logical); original file left unchanged"
+ },
+ "memory": {
+  "value": "메모리:         23Gi       3.9Gi        18Gi        99Mi       1.2Gi        19Gi",
+  "source": "recorded (free -h)"
+ },
+ "module": {
+  "path": "/home/oy/iCAT/buildoutput/nvmev-revC-elim25.ko",
+  "sha256": "606acc4161d0840caf4bea929e069f1ff334d14b602f202663081001df4c1597",
+  "source": "recorded",
+  "preregistered_sha256": "606acc4161d0840caf4bea929e069f1ff334d14b602f202663081001df4c1597",
+  "matches_preregistered": true
+ },
+ "runner": {
+  "path": "/home/oy/iCAT/result/revC-20261124/runner-revC.sh",
+  "sha256": "65bb56488ba0f70c46738dda2becd9a14ff7a5d133e8f214296b58056410187a",
+  "sha256_now": "65bb56488ba0f70c46738dda2becd9a14ff7a5d133e8f214296b58056410187a",
+  "source": "recorded / derived"
+ },
+ "workload_files": {
+  "/home/oy/iCAT/workloads/mix-test4.fio": "b5edbcc77f269f500986eae375da8a94d4bf762d30f52a58d8ffd0d4901fa946",
+  "/home/oy/iCAT/workloads/sqlite/workloada": "c0aff8a25402e3f8178b47db2cf0575ce9cacba4eeb4c4657e84cf748db8d92d"
+ },
+ "nvmevirt_params": {
+  "value": [
+   "insmod \"$module\" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid=\"$(id -u)\"",
+   "insmod \"$module\" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid=\"$(id -u)\" icat_seed=\"${ICAT_SEED:?}\""
+  ],
+  "source": "derived from runner whose sha256 is recorded above (static arguments)"
+ },
+ "seeds": {
+  "fio_hot_warm_cold": [
+   20260911,
+   20261011,
+   20261111
+  ],
+  "icat_seed": 2026111401,
+  "prepare": 20260907,
+  "source": "derived from pre-registered formula; also printed in the journal line of the run"
+ },
+ "start": {
+  "value": "2026-11-24T16:39:33+09:00",
+  "source": "recorded (environment.txt first line)"
+ },
+ "end": {
+  "value": "2026-11-24T18:11:01+09:00",
+  "source": "derived (mtime of exit-code.txt)"
+ },
+ "phase_times": {
+  "A": [
+   "2026-11-24T16:40:56+09:00",
+   "2026-11-24T17:10:56+09:00"
+  ],
+  "B": [
+   "2026-11-24T17:10:56+09:00",
+   "2026-11-24T17:41:00+09:00"
+  ],
+  "C": [
+   "2026-11-24T17:41:00+09:00",
+   "2026-11-24T18:11:00+09:00"
+  ]
+ },
+ "source_tree": {
+  "path": "/home/oy/iCAT/revC-src",
+  "sha256_now": "048842d6a9e51b4859c2942bf6e74ca86808847f59f46d89ebe6c2281810999d",
+  "source": "reconstructed",
+  "caveat": "source tree hash was not recorded at run time; this is the current tree. Link to the run is the module sha256 (and the objdump comparison in preregistration.md)"
+ },
+ "git": {
+  "commit": "c06a372a5e940f911734946f1ffd574d2bdd7ca8",
+  "dirty_files": 120,
+  "source": "reconstructed (current state of the run tree /home/oy/iCAT; experiment sources are untracked local files there)"
+ }
+}
