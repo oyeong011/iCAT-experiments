@@ -1,0 +1,33 @@
+policy	clock_mode	region	calls_mean	ns_per_call_raw_mean	ns_per_call_minus_calib_mean	sd_over_seeds	ns_per_gc_mean	ms_per_host_GiB_mean	n_seeds
+icat	1	GC	1314172	54547.4	53690.8	373.9	53690.8	1572.87	3
+icat	1	SELECT	1314172	48485.5	47629.0	277.1	47629.0	1395.29	3
+icat	1	LEARN	1314172	485.5	-371.1	8.7	-371.1	-10.87	3
+# icat mode1 seed1 host_pages=11759730 calib_ns=863.4 user_s=74.512 sys_s=4.327 maxrss_kb=173556
+# icat mode1 seed2 host_pages=11759730 calib_ns=853.5 user_s=73.524 sys_s=4.210 maxrss_kb=173556
+# icat mode1 seed3 host_pages=11759730 calib_ns=852.8 user_s=73.523 sys_s=4.228 maxrss_kb=173556
+icat	2	GC	1314172	53086.3	53045.7	277.7	53045.7	1553.98	3
+icat	2	SELECT	1314172	48949.5	48908.9	205.0	48908.9	1432.79	3
+icat	2	LEARN	1314172	22.2	-18.5	0.5	-18.5	-0.54	3
+# icat mode2 seed1 host_pages=11759730 calib_ns=40.5 user_s=74.681 sys_s=0.069 maxrss_kb=173552
+# icat mode2 seed2 host_pages=11759730 calib_ns=40.8 user_s=74.678 sys_s=0.069 maxrss_kb=173556
+# icat mode2 seed3 host_pages=11759730 calib_ns=40.7 user_s=74.185 sys_s=0.067 maxrss_kb=173556
+smartgc-eq8	1	GC	1688019	57421.4	56554.7	135.3	56554.7	2128.08	3
+smartgc-eq8	1	SELECT	1688019	826.9	-39.8	20.9	-39.8	-1.50	3
+smartgc-eq8	1	LEARN	1540	276343.3	275476.6	975.6	251.4	9.46	3
+smartgc-eq8	1	REWARD	1688019	463.8	-402.9	25.1	-402.9	-15.16	3
+smartgc-eq8	1	BUF_ABSORB	11759719	454.1	-412.6	25.2	-2874.4	-108.16	3
+smartgc-eq8	1	BUF_UNBUF	108169626	432.2	-434.5	24.3	-27841.2	-1047.60	3
+smartgc-eq8	1	BUF_DRAIN	11569202	472.5	-394.2	24.4	-2702.0	-101.67	3
+# smartgc-eq8 mode1 seed1 host_pages=11759730 calib_ns=894.7 user_s=29.775 sys_s=106.414 maxrss_kb=176244
+# smartgc-eq8 mode1 seed2 host_pages=11759730 calib_ns=856.7 user_s=29.528 sys_s=106.021 maxrss_kb=176244
+# smartgc-eq8 mode1 seed3 host_pages=11759730 calib_ns=848.7 user_s=29.314 sys_s=106.398 maxrss_kb=176244
+smartgc-eq8	2	GC	1688019	7630.6	7589.8	823.9	7589.8	285.58	3
+smartgc-eq8	2	SELECT	1688019	427.8	387.0	46.7	387.0	14.56	3
+smartgc-eq8	2	LEARN	1540	285557.1	285516.3	17297.8	260.5	9.80	3
+smartgc-eq8	2	REWARD	1688019	50.4	9.6	3.2	9.6	0.36	3
+smartgc-eq8	2	BUF_ABSORB	11759719	40.2	-0.6	7.7	-4.1	-0.15	3
+smartgc-eq8	2	BUF_UNBUF	108169626	38.2	-2.6	0.3	-164.5	-6.19	3
+smartgc-eq8	2	BUF_DRAIN	11569202	29.3	-11.4	1.6	-78.5	-2.95	3
+# smartgc-eq8 mode2 seed1 host_pages=11759730 calib_ns=40.7 user_s=21.818 sys_s=0.077 maxrss_kb=176244
+# smartgc-eq8 mode2 seed2 host_pages=11759730 calib_ns=40.8 user_s=18.296 sys_s=0.075 maxrss_kb=176244
+# smartgc-eq8 mode2 seed3 host_pages=11759730 calib_ns=40.8 user_s=18.269 sys_s=0.065 maxrss_kb=176244
