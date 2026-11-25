@@ -14,10 +14,10 @@ journal="${MIX_JOURNAL:-$root/EXPERIMENT_LOG.md}"
 control=/proc/nvmevirt_measurement
 label=${1:?Use smoke, main, long, t4, or mixA/B/C/D/F/G/H/J/K/L/M/O/P/Q}; policy=${2:?Use fixed47 or online}; rep=${3:-1}
 # revA-20261114: only the pre-registered FIO-Fast -> YCSB-A -> FIO-Fast schedule (3 x 1800 s) and five policies
-[[ "$label" == mixFYF && "$policy" =~ ^(abl-v4|abl-nodiscount|abl-noelim-nosettle)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+[[ "$label" == mixFYF && "$policy" =~ ^(abl-v4|abl-nodiscount|abl-off-elim-settle-drift-probe)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
 [[ "$label" != mixY || "${MIXY_SEQ:-}" == "F S V F V S F S V F V S F S V F V S F S" ]] || exit 2
 case "$policy" in
-    abl-v4|abl-nodiscount|abl-noelim-nosettle) module="$root/buildoutput/nvmev-$policy.ko";;
+    abl-v4|abl-nodiscount|abl-off-elim-settle-drift-probe) module="$root/buildoutput/nvmev-$policy.ko";;
     fixed47) module="$root/buildoutput/nvmev-varmail-20260908-fixed47.ko";;
     online)  module="$root/buildoutput/nvmev-online-mix-20260907.ko";;
     onlinev2) module="$root/buildoutput/nvmev-online-v2.ko";;   # v1 + 6x reward window

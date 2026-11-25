@@ -1,6 +1,13 @@
 # abl-20261125 사전 등록: 추가 Ablation (심사 의견 M2, 승컴)
 
-- 작성: 2026-11-25, 실행 전. **사용자의 명시적 실행 승인 전에는 아무것도 실행하지 않는다.**
+- 작성: 2026-11-25, 실행 전.
+- **11-25 사용자 승인 (조건 포함):**
+  - B의 정식 이름은 `abl-off-elim-settle-drift-probe`다. 후보 제거, 정착, 변화 감지, 재탐색, probe가 모두 꺼진다는 것을 이름과 결과에 표시한다.
+  - **B는 후보 제거나 정착 각각의 독립 효과를 입증하는 자료로 쓰지 않는다.** 기능 묶음 전체의 효과를 비교하는 ablation으로만 해석한다.
+  - V4 추가 3회는 같은 배치의 대조군이다. 기존 revD-v4는 따로 보존하고, 두 결과의 재현성을 비교한다.
+  - NoDrift와 FullReset은 revD 결과를 재사용한다. 다시 돌리지 않는다.
+  - run이 실패하면 큐를 멈춘다. 다음 run은 자동으로 시작하지 않는다.
+  - 결과가 iCAT에 불리해도 그대로 보고한다.
 - 호스트: 승컴 (커널 7.0.0-31-generic, NVMeVirt = nvme0n1). 고컴 결과와 합치지 않는다.
 
 ## 1. 정책 (모두 `revD-src`에서 빌드, 소스 수정 없음, 빌드 플래그만 다름)
@@ -9,7 +16,7 @@
 |---|---|---|---|
 | abl-v4 | `ICAT_VARIANT=4` | 없음. revD-v4와 **바이트 단위로 같다** (다시 빌드한 SHA가 같음) | b35775057f2e7dc6… |
 | abl-nodiscount | `ICAT_VARIANT=4 ICAT_EXTRA=-DWATGC_V2_GAMMA_Q16=65536ULL` | γ = 1.0만 바뀐다. `watgc_v2_discount(v) = (v>>16)·65536 + ((v&0xFFFF)·65536>>16) = v` | b26b914ce2e13da7… |
-| abl-noelim-nosettle | `ICAT_VARIANT=2` | 후보 제거 OFF (conv_ftl.c 620), 정착 OFF (540) | b35924ab4ee32da5… |
+| abl-off-elim-settle-drift-probe | `ICAT_VARIANT=2` | 후보 제거 OFF (conv_ftl.c 620), 정착 OFF (540) | b35924ab4ee32da5… |
 
 - **abl-nodiscount의 기계어 차이:** objdump 정규화 diff에서 바뀐 함수는 `do_gc`(학습기가 인라인된 함수) 하나다. 할인 곱셈 부분만 빠졌다 (V4 55줄 → 25줄).
 - 리셋 시 통계를 0으로 만드는 동작은 두 정책에서 같다. 그래서 γ=1이어도 리셋 이후 데이터만 남는다.
@@ -70,7 +77,7 @@
 | YCSB 요청, 성공 수 | READ+UPDATE Operations, Return=OK | `ycsb-run-B.txt.gz` |
 
 - **주 대비 (사전 지정):**
-  - 전체 WAF와 단계 C WAF: NoDiscount − V4, NoElimNoSettle − V4 (같은 배치의 abl-v4 대비)
+  - 전체 WAF와 단계 C WAF: NoDiscount − V4, OffBundle − V4 (같은 배치의 abl-v4 대비)
   - Welch 95 % CI, Hedges' g
   - **Holm 보정은 주 대비 4개 묶음에 적용한다**
 - **보조:**

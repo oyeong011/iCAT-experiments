@@ -6,7 +6,7 @@ busy() { [[ -e /sys/module/nvmev ]] || mountpoint -q /home/oy/iCAT/mnt; }
 ck() { python3 -I $C/check-run.py "$1" >> $L 2>&1; }
 push() { git add $C EXPERIMENT_LOG.md >/dev/null 2>&1; git commit -qm "abl-20261125: $1" >/dev/null 2>&1; git push -q 2>/dev/null; }
 busy && { echo "$(date -Is) device occupied; not started" >> $L; exit 1; }
-for pol in abl-v4 abl-nodiscount abl-noelim-nosettle; do
+for pol in abl-v4 abl-nodiscount abl-off-elim-settle-drift-probe; do
   $C/run-one.sh $pol 1 smoke; rc=$?
   ck $C/raw/mixFYF-$pol-rep1-smoke120 && (( rc == 0 )) || { echo "$(date -Is) smoke failed: $pol (exit=$rc) - main NOT started" >> $L; push "smoke failed $pol"; exit 1; }
 done
