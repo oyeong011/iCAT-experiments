@@ -1,0 +1,12 @@
+policy,item,bytes,kind,source
+"iCAT V4 (online-v4, db93f822)","learner state, 4 partitions (tuner minus 128 B parameter cache)",10112,calculated (gdb sizeof),report/revision-20261123-gocom/resource_overhead_final.md#3.1
+"iCAT V4 (online-v4, db93f822)",struct watgc_v2_tuner x 4 (whole),10624,calculated (gdb sizeof),same
+iCAT revA/revC-v4 (987d6204 / revC),struct watgc_v2_tuner x 4 incl. 56 B counters,10848,calculated (gdb sizeof),same
+SmartGC (smartgc-src),"learner state: Q-table 640,000 + candidates 1,048,576 + sort keys 262,144 + struct 928",1951648,calculated (gdb sizeof + allocation formula),same
+SmartGC (smartgc-src),"GC buffer (drain + page bitmap), not learner",393216,calculated,same
+SmartGC paper as written,"per-block 20 KB Q-table x 32,768 lines",671088640,calculated from the paper text (not implemented),smartgc-src/SMARTGC.md item 1
+CAT-47,learner state,0,calculated,no learner
+SmartGC-EQ8,"VmallocUsed delta, run mean - before load (kB)",not measured,"measured, SeungCom mixY, n=1 (emulator itself ~35 MB; supporting evidence only)",result/smartgc-20261119/report/compare.csv
+SmartGC,"VmallocUsed delta, run mean - before load (kB)",38508134.4,"measured, SeungCom mixY, n=1 (emulator itself ~35 MB; supporting evidence only)",result/smartgc-20261119/report/compare.csv
+CAT-47,"VmallocUsed delta, run mean - before load (kB)",36449689.6,"measured, SeungCom mixY, n=1 (emulator itself ~35 MB; supporting evidence only)",result/smartgc-20261119/report/compare.csv
+iCAT V4,"VmallocUsed delta, run mean - before load (kB)",35575193.6,"measured, SeungCom mixY, n=1 (emulator itself ~35 MB; supporting evidence only)",result/smartgc-20261119/report/compare.csv
