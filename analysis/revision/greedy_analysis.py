@@ -82,8 +82,7 @@ if __name__ == '__main__':
     dirs = sorted(G.glob('raw/mixFYF-greedy-*-rep[123]'))
     ctrl_dirs = {'abl-v4': sorted((ROOT / 'result/revision-additional-ablation/raw').glob('mixFYF-abl-v4-rep[123]')),
                  'revD-v4': sorted((ROOT / 'result/revD-20261124/raw').glob('mixFYF-revD-v4-rep[123]'))}
-    if CONTROL == 'greedy-v4': ctrl = [d for d in dirs if R.policy(d) == 'greedy-v4']
-    else: ctrl = ctrl_dirs.get(CONTROL, [])
+    ctrl = [] if CONTROL == 'greedy-v4' else ctrl_dirs['revD-v4'] + ctrl_dirs['abl-v4']   # primary = control.txt, the other = secondary
     runs = [run_row(d) for d in dirs + (ctrl if CONTROL != 'greedy-v4' else [])]
     arms, chk = [], []
     for d in dirs + (ctrl if CONTROL != 'greedy-v4' else []):
@@ -91,16 +90,16 @@ if __name__ == '__main__':
     for name, rows in (('runs.csv', runs), ('arm_counts.csv', arms), ('greedy_rule_check.csv', chk)):
         R.write(name, rows)
     v = lambda pol, k: [r[k] for r in runs if r['policy'] == pol and r['valid']]
-    ctl = 'greedy-v4' if CONTROL == 'greedy-v4' else CONTROL
+    ctls = [CONTROL] + [c for c in ('revD-v4', 'abl-v4') if c != CONTROL and CONTROL != 'greedy-v4']
     keys = ['total_waf', 'A_waf', 'B_waf', 'C_waf', 'switches', 'eval_explore', 'learner_ms', 'ycsb_ops']
-    R.write('statistics.csv', [{'policy': p, 'metric': k, 'values': ' / '.join(f'{x:.4f}' for x in v(p, k)), **R.desc(v(p, k))} for p in ('greedy-online', ctl) for k in keys])
+    R.write('statistics.csv', [{'policy': p, 'metric': k, 'values': ' / '.join(f'{x:.4f}' for x in v(p, k)), **R.desc(v(p, k))} for p in ['greedy-online', *ctls] for k in keys])
     con = []
-    for k in ('total_waf', 'C_waf'):
+    for ctl, k in [(c, k) for c in ctls for k in ('total_waf', 'C_waf')]:
         a, b = v(ctl, k), v('greedy-online', k)
         if len(a) == 3 and len(b) == 3:
             pa = {r['rep']: r[k] for r in runs if r['policy'] == ctl and r['valid']}; pb = {r['rep']: r[k] for r in runs if r['policy'] == 'greedy-online' and r['valid']}
             dd = [pb[i] - pa[i] for i in (1, 2, 3)]; m, s = st.mean(dd), st.stdev(dd); h = stats.t.ppf(.975, 2) * s / 3 ** .5
-            con.append({'host': '승컴', 'contrast': f'greedy-online - {ctl}', 'metric': k, **welch(a, b),
+            con.append({'host': '승컴', 'contrast': f'greedy-online - {ctl}', 'role': 'primary' if ctl == CONTROL else 'secondary', 'metric': k, **welch(a, b),
                         'paired_mean': m, 'paired_ci_lo': m - h, 'paired_ci_hi': m + h, 'paired_p': 2 * stats.t.sf(abs(m / (s / 3 ** .5)), 2) if s else float('nan')})
         else: con.append({'host': '승컴', 'contrast': f'greedy-online - {ctl}', 'metric': k, 'diff': 'n<3: no statistics'})
     if R.GOCOM:   # separate host reference: 고컴 Random Selection vs 고컴 V4 (measured), never pooled with 승컴

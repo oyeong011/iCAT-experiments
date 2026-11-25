@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # greedy-20261125: wait for the ablation queue to end and the device to be free, apply the pre-registered V4 reuse rule
-# (Welch 95% CI of abl-v4 - revD-v4 total WAF entirely inside [-0.02, +0.02]); start the greedy-only queue only if it passes.
+# (Welch 95% CI of abl-v4 - revD-v4 total WAF entirely inside [-0.02, +0.02]), record it, then start the greedy-only queue (3 runs).
 C=/home/oy/iCAT/result/greedy-20261125; A=/home/oy/iCAT/result/revision-additional-ablation/queue.log; cd /home/oy/iCAT
 until grep -qE 'ABLQUEUEDONE|ANOMALY|failed|not started' $A; do sleep 60; done
 grep -q ABLQUEUEDONE $A || { echo "$(date -Is) ablation did not finish normally; greedy NOT started" > $C/control-decision.txt; exit 1; }
@@ -26,7 +26,7 @@ sys.exit(0 if ok else 3)
 P
 rc=$?; echo "$(date -Is) rule exit=$rc" >> $C/control-decision.txt
 git add $C/control-decision.txt; git commit -qm "greedy-20261125: V4 reuse decision (rule exit=$rc)" ; git push -q
-(( rc == 0 )) || exit $rc
-echo abl-v4 > $C/control.txt; cp $C/queue-order.greedy-only.txt $C/queue-order.registered.txt
-git add $C; git commit -qm "greedy-20261125: control abl-v4, greedy-only order registered; queue starting"; git push -q
+# 11-25 brief: greedy 3 runs start regardless of the rule; the rule only decides whether extra V4 runs are PROPOSED (never auto-run).
+echo revD-v4 > $C/control.txt; cp $C/queue-order.greedy-only.txt $C/queue-order.registered.txt
+git add $C; git commit -qm "greedy-20261125: control revD-v4 (reuse rule exit=$rc), greedy-only order registered; queue starting"; git push -q
 exec bash $C/queue.sh
