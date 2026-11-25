@@ -1,0 +1,17 @@
+kind,host,what,n,valid_n,value,values,source
+[측정],고컴,arm47 total WAF,1,1,1.987355,1.9874,origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-arm47-rep1
+[측정],고컴,revA-random total WAF,3,3,2.324314333333333,2.3265 / 2.3285 / 2.3180,origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-random-rep1 ; origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-random-rep2 ; origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-random-rep3
+[측정],고컴,revA-v1 total WAF,3,3,2.2070693333333335,2.1643 / 2.2656 / 2.1913,origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-v1-rep1 ; origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-v1-rep2 ; origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-v1-rep3
+[측정],고컴,revA-v2 total WAF,3,3,2.2638926666666666,2.2542 / 2.2653 / 2.2722,origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-v2-rep1 ; origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-v2-rep2 ; origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-v2-rep3
+[측정],고컴,revA-v4 total WAF,3,3,2.1284080000000003,2.1227 / 2.1310 / 2.1315,origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-v4-rep1 ; origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-v4-rep2 ; origin/report/data-validity-20261124@299d6e78d:result/revA-20261114/raw/mixFYF-revA-v4-rep3
+[보정],고컴,arm47 estimate - measured (phase A / C / total),1,,0.08461171532698186,+0.1478 / +0.0214 / +0.0846,estimator(arm47) vs mixFYF-arm47-rep1/summary.txt
+[추정],고컴,best single fixed arm in hindsight (arm 46),,,2.046010411350819,,per-arm window estimate
+[추정],고컴,"Random Search k=1 (try k arms x 1 window, then fix)",20000,,2.3062278000221017,p10=2.1325 p90=2.4177,seed=20261125; windows from revA-random rep1-3
+[추정],고컴,"Random Search k=2 (try k arms x 1 window, then fix)",20000,,2.28104905983704,p10=2.0970 p90=2.4131,seed=20261125; windows from revA-random rep1-3
+[추정],고컴,"Random Search k=3 (try k arms x 1 window, then fix)",20000,,2.2700570573598102,p10=2.0963 p90=2.4080,seed=20261125; windows from revA-random rep1-3
+[추정],고컴,"Random Search k=5 (try k arms x 1 window, then fix)",20000,,2.262722109085173,p10=2.0949 p90=2.4071,seed=20261125; windows from revA-random rep1-3
+[추정],고컴,"Random Search k=8 (try k arms x 1 window, then fix)",20000,,2.2587683440563784,p10=2.0922 p90=2.4024,seed=20261125; windows from revA-random rep1-3
+[추정],고컴,"Random Search k=12 (try k arms x 1 window, then fix)",20000,,2.253045685178236,p10=2.0661 p90=2.3957,seed=20261125; windows from revA-random rep1-3
+[추정],고컴,"Random Search k=20 (try k arms x 1 window, then fix)",20000,,2.2443725949879876,p10=2.0613 p90=2.3822,seed=20261125; windows from revA-random rep1-3
+[추정],고컴,"Random Search k=30 (try k arms x 1 window, then fix)",20000,,2.2323007447365164,p10=2.0560 p90=2.3647,seed=20261125; windows from revA-random rep1-3
+[추정],고컴,"Random Search k=45 (try k arms x 1 window, then fix)",20000,,2.2136713812463142,p10=2.0485 p90=2.3387,seed=20261125; windows from revA-random rep1-3
