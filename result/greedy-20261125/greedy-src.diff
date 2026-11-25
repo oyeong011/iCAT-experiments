@@ -1,0 +1,71 @@
+--- ../revD-src/conv_ftl.c	2026-11-24 15:41:59.198153943 +0900
++++ conv_ftl.c	2026-11-25 10:56:22.792724900 +0900
+@@ -411,6 +411,21 @@
+ 	}
+ 	if (t->arm[choice].visits < WATGC_V2_MIN_VISITS)
+ 		return choice;
++#if ICAT_VARIANT == 8
++	/* greedy-20261125 Online Greedy: after one visit per arm, lowest undiscounted mean WAF (sum gc / sum host);
++	 * ties -> lowest arm index (strict <). No UCB bonus, no stale revisit. */
++	choice = WATGC_V2_ARM_N;
++	for (i = WATGC_V2_ARM_LO; i < WATGC_V2_ARM_N; i++) {
++		if (!watgc_v2_on(t, i) ||
++		    !watgc_v2_waf_q16(t->arm[i].host_pages, t->arm[i].gc_pages, &mean))
++			continue;
++		if (choice == WATGC_V2_ARM_N || mean < (uint32_t)lowest) {
++			choice = i;
++			lowest = mean;
++		}
++	}
++	return choice == WATGC_V2_ARM_N ? t->current_arm : choice;
++#endif
+ 	oldest = watgc_v2_oldest(t, false);
+ 	if (t->windows - t->arm[oldest].last_window >= WATGC_V2_STALE_WINDOWS)
+ 		return oldest;
+@@ -537,7 +552,7 @@
+ 	}
+ 	if (t->current_arm == t->best_arm && t->best_confirmations != ~0U)
+ 		t->best_confirmations++;
+-	if (ICAT_VARIANT != 2 && ICAT_VARIANT != 9 && ICAT_VARIANT != 5 && /* revA: V2/random never settle; revB: 5 never settles */
++	if (ICAT_VARIANT != 2 && ICAT_VARIANT != 9 && ICAT_VARIANT != 5 && ICAT_VARIANT != 8 && /* revA: V2/random never settle; revB: 5; greedy 8 */
+ 	    !t->settled && watgc_v2_covered(t) &&
+ 	    t->stable_windows >= WATGC_V2_STABLE_WINDOWS &&
+ 	    t->best_confirmations >= WATGC_V2_BEST_CONFIRMATIONS) {
+@@ -579,12 +594,14 @@
+ 	}
+ 	had_coverage = watgc_v2_covered(t);
+ 	t->epoch_windows++;
++#if ICAT_VARIANT != 8   /* greedy-20261125: Online Greedy keeps undiscounted sums */
+ 	for (i = 0; i < WATGC_V2_ARM_N; i++) {
+ 		a = &t->arm[i];
+ 		a->host_pages = watgc_v2_discount(a->host_pages);
+ 		a->gc_pages = watgc_v2_discount(a->gc_pages);
+ 		a->count_q16 = watgc_v2_discount(a->count_q16);
+ 	}
++#endif
+ 	a = &t->arm[t->current_arm];
+ 	/* Preserve paired sums if exceptionally long counters need rescaling. */
+ 	while (~0ULL - a->host_pages < weighted_host ||
+@@ -617,7 +634,7 @@
+ 	return watgc_v2_random_arm(t);
+ #endif
+ 	/* v4: successive elimination once every candidate has been seen. */
+-	if (ICAT_VARIANT != 2 && ICAT_VARIANT != 3 && watgc_v2_covered(t)) { /* revA: V2 has no elimination; revB: 3 neither */
++	if (ICAT_VARIANT != 2 && ICAT_VARIANT != 3 && ICAT_VARIANT != 8 && watgc_v2_covered(t)) { /* revA: V2 no elim; revB: 3; greedy 8 */
+ 		uint32_t bm, m;
+ 
+ 		if (watgc_v2_waf_q16(t->arm[t->best_arm].host_pages,
+--- ../revD-src/conv_ftl.h	2026-11-24 15:41:59.197814039 +0900
++++ conv_ftl.h	2026-11-25 10:56:22.792857294 +0900
+@@ -199,8 +199,9 @@
+  * 6 = V4 with the unrestricted 60-arm search space,
+  * 7 = V4 whose drift reset restores all 45 arms (revD-20261124 E1 FullReset; same as online-v4fullreset-src). */
+ #if ICAT_VARIANT != 4 && ICAT_VARIANT != 1 && ICAT_VARIANT != 2 && ICAT_VARIANT != 9 && \
+-    ICAT_VARIANT != 3 && ICAT_VARIANT != 5 && ICAT_VARIANT != 6 && ICAT_VARIANT != 7
+-#error "ICAT_VARIANT must be 4, 1, 2, 9, 3, 5, 6 or 7"
++    ICAT_VARIANT != 3 && ICAT_VARIANT != 5 && ICAT_VARIANT != 6 && ICAT_VARIANT != 7 && \
++    ICAT_VARIANT != 8
++#error "ICAT_VARIANT must be 4, 1, 2, 9, 3, 5, 6, 7 or 8 (greedy-20261125)"
+ #endif
+ 
+ struct conv_ftl {

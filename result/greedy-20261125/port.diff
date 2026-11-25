@@ -1,0 +1,72 @@
+11c11
+< [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revision-additional-ablation/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+---
+> [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/greedy-20261125/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+17c17
+< [[ "$label" == mixFYF && "$policy" =~ ^(abl-v4|abl-nodiscount|abl-off-elim-settle-drift-probe)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+---
+> [[ "$label" == mixFYF && "$policy" =~ ^(greedy-online|greedy-v4)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+20c20
+<     abl-v4|abl-nodiscount|abl-off-elim-settle-drift-probe) module="$root/buildoutput/nvmev-$policy.ko";;
+---
+>     greedy-online|greedy-v4) case "$policy" in greedy-online) module="$root/buildoutput/nvmev-greedy.ko";; greedy-v4) module="$root/buildoutput/nvmev-abl-v4.ko";; esac;;
+80c80
+< printf '\n### abl-20261125 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
+---
+> printf '\n### greedy-20261125 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
+128c128
+< [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revision-additional-ablation/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+---
+> [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/greedy-20261125/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+134c134
+< if [[ "$policy" == rev[ABCD]-* || "$policy" == abl-* ]]; then   # revD 11-24 / abl 11-25: pass icat_seed
+---
+> if [[ "$policy" == rev[ABCD]-* || "$policy" == abl-* || "$policy" == greedy-* ]]; then   # revD 11-24 / abl, greedy 11-25: pass icat_seed
+4c4
+< source /home/oy/iCAT/result/revision-additional-ablation/inputs/env-seungcom.sh
+---
+> source /home/oy/iCAT/result/greedy-20261125/inputs/env-seungcom.sh
+13c13
+<    grep -qxF "$(sha256sum "$1" | cut -d' ' -f1)  $1" <(sed 's#  buildoutput/#  /home/oy/iCAT/buildoutput/#' /home/oy/iCAT/result/revision-additional-ablation/modules.sha256) || return 1
+---
+>    grep -qxF "$(sha256sum "$1" | cut -d' ' -f1)  $1" <(sed 's#  buildoutput/#  /home/oy/iCAT/buildoutput/#' /home/oy/iCAT/result/greedy-20261125/modules.sha256) || return 1
+2c2
+< # abl-20261125 (copied from revD-20261124 run-one.sh; paths only). usage: run-one.sh <policy> <rep> [smoke]
+---
+> # greedy-20261125 (copied from revD-20261124 run-one.sh; paths only). usage: run-one.sh <policy> <rep> [smoke]
+5c5
+< C=/home/oy/iCAT/result/revision-additional-ablation
+---
+> C=/home/oy/iCAT/result/greedy-20261125
+14c14
+<     bash $C/runner-abl.sh mixFYF "$pol" "$rep" > $C/console/$tag.console.txt 2>&1
+---
+>     bash $C/runner-greedy.sh mixFYF "$pol" "$rep" > $C/console/$tag.console.txt 2>&1
+2c2
+< # abl-20261125 additional ablation queue (M2). NOT STARTED until the user approves. Smokes (120 s, 3 policies) must pass check-run,
+---
+> # greedy-20261125 Online Greedy queue (M3). NOT STARTED until the user approves. Smokes (120 s, 3 policies) must pass check-run,
+4c4
+< C=/home/oy/iCAT/result/revision-additional-ablation; L=$C/queue.log; cd /home/oy/iCAT
+---
+> C=/home/oy/iCAT/result/greedy-20261125; L=$C/queue.log; cd /home/oy/iCAT
+7c7
+< push() { git add $C EXPERIMENT_LOG.md >/dev/null 2>&1; git commit -qm "abl-20261125: $1" >/dev/null 2>&1; git push -q 2>/dev/null; }
+---
+> push() { git add $C EXPERIMENT_LOG.md >/dev/null 2>&1; git commit -qm "greedy-20261125: $1" >/dev/null 2>&1; git push -q 2>/dev/null; }
+9c9
+< for pol in abl-v4 abl-nodiscount abl-off-elim-settle-drift-probe; do
+---
+> for pol in $(cut -d" " -f1 $C/queue-order.registered.txt | sort -u); do
+22c22
+< echo "$(date -Is) ABLQUEUEDONE" >> $L; push "queue done"
+---
+> echo "$(date -Is) GREEDYQUEUEDONE" >> $L; push "queue done"
+2c2
+< """abl-20261125 post-run check (copy of revD-20261124, paths only) (runs between measurements only). usage: check-run.py <run dir>
+---
+> """greedy-20261125 post-run check (copy of revD-20261124, paths only) (runs between measurements only). usage: check-run.py <run dir>
+9c9
+< d = Path(sys.argv[1]).resolve(); C = Path('/home/oy/iCAT/result/revision-additional-ablation')
+---
+> d = Path(sys.argv[1]).resolve(); C = Path('/home/oy/iCAT/result/greedy-20261125')

@@ -1,0 +1,78 @@
+{
+ "id": "greedy-20261125",
+ "host": "승컴",
+ "status": "prepared, NOT started (awaiting explicit approval; cannot start before the ablation queue ends ~2026-11-26 00:50)",
+ "source": "greedy-src = revD-src + VARIANT 8 (greedy-src.diff)",
+ "git_commit_at_prep": "994fe6b84370cd4abce906a8f60b0fe8aa7db32e",
+ "policies": {
+  "greedy-online": {
+   "flags": "ICAT_VARIANT=8",
+   "module": "buildoutput/nvmev-greedy.ko",
+   "module_sha256": "4df03c90dad0efb434dd101ffd815c03b910c0738b6988fcb5b55fc407262eec"
+  },
+  "greedy-v4 (conditional)": {
+   "module": "buildoutput/nvmev-abl-v4.ko",
+   "module_sha256": "b35775057f2e7dc6ea8070692baaff063681d89e65bfbb79533cfb4ef5ff32d6",
+   "note": "= revD-v4 = abl-v4 bytes"
+  }
+ },
+ "control_rule": "abl-v4 vs revD-v4 total WAF Welch CI contains 0 and |diff|<=0.02 -> control abl-v4, queue greedy-only; else in-batch greedy-v4, queue with-v4",
+ "reused": {
+  "V4": "result/revD-20261124/raw/mixFYF-revD-v4-rep* and/or result/revision-additional-ablation/raw/mixFYF-abl-v4-rep*",
+  "Random Selection": "고컴 origin/report/data-validity-20261124@299d6e78d result/revA-20261114/raw/mixFYF-revA-random-rep1..3 (separate host, reference only)"
+ },
+ "workload": "mixFYF: FIO-Fast 1800s -> YCSB-A 250k (load+run 1800s) -> FIO-Fast 1800s",
+ "seeds": {
+  "fio_hot_warm_cold": "20260910/20261010/20261110 + rep",
+  "icat_seed": "2026111400 + rep",
+  "prep_randseed": 20260907,
+  "order_shuffle_with_v4": "random.Random(20261126 + rep)"
+ },
+ "run_orders": {
+  "greedy-only": [
+   [
+    "greedy-online",
+    "1"
+   ],
+   [
+    "greedy-online",
+    "2"
+   ],
+   [
+    "greedy-online",
+    "3"
+   ]
+  ],
+  "with-v4": [
+   [
+    "greedy-v4",
+    "1"
+   ],
+   [
+    "greedy-online",
+    "1"
+   ],
+   [
+    "greedy-online",
+    "2"
+   ],
+   [
+    "greedy-v4",
+    "2"
+   ],
+   [
+    "greedy-v4",
+    "3"
+   ],
+   [
+    "greedy-online",
+    "3"
+   ]
+  ]
+ },
+ "expected_hours": {
+  "greedy-only": 4.7,
+  "with-v4": 9.4
+ },
+ "analysis": "analysis/revision/greedy_analysis.py"
+}
