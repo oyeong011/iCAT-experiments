@@ -1,0 +1,92 @@
+# 2026-11-26T04:12:41+09:00 host=oy-B550M-DS3H pol=smartgc-eq8 mode=1 seed=1 src=m1-smartgc-src sha=162b0f3c467fc2f5 cpu= AMD Ryzen 5 3600XT 6-Core Processor
+In file included from /home/oy/iCAT/result/m1-20261126/sim/sim.c:19:
+/home/oy/iCAT/result/m1-20261126/m1-smartgc-src/ssd.c: In function ‘ssd_advance_nand’:
+/home/oy/iCAT/result/m1-20261126/m1-smartgc-src/ssd.c:418:42: warning: ‘chnl_etime’ may be used uninitialized [-Wmaybe-uninitialized]
+  418 |                 lun->next_lun_avail_time = chnl_etime;
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+/home/oy/iCAT/result/m1-20261126/m1-smartgc-src/ssd.c:368:30: note: ‘chnl_etime’ was declared here
+  368 |         uint64_t chnl_stime, chnl_etime;
+      |                              ^~~~~~~~~~
+m1calib clock=thread_cputime empty_region_ns=894.7
+epoch=1 active=0 host_bytes=48167854080 host_pages=11759730 gc_pages=96353299
+part=0 host_pages=2940410 gc_pages=24128442 gc_count=422342 arm=37 windows=0 phase=0
+part=1 host_pages=2939187 gc_pages=24067730 gc_count=421375 arm=37 windows=0 phase=0
+part=2 host_pages=2939612 gc_pages=24041018 gc_count=420966 arm=37 windows=0 phase=0
+part=3 host_pages=2940521 gc_pages=24116109 gc_count=422150 arm=37 windows=0 phase=0
+smartgc part=0 steps=386 explored=363575 eps_permille=300 absorbed=47313 evicted=42432 gc_flushed=11 frozen=81 buf_pages=184 freezes=14710 thaws=0 nand_pages=27063971 listed=423372
+smartgc part=1 steps=384 explored=361087 eps_permille=300 absorbed=47893 evicted=43105 gc_flushed=4 frozen=81 buf_pages=162 freezes=14573 thaws=0 nand_pages=27002129 listed=422064
+smartgc part=2 steps=383 explored=360328 eps_permille=300 absorbed=47636 evicted=42942 gc_flushed=14 frozen=81 buf_pages=158 freezes=15078 thaws=0 nand_pages=26975936 listed=421822
+smartgc part=3 steps=384 explored=362717 eps_permille=300 absorbed=47916 evicted=42984 gc_flushed=56 frozen=80 buf_pages=180 freezes=14969 thaws=0 nand_pages=27051698 listed=423177
+wear part=0 erase_min=36 erase_max=64 erase_mean_milli=51555 erase_std_milli=5519
+wear part=1 erase_min=37 erase_max=64 erase_mean_milli=51437 erase_std_milli=5714
+wear part=2 erase_min=33 erase_max=64 erase_mean_milli=51387 erase_std_milli=5468
+wear part=3 erase_min=37 erase_max=64 erase_mean_milli=51531 erase_std_milli=5484
+sim policy=smartgc workload=zones capacity_mib=8192 host_pages=11759730 gc_pages=96353299 waf=9.193496 waf_nand=9.191855 invariants=ok
+m1rusage user_s=29.775 sys_s=106.414 maxrss_kb=176244
+m1prof clock=thread_cputime part=0 region=GC calls=422342 ns=24342276308 max_ns=506420
+m1prof clock=thread_cputime part=0 region=SELECT calls=422342 ns=351303156 max_ns=471384
+m1prof clock=thread_cputime part=0 region=LEARN calls=386 ns=108265866 max_ns=470082
+m1prof clock=thread_cputime part=0 region=REWARD calls=422342 ns=195436771 max_ns=13005
+m1prof clock=thread_cputime part=0 region=BUF_ABSORB calls=2940407 ns=1328592083 max_ns=16721
+m1prof clock=thread_cputime part=0 region=BUF_UNBUF calls=27063968 ns=11707937717 max_ns=34765
+m1prof clock=thread_cputime part=0 region=BUF_DRAIN calls=2893097 ns=1365286968 max_ns=75973
+m1prof clock=thread_cputime part=1 region=GC calls=421375 ns=24241796843 max_ns=521989
+m1prof clock=thread_cputime part=1 region=SELECT calls=421375 ns=343701678 max_ns=494136
+m1prof clock=thread_cputime part=1 region=LEARN calls=384 ns=98908276 max_ns=492925
+m1prof clock=thread_cputime part=1 region=REWARD calls=421375 ns=195722759 max_ns=9657
+m1prof clock=thread_cputime part=1 region=BUF_ABSORB calls=2939183 ns=1333943077 max_ns=19807
+m1prof clock=thread_cputime part=1 region=BUF_UNBUF calls=27002125 ns=11679044871 max_ns=32401
+m1prof clock=thread_cputime part=1 region=BUF_DRAIN calls=2891294 ns=1369897889 max_ns=73588
+m1prof clock=thread_cputime part=2 region=GC calls=420966 ns=24261713830 max_ns=561213
+m1prof clock=thread_cputime part=2 region=SELECT calls=420966 ns=352980876 max_ns=539131
+m1prof clock=thread_cputime part=2 region=LEARN calls=383 ns=108068701 max_ns=537778
+m1prof clock=thread_cputime part=2 region=REWARD calls=420966 ns=195041629 max_ns=15559
+m1prof clock=thread_cputime part=2 region=BUF_ABSORB calls=2939609 ns=1334910245 max_ns=14978
+m1prof clock=thread_cputime part=2 region=BUF_UNBUF calls=26975933 ns=11670870200 max_ns=31278
+m1prof clock=thread_cputime part=2 region=BUF_DRAIN calls=2891976 ns=1366346266 max_ns=69189
+m1prof clock=thread_cputime part=3 region=GC calls=422150 ns=24325029761 max_ns=516538
+m1prof clock=thread_cputime part=3 region=SELECT calls=422150 ns=353785014 max_ns=482165
+m1prof clock=thread_cputime part=3 region=LEARN calls=384 ns=108236291 max_ns=480842
+m1prof clock=thread_cputime part=3 region=REWARD calls=422150 ns=195279879 max_ns=12233
+m1prof clock=thread_cputime part=3 region=BUF_ABSORB calls=2940519 ns=1334718232 max_ns=14768
+m1prof clock=thread_cputime part=3 region=BUF_UNBUF calls=27051696 ns=11702089766 max_ns=31208
+m1prof clock=thread_cputime part=3 region=BUF_DRAIN calls=2892605 ns=1364945667 max_ns=72947
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=0 region=GC calls=422342 ns=24342276308 max_ns=506420
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=0 region=SELECT calls=422342 ns=351303156 max_ns=471384
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=0 region=LEARN calls=386 ns=108265866 max_ns=470082
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=0 region=REWARD calls=422342 ns=195436771 max_ns=13005
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=0 region=BUF_ABSORB calls=2940407 ns=1328592083 max_ns=16721
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=0 region=BUF_UNBUF calls=27063968 ns=11707937717 max_ns=34765
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=0 region=BUF_DRAIN calls=2893097 ns=1365286968 max_ns=75973
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=1 region=GC calls=421375 ns=24241796843 max_ns=521989
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=1 region=SELECT calls=421375 ns=343701678 max_ns=494136
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=1 region=LEARN calls=384 ns=98908276 max_ns=492925
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=1 region=REWARD calls=421375 ns=195722759 max_ns=9657
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=1 region=BUF_ABSORB calls=2939183 ns=1333943077 max_ns=19807
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=1 region=BUF_UNBUF calls=27002125 ns=11679044871 max_ns=32401
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=1 region=BUF_DRAIN calls=2891294 ns=1369897889 max_ns=73588
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=2 region=GC calls=420966 ns=24261713830 max_ns=561213
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=2 region=SELECT calls=420966 ns=352980876 max_ns=539131
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=2 region=LEARN calls=383 ns=108068701 max_ns=537778
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=2 region=REWARD calls=420966 ns=195041629 max_ns=15559
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=2 region=BUF_ABSORB calls=2939609 ns=1334910245 max_ns=14978
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=2 region=BUF_UNBUF calls=26975933 ns=11670870200 max_ns=31278
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=2 region=BUF_DRAIN calls=2891976 ns=1366346266 max_ns=69189
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=3 region=GC calls=422150 ns=24325029761 max_ns=516538
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=3 region=SELECT calls=422150 ns=353785014 max_ns=482165
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=3 region=LEARN calls=384 ns=108236291 max_ns=480842
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=3 region=REWARD calls=422150 ns=195279879 max_ns=12233
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=3 region=BUF_ABSORB calls=2940519 ns=1334718232 max_ns=14768
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=3 region=BUF_UNBUF calls=27051696 ns=11702089766 max_ns=31208
+NVMeVirt: M1PROF when=remove clock=thread_cputime part=3 region=BUF_DRAIN calls=2892605 ns=1364945667 max_ns=72947
+NVMeVirt: Wear: ns=0 part=0 erases=422342 erase_min=36 erase_max=64 erase_mean_milli=51555 erase_std_milli=5519
+NVMeVirt: Wear: ns=0 part=1 erases=421375 erase_min=37 erase_max=64 erase_mean_milli=51437 erase_std_milli=5714
+NVMeVirt: Wear: ns=0 part=2 erases=420966 erase_min=33 erase_max=64 erase_mean_milli=51387 erase_std_milli=5468
+NVMeVirt: Wear: ns=0 part=3 erases=422150 erase_min=37 erase_max=64 erase_mean_milli=51531 erase_std_milli=5484
+NVMeVirt: GC stats: ns=0 policy=smartgc host_pages=11759730 gc_pages=96353299 gc_count=1686833 WAF=9.193 warmup_gc=100-per-part
+NVMeVirt: SmartGC summary ns=0 part=0 steps=386 explored=363575 eps_permille=300 absorbed=47313 evicted=42432 gc_flushed=11 frozen=81 buf_pages=184 freezes=14710 thaws=0 listed=423372
+NVMeVirt: SmartGC summary ns=0 part=1 steps=384 explored=361087 eps_permille=300 absorbed=47893 evicted=43105 gc_flushed=4 frozen=81 buf_pages=162 freezes=14573 thaws=0 listed=422064
+NVMeVirt: SmartGC summary ns=0 part=2 steps=383 explored=360328 eps_permille=300 absorbed=47636 evicted=42942 gc_flushed=14 frozen=81 buf_pages=158 freezes=15078 thaws=0 listed=421822
+NVMeVirt: SmartGC summary ns=0 part=3 steps=384 explored=362717 eps_permille=300 absorbed=47916 evicted=42984 gc_flushed=56 frozen=80 buf_pages=180 freezes=14969 thaws=0 listed=423177
+m1time wall_s=137.03 user_s=30.53 sys_s=106.48
+exit=0

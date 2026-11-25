@@ -1,0 +1,48 @@
+# 2026-11-26T04:09:43+09:00 host=oy-B550M-DS3H pol=icat mode=2 seed=1 src=m1-icat-src sha=362ff435aa683dbc cpu= AMD Ryzen 5 3600XT 6-Core Processor
+In file included from /home/oy/iCAT/result/m1-20261126/sim/sim.c:19:
+/home/oy/iCAT/result/m1-20261126/m1-icat-src/ssd.c: In function ‘ssd_advance_nand’:
+/home/oy/iCAT/result/m1-20261126/m1-icat-src/ssd.c:418:42: warning: ‘chnl_etime’ may be used uninitialized [-Wmaybe-uninitialized]
+  418 |                 lun->next_lun_avail_time = chnl_etime;
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+/home/oy/iCAT/result/m1-20261126/m1-icat-src/ssd.c:368:30: note: ‘chnl_etime’ was declared here
+  368 |         uint64_t chnl_stime, chnl_etime;
+      |                              ^~~~~~~~~~
+m1calib clock=monotonic_pinned empty_region_ns=40.5
+epoch=1 active=0 host_bytes=48167854080 host_pages=11759730 gc_pages=72456380
+part=0 host_pages=2940410 gc_pages=18110655 gc_count=328390 arm=37 windows=0 phase=2
+part=1 host_pages=2939187 gc_pages=18118920 gc_count=328500 arm=37 windows=0 phase=2
+part=2 host_pages=2939612 gc_pages=18111901 gc_count=328397 arm=37 windows=0 phase=2
+part=3 host_pages=2940521 gc_pages=18114904 gc_count=328458 arm=37 windows=0 phase=2
+sim policy=watgc-v2 workload=zones capacity_mib=8192 host_pages=11759730 gc_pages=72456380 waf=7.161398 waf_nand=7.161398 invariants=ok
+m1rusage user_s=74.681 sys_s=0.069 maxrss_kb=173552
+m1prof clock=monotonic_pinned part=0 region=GC calls=328390 ns=17571220586 max_ns=3307687
+m1prof clock=monotonic_pinned part=0 region=SELECT calls=328390 ns=16185386183 max_ns=3302467
+m1prof clock=monotonic_pinned part=0 region=LEARN calls=328390 ns=7071536 max_ns=14297
+m1prof clock=monotonic_pinned part=1 region=GC calls=328500 ns=17500914919 max_ns=3214119
+m1prof clock=monotonic_pinned part=1 region=SELECT calls=328500 ns=16119299798 max_ns=3209320
+m1prof clock=monotonic_pinned part=1 region=LEARN calls=328500 ns=7199861 max_ns=5911
+m1prof clock=monotonic_pinned part=2 region=GC calls=328397 ns=17522440249 max_ns=3258554
+m1prof clock=monotonic_pinned part=2 region=SELECT calls=328397 ns=16144224805 max_ns=3250729
+m1prof clock=monotonic_pinned part=2 region=LEARN calls=328397 ns=8200472 max_ns=3437
+m1prof clock=monotonic_pinned part=3 region=GC calls=328458 ns=17499838610 max_ns=3291106
+m1prof clock=monotonic_pinned part=3 region=SELECT calls=328458 ns=16114535215 max_ns=3072359
+m1prof clock=monotonic_pinned part=3 region=LEARN calls=328458 ns=7212933 max_ns=5721
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=0 region=GC calls=328390 ns=17571220586 max_ns=3307687
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=0 region=SELECT calls=328390 ns=16185386183 max_ns=3302467
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=0 region=LEARN calls=328390 ns=7071536 max_ns=14297
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=1 region=GC calls=328500 ns=17500914919 max_ns=3214119
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=1 region=SELECT calls=328500 ns=16119299798 max_ns=3209320
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=1 region=LEARN calls=328500 ns=7199861 max_ns=5911
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=2 region=GC calls=328397 ns=17522440249 max_ns=3258554
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=2 region=SELECT calls=328397 ns=16144224805 max_ns=3250729
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=2 region=LEARN calls=328397 ns=8200472 max_ns=3437
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=3 region=GC calls=328458 ns=17499838610 max_ns=3291106
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=3 region=SELECT calls=328458 ns=16114535215 max_ns=3072359
+NVMeVirt: M1PROF when=remove clock=monotonic_pinned part=3 region=LEARN calls=328458 ns=7212933 max_ns=5721
+NVMeVirt: WATGC_V2 summary ns=0 part=0 epoch=1 windows=0 epoch_windows=0 discarded=27 visited=0 covered=0 settled=0 phase=2 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0 revA_variant=4 select=0 eval_explore=0 elim=0 best_change=0 reset=0 learner_ns=0 active=45
+NVMeVirt: WATGC_V2 summary ns=0 part=1 epoch=1 windows=0 epoch_windows=0 discarded=27 visited=0 covered=0 settled=0 phase=2 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0 revA_variant=4 select=0 eval_explore=0 elim=0 best_change=0 reset=0 learner_ns=0 active=45
+NVMeVirt: WATGC_V2 summary ns=0 part=2 epoch=1 windows=0 epoch_windows=0 discarded=27 visited=0 covered=0 settled=0 phase=2 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0 revA_variant=4 select=0 eval_explore=0 elim=0 best_change=0 reset=0 learner_ns=0 active=45
+NVMeVirt: WATGC_V2 summary ns=0 part=3 epoch=1 windows=0 epoch_windows=0 discarded=27 visited=0 covered=0 settled=0 phase=2 current=37 best=37 k=7 scale_pct=100 age_ratio=7 best_waf_valid=0 best_waf_q16=0 revA_variant=4 select=0 eval_explore=0 elim=0 best_change=0 reset=0 learner_ns=0 active=45
+NVMeVirt: GC stats: ns=0 policy=watgc-v2 host_pages=11759730 gc_pages=72456380 gc_count=1313745 WAF=7.161 warmup_gc=100-per-part
+m1time wall_s=75.98 user_s=75.40 sys_s=0.15
+exit=0
