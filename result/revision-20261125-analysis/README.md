@@ -1,6 +1,6 @@
 # revision-20261125-analysis: 기존 원시 로그 재분석 (새 실행 없음)
 
-- 스크립트: `analysis/revision/r_suite_20261125.py` (sha256 201c0e88b23a1b74…). 회복 정의는 `e1_revd.py`가 `recovery.py`에서 ast로 가져온 것을 그대로 쓴다 (TOL 1.05, ROLL 10, HOLD 20).
+- 스크립트: `analysis/revision/r_suite_20261125.py` (sha256 c6e8eca8e837ae38…). 회복 정의는 `e1_revd.py`가 `recovery.py`에서 ast로 가져온 것을 그대로 쓴다 (TOL 1.05, ROLL 10, HOLD 20).
 - 재현 방법:
   ```
   git fetch origin

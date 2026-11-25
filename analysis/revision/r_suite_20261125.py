@@ -70,7 +70,7 @@ def phase_of(start, t):
 
 def write(name, rows):
     with open(OUT / name, 'w', newline='') as f:
-        w = csv.DictWriter(f, list(dict.fromkeys(k for r in rows for k in r))); w.writeheader(); w.writerows(rows)
+        w = csv.DictWriter(f, list(dict.fromkeys(k for r in rows for k in r)), lineterminator='\n'); w.writeheader(); w.writerows(rows)
 
 def desc(xs):                                            # mean, SD, t 95% CI; only for n=3 valid runs
     if len(xs) != 3: return {'n': len(xs), 'mean': '', 'sd': '', 'ci_lo': '', 'ci_hi': ''}
@@ -150,13 +150,13 @@ def gamma(all_runs):
     rows = []
     for host, d in all_runs:
         if 'arm47' in policy(d): continue
-        start, samp, ev = klog(d)
+        start, samp, ev = klog(d); v, why = validity(d)
         for part in range(4):
             w = [x for x in samp if x[1] == part]
             last_reset = max((t for t, k, p in ev if k == 'reset' and p == part), default=None)
             since = sum(1 for x in w if last_reset is None or x[0] > last_reset)
             perph = {ph: sum(1 for x in w if phase_of(start, x[0]) == ph) for ph in 'ABC'}
-            rows.append({'host': host, 'policy': policy(d), 'rep': rep(d), 'part': part, 'windows_total': len(w),
+            rows.append({'host': host, 'policy': policy(d), 'rep': rep(d), 'part': part, 'valid': v, 'invalid_reason': why, 'windows_total': len(w),
                          **{f'windows_{k}': v for k, v in perph.items()}, 'windows_since_last_reset': since,
                          'weight_oldest_window_at_end': GAMMA ** len(w),          # if never reset
                          'weight_oldest_since_reset': GAMMA ** since,
@@ -187,9 +187,10 @@ def latency(all_runs):
 # ---------------------------------------------------------------- 6 Random Search estimate from random-selection windows
 def random_search(all_runs, trials=20000, seed=20261125):
     gr = [(h, d) for h, d in all_runs if h == '고컴']
-    win = defaultdict(list)                               # (phase, arm) -> [(host, gc)] per window; host/gc are per-window deltas
+    used = []; win = defaultdict(list)                               # (phase, arm) -> [(host, gc)] per window; host/gc are per-window deltas
     for _, d in gr:
         if policy(d) != 'revA-random' or not validity(d)[0]: continue
+        used.append(rel(d))
         start, samp, _ = klog(d)
         for t, part, _, arm, h, g, _ in samp:
             win[(phase_of(start, t), arm)].append((h, g))
@@ -224,8 +225,9 @@ def random_search(all_runs, trials=20000, seed=20261125):
         rows.append({'kind': '[추정]', 'host': '고컴', 'what': f'Random Search k={k} (try k arms x 1 window, then fix)', 'n': trials,
                      'value': st.mean(vals), 'values': f'p10={sorted(vals)[trials // 10]:.4f} p90={sorted(vals)[9 * trials // 10]:.4f}',
                      'source': f'seed={seed}; windows from revA-random rep1-3'})
+    src = ' ; '.join(used)
     armrows = [{'arm': a, 'A_windows': len(win[('A', a)]), 'A_waf_est': est('A', a), 'C_windows': len(win[('C', a)]), 'C_waf_est': est('C', a),
-                'B_waf_pooled': wafB, 'total_waf_est': tot(a)} for a in arms]
+                'B_waf_pooled': wafB, 'total_waf_est': tot(a), 'kind': '[추정]', 'valid_runs_used': src} for a in arms]
     return rows, armrows
 
 if __name__ == '__main__':
