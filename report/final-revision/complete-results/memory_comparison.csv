@@ -1,0 +1,4 @@
+run,policy,vmalloc_delta_load_kB_measured,theoretical_conv_ftl_vmalloc_kB_calculated,module_coresize_kB_measured,theoretical_plus_coresize_kB,residual_kB_derived,vmalloc_after_unload_minus_pre_kB_measured,vmalloc_loaded_max_minus_pre_kB_measured,slab_delta_load_kB_measured,sunreclaim_delta_load_kB_measured,note
+mixY-m1-icat-v4-rep1,iCAT-v4,34848.0,34315.6,104.0,34419.6,428.4,16.0,35152.0,104080.0,104148.0,Slab/SUnreclaim deltas are system-wide and are not attributed to the policy (both policies share the same slab users)
+mixY-m1-smartgc-eq8-rep1,SmartGC-EQ8,37752.0,37373.2,108.0,37481.2,270.8,16.0,38168.0,104072.0,104072.0,Slab/SUnreclaim deltas are system-wide and are not attributed to the policy (both policies share the same slab users)
+DIFF (SmartGC - iCAT),,2904.0,3057.6,4.0,,,,,-8.0,-76.0,"n=1 each: single difference, no test. Measured window identical (sampler.sh states pre/load1s/loaded/post)."

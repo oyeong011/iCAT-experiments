@@ -14764,3 +14764,9 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 판정: 메모리 충족, CPU 부분 충족, GC·선택 비용 충족(n=1), 공통 비용 분리 부분 충족, 반복 미충족.
 - 스크립트 버그 1건 수정 후 재생성: crosscheck의 파티션 키 자료형(str/int) 불일치 → 출력 디렉터리(방금 생성, 미커밋)를 지우고 다시 만듦.
 - 산출물: iCAT-final result/m1-20261126-final/, 논문 §6.3 표 9b, review_evidence_and_status.md, DELIVERY_20261127.md. 검증용 kernel.log/kernel-final.log 원본 gzip과 sha256을 미러에 추가(원본 수정 없음).
+
+## 2026-11-27 10:00 고컴: 전체 실험 통합 Excel (새 실험 없음)
+- analysis/final_revision/complete_results.py → report/final-revision/iCAT_Complete_Experiment_Results.xlsx (17 sheets, 15 native charts), complete-results/*.csv, DATA_PROVENANCE.csv, EXPERIMENT_CATALOG/RESULT_SUMMARY/FIGURE_CATALOG.md.
+- mixFYF 78 runs recomputed from raw (승컴 origin/main 4689c6797 via git archive, read-only): 78/78 valid, all match published; 622 published statistics match.
+- arm47-20261127 (승컴) 고컴 독립 검증 3/3 유효, 일치: result/arm47-20261127-verify/.
+- XlsxWriter 내려받기는 권한 판단에서 거부되어 내려받은 파일을 지움; 표준 라이브러리 차트 작성기(xlsx_chart.py) 사용. Excel/LibreOffice로 열어 보지는 못함(구조·수치 검사만).

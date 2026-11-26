@@ -1,0 +1,33 @@
+정책,clock mode,clock,구간,seed,호출 수,호출당 (ns),보정 후 (ns),seed SD,user s,sys s,"maxrss kB (사용자 공간 프로세스, 모듈 메모리 아님)"
+icat,1,CLOCK_THREAD_CPUTIME_ID (thread CPU time),GC,mean of 3,1314172,54547.4,53690.8,373.9,,,
+icat,1,CLOCK_THREAD_CPUTIME_ID (thread CPU time),SELECT,mean of 3,1314172,48485.5,47629.0,277.1,,,
+icat,1,CLOCK_THREAD_CPUTIME_ID (thread CPU time),LEARN,mean of 3,1314172,485.5,-371.1,8.7,,,
+icat,1,process getrusage,WHOLE PROCESS,1,,,,,74.512,4.327,173556
+icat,1,process getrusage,WHOLE PROCESS,2,,,,,73.524,4.210,173556
+icat,1,process getrusage,WHOLE PROCESS,3,,,,,73.523,4.228,173556
+icat,2,"CLOCK_MONOTONIC pinned CPU 11 (elapsed, no I/O/wait)",GC,mean of 3,1314172,53086.3,53045.7,277.7,,,
+icat,2,"CLOCK_MONOTONIC pinned CPU 11 (elapsed, no I/O/wait)",SELECT,mean of 3,1314172,48949.5,48908.9,205.0,,,
+icat,2,"CLOCK_MONOTONIC pinned CPU 11 (elapsed, no I/O/wait)",LEARN,mean of 3,1314172,22.2,-18.5,0.5,,,
+icat,2,process getrusage,WHOLE PROCESS,1,,,,,74.681,0.069,173552
+icat,2,process getrusage,WHOLE PROCESS,2,,,,,74.678,0.069,173556
+icat,2,process getrusage,WHOLE PROCESS,3,,,,,74.185,0.067,173556
+smartgc-eq8,1,CLOCK_THREAD_CPUTIME_ID (thread CPU time),GC,mean of 3,1688019,57421.4,56554.7,135.3,,,
+smartgc-eq8,1,CLOCK_THREAD_CPUTIME_ID (thread CPU time),SELECT,mean of 3,1688019,826.9,-39.8,20.9,,,
+smartgc-eq8,1,CLOCK_THREAD_CPUTIME_ID (thread CPU time),LEARN,mean of 3,1540,276343.3,275476.6,975.6,,,
+smartgc-eq8,1,CLOCK_THREAD_CPUTIME_ID (thread CPU time),REWARD,mean of 3,1688019,463.8,-402.9,25.1,,,
+smartgc-eq8,1,CLOCK_THREAD_CPUTIME_ID (thread CPU time),BUF_ABSORB,mean of 3,11759719,454.1,-412.6,25.2,,,
+smartgc-eq8,1,CLOCK_THREAD_CPUTIME_ID (thread CPU time),BUF_UNBUF,mean of 3,108169626,432.2,-434.5,24.3,,,
+smartgc-eq8,1,CLOCK_THREAD_CPUTIME_ID (thread CPU time),BUF_DRAIN,mean of 3,11569202,472.5,-394.2,24.4,,,
+smartgc-eq8,1,process getrusage,WHOLE PROCESS,1,,,,,29.775,106.414,176244
+smartgc-eq8,1,process getrusage,WHOLE PROCESS,2,,,,,29.528,106.021,176244
+smartgc-eq8,1,process getrusage,WHOLE PROCESS,3,,,,,29.314,106.398,176244
+smartgc-eq8,2,"CLOCK_MONOTONIC pinned CPU 11 (elapsed, no I/O/wait)",GC,mean of 3,1688019,7630.6,7589.8,823.9,,,
+smartgc-eq8,2,"CLOCK_MONOTONIC pinned CPU 11 (elapsed, no I/O/wait)",SELECT,mean of 3,1688019,427.8,387.0,46.7,,,
+smartgc-eq8,2,"CLOCK_MONOTONIC pinned CPU 11 (elapsed, no I/O/wait)",LEARN,mean of 3,1540,285557.1,285516.3,17297.8,,,
+smartgc-eq8,2,"CLOCK_MONOTONIC pinned CPU 11 (elapsed, no I/O/wait)",REWARD,mean of 3,1688019,50.4,9.6,3.2,,,
+smartgc-eq8,2,"CLOCK_MONOTONIC pinned CPU 11 (elapsed, no I/O/wait)",BUF_ABSORB,mean of 3,11759719,40.2,-0.6,7.7,,,
+smartgc-eq8,2,"CLOCK_MONOTONIC pinned CPU 11 (elapsed, no I/O/wait)",BUF_UNBUF,mean of 3,108169626,38.2,-2.6,0.3,,,
+smartgc-eq8,2,"CLOCK_MONOTONIC pinned CPU 11 (elapsed, no I/O/wait)",BUF_DRAIN,mean of 3,11569202,29.3,-11.4,1.6,,,
+smartgc-eq8,2,process getrusage,WHOLE PROCESS,1,,,,,21.818,0.077,176244
+smartgc-eq8,2,process getrusage,WHOLE PROCESS,2,,,,,18.296,0.075,176244
+smartgc-eq8,2,process getrusage,WHOLE PROCESS,3,,,,,18.269,0.065,176244

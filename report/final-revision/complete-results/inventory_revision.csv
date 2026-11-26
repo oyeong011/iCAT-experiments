@@ -1,0 +1,15 @@
+배치,호스트,심사 의견,정책,부하,run 수,유효 (재계산),시트,원시 경로
+revA-20261114,고컴,M2·M3,V4 / V1 / V2 / Random / 고정 Arm 47(n=1),mixFYF 90분 (FIO→YCSB-A→FIO),13,13,"Random Selection, Ablation Study, Arm 47",result/revA-20261114/raw
+revB-20261122,고컴,M2,V4(n=1) / NoElim / NoSettle / 60 arms(n=1),mixFYF,8,8,Ablation Study (대조군 n=1 → 통계 없음),result/revB-20261122/raw
+revC-20261124,고컴,M3·M6,V4 / 제거 10 % / 25 % / 60 arms / 원래 iCAT,mixFYF,15,15,"Ablation Study, Online Greedy(원래 iCAT)",result/revC-20261124/raw
+revD-20261124,승컴,M2,V4 / NoDrift / FullReset,mixFYF,9,9,"Ablation Study, Drift Threshold",origin/main@4689c6797:result/revD-20261124/raw
+revE-20261125,고컴,M2·M6,V4 / NoElim / 감지 12.5 %,mixFYF,9,9,"Ablation Study, Drift Threshold",result/revE-20261125/raw
+abl-20261125,승컴,M2,V4 / NoDiscount / 묶음 끔,mixFYF,9,9,Ablation Study,origin/main@4689c6797:result/revision-additional-ablation/raw
+greedy-20261125,승컴,M3,"Online Greedy (대조군 revD-v4, abl-v4: 다른 배치)",mixFYF,3,3,Online Greedy,origin/main@4689c6797:result/greedy-20261125/raw
+batchG-20261126,승컴,M3·M6,V4 / Greedy GC / 감지 50 %,mixFYF,9,9,"Greedy GC, Drift Threshold",origin/main@4689c6797:result/batchG-20261126/raw
+arm47-20261127,승컴,Robustness,고정 Arm 47 ×3,mixFYF,3,3,Arm 47 Robustness,origin/main@4689c6797:result/arm47-20261127/raw
+smartgc-20261119 / gc-20261010,승컴,M1,SmartGC-EQ8 / SmartGC / CAT-47 / iCAT-v4 (각 1),mixY 20단계 10 h,4,4,SmartGC Comparison,"result/smartgc-20261119/resume, result/gc-20261010"
+gocom-sg-20261119,고컴,M1 (보조),SmartGC / SmartGC-Q / Greedy / Arm47 (각 1),mixY,4,4,SmartGC Comparison,result/gocom-sg-20261119
+m1-20261126,고컴,M1·M5,"iCAT-v4 / SmartGC-EQ8 (구간 타이머 빌드, 각 1; 4회 CANCELLED)",mixY 20단계 10 h,2,2,"Memory Overhead, CPU and Timing",/home/oy/iCAT/result/m1-20261126/raw (요약 result/m1-20261126-final)
+bench (사용자 공간 sim),고컴,M1 CPU 대체,"icat / smartgc-eq8, 각 seed 3",sim zones 60/30/10 % (mixY 아님),6,6,CPU and Timing,analysis/bench_summary.tsv
+secondary-metrics-20261126,승컴 (기존 로그 재분석),M3·M6 보조,"revD-v4, abl-*, greedy",-,15,15,Secondary Metrics,origin/main 4689c6797:result/secondary-metrics-20261126

@@ -1,0 +1,137 @@
+table,item,source,method
+Raw Results / Run Validity,"all mixFYF runs: WAF total/A/B/C, phase-C first-5-min WAF, validity checks",raw run directories (raw_dir column); SeungCom via git archive 4689c6797,"recomputed in complete_results.py: total = 1+gc/host from summary.txt ""total"" line, two paths = sum of final-control part lines; phase = start/end snapshots; C5 = control-series 30 s samples, first at/after C start to first at/after C start+300 s"
+Statistical Analysis,"group mean/SD/t 95 % CI; Welch contrasts, Hedges g, Holm",Raw Results (this workbook),"recomputed: t CI with n-1 df; Welch-Satterthwaite df; Hedges g = pooled-SD d x (1-3/(4(na+nb)-9)); Holm within batch family = primary contrasts x {total, phase C}"
+Workload Adaptation,"time-resolved WAF (5-min windows), revA GoCom n=3 per policy",control-series.txt of each revA run,recomputed: 1+Δgc/Δhost between first 30 s samples at/after A-start + 300 s·i
+Random Selection,all values,Raw Results rows revA-v4 / revA-random,recomputed (this script)
+Workload Adaptation,mixY per-phase WAF,"report/paper-figures-20261127/F7_smartgc_waf.csv (databook, GoCom recomputation of SeungCom runs)",copied
+Workload Adaptation,adaptation metrics,report/paper-figures-20261127/F5_adaptation_summary.csv,"copied (GoCom kernel-log analysis, verified 11-25/26)"
+Memory Overhead,all,"result/m1-20261126-final/*.csv (GoCom M1 final, b1af7f526)",copied; learning-structure sum recomputed from memory_theoretical.csv + struct smartgc 232 B x 4
+CPU and Timing,all,result/m1-20261126-final/*.csv,copied (GoCom M1 final; M1PROF cross-checked stop vs remove and vs gc_count)
+Secondary Metrics,explore_host_share,"result/final-revision-analysis/m4/runs.csv, result/*-verify/runs.csv",copied (GoCom og_audit kernel-log parse)
+Secondary Metrics,SeungCom secondary metrics,origin/main 4689c6797:result/secondary-metrics-20261126/statistics.csv,copied; C_first5min_waf independently recomputed (match in Statistical Analysis)
+Secondary Metrics,latency,report/paper-figures-20261127/F6_latency_stats.csv,"copied (GoCom, from FIO json / YCSB output)"
+complete-results CSV,executive_summary,report/final-revision/complete-results/executive_summary.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,unmet_items,report/final-revision/complete-results/unmet_items.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart01_policy_total_waf,report/final-revision/complete-results/chart01_policy_total_waf.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart02_phase_waf,report/final-revision/complete-results/chart02_phase_waf.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,inventory_revision,report/final-revision/complete-results/inventory_revision.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,inventory_paper_figures,report/final-revision/complete-results/inventory_paper_figures.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,inventory_all_result_dirs,report/final-revision/complete-results/inventory_all_result_dirs.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart03_random_vs_icat,report/final-revision/complete-results/chart03_random_vs_icat.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,ablation_contrasts,report/final-revision/complete-results/ablation_contrasts.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart04_ablation_delta,report/final-revision/complete-results/chart04_ablation_delta.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,online_greedy_contrasts,report/final-revision/complete-results/online_greedy_contrasts.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart05_online_greedy,report/final-revision/complete-results/chart05_online_greedy.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,greedygc_contrasts,report/final-revision/complete-results/greedygc_contrasts.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart06_greedygc,report/final-revision/complete-results/chart06_greedygc.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart07_waf_timeseries_revA,report/final-revision/complete-results/chart07_waf_timeseries_revA.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart07b_mixY_phase_waf,report/final-revision/complete-results/chart07b_mixY_phase_waf.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,adaptation_metrics,report/final-revision/complete-results/adaptation_metrics.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,drift_contrasts,report/final-revision/complete-results/drift_contrasts.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart08_drift_delta,report/final-revision/complete-results/chart08_drift_delta.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,smartgc_seungcom,report/final-revision/complete-results/smartgc_seungcom.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,smartgc_gocom_sg,report/final-revision/complete-results/smartgc_gocom_sg.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,smartgc_m1,report/final-revision/complete-results/smartgc_m1.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart_smartgc_waf,report/final-revision/complete-results/chart_smartgc_waf.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,memory_theoretical,report/final-revision/complete-results/memory_theoretical.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,memory_measured,report/final-revision/complete-results/memory_measured.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,memory_comparison,report/final-revision/complete-results/memory_comparison.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart09_memory,report/final-revision/complete-results/chart09_memory.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,kernel_elapsed,report/final-revision/complete-results/kernel_elapsed.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,common_vs_algorithm,report/final-revision/complete-results/common_vs_algorithm.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,userspace_cpu,report/final-revision/complete-results/userspace_cpu.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart10_timing,report/final-revision/complete-results/chart10_timing.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart11_arm47,report/final-revision/complete-results/chart11_arm47.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,secondary_C5,report/final-revision/complete-results/secondary_C5.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,explore_host_share,report/final-revision/complete-results/explore_host_share.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,seungcom_secondary,report/final-revision/complete-results/seungcom_secondary.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,latency,report/final-revision/complete-results/latency.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart12a_explore_share,report/final-revision/complete-results/chart12a_explore_share.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,chart12b_adaptation_time,report/final-revision/complete-results/chart12b_adaptation_time.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,all_group_stats,report/final-revision/complete-results/all_group_stats.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,all_contrasts,report/final-revision/complete-results/all_contrasts.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,crosscheck_published,report/final-revision/complete-results/crosscheck_published.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,crosscheck_mismatch,report/final-revision/complete-results/crosscheck_mismatch.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,run_validity,report/final-revision/complete-results/run_validity.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,smoke_runs,report/final-revision/complete-results/smoke_runs.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,raw_results_mixFYF,report/final-revision/complete-results/raw_results_mixFYF.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,raw_results_mixY,report/final-revision/complete-results/raw_results_mixY.csv,written from the same in-memory table as the sheet / chart
+complete-results CSV,reviewer_matrix,report/final-revision/complete-results/reviewer_matrix.csv,written from the same in-memory table as the sheet / chart
+Raw Results,revA-v4 rep1,result/revA-20261114/raw/mixFYF-revA-v4-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-v4 rep2,result/revA-20261114/raw/mixFYF-revA-v4-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-v4 rep3,result/revA-20261114/raw/mixFYF-revA-v4-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-v1 rep1,result/revA-20261114/raw/mixFYF-revA-v1-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-v1 rep2,result/revA-20261114/raw/mixFYF-revA-v1-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-v1 rep3,result/revA-20261114/raw/mixFYF-revA-v1-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-v2 rep1,result/revA-20261114/raw/mixFYF-revA-v2-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-v2 rep2,result/revA-20261114/raw/mixFYF-revA-v2-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-v2 rep3,result/revA-20261114/raw/mixFYF-revA-v2-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-random rep1,result/revA-20261114/raw/mixFYF-revA-random-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-random rep2,result/revA-20261114/raw/mixFYF-revA-random-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-random rep3,result/revA-20261114/raw/mixFYF-revA-random-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revA-arm47 rep1,result/revA-20261114/raw/mixFYF-arm47-rep1,recomputed; published value source: result/arm47-20261127-verify/runs.csv; match=True
+Raw Results,revB-v4 rep1,result/revB-20261122/raw/mixFYF-revB-v4-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revB-noelim rep1,result/revB-20261122/raw/mixFYF-revB-noelim-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revB-noelim rep2,result/revB-20261122/raw/mixFYF-revB-noelim-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revB-noelim rep3,result/revB-20261122/raw/mixFYF-revB-noelim-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revB-nosettle rep1,result/revB-20261122/raw/mixFYF-revB-nosettle-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revB-nosettle rep2,result/revB-20261122/raw/mixFYF-revB-nosettle-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revB-nosettle rep3,result/revB-20261122/raw/mixFYF-revB-nosettle-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revB-arm60 rep1,result/revB-20261122/raw/mixFYF-revB-arm60-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-v4 rep1,result/revC-20261124/raw/mixFYF-revC-v4-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-v4 rep2,result/revC-20261124/raw/mixFYF-revC-v4-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-v4 rep3,result/revC-20261124/raw/mixFYF-revC-v4-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-elim10 rep1,result/revC-20261124/raw/mixFYF-revC-elim10-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-elim10 rep2,result/revC-20261124/raw/mixFYF-revC-elim10-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-elim10 rep3,result/revC-20261124/raw/mixFYF-revC-elim10-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-elim25 rep1,result/revC-20261124/raw/mixFYF-revC-elim25-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-elim25 rep2,result/revC-20261124/raw/mixFYF-revC-elim25-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-elim25 rep3,result/revC-20261124/raw/mixFYF-revC-elim25-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-arm60 rep1,result/revC-20261124/raw/mixFYF-revB-arm60-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-arm60 rep2,result/revC-20261124/raw/mixFYF-revB-arm60-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-arm60 rep3,result/revC-20261124/raw/mixFYF-revB-arm60-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-online rep1,result/revC-20261124/raw/mixFYF-online-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-online rep2,result/revC-20261124/raw/mixFYF-online-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revC-online rep3,result/revC-20261124/raw/mixFYF-online-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revD-v4 rep1,origin/main@4689c6797:result/revD-20261124/raw/mixFYF-revD-v4-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revD-v4 rep2,origin/main@4689c6797:result/revD-20261124/raw/mixFYF-revD-v4-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revD-v4 rep3,origin/main@4689c6797:result/revD-20261124/raw/mixFYF-revD-v4-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revD-nodrift rep1,origin/main@4689c6797:result/revD-20261124/raw/mixFYF-revD-nodrift-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revD-nodrift rep2,origin/main@4689c6797:result/revD-20261124/raw/mixFYF-revD-nodrift-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revD-nodrift rep3,origin/main@4689c6797:result/revD-20261124/raw/mixFYF-revD-nodrift-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revD-fullreset rep1,origin/main@4689c6797:result/revD-20261124/raw/mixFYF-revD-fullreset-rep1,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revD-fullreset rep2,origin/main@4689c6797:result/revD-20261124/raw/mixFYF-revD-fullreset-rep2,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revD-fullreset rep3,origin/main@4689c6797:result/revD-20261124/raw/mixFYF-revD-fullreset-rep3,recomputed; published value source: result/final-revision-analysis/m4/runs.csv; match=True
+Raw Results,revE-v4 rep1,result/revE-20261125/raw/mixFYF-revE-v4-rep1,recomputed; published value source: result/revE-20261125-analysis/runs.csv; match=True
+Raw Results,revE-v4 rep2,result/revE-20261125/raw/mixFYF-revE-v4-rep2,recomputed; published value source: result/revE-20261125-analysis/runs.csv; match=True
+Raw Results,revE-v4 rep3,result/revE-20261125/raw/mixFYF-revE-v4-rep3,recomputed; published value source: result/revE-20261125-analysis/runs.csv; match=True
+Raw Results,revE-noelim rep1,result/revE-20261125/raw/mixFYF-revE-noelim-rep1,recomputed; published value source: result/revE-20261125-analysis/runs.csv; match=True
+Raw Results,revE-noelim rep2,result/revE-20261125/raw/mixFYF-revE-noelim-rep2,recomputed; published value source: result/revE-20261125-analysis/runs.csv; match=True
+Raw Results,revE-noelim rep3,result/revE-20261125/raw/mixFYF-revE-noelim-rep3,recomputed; published value source: result/revE-20261125-analysis/runs.csv; match=True
+Raw Results,revE-drift12 rep1,result/revE-20261125/raw/mixFYF-revE-drift12-rep1,recomputed; published value source: result/revE-20261125-analysis/runs.csv; match=True
+Raw Results,revE-drift12 rep2,result/revE-20261125/raw/mixFYF-revE-drift12-rep2,recomputed; published value source: result/revE-20261125-analysis/runs.csv; match=True
+Raw Results,revE-drift12 rep3,result/revE-20261125/raw/mixFYF-revE-drift12-rep3,recomputed; published value source: result/revE-20261125-analysis/runs.csv; match=True
+Raw Results,abl-v4 rep1,origin/main@4689c6797:result/revision-additional-ablation/raw/mixFYF-abl-v4-rep1,recomputed; published value source: result/abl-20261125-verify/runs.csv; match=True
+Raw Results,abl-v4 rep2,origin/main@4689c6797:result/revision-additional-ablation/raw/mixFYF-abl-v4-rep2,recomputed; published value source: result/abl-20261125-verify/runs.csv; match=True
+Raw Results,abl-v4 rep3,origin/main@4689c6797:result/revision-additional-ablation/raw/mixFYF-abl-v4-rep3,recomputed; published value source: result/abl-20261125-verify/runs.csv; match=True
+Raw Results,abl-nodiscount rep1,origin/main@4689c6797:result/revision-additional-ablation/raw/mixFYF-abl-nodiscount-rep1,recomputed; published value source: result/abl-20261125-verify/runs.csv; match=True
+Raw Results,abl-nodiscount rep2,origin/main@4689c6797:result/revision-additional-ablation/raw/mixFYF-abl-nodiscount-rep2,recomputed; published value source: result/abl-20261125-verify/runs.csv; match=True
+Raw Results,abl-nodiscount rep3,origin/main@4689c6797:result/revision-additional-ablation/raw/mixFYF-abl-nodiscount-rep3,recomputed; published value source: result/abl-20261125-verify/runs.csv; match=True
+Raw Results,abl-offbundle rep1,origin/main@4689c6797:result/revision-additional-ablation/raw/mixFYF-abl-off-elim-settle-drift-probe-rep1,recomputed; published value source: result/abl-20261125-verify/runs.csv; match=True
+Raw Results,abl-offbundle rep2,origin/main@4689c6797:result/revision-additional-ablation/raw/mixFYF-abl-off-elim-settle-drift-probe-rep2,recomputed; published value source: result/abl-20261125-verify/runs.csv; match=True
+Raw Results,abl-offbundle rep3,origin/main@4689c6797:result/revision-additional-ablation/raw/mixFYF-abl-off-elim-settle-drift-probe-rep3,recomputed; published value source: result/abl-20261125-verify/runs.csv; match=True
+Raw Results,greedy rep1,origin/main@4689c6797:result/greedy-20261125/raw/mixFYF-greedy-online-rep1,recomputed; published value source: result/greedy-20261125-verify/runs.csv; match=True
+Raw Results,greedy rep2,origin/main@4689c6797:result/greedy-20261125/raw/mixFYF-greedy-online-rep2,recomputed; published value source: result/greedy-20261125-verify/runs.csv; match=True
+Raw Results,greedy rep3,origin/main@4689c6797:result/greedy-20261125/raw/mixFYF-greedy-online-rep3,recomputed; published value source: result/greedy-20261125-verify/runs.csv; match=True
+Raw Results,bg-v4 rep1,origin/main@4689c6797:result/batchG-20261126/raw/mixFYF-bg-v4-rep1,recomputed; published value source: result/batchG-20261126-verify/runs.csv; match=True
+Raw Results,bg-v4 rep2,origin/main@4689c6797:result/batchG-20261126/raw/mixFYF-bg-v4-rep2,recomputed; published value source: result/batchG-20261126-verify/runs.csv; match=True
+Raw Results,bg-v4 rep3,origin/main@4689c6797:result/batchG-20261126/raw/mixFYF-bg-v4-rep3,recomputed; published value source: result/batchG-20261126-verify/runs.csv; match=True
+Raw Results,greedygc rep1,origin/main@4689c6797:result/greedygc-20261126/raw/mixFYF-greedygc-rep1,recomputed; published value source: result/batchG-20261126-verify/runs.csv; match=True
+Raw Results,greedygc rep2,origin/main@4689c6797:result/greedygc-20261126/raw/mixFYF-greedygc-rep2,recomputed; published value source: result/batchG-20261126-verify/runs.csv; match=True
+Raw Results,greedygc rep3,origin/main@4689c6797:result/greedygc-20261126/raw/mixFYF-greedygc-rep3,recomputed; published value source: result/batchG-20261126-verify/runs.csv; match=True
+Raw Results,drift50 rep1,origin/main@4689c6797:result/drift50-20261126/raw/mixFYF-drift50-rep1,recomputed; published value source: result/batchG-20261126-verify/runs.csv; match=True
+Raw Results,drift50 rep2,origin/main@4689c6797:result/drift50-20261126/raw/mixFYF-drift50-rep2,recomputed; published value source: result/batchG-20261126-verify/runs.csv; match=True
+Raw Results,drift50 rep3,origin/main@4689c6797:result/drift50-20261126/raw/mixFYF-drift50-rep3,recomputed; published value source: result/batchG-20261126-verify/runs.csv; match=True
+Raw Results,arm47 rep1,origin/main@4689c6797:result/arm47-20261127/raw/mixFYF-arm47-rep1,recomputed; published value source: result/arm47-20261127-verify/runs.csv; match=True
+Raw Results,arm47 rep2,origin/main@4689c6797:result/arm47-20261127/raw/mixFYF-arm47-rep2,recomputed; published value source: result/arm47-20261127-verify/runs.csv; match=True
+Raw Results,arm47 rep3,origin/main@4689c6797:result/arm47-20261127/raw/mixFYF-arm47-rep3,recomputed; published value source: result/arm47-20261127-verify/runs.csv; match=True

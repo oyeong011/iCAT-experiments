@@ -1,0 +1,9 @@
+심사 의견,요구,근거 시트,반복,결과 요약,판정
+M1,기존 학습 기반 GC(SmartGC)와 비교,"SmartGC Comparison, Memory Overhead, CPU and Timing",정책당 1회 (반복 미충족),"WAF 방향 일관(두 호스트), 메모리 충족, CPU 부분 충족(커널 CPU 측정 불가), GC 비용 iCAT이 더 큼",부분 충족
+M2,구성 요소 제거,Ablation Study,3 (revB 일부 n=1),"V2·FullReset·NoElim·묶음 끔은 차이, V1·NoDrift·NoDiscount는 구분되지 않음",충족 (불리한 결과 포함 보고)
+M3,온라인 기준선 비교,"Random Selection, Online Greedy, Greedy GC",3,Random·원래 iCAT·Greedy GC 대비 차이. Online Greedy와 구분되지 않음(간접). Periodic 미실행,부분 충족
+M4,반복과 통계 검증,"Statistical Analysis, Run Validity, Raw Results",78 run,"재계산 78/78 일치, 통계 대조 622/622",충족
+M5,자원 효율,"Memory Overhead, CPU and Timing, Secondary Metrics","1 (M1), 3 (revA 지연)",ktime 경과와 CPU 시간 구분. 지연은 같은 배치 안에서만,부분 충족
+M6,"적응 성능, 파라미터 근거","Workload Adaptation, Drift Threshold, Ablation Study, Secondary Metrics",3,"감지 12.5/25/50 %, 제거 10/15/25 %, 후보 45/60. 판단 구간 등 4개 미측정",부분 충족
+M7,환경 일반화,(실험 없음) M7_scope_and_limitations.md,-,단일 에뮬레이터 구성 명시,범위 명시
+Robustness,최적 고정 arm 재현성,Arm 47 Robustness,3 + 1,Arm 47 WAF 재현 (CV 0.013 %),"충족 (승컴, 집컴 검증 전)"
