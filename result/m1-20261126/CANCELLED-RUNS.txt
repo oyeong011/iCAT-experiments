@@ -1,0 +1,6 @@
+2026-11-26 06:35 KST: user decision (AskUserQuestion answer "정책당 1회만"): run the 10 h mixY once per policy only
+(m1-icat-v4 rep1, already running since 04:38, and m1-smartgc-eq8 rep1, next in the registered order). The remaining 4 registered runs
+(m1-icat-v4 rep2, m1-smartgc-eq8 rep2, m1-smartgc-eq8 rep3, m1-icat-v4 rep3) are CANCELLED before they started (not failed, not excluded).
+Mechanism: empty placeholder directories raw/mixY-<pol>-rep<n> were created so that queue-m1.sh line 50 logs "skip existing"; they
+contain no data and are removed after the queue prints "main queue finished". The running run and the queue process were not touched.
+Consequence: n=1 per policy in this batch -> no statistics (n<3 rule); per-call costs and memory are reported per run, WAF as single values.
