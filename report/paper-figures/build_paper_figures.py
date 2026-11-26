@@ -609,6 +609,11 @@ def main():
     for pol, rep, rdir in batchG_specs:
         raw_runs.append(verify_mixfyf_run(REF_MAIN, commit_main, "batchG-20261126", rdir, pol, rep, h_batchG))
 
+    # arm47-20261127 completed main runs (SeungCom 3/3 COMPLETE! Fixed Arm 47 n=3; host-separated from GoCom revA n=1)
+    h_arm47 = parse_module_hashes(REF_MAIN, "result/arm47-20261127/modules.sha256")
+    for rep in (1, 2, 3):
+        raw_runs.append(verify_mixfyf_run(REF_MAIN, commit_main, "arm47-20261127", f"result/arm47-20261127/raw/mixFYF-arm47-rep{rep}", "arm47-seungcom", rep, h_arm47))
+
     # Enforce strict validity gate
     for r in raw_runs:
         if not r["valid"]:
@@ -1400,6 +1405,7 @@ def main():
         ["M2/M6", "revE-20261125 (v4/NoElim-isol/drift12)", "GoCom (Ryzen 3600XT)", "mixFYF 250k (1800s x3)", REF_GOCOM, commit_gocom, "COMPLETED (VERIFIED)", 9, 9, "Ablation, NoElim, Fig_05", "9/9 VALID! Same-batch NoElim-v4 +0.0913 [+0.030,+0.153] (g=3.88, Paired>0); drift12-v4 +0.0720 [+0.012,+0.132] (Holm p=0.091)"],
         ["M3", "greedy-20261125 (Online Greedy VARIANT=8)", "SeungCom (i7-7700)", "mixFYF 250k (1800s x3)", REF_MAIN, commit_main, "COMPLETED (VERIFIED)", 3, 3, "Online Greedy", "3/3 VALID (triple-verified, 0/2513 argmin mismatches)! Greedy-revD_v4 -0.0086 [-0.051,+0.034] (honest null)"],
         ["M3/M6", "batchG-20261126 (Greedy GC / drift50 / bg-v4)", "SeungCom (i7-7700)", "mixFYF 250k (1800s x3)", REF_MAIN, commit_main, "COMPLETED (VERIFIED)", 9, 9, "Greedy GC, Fig_05_Parameters", "9/9 VALID (0/36 WAF mismatches)! Greedy GC-v4 +0.5189 [+0.463,+0.574] (Holm p=0.0013, -19.7%; FIO lat lower on Greedy); drift50-v4 +0.0183 [-0.045,+0.081] (ns)"],
+        ["Robustness", "arm47-20261127 (Fixed Arm 47 oracle n=3)", "SeungCom (i7-7700)", "mixFYF 250k (1800s x3)", REF_MAIN, commit_main, "COMPLETED (VERIFIED)", 3, 3, "Raw_Data, Statistics, Table_Data", "3/3 VALID! 1.98764±0.00027 [1.98698, 1.98831] (CV=0.013%; GoCom revA n=1 1.987355 inside CI; host-separated, never pooled as n=4)"],
         ["M1/M5", "m1-20261126 (SmartGC-EQ8 vs iCAT-v4 ktime & mem)", "GoCom (Ryzen 3600XT)", "mixY 10h (n=1 per policy)", REF_GOCOM, commit_gocom, "COMPLETED (VERIFIED, n=1)", 2, 2, "Fig_07_Resources", "2/2 VALID (rep2-3 cancelled by user; n=1 no stat)! WAF_nand 3.330 vs 4.553 (-26.9%); VmallocUsed +34,848 vs +37,752 kB (+2,904 kB); GC ktime 98.4 vs 17.8 us/GC (5.5x); LEARN 4.3 vs 47.6 s"],
         ["E3", "revA-20261114 & revD-20261124 adaptation", "GoCom / SeungCom", "mixFYF 250k (1800s x3)", REF_GOCOM, commit_gocom, "COMPLETED (PARTIAL)", 22, 22, "Fig_03_Adaptation, Fig_04_Exploration", "Sep mixR invalid excluded; revA & revD per-partition verified (Phase B low-write limit)"],
         ["E4", "Statistical Reliability (n=3 CI/Welch)", "GoCom / SeungCom", "mixFYF 250k", REF_GOCOM, commit_gocom, "COMPLETED (mixFYF 75 runs)", 75, 75, "All Figures", "n=3 enforced across revA/revB/revC/revD/abl/revE/greedy/batchG (75 verified mixFYF runs + 2 m1 mixY runs = 77 VALID); legacy Table 6/7/9 n=1 disclosed"],

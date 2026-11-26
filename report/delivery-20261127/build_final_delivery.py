@@ -417,6 +417,7 @@ def main():
     h_revE = load_hashes(REF_GOCOM, "result/revE-20261125/modules.sha256")
     h_greedy = load_hashes(REF_MAIN, "result/greedy-20261125/modules.sha256")
     h_batchG = load_hashes(REF_MAIN, "result/batchG-20261126/modules.sha256")
+    h_arm47 = load_hashes(REF_MAIN, "result/arm47-20261127/modules.sha256")
     h_m1 = load_hashes(REF_GOCOM, "result/m1-20261126/modules.sha256")
 
     # Core completed campaigns (65 + arm47 n=1 = 66 mixFYF runs)
@@ -441,6 +442,8 @@ def main():
         *[("revE-20261125", "M2/M6", REF_GOCOM, c_gocom, f"revE-{p}", r, f"result/revE-20261125/raw/mixFYF-revE-{p}-rep{r}", h_revE.get(m), "mixFYF 250k", True)
           for (p, m) in [("v4", "nvmev-revC-v4.ko"), ("noelim", "nvmev-revB-noelim.ko"), ("drift12", "nvmev-revE-drift12.ko")] for r in (1, 2, 3)],
         *[("greedy-20261125", "M3", REF_MAIN, c_main, "greedy-online", r, f"result/greedy-20261125/raw/mixFYF-greedy-online-rep{r}", h_greedy.get("nvmev-greedy-online.ko"), "mixFYF 250k", True)
+          for r in (1, 2, 3)],
+        *[("arm47-20261127", "Robustness/Ref", REF_MAIN, c_main, "arm47-seungcom", r, f"result/arm47-20261127/raw/mixFYF-arm47-rep{r}", h_arm47.get("nvmev-arm47.ko"), "mixFYF 250k", True)
           for r in (1, 2, 3)],
     ]
 
@@ -608,6 +611,8 @@ def main():
             ("F8_batchG_4test", "4-test (batchG 2x2)", "M3-5 Greedy GC 대비 우위 (mixFYF 동일배치)", "batchG-greedygc - batchG-v4", "SeungCom", "direct (same host, same batch)", "batchG-greedygc", "batchG-v4", "Phase C WAF", "waf_C"),
             ("F8_batchG_4test", "4-test (batchG 2x2)", "M6-3 변화 감지 문턱 50% 민감도 (mixFYF 동일배치)", "batchG-drift50 - batchG-v4", "SeungCom", "direct (same host, same batch)", "batchG-drift50", "batchG-v4", "Total WAF", "waf_recalc"),
             ("F8_batchG_4test", "4-test (batchG 2x2)", "M6-3 변화 감지 문턱 50% 민감도 (mixFYF 동일배치)", "batchG-drift50 - batchG-v4", "SeungCom", "direct (same host, same batch)", "batchG-drift50", "batchG-v4", "Phase C WAF", "waf_C"),
+            ("F10_arm47_indirect", "2-test (arm47 indirect ref)", "Robustness 고정 Arm 47 (승컴 n=3) vs bg-v4 (다른 배치 참고)", "arm47-seungcom - batchG-v4", "SeungCom", "indirect (same host, different batch)", "arm47-seungcom", "batchG-v4", "Total WAF", "waf_recalc"),
+            ("F10_arm47_indirect", "2-test (arm47 indirect ref)", "Robustness 고정 Arm 47 (승컴 n=3) vs bg-v4 (다른 배치 참고)", "arm47-seungcom - batchG-v4", "SeungCom", "indirect (same host, different batch)", "arm47-seungcom", "batchG-v4", "Phase C WAF", "waf_C"),
         ]
 
     stat_rows = []
@@ -800,10 +805,11 @@ def main():
 | **그림 10** (`fig5_three_phase_mix` / `paper_fig10_e1_three_phase`) | §6.2/6.4 | 구 `mixR-*-x3` (**SQLITE_FULL 오염으로 무효**) / 300k 재측정 **미실행** | **INVALID / 미실행** | **INVALID** | **절대 사용 금지.** 표 8(`300k records` 전원 대기)·그림 10(`생성 대기`)을 유효 `mixFYF 250k (n=3)` 결과(`revA/revD`, 표 10·`figure03_adaptation.png`)로 전면 대체. |
 | **신규 리비전 Figure 1~7** (`report/paper-figures/figures/`) | §6.4/§7 | 75+ 검증 `mixFYF 250k` run + `resource-v124` + `3×60` sweep | 핵심 조건 전부 **`n=3`** | **ROBUST** | 논문 리비전의 **1차 통계적 확정 근거** (`verify_paper_figures.py` 전수 수치 일치 검증). |
 
-### 1.1 고정 Arm 47 (`1.987`) 사용 범위 및 재현성 감사
-- **`revA/mixFYF-arm47-rep1` (`WAF = 1.987355`)**: `mixFYF 250k`에서 확보된 **유일한 `n=1` 단일 실행** (`rep2–3` 미존재). 따라서 `1.987`은 "단일 실행 참고 상한(oracle reference, `n=1`)"으로만 표기하며, `iCAT-v4`와의 통계적 차이 검정이나 CI 산출에 사용 금지.
-- **기존 `n=3` Arm 47 증거**: FIO-Fast 단일 10분(`SD=0.00017`, `t4-fixed47-rep1..3`), FIO-Fast 30분(`1.774`, `resource-v124`), `mixY 90m`(`cat60-90min`)에서는 `n=3` 재현성이 높으나, **`mixY 10h` 교차 월 비교**에서는 10월(`2.864`)과 11월(`3.233`) 사이에 **`+12.9%` 시기 편차**가 실측되어 교차 날짜/배치 `n=1` 비교 불가 원칙을 실증함.
-- **표 6·표 7의 x3 Arm 47**: 3배 길이 전환 워크로드(표 6, 7)의 고정 조합은 모두 `n=1`이므로, L256 `【결과 대기: arm 47·17·50 각 3회】`는 삭제하고 "고정 조합 1회 측정 참고값"으로 한계를 명시해야 함.
+### 1.1 고정 Arm 47 (`1.987`) 사용 범위 및 재현성 감사 (**승컴 `arm47-20261127` `n=3` 독립 검증 완료**)
+- **승컴 `arm47-20261127` (`n=3` VALID, `4689c6797`)**: `rep1 1.987502 / rep2 1.987953 / rep3 1.987478` → **`Mean = 1.98764 ± 0.00027`** (`95% CI [1.98698, 1.98831]`, `CV = 0.013%`; `Phase A 1.77430 / B 1.03098 / C 2.27865`). 4개 파티션 `Fixed CAT init arm=47` 확인, 2-경로 WAF 일치, 승컴 분석과 소수 6자리 일치.
+- **고컴 `revA/mixFYF-arm47-rep1` (`1.987355`, `n=1`)**: 호스트가 다르므로 승컴 `n=3`과 **절대 합산(`n=4` 표기) 금지**. 다만 고컴 `1.987355`가 승컴 `n=3` 95% CI(`[1.98698, 1.98831]`) 내부에 위치하여 `mixFYF` Arm 47 WAF의 극도로 높은 재현성이 독립 확인됨.
+- **승컴 내 간접 비교 (`arm47 − bg-v4`, 다른 배치)**: Total **`−0.1228 [−0.1836, −0.0621]`** (`p=0.0130`, `g=−5.68`), Phase C **`−0.1250 [−0.2492, −0.0009]`** (`p=0.0493`) — 사후 최적 oracle인 Arm 47이 온라인 V4보다 약 5.8% 낮음. 또한 Arm 47의 FIO Phase C p99(`174.6 µs`)는 V4(`166.0 µs`)와 유사하여, Greedy GC(`41.9 µs`)와의 지연 차이가 온라인 학습기가 아닌 **CAT 전 라인 스캔 자체**에서 비롯됨을 방증함.
+- **기존 `n=3` Arm 47 및 표 6·7 한계**: FIO-Fast 10분/30분·`mixY 90m`에서도 재현성이 확인되나, **`mixY 10h` 교차 월 비교**에서는 10월(`2.864`)과 11월(`3.233`) 사이에 **`+12.9%` 시기 편차**가 존재함. 표 6·표 7의 3배 길이 고정 조합은 여전히 `n=1`이므로 L256 `【결과 대기】` 삭제 후 단일 실행 참고값으로 명시.
 
 ---
 
@@ -1067,7 +1073,7 @@ def main():
 
 1. **SmartGC 대비 자원 오버헤드 분리 서술 (`M1` / `M5`)**: iCAT-v4의 **학습 상태 메모리(193×–232× 경량, 실측 `VmallocUsed` 차이 `+2,904 kB` vs 이론 `3,058 KiB`)**와 **학습 연산 자체(`4.3 s` vs `47.6 s`, 11× 경량)**는 압도적으로 가볍지만, **CAT 전 라인 스캔 기반 희생 선택(`SELECT 87.0 µs/GC`)** 때문에 GC 1회 경과시간은 iCAT(`98.4 µs`, `1,342 ms/GiB`)이 SmartGC(`17.8 µs`, `333 ms/GiB`)의 **5.5×**입니다(`m1-20261126` 2/2 독립 검증 완료, 표 9b 일치). 따라서 "전체 GC CPU도 iCAT이 우위"라는 표현은 금지하고, **WAF·메모리 우위 대 희생 선택 연산 비용 트레이드오프**로 기술해야 합니다.
 2. **Online Greedy 무우위 (`M3-3`) & FIO p99 열위 (`M5-5`)**: `mixFYF`에서 단순 탐욕 선택 대비 통계적 우위가 없고, FIO p99는 iCAT-v4가 `+15~20 µs` 높으며(Greedy GC 대비로도 FIO p99 `166 vs 42 µs` 열위), 두 항목 모두 본문에 정직하게 유지합니다.
-3. **기존 논문 Figure 1~10 중 단일 실행(`n=1`) 및 무효 데이터 격리**: 그림 2·4·6·7·8·9와 표 6·7·9·9b, 그리고 고정 Arm 47(`1.987`, `revA` 고컴 `n=1`)은 단일 실행 기반이므로 탐색적 사례로 한정하고, **`SQLITE_FULL`로 오염된 구 그림 10 및 미실행 `300k` 표 8은 원고에서 제거·대체**해야 합니다. *(참고: 승컴에서 `arm47-20261127` 고정 Arm 47 `n=3` 추가 실행이 smoke 완료 후 진행 중, ~05:30 KST)*
+3. **기존 논문 Figure 1~10 중 단일 실행(`n=1`) 및 무효 데이터 격리**: 그림 2·4·6·7·8·9와 표 6·7·9·9b는 단일 실행 기반이므로 탐색적 사례로 한정하고, **`SQLITE_FULL`로 오염된 구 그림 10 및 미실행 `300k` 표 8은 원고에서 제거·대체**해야 합니다. *(고정 Arm 47 `mixFYF`는 승컴 `arm47-20261127` `n=3` 독립 검증 완료: **`1.98764 ± 0.00027`** [`[1.98698, 1.98831]`] — 기존 고컴 `n=1` `1.987355`가 CI 내 재현됨, 호스트 분리 유지)*
 4. **원고(`PAPER_KCI_DRAFT.md` @ `2a0900382`) 잔존 오류 패치**: L232/L240/L256/L260/L297–307의 `【결과 대기】` 플레이스홀더, §7 L400(구 L385) `"GC 수행 시간은 계측하지 않았다"` 오기, 표 9 `WAF_nand` vs `WAF` 정의 차이를 `final_revision_status.md` 패치표대로 투고 전 일괄 반영하면 됩니다.
 
 ---

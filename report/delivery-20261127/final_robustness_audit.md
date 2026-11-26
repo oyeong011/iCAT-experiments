@@ -1,8 +1,8 @@
 # iCAT 논문 리비전 최종 Robustness 감사 보고서 (`final_robustness_audit.md`)
 
 - **작성 주체**: 집컴 (독립 연구 감사·원시 로그 검증·최종 통합 담당)
-- **생성 시각**: `2026-11-27 01:08:16 KST`
-- **기준 원격 커밋**: 승컴 `origin/main @ 2ccac44b7` / 고컴 `origin/report/data-validity-20261124 @ 2a0900382` / 자원 계측 `origin/resource-overhead-20261114 @ c046de0d0`
+- **생성 시각**: `2026-11-27 05:33:47 KST`
+- **기준 원격 커밋**: 승컴 `origin/main @ 4689c6797` / 고컴 `origin/report/data-validity-20261124 @ 67cf3f901` / 자원 계측 `origin/resource-overhead-20261114 @ c046de0d0`
 - **절대 원칙**: 원시 로그(`result/`)·원본 `figs/` 무변경, 신규 NVMeVirt 미실행, 호스트·배치 무분별 합산 금지, `n<3` 통계적 유의성 미부여, 미검증·실행 중 항목 `PASS` 표기 금지.
 
 ---
@@ -23,10 +23,11 @@
 | **그림 10** (`fig5_three_phase_mix` / `paper_fig10_e1_three_phase`) | §6.2/6.4 | 구 `mixR-*-x3` (**SQLITE_FULL 오염으로 무효**) / 300k 재측정 **미실행** | **INVALID / 미실행** | **INVALID** | **절대 사용 금지.** 표 8(`300k records` 전원 대기)·그림 10(`생성 대기`)을 유효 `mixFYF 250k (n=3)` 결과(`revA/revD`, 표 10·`figure03_adaptation.png`)로 전면 대체. |
 | **신규 리비전 Figure 1~7** (`report/paper-figures/figures/`) | §6.4/§7 | 75+ 검증 `mixFYF 250k` run + `resource-v124` + `3×60` sweep | 핵심 조건 전부 **`n=3`** | **ROBUST** | 논문 리비전의 **1차 통계적 확정 근거** (`verify_paper_figures.py` 전수 수치 일치 검증). |
 
-### 1.1 고정 Arm 47 (`1.987`) 사용 범위 및 재현성 감사
-- **`revA/mixFYF-arm47-rep1` (`WAF = 1.987355`)**: `mixFYF 250k`에서 확보된 **유일한 `n=1` 단일 실행** (`rep2–3` 미존재). 따라서 `1.987`은 "단일 실행 참고 상한(oracle reference, `n=1`)"으로만 표기하며, `iCAT-v4`와의 통계적 차이 검정이나 CI 산출에 사용 금지.
-- **기존 `n=3` Arm 47 증거**: FIO-Fast 단일 10분(`SD=0.00017`, `t4-fixed47-rep1..3`), FIO-Fast 30분(`1.774`, `resource-v124`), `mixY 90m`(`cat60-90min`)에서는 `n=3` 재현성이 높으나, **`mixY 10h` 교차 월 비교**에서는 10월(`2.864`)과 11월(`3.233`) 사이에 **`+12.9%` 시기 편차**가 실측되어 교차 날짜/배치 `n=1` 비교 불가 원칙을 실증함.
-- **표 6·표 7의 x3 Arm 47**: 3배 길이 전환 워크로드(표 6, 7)의 고정 조합은 모두 `n=1`이므로, L256 `【결과 대기: arm 47·17·50 각 3회】`는 삭제하고 "고정 조합 1회 측정 참고값"으로 한계를 명시해야 함.
+### 1.1 고정 Arm 47 (`1.987`) 사용 범위 및 재현성 감사 (**승컴 `arm47-20261127` `n=3` 독립 검증 완료**)
+- **승컴 `arm47-20261127` (`n=3` VALID, `4689c6797`)**: `rep1 1.987502 / rep2 1.987953 / rep3 1.987478` → **`Mean = 1.98764 ± 0.00027`** (`95% CI [1.98698, 1.98831]`, `CV = 0.013%`; `Phase A 1.77430 / B 1.03098 / C 2.27865`). 4개 파티션 `Fixed CAT init arm=47` 확인, 2-경로 WAF 일치, 승컴 분석과 소수 6자리 일치.
+- **고컴 `revA/mixFYF-arm47-rep1` (`1.987355`, `n=1`)**: 호스트가 다르므로 승컴 `n=3`과 **절대 합산(`n=4` 표기) 금지**. 다만 고컴 `1.987355`가 승컴 `n=3` 95% CI(`[1.98698, 1.98831]`) 내부에 위치하여 `mixFYF` Arm 47 WAF의 극도로 높은 재현성이 독립 확인됨.
+- **승컴 내 간접 비교 (`arm47 − bg-v4`, 다른 배치)**: Total **`−0.1228 [−0.1836, −0.0621]`** (`p=0.0130`, `g=−5.68`), Phase C **`−0.1250 [−0.2492, −0.0009]`** (`p=0.0493`) — 사후 최적 oracle인 Arm 47이 온라인 V4보다 약 5.8% 낮음. 또한 Arm 47의 FIO Phase C p99(`174.6 µs`)는 V4(`166.0 µs`)와 유사하여, Greedy GC(`41.9 µs`)와의 지연 차이가 온라인 학습기가 아닌 **CAT 전 라인 스캔 자체**에서 비롯됨을 방증함.
+- **기존 `n=3` Arm 47 및 표 6·7 한계**: FIO-Fast 10분/30분·`mixY 90m`에서도 재현성이 확인되나, **`mixY 10h` 교차 월 비교**에서는 10월(`2.864`)과 11월(`3.233`) 사이에 **`+12.9%` 시기 편차**가 존재함. 표 6·표 7의 3배 길이 고정 조합은 여전히 `n=1`이므로 L256 `【결과 대기】` 삭제 후 단일 실행 참고값으로 명시.
 
 ---
 
@@ -46,7 +47,7 @@
 
 ## 3. 최종 신규 배치 독립 검증 결과 (`batchG-20261126` & `m1-20261126`)
 
-### 3.1 승컴 `batchG-20261126` 독립 검증 완료 (9/9 VALID, `origin/main @ 2ccac44b7`)
+### 3.1 승컴 `batchG-20261126` 독립 검증 완료 (9/9 VALID, `origin/main @ 4689c6797`)
 
 모든 9개 run에 대해 종료 코드(`0`), 사전등록 모듈 SHA256, FIO 오류(`0`)·시드(`rep1/2/3`), YCSB 성공률(`100%`, `SQLITE_FULL=0`), 커널 오류(`0`), 원시 카운터 2-경로 WAF 재계산을 독립 검증 완료했습니다. *(참고: `cpu_check=unavailable`은 `loadsampler`가 승컴에 미이식되어 CPU가 미측정임을 뜻하며 WAF 유효성과 무관 — 커밋 `2fd5fa359` 확인)*
 
@@ -57,7 +58,7 @@
 | **Drift 50%** *(M6-3)* | `2.1288 ± 0.0299` | `[2.0546, 2.2030]` | `+0.0183 [-0.0445, +0.0812]` | `0.458654` | `0.830654` | `0.537` | `+0.0418 [-0.0877, +0.1714]` (`Holm 0.8307`) | **NO_DIFF_FOUND (CI includes 0)** |
 
 
-### 3.2 고컴 `m1-20261126` 독립 검증 완료 (2/2 VALID, `n=1` per policy, `origin/report/data-validity-20261124 @ 2a0900382`)
+### 3.2 고컴 `m1-20261126` 독립 검증 완료 (2/2 VALID, `n=1` per policy, `origin/report/data-validity-20261124 @ 67cf3f901`)
 
 > **핵심 검증 규칙:** 모든 `M1PROF` 카운터는 커밋 `08ac54dc9` 규정에 따라 이전 실행 링버퍼가 섞이지 않은 **`kernel.log.nowarn.gz` 단독**에서 파싱했습니다(`kernel-final.log` 미사용). 사용자 결정으로 `rep2–3`은 취소되어 **정책당 `n=1`**이며, 통계적 유의성은 부여하지 않습니다.
 
@@ -81,7 +82,7 @@
 
 ## 4. 원시 데이터 무결성 요약 (`final_experiment_validity.csv`)
 
-- **총 추적 run 수**: `77`건 (**VALID `77`건**, **RUNNING(미검증) `0`건**, 무효 혼입 **0건**)
+- **총 추적 run 수**: `80`건 (**VALID `80`건**, **RUNNING(미검증) `0`건**, 무효 혼입 **0건**)
 - 모든 VALID run은 원시 `summary.txt` ↔ `final-control.txt` ↔ 파티션 합산 2-경로 WAF 일치, `exit=0`, 커널 오류 `0`, FIO 오류 `0`, YCSB `SQLITE_FULL=0` (`≥99%`, 실측 `100%`) 및 사전등록 모듈 SHA256 대조를 독립 통과함.
 - 상세 run별 표: [final_experiment_validity.csv](file:///C:/Users/oyeon/orca/iCAT-experiments/report/delivery-20261127/final_experiment_validity.csv)
 - 상세 통계 대비 표: [final_statistical_audit.csv](file:///C:/Users/oyeon/orca/iCAT-experiments/report/delivery-20261127/final_statistical_audit.csv)

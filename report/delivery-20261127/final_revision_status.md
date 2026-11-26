@@ -1,9 +1,9 @@
 # iCAT 논문 리비전 최종 상태 및 원고 수정 패치 지침 (`final_revision_status.md`)
 
-- **생성 시각**: `2026-11-27 01:08:16 KST`
-- **원격 커밋**: 승컴 `origin/main @ 2ccac44b7` / 고컴 `origin/report/data-validity-20261124 @ 2a0900382` / 자원 계측 `origin/resource-overhead-20261114 @ c046de0d0`
+- **생성 시각**: `2026-11-27 05:33:47 KST`
+- **원격 커밋**: 승컴 `origin/main @ 4689c6797` / 고컴 `origin/report/data-validity-20261124 @ 67cf3f901` / 자원 계측 `origin/resource-overhead-20261114 @ c046de0d0`
 - **실험 완료 현황**:
-  - 확정 검증 완료: **`77`개 run VALID** (무효/오염 혼입 0건)
+  - 확정 검증 완료: **`80`개 run VALID** (무효/오염 혼입 0건)
   - 실행 대기(미완료): **`0`개 run RUNNING** (`batchG` 완료=True, `m1` 완료=True)
 
 ---

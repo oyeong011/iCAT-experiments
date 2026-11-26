@@ -1,6 +1,6 @@
 # iCAT 최초 심사 요구사항(M1~M7, 47개 세부 항목) 대응 근거표 (`final_reviewer_evidence_matrix.md`)
 
-- **생성 시각**: `2026-11-27 01:08:16 KST` (`origin/main @ 2ccac44b7`, `origin/report/data-validity-20261124 @ 2a0900382`, `origin/resource-overhead-20261114 @ c046de0d0`)
+- **생성 시각**: `2026-11-27 05:33:47 KST` (`origin/main @ 4689c6797`, `origin/report/data-validity-20261124 @ 67cf3f901`, `origin/resource-overhead-20261114 @ c046de0d0`)
 - **분류 체계 (5종 엄격 적용)**: `입증 완료` | `부분 입증` | `입증 실패` | `추가 실험 불필요` | `추가 실험 필요`
 - **표기 원칙**: 모든 항목에 **최초 심사 요구사항 원 명칭**을 유지하고, 내부 실험 ID(`revE-noelim`, `batchG-drift50` 등)와 원시 로그 경로를 함께 병기함.
 
