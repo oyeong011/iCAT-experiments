@@ -102,3 +102,16 @@
 - phaseB-run host_pages=5298040 gc_pages=108283 WAF=1.020438
 - ycsb-load [OVERALL], Throughput(ops/sec), 26150.62761506276
 - ycsb-run [OVERALL], Throughput(ops/sec), 59807.034949065666
+
+### batchG-20261126 mixFYF drift50 rep2 — started 2026-11-26T18:34:47+09:00
+- FIO-Fast 1800s -> YCSB-A (load 250000 records + run, 1800s total) -> FIO-Fast 1800s; Table-3 prep; seeds hot/warm/cold=20260912/20261012/20261112; icat_seed=2026111402; module `/home/oy/iCAT/buildoutput/nvmev-drift50.ko`; evidence `/home/oy/iCAT/result/drift50-20261126/raw/mixFYF-drift50-rep2`.
+
+- Finished 2026-11-26T20:06:23+09:00; mixFYF drift50 exit=0; evidence `/home/oy/iCAT/result/drift50-20261126/raw/mixFYF-drift50-rep2`; cleanup attempted.
+- total host_bytes=613555605504 host_pages=149793849 gc_pages=165008351 WAF=2.101570
+- phaseA(test4) host_pages=72001978 gc_pages=64702526 WAF=1.898622
+- phaseB(sqlite-a) host_pages=5789884 gc_pages=223550 WAF=1.038610
+- phaseC(test4) host_pages=72001987 gc_pages=100082275 WAF=2.389993
+- phaseB-load host_pages=452310 gc_pages=115446 WAF=1.255236
+- phaseB-run host_pages=5337574 gc_pages=108104 WAF=1.020253
+- ycsb-load [OVERALL], Throughput(ops/sec), 25339.54996959254
+- ycsb-run [OVERALL], Throughput(ops/sec), 60449.734488541086
