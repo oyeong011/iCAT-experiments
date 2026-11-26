@@ -1,0 +1,24 @@
+11c11
+< [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/greedy-20261125/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+---
+> [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/batchG-20261126/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+17c17
+< [[ "$label" == mixFYF && "$policy" =~ ^(greedy-online|greedy-v4)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+---
+> [[ "$label" == mixFYF && "$policy" =~ ^(drift50|greedygc|bg-v4)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+20c20
+<     greedy-online|greedy-v4) case "$policy" in greedy-online) module="$root/buildoutput/nvmev-greedy-online.ko";; greedy-v4) module="$root/buildoutput/nvmev-abl-v4.ko";; esac;;
+---
+>     drift50|greedygc|bg-v4) case "$policy" in drift50) module="$root/buildoutput/nvmev-drift50.ko";; greedygc) module="$root/buildoutput/nvmev-greedygc.ko";; bg-v4) module="$root/buildoutput/nvmev-abl-v4.ko";; esac;;   # batchG 11-26
+80c80
+< printf '\n### greedy-20261125 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
+---
+> printf '\n### batchG-20261126 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
+128c128
+< [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/greedy-20261125/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+---
+> [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/batchG-20261126/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+134c134
+< if [[ "$policy" == rev[ABCD]-* || "$policy" == abl-* || "$policy" == greedy-* ]]; then   # revD 11-24 / abl, greedy 11-25: pass icat_seed
+---
+> if [[ "$policy" == rev[ABCD]-* || "$policy" == abl-* || "$policy" == greedy-* || "$policy" == drift50 || "$policy" == bg-v4 ]]; then   # batchG 11-26: greedygc has no icat_seed param (WATGC-only)
