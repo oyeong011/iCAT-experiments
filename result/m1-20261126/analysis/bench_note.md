@@ -40,3 +40,14 @@
   - GC 1회: iCAT 91.0 µs, SmartGC 36.3 µs
   - 선택: iCAT 85.8 µs, SmartGC 31.8 µs
 - 본 실행 6회의 ktime 값으로 최종 판정한다.
+
+## 정정 (2026-11-26 07:10): 커널 단기 실행의 SmartGC 값
+- 위 마지막 항목의 SmartGC 값 "GC 36.3 µs, 선택 31.8 µs"는 **틀렸다.**
+- 원인
+  - check-m1.py가 kernel.log와 kernel-final.log를 합쳐 읽는다.
+  - kernel-final.log는 dmesg 버퍼 전체라서 직전 run(iCAT 단기 실행)의 M1PROF 줄을 포함한다.
+- 이 run의 줄만 담은 kernel.log로 다시 계산한 값 (`analysis/check-m1-scoped.py`, `analysis/final_revision/m1_resource.py`)
+  - SmartGC-EQ8: GC 1회 5.34 µs, 선택 1.15 µs, step 1회 551 µs (340회), 보상 98 ns, 버퍼 연산 36–54 ns
+  - iCAT-v4: GC 91.0 µs, 선택 85.8 µs, LEARN 45 ns. 직전 M1 run이 없어서 오염되지 않았고 값이 그대로이다.
+- 유효성 판정(OK)은 kernel.log만으로 다시 검사해도 두 단기 실행 모두 OK이다.
+- checks.tsv의 *_ns_per_call 열은 참고값이다. 본 실행에서도 직전 run의 줄이 섞일 수 있으므로 최종 분석에 쓰지 않는다.
