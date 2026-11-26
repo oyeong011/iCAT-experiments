@@ -115,3 +115,16 @@
 - phaseB-run host_pages=5337574 gc_pages=108104 WAF=1.020253
 - ycsb-load [OVERALL], Throughput(ops/sec), 25339.54996959254
 - ycsb-run [OVERALL], Throughput(ops/sec), 60449.734488541086
+
+### batchG-20261126 mixFYF greedygc rep3 — started 2026-11-26T20:06:38+09:00
+- FIO-Fast 1800s -> YCSB-A (load 250000 records + run, 1800s total) -> FIO-Fast 1800s; Table-3 prep; seeds hot/warm/cold=20260913/20261013/20261113; icat_seed=2026111403; module `/home/oy/iCAT/buildoutput/nvmev-greedygc.ko`; evidence `/home/oy/iCAT/result/greedygc-20261126/raw/mixFYF-greedygc-rep3`.
+
+- Finished 2026-11-26T21:38:14+09:00; mixFYF greedygc exit=0; evidence `/home/oy/iCAT/result/greedygc-20261126/raw/mixFYF-greedygc-rep3`; cleanup attempted.
+- total host_bytes=613748879360 host_pages=149841035 gc_pages=242946037 WAF=2.621359
+- phaseA(test4) host_pages=72001978 gc_pages=90941531 WAF=2.263042
+- phaseB(sqlite-a) host_pages=5837037 gc_pages=680925 WAF=1.116656
+- phaseC(test4) host_pages=72002020 gc_pages=151323581 WAF=3.101657
+- phaseB-load host_pages=452310 gc_pages=482581 WAF=2.066925
+- phaseB-run host_pages=5384727 gc_pages=198344 WAF=1.036835
+- ycsb-load [OVERALL], Throughput(ops/sec), 32666.928002090684
+- ycsb-run [OVERALL], Throughput(ops/sec), 61370.07980786293
