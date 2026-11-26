@@ -1,5 +1,7 @@
 # M1 기존 기법 비교: SmartGC 대 iCAT 최종본 (고컴 검증, 2026-11-25)
 
+> **11-27 추가**: 구간 타이머 빌드로 다시 잰 자원 비용(GC·선택·학습 경과 시간, VmallocUsed 실측)은 `result/m1-20261126-final/m1_final_report.md`에 있다(고컴, 정책당 1회). 이 문서의 "CPU 시간과 GC 수행 시간 미측정" 서술은 그 보고로 대체된다. 커널 CPU 사용 시간은 여전히 측정 불가이다.
+
 - 새 실험은 하지 않았다. 모든 측정값은 승컴 11월 mixY 10시간 원시 디렉터리에서 고컴이 다시 계산했다(`analysis/final_revision/m1_smartgc.py`).
   - 출력: `result/final-revision-analysis/m1_*.csv`
 - 계산값의 근거는 `report/revision-20261123-gocom/resource_overhead_final.md` §3이다. 모듈 DWARF 정보에서 gdb `sizeof`로 직접 읽은 값이다.

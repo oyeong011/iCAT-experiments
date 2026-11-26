@@ -4,3 +4,4 @@
 Mechanism: empty placeholder directories raw/mixY-<pol>-rep<n> were created so that queue-m1.sh line 50 logs "skip existing"; they
 contain no data and are removed after the queue prints "main queue finished". The running run and the queue process were not touched.
 Consequence: n=1 per policy in this batch -> no statistics (n<3 rule); per-call costs and memory are reported per run, WAF as single values.
+2026-11-27T00:52:29+09:00: main queue finished 00:51:12; the 4 empty placeholder dirs were removed (rmdir, all empty). Runs stay CANCELLED.

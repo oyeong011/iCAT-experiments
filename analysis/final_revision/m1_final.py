@@ -151,6 +151,46 @@ for r in RUNS:
                        unit='ns, s, ms', kind='measured', reps=REPS))
 wcsv('kernel_elapsed_time.csv', ke)
 
+# ---------------- independent cross-check of the M1PROF counters ----------------
+# (a) when=stop vs when=remove (same counters printed twice; remove comes after the run) in kernel-final.log,
+# (b) M1PROF GC calls per partition vs gc_count in final-control.txt (FTL counter, independent of the timer code).
+xc = []
+for r in RUNS:
+    d = C / 'raw' / r
+    kf = (d / 'kernel-final.log').read_text(errors='replace')
+    pat = r'M1PROF when={} clock=\S+ part=(\d) region=(\S+) calls=(\d+) ns=(\d+) max_ns=(\d+)'
+    stop = {(p, g): (c, n) for p, g, c, n, _ in re.findall(pat.format('stop'), (d / 'kernel.log').read_text(errors='replace'))}
+    rem = {(p, g): (c, n) for p, g, c, n, _ in re.findall(pat.format('remove'), kf)}
+    fcp = {int(p): int(c) for p, c in re.findall(r'^part=(\d) .*?gc_count=(\d+)', (d / 'final-control.txt').read_text(), re.M)}
+    for (p, g), (c, n) in sorted(stop.items()):
+        rc = rem.get((p, g))
+        xc.append(dict(run=r, policy=pol(r), part=p, region=g, stop_calls=c, remove_calls=rc[0] if rc else 'missing', stop_equals_remove=bool(rc) and rc == (c, n),
+                       final_control_gc_count=fcp.get(int(p), '') if g == 'GC' else '', gc_calls_equal_gc_count=(int(c) == fcp.get(int(p))) if g == 'GC' else ''))
+wcsv('crosscheck_m1prof.csv', xc)
+
+# ---------------- WAF and run integrity (n=1 each: single values, no CI / test) ----------------
+wi = []
+for r in RUNS:
+    d = C / 'raw' / r; fc = (d / 'final-control.txt').read_text()
+    h, g = map(int, re.search(r'host_pages=(\d+) gc_pages=(\d+)', fc.splitlines()[0]).groups())
+    parts = re.findall(r'^part=\d host_pages=(\d+) gc_pages=(\d+) gc_count=(\d+)', fc, re.M)
+    sg = re.findall(r'^smartgc part=\d .*?absorbed=(\d+) evicted=(\d+).*?nand_pages=(\d+)', fc, re.M)
+    klog = (d / 'kernel.log').read_text(errors='replace')
+    fio_err = sum(1 for j in d.glob('phase-S*.json') if any(x['error'] for x in json.loads(j.read_text())['jobs']))
+    fb = list(d.glob('filebench-S*.txt'))
+    wi.append(dict(run=r, policy=pol(r), exit=(d / 'exit-code.txt').read_text().strip(), host_pages=h, gc_pages=g, host_TB=round(h * 4096 / 1e12, 3),
+                   waf_two_paths_equal=(h, g) == (sum(int(x[0]) for x in parts), sum(int(x[1]) for x in parts)),
+                   waf_1_plus_gc_over_host=round(1 + g / h, 6),
+                   absorbed=sum(int(x[0]) for x in sg) if sg else '', evicted=sum(int(x[1]) for x in sg) if sg else '',
+                   nand_pages=sum(int(x[2]) for x in sg) if sg else '',
+                   waf_nand=round(sum(int(x[2]) for x in sg) / h, 6) if sg else round(1 + g / h, 6),
+                   gc_count=sum(int(x[2]) for x in parts), fio_phases=len(list(d.glob('phase-S*.json'))), fio_phases_with_error=fio_err,
+                   filebench_phases=len(fb), filebench_io_summary_ok=sum('IO Summary' in f.read_text(errors='replace') for f in fb),
+                   kernel_errors=len(re.findall(r'BUG[: ]|Oops|Call Trace|soft lockup|hung_task|blocked for more than', klog)),
+                   chmodel_warn_lines=klog.count('Need to increase array size'), ycsb='not applicable (mixY has no YCSB / SQLite phase)',
+                   note='n=1: single value, no CI or significance test'))
+wcsv('waf_and_integrity.csv', wi)
+
 # ---------------- userspace CPU time (separate table; NOT compared 1:1 with kernel ktime) ----------------
 us = []
 bs = C / 'analysis' / 'bench_summary.tsv'

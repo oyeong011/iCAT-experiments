@@ -1,0 +1,16 @@
+policy,item,formula,bytes,kB,lifetime,policy_specific,kind
+iCAT-v4,maptbl,8 B x tt_pgs(524288) x 4,16777216,16384.0,init: conv_init_ftl vmalloc; free: conv_remove_namespace vfree,no,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+iCAT-v4,rmap,8 B x tt_pgs x 4,16777216,16384.0,same as maptbl,no,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+iCAT-v4,lines,sizeof(struct line)=48 x 8192 x 4,1572864,1536.0,init_lines vmalloc; free at remove,size differs,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+iCAT-v4,conv_ftls,sizeof(struct conv_ftl)=2960 x 4 (incl. watgc_v2_tuner 2712 B = iCAT learner state),11840,11.6,namespace init; free at remove,size differs,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+iCAT-v4,TOTAL vmalloc by conv_ftl.c,,35139136,34315.6,,,calculated
+SmartGC-EQ8,maptbl,8 B x tt_pgs(524288) x 4,16777216,16384.0,init: conv_init_ftl vmalloc; free: conv_remove_namespace vfree,no,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+SmartGC-EQ8,rmap,8 B x tt_pgs x 4,16777216,16384.0,same as maptbl,no,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+SmartGC-EQ8,lines,sizeof(struct line)=72 x 8192 x 4,2359296,2304.0,init_lines vmalloc; free at remove,size differs,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+SmartGC-EQ8,conv_ftls,sizeof(struct conv_ftl)=3120 x 4 (incl. struct smartgc 232 B; tuner 2640 B present but unused),12480,12.2,namespace init; free at remove,size differs,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+SmartGC-EQ8,Q table,8 B x 10000 states x 2 actions x 4,640000,625.0,smartgc_init vzalloc; vfree in smartgc teardown at remove,yes,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+SmartGC-EQ8,cand,32 B x 8192 x 4,1048576,1024.0,smartgc_init,yes,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+SmartGC-EQ8,sort_key,8 B x 8192 x 4,262144,256.0,smartgc_init,yes,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+SmartGC-EQ8,drain list [GC buffer],4 B x 8192 x 4,131072,128.0,smartgc_init,yes,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+SmartGC-EQ8,buffered bitmap [GC buffer],tt_pgs/8 B x 4,262144,256.0,smartgc_init,yes,calculated (gdb sizeof on the built .ko x allocation formula in conv_ftl.c)
+SmartGC-EQ8,TOTAL vmalloc by conv_ftl.c,,38270144,37373.2,,,calculated

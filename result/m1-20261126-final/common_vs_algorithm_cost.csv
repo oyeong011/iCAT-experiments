@@ -1,0 +1,13 @@
+run,policy,category,total_s,ms_per_host_GiB,ns_per_gc,derivation,kind,note,clock
+mixY-m1-icat-v4-rep1,iCAT-v4,"NVMeVirt common processing (I/O dispatch, NAND timing model, DMA copy)",,,,not instrumented,not measured,dispatcher kthreads busy-poll CPU 1-2 at ~100 % for every policy; /proc/stat cannot separate it,ktime elapsed (not CPU time)
+mixY-m1-icat-v4-rep1,iCAT-v4,"FTL common write/read path (mapping update, line allocation)",,,,not instrumented,not measured,,ktime elapsed (not CPU time)
+mixY-m1-icat-v4-rep1,iCAT-v4,"GC common work (page copy, erase, bookkeeping)",1187.337,153.879,11280.2,GC - SELECT - LEARN,derived,"includes nested timer overhead (~2 regions) and depends on victim valid pages, which differs between policies",ktime elapsed (not CPU time)
+mixY-m1-icat-v4-rep1,iCAT-v4,victim selection (policy),9162.437,1187.456,87046.8,SELECT (CAT score scan over all lines),measured,,ktime elapsed (not CPU time)
+mixY-m1-icat-v4-rep1,iCAT-v4,iCAT learning / score update,4.295,0.557,40.8,LEARN = watgc_v2_on_gc,measured,,ktime elapsed (not CPU time)
+mixY-m1-smartgc-eq8-rep1,SmartGC-EQ8,"NVMeVirt common processing (I/O dispatch, NAND timing model, DMA copy)",,,,not instrumented,not measured,dispatcher kthreads busy-poll CPU 1-2 at ~100 % for every policy; /proc/stat cannot separate it,ktime elapsed (not CPU time)
+mixY-m1-smartgc-eq8-rep1,SmartGC-EQ8,"FTL common write/read path (mapping update, line allocation)",,,,not instrumented,not measured,,ktime elapsed (not CPU time)
+mixY-m1-smartgc-eq8-rep1,SmartGC-EQ8,"GC common work (page copy, erase, bookkeeping)",1736.485,312.339,16747.5,GC - SELECT - REWARD,derived,"includes nested timer overhead (~3 regions) and depends on victim valid pages, which differs between policies",ktime elapsed (not CPU time)
+mixY-m1-smartgc-eq8-rep1,SmartGC-EQ8,"victim selection (policy, excluding learning step)",56.314,10.129,543.1,SELECT - LEARN,derived,,ktime elapsed (not CPU time)
+mixY-m1-smartgc-eq8-rep1,SmartGC-EQ8,"SmartGC learning step (Q update, state scoring, candidate sort)",47.556,8.554,458.6,LEARN = smartgc_step,measured,,ktime elapsed (not CPU time)
+mixY-m1-smartgc-eq8-rep1,SmartGC-EQ8,SmartGC reward (on erase),9.174,1.65,88.5,REWARD = smartgc_on_erase,measured,,ktime elapsed (not CPU time)
+mixY-m1-smartgc-eq8-rep1,SmartGC-EQ8,SmartGC GC buffer on write path (absorb + unbuffer + drain),473.107,85.097,4562.9,"BUF_ABSORB + BUF_UNBUF + BUF_DRAIN (drain contains part of the unbuffer calls: upper bound, double count possible)",measured (upper bound),outside do_gc; policy-specific cost on the host write path,ktime elapsed (not CPU time)
