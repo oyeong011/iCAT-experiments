@@ -1,0 +1,48 @@
+11c11
+< [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/batchG-20261126/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+---
+> [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/arm47-20261127/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+17c17
+< [[ "$label" == mixFYF && "$policy" =~ ^(drift50|greedygc|bg-v4)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+---
+> [[ "$label" == mixFYF && "$policy" =~ ^(arm47)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+80c80
+< printf '\n### batchG-20261126 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
+---
+> printf '\n### arm47-20261127 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
+128c128
+< [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/batchG-20261126/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+---
+> [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/arm47-20261127/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+4c4
+< source /home/oy/iCAT/result/batchG-20261126/inputs/env-seungcom.sh
+---
+> source /home/oy/iCAT/result/arm47-20261127/inputs/env-seungcom.sh
+13c13
+<    grep -qxF "$(sha256sum "$1" | cut -d' ' -f1)  $1" <(sed 's#  buildoutput/#  /home/oy/iCAT/buildoutput/#' /home/oy/iCAT/result/batchG-20261126/modules.sha256) || return 1
+---
+>    grep -qxF "$(sha256sum "$1" | cut -d' ' -f1)  $1" <(sed 's#  buildoutput/#  /home/oy/iCAT/buildoutput/#' /home/oy/iCAT/result/arm47-20261127/modules.sha256) || return 1
+2c2
+< # batchG-20261126 (copy of greedy-20261125 run-one.sh; paths + per-experiment raw dir). usage: run-one.sh <policy> <rep> [smoke]
+---
+> # arm47-20261127 (copy of batchG-20261126 run-one.sh; paths only). usage: run-one.sh <policy> <rep> [smoke]
+4c4
+< C=/home/oy/iCAT/result/batchG-20261126
+---
+> C=/home/oy/iCAT/result/arm47-20261127
+6c6
+< case $pol in drift50) R=/home/oy/iCAT/result/drift50-20261126/raw;; greedygc) R=/home/oy/iCAT/result/greedygc-20261126/raw;; bg-v4) R=$C/raw;; *) exit 2;; esac
+---
+> case $pol in arm47) R=$C/raw;; *) exit 2;; esac
+14c14
+<     bash $C/runner-batchG.sh mixFYF "$pol" "$rep" > $C/console/$tag.console.txt 2>&1
+---
+>     bash $C/runner-arm47.sh mixFYF "$pol" "$rep" > $C/console/$tag.console.txt 2>&1
+2c2
+< """batchG-20261126 post-run check (copy of revD-20261124, paths only) (runs between measurements only). usage: check-run.py <run dir>
+---
+> """arm47-20261127 post-run check (copy of revD-20261124, paths only) (runs between measurements only). usage: check-run.py <run dir>
+9c9
+< d = Path(sys.argv[1]).resolve(); C = Path('/home/oy/iCAT/result/batchG-20261126')
+---
+> d = Path(sys.argv[1]).resolve(); C = Path('/home/oy/iCAT/result/arm47-20261127')
