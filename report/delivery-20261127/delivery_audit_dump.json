@@ -1,0 +1,102 @@
+{
+  "generated_at": "2026-11-27 01:08:16 KST",
+  "commits": {
+    "main": "2ccac44b7",
+    "gocom": "2a0900382",
+    "res": "c046de0d0"
+  },
+  "n_valid": 77,
+  "n_running": 0,
+  "batchG_complete": true,
+  "m1_complete": true,
+  "batchG_stats": {
+    "greedygc": {
+      "n": 3,
+      "mean": 2.6293428772722987,
+      "sd": 0.006924216418478676,
+      "ci_lo": 2.612142170142835,
+      "ci_hi": 2.6465435844017624
+    },
+    "drift50": {
+      "n": 3,
+      "mean": 2.128811950910486,
+      "sd": 0.02988356492369116,
+      "ci_lo": 2.0545770603220057,
+      "ci_hi": 2.2030468414989666
+    },
+    "v4": {
+      "n": 3,
+      "mean": 2.1104717905401,
+      "sd": 0.02446226769022144,
+      "ci_lo": 2.049704148855889,
+      "ci_hi": 2.171239432224311
+    }
+  },
+  "m1_icat_v4": {
+    "parts_parsed": 4,
+    "gc_calls": 105258734,
+    "gc_s": 10354.068862352,
+    "gc_us_per_call": 98.36778829538268,
+    "gc_max_us": 427.552,
+    "gc_ms_per_gib": 1341.8922884566014,
+    "select_calls": 105258734,
+    "select_s": 9162.437468482,
+    "select_us_per_call": 87.04681426704221,
+    "select_max_us": 371.827,
+    "learn_calls": 105258734,
+    "learn_s": 4.294781089,
+    "learn_us_per_call": 0.040802135136833395,
+    "learn_ns_per_call": 40.80213513683339,
+    "reward_calls": 0,
+    "reward_s": 0.0,
+    "reward_ns_per_call": null,
+    "buf_upper_s": 0.0,
+    "buf_absorbed": 0,
+    "buf_evicted": 0,
+    "chmodel_warn": 0,
+    "waf_nand": 3.33046446329705,
+    "vm_pre_kb": 47076.0,
+    "vm_delta_load1s_kb": 34848.0,
+    "vm_delta_load1s_bytes": 35684352,
+    "vm_delta_loaded_kb": 34704.0,
+    "vm_delta_post_kb": 16.0,
+    "host_tb": 8.285014290432
+  },
+  "m1_smartgc_eq8": {
+    "parts_parsed": 4,
+    "gc_calls": 103686126,
+    "gc_s": 1849.528443736,
+    "gc_us_per_call": 17.837762052523786,
+    "gc_max_us": 2927.41,
+    "gc_ms_per_gib": 332.6721406303319,
+    "select_calls": 103686126,
+    "select_s": 103.869980713,
+    "select_us_per_call": 1.0017731852861393,
+    "select_max_us": 2912.271,
+    "learn_calls": 48751,
+    "learn_s": 47.555507327,
+    "learn_us_per_call": 975.4775763984328,
+    "learn_ns_per_call": 975477.5763984328,
+    "reward_calls": 103686126,
+    "reward_s": 9.173812624,
+    "reward_ns_per_call": 88.47676133642027,
+    "buf_upper_s": 473.106561826,
+    "buf_absorbed": 30678607,
+    "buf_evicted": 18157450,
+    "chmodel_warn": 22069,
+    "waf_nand": 4.553193641139604,
+    "vm_pre_kb": 47140.0,
+    "vm_delta_load1s_kb": 37752.0,
+    "vm_delta_load1s_bytes": 38658048,
+    "vm_delta_loaded_kb": 37720.0,
+    "vm_delta_post_kb": 16.0,
+    "host_tb": 5.969589280768
+  },
+  "verdict_counts": {
+    "입증 완료": 14,
+    "부분 입증": 17,
+    "입증 실패": 7,
+    "추가 실험 불필요": 9,
+    "추가 실험 필요": 0
+  }
+}
