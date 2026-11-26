@@ -37,3 +37,16 @@
 - phaseB-run host_pages=5430722 gc_pages=98534 WAF=1.018144
 - ycsb-load [OVERALL], Throughput(ops/sec), 26435.444644178915
 - ycsb-run [OVERALL], Throughput(ops/sec), 59561.622018697126
+
+### arm47-20261127 mixFYF arm47 rep3 — started 2026-11-27T03:53:45+09:00
+- FIO-Fast 1800s -> YCSB-A (load 250000 records + run, 1800s total) -> FIO-Fast 1800s; Table-3 prep; seeds hot/warm/cold=20260913/20261013/20261113; icat_seed=2026111403; module `/home/oy/iCAT/buildoutput/nvmev-arm47.ko`; evidence `/home/oy/iCAT/result/arm47-20261127/raw/mixFYF-arm47-rep3`.
+
+- Finished 2026-11-27T05:25:19+09:00; mixFYF arm47 exit=0; evidence `/home/oy/iCAT/result/arm47-20261127/raw/mixFYF-arm47-rep3`; cleanup attempted.
+- total host_bytes=613552050176 host_pages=149792981 gc_pages=147917287 WAF=1.987478
+- phaseA(test4) host_pages=72001981 gc_pages=55730097 WAF=1.774008
+- phaseB(sqlite-a) host_pages=5789019 gc_pages=169302 WAF=1.029245
+- phaseC(test4) host_pages=72001981 gc_pages=92017888 WAF=2.277991
+- phaseB-load host_pages=452310 gc_pages=73241 WAF=1.161927
+- phaseB-run host_pages=5336709 gc_pages=96061 WAF=1.018000
+- ycsb-load [OVERALL], Throughput(ops/sec), 27648.750276487503
+- ycsb-run [OVERALL], Throughput(ops/sec), 63399.67218096862
