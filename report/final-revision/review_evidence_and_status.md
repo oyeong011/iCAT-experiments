@@ -26,11 +26,13 @@
 | **M3** 온라인 기준선 비교 | revA Random Selection. 고컴 | `report/online-greedy-audit.md`, `M4_statistics_final.md` | `result/revA-20261114/raw/` | 3 | 6/6 유효 | 반영: §6.4 표 10 |
 | | revC 원래 iCAT (온라인 학습 원 구현). 고컴 | `report/final-revision/revC_E2_E6_E7_final.md` | `result/revC-20261124/raw/mixFYF-online-*` | 3 | 3/3 유효 | 반영: §6.4 표 10·11 |
 | | 승컴 greedy-20261125 Online Greedy (대조군 revD-v4, 다른 배치) | `result/greedy-20261125-verify/verify.md`, `report/online-greedy-audit.md` | origin/main `result/greedy-20261125/raw/` | 3 | 3/3 유효, 고컴 재계산 일치, 규칙 재계산 2512/2513 일치 (1건 반올림 동률). V4와 구분되지 않음 | 반영: 표 10 D′ |
+| | **승컴 batchG Greedy GC** (학습 없음, 같은 배치 V4 3회) | `result/batchG-20261126-verify/verify.md`, 승컴 `result/batchG-20261126-analysis/conclusion.md` | origin/main `result/greedygc-20261126/raw/`, `result/batchG-20261126/raw/` | 3 | 9/9 유효, 고컴 재계산 일치. +0.519 [+0.463, +0.574], Holm 0.0013. Greedy GC가 FIO p99는 더 낮음 | 반영: 표 10 배치 G |
 | | Periodic Switching | — | — | 0 | **실행하지 않음** | 미반영. 논문에서 주장하지 않는다 |
 | **M4** 반복과 통계 검증 | revA·revB·revC·revD 전체 재계산 | `report/final-revision/M4_statistics_final.md`, `M4_validity_data.md`, `result/final-revision-analysis/m4/*.csv` | 위 원시 디렉터리 44개 | 정책당 3 (revB V4·Arm60은 1) | 44/44 유효, 제외 0 | 반영: §6.4 (Welch CI, Holm 각주). revB n=1은 쓰지 않음 |
 | **M5** 자원 효율 (메모리, CPU, 지연) | revA 지연·학습 경과 시간 (고컴), revC 추가, SmartGC 메모리 | `report/final-revision/M5_resource_comparison.md`, `result/final-revision-analysis/{cpu_overhead,latency_comparison,memory_overhead,m5_stats}.csv` | revA·revC 원시 로그, 모듈 DWARF | 3 | 유효 | 반영: §6.3, §7 "자원 비용". CPU 시간과 GC 수행 시간은 **미측정**이라고 명시 |
 | **M6** 적응 성능, 파라미터 근거 | revA·revC·revD 적응 지표. revC 제거 문턱 10/15/25 %, 후보 45/60 | `report/final-revision/M6_adaptation_parameters.md`, `revC_E2_E6_E7_final.md`, `result/final-revision-analysis/{adaptation_*,parameter_sensitivity}.csv` | 커널 로그 (`kernel*.log`, `kernel-snapshots/`) | 3 | 유효 | 반영: §6.4 표 10·11, 한계 4 |
 | | **revE 감지 문턱 12.5 %**. 고컴 | `report/final-revision/revE_final.md` | `result/revE-20261125/raw/` | 3 | 유효. +0.072 [+0.012, +0.132], Holm p=0.091 | 반영: 표 10·11 배치 E |
+| | **승컴 batchG 감지 문턱 50 %** | `result/batchG-20261126-verify/verify.md` | origin/main `result/drift50-20261126/raw/` | 3 | 유효, 고컴 재계산 일치. +0.018 [−0.045, +0.081] 구분되지 않음. 리셋 11건 모두 50 % 초과 | 반영: 표 10 배치 G |
 | | 판단 구간 512 MiB 민감도 | `result/revE-20261125/window_plan.md` (계획만) | — | 0 | **승인 안 됨, 실행 안 함** | 한계 4에 "미측정 경험적 설정"으로 명시 |
 | **M7** 환경 일반화 | 실험 없음. 실행 모듈 설정 정리 | `report/final-revision/M7_scope_and_limitations.md` | `revC-src/ssd_config.h`, 러너, `environment.txt` | — | — | 반영: §7 "적용 범위", 한계 5 |
 
