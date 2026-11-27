@@ -14770,3 +14770,7 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - mixFYF 78 runs recomputed from raw (승컴 origin/main 4689c6797 via git archive, read-only): 78/78 valid, all match published; 622 published statistics match.
 - arm47-20261127 (승컴) 고컴 독립 검증 3/3 유효, 일치: result/arm47-20261127-verify/.
 - XlsxWriter 내려받기는 권한 판단에서 거부되어 내려받은 파일을 지움; 표준 라이브러리 차트 작성기(xlsx_chart.py) 사용. Excel/LibreOffice로 열어 보지는 못함(구조·수치 검사만).
+
+## 2026-11-27 12:23 고컴: 결과집 재구성용 용어·캡션·주장 문구 (새 실험 없음)
+- report/final-revision/redesign_support/{TERMINOLOGY_MAP,FIGURE_CAPTIONS,ALLOWED_CLAIMS}.md 작성. 기존 Excel·CSV·원시 경로는 바꾸지 않음.
+- 발견: revA V2와 abl 묶음 끔은 같은 ICAT_VARIANT=2 (abl preregistration 33행) → NoElim+NoSettle로 통일 제안. revA V1 = revD NoDrift (같은 소스). 논문의 맨 'Greedy'(희생 블록 규칙)와 Online Greedy가 겹침. Arm 47 = CAT-Best = CAT-47.
