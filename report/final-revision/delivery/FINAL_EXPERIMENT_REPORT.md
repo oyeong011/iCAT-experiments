@@ -1,8 +1,8 @@
 # iCAT 논문 리비전 최종 종합 실험 보고서 (`FINAL_EXPERIMENT_REPORT.md`)
 
 - **작성 주체**: 집컴 (최종 연구 통합·독립 감사 책임)
-- **작성 시각**: `2026-11-27 08:48:37 KST`
-- **기준 원격 커밋**: 승컴 `origin/main @ 4689c6797` / 고컴 `origin/report/data-validity-20261124 @ 67cf3f901` / 자원 계측 `origin/resource-overhead-20261114 @ c046de0d0`
+- **작성 시각**: `2026-11-27 09:04:29 KST`
+- **기준 원격 커밋**: 승컴 `origin/main @ 4689c6797` / 고컴 `origin/report/data-validity-20261124 @ 3fdb21258` / 자원 계측 `origin/resource-overhead-20261114 @ c046de0d0`
 - **연결 통합 산출물**: [FINAL_REVIEWER_RESPONSE_MATRIX.xlsx](file:///C:/Users/oyeon/orca/iCAT-experiments/report/final-revision/delivery/FINAL_REVIEWER_RESPONSE_MATRIX.xlsx) · [FINAL_FIGURE_CATALOG.md](file:///C:/Users/oyeon/orca/iCAT-experiments/report/final-revision/delivery/FINAL_FIGURE_CATALOG.md) · [FINAL_PAPER_NUMBER_AUDIT.csv](file:///C:/Users/oyeon/orca/iCAT-experiments/report/final-revision/delivery/FINAL_PAPER_NUMBER_AUDIT.csv) · [iCAT_Paper_Figures.xlsx](file:///C:/Users/oyeon/orca/iCAT-experiments/report/paper-figures/iCAT_Paper_Figures.xlsx)
 
 ---

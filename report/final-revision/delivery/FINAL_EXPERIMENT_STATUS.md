@@ -1,7 +1,7 @@
 # 최종 실험 완료 현황 및 입력 자료 수신 상태 (`FINAL_EXPERIMENT_STATUS.md`)
 
-- **작성 시각**: `2026-11-27 08:48:37 KST`
-- **기준 커밋**: 승컴 `origin/main @ 4689c6797` / 고컴 `origin/report/data-validity-20261124 @ 67cf3f901` / 자원 계측 `origin/resource-overhead-20261114 @ c046de0d0`
+- **작성 시각**: `2026-11-27 09:04:29 KST`
+- **기준 커밋**: 승컴 `origin/main @ 4689c6797` / 고컴 `origin/report/data-validity-20261124 @ 3fdb21258` / 자원 계측 `origin/resource-overhead-20261114 @ c046de0d0`
 
 ## 1. 전체 리비전 핵심 실험 완료 현황 (**80/80 VALID, RUNNING 0건**)
 
@@ -20,15 +20,15 @@
 | **보조 검증 셋** (`resource-v124`, `3×60` 스윕, 레거시 Greedy 9종) | 승컴 | FIO-Fast 30m / 60-arm / x1 9종 | 246 / 246 | M5, M6-2, M3-5 | 집컴 | **완료·검증** |
 | **제외된 무효 실행** (`SQLITE_FULL` 224+건, `mixG` 34건, `ENOSPC` 1건, 10월 `mixY` 이상치) | 양 호스트 | 구 `mixR`/전환/`mixY` | 0 / 260+ | M4-7 | 고컴·집컴 | **엄격 제외 (재사용 금지)** |
 
-## 2. 고컴·승컴 신규 통합 입력 파일 수신 상태 (`0/5` 고컴, `0/5` 승컴)
+## 2. 고컴·승컴 신규 통합 입력 파일 수신 상태 (`5/5` 고컴, `0/5` 승컴)
 
 | 소속 PC | 지시 입력 파일 | 원격 브랜치 | 수신 상태 | 경로 / 비고 |
 |---|---|---|---|---|
-| 고컴 | `iCAT_Complete_Experiment_Results.xlsx` | `origin/report/data-validity-20261124` (`67cf3f901`) | **미푸시 대기 (WAITING_PUSH)** | `아직 원격에 없음 — push 감지 즉시 교차검증 예정` |
-| 고컴 | `EXPERIMENT_CATALOG.md` | `origin/report/data-validity-20261124` (`67cf3f901`) | **미푸시 대기 (WAITING_PUSH)** | `아직 원격에 없음 — push 감지 즉시 교차검증 예정` |
-| 고컴 | `EXPERIMENT_RESULT_SUMMARY.md` | `origin/report/data-validity-20261124` (`67cf3f901`) | **미푸시 대기 (WAITING_PUSH)** | `아직 원격에 없음 — push 감지 즉시 교차검증 예정` |
-| 고컴 | `FIGURE_CATALOG.md` | `origin/report/data-validity-20261124` (`67cf3f901`) | **미푸시 대기 (WAITING_PUSH)** | `아직 원격에 없음 — push 감지 즉시 교차검증 예정` |
-| 고컴 | `DATA_PROVENANCE.csv` | `origin/report/data-validity-20261124` (`67cf3f901`) | **미푸시 대기 (WAITING_PUSH)** | `아직 원격에 없음 — push 감지 즉시 교차검증 예정` |
+| 고컴 | `iCAT_Complete_Experiment_Results.xlsx` | `origin/report/data-validity-20261124` (`3fdb21258`) | **수신 완료** | `report/final-revision/iCAT_Complete_Experiment_Results.xlsx` |
+| 고컴 | `EXPERIMENT_CATALOG.md` | `origin/report/data-validity-20261124` (`3fdb21258`) | **수신 완료** | `report/final-revision/EXPERIMENT_CATALOG.md` |
+| 고컴 | `EXPERIMENT_RESULT_SUMMARY.md` | `origin/report/data-validity-20261124` (`3fdb21258`) | **수신 완료** | `report/final-revision/EXPERIMENT_RESULT_SUMMARY.md` |
+| 고컴 | `FIGURE_CATALOG.md` | `origin/report/data-validity-20261124` (`3fdb21258`) | **수신 완료** | `report/final-revision/FIGURE_CATALOG.md` |
+| 고컴 | `DATA_PROVENANCE.csv` | `origin/report/data-validity-20261124` (`3fdb21258`) | **수신 완료** | `report/final-revision/DATA_PROVENANCE.csv` |
 | 승컴 | `final_independent_validation.md` | `origin/main` (`4689c6797`) | **미푸시 대기 (WAITING_PUSH)** | `아직 원격에 없음 — push 감지 즉시 교차검증 예정` |
 | 승컴 | `final_raw_data_validation.csv` | `origin/main` (`4689c6797`) | **미푸시 대기 (WAITING_PUSH)** | `아직 원격에 없음 — push 감지 즉시 교차검증 예정` |
 | 승컴 | `final_statistical_validation.csv` | `origin/main` (`4689c6797`) | **미푸시 대기 (WAITING_PUSH)** | `아직 원격에 없음 — push 감지 즉시 교차검증 예정` |

@@ -24,6 +24,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import openpyxl
+from openpyxl.chart import BarChart, Reference
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 
@@ -265,6 +266,14 @@ def main():
             "Proposed_Fix_Do_Not_Edit_Draft_Directly": "Keep legacy fig2 omitted from submission (already excluded)",
             "Raw_Evidence_Path": "report/final-robustness-20261126/figure_robustness.csv",
         },
+        {
+            "Audit_ID": "NA-17", "Target_Source": "GoCom Complete Excel & 5 Catalog Files (3fdb21258)", "Location": f"{REF_GOCOM}@{c_gocom}:report/final-revision/iCAT_Complete_Experiment_Results.xlsx",
+            "Metric_or_Item": "17 sheets, 15 native charts, 78 mixFYF runs (312 WAF cells) + 2 M1 runs + 33 direct/same-host contrasts", "Reported_Value": "78 mixFYF + 2 M1 runs, 622 published stats, 0 crosscheck mismatches",
+            "Verified_Raw_Value": "78/78 mixFYF (0/312 WAF mismatches) + 2/2 M1 (0 mismatches) + 33/33 contrasts (0 mismatches) + 0 Excel errors; earlier databook v2 errata (F6 unit, F3 blank p/Holm, D' sign) resolved in Complete Excel",
+            "Status": "MATCH", "Severity": "INFO",
+            "Proposed_Fix_Do_Not_Edit_Draft_Directly": "GoCom 5/5 input files verified PASS; note Complete Excel has not been visually rendered in LibreOffice/Excel on GoCom (OOXML & cached chart values verified PASS)",
+            "Raw_Evidence_Path": f"{REF_GOCOM}@{c_gocom}:report/final-revision/complete-results/",
+        },
     ]
     write_csv(OUT_DIR / "FINAL_PAPER_NUMBER_AUDIT.csv", list(audit_rows[0].keys()), audit_rows)
     print(f"Wrote FINAL_PAPER_NUMBER_AUDIT.csv ({len(audit_rows)} rows)")
@@ -414,6 +423,86 @@ def main():
             ws5.cell(idx_v, c, val)
     style_sheet(ws5, r_start + 1, r_start + 1 + len(val_rows), 1, len(v_cols))
     autofit(ws5, max_w=46)
+
+    # Sheet 6: All_Experiments_Summary (Purpose, Target, Conditions, n, Mean WAF, SD, 95% CI + Native Chart)
+    ws6 = wb.create_sheet("All_Experiments_Summary")
+    ws6["A1"] = "전체 검증 실험 요약표 (실험 목적 · 비교 대상 · 실행 조건 · 반복 수 · 평균 WAF · SD · 95% CI · 네이티브 차트)"
+    ws6["A1"].font = Font(name="Calibri", size=12, bold=True, color="1F3864")
+    ws6["A2"] = f"기준: {n_valid}/{n_total} VALID (호스트·배치 엄격 분리, n<3 통계 미표시) | 연동 통합본: GoCom iCAT_Complete_Experiment_Results.xlsx (17시트/15차트) & Home iCAT_Paper_Figures.xlsx (21시트)"
+    ws6["A2"].font = Font(name="Calibri", size=9.5, italic=True, color="444444")
+
+    # Group val_rows by (Campaign, Policy) preserving order
+    grp_order, grp_vals = [], defaultdict(list)
+    for vr in val_rows:
+        key = (vr["Campaign"], vr["Policy"])
+        if key not in grp_vals:
+            grp_order.append(key)
+        grp_vals[key].append(vr)
+
+    purp_map = {
+        "revA-20261114": ("M3-1/M2-2/M2-3 무작위·묶음·변화감지 기준선 검증", "동일배치 revA-v4"),
+        "revB-20261122": ("M2-1/M2-2 후보제거·정착 예비 검증 (교차배치)", "revB-v4 (n=1, revE로 대체)"),
+        "revC-20261124": ("M3-2 원 iCAT·M6-1 제거문턱·M6-2 60후보 검증", "동일배치 revC-v4"),
+        "revD-20261124": ("M2-3 변화감지·M2-5 부분 vs 전체 복원 검증", "동일배치 revD-v4"),
+        "abl-20261125": ("M2-2 4기능 묶음 재현·M2-6 할인계수 검증", "동일배치 abl-v4"),
+        "revE-20261125": ("M2-1 후보제거 단독·M6-3 감지문턱 12.5% 검증", "동일배치 revE-v4"),
+        "greedy-20261125": ("M3-3 단순 Online Greedy 대비 검증 (간접)", "승컴 revD-v4 / abl-v4 (다른 배치)"),
+        "batchG-20261126": ("M3-5 Greedy GC·M6-3 감지문턱 50% 검증", "동일배치 batchG-v4"),
+        "arm47-20261127": ("고정 Arm 47 (1.987) 재현성 Robustness 검증", "승컴 bg-v4 (간접) / 고컴 n=1 참고"),
+        "m1-20261126": ("M1/M5 SmartGC-EQ8 vs iCAT-v4 자원·WAF 비교", "동일환경 n=1 (통계 없음)"),
+    }
+    import math as _m
+    def _t95_df2(vals):
+        n = len(vals)
+        mean = sum(vals) / n
+        if n < 2:
+            return mean, None, None, None
+        sd = _m.sqrt(sum((x - mean) ** 2 for x in vals) / (n - 1))
+        if n < 3:
+            return mean, sd, None, None
+        half = 4.302652729911275 * sd / _m.sqrt(n)
+        return mean, sd, mean - half, mean + half
+
+    ae_hdr = ["Campaign", "Policy", "Experiment_Purpose", "Comparison_Target", "Host_and_Condition", "n", "Mean_WAF", "SD", "CI95_Lo", "CI95_Hi", "Stat_Status"]
+    for c, h in enumerate(ae_hdr, 1):
+        ws6.cell(4, c, h)
+    ae_rows = []
+    for camp, pol in grp_order:
+        items = grp_vals[(camp, pol)]
+        wafs = [float(x["WAF_nand"] if camp == "m1-20261126" else x["WAF_Recalc"]) for x in items]
+        mean, sd, lo, hi = _t95_df2(wafs)
+        purp, tgt = purp_map.get(camp, ("", ""))
+        host_lbl = "GoCom (Ryzen)" if "B550M" in items[0]["Host"] else "SeungCom (i7)"
+        cond = f"{host_lbl} | {items[0]['Workload']}"
+        st_lbl = "n=3 (95% t-CI)" if len(wafs) >= 3 else f"n={len(wafs)} (NO STAT)"
+        ae_rows.append([
+            camp, pol, purp, tgt, cond, len(wafs), round(mean, 6),
+            round(sd, 6) if sd is not None else "N/A (n<2)",
+            round(lo, 6) if lo is not None else "NO CI (n<3)",
+            round(hi, 6) if hi is not None else "NO CI (n<3)",
+            st_lbl,
+        ])
+    for r_i, row in enumerate(ae_rows, 5):
+        for c_i, v in enumerate(row, 1):
+            ws6.cell(r_i, c_i, v)
+    style_sheet(ws6, 4, 4 + len(ae_rows), 1, len(ae_hdr), wrap_cols={3, 4, 5})
+    autofit(ws6, max_w=42)
+
+    # Native editable Excel BarChart for mixFYF Mean WAF across all groups
+    ch = BarChart()
+    ch.type = "col"
+    ch.title = "Verified Mean WAF Across All Revision Experiments (Lower is Better; Host/Batch Separated)"
+    ch.y_axis.title = "Mean WAF / WAF_nand"
+    ch.x_axis.title = "Policy Group"
+    data_ref = Reference(ws6, min_col=7, min_row=4, max_row=4 + len(ae_rows))
+    cats_ref = Reference(ws6, min_col=2, min_row=5, max_row=4 + len(ae_rows))
+    ch.add_data(data_ref, titles_from_data=True)
+    ch.set_categories(cats_ref)
+    ch.series[0].graphicalProperties.solidFill = "1F5A96"
+    ch.legend = None
+    ch.width = 28
+    ch.height = 13
+    ws6.add_chart(ch, f"A{4 + len(ae_rows) + 3}")
 
     xlsx_out = OUT_DIR / "FINAL_REVIEWER_RESPONSE_MATRIX.xlsx"
     wb.save(xlsx_out)
@@ -736,7 +825,71 @@ def main():
 """
     (OUT_DIR / "FINAL_DELIVERY_CHECKLIST.md").write_text(chk_md, encoding="utf-8")
     print("Wrote FINAL_DELIVERY_CHECKLIST.md")
-    print("ALL 7 MANDATORY FINAL DELIVERY FILES GENERATED SUCCESSFULLY!")
+
+    # -----------------------------------------------------------------------
+    # 8. PAPER_KCI_DRAFT_PATCH_PROPOSAL.md (Copy-paste BEFORE -> AFTER patches; draft untouched)
+    # -----------------------------------------------------------------------
+    patch_md = f"""# `PAPER_KCI_DRAFT.md` (`{c_gocom}`) 원고 수정 제안서 (`PAPER_KCI_DRAFT_PATCH_PROPOSAL.md`)
+
+- **작성 시각**: `{NOW_STR}`
+- **원칙**: 원고(`PAPER_KCI_DRAFT.md`)를 직접 수정하지 않고, 저자가 즉시 복사·반영할 수 있도록 **정확한 줄 번호, 현재 원문, 권고 수정문, 원시 근거**를 별도로 제공합니다.
+
+---
+
+## 패치 1 (HIGH — §7 자원 비용, L405): `"GC 수행 시간은 계측하지 않았다"` 오기 교정
+
+- **위치**: `origin/report/data-validity-20261124 @ {c_gocom}:PAPER_KCI_DRAFT.md` **L405**
+- **현재 원문**:
+  > 에뮬레이터 스레드가 busy-poll 구조여서 정책별 CPU 사용률은 구분할 수 없었고, GC 수행 시간은 계측하지 않았다.
+- **권고 수정문**:
+  > 에뮬레이터 스레드가 busy-poll 구조이고 해당 커널용 perf가 없어 커널 내부 CPU 사용 시간은 측정하지 못하였다. 대신 커널 ktime 경과 시간으로 GC 수행 구간을 계측하였다. 별도 FIO-Fast 30분 계측(n=3, erase=0)에서 학습기 호출을 제외한 GC 매핑 경과 시간은 iCAT-v4 206.8 s 대 CAT-47 256.0 s(학습기 분리 경과 시간: 보상 갱신 1.44 ms, 정책 선택 1.27 ms, arm 설정 0.06 ms)였다. 또한 SmartGC-EQ8과의 동일 환경 비교(표 9b, mixY 10시간, 정책당 1회)에서는 학습 갱신(LEARN) 자체는 iCAT-v4(4.3 s, 40.8 ns/GC)가 SmartGC(47.6 s)보다 11배 작았으나, CAT 전체 line 점수 검사(SELECT 87.0 µs/GC) 때문에 GC 1회 전체 경과 시간은 iCAT-v4(98.4 µs)가 SmartGC(17.8 µs)의 5.5배였다. 따라서 iCAT-v4의 이점은 학습 상태 메모리와 WAF에 있으며, GC 실행 시간 우위는 주장하지 않는다.
+- **근거**: `{REF_RES}@{c_res}:result/resource-v124-20261114/report/cpu_overhead_summary.csv`, `{REF_GOCOM}@{c_gocom}:result/m1-20261126-final/m1_final_report.md`
+
+---
+
+## 패치 2 (HIGH — §6.2 표 8 및 그림 10, L297–L307): 미실행 `300k records` 표 8·그림 10 제거 및 §6.4 통합
+
+- **위치**: `PAPER_KCI_DRAFT.md` **L297–L307**
+- **문제**: YCSB-A 30만 레코드 재측정은 수행되지 않았으며 표 8 전 셀이 `"대기"`, 그림 10이 `【재측정 결과 대기】` 상태임. 실제 유효 대체 실험은 6.4절의 **YCSB-A 25만 레코드 (`mixFYF 250k`, `n=3`)** 표 10·표 11 및 신규 `figure03_adaptation`임.
+- **권고 수정문 (L297–L307 교체)**:
+  > **3단계 균등 전환.** 단계별 최상위 조합이 다른 워크로드에서 iCAT-v4의 변화 감지와 재탐색 범위의 효과를 보기 위해 FIO-Fast → YCSB-A → FIO-Fast 전환을 구성하였다. 이전 3배 길이 측정(YCSB-A 60만 레코드)은 YCSB 단계에서 데이터베이스 공간 부족(`SQLITE_FULL`)으로 연산이 실패하여 단계 2·3과 전체 WAF가 무효로 판정되었으므로 제외한다(8장 한계 7). 이에 YCSB-A를 25만 레코드로 조정하고 오류 0건을 검증한 동일 배치 3회 반복 재측정(iCAT-v4, NoDrift, FullReset 및 추가 변형)과 단계별 적응 궤적은 6.4절 표 10·표 11 및 그림 10(`figure03_adaptation`)에 통합 제시한다.
+
+---
+
+## 패치 3 (HIGH — 잔존 플레이스홀더 5건, L004, L232, L240, L256, L260)
+
+1. **L004–L005 (문서 상단 초안 메모)**: 투고본에서 삭제.
+2. **L232 (그림 6 캡션/본문)**:
+   - 현재: `...나머지 변경(판단 구간, 순회 횟수, 초기화 임계값)과 iCAT-v4의 세 메커니즘에 대한 제거 실험을 진행 중이다【결과 대기】.`
+   - 수정: `...각 1회 실행이므로 크기는 잠정적이며, iCAT-v4 핵심 메커니즘의 동일 배치 3회 반복 제거 검증은 6.4절 표 10에 제시한다.`
+3. **L240 (그림 7 본문)**:
+   - 현재: `모든 전환 워크로드를 3회로 맞춘 결과로 그림 7을 갱신할 예정이다【결과 대기】.`
+   - 수정: `이 8종 비교는 CAT-Robust 1회·iCAT-v4 1~3회의 탐색적 요약이며, 통계적 추론은 3회 반복을 확보한 6.4절(표 10)에서만 수행한다.`
+4. **L256 (표 6 본문)**:
+   - 현재: `...고정 조합 반복 측정 결과가 나오기 전에는 "동등 이상"으로 해석한다【결과 대기: arm 47·17·50 각 3회】.`
+   - 수정: `...고정 조합은 1회 측정이므로 통계적 우열 없이 탐색적 사례("동등 이상")로만 해석한다. (참고: 6.4절 mixFYF 워크로드에서 별도 수행한 고정 arm 47의 3회 반복 재현성 검증은 1.9876 ± 0.0003 [95% CI 1.9870, 1.9883]으로 확인되었다.)`
+5. **L260 (그림 8 캡션)**: `【선별 실험 결과로 갱신 예정】` 문구 삭제.
+
+---
+
+## 패치 4 (MEDIUM — §6.2 그림 9 견고성 본문, L262): 소수 2자리 정확값 병기
+
+- **위치**: `PAPER_KCI_DRAFT.md` **L262**
+- **현재 원문**: `...평균은 CAT-Best 0.2%, iCAT-v4 5.0%, CAT-Robust 5.0%였고...`
+- **권고 수정문**: `...평균은 CAT-Best 0.21%, CAT-Robust 4.95%, iCAT-v4 5.04%였고...`
+- **사유**: 1자리 반올림 시 `iCAT-v4`와 `CAT-Robust`가 모두 `5.0%`로 동일해 보이나, 실제 post-gating 평균 손실은 `CAT-Robust(4.95%)`가 `iCAT-v4(5.04%)`보다 `0.09%p` 낮음.
+
+---
+
+## 패치 5 (MEDIUM — §6.3 표 9 각주, L313–L321): `WAF_nand` vs 호스트 `WAF` 정의 명시
+
+- **위치**: `PAPER_KCI_DRAFT.md` **L313** (표 9 제목/각주)
+- **권고 보강**: 표 9 각주에 아래 한 줄 추가:
+  > ※ `WAF_nand = (host_pages + gc_pages − absorbed + evicted) / host_pages` (DRAM GC 버퍼 흡수분 반영). 버퍼를 제외하지 않은 호스트 쓰기 기준 `WAF (= 1 + gc_pages/host_pages)`는 SmartGC-EQ8 `4.498` (표 9b `4.562`), SmartGC `11.072`이며, 버퍼가 없는 CAT-47·iCAT-v4는 두 값이 같다.
+"""
+    (OUT_DIR / "PAPER_KCI_DRAFT_PATCH_PROPOSAL.md").write_text(patch_md, encoding="utf-8")
+    print("Wrote PAPER_KCI_DRAFT_PATCH_PROPOSAL.md")
+    print("ALL FINAL DELIVERY FILES GENERATED SUCCESSFULLY!")
 
 
 if __name__ == "__main__":
