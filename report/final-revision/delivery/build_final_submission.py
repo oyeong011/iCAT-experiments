@@ -269,10 +269,25 @@ def main():
         {
             "Audit_ID": "NA-17", "Target_Source": "GoCom Complete Excel & 5 Catalog Files (3fdb21258)", "Location": f"{REF_GOCOM}@{c_gocom}:report/final-revision/iCAT_Complete_Experiment_Results.xlsx",
             "Metric_or_Item": "17 sheets, 15 native charts, 78 mixFYF runs (312 WAF cells) + 2 M1 runs + 33 direct/same-host contrasts", "Reported_Value": "78 mixFYF + 2 M1 runs, 622 published stats, 0 crosscheck mismatches",
-            "Verified_Raw_Value": "78/78 mixFYF (0/312 WAF mismatches) + 2/2 M1 (0 mismatches) + 33/33 contrasts (0 mismatches) + 0 Excel errors; earlier databook v2 errata (F6 unit, F3 blank p/Holm, D' sign) resolved in Complete Excel",
+            "Verified_Raw_Value": "78/78 mixFYF (0/312 WAF mismatches) + 2/2 M1 (0 mismatches) + 33/33 contrasts (0 mismatches) + 0 Excel errors; real Microsoft Excel COM open PASS (15/15 charts rendered)",
             "Status": "MATCH", "Severity": "INFO",
-            "Proposed_Fix_Do_Not_Edit_Draft_Directly": "GoCom 5/5 input files verified PASS; note Complete Excel has not been visually rendered in LibreOffice/Excel on GoCom (OOXML & cached chart values verified PASS)",
+            "Proposed_Fix_Do_Not_Edit_Draft_Directly": "GoCom 5/5 input files verified PASS (see NA-18 for 1 visual axis-crossing fix on Chart 10)",
             "Raw_Evidence_Path": f"{REF_GOCOM}@{c_gocom}:report/final-revision/complete-results/",
+        },
+        {
+            "Audit_ID": "NA-18", "Target_Source": "GoCom Complete Excel Chart 10 (Real Microsoft Excel Visual QA)", "Location": f"{REF_GOCOM}@{c_gocom}:iCAT_Complete_Experiment_Results.xlsx!CPU and Timing (Chart 10)",
+            "Metric_or_Item": "Logarithmic Y-axis crossing point (0.01 to 100 us/GC)", "Reported_Value": "Default Excel crossesAt=1.0 us causes LEARN (0.041/0.459 us) & REWARD (0.089 us) bars to hang upside-down and hides SmartGC SELECT (1.00 us) at y=1",
+            "Verified_Raw_Value": "Data cells 100% accurate; visual axis setting only", "Status": "DISCREPANCY", "Severity": "LOW",
+            "Proposed_Fix_Do_Not_Edit_Draft_Directly": "In Excel Format Vertical Axis -> set 'Horizontal axis crosses: Axis value = 0.01' (all 14 other charts verified clean in Microsoft Excel)",
+            "Raw_Evidence_Path": f"{REF_GOCOM}@{c_gocom}:report/final-revision/complete-results/chart10_timing.csv",
+        },
+        {
+            "Audit_ID": "NA-19", "Target_Source": "PAPER_KCI_DRAFT.md Table 6 & Table 7 (x3 Transition Workloads)", "Location": f"67cf3f901:PAPER_KCI_DRAFT.md#L248-L280",
+            "Metric_or_Item": "Table 6 (3 workloads x 7 arms = 21 cells) & Table 7 x3 values (mixD/L/Q)", "Reported_Value": "Table 6 21 cells + Table 7 x3 WAFs",
+            "Verified_Raw_Value": "21/21 Table 6 cells & Table 7 x3 values exact 3-decimal match to result/mix-20260911/*/summary.txt (note: all fixed arms n=1)",
+            "Status": "MATCH", "Severity": "INFO",
+            "Proposed_Fix_Do_Not_Edit_Draft_Directly": "Numbers exact; keep n=1 fixed-arm exploratory caveat and remove L256 【결과 대기】 tag (Patch 3)",
+            "Raw_Evidence_Path": f"{REF_GOCOM}@{c_gocom}:result/mix-20260911/",
         },
     ]
     write_csv(OUT_DIR / "FINAL_PAPER_NUMBER_AUDIT.csv", list(audit_rows[0].keys()), audit_rows)
@@ -494,14 +509,19 @@ def main():
     ch.title = "Verified Mean WAF Across All Revision Experiments (Lower is Better; Host/Batch Separated)"
     ch.y_axis.title = "Mean WAF / WAF_nand"
     ch.x_axis.title = "Policy Group"
+    ch.x_axis.delete = False
+    ch.y_axis.delete = False
+    ch.x_axis.tickLblPos = "low"
+    ch.y_axis.tickLblPos = "nextTo"
+    ch.y_axis.scaling.min = 1.0
     data_ref = Reference(ws6, min_col=7, min_row=4, max_row=4 + len(ae_rows))
     cats_ref = Reference(ws6, min_col=2, min_row=5, max_row=4 + len(ae_rows))
     ch.add_data(data_ref, titles_from_data=True)
     ch.set_categories(cats_ref)
     ch.series[0].graphicalProperties.solidFill = "1F5A96"
     ch.legend = None
-    ch.width = 28
-    ch.height = 13
+    ch.width = 30
+    ch.height = 14
     ws6.add_chart(ch, f"A{4 + len(ae_rows) + 3}")
 
     xlsx_out = OUT_DIR / "FINAL_REVIEWER_RESPONSE_MATRIX.xlsx"

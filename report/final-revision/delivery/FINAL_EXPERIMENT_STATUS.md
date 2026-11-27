@@ -1,6 +1,6 @@
 # 최종 실험 완료 현황 및 입력 자료 수신 상태 (`FINAL_EXPERIMENT_STATUS.md`)
 
-- **작성 시각**: `2026-11-27 09:04:29 KST`
+- **작성 시각**: `2026-11-27 09:11:23 KST`
 - **기준 커밋**: 승컴 `origin/main @ 4689c6797` / 고컴 `origin/report/data-validity-20261124 @ 3fdb21258` / 자원 계측 `origin/resource-overhead-20261114 @ c046de0d0`
 
 ## 1. 전체 리비전 핵심 실험 완료 현황 (**80/80 VALID, RUNNING 0건**)

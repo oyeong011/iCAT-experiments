@@ -1,6 +1,6 @@
 # 최종 논문 Figure 선정 카탈로그 (`FINAL_FIGURE_CATALOG.md`)
 
-- **작성 시각**: `2026-11-27 09:04:29 KST`
+- **작성 시각**: `2026-11-27 09:11:23 KST`
 - **기준 커밋**: 승컴 `origin/main @ 4689c6797` / 고컴 `origin/report/data-validity-20261124 @ 3fdb21258` / 집컴 `origin/report/home-delivery-20261127`
 - **4단계 판정 기준**: `논문에 그대로 사용 가능` | `수정 후 사용 가능` | `보조 자료로만 사용` | `사용 금지`
 
