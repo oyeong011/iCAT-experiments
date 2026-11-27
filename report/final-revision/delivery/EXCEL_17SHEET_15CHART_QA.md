@@ -78,9 +78,16 @@
 2. **승컴 기(旣) push 분석 결과 (`origin/main @ 4689c6797`) 삼중 교차검증:**
    - 622개 중 **79개 항목**이 승컴 `4689c6797` CSV (`arm47` 20개, `batchG` 30개, `secondary-metrics` 10개, `batchG contrasts` 19개)와 직접 대조되었으며 **79/79건 오차 0.0 완전 일치**.
    - 집컴 독립 재계산(`final_experiment_validity.csv`, `final_statistical_audit.csv`)과도 **승컴 33개 run + 고컴 47개 run(총 80/80) 불일치 0건**.
-3. **승컴 신규 5종 파일 (`final_independent_validation.md` 외 4종) 수신 상태 — 미검증 명시:**
-   - 2026-11-27 09:15 KST `git fetch --all` 기준 `origin/main` HEAD는 여전히 `4689c6797`이며, 승컴의 신규 5종 파일(`final_independent_validation.md`, `final_raw_data_validation.csv`, `final_statistical_validation.csv`, `final_robustness_validation.csv`, `final_m1_resource_validation.md`)은 **아직 push되지 않음 (`WAITING_PUSH / 미검증`)**.
-   - 원칙에 따라 해당 5종 파일은 검증 완료로 표시하지 않으며, push 확인 즉시 30분 정기 점검 또는 즉시 대조로 추가 검증한다.
+3. **승컴 독립 검증 5종 파일 (`origin/main @ 5926cb48d`, interim 수신 완료 — `pre-revision figure counts`만 추가 대기):**
+   - `2026-11-27 09:16:49 KST` 커밋 `5926cb48d`로 5종 파일(`final_independent_validation.md`, `final_raw_data_validation.csv`, `final_statistical_validation.csv`, `final_robustness_validation.csv`, `final_m1_resource_validation.md`) 및 `crosscheck_jibcom_delivery.csv` (950행), `excel_cell_validation.csv` (7,516행), `m1_recalc.csv` (166행) 수신·교차 확인 완료.
+   - **집컴 전달 패키지 대조 (`crosscheck_jibcom_delivery.csv` 950행):** `final_experiment_validity.csv` (720셀) + `final_statistical_audit.csv` (230셀) 기준 **947/950 완전 일치, 수치 불일치 0건** (2건은 revA Holm 가족 크기 3 vs 6 정의 차이뿐이며 0.05 판정 동일, 1건은 M1 n=1 검정 제외). `figure_manifest.csv` 반복 횟수 **14/14 `MATCH`**.
+   - **고컴 Excel 셀 대조 (`excel_cell_validation.csv` 7,516행):** 행 키 대조 **3,016/3,016 `일치` (0 불일치)** + 값 대조 **4,214 `일치`** (286칸은 재계산 범위 밖 보조/이론값 미검증).
+   - **승컴이 추가 적발한 4건의 서술·표기 보완 권고 (집컴 `FINAL_LIMITATIONS.md` 및 `figure_manifest.csv`에 즉시 반영 완료):**
+     1. **`SmartGC mixY` 단계 시간 초과 (`OVERRUN`):** SmartGC 7/20 단계 초과(최대 83.6분, 총 12.5–12.7 h), SmartGC-EQ8 2/20 단계 소폭 초과(31.7–32.5분) vs iCAT/CAT-47/Greedy 20/20 약 30분(10 h) → 고컴 Excel `SmartGC Comparison` B7 `"20단계 × 1800 s = 10 h"` 서술 보완 필요.
+     2. **`10,112 B` 빌드 출처:** `10,112 B`는 `resource-v124` 빌드(`tuner 2,656 B`) 기준이며 `m1` 빌드(`tuner 2,712 B`) 기준은 `10,336 B`(결론 약 1/190 동일) → 출처 빌드 병기 필요.
+     3. **`SmartGC Comparison` 24행 열 머리글 오기:** 6열 `"WAF_nand (summary)"`에 실제 값은 원시 경로가 기재됨(고컴 Excel 원본 오기).
+     4. **`ktime` vs `CPU` 표기 통일 및 `NoElim` 주 근거 한정:** 커널 CPU 시간은 미측정이므로 모든 표기에서 `"ktime 경과 시간"`으로 통일(`figure_manifest.csv` `figure07` 즉시 수정 완료); `NoElim` 주 근거는 같은 배치 `revE` (`Holm 0.091`)로 한정하고 `revB−revA`는 간접 참고로만 사용.
+   - **남은 미완료 항목 (명시 유지):** 승컴 `final_independent_validation.md` 4절 `PRE_REVISION_SECTION` (`final_prerevision_figure_validation.csv`, 기존 논문 그림 원천 `mix-20260911` 반복 횟수 표)는 아직 미완성(`interim`)이므로 최종 완료 시 추가 대조한다.
 
 ---
 

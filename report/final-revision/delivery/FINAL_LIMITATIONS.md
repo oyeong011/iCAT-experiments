@@ -6,9 +6,11 @@
 1. **단일 에뮬레이터 기하학 및 `erase=0` 타이밍 한계 (M7-1~5)**
    - 모든 실험은 NVMeVirt 8 GiB, OP 7%, MLC 타이밍(`erase=0`), `conv_ftl`, `ext4 nodiscard`, 최대 10시간 범위에서 수행되었다.
    - 대용량 SSD(16~64+ GiB), 상이한 OP 비율(14%/28%), 비영(non-zero) 소거 지연을 갖는 TLC/QLC 실물 SSD, `discard` 활성 환경 및 실서버 장기 트레이스에서의 일반화는 미검증이며 향후 과제로 명시한다.
-2. **SmartGC 비교의 단일 실행(`n=1`) 및 커널 CPU 시간 미측정 (M1-2, M1-3, M1-9, M5-2)**
+2. **SmartGC 비교의 단일 실행(`n=1`), `mixY` 단계 시간 초과, 커널 CPU 시간 미측정 및 빌드 출처 차이 (M1-2, M1-3, M1-9, M5-2)**
    - `m1-20261126`은 사용자 결정으로 정책당 `n=1`만 실행되었으므로(`rep2–3` 4건 CANCELLED) 통계적 유의성 검정이나 신뢰구간을 부여할 수 없다.
-   - 커널 스레드는 `VmRSS`가 존재하지 않아 `/proc/meminfo` `VmallocUsed`와 `gdb sizeof` 계산값으로 대체하였으며, NVMeVirt busy-poll 구조 및 커널용 `perf` 부재로 커널 내부 CPU 시간과 NVMeVirt 공통 처리 비용은 미측정(`ktime` 경과 시간과 엄격 구분)이다.
+   - 승컴 독립 검증(`5926cb48d`)에서 확인된 바와 같이 `mixY` 실행 중 SmartGC 계열은 높은 WAF/I/O 지연으로 30분(1800 s) 단계가 초과되었다(승컴 SmartGC 7/20 단계 초과 최대 83.6분·총 12.7 h, 고컴 SmartGC 7/20·총 12.5 h, SmartGC-EQ8 양 호스트 2/20 단계 31.7–32.5분 vs iCAT·CAT-47·Greedy 20/20 단계 약 30분·총 10 h). 따라서 SmartGC와 iCAT의 `mixY` WAF 비교는 완전히 동일한 실행 시간/쓰기량이 아님을 명시한다.
+   - 커널 스레드는 `VmRSS`가 존재하지 않아 `/proc/meminfo` `VmallocUsed`와 `gdb sizeof` 계산값으로 대체하였다. `10,112 B` 학습 자료구조 계산값은 `resource-v124` 빌드(`tuner 2,656 B`) 기준이며, `m1-20261126` 빌드(`tuner 2,712 B`) 기준은 `10,336 B`(약 1/189)로 약 224 B 차이가 있음을 출처와 함께 명시한다.
+   - NVMeVirt busy-poll 구조 및 커널용 `perf` 부재로 커널 내부 CPU 시간과 NVMeVirt 공통 처리 비용은 어느 PC에서도 측정되지 않았으며, 모든 시간 지표는 `ktime_get_ns` 경과 시간으로만 표기한다(CPU 시간과 엄격 구분). 또한 다수 배치에서 소스 Git SHA가 미기록되어 빌드 정체성은 모듈 `SHA256`으로만 확인한다.
 3. **GC 희생 블록 선택(`SELECT`) 경과 시간 불리 트레이드오프 (M1-4, M1-6)**
    - iCAT-v4의 학습 갱신(`LEARN`) 자체는 `4.30 s` (`40.8 ns/GC`)로 SmartGC(`47.56 s`)보다 11배 작으나, CAT 전 라인 점수 스캔(`SELECT 87.05 µs/GC`) 때문에 GC 1회 전체 경과시간은 iCAT(`98.37 µs/GC`, `1,342 ms/GiB`)이 SmartGC(`17.84 µs/GC`, `333 ms/GiB`)의 **5.5배**였다. 따라서 "전체 GC CPU 효율 우위"는 주장할 수 없으며, **WAF·학습 메모리 우위 대 희생 선택 연산 비용 트레이드오프**로 기술한다.
 4. **단순 온라인 탐욕 선택(Online Greedy) 대비 WAF 우위 미입증 (M3-3)**
