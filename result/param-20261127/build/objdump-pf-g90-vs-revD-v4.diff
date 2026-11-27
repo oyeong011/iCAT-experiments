@@ -1,0 +1,22 @@
+7694c7694
+< push   $0xe666
+---
+> push   $0xffdf
+8726,8727c8726,8727
+< imul   $0xe666,%rax,%rax
+< imul   $0xe666,%rcx,%rcx
+---
+> imul   $0xffdf,%rax,%rax
+> imul   $0xffdf,%rcx,%rcx
+8734,8735c8734,8735
+< imul   $0xe666,%rax,%rax
+< imul   $0xe666,%rcx,%rcx
+---
+> imul   $0xffdf,%rax,%rax
+> imul   $0xffdf,%rcx,%rcx
+8742,8743c8742,8743
+< imul   $0xe666,%rax,%rax
+< imul   $0xe666,%rcx,%rcx
+---
+> imul   $0xffdf,%rax,%rax
+> imul   $0xffdf,%rcx,%rcx
