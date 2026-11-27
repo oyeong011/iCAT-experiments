@@ -25,7 +25,9 @@ def write(name, rows):
 
 def sig(c):
     h = float(c['holm_p_family'])
-    return f"유의 (Holm p {h:.2g})" if h < 0.05 else f"보정 후 유의하지 않음 (Welch p {float(c['welch_p']):.2g}, Holm p {h:.2g})"
+    w = float(c['welch_p'])
+    if h < 0.05: return f"유의 (Holm p {h:.2g})"
+    return f"보정 전 p {w:.2g}, 보정 후 유의하지 않음 (Holm p {h:.2g})" if w < 0.05 else f"차이 확인 못 함 (Welch p {w:.2g}, Holm p {h:.2g})"
 
 # ---- source-verified feature matrix (revD-src/conv_ftl.c, conv_ftl.h; sources.sha256 OK) ----
 # columns: Discounting, Elimination, Settling, Drift detection, Partial reset, Probe
