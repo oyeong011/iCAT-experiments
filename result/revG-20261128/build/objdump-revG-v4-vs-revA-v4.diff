@@ -1,0 +1,40 @@
+5577c5577
+< shl    $0xe,%r9d
+---
+> shl    $0xf,%r9d
+5579c5579
+< movl   $0x2000,0x20(%rcx)
+---
+> movl   $0x4000,0x20(%rcx)
+5593,5594c5593,5594
+< movq   $0x2000,0xd0(%rcx)
+< movq   $0x4000,0xd8(%rcx)
+---
+> movq   $0x4000,0xd0(%rcx)
+> movq   $0x8000,0xd8(%rcx)
+5616,5617c5616,5617
+< shl    $0xe,%rax
+< shl    $0xd,%rdx
+---
+> shl    $0xf,%rax
+> shl    $0xe,%rdx
+5624c5624
+< shl    $0x10,%edx
+---
+> shl    $0x11,%edx
+5628c5628
+< shl    $0xe,%rax
+---
+> shl    $0xf,%rax
+5646c5646
+< movq   $0x2000,0x100(%rcx)
+---
+> movq   $0x4000,0x100(%rcx)
+5655c5655
+< shl    $0x19,%rdx
+---
+> shl    $0x1a,%rdx
+5668c5668
+< push   $0x2000
+---
+> push   $0x4000

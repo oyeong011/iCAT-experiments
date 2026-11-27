@@ -14795,3 +14795,8 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 - 고컴·승컴 모두 NVMeVirt 8 GiB (커널 로그 779+45 run: 8191 MiB / 논리 7655 MiB). 16 GiB 실험 없음. 고컴 호스트 RAM 32 GiB (firmware memmap), 승컴 16 GB.
 - report/final-revision/capacity_check/{CAPACITY_CHECK_20261127.md, capacity_comparison.csv}. 공통 정책은 iCAT-v4뿐.
 - revF: c075 smoke ANOMALY는 check-run v1 오탐 (kernel-final.log에 직전 run init 포함). v2로 고쳐 재검사 OK, 16:27 큐 재개 (g99 smoke부터).
+
+## 2026-11-27 16:44 고컴: revG-20261128 용량 확장 (16 GiB) 사전 등록
+- 사용자 결정: 블록 크기 유지·블록 수 2배 (BLKS_PER_PLN 16384), FIO 쓰기량 2배·IOPS 유지·작업 영역 12 GiB, YCSB 유지, revF 종료 후 자동 전환·재부팅·자동 시작.
+- revG-src = revA-src + ICAT_BLKS_PER_PLN #ifdef + Kbuild ICAT_EXTRA. 기본 빌드 objdump = revA-v4/revA-random 0줄. 16 GiB 빌드는 블록 수 상수만 다름.
+- 러너/safety: cmdline memmap=16G$4G 없으면 거부, insmod 후 16383 MiB·lines=16384·64 KiB 블록 확인. crontab @reboot boot-start.sh 설치. root-switch-16g.sh는 사용자가 sudo로 실행 필요 (GRUB·재부팅 권한 없음).

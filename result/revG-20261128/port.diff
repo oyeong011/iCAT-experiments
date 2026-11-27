@@ -1,0 +1,65 @@
+9a10,11
+> # revG-20261128: refuse unless the kernel reserved 16 GiB at 4 GiB (memmap=16G$4G); insmod memmap_size=16384M would otherwise map live RAM
+> grep -qE '(^| )memmap=16G\$4G( |$)' /proc/cmdline || { echo "revG: /proc/cmdline lacks memmap=16G\$4G; refusing" >&2; exit 4; }
+11c13
+< [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revF-20261127/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+---
+> [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revG-20261128/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+17c19
+< [[ "$label" == mixFYF && "$policy" =~ ^(revF-v4|revF-g99|revF-g95|revF-g90|revF-c050|revF-c075)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+---
+> [[ "$label" == mixFYF && "$policy" =~ ^(revG-v4|revG-random)$ && ( "${PH_SECS:-}" == 1800 || ( "${REVA_SMOKE:-}" == 1 && "${PH_SECS:-}" == 120 ) ) && "$rep" =~ ^[1-9]$ ]] || exit 2
+20,21c22
+<     revF-v4) module="$root/buildoutput/nvmev-revC-v4.ko";;   # revF-20261127: control, same file as revC-v4/revE-v4 (sha256 in modules.sha256)
+<     revF-g99|revF-g95|revF-g90|revF-c050|revF-c075) module="$root/buildoutput/nvmev-$policy.ko";;   # revF: revF-src V4 with GAMMA_Q16 or UCB_C_Q16 override
+---
+>     revG-v4|revG-random) module="$root/buildoutput/nvmev-$policy.ko";;   # revG-20261128: revA-src V4 / Random (VARIANT 4 / 9) with ICAT_BLKS_PER_PLN=16384 (16 GiB, 64 KiB blocks)
+81c82
+< printf '\n### revF-20261127 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
+---
+> printf '\n### revG-20261128 mixFYF %s rep%s — started %s\n- FIO-Fast %ss -> YCSB-A (load %s records + run, %ss total) -> FIO-Fast %ss; Table-3 prep; seeds hot/warm/cold=%s/%s/%s; icat_seed=%s; module `%s`; evidence `%s`.\n' "$policy" "$rep" "$(date -Is)" "$PH_SECS" "$RECORDS" "$PH_SECS" "$PH_SECS" "$SEED_HOT" "$SEED_WARM" "$SEED_COLD" "${ICAT_SEED:-none}" "$module" "$dir" >> "$journal"
+116c117
+<     if [[ "$rc" == 0 && ( "$policy" == online* || "$policy" == rev[ABCEF]-* ) ]]; then
+---
+>     if [[ "$rc" == 0 && ( "$policy" == online* || "$policy" == rev[ABCEFG]-* ) ]]; then
+129c130
+< [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revF-20261127/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+---
+> [[ "${BASH_ENV:-}" == /home/oy/iCAT/result/revG-20261128/safety-env.sh && "${MIXX_LOCK_HELD:-}" == 1 ]] || exit 1
+131c132
+< { date -Is; uname -a; cat /proc/cmdline; fio --version; java -version 2>&1; sqlite3 --version; sha256sum "$module" "$0" "$root/workloads/mix-test4.fio" "$root/workloads/sqlite/workloada"; lscpu; free -h; } > "$dir/environment.txt"
+---
+> { date -Is; uname -a; cat /proc/cmdline; fio --version; java -version 2>&1; sqlite3 --version; sha256sum "$module" "$0" "$root/workloads/mix-test4-16g.fio" "$root/workloads/sqlite/workloada"; lscpu; free -h; } > "$dir/environment.txt"
+135,136c136,137
+< if [[ "$policy" == rev[ABCEF]-* ]]; then
+<     sudo -n insmod "$module" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid="$(id -u)" icat_seed="${ICAT_SEED:?}"
+---
+> if [[ "$policy" == rev[ABCEFG]-* ]]; then
+>     sudo -n insmod "$module" memmap_start=4G memmap_size=16384M cpus=1,2 measurement_manual=1 measurement_uid="$(id -u)" icat_seed="${ICAT_SEED:?}"
+138c139
+<     sudo -n insmod "$module" memmap_start=4G memmap_size=8192M cpus=1,2 measurement_manual=1 measurement_uid="$(id -u)"
+---
+>     sudo -n insmod "$module" memmap_start=4G memmap_size=16384M cpus=1,2 measurement_manual=1 measurement_uid="$(id -u)"
+143a145,150
+> # revG: the loaded device must have the intended 16 GiB geometry (block 64 KiB, line 256 KiB, 16384 lines per partition)
+> sudo -n dmesg --color=never | awk -v m="$marker" 'index($0,m){on=1} on' | grep -aE "NVMeVirt: (Storage|Total Capacity|ns [0-9]+/)" > "$dir/geometry.txt" || true
+> grep -q 'Storage: 0x100100000-0x500000000 (16383 MiB)' "$dir/geometry.txt" || { echo 'revG: storage is not 16383 MiB at 4G'; exit 1; }
+> ! grep 'Total Capacity' "$dir/geometry.txt" | grep -qv 'lines=16384 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256' || { echo 'revG: geometry mismatch'; exit 1; }
+> grep -q 'lines=16384 blk-size(MiB,KiB)=0,64 line-size(MiB,KiB)=0,256' "$dir/geometry.txt" || { echo 'revG: geometry line missing'; exit 1; }
+> nsmb=$(grep -oE 'ns 0/1: size [0-9]+ MiB' "$dir/geometry.txt" | grep -oE '[0-9]+' | tail -1); (( ${nsmb:-0} >= 15000 && ${nsmb:-0} <= 15700 )) || { echo "revG: namespace size ${nsmb:-?} MiB unexpected"; exit 1; }
+162c169
+< FGB=6; [[ $label != mixV ]] || FGB=${MIXV_FIO_GB:-6}   # 21:30: mixV may use a 5 GiB FIO-Fast (cold region 3 GiB)
+---
+> FGB=12; [[ $label != mixV ]] || FGB=${MIXV_FIO_GB:-6}   # 21:30: mixV may use a 5 GiB FIO-Fast (cold region 3 GiB)
+180c187
+<     timeout --signal=TERM --kill-after=30 $(( ${PH_SECS:-1800} + 900 )) fio "$root/workloads/$job" --output-format=json --output="$dir/phase-$slot.json"
+---
+>     timeout --signal=TERM --kill-after=30 $(( 2 * ${PH_SECS:-1800} + 900 )) fio "$root/workloads/$job" --output-format=json --output="$dir/phase-$slot.json"
+387c394
+<            HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio A mix-test4.fio
+---
+>            HOT_IO=$((HOT_IO * ps_ / 300)) WARM_IO=$((WARM_IO * ps_ / 300)) COLD_IO=$((COLD_IO * ps_ / 300)) phase_fio A mix-test4-16g.fio   # revG: 2x payload, same IOPS -> 2 x PH_SECS
+389c396
+<            HOT_IO=$((HOT_IO * ps_ / 600)) WARM_IO=$((WARM_IO * ps_ / 600)) COLD_IO=$((COLD_IO * ps_ / 600)) phase_fio C mix-test4.fio;;
+---
+>            HOT_IO=$((HOT_IO * ps_ / 300)) WARM_IO=$((WARM_IO * ps_ / 300)) COLD_IO=$((COLD_IO * ps_ / 300)) phase_fio C mix-test4-16g.fio;;   # revG: 2x payload, same IOPS -> 2 x PH_SECS
