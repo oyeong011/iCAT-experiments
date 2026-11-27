@@ -128,3 +128,16 @@
 - phaseB-run host_pages=5301544 gc_pages=121476 WAF=1.022913
 - ycsb-load [OVERALL], Throughput(ops/sec), 34969.92586375717
 - ycsb-run [OVERALL], Throughput(ops/sec), 83481.40464543861
+
+### revF-20261127 mixFYF revF-v4 rep1 — started 2026-11-28T00:27:43+09:00
+- FIO-Fast 1800s -> YCSB-A (load 250000 records + run, 1800s total) -> FIO-Fast 1800s; Table-3 prep; seeds hot/warm/cold=20260911/20261011/20261111; icat_seed=2026111401; module `/home/oy/iCAT/buildoutput/nvmev-revC-v4.ko`; evidence `/home/oy/iCAT/result/revF-20261127/raw/mixFYF-revF-v4-rep1`.
+
+- Finished 2026-11-28T01:59:10+09:00; mixFYF revF-v4 exit=0; evidence `/home/oy/iCAT/result/revF-20261127/raw/mixFYF-revF-v4-rep1`; cleanup attempted.
+- total host_bytes=613601501184 host_pages=149805054 gc_pages=169729861 WAF=2.133005
+- phaseA(test4) host_pages=72009649 gc_pages=65114509 WAF=1.904247
+- phaseB(sqlite-a) host_pages=5793427 gc_pages=282879 WAF=1.048828
+- phaseC(test4) host_pages=72001978 gc_pages=104332473 WAF=2.449022
+- phaseB-load host_pages=452310 gc_pages=164777 WAF=1.364301
+- phaseB-run host_pages=5341117 gc_pages=118102 WAF=1.022112
+- ycsb-load [OVERALL], Throughput(ops/sec), 34492.27373068433
+- ycsb-run [OVERALL], Throughput(ops/sec), 81003.89504340677
