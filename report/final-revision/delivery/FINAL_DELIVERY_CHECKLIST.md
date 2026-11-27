@@ -1,7 +1,7 @@
 # iCAT 논문 리비전 최종 제출 체크리스트 (`FINAL_DELIVERY_CHECKLIST.md`)
 
-- **작성 시각**: `2026-11-27 09:34 KST`
-- **최종 제출 준비 판정**: **CONDITIONAL READY (원시 80/80 + 88/89 삼중 교차검증 0불일치·고컴 통합 Excel 17시트/15차트·622통계 + 7,230셀 QA 및 Chart 10 축 수정 완료; 저자 원고 패치 5건 수동 반영 및 승컴 4절 `pre-revision figure counts` 최종본 대기 남음)**
+- **작성 시각**: `2026-11-27 10:03 KST`
+- **최종 제출 준비 판정**: **READY FOR AUTHOR APPLICATION (3대 PC 독립 삼중 교차검증 100% 완료·수치 불일치 0건; 저자의 `PAPER_KCI_DRAFT.md` 수동 패치 5건 적용만 남음)**
 
 | # | 점검 항목 | 상태 | 근거 / 비고 |
 |---|---|---|---|
@@ -14,7 +14,7 @@
 | 7 | `iCAT_Paper_Figures.xlsx` 및 최종 Figure 무결성 검증 | **PASS** | 21시트, 40/40 수치 일치, 0 오류 리터럴, 300 DPI PNG/PDF/SVG, `figs/` 0건 수정 |
 | 8 | `FINAL_EXPERIMENT_REPORT.md` 12개 장 완비 | **PASS** | 1장~12장 전수 작성, 모든 수치 원시 로그 출처 연결 |
 | 9 | 고컴 신규 통합 5종 파일 수신·교차검증 (`iCAT_Complete_Experiment_Results.xlsx` 등) | **PASS (Chart 10 수정본 제공)** | `origin/report/data-validity-20261124 @ 3fdb21258`: 17시트·78 mixFYF·2 M1·33대비·622통계 0불일치; 실제 Excel 육안 QA에서 `그림 10` 로그축 `crossesAt=1.0` 버그(`NA-18`) 발견 → `iCAT_Complete_Experiment_Results_Chart10Fixed.xlsx` (`CELL_DIFFS=0`)로 수정·재검증 완료 (`EXCEL_17SHEET_15CHART_QA.md`) |
-| 10 | 승컴 신규 검증 5종 파일 수신·교차검증 (`final_independent_validation.md` 등) | **PASS (INTERIM 5/5 수신 @ `5926cb48d`; 4절 `pre-revision` 대기)** | `origin/main @ 5926cb48d`: 집컴 950셀 대조 **947/950 일치(0 불일치)**, 고컴 Excel **3,016 키드/7,230 총 셀 일치(0 불일치)**, M1 **126/126 일치**. 승컴 4대 서술 지적(`SmartGC mixY` 시간 초과, `10,112 B` 빌드 출처, `ktime` 표기 통일, `NoElim` revE 한정) `FINAL_LIMITATIONS.md`·`figure_manifest.csv`에 즉시 반영 완료 |
+| 10 | 승컴 신규 검증 5종 파일 수신·교차검증 (`final_independent_validation.md` 등) | **PASS (FINAL 6/6 완료 @ `ceca0ed47`)** | `origin/main @ ceca0ed47`: 집컴 950셀 **947/950 일치(0 불일치)**, 고컴 Excel **3,016 키/7,230 총 셀 일치(0 불일치)**, M1 **126/126 일치**, `mix-20260911` **707폴더(452 유효) 전수 재검증 완료**. 승컴 지적 사항(`SmartGC mixY` 시간 초과, `10,112 B` 빌드 출처, `ktime` 표기, `NoElim` revE 한정, `mixG` 전체 제외) 전수 반영 완료 |
 | 11 | 투고 전 원고(`PAPER_KCI_DRAFT.md`) 최종 수동 반영 (NA-09~NA-13) | **ACTION REQUIRED (저자 반영)** | L405 GC 계측 오기, L297–307 미실행 300k 표 8·그림 10, 5건 `【결과 대기】` 태그, L262 그림 9 소수 2자리, 표 9 `WAF_nand` 각주 (`PAPER_KCI_DRAFT_PATCH_PROPOSAL.md`) |
 
 ## 최종 전달 산출물 경로 (`report/final-revision/delivery/`)
