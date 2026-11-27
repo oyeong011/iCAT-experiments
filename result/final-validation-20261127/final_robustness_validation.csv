@@ -1,0 +1,122 @@
+check,item,result,verdict,detail
+Random Selection 반복 간 편차,고컴 revA-random total_waf,2.3265 / 2.3285 / 2.3180,OK,"SD 0.0055, CV 0.24 %, range 0.0104"
+Random Selection 반복 간 편차,고컴 revA-random A_waf,1.9368 / 1.9501 / 1.9333,OK,"SD 0.0089, CV 0.46 %, range 0.0168"
+Random Selection 반복 간 편차,고컴 revA-random B_waf,1.0756 / 1.0693 / 1.0754,OK,"SD 0.0036, CV 0.33 %, range 0.0063"
+Random Selection 반복 간 편차,고컴 revA-random C_waf,2.8159 / 2.8083 / 2.8039,OK,"SD 0.0061, CV 0.22 %, range 0.0120"
+Random Selection 반복 간 편차,고컴 revA-random C5_waf,2.7462 / 2.7990 / 2.7725,OK,"SD 0.0264, CV 0.95 %, range 0.0527"
+Random Selection 반복 간 편차,고컴 revA-random ycsb_ops_per_s,82374.2429 / 82693.7484 / 82314.8904,OK,"SD 203.7727, CV 0.25 %, range 378.8581"
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure01_random: Random n=3,valid main reps = 3,MATCH,고컴 revA-20261114/revA-random
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure01_random: iCAT-v4 n=3,valid main reps = 3,MATCH,고컴 revA-20261114/revA-v4
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure01_random: CAT-47 ref n=1,valid main reps = 1,MATCH,고컴 revA-20261114/arm47
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure02_ablation: v1 n=3,valid main reps = 3,MATCH,고컴 revA-20261114/revA-v1
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure02_ablation: v2 n=3,valid main reps = 3,MATCH,고컴 revA-20261114/revA-v2
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),"figure02_ablation: NoElim n=3 (control = revA-v4, other batch)",valid main reps = 3,MATCH,고컴 revB-20261122/revB-noelim
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),"figure02_ablation: NoSettle n=3 (control = revA-v4, other batch)",valid main reps = 3,MATCH,고컴 revB-20261122/revB-nosettle
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure02_ablation: revD v4 n=3,valid main reps = 3,MATCH,승컴 revD-20261124/revD-v4
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure02_ablation: NoDrift n=3,valid main reps = 3,MATCH,승컴 revD-20261124/revD-nodrift
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure02_ablation: FullReset n=3,valid main reps = 3,MATCH,승컴 revD-20261124/revD-fullreset
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure05_parameters: elim10 n=3,valid main reps = 3,MATCH,고컴 revC-20261124/revC-elim10
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure05_parameters: elim15 (v4) n=3,valid main reps = 3,MATCH,고컴 revC-20261124/revC-v4
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure05_parameters: elim25 n=3,valid main reps = 3,MATCH,고컴 revC-20261124/revC-elim25
+Figure 반복 횟수 (집컴 manifest 주장 vs 원시),figure06_candidates: 60-arm n=3,valid main reps = 3,MATCH,고컴 revC-20261124/revB-arm60
+Arm 47 독립 반복,승컴 arm47-20261127 valid main reps,3,OK,
+Arm 47 독립 반복,seeds differ between reps,20260911/20261011/20261111 | 20260912/20261012/20261112 | 20260913/20261013/20261113,OK,
+Arm 47 독립 반복,"Fixed CAT arm=47 on all 4 partitions, every run","[8, 8, 8, 8]",OK,"init printed at insmod and again at measurement start = 8 lines, all arm=47"
+Arm 47 독립 반복,same module as 고컴 n=1,{'9fde0ea49892b1c8'},OK,
+Arm 47 독립 반복,고컴 n=1 inside 승컴 n=3 95% CI (not pooled),"1.987355 in [1.986980, 1.988309]",OK,"different hosts (Intel vs AMD): reported side by side, never n=4"
+drift50 변화 감지 동작,drift50 rep1,resets=4 min_dev=0.863,OK,every waf-drift reset must exceed 50 % deviation (DRIFT_Q16=32768)
+drift50 변화 감지 동작,drift50 rep2,resets=4 min_dev=0.614,OK,every waf-drift reset must exceed 50 % deviation (DRIFT_Q16=32768)
+drift50 변화 감지 동작,drift50 rep3,resets=3 min_dev=0.723,OK,every waf-drift reset must exceed 50 % deviation (DRIFT_Q16=32768)
+drift50 변화 감지 동작 (비교 기준),bg-v4 rep1,resets=4 min_dev=0.674 n_dev_25_50=0,OK,threshold 0.250
+drift50 변화 감지 동작 (비교 기준),bg-v4 rep2,resets=4 min_dev=0.781 n_dev_25_50=0,OK,threshold 0.250
+drift50 변화 감지 동작 (비교 기준),bg-v4 rep3,resets=4 min_dev=0.755 n_dev_25_50=0,OK,threshold 0.250
+drift50 변화 감지 동작 (비교 기준),revE-drift12 rep1,resets=4 min_dev=0.437 n_dev_25_50=1,OK,threshold 0.125
+drift50 변화 감지 동작 (비교 기준),revE-drift12 rep2,resets=4 min_dev=0.405 n_dev_25_50=3,OK,threshold 0.125
+drift50 변화 감지 동작 (비교 기준),revE-drift12 rep3,resets=4 min_dev=0.429 n_dev_25_50=1,OK,threshold 0.125
+Greedy GC 대 iCAT 동일 조건,rep1 bg-v4 vs greedygc,all identical,OK,"module nvmev-abl-v4.ko vs nvmev-greedygc.ko; kernel policy watgc-v2 vs greedy; phase min 30.0/30.3/30.1 vs 30.0/30.1/30.0; YCSB ops (time-limited, outcome) 107802931 vs 111569965"
+Greedy GC 대 iCAT 동일 조건,rep2 bg-v4 vs greedygc,all identical,OK,"module nvmev-abl-v4.ko vs nvmev-greedygc.ko; kernel policy watgc-v2 vs greedy; phase min 30.0/30.1/30.1 vs 30.0/30.1/30.0; YCSB ops (time-limited, outcome) 107063444 vs 109230659"
+Greedy GC 대 iCAT 동일 조건,rep3 bg-v4 vs greedygc,all identical,OK,"module nvmev-abl-v4.ko vs nvmev-greedygc.ko; kernel policy watgc-v2 vs greedy; phase min 30.0/30.1/30.1 vs 30.0/30.1/30.1; YCSB ops (time-limited, outcome) 108250404 vs 109978497"
+mixY 동일 조건 (단계 시간),고컴 gocom-sg-20261119/mixY-sg-arm47-rep1,0/20 phases > 31 min,OK,all 20 phases ~30 min
+mixY 동일 조건 (단계 시간),고컴 gocom-sg-20261119/mixY-sg-greedy-rep1,0/20 phases > 31 min,OK,all 20 phases ~30 min
+mixY 동일 조건 (단계 시간),고컴 gocom-sg-20261119/mixY-smartgc-rep1,7/20 phases > 31 min,OVERRUN,"S04=50.4, S07=50.9, S08=31.7, S10=76.1, S13=59.6, S16=50.0, S19=40.9; total 12.502 h vs 10 h nominal"
+mixY 동일 조건 (단계 시간),고컴 gocom-sg-20261119/mixY-smartgcq-rep1,3/20 phases > 31 min,OVERRUN,"S04=66.9, S10=48.9, S16=41.6; total 11.14 h vs 10 h nominal"
+mixY 동일 조건 (단계 시간),고컴 m1-20261126/mixY-m1-icat-v4-rep1,0/20 phases > 31 min,OK,all 20 phases ~30 min
+mixY 동일 조건 (단계 시간),고컴 m1-20261126/mixY-m1-smartgc-eq8-rep1,2/20 phases > 31 min,OVERRUN,"S04=32.5, S07=31.8; total 10.084 h vs 10 h nominal"
+mixY 동일 조건 (단계 시간),승컴 gc-20261010/mixY-sg-arm47-rep1,0/20 phases > 31 min,OK,all 20 phases ~30 min
+mixY 동일 조건 (단계 시간),승컴 gc-20261010/mixY-smartgc-eq8-rep1,2/20 phases > 31 min,OVERRUN,"S04=32.5, S07=31.7; total 10.077 h vs 10 h nominal"
+mixY 동일 조건 (단계 시간),승컴 smartgc-20261119/mixY-onlinev4-rep1,0/20 phases > 31 min,OK,all 20 phases ~30 min
+mixY 동일 조건 (단계 시간),승컴 smartgc-20261119/mixY-smartgc-rep1,7/20 phases > 31 min,OVERRUN,"S04=58.2, S07=58.3, S08=31.2, S10=69.5, S13=54.4, S16=50.4, S19=50.6; total 12.715 h vs 10 h nominal"
+호스트·배치 혼합,every descriptive group = one host x one batch x one policy,38 groups,OK,
+호스트·배치 혼합,greedy-20261125/greedy-online - revD-20261124/revD-v4 total_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revD-20261124/revD-v4 A_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revD-20261124/revD-v4 B_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revD-20261124/revD-v4 C_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revD-20261124/revD-v4 C5_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revD-20261124/revD-v4 ycsb_ops_per_s,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revision-additional-ablation/abl-v4 total_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revision-additional-ablation/abl-v4 A_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revision-additional-ablation/abl-v4 B_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revision-additional-ablation/abl-v4 C_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revision-additional-ablation/abl-v4 C5_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,greedy-20261125/greedy-online - revision-additional-ablation/abl-v4 ycsb_ops_per_s,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,arm47-20261127/arm47 - batchG-20261126/bg-v4 total_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,arm47-20261127/arm47 - batchG-20261126/bg-v4 A_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,arm47-20261127/arm47 - batchG-20261126/bg-v4 B_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,arm47-20261127/arm47 - batchG-20261126/bg-v4 C_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,arm47-20261127/arm47 - batchG-20261126/bg-v4 C5_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,arm47-20261127/arm47 - batchG-20261126/bg-v4 ycsb_ops_per_s,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-noelim - revB-20261122/revB-noelim total_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-noelim - revB-20261122/revB-noelim A_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-noelim - revB-20261122/revB-noelim B_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-noelim - revB-20261122/revB-noelim C_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-noelim - revB-20261122/revB-noelim C5_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-noelim - revB-20261122/revB-noelim ycsb_ops_per_s,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-noelim - revA-20261114/revA-v4 total_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-noelim - revA-20261114/revA-v4 A_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-noelim - revA-20261114/revA-v4 B_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-noelim - revA-20261114/revA-v4 C_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-noelim - revA-20261114/revA-v4 C5_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-noelim - revA-20261114/revA-v4 ycsb_ops_per_s,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-nosettle - revA-20261114/revA-v4 total_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-nosettle - revA-20261114/revA-v4 A_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-nosettle - revA-20261114/revA-v4 B_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-nosettle - revA-20261114/revA-v4 C_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-nosettle - revA-20261114/revA-v4 C5_waf,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revB-20261122/revB-nosettle - revA-20261114/revA-v4 ycsb_ops_per_s,indirect (different batch),INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revision-additional-ablation/abl-v4 - revD-20261124/revD-v4 total_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revision-additional-ablation/abl-v4 - revD-20261124/revD-v4 A_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revision-additional-ablation/abl-v4 - revD-20261124/revD-v4 B_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revision-additional-ablation/abl-v4 - revD-20261124/revD-v4 C_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revision-additional-ablation/abl-v4 - revD-20261124/revD-v4 C5_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revision-additional-ablation/abl-v4 - revD-20261124/revD-v4 ycsb_ops_per_s,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revD-20261124/revD-v4 total_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revD-20261124/revD-v4 A_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revD-20261124/revD-v4 B_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revD-20261124/revD-v4 C_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revD-20261124/revD-v4 C5_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revD-20261124/revD-v4 ycsb_ops_per_s,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revision-additional-ablation/abl-v4 total_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revision-additional-ablation/abl-v4 A_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revision-additional-ablation/abl-v4 B_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revision-additional-ablation/abl-v4 C_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revision-additional-ablation/abl-v4 C5_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,batchG-20261126/bg-v4 - revision-additional-ablation/abl-v4 ycsb_ops_per_s,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revC-20261124/revC-v4 - revA-20261114/revA-v4 total_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revC-20261124/revC-v4 - revA-20261114/revA-v4 A_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revC-20261124/revC-v4 - revA-20261114/revA-v4 B_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revC-20261124/revC-v4 - revA-20261114/revA-v4 C_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revC-20261124/revC-v4 - revA-20261114/revA-v4 C5_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revC-20261124/revC-v4 - revA-20261114/revA-v4 ycsb_ops_per_s,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revA-20261114/revA-v4 total_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revA-20261114/revA-v4 A_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revA-20261114/revA-v4 B_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revA-20261114/revA-v4 C_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revA-20261114/revA-v4 C5_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revA-20261114/revA-v4 ycsb_ops_per_s,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revC-20261124/revC-v4 total_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revC-20261124/revC-v4 A_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revC-20261124/revC-v4 B_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revC-20261124/revC-v4 C_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revC-20261124/revC-v4 C5_waf,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,revE-20261125/revE-v4 - revC-20261124/revC-v4 ycsb_ops_per_s,batch reproducibility,INDIRECT (label required),"same host, different batch: never pooled; reported as reference only"
+호스트·배치 혼합,집컴 figure02: revB NoElim/NoSettle vs revA-v4,control from another batch (revB has only n=1 V4),INDIRECT (label required),"revE-noelim - revE-v4 (same batch, n=3) exists and is the direct NoElim test"
