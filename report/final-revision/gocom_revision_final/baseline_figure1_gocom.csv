@@ -1,0 +1,6 @@
+Experiment,batch (host),n,Baseline mean WAF,Baseline SD,Baseline 95% CI lo,Baseline 95% CI hi,iCAT-v4 mean WAF (same batch),iCAT-v4 SD,iCAT-v4 95% CI lo,iCAT-v4 95% CI hi,ΔWAF (baseline − iCAT),Welch 95% CI lo,Welch 95% CI hi,Welch df,p (unadj.),Holm p,Holm family size,Improvement (%) = (baseline − iCAT)/baseline ×100 [계산],ΔWAF (%) = (baseline − iCAT)/iCAT ×100 [계산],Normalized WAF = baseline/iCAT [계산],verdict
+Random Selection,"revA-20261114 (고컴, Ryzen 5 3600XT)",3 vs 3,2.3243,0.0055,2.3106,2.3381,2.1284,0.0049,2.1161,2.1407,0.1959,0.1840,0.2079,3.95,1.57e-06,<0.0001,6,8.43,9.20,1.0920,차이 있음
+iCAT (원 구현) [추가],"revC-20261124 (고컴, Ryzen 5 3600XT)",3 vs 3,2.3951,0.0029,2.3879,2.4022,2.1200,0.0294,2.0469,2.1931,0.2751,0.2030,0.3472,2.04,3.53e-03,0.0282,8,11.49,12.98,1.1298,차이 있음
+
+"오차 막대: 95 % CI (t 분포, df = 2). SD 열을 따로 둔다. Greedy GC 행은 승컴 batchG 담당이라 이 파일에 없다."
+Improvement (%)는 평균의 비로 계산한 점추정값이며 CI가 없다. 판정은 ΔWAF의 Welch CI로 한다.

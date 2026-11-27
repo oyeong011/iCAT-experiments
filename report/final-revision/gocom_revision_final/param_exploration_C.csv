@@ -1,0 +1,7 @@
+setting,group,batch,status,n,mean WAF,SD,95% CI lo,95% CI hi,Δ vs same-batch default,Welch CI lo,Welch CI hi,Holm p,verdict,active candidates end of phase A (mean of 4 parts),"eliminated share end of phase A [실측, 1 − active/candidates]",elim counter (sum 4 parts),eval_explore (sum),resets (sum),learner ktime ms,"첫 정착 시간 (단계 A 시작부터, 가장 늦은 파티션, s)",단계 C 첫 감지 (s),단계 C 재설정 때 복원된 후보 수,"단계 C 재정착 (재설정부터, 최대, s)",단계 C 탐색 조합이 처리한 host 쓰기 비중
+C = 0.25 (기본),revA-v4,revA-20261114,측정 (모든 iCAT-v4 대조군),3,2.1284,0.0049,2.1161,2.1407,(기본값),,,,대조군,19.333 ± 2.323,0.570 ± 0.052,196.667 ± 3.786,517.333 ± 17.616,4.000 ± 0.000,3.880 ± 0.106,3640.033 ± 7.508,63.267 ± 1.986,16.667 ± 1.528,360.500 ± 41.050,0.223 ± 0.035
+C = 0.50,,,실행하지 않음
+C = 0.75,,,실행하지 않음
+
+"C는 UCB 보너스 항의 계수다 (WAF 단위, conv_ftl.c:436). 무작위 선택 확률이 아니다."
+커널 로그 전수 검사: exploration_q16은 모든 run에서 16384 (0.25)뿐이다. C 민감도 실험은 없다.

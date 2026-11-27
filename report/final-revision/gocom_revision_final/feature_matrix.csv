@@ -1,0 +1,24 @@
+Variant,run groups,ICAT_VARIANT,γ (discount),"C (UCB, WAF 단위)",Elimination threshold,Drift threshold,candidates,Discounting,Elimination,Settling,Drift Detection,Partial Reset,Probe,제거·변경한 기능,유지한 기능,변경 코드 위치,분류
+iCAT-v4,revA-v4 revB-v4 revC-v4 revE-v4 (고컴); revD-v4 abl-v4 bg-v4 (승컴),4,0.9995,0.25,15 %,25 %,45,✓,✓,✓,✓,✓,✓,—,전부,—,대조군
+NoDrift (revA V1),revA-v1 (고컴); revD-nodrift (승컴),1,0.9995,0.25,15 %,— (감지 없음),45,✓,✓,✓,✗,— (재설정 없음),✓,변화 감지와 재설정,"할인, 제거, 정착, probe","revC-src/conv_ftl.c:563-574 (skipped when ICAT_VARIANT 1; runs only while settled; threshold WATGC_V2_DRIFT_Q16, conv_ftl.h:75)",Ablation
+NoElim+NoSettle (revA V2 = abl 묶음 끔),revA-v2 (고컴); abl-off-elim-settle-drift-probe (승컴),2,0.9995,0.25,— (제거 없음),— (정착 없어 미동작),45,✓,✗,✗,N (구조상),— (재설정 없음),N (구조상),"후보 제거, 정착. 정착이 전제인 변화 감지·재설정·probe도 동작하지 않음",할인 UCB (45개),"revC-src/conv_ftl.c:616-633 (skipped when ICAT_VARIANT 2 or 3; threshold WATGC_V2_ELIM_Q16, conv_ftl.h:39); revC-src/conv_ftl.c:536-550 (skipped when ICAT_VARIANT 2, 5, 9)",Ablation
+NoElim,"revE-noelim, revB-noelim (고컴, 같은 모듈 b1663b47)",3,0.9995,0.25,— (제거 없음),25 %,45,✓,✗,✓,✓,△ (제거된 후보가 없어 복원 대상 없음),✓,후보 제거,"할인, 정착, 변화 감지, 재설정, probe","revC-src/conv_ftl.c:616-633 (skipped when ICAT_VARIANT 2 or 3; threshold WATGC_V2_ELIM_Q16, conv_ftl.h:39)",Ablation
+NoSettle,revB-nosettle (고컴),5,0.9995,0.25,15 %,— (정착 없어 미동작),45,✓,✓,✗,N (구조상),— (재설정 없음),N (구조상),정착. 정착이 전제인 변화 감지·재설정·probe도 동작하지 않음,"할인, 후보 제거","revC-src/conv_ftl.c:536-550 (skipped when ICAT_VARIANT 2, 5, 9)","Ablation (대조군 n=1, 통계 불가)"
+FullReset,revD-fullreset (승컴),7,0.9995,0.25,15 %,25 %,45,✓,✓,✓,✓,N (45개 전체 복원),✓,부분 복원 → 전체 복원,나머지 전부,"revD-src/conv_ftl.c reset_epoch #if ICAT_VARIANT == 7: active = WATGC_V2_ALLOWED (승컴 소스, 고컴 교차 확인)",Ablation
+NoDiscount,abl-nodiscount (승컴),4,1.0 (Q16 65536),0.25,15 %,25 %,45,N (γ = 1),✓,✓,✓,✓,✓,할인 (γ 0.9995 → 1),나머지 전부,ICAT_EXTRA=-DWATGC_V2_GAMMA_Q16=65536ULL (승컴 abl 사전 등록),Ablation
+Random Selection,revA-random (고컴),9,(계산되나 선택에 쓰지 않음),— (UCB 미사용),— (제거 없음),— (감지 없음),45,—,✗,✗,✗,—,✗,"학습 기반 선택 전체 (UCB, 제거, 정착, 감지)","후보 45개, 판단 구간",revC-src/conv_ftl.c:611-614 (ICAT_VARIANT 9 returns a uniform random arm among 45),기준선
+Elim10 / Elim25,"revC-elim10, revC-elim25 (고컴)",4,0.9995,0.25,10 % / 25 %,25 %,45,✓,✓,✓,✓,✓,✓,없음 (문턱만 변경),전부,"ICAT_EXTRA=-DWATGC_V2_ELIM_Q16=6554ULL / 16384ULL (revC preregistration E6, objdump 1줄 차이)",Parameter Sensitivity
+Drift12.5,revE-drift12 (고컴),4,0.9995,0.25,15 %,12.5 %,45,✓,✓,✓,✓,✓,✓,없음 (문턱만 변경),전부,"ICAT_EXTRA=-DWATGC_V2_DRIFT_Q16=8192ULL (revE build log, objdump 1줄 차이)",Parameter Sensitivity
+Drift50,drift50 (승컴),4,0.9995,0.25,15 %,50 %,45,✓,✓,✓,✓,✓,✓,없음 (문턱만 변경),전부,ICAT_EXTRA=-DWATGC_V2_DRIFT_Q16=32768ULL (승컴 result/drift50-20261126/preregistration.md:14),Parameter Sensitivity
+Arms60,"revC-arm60 (= revB-arm60 모듈, 고컴)",6,0.9995,0.25,15 %,25 %,60,✓,✓,✓,✓,✓,✓,후보 축소 (k=2 제외) 해제,전부,revC-src/conv_ftl.h:33-37 (ICAT_VARIANT 6 sets WATGC_V2_ARM_LO 0 -> 60 arms),Parameter Sensitivity
+
+"기호: ✓ 동작, ✗ 코드에서 끔, N (구조상) = 코드는 있으나 전제(정착)가 없어 실행되지 않음, — 해당 없음"
+code:discount,"revC-src/conv_ftl.c:578-582 (watgc_v2_discount on every arm each window; γ = WATGC_V2_GAMMA_Q16, conv_ftl.h:61)"
+code:elim,"revC-src/conv_ftl.c:616-633 (skipped when ICAT_VARIANT 2 or 3; threshold WATGC_V2_ELIM_Q16, conv_ftl.h:39)"
+code:settle,"revC-src/conv_ftl.c:536-550 (skipped when ICAT_VARIANT 2, 5, 9)"
+code:drift,"revC-src/conv_ftl.c:563-574 (skipped when ICAT_VARIANT 1; runs only while settled; threshold WATGC_V2_DRIFT_Q16, conv_ftl.h:75)"
+code:probe,revC-src/conv_ftl.c:642-655 (runs only while settled)
+code:reset,"revC-src/conv_ftl.c:474-497 (reset_epoch: zero all arm statistics, active = survivors + 1-step neighbours via watgc_v2_grow)"
+code:random,revC-src/conv_ftl.c:611-614 (ICAT_VARIANT 9 returns a uniform random arm among 45)
+code:arms,revC-src/conv_ftl.h:33-37 (ICAT_VARIANT 6 sets WATGC_V2_ARM_LO 0 -> 60 arms)
+code:ucb,revC-src/conv_ftl.h:63 WATGC_V2_UCB_C_Q16 16384 = 0.25 WAF units; used at revC-src/conv_ftl.c:436

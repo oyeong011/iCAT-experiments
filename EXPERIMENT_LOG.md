@@ -14778,3 +14778,9 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 ## 2026-11-27 14:05 고컴: 집컴 baseline 메인 그래프 검토 (읽기 전용, 새 실험 없음)
 - report/final-revision/redesign_support/BASELINE_FIGURE_REVIEW.md. Random +0.196 [+0.184,+0.208] Holm<0.0001, Greedy GC +0.519 [+0.463,+0.574] Holm 0.0013 — 기존 CSV와 일치.
 - 지적: iCAT-v4=0 막대 하나는 대조군 두 개(배치 A 고컴, 배치 G 승컴)를 하나로 보이게 함. Online Greedy 제외는 근거 명시 + 캡션 언급 조건부. 원 구현 iCAT(직접 비교) 처리 결정 필요.
+
+## 2026-11-27 15:56 고컴: 리비전 최종 결과 고컴 부분 (기준선 Random, 고컴 Ablation, 파라미터) — 새 실험 없음
+- analysis/final_revision/gocom_revision_final.py → report/final-revision/gocom_revision_final/ (CSV 10개 + GOCOM_FINAL_REPORT.md). 검사 388건 불일치 0.
+- 41개 고컴 run의 커널 init 줄 VARIANT/γ/C가 사전 등록과 일치. 기능 off 변형에서 해당 동작(제거·재설정)이 로그에 0건.
+- γ 0.90/0.95/0.99, C 0.50/0.75 실험 없음 (init 줄 462,668개: γ 0.9995 또는 1.0, C 0.25뿐). W1–W4 없음. 참고 엑셀 iCAT_기준선_Ablation_논문용.xlsx 찾지 못함.
+- 제거 문턱 10/15/25 %에서 단계 A 끝 실제 제거 비율 0.80/0.61/0.10 (문턱과 다름).

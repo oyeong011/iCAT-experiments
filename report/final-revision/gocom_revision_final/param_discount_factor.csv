@@ -1,0 +1,9 @@
+setting,group,batch,status,n,mean WAF,SD,95% CI lo,95% CI hi,Δ vs same-batch default,Welch CI lo,Welch CI hi,Holm p,verdict,active candidates end of phase A (mean of 4 parts),"eliminated share end of phase A [실측, 1 − active/candidates]",elim counter (sum 4 parts),eval_explore (sum),resets (sum),learner ktime ms,"첫 정착 시간 (단계 A 시작부터, 가장 늦은 파티션, s)",단계 C 첫 감지 (s),단계 C 재설정 때 복원된 후보 수,"단계 C 재정착 (재설정부터, 최대, s)",단계 C 탐색 조합이 처리한 host 쓰기 비중
+γ = 0.9995 (기본),revA-v4,revA-20261114,측정 (모든 iCAT-v4 대조군),3,2.1284,0.0049,2.1161,2.1407,(기본값),,,,대조군,19.333 ± 2.323,0.570 ± 0.052,196.667 ± 3.786,517.333 ± 17.616,4.000 ± 0.000,3.880 ± 0.106,3640.033 ± 7.508,63.267 ± 1.986,16.667 ± 1.528,360.500 ± 41.050,0.223 ± 0.035
+γ = 0.90,,,실행하지 않음
+γ = 0.95,,,실행하지 않음
+γ = 0.99,,,실행하지 않음
+γ = 1.0 (할인 없음),,,"승컴 abl-nodiscount n=3 (승컴 담당): Δ −0.004 [−0.064, +0.057], 구분되지 않음"
+
+"커널 로그 검사 (이 PC의 result, result_e1, result_e2 전체 + 승컴 리비전 배치 7개): WATGC_V2 init 줄 462,668개 중 gamma_q16은 65503 (0.9995) 또는 65536 (1.0, NoDiscount)뿐이다."
+γ 0.90 / 0.95 / 0.99는 어떤 배치에서도 실행하지 않았다. 민감도 그래프를 만들 수 없다.
