@@ -14790,3 +14790,8 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 
 ## 2026-11-27 16:11 고컴: revF-20261127 γ·C 민감도 사전 등록 (사용자 지시: C 0.75/0.5/0.25, γ 0.99/0.95/0.90, 각 1회)
 - 대조군 revF-v4 (revC-v4.ko) + g99/g95/g90/c050/c075, n=1, 통계 없음. revF-src = revC-src + UCB_C #ifndef 3줄 (기본 빌드 objdump 차이 0). 순서 random(20261127): g90 c075 g99 g95 c050 v4. 예상 약 10 h.
+
+## 2026-11-27 16:29 고컴: NVMeVirt 용량 검증 (읽기 전용)
+- 고컴·승컴 모두 NVMeVirt 8 GiB (커널 로그 779+45 run: 8191 MiB / 논리 7655 MiB). 16 GiB 실험 없음. 고컴 호스트 RAM 32 GiB (firmware memmap), 승컴 16 GB.
+- report/final-revision/capacity_check/{CAPACITY_CHECK_20261127.md, capacity_comparison.csv}. 공통 정책은 iCAT-v4뿐.
+- revF: c075 smoke ANOMALY는 check-run v1 오탐 (kernel-final.log에 직전 run init 포함). v2로 고쳐 재검사 OK, 16:27 큐 재개 (g99 smoke부터).
