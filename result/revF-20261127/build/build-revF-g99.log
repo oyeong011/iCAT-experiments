@@ -1,0 +1,31 @@
++++ uname -r
+++ taskset -c 11 nice -n 19 make -j1 -C /lib/modules/7.0.0-31-generic/build M=/home/oy/iCAT/revF-src ICAT_VARIANT=4 ICAT_EXTRA=-DWATGC_V2_GAMMA_Q16=64881ULL clean modules
+make: 디렉터리 '/usr/src/linux-headers-7.0.0-31-generic' 들어감
+make[1]: 디렉터리 '/home/oy/iCAT/revF-src' 들어감
+  CLEAN   Module.symvers
+  GEN     Makefile
+warning: the compiler differs from the one used to build the kernel
+  The kernel was built by: x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  You are using:           gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+warning: pahole version differs from the one used to build the kernel
+  The kernel was built with: 125
+  You are using:             0
+  CC [M]  main.o
+  CC [M]  pci.o
+  CC [M]  admin.o
+  CC [M]  io.o
+  CC [M]  dma.o
+  CC [M]  ssd.o
+  CC [M]  conv_ftl.o
+  CC [M]  pqueue/pqueue.o
+  CC [M]  channel_model.o
+  LD [M]  nvmev.o
+  MODPOST Module.symvers
+WARNING: modpost: missing MODULE_DESCRIPTION() in nvmev.o
+  CC [M]  nvmev.mod.o
+  CC [M]  .module-common.o
+  LD [M]  nvmev.ko
+  BTF [M] nvmev.ko
+Skipping BTF generation for nvmev.ko due to unavailability of vmlinux
+make[1]: 디렉터리 '/home/oy/iCAT/revF-src' 나감
+make: 디렉터리 '/usr/src/linux-headers-7.0.0-31-generic' 나감

@@ -1,0 +1,17 @@
+7455c7455
+< push   $0x4000
+---
+> push   $0xc000
+9363a9364
+> imul   $0xc000,%rax,%rax
+9365d9365
+< shl    $0xe,%rax
+9366a9367
+> xor    $0x1,%esi
+9369d9369
+< xor    $0x1,%esi
+9690,9691c9690
+< data16 cs nopw 0x0(%rax,%rax,1)
+< xchg   %ax,%ax
+---
+> cs nopw 0x0(%rax,%rax,1)
