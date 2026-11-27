@@ -1,0 +1,7 @@
+policy,host,batch,n,direct_comparison_to_v4,mean_waf,sd_waf,ci95_lo,ci95_hi,matched_v4,delta_vs_matched_v4,delta_pct,delta_ci95_lo,delta_ci95_hi,p_value,holm_p,hedges_g,interpretation,note
+iCAT-v4 (revA 대조군),고컴,revA-20261114,3,(대조군),2.128,0.005,2.116,2.141,,,,,,,,,기준,Random의 같은 배치 대조군. 고컴 Ryzen 3600XT
+Random Selection,고컴,revA-20261114,3,yes,2.324,0.006,2.311,2.338,revA-20261114/revA-v4,+0.196,+9.2,0.184,0.208,1.6e-06,9.4e-06,29.89,Random이 V4보다 WAF가 높다 (V4가 낫다),"같은 배치·같은 seed 직접 비교. Holm 가족 = revA 3대비 × {전체, C} = 6 (전체만 3이면 Holm p 4.7e-6, 판정 같음)"
+iCAT-v4 (revD 대조군),승컴,revD-20261124,3,(대조군),2.139,0.008,2.118,2.159,,,,,,,,,기준,Online Greedy의 간접 비교 기준. 승컴 i7-7700
+Online Greedy,승컴,greedy-20261125,3,no,2.130,0.020,2.081,2.179,revD-20261124/revD-v4,-0.009,-0.4,-0.051,0.034,0.543,해당 없음 (간접),-0.45,차이를 확인하지 못했다 (간접 비교),"다른 배치 (greedy-20261125 배치에 V4 없음). 같은 호스트·같은 부하. Holm 가족 없음. abl-v4 기준으로도 −0.009, p .63"
+iCAT-v4 (batchG 대조군),승컴,batchG-20261126,3,(대조군),2.110,0.024,2.050,2.171,,,,,,,,,기준,Greedy GC의 같은 배치 대조군. 승컴 i7-7700
+Greedy GC,승컴,greedygc-20261126,3,yes,2.629,0.007,2.612,2.647,batchG-20261126/bg-v4,+0.519,+24.6,0.463,0.574,0.00032,0.0013,23.09,Greedy GC가 V4보다 WAF가 높다 (V4가 낫다),"같은 큐에서 번갈아 실행한 직접 비교, 같은 seed. Holm 가족 = batchG 2대비 × {전체, C} = 4. FIO 쓰기 p99 지연은 Greedy GC가 낮다 (단계 C −124 µs)"

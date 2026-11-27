@@ -1,0 +1,10 @@
+graph,label,host,batch,n,value,err_lo,err_hi,comparison,annotation
+absolute_waf,iCAT-v4 (고컴 revA),고컴,revA-20261114,3,2.128,2.116,2.141,,
+absolute_waf,Random,고컴,revA-20261114,3,2.324,2.311,2.338,,
+absolute_waf,iCAT-v4 (승컴 revD),승컴,revD-20261124,3,2.139,2.118,2.159,,
+absolute_waf,Online Greedy,승컴,greedy-20261125,3,2.130,2.081,2.179,,
+absolute_waf,iCAT-v4 (승컴 batchG),승컴,batchG-20261126,3,2.110,2.050,2.171,,
+absolute_waf,Greedy GC,승컴,greedygc-20261126,3,2.629,2.612,2.647,,
+delta_vs_v4,Random,고컴,revA-20261114,3,+0.196,0.184,0.208,직접 (같은 배치),"+0.196 (+9.2 %), 95 % CI [0.184, 0.208], Holm p 9.4e-06"
+delta_vs_v4,Online Greedy,승컴,greedy-20261125,3,-0.009,-0.051,0.034,간접 (다른 배치),"-0.009 (-0.4 %), 95 % CI [-0.051, 0.034], 간접 비교·차이 확인 못 함"
+delta_vs_v4,Greedy GC,승컴,greedygc-20261126,3,+0.519,0.463,0.574,직접 (같은 배치),"+0.519 (+24.6 %), 95 % CI [0.463, 0.574], Holm p 0.0013"
