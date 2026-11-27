@@ -14774,3 +14774,7 @@ Original arm03 mismatch: module1198937595904 vs block1198938116096 bytes, differ
 ## 2026-11-27 12:23 고컴: 결과집 재구성용 용어·캡션·주장 문구 (새 실험 없음)
 - report/final-revision/redesign_support/{TERMINOLOGY_MAP,FIGURE_CAPTIONS,ALLOWED_CLAIMS}.md 작성. 기존 Excel·CSV·원시 경로는 바꾸지 않음.
 - 발견: revA V2와 abl 묶음 끔은 같은 ICAT_VARIANT=2 (abl preregistration 33행) → NoElim+NoSettle로 통일 제안. revA V1 = revD NoDrift (같은 소스). 논문의 맨 'Greedy'(희생 블록 규칙)와 Online Greedy가 겹침. Arm 47 = CAT-Best = CAT-47.
+
+## 2026-11-27 14:05 고컴: 집컴 baseline 메인 그래프 검토 (읽기 전용, 새 실험 없음)
+- report/final-revision/redesign_support/BASELINE_FIGURE_REVIEW.md. Random +0.196 [+0.184,+0.208] Holm<0.0001, Greedy GC +0.519 [+0.463,+0.574] Holm 0.0013 — 기존 CSV와 일치.
+- 지적: iCAT-v4=0 막대 하나는 대조군 두 개(배치 A 고컴, 배치 G 승컴)를 하나로 보이게 함. Online Greedy 제외는 근거 명시 + 캡션 언급 조건부. 원 구현 iCAT(직접 비교) 처리 결정 필요.
