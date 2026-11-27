@@ -156,7 +156,8 @@ def run(loc, batch, d, base, cm, reg):
     if ex != '0': bad.append(f'exit={ex or "missing"}')
     if r['workload'] == 'mixFYF' and r['phases'] != 'A+B+C': bad.append(f'phases={r["phases"]}')
     if r['workload'] == 'mixY' and len(phs) != 20: bad.append(f'{len(phs)}/20 phases')
-    r['has_sqlite_phase'] = '(sqlite' in (rd(d, 'summary.txt') or '')
+    # YCSB required when a phase that includes sqlite actually wrote (mixG runs sqlite concurrently inside phase A; t4 has an unused sqlite slot)
+    r['has_sqlite_phase'] = any(int(h) > 0 for h in re.findall(r'^phase\w*\([^)]*sqlite[^)]*\) host_pages=(\d+)', rd(d, 'summary.txt') or '', re.M))
     if (r['workload'] == 'mixFYF' or (r['workload'] != 'mixY' and r['has_sqlite_phase'])) and (not ops or ok != ops): bad.append(f'ycsb {ok}/{ops}')
     if r['workload'] == 'mixY':   # mixY = FIO + filebench varmail (no YCSB): 6 varmail phases must reach IO Summary, no error lines
         fb = [p.read_text(errors='replace') for p in sorted(d.glob('filebench-S*.txt'))]

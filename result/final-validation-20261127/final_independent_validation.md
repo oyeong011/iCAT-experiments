@@ -112,11 +112,23 @@
 | 호스트·배치 혼합 | 39개 그룹 모두 호스트 1개 × 배치 1개예요. 다른 배치 대비 21개는 "간접"으로 표시했어요 | 일치 (혼합 없음) |
 | mixY 단계 시간 | 0절 발견 1 참고 | **불일치** (SmartGC 계열) |
 | 리비전 그림 반복 횟수 (집컴 `figure_manifest.csv` 주장 14개) | 14/14 원시 유효 반복 수와 같아요 | 일치 |
-| 기존 논문 그림 원천 (`mix-20260911`) | 4절 참고 | 4절 |
+| 기존 논문 그림 원천 (`mix-20260911`) | n=1 그림은 n=1로 확인. mixG 전체가 YCSB 결과 없음 (집컴은 greedy만 제외) | 4절 |
 
 ## 4. 기존 논문 그림의 반복 횟수 (`final_prerevision_figure_validation.csv`)
 
-PRE_REVISION_SECTION
+- 승컴 `mix-20260911`의 9월 실행 707개 폴더를 같은 검사기로 다시 봤어요. 유효 452개, 무효 255개예요.
+  - 무효 사유: SQLITE_FULL 162개 (mixA, mixB, mixH, mixJ, mixR 전부), YCSB 결과 비어 있음 23개, exit=1 5개
+- **mixG는 전체가 검증 불가예요.** sqlite가 단계 A 안에서 FIO와 함께 도는 부하인데, greedy와 online 모두 YCSB 결과 파일이 비어 있어요. 집컴은 mixG-greedy만 제외했지만 같은 이유로 mixG-online도 제외해야 해요.
+- 집컴 `final_robustness_audit.md`의 기존 그림 감사와 반복 수를 원시 로그로 다시 세었어요.
+
+| 기존 그림 | 원천 | 원시 유효 반복 수 | 집컴 주장과 |
+|---|---|---|---|
+| 그림 1 (60 arm 민감도) | `sweep-20260915` | 이번 범위 밖 (`mix-20260911` 아님) | 미검증 |
+| 그림 2·4·5 (t4 시간 사용, 순위, v4 선택) | `t4-onlinev4-rep1-x60`, `t4-online*-x18` | v4 x60 **n=1**, online x18 n=1, v3 x18 n=1 | 일치 (n=1, "1회 사례"로만) |
+| 그림 6 (구버전 ablation) | `t4-onlinev3*-x18`, `v3probe`, `v3k2` | 각 **n=1** | 일치 |
+| 그림 7·8·9 (여러 mix에서 v4 대 고정 arm) | `mix*-{onlinev4,fixed50}-x3` | v4 x3 유효: C 1, D 1, F 2, K 1, L 1, O 3, P 2, Q 1 (8종). fixed50 x3은 8종 모두 **n=1**. mixA·B·G·H·J·R은 0 (무효) | 일치 ("v4 n=1–3, 고정 n=1, 유효 8종") |
+| 그림 10 (mixR 세 단계) | `mixR-*-x3` | 유효 0 (전부 SQLITE_FULL) | 일치 (사용 금지) |
+| 9개 워크로드 원래 iCAT 대 Greedy (집컴 `validation_report.md`) | `mix{C,D,F,K,L,M,O,P,Q}-{greedy,online}-rep1..3` | 9종 모두 n=3 대 n=3 유효. online − greedy = −7.0 % (mixF, p .010) ~ −42.0 % (mixP), 9종 모두 Welch CI가 0을 제외 | 일치. 단 "online"은 **원래 iCAT**이지 iCAT-v4가 아니에요 |
 
 ## 5. 다른 PC 결과와의 대조
 
@@ -161,7 +173,7 @@ PRE_REVISION_SECTION
 | 무효 실행이 통계에 들어갔는가 | 아니요. 무효 1건(SmartGC 1차 시도)은 어느 표에도 없어요 |
 | 호스트·배치를 섞었는가 | 아니요. 다른 배치 대비는 모두 "간접"으로 표시돼 있어요 |
 | n=1에 CI나 유의성을 붙였는가 | 아니요 (Excel, 집컴, 이 검증 모두) |
-| 논문 전에 고쳐야 할 것 | SmartGC 단계 시간 초과 명시, 10,112 B 출처, "CPU" 표기, NoElim 근거를 revE로 한정, Holm 병기 |
+| 논문 전에 고쳐야 할 것 | SmartGC 단계 시간 초과 명시, 10,112 B 출처, "CPU" 표기, NoElim 근거를 revE로 한정, Holm 병기, mixG online도 제외 |
 
 ## 7. 재현
 
