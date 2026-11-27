@@ -67,3 +67,27 @@ for name, rows in (('baseline_comparison.csv', base), ('graph_ready_values.csv',
 assert all(float(r['delta_ci95_lo']) > 0 for r in base if r['direct_comparison_to_v4'] == 'yes')
 assert all(float(r['delta_ci95_lo']) < 0 < float(r['delta_ci95_hi']) for r in base if r['direct_comparison_to_v4'] == 'no')
 for r in base: print(*(r[k] for k in ('policy', 'host', 'mean_waf', 'ci95_lo', 'ci95_hi', 'delta_vs_matched_v4', 'delta_pct', 'delta_ci95_lo', 'delta_ci95_hi', 'p_value', 'holm_p', 'hedges_g')), sep=' | ')
+
+# 11-27 main 3-bar package: Random / iCAT-v4 / Greedy GC (Online Greedy excluded).
+# iCAT-v4 keeps TWO rows (고컴 revA control for Random, 승컴 batchG control for Greedy GC): never pooled.
+M = [('Random Selection', 'Random', 'iCAT-v4 (revA)'), ('iCAT-v4 (revA 대조군)', 'iCAT-v4', ''),
+     ('iCAT-v4 (batchG 대조군)', 'iCAT-v4', ''), ('Greedy GC', 'Greedy GC', 'iCAT-v4 (batchG)')]
+by = {r['policy']: r for r in base}
+main = [{'bar': bar, 'row': lab, 'host': by[lab]['host'], 'batch': by[lab]['batch'], 'n': by[lab]['n'],
+         'mean_waf': by[lab]['mean_waf'], 'sd_waf': by[lab]['sd_waf'], 'ci95_lo': by[lab]['ci95_lo'], 'ci95_hi': by[lab]['ci95_hi'],
+         'matched_v4': ref, 'delta_waf_vs_v4': by[lab]['delta_vs_matched_v4'], 'delta_ci95_lo': by[lab]['delta_ci95_lo'],
+         'delta_ci95_hi': by[lab]['delta_ci95_hi'], 'holm_p': by[lab]['holm_p'],
+         'comparison_type': 'direct' if ref else 'control',
+         'note': {'Random': '고컴. Greedy GC와 직접 비교 안 함', 'Greedy GC': '승컴. Random과 직접 비교 안 함'}.get(bar, 'V4 두 대조군은 호스트가 달라 합치지 않음')}
+        for lab, bar, ref in M]
+with open(OUT / 'graph_main_3bars.csv', 'w', newline='') as f:
+    w = csv.DictWriter(f, list(main[0]), lineterminator='\n'); w.writeheader(); w.writerows(main)
+# self-check against the source CSV (unrounded)
+pol = {lab: (b, p_, c) for lab, b, p_, c, *_ in ROWS}
+for m in main:
+    b, p_, c = pol[m['row']]; d = D[(b, p_)]
+    assert all(abs(float(m[k]) - float(d[s])) < 5e-4 for k, s in (('mean_waf', 'mean'), ('sd_waf', 'sd'), ('ci95_lo', 'ci95_lo'), ('ci95_hi', 'ci95_hi')))
+    if c:
+        x = C[(c, f'{b}/{p_}')]
+        assert abs(float(m['delta_waf_vs_v4']) - float(x['diff'])) < 5e-4 and abs(float(m['holm_p']) - float(x['holm_p_family'])) <= 0.05 * float(x['holm_p_family'])
+print('graph_main_3bars.csv', len(main), 'rows OK')
