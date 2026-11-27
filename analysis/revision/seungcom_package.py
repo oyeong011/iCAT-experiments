@@ -7,12 +7,12 @@ Inputs (no new experiments):
   <run>/kernel.log                                                    (WATGC_V2 learner lines)
   scratchpad objdump comparison results are recorded by hand in module_verification.csv (see report).
 Every variant is compared only with the iCAT-v4 of its own batch. Nothing is pooled across batches."""
-import csv, re, statistics as st
+import csv, re, statistics as st, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 V = ROOT / 'result/final-validation-20261127'
-OUT = ROOT / 'result/final-revision-seungcom'
+OUT = ROOT / (sys.argv[1] if len(sys.argv) > 1 else 'result/final-revision-seungcom')
 OUT.mkdir(exist_ok=True)
 S = list(csv.DictReader(open(V / 'final_statistical_validation.csv')))
 RAW = [r for r in csv.DictReader(open(V / 'final_raw_data_validation.csv')) if r['role'] == 'main']
@@ -44,9 +44,9 @@ VAR = [  # key, batch, policy, label, x-axis label, flags, feature marks, remove
     ('V4', 'revision-additional-ablation', 'abl-v4', 'iCAT-v4 (abl 대조군)', '', 'ICAT_VARIANT=4', ('✓', '✓', '✓', '✓', '✓', '✓'), '—', '전부', ''),
     ('NoDiscount', 'revision-additional-ablation', 'abl-nodiscount', 'NoDiscount', 'w/o Discounting', 'ICAT_VARIANT=4 ICAT_EXTRA=-DWATGC_V2_GAMMA_Q16=65536ULL',
      ('✗ (γ=1)', '✓', '✓', '✓', '✓', '✓'), 'γ = 65536/65536 = 1 → watgc_v2_discount(v) = (v>>16)*65536 + ((v&0xFFFF)*65536>>16) = v (항등)', '나머지 전부', LOC['disc']),
-    ('OffBundle', 'revision-additional-ablation', 'abl-off-elim-settle-drift-probe', 'NoElim+NoSettle (+Drift, Probe 구조적 off)', 'w/o Elim, Settle, Drift, Probe',
+    ('OffBundle', 'revision-additional-ablation', 'abl-off-elim-settle-drift-probe', 'NoElim+NoSettle', 'w/o Elimination & Settling',
      'ICAT_VARIANT=2', ('✓', '✗', '✗', '✗ (정착이 없어 발동 불가)', 'N/A (리셋 없음)', '✗ (정착이 없어 도달 불가)'),
-     '후보 제거, 정착을 끔. 변화 감지와 probe는 정착 상태에서만 동작하므로 함께 꺼짐', '할인, UCB 탐색', LOC['elim'] + '; ' + LOC['settle']),
+     '후보 제거, 정착을 끔. 변화 감지와 probe는 정착 상태에서만 동작하므로 구조상 함께 꺼짐. 고컴 revA V2와 같은 정책 (VARIANT 2)', '할인, UCB 탐색', LOC['elim'] + '; ' + LOC['settle']),
 ]
 abl = []
 for key, b, p, label, xl, flags, marks, removed, kept, code in VAR:
@@ -149,10 +149,10 @@ write('learner_metrics_by_policy.csv', lpol)
 dr = C['drift50-20261126/drift50']
 write('parameter_sensitivity.csv', [
     {'parameter': 'Discount factor γ', 'default': '0.99949646 (GAMMA_Q16 65503, conv_ftl.h:61)', 'tested_on_seungcom': 'γ = 1.0 (NoDiscount, abl 배치)',
-     'requested_but_not_run': '0.90, 0.95, 0.99 — 어느 소스 트리에도 없음 (미실험)', 'result': f"NoDiscount − V4 {float(C['revision-additional-ablation/abl-nodiscount']['diff']):+.4f}, Holm p 1 (차이 확인 못 함)",
+     'requested_but_not_run': '0.90, 0.95, 0.99 — 승컴 미실험. 고컴 revF-20261127에서 각 1회 실행 중 (n=1, 통계 없음)', 'result': f"NoDiscount − V4 {float(C['revision-additional-ablation/abl-nodiscount']['diff']):+.4f}, Holm p 1 (차이 확인 못 함)",
      'note': 'γ=1 끝점 하나뿐이라 민감도 곡선이 아니다. 기본값은 0.99가 아니라 0.9995다'},
     {'parameter': 'Exploration coefficient C (UCB)', 'default': '0.25 WAF 단위 (UCB_C_Q16 16384, conv_ftl.h:63)', 'tested_on_seungcom': '없음',
-     'requested_but_not_run': '0.25 외 값 — 모든 소스 트리에서 16384 고정 (미실험)', 'result': '미실험',
+     'requested_but_not_run': '0.50, 0.75 — 승컴 미실험 (승컴 소스는 16384 고정). 고컴 revF-20261127에서 각 1회 실행 중', 'result': '승컴 자료 없음 → 고컴 revF (n=1)',
      'note': 'C는 UCB 보너스의 크기(WAF 단위)이고, 무작위 선택 확률이 아니다'},
     {'parameter': 'Elimination threshold', 'default': '15 % (ELIM_Q16 9830, conv_ftl.h:39)', 'tested_on_seungcom': '15 %만 (모든 승컴 리비전 배치)',
      'requested_but_not_run': '10 %, 25 %는 고컴 revC-20261124에 있음', 'result': '승컴 자료 없음 → 고컴 revC 참조',

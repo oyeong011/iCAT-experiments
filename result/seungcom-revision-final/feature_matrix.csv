@@ -1,0 +1,7 @@
+variant,batch,build_flags,discounting,elimination,settling,drift_detection,partial_reset,probe,code_location (revD-src@b62127da2),runtime_check (kernel log),note,gocom_crosscheck
+iCAT-v4,revD / abl / batchG,ICAT_VARIANT=4,✓ γ=0.99949646,✓ 15 %,✓,✓ 25 %,✓,✓,—,init VARIANT=4 gamma_q16=65503 exploration_q16=16384; 리셋 직후 active < 45,,
+NoDrift,revD-20261124,ICAT_VARIANT=1,✓,✓,✓,✗,N/A (리셋 없음),✓,revD-src/conv_ftl.c:567 `ICAT_VARIANT != 1` → 감지 블록(567-579) 건너뜀,summary reset=0 (3 run × 4 파티션),고컴 revA V1과 같은 소스,
+FullReset,revD-20261124,ICAT_VARIANT=7,✓,✓,✓,✓,✗ 45개 전부 복원,✓,revD-src/conv_ftl.c:486-490 reset_epoch에서 `active = WATGC_V2_ALLOWED` (45개),reset 직후 sample active=45 (12/12 리셋),,
+NoDiscount,revision-additional-ablation,ICAT_VARIANT=4 ICAT_EXTRA=-DWATGC_V2_GAMMA_Q16=65536ULL,✗ γ=1 (항등),✓,✓,✓,✓,✓,"revD-src/conv_ftl.c:317-321 watgc_v2_discount, 584-586 호출; conv_ftl.h:60-62 GAMMA_Q16",init gamma_q16=65536 (3 run × 4 파티션),,
+NoElim+NoSettle,revision-additional-ablation,ICAT_VARIANT=2,✓,✗,✗,✗ (정착이 없어 구조상 꺼짐),N/A (리셋 없음),✗ (정착이 없어 구조상 꺼짐),"revD-src/conv_ftl.c:620 제거 `!= 2`, 540 정착 `!= 2`; 감지 568과 probe 639-657은 settled일 때만",summary elim=0 active=45 settled=0 reset=0 (3 run × 4 파티션),고컴 revA V2와 같은 정책 (VARIANT 2),
+drift50 (Parameter Sensitivity),drift50-20261126 (batchG 같은 큐),ICAT_VARIANT=4 ICAT_EXTRA=-DWATGC_V2_DRIFT_Q16=32768ULL,✓,✓,✓,✓ 문턱 50 %,✓,✓,conv_ftl.h:74-76 DRIFT_Q16; 사용 revD-src/conv_ftl.c:572-573,init에 문턱이 찍히지 않음 → objdump로만 확인 (shl $0xf vs $0xe),Ablation 아님,

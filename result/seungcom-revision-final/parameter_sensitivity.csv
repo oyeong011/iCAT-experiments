@@ -1,0 +1,5 @@
+parameter,default,tested_on_seungcom,requested_but_not_run,result,note
+Discount factor γ,"0.99949646 (GAMMA_Q16 65503, conv_ftl.h:61)","γ = 1.0 (NoDiscount, abl 배치)","0.90, 0.95, 0.99 — 승컴 미실험. 고컴 revF-20261127에서 각 1회 실행 중 (n=1, 통계 없음)","NoDiscount − V4 -0.0038, Holm p 1 (차이 확인 못 함)",γ=1 끝점 하나뿐이라 민감도 곡선이 아니다. 기본값은 0.99가 아니라 0.9995다
+Exploration coefficient C (UCB),"0.25 WAF 단위 (UCB_C_Q16 16384, conv_ftl.h:63)",없음,"0.50, 0.75 — 승컴 미실험 (승컴 소스는 16384 고정). 고컴 revF-20261127에서 각 1회 실행 중",승컴 자료 없음 → 고컴 revF (n=1),"C는 UCB 보너스의 크기(WAF 단위)이고, 무작위 선택 확률이 아니다"
+Elimination threshold,"15 % (ELIM_Q16 9830, conv_ftl.h:39)",15 %만 (모든 승컴 리비전 배치),"10 %, 25 %는 고컴 revC-20261124에 있음",승컴 자료 없음 → 고컴 revC 참조,문턱(평균이 best보다 몇 % 나쁘면 제거)과 실제 제거된 후보 비율은 다르다. 제거 비율은 learner_metrics의 active_at_first_settle로 본다
+Drift threshold,"25 % (DRIFT_Q16 16384, conv_ftl.h:75), 3구간 연속","50 % (drift50, batchG 같은 큐)",12.5 %는 고컴 revE-20261125,"drift50 − V4 +0.0183 [-0.0445, +0.0812], Holm p 0.83 (차이 확인 못 함)",Ablation이 아니라 Parameter Sensitivity. V4 리셋의 편차가 모두 50 %를 넘어서 25 %와 50 %가 다르게 동작할 기회가 거의 없었다

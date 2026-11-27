@@ -1,0 +1,8 @@
+policy,registered_module,registered_sha256_prefix,rebuild_flags (revD-src; sources.sha256 OK),objdump_diff_lines_vs_registered,negative_control,negative_control_diff_lines,verdict,source_commit
+revD-v4 / abl-v4 / bg-v4,buildoutput/nvmev-revD-v4.ko (= abl-v4 byte-identical),b35775057f2e7dc6,ICAT_VARIANT=4,0,rebuild v4 vs registered revD-nodrift,1515,일치,revD-src@b62127da2 (clean)
+revD-nodrift,buildoutput/nvmev-revD-nodrift.ko,4c267cd599976c59,ICAT_VARIANT=1,0,—,,일치,revD-src@b62127da2 (clean)
+revD-fullreset,buildoutput/nvmev-revD-fullreset.ko,5a34cb8487ac3c79,ICAT_VARIANT=7,0,rebuild fullreset vs registered revD-v4,404,일치,revD-src@b62127da2 (clean)
+abl-nodiscount,buildoutput/nvmev-abl-nodiscount.ko,b26b914ce2e13da7,ICAT_VARIANT=4 ICAT_EXTRA=-DWATGC_V2_GAMMA_Q16=65536ULL,0,rebuild nodiscount vs registered abl-v4,48,일치,revD-src@b62127da2 (clean)
+abl-off-elim-settle-drift-probe,buildoutput/nvmev-abl-off-elim-settle-drift-probe.ko,b35924ab4ee32da5,ICAT_VARIANT=2,0,rebuild offbundle vs registered revD-v4,1258,일치,revD-src@b62127da2 (clean)
+drift50,buildoutput/nvmev-drift50.ko,8196ed9b7dccc537,ICAT_VARIANT=4 ICAT_EXTRA=-DWATGC_V2_DRIFT_Q16=32768ULL,0,rebuild drift50 vs registered abl-v4,2 (shl $0xf vs $0xe = 32768 vs 16384),일치,revD-src@b62127da2 (clean)
+greedygc,buildoutput/nvmev-greedygc.ko,cd2b7704ef1263a9,NVMEVIRT_GC_POLICY=GREEDY (revD-src 그대로),0,rebuild greedygc vs registered revD-v4,3023,일치 (preregistration의 nvmevirt_test/는 쓰지 않은 9월 모듈 설명. 실행 모듈은 revD-src 빌드),revD-src@b62127da2 (clean)
