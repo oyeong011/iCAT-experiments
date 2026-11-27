@@ -14,3 +14,13 @@
 
 ### param-20261127 mixFYF pf-c075 rep1 — started 2026-11-27T16:37:01+09:00
 - FIO-Fast 120s -> YCSB-A (load 250000 records + run, 120s total) -> FIO-Fast 120s; Table-3 prep; seeds hot/warm/cold=20260911/20261011/20261111; icat_seed=2026111401; module `/home/oy/iCAT/buildoutput/nvmev-pf-c075.ko`; evidence `/home/oy/iCAT/result/param-20261127/raw/mixFYF-pf-c075-rep1-smoke120`.
+
+- Finished 2026-11-27T16:44:33+09:00; mixFYF pf-c075 exit=0; evidence `/home/oy/iCAT/result/param-20261127/raw/mixFYF-pf-c075-rep1-smoke120`; cleanup attempted.
+- total host_bytes=43012759552 host_pages=10501162 gc_pages=13197033 WAF=2.256721
+- phaseA(test4) host_pages=4811386 gc_pages=4479113 WAF=1.930940
+- phaseB(sqlite-a) host_pages=889643 gc_pages=458537 WAF=1.515417
+- phaseC(test4) host_pages=4800133 gc_pages=8259383 WAF=2.720657
+- phaseB-load host_pages=452310 gc_pages=325802 WAF=1.720307
+- phaseB-run host_pages=437333 gc_pages=132735 WAF=1.303510
+- ycsb-load [OVERALL], Throughput(ops/sec), 31830.91418385536
+- ycsb-run [OVERALL], Throughput(ops/sec), 59757.707189777735
