@@ -6,3 +6,16 @@
 2026-11-27T16:26:28+09:00 end smoke revF-c075 exit=0
 2026-11-27T16:26:29	mixFYF-revF-c075-rep1-smoke120	ANOMALY	waf=2.191718 waf_A=1.884411 waf_B=1.486368 waf_C=2.630498 init=58982/16384/v4 65503/49152/v4 cpu1=99.8 cpu2=99.9 all_cpu=26.6 max_load1=3.86 samples=15	init gamma/C/variant mismatch [(58982, 16384, 4), (65503, 49152, 4)] parts=['0', '1', '2', '3']
 2026-11-27T16:26:29+09:00 ANOMALY smoke revF-c075 (exit=0 check=1); main queue NOT started
+2026-11-27T16:26:32+09:00 pushed logs
+2026-11-27T16:27:29+09:00 check-run v2: init check now reads this run's kernel.log only (v1 read kernel-final.log = whole dmesg incl. previous run -> false positive on c075 smoke). Re-checked: g90 OK, c075 OK (init 65503/49152/v4). Resuming with queue-revF-resume.sh.
+2026-11-27T16:27:29+09:00 revF resumes (after check-run v2 fix)
+2026-11-27T16:27:29+09:00 start smoke revF-g99
+2026-11-27T16:34:56+09:00 end smoke revF-g99 exit=0
+2026-11-27T16:34:56	mixFYF-revF-g99-rep1-smoke120	OK	waf=2.257044 waf_A=1.936508 waf_B=1.516786 waf_C=2.714576 init=64881/16384/v4 cpu1=95.9 cpu2=95.7 all_cpu=30.6 max_load1=4.18 samples=15	
+2026-11-27T16:34:56+09:00 start smoke revF-g95
+2026-11-27T16:42:24+09:00 end smoke revF-g95 exit=0
+2026-11-27T16:42:24	mixFYF-revF-g95-rep1-smoke120	OK	waf=2.188186 waf_A=1.882438 waf_B=1.471095 waf_C=2.631318 init=62259/16384/v4 cpu1=99.8 cpu2=99.8 all_cpu=29.9 max_load1=5.02 samples=15	
+2026-11-27T16:42:24+09:00 start smoke revF-c050
+2026-11-27T16:49:50+09:00 end smoke revF-c050 exit=0
+2026-11-27T16:49:50	mixFYF-revF-c050-rep1-smoke120	OK	waf=2.258918 waf_A=1.935726 waf_B=1.511629 waf_C=2.721380 init=65503/32768/v4 cpu1=99.9 cpu2=99.8 all_cpu=25.3 max_load1=3.56 samples=15	
+2026-11-27T16:49:50+09:00 all 5 smokes passed (2 before + 3 after resume); main queue starts

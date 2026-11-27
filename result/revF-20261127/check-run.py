@@ -38,7 +38,8 @@ EXP = {'revF-v4': (65503, 16384), 'revF-g99': (64881, 16384), 'revF-g95': (62259
        'revF-c050': (65503, 32768), 'revF-c075': (65503, 49152)}
 pol = re.match(r'mixFYF-(revF-[a-z0-9]+)-rep', d.name)
 if pol and pol[1] in EXP:
-    got = set(re.findall(r'WATGC_V2 init .*?part=(\d) .*?gamma_q16=(\d+) exploration_q16=(\d+) revA_variant=(\d+)', kl))
+    own = (d / 'kernel.log').read_text(errors='replace') if (d / 'kernel.log').exists() else ''   # v2: this run's section only (kernel-final.log is the whole dmesg incl. earlier runs)
+    got = set(re.findall(r'WATGC_V2 init .*?part=(\d) .*?gamma_q16=(\d+) exploration_q16=(\d+) revA_variant=(\d+)', own))
     gv = {(int(g), int(c), int(v)) for _, g, c, v in got}; parts = {p for p, *_ in got}
     info['init'] = ' '.join(f'{g}/{c}/v{v}' for g, c, v in sorted(gv))
     if gv != {EXP[pol[1]] + (4,)} or parts != {'0', '1', '2', '3'}: prob.append(f'init gamma/C/variant mismatch {sorted(gv)} parts={sorted(parts)}')

@@ -6,7 +6,7 @@ exec 7>/home/oy/iCAT/result/revE-20261125/git.lock; flock 7
 mkdir -p $R/raw $R/console $R/build $R/inputs
 [[ -n "$run" && -d $C/raw/$run ]] && rsync -a --exclude kernel-snapshots $C/raw/$run/ $R/raw/$run/
 rsync -a $C/console/ $R/console/; rsync -a $C/build/ $R/build/; rsync -a $C/inputs/ $R/inputs/
-cp -p $C/{preregistration.md,modules.sha256,queue-order.registered.txt,queue.log,runs.tsv,checks.tsv,loadsampler.tsv,runner-revF.sh,port.diff,run-one.sh,safety-env.sh,queue-revF.sh,check-run.py,sync-push.sh,loadsampler.sh,journal.md} $R/ 2>/dev/null
+cp -p $C/{preregistration.md,modules.sha256,queue-order.registered.txt,queue.log,runs.tsv,checks.tsv,loadsampler.tsv,runner-revF.sh,port.diff,run-one.sh,safety-env.sh,queue-revF.sh,queue-revF-resume.sh,check-run.v1-falsepositive.py,check-run.py,sync-push.sh,loadsampler.sh,journal.md} $R/ 2>/dev/null
 cd $W
 git add result/revF-20261127 >/dev/null 2>&1
 git -c user.name=oyeong011 -c user.email=oyeong011@gmail.com commit -q -m "revF-20261127: ${run:-campaign logs} (GoCom, auto)
